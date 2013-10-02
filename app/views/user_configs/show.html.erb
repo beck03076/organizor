@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Def follow up days:</b>
+  <%= @user_config.def_follow_up_days %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @user_config.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_config_path(@user_config) %> |
+<%= link_to 'Back', user_configs_path %>

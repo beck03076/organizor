@@ -1,0 +1,102 @@
+<script type="text/javascript" charset="utf-8">
+
+   $(".dateField").datetimepicker({
+    inline: true,
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '1950:2030',
+    controlType: 'select',
+    timeFormat: 'hh:mm tt'});
+    
+    
+    
+    $(function(){
+      $(".dateField").trigger("select");
+      $(".dateFeld").datetimepicker('setDate', 'addDays(new Date(), 8)');
+      
+      
+      function addDays(dateObj, numDays) {
+     return dateObj.setDate(dateObj.getDate() + numDays);
+    }
+    
+    $(document).on('nested:fieldAdded', function(event){
+      var field = event.field; 
+      var dateField = field.find('.dateField');
+      dateField.datetimepicker({
+        inline: true,
+        changeMonth: true, 
+        changeYear: true, 
+        yearRange: '1950:2030',
+        controlType: 'select',
+        timeFormat: 'hh:mm tt'
+      });
+    })
+    
+    });
+    
+    
+</script>
+
+<% if @list.to_i == 1 && @enquiry.todos.size > 0 %>
+<table class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <thead>
+      <tr class="theme-l">
+                            <th>Topic</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                            <th>Assigned To</th>
+                            <th>Assigned By</th>
+      </tr>
+    </thead>
+    <tbody>
+            <% @enquiry.todos.each do |t| %>
+                <tr>
+                    <td><%= t.topic.try(:name) %></td>
+                    <td><%= t.desc %></td>
+                    <td><%= t.status.try(:name) %></td>
+                    <td><%= t.duedate %></td>
+                    <td><%= t.priority %></td>
+                    <td><%= User.find(t.assigned_to).first_name %></td>
+                    <td><%= User.find(t.assigned_by).first_name %></td>
+               </tr>
+           <% end %>               
+
+    </tbody>
+  </table>
+<br/>
+<br/>
+<br/>
+<% end %>
+
+
+<div id="followup-action" class="action-box">
+<%= form_for(@todo) do |g| %>
+  <%= g.hidden_field :enquiry_id, value: id %>
+                 <div class="cols">
+                    <div class="col6">
+                        <%= hidden_field_tag "#{g.object_name}[sub_id]",@enquiry.id %>
+                        <%= hidden_field_tag "#{g.object_name}[sub_class]","Enquiry" %>
+                        <%= go_create(g,"todo_topic","topic_id","name",1) %> 
+                        <%= fs(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        <%= go_create(g,"todo_status","status_id","name",1) %> 
+                        <%= fs(g,[:assigned_to, 
+                                 User.order(:first_name), 
+                                 :id, 
+                                 :first_name,
+                                 {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                    </div>
+                    <div class="col6">
+                        <%= fs(g,[:duedate,:class => "dateField"],"text_field",nil) %>
+                        <%= g.select(:priority,
+                                     options_for_select(["High","Medium","Low"])) %>
+                                     
+                    </div>
+                </div>
+    <%= hidden_field_tag "#{g.object_name}[todo]", "from_action" %>
+    <%= g.submit "Create",{:class => "btnp fl"} %>
+    
+<% end %>
+</div>

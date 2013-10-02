@@ -1,0 +1,22 @@
+<% @timelines.each do |t| %>
+<li>
+  <%= image_tag "/images/icons/"+ t.action.to_s + ".png",{class: "fl", width: "35"} %>
+  &nbsp;&nbsp;&nbsp;
+  <h4><%= t.comment %></h4>
+  <br/>
+  &nbsp;&nbsp;&nbsp;
+  <%= t.desc.html_safe %>
+  
+  <br/>
+      <small>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          
+          &nbsp;&nbsp;..<b><%= t.user_name %></b> <i>
+          <%= time_ago_in_words(t.created_at) %> ago</i>
+      </small>
+  
+</li>
+<% end %>
+

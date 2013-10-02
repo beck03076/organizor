@@ -1,0 +1,23 @@
+<h1>Listing student_sources</h1>
+
+<table>
+  <tr>
+    <th>Index</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @student_sources.each do |student_source| %>
+  <tr>
+    <td><%= student_source.index %></td>
+    <td><%= link_to 'Show', student_source %></td>
+    <td><%= link_to 'Edit', edit_student_source_path(student_source) %></td>
+    <td><%= link_to 'Destroy', student_source, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Student source', new_student_source_path %>

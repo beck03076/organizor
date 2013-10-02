@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Branch:</b>
+  <%= @user.branch_id %>
+</p>
+
+<p>
+  <b>Role:</b>
+  <%= @user.role_id %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= @user.image %>
+</p>
+
+<p>
+  <b>Email signature:</b>
+  <%= @user.email_signature %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @user.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @user.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

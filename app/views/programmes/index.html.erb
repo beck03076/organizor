@@ -1,0 +1,43 @@
+<h1>Listing programmes</h1>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Country</th>
+    <th>City</th>
+    <th>Institution</th>
+    <th>Level</th>
+    <th>Subject</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Enquiry</th>
+    <th>Created by</th>
+    <th>Updated by</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @programmes.each do |programme| %>
+  <tr>
+    <td><%= programme.type_id %></td>
+    <td><%= programme.country_id %></td>
+    <td><%= programme.city_id %></td>
+    <td><%= programme.institution_id %></td>
+    <td><%= programme.level_id %></td>
+    <td><%= programme.subject_id %></td>
+    <td><%= programme.start_date %></td>
+    <td><%= programme.end_date %></td>
+    <td><%= programme.enquiry_id %></td>
+    <td><%= programme.created_by %></td>
+    <td><%= programme.updated_by %></td>
+    <td><%= link_to 'Show', programme %></td>
+    <td><%= link_to 'Edit', edit_programme_path(programme) %></td>
+    <td><%= link_to 'Destroy', programme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Programme', new_programme_path %>

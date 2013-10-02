@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  desc: MyText
+  subject: MyText
+  body: MyText
+  signature: MyText
+  created_by: 1
+  updated_by: 1
+
+two:
+  name: MyString
+  desc: MyText
+  subject: MyText
+  body: MyText
+  signature: MyText
+  created_by: 1
+  updated_by: 1

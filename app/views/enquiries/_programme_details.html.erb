@@ -1,0 +1,92 @@
+<div class="cols bltab " style="width:97%">
+<div class="col1">
+  PR
+</div>
+<div class="col11 brgl" style="padding-left:10px">
+  
+    <div class="fields">
+        <% @p_types.each do |i| %>
+          <%= p.radio_button :type_id,i.id,{:class => "programme_type",:lang => i.name,
+                                            :onclick => "p_type_click(this,this.lang);" } %>
+          &nbsp;<%= p.label i.name %>&nbsp;&nbsp;&nbsp;&nbsp;
+        <% end %>
+    
+    <div id="object_name" data-obj='<%= parent %>'>
+    </div>
+    <br/>
+    
+        <%= label_tag :country %>
+        <%= p.collection_select(:country_id, 
+                                Country.order(:name), 
+                                :id, 
+                                :name,
+                                {:prompt => "--Country--"},
+                                {:class => "countries_select",
+                                 :onchange => "prepareSelect(this,
+                                               '_programmes_attributes_index_city_id',
+                                               '/get_cities/');
+                                               prepareSelect(this,
+                                               '_programmes_attributes_index_institution_id',
+                                               '/get_institutions/country/');"}) %> &nbsp;&nbsp;
+        <%= label_tag :city %>
+        <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
+        <% one = p.object.city_id %>
+        <% two = one.blank? ? [] : City.where(id: one) %>
+        <%= p.collection_select(:city_id, 
+                                two, 
+                                :id, 
+                                :name,
+                                {:prompt => "--City--"},
+                                {:class => "cities_select",
+                                 :onchange => "prepareSelect(this,
+                                               '_programmes_attributes_index_institution_id',
+                                               '/get_institutions/city/');"}) %> &nbsp;&nbsp;
+        <%= p.label :school %>
+         <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
+        <% four = p.object.institution_id %>
+        <% five = four.blank? ? [] : Institution.where(id: four) %>
+        <%= p.collection_select(:institution_id, 
+                                five, 
+                                :id, 
+                                :name,
+                                {:prompt => "--Institution--"},
+                                {:class => "institutions_select"}) %>
+
+       <%= go_create(p,"course_level","level_id","name") %>
+       <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
+       <% if parent == "enquiry" %>
+         <% sty = ['','none','none','display:none;'] %>
+       <% elsif parent == "registration" %>
+         <% sty = ['display:none;',nil,nil,''] %>
+       <% end %>
+       
+       <div class="course_subject_text_div" style='<%= sty[0] %>'>
+            <%= label_tag :course_subject %>
+            <%= p.text_field :course_subject_text %>
+       </div>
+       
+       <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
+
+          <%= label_tag :start_date,nil,{class: 'start_date'} %><br />
+          <%= p.text_field :start_date,{class: 'dateField'} %>
+        
+          <div class="end_date_div">
+              <%= label_tag :end_date %><br />
+              <%= p.text_field :end_date,{class: 'dateField'} %>
+          </div>
+          
+           <%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
+           <div class="ins_ref_no" style='<%= sty[3] %>'>
+             <%= fs(p,"ins_ref_no","text_field") %>
+           </div>
+    </div>
+  
+      <span class="btns">
+          <img src="/images/icons/active-delete.png" width="18"/>
+          &nbsp;&nbsp;
+          <%= p.link_to_remove "Remove" %>
+      </span>
+</div>
+</div>
+<br/>
+

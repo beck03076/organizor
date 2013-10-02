@@ -1,0 +1,23 @@
+$("#email_template_create").dialog({
+  autoOpen: true,
+  width: 650,
+  height: 800,
+  modal: true,
+  draggable:true,
+  resizable:false,
+  title: 'Create New Email Template',
+  buttons: [
+       {
+            text: "CLOSE",
+            className: 'close-button-class',
+            click: function() {
+                $(this).dialog("close");
+                location.reload();
+            }
+        }
+    ],
+  open: function() {
+    $("#email_template_create").html("<%= escape_javascript(render('emails/template_create')) %>");
+    }
+});
+

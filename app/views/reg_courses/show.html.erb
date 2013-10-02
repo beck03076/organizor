@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>City:</b>
+  <%= @reg_course.city_id %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @reg_course.country_id %>
+</p>
+
+<p>
+  <b>Institution:</b>
+  <%= @reg_course.institution_id %>
+</p>
+
+<p>
+  <b>Course level:</b>
+  <%= @reg_course.course_level_id %>
+</p>
+
+<p>
+  <b>Course subject:</b>
+  <%= @reg_course.course_subject %>
+</p>
+
+<p>
+  <b>Programme type:</b>
+  <%= @reg_course.programme_type_id %>
+</p>
+
+<p>
+  <b>App status:</b>
+  <%= @reg_course.app_status_id %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%= @reg_course.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @reg_course.end_date %>
+</p>
+
+<p>
+  <b>Ins ref no:</b>
+  <%= @reg_course.ins_ref_no %>
+</p>
+
+
+<%= link_to 'Edit', edit_reg_course_path(@reg_course) %> |
+<%= link_to 'Back', reg_courses_path %>

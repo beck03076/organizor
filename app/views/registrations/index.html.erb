@@ -1,0 +1,113 @@
+<h1>Listing registrations</h1>
+
+<table>
+  <tr>
+    <th>Ref no</th>
+    <th>First name</th>
+    <th>Surname</th>
+    <th>Gender</th>
+    <th>Date of birth</th>
+    <th>Country</th>
+    <th>Email1</th>
+    <th>Email2</th>
+    <th>Mobile1</th>
+    <th>Mobile2</th>
+    <th>Home phone</th>
+    <th>Work phone</th>
+    <th>Address line1</th>
+    <th>Address line2</th>
+    <th>Address city</th>
+    <th>Address country</th>
+    <th>Address post code</th>
+    <th>Address others</th>
+    <th>Passport number</th>
+    <th>Valid till</th>
+    <th>Visa type</th>
+    <th>Valid till</th>
+    <th>Qua</th>
+    <th>Qua subject</th>
+    <th>Qua institution</th>
+    <th>Qua grade</th>
+    <th>Qua exam</th>
+    <th>Qua score</th>
+    <th>Proficieny</th>
+    <th>Course</th>
+    <th>Reg source</th>
+    <th>Reg direct</th>
+    <th>Reg came through</th>
+    <th>Sub agent</th>
+    <th>Emer full name</th>
+    <th>Emer relationship</th>
+    <th>Emer mobile</th>
+    <th>Emer email</th>
+    <th>Flight no</th>
+    <th>Flight arrival date</th>
+    <th>Flight arrival time</th>
+    <th>Flight airport</th>
+    <th>Assigned to</th>
+    <th>Assigned by</th>
+    <th>Created by</th>
+    <th>Updated by</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @registrations.each do |registration| %>
+  <tr>
+    <td><%= registration.ref_no %></td>
+    <td><%= registration.first_name %></td>
+    <td><%= registration.surname %></td>
+    <td><%= registration.gender %></td>
+    <td><%= registration.date_of_birth %></td>
+    <td><%= registration.country_id %></td>
+    <td><%= registration.email1 %></td>
+    <td><%= registration.email2 %></td>
+    <td><%= registration.mobile1 %></td>
+    <td><%= registration.mobile2 %></td>
+    <td><%= registration.home_phone %></td>
+    <td><%= registration.work_phone %></td>
+    <td><%= registration.address_line1 %></td>
+    <td><%= registration.address_line2 %></td>
+    <td><%= registration.address_city %></td>
+    <td><%= registration.address_country_id %></td>
+    <td><%= registration.address_post_code %></td>
+    <td><%= registration.address_others %></td>
+    <td><%= registration.passport_number %></td>
+    <td><%= registration.valid_till %></td>
+    <td><%= registration.visa_type %></td>
+    <td><%= registration.valid_till %></td>
+    <td><%= registration.qua_id %></td>
+    <td><%= registration.qua_subject %></td>
+    <td><%= registration.qua_institution %></td>
+    <td><%= registration.qua_grade %></td>
+    <td><%= registration.qua_exam %></td>
+    <td><%= registration.qua_score %></td>
+    <td><%= registration.proficieny_id %></td>
+    <td><%= registration.course_id %></td>
+    <td><%= registration.reg_source_id %></td>
+    <td><%= registration.reg_direct %></td>
+    <td><%= registration.reg_came_through %></td>
+    <td><%= registration.sub_agent_id %></td>
+    <td><%= registration.emer_full_name %></td>
+    <td><%= registration.emer_relationship %></td>
+    <td><%= registration.emer_mobile %></td>
+    <td><%= registration.emer_email %></td>
+    <td><%= registration.flight_no %></td>
+    <td><%= registration.flight_arrival_date %></td>
+    <td><%= registration.flight_arrival_time %></td>
+    <td><%= registration.flight_airport %></td>
+    <td><%= registration.assigned_to %></td>
+    <td><%= registration.assigned_by %></td>
+    <td><%= registration.created_by %></td>
+    <td><%= registration.updated_by %></td>
+    <td><%= link_to 'Show', registration %></td>
+    <td><%= link_to 'Edit', edit_registration_path(registration) %></td>
+    <td><%= link_to 'Destroy', registration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Registration', new_registration_path %>

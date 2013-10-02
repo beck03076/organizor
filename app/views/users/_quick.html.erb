@@ -1,0 +1,24 @@
+<h2>User on the go </h2>
+<%= form_for(User.new) do |f| %>
+
+<%= f.label :name %><br/>
+<%= f.text_field :name, {:class => "ipt",:data => {:maxlength => "",:minlength => "4",:label => "Name", :req => "Y"},:onblur => "validate(this.id,'ANS');"}%><br/>
+<%= f.label :email %><br/>
+<%= f.text_field :email, {:class => "ipt",:data => {:maxlength => "",:minlength => "",:label => "Email address", :req => "N"},:onblur => "validate(this.id,'E');" } %><br/>
+<%= f.label :mobile_phone %><br/>    
+<%= f.text_field :mobile_phone, {:class => "ipt",:data => {:maxlength => "15",:minlength => "10",:label => "Mobile Phone", :req => "Y"},:onblur => "validate(this.id,'N');" } %><br/>
+<%= f.label :upload_image %><br/>    
+<%= f.file_field :image %><br/>    
+<%= f.label :branch %><br/>    
+<%= f.text_field :branch, {:class => "ipt"} %><br/>    
+<% Role.all.each do |role| %>
+      <%= radio_button_tag "#{f.object_name}[role_id]", role.id,nil,{:class => "user_role"}%>      
+      <%= label_tag(:roles, role.name.titleize)%> <br/>
+<% end %>  
+
+<br/>
+
+<%= f.submit %>
+<div class="cl"></div>
+<% end %>
+

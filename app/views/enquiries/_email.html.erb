@@ -1,0 +1,112 @@
+<% if @list.to_i == 1 && @enquiry.emails.size > 0 %>
+<table class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <thead>
+      <tr class="theme-l">
+                            <th>To</th>
+                            <th>From</th>
+                            <th>Subject</th>
+                            <th>Body</th>
+      </tr>
+    </thead>
+    <tbody>
+            <% @enquiry.emails.each do |email| %>
+                <tr>
+                    <td><%= email.to %></td>
+                    <td><%= email.smtp.name %></td>
+                    <td><%= email.subject %></td>
+                    <td><%= truncate(email.body,length: 20) %></td>
+               </tr>
+           <% end %>               
+
+    </tbody>
+  </table>
+<br/>
+<br/>
+<br/>
+<% end %>
+<div id="email-action" class="action-box">
+<h3> Compose New </h3>
+  <%= form_for(e) do |p| %>
+    <%= p.hidden_field :enquiry_id, value: id %>
+    
+    <div class="fbox">
+         <%= p.label :email_template %>
+         
+         
+         <%= collection_select(:email_template,
+                                :email_template_id,
+                                EmailTemplate.all,
+                                :id,
+                                :name,
+                                {:prompt => "--Template--"},
+                                {:class => "email_templates_select",
+                                 :onchange => "sel_act(this);"}) %>
+                                 
+         <%= link_to "Create Email Template","/email_template/create",{remote: true} %>
+         <div id="email_template_create"> </div>      
+    </div>
+    <div class="fbox">
+        <%= label_tag :send_from %></td>
+        <%= p.collection_select(:smtp_id,
+                                Smtp.all,
+                                :id,
+                                :name,
+                                {:prompt => "--From--"},
+                                {:class => "countries_select"}) %>
+                                
+    </div>
+    <div class="fbox">
+        <%= p.label :to %>
+        <%= p.text_field :to %>&nbsp; 
+        
+        <%= link_to "add cc","#",{ :id => "add_cc", :remote => true } %> |
+        <%= link_to "add bcc","#",{:id => "add_bcc", :remote => true } %>
+    </div>
+    <div class="fbox">
+        <%= p.label :subject %>
+        <%= p.text_field :subject %>
+    </div>
+    <div class="fbox">
+        <%= p.label :body %>
+        <%= p.text_area(:body,{:class => "tinymce"}) %>
+      
+    </div>
+    <div class="fbox">
+        <%= p.label :attachment %>
+        <%= p.file_field :attachment %>
+    </div>    
+    <div class="fbox">
+        <%= p.label :signature %>
+        <%= p.text_area(:signature,{size: "5x5",style: "width:400px"}) %>
+    </div>
+    <div class="fbox">
+        <label>&nbsp;</label>
+        <%= p.submit "Send",class: "btnp" %>
+        <%= link_to("Reset","#",{class: "btnp",id: "email_reset"}) %>
+    </div>
+  <% end %>
+
+</div>
+
+<script>
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     theme: "modern",
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor "
+     ],
+     toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons",
+     image_advtab: true,
+     templates:[ 
+        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
+        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
+    ],
+     autosave_ask_before_unload: false
+});
+
+</script>

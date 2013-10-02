@@ -1,0 +1,284 @@
+<%= nested_form_for(@registration) do |f| %>
+  <% if @registration.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this registration from being saved:</h2>
+
+      <ul>
+      <% @registration.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+<!-- NEW REGISTRATION - STARTS -->
+<div class="tab-content1" id="tab-content71">
+  <div class="boxp">
+  <!-- PERSONAL INFORMATION - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Personal Information
+          </b>
+      </h5>
+  </div>
+  <br/>  
+      <div class="cols">
+        <div class="col6">
+          <%= fs(f,"first_name","text_field",1) %>
+          <%= fs(f,[:date_of_birth,
+                    :class => "dateField"],
+                    "text_field",1) %>
+          <%= fs(f,"email1","text_field",1) %>
+          <%= fs(f,"mobile1","text_field",1) %>
+          <%= fs(f,"home_phone","text_field") %>
+          <%= fs(f,"address_line1","text_field",1) %>
+          <%= fs(f,"address_line2","text_field") %>
+          <%= fs(f,[:address_country_id, 
+                            Country.order(:name), 
+                            :id, 
+                            :name,
+                            {:prompt => "--Country--"},
+                            {:class => "countries_select1",
+                             :onchange => "prepareSelect(this,
+                                           \'enquiry_programmes_attributes_index_city_id\',
+                                           \'/get_cities/\');"}],"collection_select",1,"country") %>
+        </div>
+        <div class="col6">
+          <%= fs(f,"surname","text_field",1) %>
+          <div class="frbox">
+          <%= f.label :gender %>
+          <% {male: 'm', female: 'f'}.each do |i| %>
+            <%= f.radio_button :gender, i[1] %>
+            <%= f.label i[0].to_s.strip %>
+          <% end %>
+          </div>
+          <%= fs(f,[:country_id, 
+                            Country.order(:name), 
+                            :id, 
+                            :name,
+                            {:prompt => "--Country--"},
+                            {:class => "countries_select"}],"collection_select",1,"Nationality") %>
+          <%= fs(f,"email2","text_field") %>
+          <%= fs(f,"mobile2","text_field") %>
+          <%= fs(f,"work_phone","text_field") %>
+          <%= fs(f,"address_city","text_field",nil,"city") %>
+          <%= fs(f,"address_post_code","text_field",nil,"post_code") %>
+        </div>
+  </div>
+  <br/>
+  <br/>
+  <!-- PERSONAL INFORMATION - ENDS -->
+  
+  <!-- PASSPORT & VISA - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Passport & Visa
+          </b>
+      </h5>
+  </div>
+  <br/>  
+      <div class="cols">
+        <div class="col6">
+          <%= fs(f,"passport_number","text_field",1) %>
+          <%= fs(f,[:passport_valid_till,
+                    :class => "dateField"],"text_field") %>
+        </div>
+        <div class="col6">
+          <%= fs(f,"visa_type","text_field") %>
+          <%= fs(f,[:visa_valid_till,
+                    :class => "dateField"],"text_field") %>
+        </div>
+  </div>
+  <br/>
+  <br/>
+  <!-- PASSPORT & VISA - ENDS -->
+  
+  <!-- ENGLISH LANGUAGE PROFICIENCY - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            English Language Proficiency
+          </b>
+      </h5>
+  </div>
+  <br/>  
+  
+  <div class="cols">
+        <div class="col6">
+        <%= go_create(f,"english_level","prof_eng_level_id","name",1) %> 
+                   
+          <%= f.fields_for :proficiency_exams do |prof| %>
+
+                    <%= go_create(prof,"exam_type","exam_type_id","name",1) %> 
+                 
+                 <div class="col6">
+                 
+                    <%= fs(prof,[:exam_date,:class => "dateField"],"text_field",nil,"Exam Date") %>
+                    <%= fs(prof,"exam_score","text_field") %>
+                 
+                 </div>
+                  
+
+           <% end %>
+           
+           <%= f.link_to_add "Add more", :proficiency_exams %>
+        </div>
+  </div>
+  <br/>
+  <br/>
+  <!-- ENGLISH LANGUAGE PROFICIENCY - ENDS -->
+  
+  <!-- Student education background- STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Student Education Background
+          </b>
+      </h5>
+  </div>
+  <br/>  
+  <div class="cols">
+        <div class="col6">
+        <%= go_create(f,"qualification","qua_id","name",1) %>
+        
+
+                  
+        <%= fs(f,"qua_subject","text_field",nil,"subject") %>
+        <%= fs(f,"qua_institution","text_field",nil,"institution") %>
+        <%= fs(f,"qua_grade","text_field",nil,"grade") %>
+        
+        </div>
+        <div class="col6">
+            <%= fs(f,"qua_exam","text_field") %>
+            <%= fs(f,"qua_score","text_field") %>
+         </div>
+     
+         
+
+  </div>
+  <br/>
+  <br/>
+  <!-- Student education background - ENDS -->
+  
+   <!-- Course of Interest - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Course of Interest
+          </b>
+      </h5>
+  </div>
+  <br/>  
+  
+
+    <%= f.fields_for :programmes do |course| %>
+    
+     <%= render 'enquiries/programme_details', :p => course, :parent => f.object_name.to_s %>
+      
+    <% end %>   
+    
+  
+      <span class="btns">
+      <img src="/images/icons/org_add.png" width="18"/>
+      &nbsp;&nbsp;<%= f.link_to_add "Add more", :programmes %>
+      </span>
+  <br/>
+  <br/>
+  <!-- Course of Interest - ENDS -->
+  
+  <!-- Student Source - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Student Source
+          </b>
+      </h5>
+  </div>
+  <br/>
+  <div class="cols">
+        <div class="col6">
+          
+          <% {direct: true, indirect: false}.each do |i| %>
+            <%= f.radio_button :reg_direct,
+                               i[1],{:onclick => "sel_toggle(this,
+                                                             'div#reg_direct',
+                                                             'div#reg_indirect');",
+                                     :autocomplete => "off"} %>
+            &nbsp;<%= f.label i[0] %>&nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>
+          <div id="reg_direct">
+            <%= go_create(f,"student_source","reg_source_id","name",1) %>  
+          </div>
+          
+          <div id="reg_indirect" style="display:none;">
+              <%= fs(f,"reg_came_through","text_field",nil,"Came Through") %>
+              <%= go_create(f,"sub_agent","sub_agent_id","name",1) %> 
+          </div>
+        </div>
+  </div>    
+  <!--  Student Source - ENDS -->
+  
+  <!-- Emergency Contact - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Emergency Contact
+          </b>
+      </h5>
+  </div>
+  <br/>
+  <div class="cols">
+        <div class="col6">
+          
+          <%= fs(f,"emer_full_name","text_field",1,"Full Name") %>
+          
+            <%= f.label nil,"Relationship" %> 
+            <%= f.select(:emer_relationship,%w(Father Mother Husband Wife Brother Sister Cousin Uncle Friend Other))%>
+
+         
+          <%= fs(f,"emer_mobile","text_field",1,"Mobile") %>
+          <%= fs(f,"emer_email","text_field",nil,"Email") %>
+          
+        </div>
+  </div>    
+  <!-- Emergency Contact - ENDS -->
+  
+   <!-- Flight Details - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Flight Details
+          </b>
+      </h5>
+  </div>
+  <br/>
+  <div class="cols">
+        <div class="col6">
+          <%= fs(f,"flight_no","text_field",nil,"Flight Number") %>
+          <%= fs(f,[:flight_arrival_date,
+                    :class => "dateField"],"text_field") %>
+        </div>
+          
+        <div class="col6">
+          <%= fs(f,"flight_arrival_time","text_field",nil) %>
+          <%= fs(f,"flight_airport","text_field",nil,"Airport of Arrival") %>        
+        </div>
+  </div>    
+   <!-- Flight Details - ENDS -->
+        
+        <div class="htab"></div><br/>
+        <%= fs(f,[:note, 
+                    {:size => "5x3", :style => "width:400px;"}],"text_area",nil,"Note") %>
+        <br/>
+        <%= f.submit "Register",{:class => "btnp fl"} %>
+       
+        <div class="cl"></div>
+        
+        </div>
+        </div>
+
+<% end %>
+
+

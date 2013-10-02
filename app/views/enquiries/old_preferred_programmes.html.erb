@@ -1,0 +1,16 @@
+
+  
+      <h2> Programmes Interested </h2>
+      
+      <% programmes.each do |prog| %>
+      
+          Programme Type : <%= prog.programme_type.name %><br/>
+          Country : <%= prog.country.name %><br/>
+          City : <%= prog.city.name %><br/>
+          Institution : <%= prog.institution.name %><br/>
+          Course Level : <%= prog.course_level.name %><br/>
+          Course Subject : <%= prog.course_subject %><br/>
+          Start Date : <%= prog.start_date %><br/>
+      
+      <% end %>
+

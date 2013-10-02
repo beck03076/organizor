@@ -1,0 +1,58 @@
+<% if @list.to_i == 1 && @enquiry.notes.size > 0 %>
+<table class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <thead>
+      <tr class="theme-l">
+                            <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+            <% @enquiry.notes.each do |n| %>
+                <tr>
+                    <td>
+                    <%= n.content.html_safe %>
+                          - <b><%= User.find(n.created_by).first_name %></b> <i> about <%= time_ago_in_words(n.created_at) %> ago </i>
+
+                    </td>
+               </tr>
+           <% end %>               
+
+    </tbody>
+  </table>
+<br/>
+<br/>
+<br/>
+<% end %>
+
+<%= form_for(@note) do |g| %>
+ <div id="note-action" class="action-box">
+            <%= fs(g,[:content,size: "6x6",class: "tinymce"],"text_area",nil,"Note") %>
+            <br/>
+            <%= g.hidden_field :sub_class,value: "Enquiry" %>
+            <%= g.hidden_field :sub_id,value: @enquiry.id %>
+            <%= hidden_field_tag "#{g.object_name}[note]", "from_action" %>
+            <%= g.submit "Add note",{class: "btnp"} %>
+</div>
+<% end %>
+
+<script>
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     theme: "modern",
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor "
+     ],
+     toolbar1: "insertfile undo redo | styleselect | sizeselect | bold italic | fontselect |  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons",
+     image_advtab: true,
+     templates:[ 
+        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
+        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
+    ],
+     autosave_ask_before_unload: false
+});
+
+</script>

@@ -1,0 +1,82 @@
+          <!-- NEW Enquiry - STARTS -->
+        <div >
+          <div class="boxp">
+        <!-- Enquiry INFORMATION - STARTS -->
+          <div class="htab">
+             <h5><b>Enquiry Information</b></h5>
+        </div><br/>
+          <div class="cols">
+               <div class="col6">
+                    <div class="frbox">
+                         <%= f.label :first_name %>
+                         <%= f.text_field :first_name %>
+                    </div>
+                    <div class="frbox">
+                          <%= f.label :mobile1 %>
+                          <%= f.text_field :mobile1 %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :email1 %>
+                         <%= f.text_field :email1 %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :gender %>
+                         <% %w(Male Female).each do |elem| %>
+                             <%= radio_button_tag "#{f.object_name}[gender]",
+                                   elem,
+                                   @enquiry.gender %>
+                             <%= label_tag elem %>
+                         <% end %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :country_of_origin %>
+                         <%= f.collection_select(:country_id, 
+                                Country.order(:name), 
+                                :id, 
+                                :name) %> &nbsp;&nbsp;
+                    </div>
+                    <div class="frbox">
+                         <%= go_create(f,"student_source","source_id","name",1) %>  
+                    </div>
+                    
+               </div>
+               <div class="col6">
+                    <div class="frbox">
+                         <%= f.label :surname %>
+                         <%= f.text_field :surname %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :mobile2 %>
+                         <%= f.text_field :mobile2 %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :email2 %>
+                         <%= f.text_field :email2 %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :date_of_birth %>
+                         <%= f.text_field :date_of_birth,{class: "dateField"} %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label :score %>
+                         <%= f.select :score,
+                                   options_for_select((1..10)) %>
+
+                    </div>
+                    <div class="frbox">
+                    <%= fs(f,[:assigned_to, 
+                     User.order(:first_name), 
+                     :id, 
+                     :first_name,
+                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+  <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
+                    </div>
+               </div>
+          </div><br/><br/>
+        <!-- ENQUIRY INFORMATION - ENDS -->
+        
+      
+          </div>
+          <!-- NEW REGISTRATION - ENDS -->
+    
+     

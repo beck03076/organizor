@@ -1,0 +1,21 @@
+<h1>Listing english_levels</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @english_levels.each do |english_level| %>
+  <tr>
+    <td><%= link_to 'Show', english_level %></td>
+    <td><%= link_to 'Edit', edit_english_level_path(english_level) %></td>
+    <td><%= link_to 'Destroy', english_level, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New English level', new_english_level_path %>

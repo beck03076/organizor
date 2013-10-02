@@ -1,0 +1,98 @@
+class TodosController < ApplicationController
+  # GET /todos
+  # GET /todos.json
+  def index
+    @todos = Todo.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @todos }
+    end
+  end
+
+  # GET /todos/1
+  # GET /todos/1.json
+  def show
+    @todo = Todo.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @todo }
+    end
+  end
+
+  # GET /todos/new
+  # GET /todos/new.json
+  def new
+    @todo = Todo.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @todo }
+    end
+  end
+
+  # GET /todos/1/edit
+  def edit
+    @todo = Todo.find(params[:id])
+  end
+
+  # POST /todos
+  # POST /todos.json
+  def create
+    @todo = Todo.new(params[:todo].except("sub_id","sub_class","todo"))
+    
+    if (params[:todo][:todo].to_s == "from_action")
+      topic = TodoTopic.find(params[:todo][:topic_id]).name
+      ass_to = User.find(params[:todo][:assigned_to]).first_name
+      Timeline.create!(user_id: current_user.id,
+                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
+                       m_name: params[:todo][:sub_class],
+                       m_id: params[:todo][:sub_id],
+                       created_at: Time.now,
+                       desc: "Assigned to " + ass_to,
+                       comment: topic + ' task, due on ' + params[:todo][:duedate],
+                       action: 'todo')
+                       
+    end
+
+    respond_to do |format|
+      if @todo.save
+        format.html { redirect_to "/#{params[:todo][:sub_class].pluralize.downcase}/" + params[:todo][:sub_id].to_s }
+        format.json { render json: @todo, status: :created, location: @todo }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
+      end
+    end
+    
+  end
+
+  # PUT /todos/1
+  # PUT /todos/1.json
+  def update
+    @todo = Todo.find(params[:id])
+
+    respond_to do |format|
+      if @todo.update_attributes(params[:todo])
+        format.html { redirect_to @todo, notice: 'Todo was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /todos/1
+  # DELETE /todos/1.json
+  def destroy
+    @todo = Todo.find(params[:id])
+    @todo.destroy
+
+    respond_to do |format|
+      format.html { redirect_to todos_url }
+      format.json { head :no_content }
+    end
+  end
+end

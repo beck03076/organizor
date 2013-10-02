@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  desc: MyText
+  starts_at: 2013-09-30 14:44:57
+  ends_at: 2013-09-30 14:44:57
+  api: false
+  event_type_id: 1
+  venue: MyString
+  remind_before: 1
+  created_by: 1
+  updated_by: 1
+
+two:
+  title: MyString
+  desc: MyText
+  starts_at: 2013-09-30 14:44:57
+  ends_at: 2013-09-30 14:44:57
+  api: false
+  event_type_id: 1
+  venue: MyString
+  remind_before: 1
+  created_by: 1
+  updated_by: 1

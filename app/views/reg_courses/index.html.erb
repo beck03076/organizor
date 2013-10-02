@@ -1,0 +1,41 @@
+<h1>Listing reg_courses</h1>
+
+<table>
+  <tr>
+    <th>City</th>
+    <th>Country</th>
+    <th>Institution</th>
+    <th>Course level</th>
+    <th>Course subject</th>
+    <th>Programme type</th>
+    <th>App status</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Ins ref no</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reg_courses.each do |reg_course| %>
+  <tr>
+    <td><%= reg_course.city_id %></td>
+    <td><%= reg_course.country_id %></td>
+    <td><%= reg_course.institution_id %></td>
+    <td><%= reg_course.course_level_id %></td>
+    <td><%= reg_course.course_subject %></td>
+    <td><%= reg_course.programme_type_id %></td>
+    <td><%= reg_course.app_status_id %></td>
+    <td><%= reg_course.start_date %></td>
+    <td><%= reg_course.end_date %></td>
+    <td><%= reg_course.ins_ref_no %></td>
+    <td><%= link_to 'Show', reg_course %></td>
+    <td><%= link_to 'Edit', edit_reg_course_path(reg_course) %></td>
+    <td><%= link_to 'Destroy', reg_course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reg course', new_reg_course_path %>

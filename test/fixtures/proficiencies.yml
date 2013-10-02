@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  prof_eng_level_id: 1
+  prof_exam_id: 1
+
+two:
+  prof_eng_level_id: 1
+  prof_exam_id: 1

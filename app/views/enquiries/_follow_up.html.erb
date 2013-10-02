@@ -1,0 +1,103 @@
+<script type="text/javascript" charset="utf-8">
+
+   $(".dateField").datetimepicker({
+    inline: true,
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '1950:2030',
+    controlType: 'select',
+    dateFormat: 'yy-mm-dd', 
+    timeFormat: 'hh:mm:ss'});
+    
+    
+    
+    $(function(){
+      $(".dateField").trigger("select");
+      $(".dateFeld").datetimepicker('setDate', 'addDays(new Date(), 8)');
+      
+      
+      function addDays(dateObj, numDays) {
+     return dateObj.setDate(dateObj.getDate() + numDays);
+    }
+    
+    $(document).on('nested:fieldAdded', function(event){
+      var field = event.field; 
+      var dateField = field.find('.dateField');
+      dateField.datetimepicker({
+        inline: true,
+        changeMonth: true, 
+        changeYear: true, 
+        yearRange: '1950:2030',
+        controlType: 'select',
+        dateFormat: 'yy-mm-dd', 
+        timeFormat: 'hh:mm:ss'
+      });
+    })
+    
+    });
+    
+    
+</script>
+
+<% if @list.to_i == 1 && @enquiry.follow_ups.size > 0 %>
+<table class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <thead>
+      <tr class="theme-l">
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Starts At</th>
+                            <th>Event Type</th>
+                            <th>Assigned To</th>
+                            <th>Assigned By</th>
+      </tr>
+    </thead>
+    <tbody>
+            <% @enquiry.follow_ups.each do |fu| %>
+                <tr>
+                    <td><%= fu.title %></td>
+                    <td><%= fu.desc %></td>
+                    <td><%= fu.starts_at %></td>
+                    <td><%= fu.event_type.try(:name) %></td>
+                    <td><%= User.find(fu.assigned_to).first_name %></td>
+                    <td><%= User.find(fu.assigned_by).first_name %></td>
+               </tr>
+           <% end %>               
+
+    </tbody>
+  </table>
+<br/>
+<br/>
+<br/>
+<% end %>
+
+<div id="followup-action" class="action-box">
+<%= form_for(@follow_up) do |g| %>
+  <%= g.hidden_field :enquiry_id, value: id %>
+                <div class="cols">
+                    <div class="col6">
+                        <%= fs(g,"title","text_field") %>
+                        <%= go_create(g,"event_type","event_type_id","name",1) %> 
+                        <%= fs(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                    </div>
+                    <div class="col6">
+                        <%= fs(g,[:starts_at,:class => "dateField"],"text_field",nil) %>
+                        <%= fs(g,[:assigned_to, 
+                                 User.order(:first_name), 
+                                 :id, 
+                                 :first_name,
+                                 {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                    </div>
+                    <span onclick="div_toggle(this,'#more_fields')">more fields</span>
+                    <div class="cols" id="more_fields" style="display:none;">
+                      <%= fs(g,[:ends_at,:class => "dateField"],"text_field",nil) %>
+                      <%= fs(g,:api,"check_box",nil,"Add to google calendar?") %>
+                      <%= fs(g,:remind_before,"text_field") %> minutes
+                      <%= fs(g,:venue,"text_field") %>
+                    </div>
+                </div>
+
+    <%= g.submit "Create",{:class => "btnp fl"} %>
+    
+<% end %>
+</div>

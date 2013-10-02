@@ -1,0 +1,47 @@
+<!- Since this is a partial, including js file ->
+<%= javascript_include_tag "partials/programmes" %>
+
+  <% d = {:type => "language_school"} %>
+  <div class="field">
+    <%= label_tag :country %><br />
+    <%= select_tag(:country_id,
+                   options_for_select(@countries,@co),
+                   {:id => "countries_select",:data => d, :prompt => "--Country--"}) %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :city %><br />
+    <%= select_tag(:city_id,
+                   options_for_select(@cities,@ci),
+                   {:id => "cities_select",:data => d, :prompt => "--City--"}) %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :school %><br />
+    <%= select_tag(:type_id,
+                   options_for_select(@institutions),
+                   {:prompt => "--Institution--" }) %>
+  </div>
+  
+  <div class="field" >
+    <%= label_tag :course_level %><br />
+    <%= select_tag(:course_level_id,
+                   options_for_select(@c_levels),
+                   {:prompt => "--Level--" }) %>
+    <%= link_to "Add new",'#',{:id => "new_course_level"} %>    
+  </div>
+  <div id="new_course_level_form" style='display:none;' >
+      <%= render 'new_course_level' %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :course_subject %><br />
+    <%= text_field_tag :course_subject %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :start_date %><br />
+    <%= text_field_tag :start_date %>
+  </div>
+
+

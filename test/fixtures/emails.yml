@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  to: MyText
+  from: MyText
+  cc: MyText
+  bcc: MyText
+  subject: MyText
+  body: MyText
+  attachment: MyString
+  user_id: 1
+  enquiry_id: 1
+  registration_id: 1
+  created_by: 1
+  updated_by: 1
+
+two:
+  to: MyText
+  from: MyText
+  cc: MyText
+  bcc: MyText
+  subject: MyText
+  body: MyText
+  attachment: MyString
+  user_id: 1
+  enquiry_id: 1
+  registration_id: 1
+  created_by: 1
+  updated_by: 1

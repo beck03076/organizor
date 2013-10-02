@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  topic_id: 1
+  desc: MyText
+  status_id: 1
+  duedate: 2013-10-01 03:27:03
+  priority: MyString
+  created_by: 1
+  updated_by: 1
+
+two:
+  topic_id: 1
+  desc: MyText
+  status_id: 1
+  duedate: 2013-10-01 03:27:03
+  priority: MyString
+  created_by: 1
+  updated_by: 1

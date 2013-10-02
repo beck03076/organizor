@@ -1,0 +1,27 @@
+  <div class="course_level_div" style='display:none;'>
+        <%= p.label :course_level %><br />
+        <%= p.collection_select(:level_id,CourseLevel.all,:id,:name,
+                     {:prompt => "--Level--" },
+                     {:class => "course_level_select"}) %>
+        <%= link_to "Add new",'#',{:id => "new_course_level",
+                                   :onclick => "div_toggle(this,
+                                                           'div#new_course_level_form');",
+                                   :remote => true} %>    
+  <div id="new_course_level_form" style='display:none;'>
+      <h2>Add new course level</h2>
+    <div class="field">
+        <%= label_tag :name %><br />
+        <%= text_field_tag :name %>
+    </div>
+    <div id="course_level_desc" style='display:none;'>
+        <%= label_tag :description %><br />
+        <%= text_area_tag :desc %>
+    </div>
+    <%= link_to "Add description",'#',{:id => "add_course_level_description",
+                                      :onclick => "div_toggle(this,'div#course_level_desc');",
+                                      :remote => true} %>
+    <%= link_to "Create course",'#',{:id => "create_course_level",
+                                     :onclick => "submit_link(this,'div#new_course_level_form');",
+                                     :remote => true}  %>
+  
+  </div>

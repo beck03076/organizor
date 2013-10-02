@@ -1,0 +1,2 @@
+module EnquiryStatusesHelper
+end

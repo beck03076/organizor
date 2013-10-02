@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @application_status.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @application_status.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_application_status_path(@application_status) %> |
+<%= link_to 'Back', application_statuses_path %>

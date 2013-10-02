@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @programme.type_id %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @programme.country_id %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @programme.city_id %>
+</p>
+
+<p>
+  <b>Institution:</b>
+  <%= @programme.institution_id %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @programme.level_id %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @programme.subject_id %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%= @programme.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @programme.end_date %>
+</p>
+
+<p>
+  <b>Enquiry:</b>
+  <%= @programme.enquiry_id %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @programme.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @programme.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_programme_path(@programme) %> |
+<%= link_to 'Back', programmes_path %>
