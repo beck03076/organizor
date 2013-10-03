@@ -56,7 +56,7 @@ module ApplicationHelper
    add_desc_id = "add_" + obj_name + "_description"
    create_id = "create_" + obj_name
    
-      html = "<div class='#{main_div}' style='display:#{disp.to_s};'>"
+      html = "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
       
       html += obj.label(obj_name.to_sym)
       
