@@ -186,7 +186,19 @@ function prepareSelect(sourObj,destVar,hit)
 function enquiries_action_partial(action,id)
 {
   $.get("/enquiries_action_partial/" + action + '/' + id + '/1',function(partial){
-    $("#action_div").html(partial);  
+      var $container = $("#action_div").html(partial);
+      var $dTF = $('.dateTimeField', $container);
+      if ($dTF.length > 0) {
+        $dTF.datetimepicker({
+            inline: true,
+            changeMonth: true, 
+            changeYear: true, 
+            yearRange: '1950:2030',
+            controlType: 'select',
+            dateFormat: 'yy-mm-dd', 
+            timeFormat: 'hh:mm:ss'});
+        $dTF.trigger("select");
+      }
   });
 }
 
@@ -211,8 +223,19 @@ function enquiryTabSwitch(obj){
     
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
     
-    $.get(url ,function(table){
-     $('#'+lang).hide().html(table).fadeIn(1000);
+    $.get(url,function(table){
+     
+      var $container = $('#'+lang).html(table);
+      var $dateField = $('.dateField', $container);
+      if ($dateField.length > 0) {
+        $dateField.datepicker({
+            inline: true,
+            changeMonth: true, 
+            changeYear: true, 
+            dateFormat: "yy-mm-dd",
+            yearRange: '1980:2050' });
+        }
+
     });
 
 }

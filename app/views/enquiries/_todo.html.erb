@@ -1,38 +1,4 @@
 <script type="text/javascript" charset="utf-8">
-
-   $(".dateField").datetimepicker({
-    inline: true,
-    changeMonth: true, 
-    changeYear: true, 
-    yearRange: '1950:2030',
-    controlType: 'select',
-    timeFormat: 'hh:mm tt'});
-    
-    
-    
-    $(function(){
-      $(".dateField").trigger("select");
-      $(".dateFeld").datetimepicker('setDate', 'addDays(new Date(), 8)');
-      
-      
-      function addDays(dateObj, numDays) {
-     return dateObj.setDate(dateObj.getDate() + numDays);
-    }
-    
-    $(document).on('nested:fieldAdded', function(event){
-      var field = event.field; 
-      var dateField = field.find('.dateField');
-      dateField.datetimepicker({
-        inline: true,
-        changeMonth: true, 
-        changeYear: true, 
-        yearRange: '1950:2030',
-        controlType: 'select',
-        timeFormat: 'hh:mm tt'
-      });
-    })
-    
-    });
     
     
 </script>
@@ -89,7 +55,7 @@
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                     <div class="col6">
-                        <%= fs(g,[:duedate,:class => "dateField"],"text_field",nil) %>
+                        <%= fs(g,[:duedate,:class => "dateTimeField"],"text_field",nil) %>
                         <%= g.select(:priority,
                                      options_for_select(["High","Medium","Low"])) %>
                                      
