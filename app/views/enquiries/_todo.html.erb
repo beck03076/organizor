@@ -45,9 +45,9 @@
                         <%= hidden_field_tag "#{g.object_name}[sub_id]",@enquiry.id %>
                         <%= hidden_field_tag "#{g.object_name}[sub_class]","Enquiry" %>
                         <%= go_create(g,"todo_topic","topic_id","name",1) %> 
-                        <%= fs(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
                         <%= go_create(g,"todo_status","status_id","name",1) %> 
-                        <%= fs(g,[:assigned_to, 
+                        <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 
                                  :id, 
                                  :first_name,
@@ -55,7 +55,7 @@
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                     <div class="col6">
-                        <%= fs(g,[:duedate,:class => "dateTimeField"],"text_field",nil) %>
+                        <%= fbox(g,[:duedate,:class => "dateTimeField"],"text_field",nil) %>
                         <%= g.select(:priority,
                                      options_for_select(["High","Medium","Low"])) %>
                                      

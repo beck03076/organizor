@@ -35,13 +35,13 @@
   <%= g.hidden_field :enquiry_id, value: id %>
                 <div class="cols">
                     <div class="col6">
-                        <%= fs(g,"title","text_field") %>
+                        <%= fbox(g,"title","text_field") %>
                         <%= go_create(g,"event_type","event_type_id","name",1) %> 
-                        <%= fs(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
                     </div>
                     <div class="col6">
-                        <%= fs(g,[:starts_at,:class => "dateTimeField"],"text_field",nil) %>
-                        <%= fs(g,[:assigned_to, 
+                        <%= fbox(g,[:starts_at,:class => "dateTimeField"],"text_field",nil) %>
+                        <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 
                                  :id, 
                                  :first_name,
@@ -58,6 +58,6 @@
                 </div>
 
     <%= g.submit "Create",{:class => "btnp fl"} %>
-    
+    <div class="cl"></div>
 <% end %>
 </div>

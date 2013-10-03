@@ -22,6 +22,28 @@ module ApplicationHelper
 
   end
   
+  # f  object, name = attribute name, man = mandatory, lab = label name, cl_add = extra classes to add.
+  def fbox(f,name,elem,mand = nil,lab = nil,cl_add = nil)
+  
+    cl = "frbox "
+
+    if lab.nil?
+      l = name.is_a?(Array) ? name[0].to_s : name.to_s
+    else
+      l = lab
+    end
+    
+    if !mand.nil?
+      cl = "fbox mand"
+      l = l + "*"
+    end
+    
+    cl = cl + cl_add.to_s
+    
+    ("<div class='#{cl}' >" + f.label(name.kind_of?(Array) ? name[0].to_sym : name.to_sym ,l.titleize) + f.send(elem,*name) + "</div>").html_safe
+
+  end
+  
   def go_create(obj,obj_name,id,name,disp = "none")
    
    prompt = "--" + obj_name.titleize + "--"

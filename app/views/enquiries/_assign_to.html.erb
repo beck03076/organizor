@@ -2,12 +2,12 @@
 <div id="assignto-action" class="action-box">
     <div class="cols">
         <div class="col6">
-           <%= fs(f,[:assigned_to, 
+           <%= fbox(f,[:assigned_to, 
                      User.order(:first_name), 
                      :id, 
                      :first_name,
                      {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-           <%= fs(f,[:audit_comment,size: "2x2"],"text_area",nil,"Comments") %>
+           <%= fbox(f,[:audit_comment,size: "2x2"],"text_area",nil,"Comments") %>
             <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>

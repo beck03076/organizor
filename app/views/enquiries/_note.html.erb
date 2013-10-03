@@ -25,7 +25,7 @@
 
 <%= form_for(@note) do |g| %>
  <div id="note-action" class="action-box">
-            <%= fs(g,[:content,size: "6x6",class: "tinymce"],"text_area",nil,"Note") %>
+            <%= fbox(g,[:content,size: "6x6",class: "tinymce"],"text_area",nil,"Note") %>
             <br/>
             <%= g.hidden_field :sub_class,value: "Enquiry" %>
             <%= g.hidden_field :sub_id,value: @enquiry.id %>
