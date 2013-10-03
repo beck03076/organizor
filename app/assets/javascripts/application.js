@@ -17,7 +17,10 @@
 //= require tinymce
 
 
+
+
 $(function(){
+
 
 
 $(document).on('nested:fieldAdded', function(event){
@@ -195,6 +198,29 @@ function sel_act(sel){
     $('#email-action').html(partial);  
     });
 }
+
+// enquiries tabs switching
+function enquiryTabSwitch(obj){
+    
+    var cond = $(obj).data("cond");
+    var partial = $(obj).data("partial");
+    var enquiry_id = $(obj).data("enquiry_id");
+    var lang = $(obj).attr("lang");
+    
+    url = '/enquiries/tab/' + cond + '/' + partial + '/'
+    
+    if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
+    
+    $.get(url ,function(table){
+     $('#'+lang).hide().html(table).fadeIn(1000);
+    });
+
+}
+
+
+
+
+
 
 
 

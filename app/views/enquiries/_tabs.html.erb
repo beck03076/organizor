@@ -1,11 +1,32 @@
- <ul class="tab-menus">
-            <li lang="tab-content1" id="tab1">
-              <%= link_to 'All Enquiries', enquiries_path %>
-            </li>
-            <li lang="tab-content2" id="tab2">Pending</li>
-            <li lang="tab-content3" id="tab3">Following</li>
-            <li lang="tab-content4" id="tab4">Dropped</li>
-            <li lang="tab-content5" id="tab5" class="fr">
-                <%= link_to 'New Enquiry', new_enquiry_path %>
-            </li>
+<ul class="tab-menus">
+  <!-- [tab_name,display,class,partial]  -->
+  <% tabs =  [["Launch","none","launch","show"], 
+              ["All","","all","listing"]] %>
+  <% statuses = EnquiryStatus.all.map{|i| [i.name.capitalize,"","","listing"]} %>
+  <% tabs += statuses %>
+  <% tabs += [["New Enquiry","","fr","new"],
+              ["Edit","none","fr edit","form"]] %>
+              
+  <% tabs.each do |i| %>
+      
+      
+           <% i1 = i[0].tr(" ","_").downcase %>
+           
+           <li lang='<%= i1 + '_id' %>'  class='<%= i[2] %>' style='display:<%= i[1] %>' onclick="enquiryTabSwitch(this);" data-cond='<%= i1 %>' data-partial='<%= i[3] %>'>
+           
+             <%= i[0] %>
+             
+           </li>
+           
+           
+  <% end %>
 </ul>
+
+    <div class="tab-content" id="all_id"> </div>
+
+    <% statuses.each do |i| %>
+      <div class="tab-content" id="<%= i[0].tr(' ','_').downcase + '_id' %>"> </div>
+    <% end %>
+    
+    <div class="tab-content" id="new_enquiry_id"> </div>
+    <div class="tab-content" id="edit_id"> </div>

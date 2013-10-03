@@ -1,11 +1,37 @@
 class EnquiriesController < ApplicationController
-  
+
+
   def programme
     @co = params[:co]
     @ci = params[:ci]
     p_type = ProgrammeType.where(:name => params[:type]).map &:id
     self.pre(p_type,params[:co],params[:ci])
     render :partial => params[:type], :locals => { :p => Programme.new }
+  end
+  
+  def tab
+    set_url_params
+    
+    if @status == "all"
+      @enquiries = Enquiry.all
+    elsif @status == "new_enquiry"
+      @enquiry = Enquiry.new
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+      @enquiry.programmes.build
+    elsif @status == "launch"
+      @enquiry = Enquiry.find(params[:enquiry_id])
+      @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:enquiry_id]).order("created_at DESC")
+    elsif @status == "edit"
+      @enquiry = Enquiry.find(params[:enquiry_id])
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+      @enquiry.programmes.build
+    else
+      @enquiries = Enquiry.joins(:status).where("enquiry_statuses.name = '#{@status}'")  
+    end
+    
+    render :partial => @partial
   end
   
   def action_partial
@@ -46,11 +72,11 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/1.json
   def show
     @enquiry = Enquiry.find(params[:id])
-    @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order(:created_at)
+    @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @enquiry }
+      format.json { render partial: 'show'}
     end
   end
 

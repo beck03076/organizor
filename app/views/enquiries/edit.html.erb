@@ -1,6 +1,20 @@
-<h1>Editing enquiry</h1>
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.edit").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.edit").addClass("active-tab");
+  $("ul.tab-menus li.edit").text('Edit - <%= @enquiry.first_name.titleize %>');
+  $("ul.tab-menus li.edit").attr('data-enquiry_id', '<%= @enquiry.id %>');
+  $("ul.tab-menus li.edit").trigger("click");
+});
+</script>
 
-<%= render 'form' %>
 
-<%= link_to 'Show', @enquiry %> |
-<%= link_to 'Back', enquiries_path %>
+<div class="tab-container">
+  <%= render 'tabs' %>
+  <div class="tab-content" id="edit_id">
+  <h1>Editing enquiry</h1>
+    <%= render 'form' %>
+  </div>
+
+</div>

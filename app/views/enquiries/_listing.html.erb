@@ -1,0 +1,113 @@
+        <input type="text" placeholder="Search Keyword" style="width:250px">&nbsp;&nbsp;
+            <select><option value="">First Name</option></select>&nbsp;&nbsp;
+            <input type="button" value="Go" class="btns">
+            Advance Search
+            
+            <select style="width:100px" class="fr"><option value="">Today</option></select>&nbsp;&nbsp;
+            <img src="/images/icons/org_settings.png" width="17"  class="btns fr jqlink" lang="jqsearchSlbox"/>
+            
+            
+
+            <!-- DROP BOX - STARTS -->
+            <div class="shbox dn" id="jqsearchSlbox">
+            <img src="/images/icons/updown-arrow.png" width="25" class="shboxar"/>
+            <div class="cols">
+                <div class="col6 brwr">
+                    <label>Column Fields ( Maximum 5 )</label><br/><br/>
+                    <input type="checkbox"/>Name<br/>
+                    <input type="checkbox"/>Email Address<br/>
+                    <input type="checkbox"/>Phone Number<br/>
+                    <input type="checkbox"/>Status<br/>
+                    <input type="checkbox"/>Location<br/>
+                    <input type="checkbox"/>College Preferred<br/>
+                    </div>
+                    <div class="col6">
+                    <label>Maximum Rows</label>&nbsp;&nbsp;
+                    <input type="text" placeholder="Drop Down">
+                    </div>
+                </div>
+                <input type="button" value="Default" class="btnp fr">
+                <input type="button" value="Cancel" class="btnp fr jqlink" lang="jqsearchSlbox">
+                <input type="button" value="Save" class="btnp fr">
+                <div class="cl"></div>
+            </div>
+            <!-- DROP BOX - ENDS --><br/><br/>
+            
+            
+                    <div style="margin-right:17px">
+                    <table width="100%"  class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" >
+                        <thead>
+                        <tr class="theme-l">
+                            <th width="5"><input type="checkbox"/></th>
+                            <th width="20%">Name</th>
+                            <th width="15%">Country of Origin</th>
+                            <th width="15%">Countries to Study</th>
+                            <th align="center">Date of Birth</th>
+                            <th align="center">Status</th>
+                            <th align="center" width="130">Actions</th>
+                        </tr>
+                        </thead>
+                    </table>
+                     </div>
+                     
+                     
+                     
+                     
+            <div class="scrollbox">
+            <table  class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody >
+            <% @enquiries.each do |enquiry| %>
+            <tr>
+            
+                <td width="5">
+                  <input type="checkbox"/>
+                </td>
+                <td width="20%">
+                  <%= enquiry.first_name.to_s.titleize + ' ' + enquiry.surname.to_s.titleize %>
+                </td>
+                <td width="15%">
+                  <%= enquiry.country_of_origin.try(:name) %>
+                </td>
+                <td width="15%">
+                  <%= disp2(enquiry,"countries") %>
+                </td>
+                <td align="center">
+                  <%= enquiry.date_of_birth %>
+                </td>
+                <td align="center">
+                  <%=  enquiry.status.try(:name) %>
+                </td>
+                <td align="center" width="130">
+                    <ul class="active-tools">
+                    <li>
+                      <%= link_to(image_tag("/images/icons/inactive-tick.png"),enquiry) %>
+                    </li>
+                    <li><img src="/images/icons/active-delete.png"></li>
+                    <li><img src="/images/icons/active-mail.png"></li>
+                    </ul>
+                    <ul class="inactive-tools">
+                        <li>
+                         <%= link_to(image_tag("/images/icons/inactive-tick.png"),enquiry) %>
+                        </li>
+                        <li><img src="/images/icons/inactive-delete.png"></li>
+                        <li><img src="/images/icons/inactive-mail.png"></li>
+                    </ul>
+                </td>
+              </tr>
+              <% end %>               
+
+            </tbody>
+            </table>
+            </div>
+            
+            
+            
+            
+            
+            <br/>
+            <input type="button" value="Assign To" class="btnp">
+            <input type="button" value="Send Email" class="btnp">
+             <input type="button" value="Delete" class="btnpd">
+            <input type="button" value=">" class="btnpd fr">
+            <input type="button" value="<" class="btnpd fr">
+            <div class="cl"></div>

@@ -21,6 +21,8 @@ Organizor::Application.routes.draw do
 
   devise_for :users
   
+  match "/enquiries/tab/:status/:partial(/:enquiry_id)" => "enquiries#tab"
+  
   match "/email_template/create" => "emails#template_create"
   
   match "/email_templates/:etemp_id/:e_id/:list" => "email_templates#partial"
