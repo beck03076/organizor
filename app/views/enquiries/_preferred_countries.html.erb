@@ -1,4 +1,6 @@
-<h4>Preferred countries</h4> 
+<div class="htab">
+             <h5><b>Preferred countries</b></h5>
+        </div><br/>
 <script>
 $(document).ready(function(){
   $('#multiselect').multiSelect('deselect_all');
@@ -8,7 +10,10 @@ $(document).ready(function(){
   
 });  
 </script>
+ <div class="cols">
+  <div class="fbox">
   Search<input type="text" size="25" class="searchKey"/>
+  </div></div>
   <div class="field">
       
     <a href='#' id='deselect-all'>deselect all</a>
@@ -19,3 +24,4 @@ $(document).ready(function(){
                     include_blank: false, 
                     id: "multiselect"}) %>
   </div>
+  <br/>

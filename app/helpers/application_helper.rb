@@ -25,7 +25,7 @@ module ApplicationHelper
   # f  object, name = attribute name, man = mandatory, lab = label name, cl_add = extra classes to add.
   def fbox(f,name,elem,mand = nil,lab = nil,cl_add = nil)
   
-    cl = "frbox "
+    cl = "fbox "
 
     if lab.nil?
       l = name.is_a?(Array) ? name[0].to_s : name.to_s

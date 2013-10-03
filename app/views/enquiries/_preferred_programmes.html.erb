@@ -1,8 +1,10 @@
-  
-  <h2> Programmes Interested </h2>
+
+<div class="htab">
+             <h5><b>Programmes Interested</b></h5>
+        </div><br/>  
   
   <%= f.fields_for :programmes do |p| %>
     <%= render 'programme_details', :p => p, :parent => f.object_name.to_s %>  
   <% end %>
   
-   <%= f.link_to_add "Add more", :programmes %>
+   <%= f.link_to_add "Add more", :programmes,{:class => "btns fr"} %>
