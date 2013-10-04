@@ -67,9 +67,9 @@ module ApplicationHelper
                                     {:prompt => prompt },
                                     {:class => sel_cl })
                                     
-      html += "<span id='#{a_id}' onClick=div_toggle(this,'div##{form_id}');>Add new </span>"
+      html += "<span id='#{a_id}' onClick=showPop('popupBox1',event);>Add new </span>"
 
-      html += "<div id='#{form_id}' style='display:none;'>"
+      html += "<div id='popupBox1' class='addNewPop' style='display:none;'>"
       html += "<h2>Add new #{obj_name.tr('_',' ')}</h2>"
       
       html += "<div class='field'>"
@@ -84,7 +84,7 @@ module ApplicationHelper
       
       html += "<span id='#{add_desc_id}' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
-      html += "<span id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}');>Create course </span>"
+      html += "<span lang='popupBox1' class='Bpclose' >Create course </span>"
       
       html += "</div></div>"
       
