@@ -22,6 +22,8 @@ $(function(){
 <div class="col11 brgl" style="padding-left:10px">
   
     <div class="fields">
+	<div class="cols">
+	<div class="col6">
         <% @p_types.each do |i| %>
           <%= p.radio_button :type_id,i.id,{:class => "programme_type",:lang => i.name,
                                             :onclick => "p_type_click(this,this.lang);" } %>
@@ -44,21 +46,9 @@ $(function(){
                                                '/get_cities/');
                                                prepareSelect(this,
                                                '_programmes_attributes_index_institution_id',
-                                               '/get_institutions/country/');"}) %> &nbsp;&nbsp;
-        <%= label_tag :city %>
-        <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
-        <% one = p.object.city_id %>
-        <% two = one.blank? ? [] : City.where(id: one) %>
-        <%= p.collection_select(:city_id, 
-                                two, 
-                                :id, 
-                                :name,
-                                {:prompt => "--City--"},
-                                {:class => "cities_select",
-                                 :onchange => "prepareSelect(this,
-                                               '_programmes_attributes_index_institution_id',
-                                               '/get_institutions/city/');"}) %> &nbsp;&nbsp;
-        <%= p.label :school %>
+                                               '/get_institutions/country/');"}) %>
+		
+		 <%= p.label :school %>
          <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
         <% four = p.object.institution_id %>
         <% five = four.blank? ? [] : Institution.where(id: four) %>
@@ -68,9 +58,9 @@ $(function(){
                                 :name,
                                 {:prompt => "--Institution--"},
                                 {:class => "institutions_select"}) %>
-
-       <%= go_create(p,"course_level","level_id","name") %>
-       <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
+								
+	
+	 <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
        <% if parent == "enquiry" %>
          <% sty = ['','none','none','display:none;'] %>
        <% elsif parent == "registration" %>
@@ -83,14 +73,43 @@ $(function(){
        </div>
        
        <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
-
-          <%= label_tag :start_date,nil,{class: 'start_date'} %><br />
+	   
+	    <%= label_tag :start_date,nil,{class: 'start_date'} %><br />
           <%= p.text_field :start_date,{class: 'dateField'} %>
         
           <div class="end_date_div">
               <%= label_tag :end_date %><br />
               <%= p.text_field :end_date,{class: 'dateField'} %>
           </div>
+		  
+	   <div class="cl"></div>
+		 <span class="btns">
+          <img src="/images/icons/active-delete.png" width="18"/>
+          &nbsp;&nbsp;
+          <%= p.link_to_remove "Remove" %>
+      </span>						
+	  <div class="cl"></div>
+</div>
+<div class="col6">       
+	   <%= label_tag :city %>
+        <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
+        <% one = p.object.city_id %>
+        <% two = one.blank? ? [] : City.where(id: one) %>
+        <%= p.collection_select(:city_id, 
+                                two, 
+                                :id, 
+                                :name,
+                                {:prompt => "--City--"},
+                                {:class => "cities_select",
+                                 :onchange => "prepareSelect(this,
+                                               '_programmes_attributes_index_institution_id',
+                                               '/get_institutions/city/');"}) %> &nbsp;&nbsp;
+       
+
+       <%= go_create(p,"course_level","level_id","name") %>
+      
+
+         
           
            <%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
            <div class="ins_ref_no" style='<%= sty[3] %>'>
@@ -98,12 +117,10 @@ $(function(){
            </div>
     </div>
   
-      <span class="btns">
-          <img src="/images/icons/active-delete.png" width="18"/>
-          &nbsp;&nbsp;
-          <%= p.link_to_remove "Remove" %>
-      </span>
+     
 </div>
 </div>
 <br/>
 
+</div>
+</div>
