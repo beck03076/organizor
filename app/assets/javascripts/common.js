@@ -144,4 +144,25 @@ $(document).ready(function(){
         
     });    
     
-})
+});
+
+
+/**
+* Add new go_create js
+**/
+$(document).ready(function(){
+    $(".Bpclose").click(function(){
+    $("#"+this.lang).css("display","none");
+    });
+});
+
+function showPop(objectId,e){
+xOffset = -10;
+        yOffset = -40;        
+$("#"+objectId).css("display","inline");
+        $("#"+objectId)
+            .css("top",(e.pageY - xOffset) + "px")
+            .css("left",(e.pageX + yOffset) + "px")
+            .fadeIn("fast");    
+
+}

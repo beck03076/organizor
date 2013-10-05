@@ -147,6 +147,7 @@ function submit_link(obj,tog,obj_name){
             $(obj).parent().parent().find(tog).slideToggle();
             $("input#name").val('');
             $("textarea#desc").val('');
+            $("#"+obj.lang).css("display","none");
             return false;
 }
 
