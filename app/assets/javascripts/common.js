@@ -157,7 +157,7 @@ $(document).ready(function(){
 });
 
 function showPop(objectId,e){
-xOffset = -10;
+xOffset = 50;
         yOffset = -40;        
 $("#"+objectId).css("display","inline");
         $("#"+objectId)

@@ -49,8 +49,8 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 /* DEFAULT STYLE - ENDS */
 
 /* LAYOUT - STARTS */
-#wrapper{width:100%;margin:0;padding:0;}
-#header{padding:10px 15px 15px 15px;border-bottom:5px solid #00336C;color:#fff;position:relative}
+#wrapper{max-width:1300px;min-width:1200px;margin:0 auto 0 auto;padding:0;border:1px solid #CACACA;box-shadow:0 0 4px #ccc;box-shadow:0 0 10px #ccc;}
+#header{padding:10px 2% 15px 2%;width:96%; border-bottom:5px solid #00336C;color:#fff;position:relative}
 #left-panel{position:absolute;background:#CCC;height:auto;box-shadow: 3px 0 6px #ccc;border-right:1px solid #CACACA;}
 #right-panel{height:auto;width:200px;padding-left:10px}
 #main-body{position:relative}
@@ -309,6 +309,14 @@ input[type=radio]{padding-right:5px}
 .vlsd li{padding:15px 0 15px 10px;border-bottom:1px dashed #353535}
 .vlsd li:first-child{border-bottom:0;color:#003468;padding:10px 0 0 0}
 /* LIST - ENDS */
+
+/* SHORT POPUP - STARTS */
+.popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
+.addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
+background: #fff;overflow:hidden}
+.popupc{padding:10px}
+.popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
+/* SHORT POPUP - ENDS */
 
 /* PRINT LAYOUT - STARTS */
 @media print
