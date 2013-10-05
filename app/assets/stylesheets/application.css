@@ -102,16 +102,16 @@ textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1p
 select{border-radius:1px;border:1px solid #C0C0C0;height:30px;width:170px;padding:0 0 0 5px;}
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
 label{font-size:12px;font-weight:bold;text-align:left;}
-.btnp{font-size:16px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:2px solid #3D7DAD; margin-right:10px}
-.btnpd{font-size:16px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:2px solid #87BBE0}
+.btnp{font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:2px solid #3D7DAD; margin-right:10px}
+.btnpd{font-size:12px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:2px solid #87BBE0}
 .btnp:hover{cursor:pointer;background:#267AB3}
-.btnw{font-size:16px;background:#fff;color:#2A88C8;padding:5px 15px 5px 15px;margin-right:10px}
+.btnw{font-size:12px;background:#fff;color:#2A88C8;padding:5px 15px 5px 15px;margin-right:10px}
 .btnw:hover{cursor:pointer;background:#fff}
-.btns{font-size:16px;background:#DDDCDA;color:#5F5F5F; padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #CCCBD0}
+.btns{font-size:12px;background:#DDDCDA;color:#5F5F5F; padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #CCCBD0}
 .btns:hover{cursor:pointer;color:#3B3B3B}
-.btnb{font-size:16px;background:#222222;color:#fff;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #000000 inset;margin-right:10px}
+.btnb{font-size:12px;background:#222222;color:#fff;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #000000 inset;margin-right:10px}
 .btnb:hover{cursor:pointer;}
-.btnsd{font-size:16px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
+.btnsd{font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
 .fbox,.fsbox{width:97%;margin:10px 0 0 0}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;font-weight:bold}
 .fbox .fields,.fsbox .fields{display:inline}
