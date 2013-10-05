@@ -57,8 +57,11 @@ module ApplicationHelper
    create_id = "create_" + obj_name
    
      html = "<style>
-            .addNewPop{padding:10px;border:1px solid #ccc;box-shadow:0 0 5px #ccc;border-radius:5px;display:none
-            ;position:absolute;z-index:100000000000;background:#fff}
+            .popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
+			.addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
+background: #fff;overflow:hidden}
+			.popupc{padding:10px}
+			.popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
             </style>"
    
       html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
@@ -75,9 +78,9 @@ module ApplicationHelper
       html += "<span id='#{a_id}' onClick=showPop('#{main_div}',event);>Add new </span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
-      html += "<h2>Add new #{obj_name.tr('_',' ')}</h2>"
+      html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}</div>"
       
-      html += "<div class='field'>"
+      html += "<div class='popupc'><div class='field'>"
       html += label_tag(name.to_sym)
       html += text_field_tag(name.to_sym)
       html += "</div>"
@@ -85,11 +88,12 @@ module ApplicationHelper
       html += "<div id='#{desc_id}' style='display:none;'>"
       html += label_tag(:description)
       html += text_area_tag(:desc)
-      html += "</div>"
+      html += "</div></div>"
       
-      html += "<span id='#{add_desc_id}' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
+      html += "<div class='popupbtns'>"
+	  html += "<span id='#{add_desc_id}' class='btns fl' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
-      html += "<span lang='#{main_div}' class='Bpclose' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span>"
+      html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span><div class='cl'></div></div>"
       
       html += "</div></div>"
       
