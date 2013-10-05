@@ -56,7 +56,12 @@ module ApplicationHelper
    add_desc_id = "add_" + obj_name + "_description"
    create_id = "create_" + obj_name
    
-      html = "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
+     html = "<style>
+            .addNewPop{padding:10px;border:1px solid #ccc;box-shadow:0 0 5px #ccc;border-radius:5px;display:none
+            ;position:absolute;z-index:100000000000;background:#fff}
+            </style>"
+   
+      html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
       
       html += obj.label(obj_name.to_sym)
       
@@ -67,9 +72,9 @@ module ApplicationHelper
                                     {:prompt => prompt },
                                     {:class => sel_cl })
                                     
-      html += "<span id='#{a_id}' onClick=showPop('popupBox1',event);>Add new </span>"
+      html += "<span id='#{a_id}' onClick=showPop('#{main_div}',event);>Add new </span>"
 
-      html += "<div id='popupBox1' class='addNewPop' style='display:none;'>"
+      html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
       html += "<h2>Add new #{obj_name.tr('_',' ')}</h2>"
       
       html += "<div class='field'>"
@@ -84,7 +89,7 @@ module ApplicationHelper
       
       html += "<span id='#{add_desc_id}' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
-      html += "<span lang='popupBox1' class='Bpclose' >Create course </span>"
+      html += "<span lang='#{main_div}' class='Bpclose' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span>"
       
       html += "</div></div>"
       
