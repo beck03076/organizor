@@ -38,6 +38,14 @@
                         <%= fbox(g,"title","text_field") %>
                         <%= go_create(g,"event_type","event_type_id","name",1) %> 
                         <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+						<span onclick="div_toggle(this,'#more_fields')">more fields</span>
+						<div class="cl"></div>
+						<div class="cols" id="more_fields" style="display:none;">
+						  <%= fbox(g,[:ends_at,:class => "dateTimeField"],"text_field",nil) %>
+						  <%= fbox(g,:api,"check_box",nil,"Add to google calendar ?        ") %>
+						  <%= fbox(g,:remind_before,"text_field") %> minutes
+						  <%= fbox(g,:venue,"text_field") %>
+						</div>
                     </div>
                     <div class="col6">
                         <%= fbox(g,[:starts_at,:class => "dateTimeField"],"text_field",nil) %>
@@ -48,13 +56,7 @@
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
-                    <span onclick="div_toggle(this,'#more_fields')">more fields</span>
-                    <div class="cols" id="more_fields" style="display:none;">
-                      <%= fs(g,[:ends_at,:class => "dateTimeField"],"text_field",nil) %>
-                      <%= fs(g,:api,"check_box",nil,"Add to google calendar?") %>
-                      <%= fs(g,:remind_before,"text_field") %> minutes
-                      <%= fs(g,:venue,"text_field") %>
-                    </div>
+                    
                 </div>
 
     <%= g.submit "Create",{:class => "btnp fl"} %>

@@ -158,7 +158,7 @@ $(document).ready(function(){
 
 function showPop(objectId,e){
 xOffset = 50;
-        yOffset = -40;        
+yOffset = -130;        
 $("#"+objectId).css("display","inline");
         $("#"+objectId)
             .css("top",(e.pageY - xOffset) + "px")
