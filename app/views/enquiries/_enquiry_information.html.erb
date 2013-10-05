@@ -41,29 +41,29 @@
                     
                </div>
                <div class="col6">
-                    <div class="frbox">
+                    <div class="fbox">
                          <%= f.label :surname %>
                          <%= f.text_field :surname,{tabindex: "2"} %>
                     </div>
-                    <div class="frbox">
+                    <div class="fbox">
                          <%= f.label :mobile2 %>
                          <%= f.text_field :mobile2,{tabindex: "4"} %>
                     </div>
-                    <div class="frbox">
+                    <div class="fbox">
                          <%= f.label :email2 %>
                          <%= f.text_field :email2,{tabindex: "6"} %>
                     </div>
-                    <div class="frbox">
+                    <div class="fbox">
                          <%= f.label :date_of_birth %>
                          <%= f.text_field :date_of_birth,{class: "dateField",tabindex: "7"} %>
                     </div>
-                    <div class="frbox">
+                    <div class="fbox">
                          <%= f.label :score %>
                          <%= f.select :score,
                                    options_for_select((1..10)) %>
 
                     </div>
-                    <div class="frbox">
+                    <div class="fbox">
                     <%= fs(f,[:assigned_to, 
                      User.order(:first_name), 
                      :id, 
