@@ -34,41 +34,33 @@
             <!-- DROP BOX - ENDS --><br/><br/>
             
             
-                    <div style="margin-right:17px">
+                    <div style="margin-right:17px" class="scrollbox">
                     <table width="100%"  class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" >
                         <thead>
                         <tr class="theme-l">
                             <th width="5"><input type="checkbox"/></th>
                             <th width="20%">Name</th>
                             <th width="15%">Country of Origin</th>
-                            <th width="15%">Countries to Study</th>
-                            <th align="center">Date of Birth</th>
+                            <th>Countries to Study</th>
+                            <th align="center" width="120">Date of Birth</th>
                             <th align="center">Status</th>
                             <th align="center" width="130">Actions</th>
                         </tr>
                         </thead>
-                    </table>
-                     </div>
-                     
-                     
-                     
-                     
-            <div class="scrollbox">
-            <table  class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody >
             <% @enquiries.each do |enquiry| %>
             <tr>
             
-                <td width="5">
+                <td>
                   <input type="checkbox"/>
                 </td>
-                <td width="20%">
+                <td>
                   <%= enquiry.first_name.to_s.titleize + ' ' + enquiry.surname.to_s.titleize %>
                 </td>
-                <td width="15%">
+                <td>
                   <%= enquiry.country_of_origin.try(:name) %>
                 </td>
-                <td width="15%">
+                <td>
                   <%= disp2(enquiry,"countries") %>
                 </td>
                 <td align="center">
@@ -77,7 +69,7 @@
                 <td align="center">
                   <%=  enquiry.status.try(:name) %>
                 </td>
-                <td align="center" width="130">
+                <td align="center">
                     <ul class="active-tools">
                     <li>
                       <%= link_to(image_tag("/images/icons/inactive-tick.png"),enquiry) %>
