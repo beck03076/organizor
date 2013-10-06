@@ -56,9 +56,11 @@
                     </div>
                     <div class="col6">
                         <%= fbox(g,[:duedate,:class => "dateTimeField"],"text_field",nil) %>
-                        <%= g.select(:priority,
+                        <div class="fbox">
+						<label>&nbsp;</label>
+						<%= g.select(:priority,
                                      options_for_select(["High","Medium","Low"])) %>
-                                     
+                        </div>             
                     </div>
                 </div>
     <%= hidden_field_tag "#{g.object_name}[todo]", "from_action" %>

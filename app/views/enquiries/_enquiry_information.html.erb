@@ -63,14 +63,12 @@
                                    options_for_select((1..10)) %>
 
                     </div>
-                    <div class="fbox">
-                    <%= fs(f,[:assigned_to, 
+                    <%= fbox(f,[:assigned_to, 
                      User.order(:first_name), 
                      :id, 
                      :first_name,
                      {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
   <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
-                    </div>
                </div>
           </div><br/><br/>
         <!-- ENQUIRY INFORMATION - ENDS -->
