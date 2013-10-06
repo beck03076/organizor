@@ -166,3 +166,93 @@ $("#"+objectId).css("display","inline");
             .fadeIn("fast");    
 
 }
+
+
+$(document).ready(function(){
+	/* ON CLICKING THEME MENU*/
+	$(".theme-colrs li span").click(function(){
+		var theme=$(this).data("theme");
+		var mainColor="#2A88C8";
+		var thickColor="#00336C";
+		var lightColor="#3BA7F2";
+		var lightestColor="#E8F0FD";
+		/* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+		$(".theme-colrs li").removeClass("theme-colrs-active");
+		/* ADD ACTIVE THEME MENU CLASS NAME */
+		$(this).parent().addClass("theme-colrs-active");
+		/* APPLY THEMES */
+		switch(theme){
+			case "yellow":{
+				mainColor="#FFC20E";
+				thickColor="#DDA600";
+				lightColor="#FFCD37";
+				lightestColor="#FFFFCD";
+				break;
+			}
+			case "blue":{
+				mainColor="#2A88C8";
+				thickColor="#00336C";
+				lightColor="#3BA7F2";
+				lightestColor="#E8F0FD";
+				break;
+			}
+			case "orange":{
+				mainColor="#FF6501";
+				thickColor="#EA7500";
+				lightColor="#FF9E3E";
+				lightestColor="#FFEFDF";
+				break;
+			}
+			case "green":{
+				mainColor="#22B14C";
+				thickColor="#177232";
+				lightColor="#37D968";
+				lightestColor="#D5FFD5";
+				break;
+			}
+			case "violet":{
+				mainColor="#713F98";
+				thickColor="#682C91";
+				lightColor="#915BBB";
+				lightestColor="#EBE1F2";
+				break;
+			}
+			case "pink":{
+				mainColor="#C8158D";
+				thickColor="#A61176";
+				lightColor="#DF27AA";
+				lightestColor="#FAD1ED";
+				break;
+			}
+		}
+		$("#header").css({"background":mainColor,"border-bottom-color":thickColor});
+		$(".btnp").css({"background":mainColor,"border-color":thickColor});
+		$(".theme").css({"background":mainColor});
+		$(".uibox").css({"background":lightColor,"border-color":mainColor});
+		$(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
+		$(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
+		$(".tb-stylev tr th,.theme-l").css({"background":lightColor,"color":thickColor});
+		
+		$(".uibox").hover(function(){
+			$(this).css({"background":"#fff"});
+				$(".uiboxs").css({"background":"#fff"});
+			},function(){
+				$(".uibox").css({"background":lightColor,"border-color":mainColor});
+		});
+		
+		$(".tab-menus li").click(function(){
+			$(".tab-menus li").css({"background":"#EAEAEA"});
+			$(".tab-menus .active-tab").css({"background":lightestColor});
+		},function(){
+				$(this).css({"background":lightestColor});
+		});
+		
+		$(".tab-menus li").hover(function(){
+			$(".tab-menus li").css({"background":"#EAEAEA"});
+			$(this).css({"background":lightestColor});
+		});
+		
+		
+	});
+	
+});

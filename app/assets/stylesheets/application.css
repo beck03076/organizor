@@ -341,6 +341,19 @@ body > * {visibility: hidden;}
 .glink:hover{text-decoration:underline;cursor:pointer;}
 /* LINKS - ENDS*/
 
+/* THEME - STARTS */
+.theme-colrs{padding:0;margin:0;list-style:none}
+.theme-colrs li{margin:0 5px 0 0;display:inline;border:1px solid #A0A0A0;padding:1px;background:#fff}
+.theme-colrs li:hover{cursor:pointer;border:1px solid #F29436;background:#FFE294}
+.theme-colrs .theme-colrs-active{cursor:pointer;border:1px solid #F29436;background:#FFE294}
+.blue-theme{background:#2A88C8;padding:0 6px 0 6px}
+.yellow-theme{background:#FFFF00;padding:0 6px 0 6px}
+.pink-theme{background:#C8158D;padding:0 6px 0 6px}
+.orange-theme{background:#FF6501;padding:0 6px 0 6px}
+.green-theme{background:#22B14C;padding:0 6px 0 6px}
+.violet-theme{background:#713F98;padding:0 6px 0 6px}
+/* THEME - ENDS */
+
 /* SENTHIL's  CSS - Start */
 .sp{color:#FD9B00}
 .pending{color:#FD9B00}
