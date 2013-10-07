@@ -77,6 +77,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 /* THEME - ENDS */
 
 /* TABS - STARTS */
+.tab-container .tab-content{box-shadow:0 0 5px #444;border-radius:0 5px  5px  5px}
 .tab-menus{list-style:none;padding:0;margin:0}
 .tab-menus li{color:#666;font-size:15px;background:#EAEAEA;padding:5px 15px 3px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0}
 .tab-menus .active-tab,.tab-menus li:hover,.r-tab:hover{background:#E8F0FD;text-decoration:none;cursor:pointer;}
