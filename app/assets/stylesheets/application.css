@@ -308,6 +308,10 @@ input[type=radio]{padding-right:5px}
 .vlsd{list-style:none;padding:10px 0 10px 0;margin:0}
 .vlsd li{padding:15px 0 15px 10px;border-bottom:1px dashed #353535}
 .vlsd li:first-child{border-bottom:0;color:#003468;padding:10px 0 0 0}
+
+.vlsdet{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet li{padding:5px 0 0 0;color:#000000;font-size:12px;font-weight:lighter;}
+.vlsdet li  label{color:#999;text-align:left;width:120px;font-weight:lighter;width:130px;white-space:nowrap}
 /* LIST - ENDS */
 
 /* SHORT POPUP - STARTS */
