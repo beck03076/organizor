@@ -55,7 +55,7 @@
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                     <div class="col6">
-                        <%= fbox(g,[:duedate,:class => "dateTimeField"],"text_field",nil) %>
+                        <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
                         <div class="fbox">
 						<label>&nbsp;</label>
 						<%= g.select(:priority,
