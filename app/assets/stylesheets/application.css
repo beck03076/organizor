@@ -127,6 +127,8 @@ input[type=radio]{padding-right:5px}
 .frbox label:first-child{width:120px !important;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal !important;color:#666;vertical-align:top}
 .frbox input,.frbox select,.frbox textarea{margin-left:15px}
 .frbox .mand{margin-right:-5px}
+.close-icon{float:right;border:1px solid #ccc;padding:0 5px 2px 5px;font-size:11px;background:#ccc;border-radius:1000px;color:#444444;cursor:pointer}
+.close-icon:hover{cursor:pointer;color:#222}
 /* INPUT FIELDS - ENDS */
 
 /* TABLE - STARTS */

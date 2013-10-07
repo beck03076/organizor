@@ -60,7 +60,9 @@ module ApplicationHelper
             .popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
 			.addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
 background: #fff;overflow:hidden}
-			.popupc{padding:3px 10px 2px 10px}
+			.popupc{padding:3px 10px 2px 10px;text-align:left !important}
+.popupc label{text-align:left !important;}
+.popupc textarea,.popupc input{margin-left:0}
 			.popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
             </style>"
    
@@ -78,9 +80,9 @@ background: #fff;overflow:hidden}
       html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
-      html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}</div>"
+      html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' >x</span></div>"
       
-      html += "<div class='field' style='padding:5px 10px 0 10px'>"
+      html += "<div class='field' style='padding:15px 10px 0 10px'>"
       html += label_tag(name.to_sym)
       html += text_field_tag(name.to_sym)
       html += "</div>"
