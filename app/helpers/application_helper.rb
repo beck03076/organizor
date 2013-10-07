@@ -67,7 +67,7 @@ background: #fff;overflow:hidden}
       html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
       
       html += obj.label(obj_name.to_sym)
-      
+      html +="&nbsp;"
       html += obj.collection_select(id.to_sym,
                                     model.all,
                                     :id,
