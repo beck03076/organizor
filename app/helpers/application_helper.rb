@@ -75,7 +75,7 @@ background: #fff;overflow:hidden}
                                     {:prompt => prompt },
                                     {:class => sel_cl })
                                     
-      html += "<span id='#{a_id}' class='btns' onClick=showPop('#{main_div}',event);>Add new </span>"
+      html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
       html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}</div>"

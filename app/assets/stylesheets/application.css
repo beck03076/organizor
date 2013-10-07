@@ -90,10 +90,12 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 .htab{padding:5px 0 5px 0;color:#999;border-bottom:1px solid #F1F0F5}
 .htab h5{font-size:14px}
 .bltab{background:#E8F0FD;padding:5px 10px 5px 10px}
+.plus{background:#F1F0F5;color:#5F5F5F;border:1px solid #B1B1B1;padding:0 6px 0 6px;margin:0 0 0 10px;vertical-align:bottom;border-radius:1000px;font-size:20px;font-weight:bold;color:#B1B1B1;cursor:pointer;box-shadow:0 0 1px #F1F0F5}
+.plus:hover{border-color:#959595;color:#959595;box-shadow:0 0 1px #959595}
 /* TABS - ENDS */
 
 /* INPUT FIELDS - STARTS */
-input[type=text],input[type=password]{border-radius:1px;box-shadow: 1px 1px 1px #CACDD2 inset;height:18px;padding:3px 5px 2px 10px;width:180px;font-size:14px;border:1px solid #CACDD2;}
+input[type=text],input[type=password]{border-radius:1px;box-shadow: 1px 1px 1px #CACDD2 inset;height:18px;padding:3px 5px 2px 10px;width:165px;font-size:14px;border:1px solid #CACDD2;}
 input[type=text]:hover,input[type=text]:visited,
 input[type=password]:hover,input[type=password]:visited{box-shadow: 1px 1px 1px 1px #EFEFEF inset;}
 textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1px 5px #CACDD2 inset;padding:3px 5px 2px 10px;font-size:14px}
@@ -101,7 +103,7 @@ textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1p
 .caltf,.datepicker {background: #fff url(/images/icons/calendar0.png) 98% no-repeat;padding-right:25px !important;cursor:pointer;width:160px !important;}
 .dateTimeField{background: #fff url(/images/icons/datetime.png) 98% no-repeat !important;padding-right:25px !important;cursor:pointer;width:160px !important;}
 .ipt:hover,.ipt:visited,.ipt:focus{background:#fff}
-select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:170px;padding:0 0 0 5px;}
+select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;padding:0 0 0 5px;}
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
 label{font-size:12px;font-weight:bold;text-align:left;}
 .btnp{font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:2px solid #3D7DAD; margin-right:10px}
