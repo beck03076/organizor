@@ -267,6 +267,7 @@ function setThemeColor(objectId){
 function setBGColor(objectId){
 	var bg=$("#"+objectId).data("bg");
 	var bgColor="#fff";
+	var borderColor="#CDCDCD";
 	/* REMOVE ALL ACTIVE BG MENU CLASS NAME */
 	$("#bg-color li").removeClass("theme-colrs-active");
 	/* ADD ACTIVE BG MENU CLASS NAME */
@@ -275,6 +276,7 @@ function setBGColor(objectId){
 	switch(bg){
 		case "gray":{
 			bgColor="#F3F0EB";
+			borderColor="#F3F0EB";
 			break;
 		}
 		case "white":{
@@ -283,17 +285,19 @@ function setBGColor(objectId){
 		}
 		case "cream":{
 			bgColor="#FAF3E9";
+			borderColor="#FAF3E9";
 			break;
 		}
 		case "blue":{
 			bgColor="#E7ECF2";
+			borderColor="#E7ECF2";
 			break;
 		}
 	}
 	$("body").css({"background":bgColor});
 	$("#right-panel").css({"background":bgColor});
 	$("#main-body").css({"background":bgColor});
-	$(".boxstheme").css({"border-color":bgColor});
+	$(".boxstheme").css({"border-color":borderColor});
 	
 	
 }
