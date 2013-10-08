@@ -1,8 +1,4 @@
-<br/><div class="htab">
-	 <h5><b>Timeline</b></h5>
-</div><br/>
-<div id="scrollboxu"  style="height:440px">		
-<% @timelines.each do |t| %>
+	<% @timelines.each do |t| %>
 <li>
   <%= image_tag "/images/icons/"+ t.action.to_s + ".png",{class: "fl", width: "35"} %>
   &nbsp;&nbsp;&nbsp;
@@ -23,4 +19,3 @@
   
 </li>
 <% end %>
-</div><br/><br/>
