@@ -18,7 +18,7 @@ module ApplicationHelper
     
     cl = cl + cl_add.to_s
     
-    ("<div class='#{cl}' >" + f.label(name.kind_of?(Array) ? name[0].to_sym : name.to_sym ,l.titleize) + f.send(elem,*name) + "</div>").html_safe
+    ("<div class='#{cl}' >" + f.label(name.kind_of?(Array) ? name[0].to_sym : name.to_sym ,l.titleize) + "&nbsp;"+f.send(elem,*name) + "</div>").html_safe
 
   end
   
