@@ -52,8 +52,8 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #wrapper{max-width:1300px;min-width:1200px;margin:0 auto 0 auto;padding:0;border:1px solid #CACACA;box-shadow:0 0 4px #ccc;box-shadow:0 0 10px #ccc;border-radius:0 0 5px 5px;overflow:hidden;}
 #header{padding:10px 2% 15px 2%;width:96%; border-bottom:5px solid #00336C;color:#fff;position:relative}
 #left-panel{position:absolute;background:#CCC;height:auto;box-shadow: 3px 0 6px #ccc;border-right:1px solid #CACACA;}
-#right-panel{height:auto;width:200px;padding-left:10px}
-#main-body{position:relative}
+#right-panel{height:auto;width:200px;padding-left:10px;background:#fff}
+#main-body{position:relative;background:#fff}
 #body-content{margin-left:110px;padding:20px 0 20px 10px}
 #footer,#footerin{background:#333333;padding:10px 2% 10px 2%;color:#999999;font-size:13px;width:96%;}
 #footerin{margin:10px auto 10px auto;font-size:11px;color:#444}
@@ -363,7 +363,7 @@ body > * {visibility: hidden;}
 .glink:hover{text-decoration:underline;cursor:pointer;}
 /* LINKS - ENDS*/
 
-/* THEME - STARTS */
+/* THEME & BACKGROUND - STARTS */
 .theme-colrs{padding:0;margin:0;list-style:none}
 .theme-colrs li{margin:0 5px 0 0;display:inline;border:1px solid #A0A0A0;padding:1px;background:#fff}
 .theme-colrs li:hover{cursor:pointer;border:1px solid #F29436;background:#FFE294}
@@ -374,7 +374,12 @@ body > * {visibility: hidden;}
 .orange-theme{background:#FF6501;padding:0 6px 0 6px}
 .green-theme{background:#22B14C;padding:0 6px 0 6px}
 .violet-theme{background:#713F98;padding:0 6px 0 6px}
-/* THEME - ENDS */
+
+.blue-bg{background:#E7ECF2;padding:0 6px 0 6px}
+.cream-bg{background:#FAF3E9;padding:0 6px 0 6px}
+.white-bg{background:#fff;padding:0 6px 0 6px}
+.gray-bg{background:#F3F0EB;padding:0 6px 0 6px}
+/* THEME & BACKGROUND - ENDS */
 
 /* SENTHIL's  CSS - Start */
 .sp{color:#FD9B00}
