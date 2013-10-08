@@ -63,7 +63,7 @@
         <%= p.label :subject %>
         <%= p.text_field :subject %>
     </div>
-    <div class="fbox">
+    <div class="fbox" style="height:auto">
         <%= p.label :body %>
         <%= p.text_area(:body,{:class => "tinymce"}) %>
       
@@ -72,7 +72,7 @@
         <%= p.label :attachment %>
         <%= p.file_field :attachment %>
     </div>    
-    <div class="fbox">
+    <div class="fbox"  style="height:auto">
         <%= p.label :signature %>
         <%= p.text_area(:signature,{size: "5x5",style: "width:400px"}) %>
     </div>

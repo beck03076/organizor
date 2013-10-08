@@ -1,7 +1,7 @@
 <div id="register-action" class="action-box">
 
   <%= form_tag url_for(:controller => 'registrations', :action => 'new'),method: 'get' do %>
-    <b>Note</b> <br/>
+    Note <br/>
     <%= hidden_field_tag :enquiry_id, id %>
     <%= text_area_tag "note",
                        nil,
