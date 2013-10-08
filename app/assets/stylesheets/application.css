@@ -55,7 +55,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #right-panel{height:auto;width:200px;padding-left:10px;background:#fff}
 #main-body{position:relative;background:#fff}
 #body-content{margin-left:110px;padding:20px 0 20px 10px}
-#footer,#footerin{background:#333333;padding:10px 2% 10px 2%;color:#999999;font-size:13px;width:96%;}
+#footer,#footerin{padding:10px 2% 10px 2%;width:96%;}
 #footerin{margin:10px auto 10px auto;font-size:11px;color:#444}
 /* LAYOUT - ENDS */
 
