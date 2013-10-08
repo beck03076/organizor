@@ -71,20 +71,12 @@ $(function(){
             <%= label_tag :course_subject %>
             <%= p.text_field :course_subject_text %>
        </div>
-       
-	   <div class="fbox">
-       <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
-	   </div>
-	   
+
 	   <div class="fbox">
 	    <%= label_tag :start_date,nil,{class: 'start_date'} %>
           <%= p.text_field :start_date,{class: 'dateField  caltf'} %>
         </div>
 		
-        <div class="end_date_div fbox">
-              <%= label_tag :end_date %>
-              <%= p.text_field :end_date,{class: 'dateField caltf '} %>
-        </div>
 		  
 	   <div class="cl"></div><br/>
 		 <span class="btns">
@@ -112,14 +104,21 @@ $(function(){
 		<div class="fbox">
        <%= go_create(p,"course_level","level_id","name") %>
       </div>
-	  
+	  <div class="fbox">
+       <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
+	   </div>
 		<div class="fbox">
 		<%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
 		</div>
 		
-           <div class="ins_ref_no fbox" style='<%= sty[3] %>'>
+		<div class="end_date_div fbox">
+              <%= label_tag :end_date %>
+              <%= p.text_field :end_date,{class: 'dateField caltf '} %>
+        </div>
+		
+        <div class="ins_ref_no fbox" style='<%= sty[3] %>'>
              <%= fs(p,"ins_ref_no","text_field") %>
-           </div>
+        </div>
     </div>
   
      
