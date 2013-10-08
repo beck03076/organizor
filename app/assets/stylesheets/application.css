@@ -40,11 +40,11 @@ a:hover{color:#FD9B00}
 p {line-height: 18px;margin: 5px 0 0 0;padding: 0;}
 h1, h2, h3 ,h4,h5,h6{line-height: 1.4em;margin:5px 0 5px 0;padding:0}
 h1{font-size: 33px;padding:5px 0 5px 0;margin:0;display:inline}
-h2{font-size: 22px;padding:5px 0 5px 0;margin:0 0 5px 0;display:inline}
-h3{font-size: 20px;padding:5px 0 5px 0;margin:0 0 5px 0;display:inline}
-h4{font-size: 18px;font-weight:normal;padding:0;margin:0;display:inline}
-h5{font-size: 16px;font-weight:normal;padding:0;margin:0;display:inline}
-h6{font-size: 14px;font-weight:normal;padding:0;margin:0;display:inline}
+h2{font-size:18px;padding:5px 0 5px 0;margin:0 0 5px 0;display:inline}
+h3{font-size: 16px;padding:5px 0 5px 0;margin:0 0 5px 0;display:inline}
+h4{font-size: 15px;font-weight:normal;padding:0;margin:0;display:inline}
+h5{font-size: 14px;font-weight:normal;padding:0;margin:0;display:inline}
+h6{font-size: 13px;font-weight:normal;padding:0;margin:0;display:inline}
 small{font-size: 11px;color:#666666;font-weight:normal;}
 /* DEFAULT STYLE - ENDS */
 
@@ -108,8 +108,8 @@ textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1p
 select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;padding:0 0 0 5px;}
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
 label{font-size:12px;font-weight:bold;text-align:left;}
-.btnp{font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:2px solid #3D7DAD; margin-right:10px}
-.btnpd{font-size:12px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:2px solid #87BBE0}
+.btnp{font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:1px solid #3D7DAD; margin-right:10px}
+.btnpd{font-size:12px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #87BBE0}
 .btnp:hover{cursor:pointer;background:#267AB3}
 .btnw{font-size:12px;background:#fff;color:#2A88C8;padding:5px 15px 5px 15px;margin-right:10px}
 .btnw:hover{cursor:pointer;background:#fff}
@@ -135,7 +135,7 @@ input[type=radio]{padding-right:5px}
 
 /* TABLE - STARTS */
 .tb-stylev {background:#fff; border: 1px solid #CBCBCB;border-bottom: 0;width: 100%;margin:0 0 0 0;overflow:hidden}
-.tb-stylev tr th {border-right: 1px solid #CBCBCB;border-bottom: 0;padding:5px 15px 5px 15px;font-weight:bold;font-size:15px;}
+.tb-stylev tr th {border-right: 1px solid #CBCBCB;border-bottom: 0;padding:5px 15px 5px 15px;font-weight:bold;font-size:12px;}
 .tb-stylev tr td {border-right: 1px solid #CBCBCB;padding: 3px 15px 3px 15px;color:#999;border-bottom: 1px solid #CBCBCB;}
 .tb-stylev tr td .active-tools{display:none}
 .tb-stylev tr:hover td{color:#333;cursor:pointer}
