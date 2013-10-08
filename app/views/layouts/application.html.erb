@@ -26,7 +26,7 @@
     <img src="/images/icons/down-arrow.png" class="fr" id="downarrow" />
     <h5>
     &nbsp;&nbsp;<b><%= u.first_name.titleize %></b>
-    </h5>
+    </h5><br/>
     <small class="whitec">
     &nbsp;&nbsp;&nbsp;<%= u.email %>
     </small>
@@ -45,15 +45,26 @@
 	<ul class="lsb">
     	<li><a href="#">Theme</a></li>
         <li><ul class="theme-colrs">
-	<li><span class="blue-theme" data-theme="blue">&nbsp;</span></li>
-	<li><span class="yellow-theme" data-theme="yellow">&nbsp;</span></li>
-	<li><span class="green-theme"  data-theme="green">&nbsp;</span></li>
-	<li><span class="pink-theme"  data-theme="pink">&nbsp;</span></li>
-	<li><span class="violet-theme" data-theme="violet">&nbsp;</span></li>
-	<li><span class="orange-theme" data-theme="orange">&nbsp;</span></li>
+	<li><span class="blue-theme" id="blue-theme" data-theme="blue" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+	<li><span class="yellow-theme" id="yellow-theme" data-theme="yellow" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+	<li><span class="green-theme"  id="green-theme" data-theme="green" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+	<li><span class="pink-theme"  id="pink-theme" data-theme="pink" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+	<li><span class="violet-theme" id="violet-theme" data-theme="violet" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+	<li><span class="orange-theme" id="orange-theme" data-theme="orange" onclick="setThemeColor(this.id);">&nbsp;</span></li>
 	</ul></li>
     </ul>
 	<!-- THEME - ENDS -->
+	<!-- BACKGROUND - STARTS -->
+	<ul class="lsb">
+    <li><a href="#">Background</a></li>
+    <li><ul class="theme-colrs" id="bg-color">
+	<li><span class="blue-bg" id="blue-bg" data-bg="blue" onclick="setBGColor(this.id);">&nbsp;</span></li>
+	<li><span class="cream-bg" id="cream-bg" data-bg="cream" onclick="setBGColor(this.id);">&nbsp;</span></li>
+	<li><span class="white-bg"  id="white-bg" data-bg="white" onclick="setBGColor(this.id);">&nbsp;</span></li>
+	<li><span class="gray-bg"  id="gray-bg" data-bg="gray" onclick="setBGColor(this.id);">&nbsp;</span></li>
+	</ul></li>
+    </ul>
+	<!-- BACKGROUND - ENDS -->
     <ul  class="lsb">
         <li>
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
@@ -168,8 +179,9 @@
  
 </div>
 <!-- BODY - ENDS -->
+</div>
 <!-- FOOTER - STARTS -->
-<div id="footer">
+<div id="footerin">
 <center>Copyright 2012 Organizor | All rights reserved</center>
 </div>
 <!-- FOOTER - ENDS --> 

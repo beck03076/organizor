@@ -1,7 +1,7 @@
 <% if @list.to_i == 1 && @enquiry.emails.size > 0 %>
-<table class="tb-stylev prlayout" border="0" cellpadding="0" cellspacing="0" width="100%">
+<table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
-      <tr class="theme-l">
+      <tr>
                             <th>To</th>
                             <th>From</th>
                             <th>Subject</th>
@@ -79,7 +79,7 @@
     <div class="fbox">
         <label>&nbsp;</label>
         <%= p.submit "Send",class: "btnp" %>
-        <%= link_to("Reset","#",{class: "btnp",id: "email_reset"}) %>
+        <%= link_to("Reset","#",{class: "btns",id: "email_reset"}) %>
     </div>
   <% end %>
 

@@ -11,18 +11,23 @@ $(document).ready(function(){
 });  
 </script>
  <div class="cols">
-  <div class="fbox">
+  <div class="frbox">
   <label>Search</label>
   <input type="text" size="25" class="searchKey"/>
   </div></div>
-  <div class="field">
+  <div class="frbox">
+  <label style="padding-right:15px">Preferred countries&nbsp;&nbsp;</label>
+  <div class="field" style="display:inline-block;">
       
-    <a href='#' id='deselect-all'>deselect all</a>
+    
     <%= select_tag("#{f.object_name}[country_ids][]",
                    options_for_select(@countries),
                    {multiple: true,
                     size: 5,
                     include_blank: false, 
                     id: "multiselect"}) %>
-  </div>
+  
+	</div>
+	<a href='#' id='deselect-all'>deselect all</a>
+	</div>
   <br/>
