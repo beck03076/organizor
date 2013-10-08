@@ -108,7 +108,7 @@ textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1p
 .ipt:hover,.ipt:visited,.ipt:focus{background:#fff}
 select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;padding:0 0 0 5px;background:#fff}
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
-label{font-size:12px;font-weight:bold;text-align:left;}
+label{font-size:14px;font-weight:bold;text-align:left;}
 .btnp,.btnp:active,.btnp:link,.btnp:visited{text-decoration:none;font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:1px solid #3D7DAD; margin-right:10px}
 .btnpd,.btnpd:active,.btnpd:link,.btnpd:visited{text-decoration:none;font-size:12px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #87BBE0}
 .btnp:hover{cursor:pointer;background:#267AB3;text-decoration:none;}
@@ -119,13 +119,13 @@ label{font-size:12px;font-weight:bold;text-align:left;}
 .btnb,.btnb:active,.btnb:link,.btnb:visited{text-decoration:none;font-size:12px;background:#222222;color:#fff;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #000000 inset;margin-right:10px}
 .btnb:hover{cursor:pointer;text-decoration:none;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
-.fbox,.fsbox{width:97%;margin:10px 0 0 0;vertical-align:top}
+.fbox,.fsbox{width:97%;margin:10px 0 20px 0;vertical-align:top;white-space:nowrap}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;font-weight:bold;vertical-align:top}
 .fbox .fields,.fsbox .fields{display:inline}
 .fsbox label{width:70px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal}
 input[type=radio]{padding-right:5px}
 .fabox{margin:10px 0 0 0;text-align:left;}
-.frbox{width:97%;margin:10px 0 0 0;vertical-align:top}
+.frbox{width:97%;margin:10px 0 20px 0;vertical-align:top;white-space:nowrap}
 .frbox label{width:40px !important;}
 .frbox label:first-child{width:120px !important;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal !important;color:#666;vertical-align:top}
 .frbox input,.frbox select,.frbox textarea{margin-left:15px}

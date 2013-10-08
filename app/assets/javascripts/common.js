@@ -278,7 +278,7 @@ function setBGColor(objectId){
 			break;
 		}
 		case "white":{
-			bgColor="#FFC20E";
+			bgColor="#fff";
 			break;
 		}
 		case "cream":{
