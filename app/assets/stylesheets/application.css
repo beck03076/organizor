@@ -105,7 +105,7 @@ textarea{width:96%;border-radius:1px;border:1px solid #CACDD2;box-shadow: 1px 1p
 .caltf,.datepicker {background: #fff url(/images/icons/calendar0.png) 98% no-repeat;padding-right:25px !important;cursor:pointer;width:160px !important;width:145px !important;}
 .dateTimeField{background: #fff url(/images/icons/datetime.png) 98% no-repeat !important;padding-right:25px !important;cursor:pointer;width:160px !important;}
 .ipt:hover,.ipt:visited,.ipt:focus{background:#fff}
-select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;padding:0 0 0 5px;}
+select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;padding:0 0 0 5px;background:#fff}
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
 label{font-size:12px;font-weight:bold;text-align:left;}
 .btnp,.btnp:active,.btnp:link,.btnp:visited{text-decoration:none;font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:1px solid #3D7DAD; margin-right:10px}
