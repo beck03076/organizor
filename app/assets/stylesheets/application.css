@@ -78,13 +78,13 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 /* THEME - ENDS */
 
 /* TABS - STARTS */
-.tab-container .tab-content{box-shadow:0 0 5px #444;border-radius:0 5px  5px  5px}
+.tab-container .tab-content{box-shadow:0 0 10px #ccc;border-radius:0 5px  5px  5px}
 .tab-menus{list-style:none;padding:0;margin:0}
-.tab-menus li{color:#666;font-size:15px;background:#EAEAEA;padding:5px 15px 3px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0}
+.tab-menus li{color:#666;font-size:13px;background:#EAEAEA;padding:7px 15px 5px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0}
 .tab-menus .active-tab,.tab-menus li:hover,.r-tab:hover{background:#E8F0FD;text-decoration:none;cursor:pointer;}
-.tab-menus .active-tab{font-weight:bold}
+.tab-menus .active-tab{font-weight:bold;box-shadow:0  -1px 3px #ccc}
 .subtab-menus{list-style:none;padding:0;margin:0}
-.subtab-menus li{color:#666;font-size:15px;background:#ccc;padding:5px 15px 3px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0;border:1px solid #CCC;font-weight:bold}
+.subtab-menus li{color:#666;font-size:13px;background:#ccc;padding:7px 15px 5px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0;border:1px solid #CCC;font-weight:bold}
 .subtab-menus .active-tab,.subtab-menus li:hover{background:#fff;text-decoration:none;cursor:pointer;color:#003363;border:1px solid #CCC;border-bottom:1px solid #fff}
 .subtab-content{margin-top:-1px;background:#fff;padding:20px 20px 20px 20px;display:none;border:1px solid #ccc}
 .tab-content{background:#E8F0FD;padding:10px;display:none}
