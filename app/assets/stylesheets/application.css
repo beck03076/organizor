@@ -381,6 +381,10 @@ body > * {visibility: hidden;}
 .gray-bg{background:#F3F0EB;padding:0 6px 0 6px}
 /* THEME & BACKGROUND - ENDS */
 
+/* MARGIN - STARTS */
+.mar{margin-left:35px;}
+/* MARGIN - ENDS */
+
 /* SENTHIL's  CSS - Start */
 .sp{color:#FD9B00}
 .pending{color:#FD9B00}

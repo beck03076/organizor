@@ -45,13 +45,14 @@
                         <%= hidden_field_tag "#{g.object_name}[sub_id]",@enquiry.id %>
                         <%= hidden_field_tag "#{g.object_name}[sub_class]","Enquiry" %>
                         <%= go_create(g,"todo_topic","topic_id","name",1) %> 
-                        <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
                         <%= go_create(g,"todo_status","status_id","name",1) %> 
                         <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 
                                  :id, 
                                  :first_name,
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+						<%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                     <div class="col6">
