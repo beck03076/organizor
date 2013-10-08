@@ -200,6 +200,7 @@ input[type=radio]{padding-right:5px}
 .btnbox{text-align:right;margin:5px 0 5px 0;padding:10px 0 5px 0}
 .boxp{border:1px solid #CBCCD1;background:#fff;padding:10px 15px 10px 15px}
 .boxs{border:1px solid #CDCDCD;background:#EAEAEA;padding:10px 15px 10px 15px}
+.boxstheme{border:1px solid #CDCDCD;background:#fff;padding:10px 15px 10px 15px;box-shadow:3px}
 /* BOX - STARTS */
 
 /* BREADCRUMB - STARTS */

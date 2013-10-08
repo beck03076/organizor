@@ -293,5 +293,7 @@ function setBGColor(objectId){
 	$("body").css({"background":bgColor});
 	$("#right-panel").css({"background":bgColor});
 	$("#main-body").css({"background":bgColor});
+	$(".boxstheme").css({"border-color":bgColor});
+	
 	
 }
