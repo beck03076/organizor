@@ -37,7 +37,6 @@ $(function(){
 	   <% end %>
 	<div class="cols">
 	<div class="col6">
-    <br/>
     <div class="fbox">
         <%= label_tag :country %>
         <%= p.collection_select(:country_id, 
@@ -78,12 +77,12 @@ $(function(){
 	   </div>
 	   
 	   <div class="fbox">
-	    <%= label_tag :start_date,nil,{class: 'start_date'} %><br />
+	    <%= label_tag :start_date,nil,{class: 'start_date'} %>
           <%= p.text_field :start_date,{class: 'dateField  caltf'} %>
         </div>
 		
         <div class="end_date_div fbox">
-              <%= label_tag :end_date %><br />
+              <%= label_tag :end_date %>
               <%= p.text_field :end_date,{class: 'dateField caltf '} %>
         </div>
 		  

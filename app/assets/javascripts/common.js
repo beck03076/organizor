@@ -290,5 +290,8 @@ function setBGColor(objectId){
 			break;
 		}
 	}
-	$("body").css({"background":bgColor});		
+	$("body").css({"background":bgColor});
+	$("#right-panel").css({"background":bgColor});
+	$("#main-body").css({"background":bgColor});
+	
 }
