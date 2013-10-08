@@ -90,7 +90,8 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 .tab-content{background:#E8F0FD;padding:10px;display:none}
 .tab-content-b{background:#2A88C8;padding:10px;display:none;color:#fff;padding-left:15px !important}
 .htab{padding:5px 0 5px 0;color:#999;border-bottom:1px solid #F1F0F5}
-.htab h5{font-size:14px}
+.htab h5,.htab h6{font-size:16px}
+.htab h5 b,.htab h6 b{font-weight:normal}
 .bltab{background:#E8F0FD;padding:5px 10px 5px 10px}
 .plus{background:#F1F0F5;color:#5F5F5F;border:1px solid #B1B1B1;padding:0 6px 0 6px;margin:0 0 0 10px;vertical-align:bottom;border-radius:1000px;font-size:20px;font-weight:bold;color:#B1B1B1;cursor:pointer;box-shadow:0 0 1px #F1F0F5}
 .plus:hover{border-color:#959595;color:#959595;box-shadow:0 0 1px #959595}
