@@ -10,6 +10,9 @@
  *
  *= require_self
  *= require_tree .
+  *= require jquery.ui.core
+ *= require jquery.ui.theme
+ *= require dataTables/src/demo_table_jui
  */
  
  
@@ -397,10 +400,11 @@ body > * {visibility: hidden;}
 /* SENTHIL's  CSS - Start */
 .sp{color:#FD9B00}
 .pending{color:#FD9B00}
-.following{color:#008080}
+.following,.ref_no{color:#008080}
 .deactivated{color:#C42525}
 .activated{color:#008000}
 .Unknown{color:#2A88C8}
+
 
 #mce_15 {
     width:600px !important;
@@ -417,3 +421,18 @@ size:14px;
 font-weight:bolder;
 }
 /* SENTHIL's  CSS - End */
+
+/* Add New Go Create Starts */
+.addNewPop{padding:10px;border:1px solid #ccc;box-shadow:0 0 5px #ccc;border-radius:5px;display:none
+;position:absolute;z-index:100000000000;background:#fff}
+/* Add New Go Create Ends */
+
+/* REGISTRATION LAUNCH TABS - STARTS */
+.newtab-menus{list-style:none;padding:0;margin:0}
+.newtab-menus li{color:#CDCDCD;font-size:14px;padding:5px 15px 5px 15px;display:inline-block;margin:0 15px -1px 0;border-radius:5px 5px 0 0;font-weight:bold;border:1px solid #fff;border-bottom:1px solid #D9D9D9;}
+.newtab-menus .active-tab,.newtab-menus li:hover{background:#fff;text-decoration:none;cursor:pointer;color:#333333;border:1px solid #D9D9D9;
+border-bottom:1px solid #fff;margin:0 15px -2px 0}
+.newtab-content{background:#fff;padding:10px;display:none;border-top:1px solid #D9D9D9}
+/* REGISTRATION LAUNCH TABS - ENDS */
+
+

@@ -1,0 +1,41 @@
+# Get your project into GitHub
+cd /your/project/directory
+git init .
+git add -A .
+git commit -m "Initial import"
+git remote add origin https://github.com/[user]/[repo].git
+git push origin master
+ 
+# After making some changes
+git add -A .
+git commit -m "application helper on server"
+git push origin master
+ 
+# Tag a release when you're ready
+git tag v0.1.0
+git push origin v0.1.0
+ 
+# On your server, where you want to deploy the first time
+cd /path/to/where/project/will/live
+git clone https://github.com/[user]/[repo].git
+git checkout v0.1.0
+ 
+# On your server, when you want to deploy after that first time
+cd /path/to/project/itself
+git pull
+git checkout v0.2.0
+
+===Andrew====
+
+
+also, if you've made a whole bunch of changes (commits) and decide you want to go back to what the application looked like last week, you can roll everything back
+and if you decide you want to ditch all of the changes you've made since your last commit, because maybe what you were working on just wasn't working and you want to get back to a fresh state, just run `git reset --hard HEAD`
+
+the -A . basically says "add EVERYTHING that's changed to the package"
+now, if you want to see what's change in your application since your last commit, you can run `git diff`
+which will show you the diff of the old and new files. + before a line means that was added, - before a line means it was removed
+
+if you want a better look at what a commit is, check your git log
+run `git log`
+
+if you want a better look at what a commit is check your git log now if you want to see 

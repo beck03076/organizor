@@ -1,0 +1,46 @@
+
+<ul class="infosm">
+  <% a = @registration %>
+  <% q = @registration.qualification %>
+    <li>
+      Qualification : 
+      <b>
+        <%= q.name %>
+      </b>
+    </li>
+    
+    <li>
+      Subject : 
+      <b>
+        <%= a.qua_subject %>
+      </b>
+    </li>
+    
+    <li>
+      Institution : 
+      <b>
+        <%= a.qua_institution %>
+      </b>
+    </li>
+    
+    <li>
+      Grade : 
+      <b>
+        <%= a.qua_grade %>
+      </b>
+    </li>
+    
+    <li>
+      Exam : 
+      <b>
+        <%= a.qua_exam %>
+      </b>
+    </li>
+    
+    <li>
+      Score : 
+      <b>
+        <%= a.qua_score %>
+      </b>
+    </li>
+</ul>

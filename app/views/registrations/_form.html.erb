@@ -1,4 +1,7 @@
-<%= nested_form_for(@registration) do |f| %>
+<%= nested_form_for(@registration,:html=>{:multipart => true })  do |f| %>
+
+  <%= f.hidden_field :ref_no, value: (@registration.ref_no.nil? ? @ref_no : @registration.ref_no) %>
+  
   <% if @registration.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this registration from being saved:</h2>
@@ -267,6 +270,31 @@
         </div>
   </div>    
    <!-- Flight Details - ENDS -->
+   
+  <!-- Documents Starts -->
+  <div class="htab">
+      <h5>
+          <b>
+            Documents
+          </b>
+      </h5>
+  </div>
+  <br/>
+  <div class="cols">
+
+         <%= f.fields_for :documents do |d| %>
+
+                 <%= go_create(d,"doc_category","category_id","name",1) %> 
+                 <%= fs(d,"name","text_field",nil) %>
+                 <%= d.file_field :path %>
+                 <%= d.hidden_field :registration_id %>
+                 <%= d.link_to_remove "Remove" %>
+                
+         <% end %>
+         
+         <%= f.link_to_add "Attach document", :documents %>
+  </div>    
+  <!-- Documents - ENDS -->
         
         <div class="htab"></div><br/>
         <%= fs(f,[:note, 

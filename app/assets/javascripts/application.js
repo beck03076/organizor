@@ -15,24 +15,13 @@
 //= require_directory .
 //= require jquery_nested_form
 //= require tinymce
+//= require dataTables/jquery.dataTables
 
 
 
 
 $(function(){
 
-
-
-$(document).on('nested:fieldAdded', function(event){
-  var field = event.field; 
-  var dateField = field.find('.dateField');
-  dateField.datepicker({
-    inline: true,
-    changeMonth: true, 
-    changeYear: true, 
-    dateFormat: "yy-mm-dd",
-    yearRange: '1980:2050' });
-})
 
     $(".dateField").datepicker({
     inline: true,
@@ -41,34 +30,7 @@ $(document).on('nested:fieldAdded', function(event){
     dateFormat: "yy-mm-dd",
     yearRange: '1980:2050'
     });
-    
-    $('#multiselect').multiSelect({
-        keepOrder: true,
-        size: 5
-    });
-    
-    $('#deselect-all').click(function(){
-      $('#multiselect').multiSelect('deselect_all');
-      return false;
-    });
 
-    $(".searchKey").keyup(function(){
-    
-        var searchWord=$.trim(this.value);
-        searchWord=$.trim(searchWord.charAt(0).toUpperCase() + searchWord.slice(1));
-        
-        if(searchWord==''){
-            $("#ms-multiselect .ms-selectable:first-child ul li").show();
-            $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-        }
-        else{
-            $("#ms-multiselect .ms-selectable:first-child ul li").hide();
-            $("#ms-multiselect .ms-selectable:first-child ul li:contains('"+searchWord+"')").show();
-            $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-        }
-    });
-    
-   
 });
 
 function div_toggle(obj,div){   
@@ -133,6 +95,8 @@ function submit_link(obj,tog,obj_name){
                param[obj_name] = {name: name, desc: desc};
                var sel = '.' + obj_name + '_select'
                obj_name = (obj_name == 'todo_status') ? 'todo_statuse' : obj_name
+               obj_name = (obj_name == 'doc_category') ? 'doc_categorie' : obj_name
+               obj_name = (obj_name == 'application_status') ? 'application_statuse' : obj_name
            $.ajax({
                 url: '/'+obj_name+'s', //sumbits it to the given url of the form
                 data:  param,
@@ -144,7 +108,7 @@ function submit_link(obj,tog,obj_name){
             });
             
             }
-            $(obj).parent().parent().find(tog).slideToggle();
+            //$(obj).parent().parent().find(tog).slideToggle();
             $("input#name").val('');
             $("textarea#desc").val('');
             $("#"+obj.lang).css("display","none");
@@ -228,6 +192,8 @@ function enquiryTabSwitch(obj){
      
       var $container = $('#'+lang).html(table);
       var $dateField = $('.dateField', $container);
+      var $mSel = $('#multiselect',$container);
+      
       if ($dateField.length > 0) {
         $dateField.datepicker({
             inline: true,
@@ -236,8 +202,107 @@ function enquiryTabSwitch(obj){
             dateFormat: "yy-mm-dd",
             yearRange: '1980:2050' });
         }
+        
+      if ($mSel.length > 0) {
+        $mSel.multiSelect({
+          keepOrder: true,
+          size: 5
+        });
+       
+           var $dSel = $('#deselect-all',$container);
+           $('#deselect-all').click(function(){
+             $mSel.multiSelect('deselect_all');
+             return false;
+           });
+       
+           $(".searchKey").keyup(function(){
+        
+            var searchWord=$.trim(this.value);
+            searchWord=$.trim(searchWord.charAt(0).toUpperCase() + searchWord.slice(1));
+            
+            if(searchWord==''){
+                $("#ms-multiselect .ms-selectable:first-child ul li").show();
+                $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
+            }
+            else{
+                $("#ms-multiselect .ms-selectable:first-child ul li").hide();
+                $("#ms-multiselect .ms-selectable:first-child ul li:contains('"+searchWord+"')").show();
+                $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
+            }
+           });
+           $('#multiselect').multiSelect('deselect_all');
+           var c_ids = $('#ms-selected-countries').data('country_ids');
+           $.each(c_ids, function( index, value ){
+             $("#ms-multiselect .ms-selectable:first-child ul li[ms-value="+ value +"]").trigger("click");
+           });
+           
+      }
+       
+        
 
     });
+
+}
+
+function dataTableStart(table,filterValue,cols)
+{
+  tableId = "#" + table
+  
+  var oTable = $(tableId).dataTable({
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $(tableId).data('source'),
+    "sPaginationType": "full_numbers",
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { "name": "sFilter", "value": filterValue },
+                   { "name": "sCols", "value": cols });
+    },
+  });
+  
+   $('select#mySelect').on('change',function(){
+        var selectedValue = $(this).val();
+        oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
+    });
+    
+
+    
+    
+}
+
+
+
+// enquiries tabs switching
+function registrationTabSwitch(obj){
+    
+    var cond = $(obj).data("cond");
+    var partial = $(obj).data("partial");
+    var _id = $(obj).data("registration_id");
+    var lang = $(obj).attr("lang");
+    
+    url = '/registrations/tab/' + cond + '/' + partial + '/'
+    
+    if (typeof _id !== "undefined"){ url = url + _id; }
+
+    $.get(url,function(table){
+     
+      var $container = $('#'+lang).html(table);
+      var $dateField = $('.dateField', $container);
+      
+      if ($dateField.length > 0) {
+        $dateField.datepicker({
+            inline: true,
+            changeMonth: true, 
+            changeYear: true, 
+            dateFormat: "yy-mm-dd",
+            yearRange: '1980:2050' });
+        }
+        
+
+
+    });
+    
+     
 
 }
 

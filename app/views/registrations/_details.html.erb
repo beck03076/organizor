@@ -1,0 +1,152 @@
+<h6>
+Education Background
+</h6>
+<ul class="infosm">
+  <% a = @registration %>
+  <% q = @registration.qualification %>
+    <li>
+      Qualification : 
+      <b>
+        <%= q.name %>
+      </b>
+    </li>
+    
+    <li>
+      Subject : 
+      <b>
+        <%= a.qua_subject %>
+      </b>
+    </li>
+    
+    <li>
+      Institution : 
+      <b>
+        <%= a.qua_institution %>
+      </b>
+    </li>
+    
+    <li>
+      Grade : 
+      <b>
+        <%= a.qua_grade %>
+      </b>
+    </li>
+    
+    <li>
+      Exam : 
+      <b>
+        <%= a.qua_exam %>
+      </b>
+    </li>
+    
+    <li>
+      Score : 
+      <b>
+        <%= a.qua_score %>
+      </b>
+    </li>
+</ul>
+
+
+<h6>
+English Language Proficiency
+</h6>
+
+
+<ul class="infosm">
+    <li>
+      Level of English : 
+      <b>
+        <%= a.english_level.name %>
+      </b>
+    </li>
+    
+    <% a.exams.each do |e| %>
+            <li>
+              Exam Type : 
+              <b>
+                <%= e.exam_type.name %>
+              </b>
+            </li>
+            
+            <li>
+              Exam Score : 
+              <b>
+                <%= e.exam_score %>
+              </b>
+            </li>
+       
+            <li>
+              Exam Type : 
+              <b>
+                <%= e.exam_date %>
+              </b>
+            </li>
+    <% end %>
+</ul>
+
+
+<h6>
+Emergency Contact
+</h6>
+
+
+<ul class="infosm">
+
+    <li>
+      Full Name : 
+      <b>
+        <%= a.emer_full_name %>
+      </b>
+    </li>
+    <li>
+      Relationship : 
+      <b>
+        <%= a.emer_relationship %>
+      </b>
+    </li>
+    <li>
+      Mobile Number : 
+      <b>
+        <%= a.emer_mobile %>
+      </b>
+    </li>
+    <li>
+      Email : 
+      <b>
+        <%= a.emer_email %>
+      </b>
+    </li>
+</ul>
+
+<h6>
+Flight Details
+</h6>
+
+
+<ul class="infosm">
+    <li>
+      Flight Number : 
+      <b>
+        <%= a.flight_no %>
+      </b>
+    </li>
+    <li>
+      Arrival Date : 
+      <b>
+        <%= a.flight_arrival_date %>
+      </b>
+    </li>
+    <li>
+      Arrival Time : 
+      <b>
+        <%= a.flight_arrival_time %>
+      </b>
+    </li>
+    <li>
+      Airport : 
+      <b>
+        <%= a.flight_airport %>
+      </b>
+    </li>
+</ul>

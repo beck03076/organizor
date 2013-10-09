@@ -1,0 +1,73 @@
+
+<ul class="infosm">
+                    <% @registration.programmes.each_with_index do |i,index| %>
+                      <% j = i.programme_type.try(:name).titleize rescue ""%>
+                         
+                        <li>
+                        
+                        <%= index + 1 %>) &nbsp; <b> <%= j %> </b>
+                        <span id="reg_status" class='ref_no'>
+                          [<%= i.application_status.name %>]
+                        </span>
+                        <%= link_to "change","#"%>
+                        <br/>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Institution :
+                        <b>
+                        <%= i.institution.try(:name).to_s %>,&nbsp;<%= i.city.try(:name).to_s %>,&nbsp;<%= i.country.try(:name).to_s %>
+                        </b>
+                        <br/>
+                        <br/>
+                        </li>
+                        <li class="padl30">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>Course :</b>
+                            <br/>
+                            <br/>
+                            <% if j == "University" %>
+                              
+                              Level : <b> <%= i.course_level.try(:name).titleize %> </b>
+                              <br/>
+                              Subject : <b> <%= i.try(:course_subject) %> </b>
+                              <br/>
+                              Intake Month : <b> <%= i.start_date.strftime("%B") %> </b>
+                              <br/>
+                              Intake Year : <b> <%= i.start_date.strftime("%Y") %> </b>
+                              <br/>
+                              
+                            <% elsif j == "Language School" %>
+                              Name : <b> <%= i.try(:course_subject) %> </b>
+                              <br/>
+                              Start Date : <b> <%= i.start_date.to_date %> </b>
+                              <br/>
+                              End Date : <b> <%= i.start_date.to_date %> </b>
+                              <br/>
+                            <% end %>
+
+                        </li>
+                        <br/>
+                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                            Created by,&nbsp;
+                            <i>
+                               <b> <%= User.find(i.created_by).name %> </b>
+                            </i>
+                            at 
+                            <i>
+                                <%= i.created_at %>
+                            </i>
+                        </li>
+                        <% if i.updated_by %>
+                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+                            Last modified by,&nbsp;
+                            <i>
+                               <b> <%= (User.find(i.updated_by).name)  %> </b>
+                            </i>
+                            at 
+                            <i>
+                                <%= i.updated_at %>
+                            </i>
+                        </li>
+                        <% end %>
+                        <br/>
+                    <% end %>
+</ul>
+

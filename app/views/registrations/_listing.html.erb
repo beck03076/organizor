@@ -1,0 +1,46 @@
+<% _id =  @status + "_registrations" %>
+
+<table id='<%= _id %>' class="display" data-source="<%= registrations_url(format: "json") %>">
+<thead>
+  <tr>
+      <th>Actions</th>
+      <% @cols.each do |i| %>
+        <% if i.is_a?(Array) %>
+          <th><%= i[1].to_s.titleize %></th>
+        <% else %>
+          <th <%= (i.to_s == 'statuses' ? 'class=statuses' : '') %>>
+          <%= i.to_s.titleize %>
+          </th>
+        <% end %>
+      <% end %>
+     
+  </tr>
+
+
+</thead>
+       <%= select_tag :abdc,
+                      options_for_select(@cols.map{|i| i.is_a?(Array) ? i[0]  : i}.unshift("--Search by--")),
+                      {id: "mySelect",style: "width:150px",class: "fr"} %>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<style>
+#registrations_filter input{
+width:150px;
+}
+#registrations_filter label{
+float:left;
+}
+#all_registrations tbody tr:hover{background-color:#ccc}
+</style>
+
+<script>
+
+$(function(){
+dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>")
+});
+</script>

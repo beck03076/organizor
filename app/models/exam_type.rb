@@ -1,4 +1,4 @@
 class ExamType < ActiveRecord::Base
-  belongs_to :exam
+  has_many :exams
   attr_accessible :desc, :name
 end

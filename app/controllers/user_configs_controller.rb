@@ -1,8 +1,22 @@
 class UserConfigsController < ApplicationController
+  before_filter :set_cols
+  
+  def set_cols
+    @def_cols = {:country_id => [:country,:name],
+     :qua_id => [:qualification,:name],
+     :reg_source_id => [:student_source,:name],
+     :sub_agent_id => [:sub_agent,:name],
+     :assigned_to => :ass_to,
+     :assigned_by => :ass_by,
+     :created_by => :cre_by,
+     :updated_by => :upd_by,
+     :prof_eng_level_id => [:english_level,:name]}
+  end
+  
   # GET /user_configs
   # GET /user_configs.json
   def index
-    @user_configs = UserConfig.all
+    @user_config = UserConfig.find(current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +48,7 @@ class UserConfigsController < ApplicationController
 
   # GET /user_configs/1/edit
   def edit
-    @user_config = UserConfig.find(params[:id])
+    @user_config = UserConfig.find(current_user.id)
   end
 
   # POST /user_configs
@@ -57,6 +71,19 @@ class UserConfigsController < ApplicationController
   # PUT /user_configs/1.json
   def update
     @user_config = UserConfig.find(params[:id])
+    cols = params[:user_config][:reg_cols].map &:to_sym
+    params[:user_config][:reg_cols] = cols.map{|i| 
+    if @def_cols[i].nil? 
+      i 
+    else
+      if @def_cols[i].is_a?(Array)
+        @def_cols[i].unshift(i)
+      else
+        @def_cols[i]
+      end
+    end
+    }
+    p params[:user_config][:reg_cols]
 
     respond_to do |format|
       if @user_config.update_attributes(params[:user_config])
@@ -67,6 +94,7 @@ class UserConfigsController < ApplicationController
         format.json { render json: @user_config.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /user_configs/1

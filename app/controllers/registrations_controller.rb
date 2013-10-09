@@ -6,12 +6,35 @@ class RegistrationsController < ApplicationController
   # GET /registrations
   # GET /registrations.json
   def index
-    @registrations = Registration.all
+   set_url_params
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @registrations }
+      format.json {render :json => RegistrationsDatatable.new(view_context,eval(@sCols),@sFilter)}
     end
+  end
+
+   def tab
+    set_url_params
+    
+    if @status == "new_registration"
+      @registration = Registration.new
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+    elsif @status == "launch"
+      @registration = Registration.find(@registration_id)
+      @timelines = Timeline.where(m_name: "Registration", m_id: params[:registration_id]).order("created_at DESC")
+    elsif @status == "edit"
+      @registration = Registration.find(params[:registration_id])
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+    else
+      @cols = UserConfig.find(current_user).reg_cols
+    end
+    
+
+    render partial: @partial
+
   end
 
   # GET /registrations/1
@@ -28,6 +51,12 @@ class RegistrationsController < ApplicationController
   # GET /registrations/new
   # GET /registrations/new.json
   def new
+    ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
+    
+    ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s
+    ym = Time.now.strftime("%y%m").to_s
+    @ref_no = ym + ref_temp_no
+    
     if !params[:enquiry_id].nil?
       # e stands for enquiry
       e_obj = Enquiry.find(params[:enquiry_id])
@@ -49,6 +78,7 @@ class RegistrationsController < ApplicationController
                                   "created_at","updated_at",
                                   "status_id", "address","active")
       e[:note] = params[:note]
+      
       @registration = Registration.new(e)
       
       if !e_obj.programmes.blank?
@@ -62,7 +92,6 @@ class RegistrationsController < ApplicationController
     @c_levels = self.basic_select(CourseLevel)
     @p_types = ProgrammeType.all
     
-    @city = 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @registration }
@@ -72,6 +101,15 @@ class RegistrationsController < ApplicationController
   # GET /registrations/1/edit
   def edit
     @registration = Registration.find(params[:id])
+        @countries = self.basic_select(Country)
+@p_types = ProgrammeType.all
+    @registration.programmes.build
+    
+    ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
+    
+    ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s
+    ym = Time.now.strftime("%y%m").to_s
+    @ref_no = ym + ref_temp_no
   end
 
   # POST /registrations
@@ -81,7 +119,7 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       if @registration.save
-        format.html { redirect_to @registration, notice: 'Registration was successfully created.' }
+        format.html { redirect_to "/registrations/new" }
         format.json { render json: @registration, status: :created, location: @registration }
       else
         format.html { render action: "new" }
