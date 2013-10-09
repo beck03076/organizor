@@ -173,7 +173,7 @@ $("#"+objectId).css("display","inline");
 
 
 $(document).ready(function(){
-	var backgroundColor="gray";
+	var backgroundColor="white";
 	setBGColor(backgroundColor+"-bg");
 	/*SET THE THEME SESION VALUE HERE*/
 	var themeColor="blue";
