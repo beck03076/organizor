@@ -581,7 +581,6 @@ div.box {
     display: none;
 }
 .ui-helper-hidden-accessible {
-    left: -1e+8px;
     position: absolute;
 }
 .ui-helper-reset {
