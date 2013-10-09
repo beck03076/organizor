@@ -1,3 +1,4 @@
+<br/>
 <% if @list.to_i == 1 && @enquiry.emails.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
@@ -16,12 +17,20 @@
                     <td><%= email.subject %></td>
                     <td><%= truncate(email.body,length: 20) %></td>
                </tr>
-           <% end %>               
+           <% end %>
+				<tr>
+                    <td colspan="4" align="left"><a href="#">Back</a></td>
+               </tr>
 
     </tbody>
   </table>
-<br/>
+<br/><br/>
 <% end %>
+
+<div class="htab">
+		<h6><b>New Email</b></h6>
+</div>
+<br/>
 <div id="email-action" class="action-box">
   <%= form_for(e) do |p| %>
     <%= p.hidden_field :enquiry_id, value: id %>
@@ -63,7 +72,7 @@
         <%= p.label :subject %>
         <%= p.text_field :subject %>
     </div>
-    <div class="fbox">
+    <div class="fbox" style="height:auto">
         <%= p.label :body %>
         <%= p.text_area(:body,{:class => "tinymce"}) %>
       
@@ -72,7 +81,7 @@
         <%= p.label :attachment %>
         <%= p.file_field :attachment %>
     </div>    
-    <div class="fbox">
+    <div class="fbox"  style="height:auto">
         <%= p.label :signature %>
         <%= p.text_area(:signature,{size: "5x5",style: "width:400px"}) %>
     </div>

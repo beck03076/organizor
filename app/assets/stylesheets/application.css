@@ -123,6 +123,9 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
 .fbox,.fsbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fpbox{width:90%;margin:10px 5px 10px 5px;vertical-align:top;white-space:nowrap;height:40px}
+.fpbox label{width:80px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fpbox textarea{width:165px !important}
 .fbox .fields,.fsbox .fields{display:inline}
 .fsbox label{width:70px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal}
 input[type=radio]{padding-right:5px}
@@ -155,7 +158,8 @@ input[type=radio]{padding-right:5px}
 .tables2 tr td{background:#fff;border-bottom:1px dashed #fff;padding:5px 0 5px 5px;font-size:12px;color:#505050;cursor:pointer;font-weight:normal}
 .tables2 tr:hover td{background:#FAFAFA;color:#000000}
 .tables2 tr td a,.tables2 tr td a:hover,.tables2 tr td a:active,.tables2 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
-.tables2 tr:last-child td{border-bottom:0}
+.tables2 tr:last-child td{background:#F5F5F5;border-top:1px dashed #F5F5F5;border-bottom:1px solid #E2E2E2;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables2 tr:last-child td a{color:#6B84B4}
 /* TABLE - ENDS */
 
 .sp{color:#FD9B00}

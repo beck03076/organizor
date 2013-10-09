@@ -7,7 +7,7 @@
                      :id, 
                      :first_name,
                      {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-           <%= fbox(f,[:audit_comment,size: "2x2"],"text_area",nil,"Comments") %>
+           <%= fbox(f,[:audit_comment,size: "2x3"],"text_area",nil,"Comments") %>
             <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>

@@ -27,15 +27,20 @@
                     <td><%= User.find(t.assigned_to).first_name %></td>
                     <td><%= User.find(t.assigned_by).first_name %></td>
                </tr>
-           <% end %>               
+           <% end %> 
+<tr>
+                    <td colspan="7" align="left"><a href="#">Back</a></td>
+               </tr>		   
 
     </tbody>
   </table>
 <br/>
 <br/>
-<br/>
 <% end %>
-
+<div class="htab">
+<h6><b>New Todo</b></h6>
+</div>
+<br/>
 
 <div id="followup-action" class="action-box">
 <%= form_for(@todo) do |g| %>
@@ -51,17 +56,16 @@
                                  :id, 
                                  :first_name,
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-						<%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
-                        
-                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
-                    </div>
-                    <div class="col6">
-                        <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
+						
+						<%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
                         <div class="fbox">
 						<label>&nbsp;</label>
 						<%= g.select(:priority,
                                      options_for_select(["High","Medium","Low"])) %>
-                        </div>             
+                        </div> 
+						<%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                        
+                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                 </div>
     <%= hidden_field_tag "#{g.object_name}[todo]", "from_action" %>

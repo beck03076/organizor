@@ -14,18 +14,24 @@
 
                     </td>
                </tr>
-           <% end %>               
+           <% end %> 
+		   <tr>
+                    <td  align="left"><a href="#">Back</a></td>
+               </tr>
 
     </tbody>
   </table>
 <br/>
 <br/>
-<br/>
-<% end %>
 
+<% end %>
+<div class="htab">
+<h6><b>New Note</b></h6>
+</div>
+<br/>
 <%= form_for(@note) do |g| %>
  <div id="note-action" class="action-box">
-            <%= fbox(g,[:content,size: "6x6",class: "tinymce"],"text_area",nil,"Note") %>
+            <%= fbox(g,[:content,size: "6x6",class: "tinymce" ,style:"height:auto;"],"text_area",nil,"Note") %>
             <br/>
             <%= g.hidden_field :sub_class,value: "Enquiry" %>
             <%= g.hidden_field :sub_id,value: @enquiry.id %>
