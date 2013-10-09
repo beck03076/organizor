@@ -581,7 +581,10 @@ div.box {
     display: none;
 }
 .ui-helper-hidden-accessible {
+<<<<<<< HEAD
    
+=======
+>>>>>>> 2122a2376ece419e4ed5533109f838f0f1279461
     position: absolute;
 }
 .ui-helper-reset {
