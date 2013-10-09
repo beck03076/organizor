@@ -82,16 +82,6 @@ $(document).ready(function(){
   });    
 });
 
-function activeTab(mainContentClass,activeTabContentId,activeTabId){
-    /* HIDE ALL TABS CONTENT*/
-    $("."+mainContentClass).hide();
-    /* SHOW THE CORESPONDING TAB CONTENT*/
-    $(".tab-container #"+activeTabContentId).show();
-    /* INACTIVE ALL TABS */
-    $(".tab-menus li").removeClass("active-tab");
-    /* ACTIVE CURRENT TABS */
-    $(".tab-menus #"+activeTabId).addClass("active-tab");
-}
 function activeMM(menuId){
     /* INACTIVE ALL TABS */
     $("#menu-main li").removeClass("active-main-menu");
@@ -304,32 +294,6 @@ function setBGColor(objectId){
     
 }
 
-/**
-*  REGISTRATION LAUNCH TABS - STARTS
-**/
-$(document).ready(function(){
-    /* ON CLICKING MAIN MENU*/
-    $(".newtab-menus li").click(function(){
-        /* HIDE ALL TABS CONTENT*/
-        $(".newtab-content").hide();
-        /* SHOW THE CORESPONDING TAB CONTENT*/
-        $("#"+this.lang).show();
-        /* INACTIVE ALL TABS */
-        $(".newtab-menus li").removeClass("active-tab");
-        /* ACTIVE CURRENT TABS */
-        $(this).addClass("active-tab");
-    });
-});
-    
-function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){
-    /* HIDE ALL TABS CONTENT*/
-    $("."+mainContentClass).hide();
-    /* SHOW THE CORESPONDING TAB CONTENT*/
-    $(".newtab-container #"+activeTabContentId).show();
-    /* INACTIVE ALL TABS */
-    $(".newtab-menus li").removeClass("active-tab");
-    /* ACTIVE CURRENT TABS */
-    $(".newtab-menus #"+activeTabId).addClass("active-tab");
-}
+
 
 
