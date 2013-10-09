@@ -48,7 +48,7 @@
                         <li>&nbsp;&nbsp;&nbsp;&nbsp;
                             Created by,&nbsp;
                             <i>
-                               <b> <%= User.find(i.created_by).name %> </b>
+                               <b> <%= User.find(i.created_by).name rescue ""%> </b>
                             </i>
                             at 
                             <i>
@@ -59,7 +59,7 @@
                         <li>&nbsp;&nbsp;&nbsp;&nbsp;
                             Last modified by,&nbsp;
                             <i>
-                               <b> <%= (User.find(i.updated_by).name)  %> </b>
+                               <b> <%= (User.find(i.updated_by).name) rescue "" %> </b>
                             </i>
                             at 
                             <i>

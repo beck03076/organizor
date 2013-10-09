@@ -10,9 +10,6 @@
  *
  *= require_self
  *= require_tree .
-  *= require jquery.ui.core
- *= require jquery.ui.theme
- *= require dataTables/src/demo_table_jui
  */
  
  
@@ -431,7 +428,7 @@ font-weight:bolder;
 .newtab-menus{list-style:none;padding:0;margin:0}
 .newtab-menus li{color:#CDCDCD;font-size:14px;padding:5px 15px 5px 15px;display:inline-block;margin:0 15px -1px 0;border-radius:5px 5px 0 0;font-weight:bold;border:1px solid #fff;border-bottom:1px solid #D9D9D9;}
 .newtab-menus .active-tab,.newtab-menus li:hover{background:#fff;text-decoration:none;cursor:pointer;color:#333333;border:1px solid #D9D9D9;
-border-bottom:1px solid #fff;margin:0 15px -2px 0}
+border-bottom:1px solid #fff;margin:0 15px -2px 0;}
 .newtab-content{background:#fff;padding:10px;display:none;border-top:1px solid #D9D9D9}
 /* REGISTRATION LAUNCH TABS - ENDS */
 

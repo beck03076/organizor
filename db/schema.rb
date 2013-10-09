@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.integer  "country_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "created_by"
-    t.integer  "updated_by"
   end
 
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.string   "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -70,8 +70,6 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.integer  "capital_city_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.integer  "created_by"
-    t.integer  "updated_by"
   end
 
   create_table "course_levels", :force => true do |t|
@@ -201,15 +199,6 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "exam_scores", :force => true do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "exam_types", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -248,10 +237,10 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
 
   create_table "institutions", :force => true do |t|
     t.string   "name"
-    t.integer  "type_id"
+    t.integer  "poc"
     t.integer  "city_id"
     t.integer  "country_id"
-    t.integer  "poc"
+    t.integer  "type_id"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
