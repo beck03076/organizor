@@ -121,7 +121,7 @@ function prepareSelect(sourObj,destVar,hit)
     var index = sourObj.id.split("_")[3];
     var obj = $('div#object_name').data("obj");
     var destDiv = '#' + obj + destVar.replace("index", index);
-    var pTypeId = $(sourObj).parent().parent().find('input:radio.programme_type:checked').val();
+    var pTypeId = $(sourObj).parent().parent().parent().parent().find('input:radio.programme_type:checked').val();
     var itemId = sourObj.options[sourObj.selectedIndex].value;
     
         if (hit == '/get_cities/'){

@@ -50,19 +50,6 @@ $(function(){
                                                '/get_institutions/country/');"}) %>
     </div>
     <div class="fbox">
-         <%= p.label :school %>
-         <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
-        <% four = p.object.institution_id %>
-        <% five = four.blank? ? [] : Institution.where(id: four) %>
-        <%= p.collection_select(:institution_id, 
-                                five, 
-                                :id, 
-                                :name,
-                                {:prompt => "--Institution--"},
-                                {:class => "institutions_select"}) %>
-                                
-    </div>
-    <div class="fbox">
        <%= label_tag :city %>
         <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
         <% one = p.object.city_id %>
@@ -77,7 +64,21 @@ $(function(){
                                                '_programmes_attributes_index_institution_id',
                                                '/get_institutions/city/');"}) %> &nbsp;&nbsp;
        
-        </div>       
+    </div>      
+    <div class="fbox">
+         <%= p.label :school %>
+         <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
+        <% four = p.object.institution_id %>
+        <% five = four.blank? ? [] : Institution.where(id: four) %>
+        <%= p.collection_select(:institution_id, 
+                                five, 
+                                :id, 
+                                :name,
+                                {:prompt => "--Institution--"},
+                                {:class => "institutions_select"}) %>
+                                
+    </div>
+ 
 
        <div class="fbox">
         <%= label_tag :start_date,nil,{class: 'start_date'} %>
