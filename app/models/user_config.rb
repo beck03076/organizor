@@ -1,3 +1,4 @@
 class UserConfig < ActiveRecord::Base
-  attr_accessible :def_follow_up_days, :user_id
+  serialize :reg_cols,Array
+  attr_accessible :def_follow_up_days, :user_id,:def_note,:reg_cols
 end

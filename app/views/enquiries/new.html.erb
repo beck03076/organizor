@@ -1,0 +1,19 @@
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.new").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.new").addClass("active-tab");
+  $("ul.tab-menus li.new").trigger("click");
+});
+</script>
+
+
+<div class="tab-container">
+  <%= render 'tabs' %>
+  <div class="tab-content" id="new_enquiry_id">
+  <h1>Editing enquiry</h1>
+    <%= render 'form' %>
+  </div>
+
+</div>
+

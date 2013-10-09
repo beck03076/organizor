@@ -1,12 +1,52 @@
-<%= simple_form_for(@user_config) do |f| %>
-  <%= f.error_notification %>
+<h5>User Configuration </h5>
+<%= form_for(@user_config) do |f| %>
+ 
+        <%= f.label :default_follow_up_days %>
+        <%= f.text_field :def_follow_up_days %>
+        <br/>
 
-  <div class="form-inputs">
-    <%= f.input :def_follow_up_days %>
-    <%= f.input :user_id %>
-  </div>
+        <%= f.label :default_note %>
+        <%= f.text_area :def_note,class: "tinymce"%>
+        <br/>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+      <%= f.label :registration_columns %>
+      <br/>
+      <% Registration.column_names.push("statuses").sort.each_slice(5) do |j| %>
+      <div class="fl">
+        <% j.each do |i| %>
+          <%= check_box_tag "user_config[reg_cols][]",i %>
+          <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
+          <br/>
+        <% end %>
+      </div>
+      <% end %>
+      <br/>
+      <br/>
+      <br/>      
+      <%= f.submit "Save",{class: "fl btnp"} %>
+
+
 <% end %>
+
+<script>
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     theme: "modern",
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor "
+     ],
+     toolbar1: "insertfile undo redo | styleselect | sizeselect | bold italic | fontselect |  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons",
+     image_advtab: true,
+     templates:[ 
+        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
+        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
+    ],
+     autosave_ask_before_unload: false
+});
+
+</script>

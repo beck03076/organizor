@@ -1,6 +1,6 @@
 class AuditorObserver < ActiveRecord::Observer
 
-  observe :enquiry,:note,:follow_up
+  observe :enquiry,:note,:follow_up,:programme,:registration
 
    def before_create(record)
      record.created_by = User.current.id

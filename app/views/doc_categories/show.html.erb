@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @doc_category.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @doc_category.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_doc_category_path(@doc_category) %> |
+<%= link_to 'Back', doc_categories_path %>

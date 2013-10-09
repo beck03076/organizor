@@ -3,11 +3,22 @@ class Registration < ActiveRecord::Base
   belongs_to :qualification, foreign_key: 'qua_id'
   belongs_to :country
 
-  has_many :programmes
+  has_many :programmes, dependent: :destroy
   has_many :exams
   has_many :proficiency_exams,class_name: "Exam"
   belongs_to :sub_agent
   belongs_to :student_source, foreign_key: 'reg_source_id'  
+  
+  has_many :documents, dependent: :destroy
+  
+   belongs_to :country_of_origin,
+             :class_name => "Country",
+             :foreign_key => "country_id"
+   belongs_to :address_country,
+             :class_name => "Country",
+             :foreign_key => "address_country_id"
+             
+  belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
 
   attr_accessible :address_city, :address_country_id, :address_line1, 
   :address_line2, :address_others, :address_post_code, 
@@ -25,7 +36,41 @@ class Registration < ActiveRecord::Base
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
-  :note
+  :note,:documents_attributes
   
-  accepts_nested_attributes_for :programmes, :proficiency_exams
+  accepts_nested_attributes_for :programmes, :proficiency_exams, :documents, :allow_destroy => true
+  
+  
+  def name
+    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+  end
+  
+  def ass_to
+    User.find(self.assigned_to).name.titleize.strip rescue ""
+  end
+  
+  def ass_by
+    User.find(self.assigned_by).name.titleize.strip rescue ""
+  end
+
+  def cre_by
+    User.find(self.created_by).name.titleize.strip rescue ""
+  end
+
+  def upd_by
+    User.find(self.updated_by).name.titleize.strip rescue ""
+  end
+  
+  def statuses
+    self.programmes.map{|i| i.application_status.try(:name)} rescue ""
+  end
+
+  def address
+    [self.address_line1.to_s,
+     self.address_line2.to_s,
+     self.address_city.to_s,
+     self.address_country.try(:name).to_s,
+     self.address_post_code.to_s].join(', ').strip
+  end
+  
 end

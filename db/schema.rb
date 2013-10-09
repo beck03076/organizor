@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131001175918) do
+ActiveRecord::Schema.define(:version => 20131008135457) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
     t.integer  "country_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.string   "desc"
-    t.integer  "created_by"
-    t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -63,13 +63,15 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
     t.string   "name"
     t.text     "desc"
     t.string   "code"
-    t.string   "continent",       :limit => 13, :default => "Asia"
+    t.string   "continent"
     t.string   "region"
     t.string   "government_form"
     t.string   "local_name"
     t.integer  "capital_city_id"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "course_levels", :force => true do |t|
@@ -88,6 +90,22 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "doc_categories", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "documents", :force => true do |t|
+    t.string   "name"
+    t.string   "path"
+    t.integer  "category_id"
+    t.integer  "registration_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "email_templates", :force => true do |t|
@@ -183,6 +201,15 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "exam_scores", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "exam_types", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -221,10 +248,10 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
 
   create_table "institutions", :force => true do |t|
     t.string   "name"
-    t.integer  "poc"
+    t.integer  "type_id"
     t.integer  "city_id"
     t.integer  "country_id"
-    t.integer  "type_id"
+    t.integer  "poc"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
@@ -456,6 +483,7 @@ ActiveRecord::Schema.define(:version => 20131001175918) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.text     "def_note"
+    t.text     "reg_cols"
   end
 
   create_table "users", :force => true do |t|

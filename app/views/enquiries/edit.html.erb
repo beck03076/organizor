@@ -1,20 +1,19 @@
 <script type="text/javascript">
 $(function(){
-  $("ul.tab-menus li.edit").show();
+  $("ul.tab-menus li.new_enquiry").show();
   $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.edit").addClass("active-tab");
-  $("ul.tab-menus li.edit").text('Edit - <%= @enquiry.first_name.titleize %>');
-  $("ul.tab-menus li.edit").attr('data-enquiry_id', '<%= @enquiry.id %>');
-  $("ul.tab-menus li.edit").trigger("click");
+  $("ul.tab-menus li.new_enquiry").addClass("active-tab");
+  $("ul.tab-menus li.new_enquiry").text('Edit - <%= @enquiry.first_name.titleize %>');
+  $("ul.tab-menus li.new_enquiry").attr('data-enquiry_id', '<%= @enquiry.id %>');
+  $("ul.tab-menus li.new_enquiry").attr('data-cond', 'edit');
+  $("ul.tab-menus li.new_enquiry").trigger("click");
 });
 </script>
 
 
 <div class="tab-container">
-  <%= render 'tabs' %>
+  <%= render 'tabs', :stat => "EnquiryStatus",:model => "enquiry"  %>
   <div class="tab-content" id="edit_id">
-  <h1>Editing enquiry</h1>
-    <%= render 'form' %>
   </div>
 
 </div>

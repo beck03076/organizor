@@ -1,0 +1,125 @@
+<% a = @registration %>
+<div class="tab-content3" id="tab-content62">
+
+        <div class="boxp">
+            <div class="htab">
+            <h5>
+                <b>Application Status(es) : 
+                    <span class="sp">
+                        <h6>
+                            <b><%= disp3(a,"programmes","application_status") %> </b>
+                        </h6>
+                    </span>
+                </b>
+            </h5>
+            
+            <%= link_to "Edit", edit_registration_path(a), {class: "btnp fr"} %>
+            
+            <div class="cl"></div>
+        </div>
+        <br/>
+        <div class="cols brgb" style="padding-bottom:20px">
+            <div class="col8">
+                <div id="scrollboxu">
+                    <img src="/images/icons/user.png" width="100"  class="imgb fl"/>
+                    <div class="fl padl20">
+                        <h5>
+                        <b>                        
+                            <%= a.name %>
+                        </b>
+                        <span class='ref_no'>
+                          [<%= a.ref_no %>]
+                        </span>
+                        </h5>
+                        <ul class="infodls">
+                        <li>Mobile1 : <%= a.mobile1 %></li>
+                        <li>Mobile2 : <%= a.mobile1 %></li>
+                        <li>Email1 : <%= a.email1 %></li>
+                        <li>Email2 :<%= a.email2 %></li>
+                        </ul>
+                    </div>
+                    <div class="cl"></div>
+                    <br/>
+                    <h6><b>Personal information</b></h6>
+                    <ul class="infosm">
+                    <li>Date of Birth : <%= a.date_of_birth %></li>
+                    <li>Gender : <%= a.gender %></li>
+                    <li>Nationality : <%= a.country_of_origin.try(:name) %></li>
+                    <li>Address : <%= disp0(a,'address') %></li>
+                    <li>Home Phone : <%= a.home_phone %></li>
+                    <li>Work Phone : <%= a.work_phone %></li>
+                    </ul>
+                    <br/>
+                    <h6><b>Passport & Visa</b></h6>
+                    <ul class="infosm">
+                    <li>Passport Number : <%= a.passport_number %></li>
+                    <li>Passport Valid Till : <%= a.passport_valid_till %></li>
+                    <li>Visa Type : <%= a.visa_type %></li>
+                    <li>Visa Valid Till : <%= a.visa_valid_till %></li>
+                    </ul><br/>
+                 </div>
+            </div>
+            <div class="col4 ">
+                <div class="boxs">
+                    <ul class="infodhls">
+                        <li>Registration history</li>
+                        <li>
+                        <b>Registered on :</b> 
+                          <%= a.created_at.to_date %>
+                        </li>
+                        <li>
+                        <b>Registration Source :</b> 
+                          <%= disp1(a,'student_source') %>
+                        </li>
+                        <li>
+                        <b>Created by :</b> 
+                            <%= (User.where(id: a.created_by).map &:first_name)[0] %>
+                        </li>
+                        <li>
+                        <b>Created at :</b> 
+                          <%= a.created_at %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Last modified</b></li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.updated_by).map &:first_name)[0] %>
+                        </li>
+                        <li><b>At :</b> 
+                            <%= a.updated_at %>
+                        </li>
+                        <li><br><b>Currently Assigned</b></li>
+                        <li><b>To :</b>
+                            <%= (User.where(id: a.assigned_to).map &:first_name)[0] %>
+                        </li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.assigned_by).map &:first_name)[0] %>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+<br/>
+    <% tabs_arr = %w(Course Details Document) %>
+    <div class="newtab-container">
+        <ul class="newtab-menus">
+        <% tabs_arr.each do |i|  %>
+            <% i1 = i.downcase %>
+            <li lang='<%= i1 + "-content" %>' id='<%= i1 %>'><%= i %></li>
+        <% end %>
+        </ul>
+        
+        <% tabs_arr.each do |i|  %>
+            <% i1 = i.downcase %>
+            <div class="newtab-content" id='<%= i1+ "-content" %>'>
+              <%= render i1 %>
+            </div>
+        <% end %>
+        
+    </div>
+
+<!-- INQUIRY DETAILS - ENDS -->
+
+<script type="text/javascript">
+activeNewSubTab("newtab-content","course-content","course");
+</script>

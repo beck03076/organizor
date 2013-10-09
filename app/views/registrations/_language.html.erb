@@ -1,0 +1,33 @@
+
+<ul class="infosm">
+  <% a = @registration %>
+    <li>
+      Level of English : 
+      <b>
+        <%= a.eng_level.name %>
+      </b>
+    </li>
+    
+    <% a.exams.each do |e| %>
+            <li>
+              Exam Type : 
+              <b>
+                <%= e.exam_type.name %>
+              </b>
+            </li>
+            
+            <li>
+              Exam Score : 
+              <b>
+                <%= e.exam_score %>
+              </b>
+            </li>
+       
+            <li>
+              Exam Type : 
+              <b>
+                <%= e.exam_date %>
+              </b>
+            </li>
+    <% end %>
+</ul>

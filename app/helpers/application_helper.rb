@@ -42,6 +42,8 @@ module ApplicationHelper
     
     ("<div class='#{cl}' >" + f.label(name.kind_of?(Array) ? name[0].to_sym : name.to_sym ,l.titleize) + f.send(elem,*name) + "</div>").html_safe
 
+    ("<div class='#{cl}' >" + f.label(name.kind_of?(Array) ? name[0].to_sym : name.to_sym ,l.titleize) +  "&nbsp;" + f.send(elem,*name) + "</div>").html_safe
+
   end
   
   def go_create(obj,obj_name,id,name,disp = "none")
@@ -77,10 +79,12 @@ background: #fff;overflow:hidden}
                                     {:prompt => prompt },
                                     {:class => sel_cl })
                                     
+
       html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
       html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' >x</span></div>"
+
       
       html += "<div class='fpbox'>"
       html += label_tag(name.to_sym)
@@ -94,12 +98,31 @@ background: #fff;overflow:hidden}
       
 	  html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
+
       html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span><div class='cl'></div><br/>"
+
       
       html += "</div></div>"
       
       html.html_safe
 
   end
+  
+  def disp0(obj,method,default = "Unknown")
+    obj.send(method) || default
+  end
+  
+  def disp1(obj,method,var = "name",default = "Unknown")
+    obj.send(method).try(var.to_sym) || default
+  end
+  
+  def disp2(obj,method,var = "name",default = "Unknown")
+    obj.send(method).reject(&:nil?).map(&var.to_sym).join(", ")
+  end
+  
+  def disp3(obj,asso1,asso2,var = "name",default = "Unknown")
+    obj.send(asso1).includes(asso2.to_sym).map{|i| i.send(asso2).try(var)}.join(", ") || default
+  end
+  
 
 end

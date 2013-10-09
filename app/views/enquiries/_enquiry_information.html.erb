@@ -1,3 +1,5 @@
+
+
           <!-- NEW Enquiry - STARTS -->
         <div class="boxp">
           <div >
@@ -21,12 +23,10 @@
                     </div>
                     <div class="frbox">
                          <%= f.label :gender %>
-                         <% %w(Male Female).each do |elem| %>
-                             <%= radio_button_tag "#{f.object_name}[gender]",
-                                   elem,
-                                   @enquiry.gender %>
-                             <%= label_tag elem %>
-                         <% end %>
+                         <% {male: 'm', female: 'f'}.each do |i| %>
+                            <%= f.radio_button :gender, i[1] %>
+                            <%= f.label i[0].to_s.strip %>
+                          <% end %>
                     </div>
                     <div class="frbox">
                          <%= f.label :country_of_origin %>

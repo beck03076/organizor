@@ -98,10 +98,6 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/1/edit
   def edit
     @enquiry = Enquiry.find(params[:id])
- #   self.pre    
- @countries = self.basic_select(Country)
-@p_types = ProgrammeType.all
-    @enquiry.programmes.build
   end
 
   # POST /enquiries

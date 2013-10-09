@@ -143,26 +143,29 @@ $(document).ready(function(){
         }
         
     });    
-    
 });
 
 
 /**
 * Add new go_create js
 **/
+
 $(document).ready(function(){
     $(".Bpclose").click(function(){
     $("#"+this.lang).css("display","none");
     });
 });
 
+
 function closePop(objectId){
 $("#"+objectId).css("display","none");
 }
 
+
 function showPop(objectId,e){
-xOffset = 50;
-yOffset = -130;        
+xOffset = -10;
+        yOffset = -40;        
+
 $("#"+objectId).css("display","inline");
         $("#"+objectId)
             .css("top",(e.pageY - xOffset) + "px")
@@ -171,133 +174,162 @@ $("#"+objectId).css("display","inline");
 
 }
 
-
 $(document).ready(function(){
-	var backgroundColor="white";
-	setBGColor(backgroundColor+"-bg");
-	/*SET THE THEME SESION VALUE HERE*/
-	var themeColor="blue";
-	setThemeColor(themeColor+"-theme");
-	
+    var backgroundColor="white";
+    setBGColor(backgroundColor+"-bg");
+    /*SET THE THEME SESION VALUE HERE*/
+    var themeColor="blue";
+    setThemeColor(themeColor+"-theme");
+    
 });
 
 function setThemeColor(objectId){
-	var theme=$("#"+objectId).data("theme");
-	var mainColor="#2A88C8";
-	var thickColor="#00336C";
-	var lightColor="#3BA7F2";
-	var lightestColor="#E8F0FD";
-	/* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
-	$(".theme-colrs li").removeClass("theme-colrs-active");
-	/* ADD ACTIVE THEME MENU CLASS NAME */
-	$("#"+objectId).parent().addClass("theme-colrs-active");
-	/* APPLY THEMES */
-	switch(theme){
-		case "yellow":{
-			mainColor="#FFC20E";
-			thickColor="#DDA600";
-			lightColor="#FFCD37";
-			lightestColor="#FFFFCD";
-			break;
-		}
-		case "blue":{
-			mainColor="#2A88C8";
-			thickColor="#00336C";
-			lightColor="#3BA7F2";
-			lightestColor="#E8F0FD";
-			break;
-		}
-		case "orange":{
-			mainColor="#FF6501";
-			thickColor="#EA7500";
-			lightColor="#FF9E3E";
-			lightestColor="#FFEFDF";
-			break;
-		}
-		case "green":{
-			mainColor="#22B14C";
-			thickColor="#177232";
-			lightColor="#37D968";
-			lightestColor="#D5FFD5";
-			break;
-		}
-		case "violet":{
-			mainColor="#713F98";
-			thickColor="#682C91";
-			lightColor="#915BBB";
-			lightestColor="#EBE1F2";
-			break;
-		}
-		case "pink":{
-			mainColor="#C8158D";
-			thickColor="#A61176";
-			lightColor="#DF27AA";
-			lightestColor="#FAD1ED";
-			break;
-		}
-	}
-	$("#header").css({"background":mainColor,"border-bottom-color":thickColor});
-	$(".btnp").css({"background":mainColor,"border-color":thickColor});
-	$(".theme").css({"background":mainColor});
-	$(".uibox").css({"background":lightColor,"border-color":mainColor});
-	$(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
-	$(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
-	$(".tb-stylev tr th,.theme-l").css({"background":lightColor,"color":thickColor});
-	
-	$(".uibox").hover(function(){
-		$(this).css({"background":"#fff"});
-			$(".uiboxs").css({"background":"#fff"});
-		},function(){
-			$(".uibox").css({"background":lightColor,"border-color":mainColor});
-	});
-	
-	$(".tab-menus li").click(function(){
-		$(".tab-menus li").css({"background":"#EAEAEA"});
-		$(".tab-menus .active-tab").css({"background":lightestColor});
-	},function(){
-		$(this).css({"background":lightestColor});
-	});
-	
-	$(".tab-menus li").hover(function(){
-		$(".tab-menus li").css({"background":"#EAEAEA"});
-		$(this).css({"background":lightestColor});
-	});
+    var theme=$("#"+objectId).data("theme");
+    var mainColor="#2A88C8";
+    var thickColor="#00336C";
+    var lightColor="#3BA7F2";
+    var lightestColor="#E8F0FD";
+    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+    $(".theme-colrs li").removeClass("theme-colrs-active");
+    /* ADD ACTIVE THEME MENU CLASS NAME */
+    $("#"+objectId).parent().addClass("theme-colrs-active");
+    /* APPLY THEMES */
+    switch(theme){
+        case "yellow":{
+            mainColor="#FFC20E";
+            thickColor="#DDA600";
+            lightColor="#FFCD37";
+            lightestColor="#FFFFCD";
+            break;
+        }
+        case "blue":{
+            mainColor="#2A88C8";
+            thickColor="#00336C";
+            lightColor="#3BA7F2";
+            lightestColor="#E8F0FD";
+            break;
+        }
+        case "orange":{
+            mainColor="#FF6501";
+            thickColor="#EA7500";
+            lightColor="#FF9E3E";
+            lightestColor="#FFEFDF";
+            break;
+        }
+        case "green":{
+            mainColor="#22B14C";
+            thickColor="#177232";
+            lightColor="#37D968";
+            lightestColor="#D5FFD5";
+            break;
+        }
+        case "violet":{
+            mainColor="#713F98";
+            thickColor="#682C91";
+            lightColor="#915BBB";
+            lightestColor="#EBE1F2";
+            break;
+        }
+        case "pink":{
+            mainColor="#C8158D";
+            thickColor="#A61176";
+            lightColor="#DF27AA";
+            lightestColor="#FAD1ED";
+            break;
+        }
+    }
+    $("#header").css({"background":mainColor,"border-bottom-color":thickColor});
+    $(".btnp").css({"background":mainColor,"border-color":thickColor});
+    $(".theme").css({"background":mainColor});
+    $(".uibox").css({"background":lightColor,"border-color":mainColor});
+    $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
+    $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
+    $(".tb-stylev tr th,.theme-l").css({"background":lightColor,"color":thickColor});
+    
+    $(".uibox").hover(function(){
+        $(this).css({"background":"#fff"});
+            $(".uiboxs").css({"background":"#fff"});
+        },function(){
+            $(".uibox").css({"background":lightColor,"border-color":mainColor});
+    });
+    
+    $(".tab-menus li").click(function(){
+        $(".tab-menus li").css({"background":"#EAEAEA"});
+        $(".tab-menus .active-tab").css({"background":lightestColor});
+    },function(){
+        $(this).css({"background":lightestColor});
+    });
+    
+    $(".tab-menus li").hover(function(){
+        $(".tab-menus li").css({"background":"#EAEAEA"});
+        $(this).css({"background":lightestColor});
+    });
 }
 /* ON CLICKING BG MENU*/
 function setBGColor(objectId){
-	var bg=$("#"+objectId).data("bg");
-	var bgColor="#fff";
-	var borderColor="#CDCDCD";
-	/* REMOVE ALL ACTIVE BG MENU CLASS NAME */
-	$("#bg-color li").removeClass("theme-colrs-active");
-	/* ADD ACTIVE BG MENU CLASS NAME */
-	$("#"+objectId).parent().addClass("theme-colrs-active");
-	/* APPLY BG */
-	switch(bg){
-		case "gray":{
-			bgColor="#F3F0EB";
-			borderColor="#F3F0EB";
-			break;
-		}
-		case "white":{
-			bgColor="#fff";
-			break;
-		}
-		case "cream":{
-			bgColor="#FAF3E9";
-			borderColor="#FAF3E9";
-			break;
-		}
-		case "blue":{
-			bgColor="#E7ECF2";
-			borderColor="#E7ECF2";
-			break;
-		}
-	}
-	$("body").css({"background":bgColor});
-	$("#right-panel").css({"background":bgColor});
-	$("#main-body").css({"background":bgColor});
-	$(".boxstheme").css({"border-color":borderColor});
-	
-	
+    var bg=$("#"+objectId).data("bg");
+    var bgColor="#fff";
+    var borderColor="#CDCDCD";
+    /* REMOVE ALL ACTIVE BG MENU CLASS NAME */
+    $("#bg-color li").removeClass("theme-colrs-active");
+    /* ADD ACTIVE BG MENU CLASS NAME */
+    $("#"+objectId).parent().addClass("theme-colrs-active");
+    /* APPLY BG */
+    switch(bg){
+        case "gray":{
+            bgColor="#F3F0EB";
+            borderColor="#F3F0EB";
+            break;
+        }
+        case "white":{
+            bgColor="#fff";
+            break;
+        }
+        case "cream":{
+            bgColor="#FAF3E9";
+            borderColor="#FAF3E9";
+            break;
+        }
+        case "blue":{
+            bgColor="#E7ECF2";
+            borderColor="#E7ECF2";
+            break;
+        }
+    }
+    $("body").css({"background":bgColor});
+    $("#right-panel").css({"background":bgColor});
+    $("#main-body").css({"background":bgColor});
+    $(".boxstheme").css({"border-color":borderColor});
+    
+    
 }
+
+/**
+*  REGISTRATION LAUNCH TABS - STARTS
+**/
+$(document).ready(function(){
+    /* ON CLICKING MAIN MENU*/
+    $(".newtab-menus li").click(function(){
+        /* HIDE ALL TABS CONTENT*/
+        $(".newtab-content").hide();
+        /* SHOW THE CORESPONDING TAB CONTENT*/
+        $("#"+this.lang).show();
+        /* INACTIVE ALL TABS */
+        $(".newtab-menus li").removeClass("active-tab");
+        /* ACTIVE CURRENT TABS */
+        $(this).addClass("active-tab");
+    });
+});
+    
+function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){
+    /* HIDE ALL TABS CONTENT*/
+    $("."+mainContentClass).hide();
+    /* SHOW THE CORESPONDING TAB CONTENT*/
+    $(".newtab-container #"+activeTabContentId).show();
+    /* INACTIVE ALL TABS */
+    $(".newtab-menus li").removeClass("active-tab");
+    /* ACTIVE CURRENT TABS */
+    $(".newtab-menus #"+activeTabId).addClass("active-tab");
+}
+
+
