@@ -82,12 +82,12 @@ background: #fff;overflow:hidden}
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
       html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' >x</span></div>"
       
-      html += "<div class='field' style='padding:15px 10px 0 10px'>"
+      html += "<div class='fpbox'>"
       html += label_tag(name.to_sym)
       html += text_field_tag(name.to_sym)
       html += "</div>"
       
-      html += "<div id='#{desc_id}' style='display:none;padding:5px 10px 0 10px'>"
+      html += "<div id='#{desc_id}' style='display:none;' class='fpbox'>"
       html += label_tag(:description)
       html += text_area_tag(:desc)
       html += "</div>"

@@ -123,8 +123,9 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
 .fbox,.fsbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
-.fpbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
-.fpbox label{width:60px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fpbox{width:90%;margin:10px 5px 10px 5px;vertical-align:top;white-space:nowrap;height:40px}
+.fpbox label{width:80px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fpbox textarea{width:165px !important}
 .fbox .fields,.fsbox .fields{display:inline}
 .fsbox label{width:70px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal}
 input[type=radio]{padding-right:5px}
