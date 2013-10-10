@@ -80,6 +80,7 @@ private
     end
     
     regs
+    
   end
 
   def page
@@ -92,8 +93,7 @@ private
 
   def sort_column
     columns = [:first_name] + (@cols - ["statuses"])
-    c = columns[params[:iSortCol_0].to_i]
-
+    columns[params[:iSortCol_0].to_i]
   end
 
   def sort_direction

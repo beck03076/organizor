@@ -1,5 +1,5 @@
 class Registration < ActiveRecord::Base
-  
+  audited
   belongs_to :qualification, foreign_key: 'qua_id'
   belongs_to :country
 
@@ -19,6 +19,11 @@ class Registration < ActiveRecord::Base
              :foreign_key => "address_country_id"
              
   belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
+  
+  has_many :emails
+  has_many :follow_ups
+  has_many :notes,foreign_key: "sub_id"
+  has_many :todos
 
   attr_accessible :address_city, :address_country_id, :address_line1, 
   :address_line2, :address_others, :address_post_code, 

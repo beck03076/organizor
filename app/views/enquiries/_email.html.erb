@@ -1,5 +1,6 @@
+
 <br/>
-<% if @list.to_i == 1 && @enquiry.emails.size > 0 %>
+<% if @list.to_i == 1 && obj.emails.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
       <tr>
@@ -10,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-            <% @enquiry.emails.each do |email| %>
+            <% obj.emails.each do |email| %>
                 <tr>
                     <td><%= email.to %></td>
                     <td><%= email.smtp.name %></td>
@@ -18,7 +19,7 @@
                     <td><%= truncate(email.body,length: 20) %></td>
                </tr>
            <% end %>
-				<tr>
+                <tr>
                     <td colspan="4" align="left"><a href="#">Back</a></td>
                </tr>
 
@@ -27,13 +28,15 @@
 <br/><br/>
 <% end %>
 
-<div class="htab">
-		<h6><b>New Email</b></h6>
-</div>
-<br/>
 <div id="email-action" class="action-box">
+<div class="htab">
+        <h6><b>New Email</b></h6>
+</div>
+
   <%= form_for(e) do |p| %>
-    <%= p.hidden_field :enquiry_id, value: id %>
+    <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
+    <%= p.hidden_field obj_id.to_sym, value: id %>
+    
     
     <div class="fbox">
          <%= p.label :email_template %>

@@ -41,30 +41,30 @@
         </li>
         <li><a href="#">Create Task</a></li>
     </ul>
-	<!-- THEME - STARTS -->
-	<ul class="lsb">
-    	<li><a href="#">Theme</a></li>
+    <!-- THEME - STARTS -->
+    <ul class="lsb">
+        <li><a href="#">Theme</a></li>
         <li><ul class="theme-colrs">
-	<li><span class="blue-theme" id="blue-theme" data-theme="blue" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	<li><span class="yellow-theme" id="yellow-theme" data-theme="yellow" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	<li><span class="green-theme"  id="green-theme" data-theme="green" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	<li><span class="pink-theme"  id="pink-theme" data-theme="pink" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	<li><span class="violet-theme" id="violet-theme" data-theme="violet" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	<li><span class="orange-theme" id="orange-theme" data-theme="orange" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-	</ul></li>
+    <li><span class="blue-theme" id="blue-theme" data-theme="blue" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    <li><span class="yellow-theme" id="yellow-theme" data-theme="yellow" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    <li><span class="green-theme"  id="green-theme" data-theme="green" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    <li><span class="pink-theme"  id="pink-theme" data-theme="pink" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    <li><span class="violet-theme" id="violet-theme" data-theme="violet" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    <li><span class="orange-theme" id="orange-theme" data-theme="orange" onclick="setThemeColor(this.id);">&nbsp;</span></li>
+    </ul></li>
     </ul>
-	<!-- THEME - ENDS -->
-	<!-- BACKGROUND - STARTS -->
-	<ul class="lsb">
+    <!-- THEME - ENDS -->
+    <!-- BACKGROUND - STARTS -->
+    <ul class="lsb">
     <li><a href="#">Background</a></li>
     <li><ul class="theme-colrs" id="bg-color">
-	<li><span class="blue-bg" id="blue-bg" data-bg="blue" onclick="setBGColor(this.id);">&nbsp;</span></li>
-	<li><span class="cream-bg" id="cream-bg" data-bg="cream" onclick="setBGColor(this.id);">&nbsp;</span></li>
-	<li><span class="white-bg"  id="white-bg" data-bg="white" onclick="setBGColor(this.id);">&nbsp;</span></li>
-	<li><span class="gray-bg"  id="gray-bg" data-bg="gray" onclick="setBGColor(this.id);">&nbsp;</span></li>
-	</ul></li>
+    <li><span class="blue-bg" id="blue-bg" data-bg="blue" onclick="setBGColor(this.id);">&nbsp;</span></li>
+    <li><span class="cream-bg" id="cream-bg" data-bg="cream" onclick="setBGColor(this.id);">&nbsp;</span></li>
+    <li><span class="white-bg"  id="white-bg" data-bg="white" onclick="setBGColor(this.id);">&nbsp;</span></li>
+    <li><span class="gray-bg"  id="gray-bg" data-bg="gray" onclick="setBGColor(this.id);">&nbsp;</span></li>
+    </ul></li>
     </ul>
-	<!-- BACKGROUND - ENDS -->
+    <!-- BACKGROUND - ENDS -->
     <ul  class="lsb">
         <li>
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
@@ -87,16 +87,19 @@
         <img src="/images/icons/org_dashboard.png" id="iconMM1" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="dashboard.html">Dashboard</a></li>
+        
         <li id="inquiresMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM2','','/images/icons/org_inquiryb.png',1)">
         <img src="/images/icons/org_inquiry.png"  id="iconMM2"/><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="inquiry.html">Inquires</a></li>
+        
         <li id="registrationMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM3','','/images/icons/org_registrationb.png',1)">
         <img src="/images/icons/org_registration.png" id="iconMM3" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="registration.html">Registration</a></li>
+        
         <li id="accountsMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM4','','/images/icons/org_financeb.png',1)">
         <img src="/images/icons/org_finance.png" id="iconMM4" /><br/>

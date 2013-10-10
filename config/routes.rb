@@ -32,8 +32,10 @@ Organizor::Application.routes.draw do
   
   match "/email_template/create" => "emails#template_create"
   
-  match "/email_templates/:etemp_id/:e_id/:list" => "email_templates#partial"
-   match 'enquiries_action_partial/:partial_name/:enquiry_id/:list' => "enquiries#action_partial"
+  match "/email_templates/:etemp_id/:model/:e_id/:list" => "email_templates#partial"
+  
+  match 'enquiries_action_partial/:partial_name/:enquiry_id/:list' => "enquiries#action_partial"
+  match 'registrations_action_partial/:partial_name/:registration_id/:list' => "registrations#action_partial"
   
   match "/emails/new" => "emails#new"
   

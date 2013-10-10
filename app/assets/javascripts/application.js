@@ -148,9 +148,9 @@ function prepareSelect(sourObj,destVar,hit)
 }
 
 //list is 1 so the previous actions table for the enquirie will be returned in this partial
-function enquiries_action_partial(action,id)
+function action_partial(model,action,id)
 {
-  $.get("/enquiries_action_partial/" + action + '/' + id + '/1',function(partial){
+  $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
       var $container = $("#action_div").html(partial);
       var $dTF = $('.dateTimeField', $container);
       if ($dTF.length > 0) {
@@ -162,16 +162,24 @@ function enquiries_action_partial(action,id)
             controlType: 'select',
             dateFormat: 'yy-mm-dd', 
             timeFormat: 'hh:mm:ss'});
-        $dTF.trigger("select");
       }
   });
 }
 
+
 //list is 0, no list table will be returned
 function sel_act(sel){  
     var eTempId = sel.options[sel.selectedIndex].value;
-    var eId = $('#enquiry_id_div').data("enquiry_id");
-    $.get('/email_templates/'+eTempId+'/'+eId+'/0',function(partial){
+    var enqId = $('#enquiry_id_div');
+    var regId = $('#registration_id_div');
+    if (enqId.length != 0){
+      var eId = enqId.data("enquiry_id");
+      var model = enqId.data("model_sing");
+    }else if (regId.length != 0){
+      var eId = regId.data("registration_id");
+      var model = regId.data("model_sing");
+    }
+    $.get('/email_templates/'+eTempId+'/'+model+'/'+eId+'/0',function(partial){
     $('#email-action').html(partial);  
     });
 }
@@ -264,10 +272,7 @@ function dataTableStart(table,filterValue,cols)
         var selectedValue = $(this).val();
         oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
     });
-    
 
-    
-    
 }
 
 
@@ -297,9 +302,6 @@ function registrationTabSwitch(obj){
             dateFormat: "yy-mm-dd",
             yearRange: '1980:2050' });
         }
-        
-
-
     });
     
      

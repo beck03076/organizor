@@ -1,13 +1,13 @@
 
-        <% %w(Email Follow\ up Note Todo Assign\ to Register Deactivate).each do |elem| %>
+        <% %w(Email Follow\ up Note Todo Assign\ to).each do |elem| %>
           <!--  Shortening variable names -->
           <% e = elem.downcase %>
           <%= radio_button_tag 'action',
                                e,
                                false,
-                               onclick: "action_partial('enquiries',
+                               onclick: "action_partial('registrations',
                                                         '#{e.tr(" ", "_")}',
-                                                        '#{@enquiry.id}');" %>
+                                                        '#{@registration.id}');" %>
           <%= label_tag elem.titleize %>
           &nbsp;&nbsp;&nbsp;&nbsp;
         <% end %>

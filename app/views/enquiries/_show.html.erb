@@ -55,11 +55,11 @@
                       <% j = i.programme_type.try(:name) %>
                          
                         <li><%= index + 1 %>) &nbsp; <b> <%= j %> - </b>
-                        <%= [i.institution.try(:name).to_s,
-                             i.city.try(:name).to_s,
-                             i.country.try(:name).to_s].join(", ") %></li>
+                        <%= [i.institution.try(:name),
+                             i.city.try(:name),
+                             i.country.try(:name)].join(", ") %></li>
                         <li>&nbsp;&nbsp;&nbsp;&nbsp;<b> Course - </b>
-                        <%= i.course_level.name if j == "university" %>
+                        <%= i.course_level.name if j == "university" rescue "(course level was empty)" %>
                         <%= i.course_subject %><li>
                         <li><%= i.start_date %><li>
                     <% end %>
@@ -106,21 +106,21 @@
                 </div>
             </div>
         </div>
-		
-		<br/><div class="htab">
-		<h5><b>Timeline</b></h5>
-		</div><br/>
-		<div id="scrollboxu"  style="height:440px">	
+        
+        <br/><div class="htab">
+        <h5><b>Timeline</b></h5>
+        </div><br/>
+        <div id="scrollboxu"  style="height:440px">    
         <ul class="vlsdn">
             <%= render 'timeline' %>
         </ul>
-		</div><br/><br/>
-		
-        <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>'>
+        </div><br/><br/>
+        
+        <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>' data-model_sing='enquiry' data-model_plu='enquiries' >
         </div>
-		<div class="htab">
-		<h5><b>Action</b></h5>
-		</div>
+        <div class="htab">
+        <h5><b>Action</b></h5>
+        </div>
         <div class="boxstheme">
           <%= render "actions" %>
           <!-- Action container -->
