@@ -29,17 +29,17 @@
                               <br/>
                               Subject : <b> <%= i.try(:course_subject) %> </b>
                               <br/>
-                              Intake Month : <b> <%= i.start_date.strftime("%B") %> </b>
+                              Intake Month : <b> <%= i.start_date.strftime("%B") rescue "" %> </b>
                               <br/>
-                              Intake Year : <b> <%= i.start_date.strftime("%Y") %> </b>
+                              Intake Year : <b> <%= i.start_date.strftime("%Y") rescue "" %> </b>
                               <br/>
                               
                             <% elsif j == "Language School" %>
                               Name : <b> <%= i.try(:course_subject) %> </b>
                               <br/>
-                              Start Date : <b> <%= i.start_date.to_date %> </b>
+                              Start Date : <b> <%= i.start_date.to_date rescue "" %> </b>
                               <br/>
-                              End Date : <b> <%= i.start_date.to_date %> </b>
+                              End Date : <b> <%= i.start_date.to_date rescue ""%> </b>
                               <br/>
                             <% end %>
 
