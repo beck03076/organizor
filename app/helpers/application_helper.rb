@@ -68,7 +68,7 @@ background: #fff;overflow:hidden}
             .popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
             </style>"
    
-      html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
+      html += "<div class='#{main_div} frbox' style='display:#{disp.to_s};'>"
       
       html += obj.label(obj_name.to_sym)
       html +="&nbsp;"
@@ -83,8 +83,7 @@ background: #fff;overflow:hidden}
       html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
-      html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' >x</span></div>"
-
+ html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' lang=#{main_div} onClick=closePop('#{main_div}');>x</span></div>"
       
       html += "<div class='fpbox'>"
       html += label_tag(name.to_sym)

@@ -182,13 +182,12 @@
       
     <% end %>   
     
-  
-      <span class="btns">
-      <img src="/images/icons/org_add.png" width="18"/>
-      &nbsp;&nbsp;<%= f.link_to_add "Add more", :programmes %>
+  <br/>
+      <span class="btns fr">
+      <%= f.link_to_add "Add more", :programmes %>
       </span>
   <br/>
-  <br/>
+  <div class="cl"></div>
   <!-- Course of Interest - ENDS -->
   
   <!-- Student Source - STARTS -->
@@ -236,10 +235,10 @@
         <div class="col6">
           
           <%= fs(f,"emer_full_name","text_field",1,"Full Name") %>
-          
+          <div class="frbox">
             <%= f.label nil,"Relationship" %> 
             <%= f.select(:emer_relationship,%w(Father Mother Husband Wife Brother Sister Cousin Uncle Friend Other))%>
-
+		</div>
          
           <%= fs(f,"emer_mobile","text_field",1,"Mobile") %>
           <%= fs(f,"emer_email","text_field",nil,"Email") %>
@@ -288,18 +287,32 @@
                  <%= fs(d,"name","text_field",nil) %>
                  <%= d.file_field :path %>
                  <%= d.hidden_field :registration_id %>
-                 <%= d.link_to_remove "Remove" %>
-                
+                 <span class="btns">
+				 <%= d.link_to_remove "Remove" %>
+                </span>
          <% end %>
          
+		 <span class="btns">
          <%= f.link_to_add "Attach document", :documents %>
+		 </span>
   </div>    
   <!-- Documents - ENDS -->
-        
-        <div class="htab"></div><br/>
+        <br/><br/>
+        <div class="htab">
+      <h5>
+          <b>
+            Note
+          </b>
+      </h5>
+  </div>
+
+  <div class="cols">
+  <div class="col6">
         <%= fs(f,[:note, 
-                    {:size => "5x3", :style => "width:400px;"}],"text_area",nil,"Note") %>
-        <br/>
+                    {:size => "5x3", :style => "width:165px;height:auto"}],"text_area",nil,"Note") %>
+        
+		</div></div>
+		<br/><br/><br/>
         <%= f.submit "Register",{:class => "btnp fl"} %>
        
         <div class="cl"></div>

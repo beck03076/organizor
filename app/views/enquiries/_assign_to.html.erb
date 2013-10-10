@@ -11,7 +11,7 @@
             <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
-            <br/>
+            <br/><br/><br/>
             <%= f.submit "Assign",{:class => "btnp"} %>
         </div>
     </div>

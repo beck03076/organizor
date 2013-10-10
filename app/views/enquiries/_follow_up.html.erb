@@ -49,7 +49,7 @@
                                  :first_name,
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
-                        <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
                         <br/>
                         <br/>
                         <br/>

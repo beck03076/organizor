@@ -1,152 +1,150 @@
-<h6>
+<br/><h6>
 Education Background
 </h6>
-<ul class="infosm">
+<ul class="vlsdet">
   <% a = @registration %>
   <% q = @registration.qualification %>
     <li>
-      Qualification : 
-      <b>
+      <label>Qualification </label>: 
         <%= q.name %>
-      </b>
     </li>
     
     <li>
-      Subject : 
-      <b>
+      <label>Subject </label>: 
+      
         <%= a.qua_subject %>
-      </b>
+      
     </li>
     
     <li>
-      Institution : 
-      <b>
+      <label>Institution </label>: 
+      
         <%= a.qua_institution %>
-      </b>
+      
     </li>
     
     <li>
-      Grade : 
-      <b>
+      <label>Grade </label>: 
+      
         <%= a.qua_grade %>
-      </b>
+      
     </li>
     
-    <li>
-      Exam : 
-      <b>
+    <li><label>
+      Exam </label>: 
+      
         <%= a.qua_exam %>
-      </b>
+      
     </li>
     
-    <li>
-      Score : 
-      <b>
+    <li><label>
+      Score </label>: 
+      
         <%= a.qua_score %>
-      </b>
+      
     </li>
 </ul>
-
+<br/>
 
 <h6>
 English Language Proficiency
 </h6>
 
 
-<ul class="infosm">
-    <li>
-      Level of English : 
-      <b>
+<ul class="vlsdet">
+    <li><label>
+      Level of English </label>: 
+      
         <%= a.english_level.name %>
-      </b>
+      
     </li>
     
     <% a.exams.each do |e| %>
-            <li>
-              Exam Type : 
-              <b>
+            <li><label>
+              Exam Type </label>: 
+              
                 <%= e.exam_type.name %>
-              </b>
+              
             </li>
             
-            <li>
-              Exam Score : 
-              <b>
+            <li><label>
+              Exam Score </label>: 
+              
                 <%= e.exam_score %>
-              </b>
+              
             </li>
        
-            <li>
-              Exam Type : 
-              <b>
+            <li><label>
+              Exam Type </label>: 
+              
                 <%= e.exam_date %>
-              </b>
+              
             </li>
     <% end %>
 </ul>
 
-
+<br/>
 <h6>
 Emergency Contact
 </h6>
 
 
-<ul class="infosm">
+<ul class="vlsdet">
 
-    <li>
-      Full Name : 
-      <b>
+    <li><label>
+      Full Name </label>: 
+      
         <%= a.emer_full_name %>
-      </b>
+      
     </li>
-    <li>
-      Relationship : 
-      <b>
+    <li><label>
+      Relationship </label>: 
+      
         <%= a.emer_relationship %>
-      </b>
+      
     </li>
-    <li>
-      Mobile Number : 
-      <b>
+    <li><label>
+      Mobile Number </label>: 
+      
         <%= a.emer_mobile %>
-      </b>
+      
     </li>
-    <li>
-      Email : 
-      <b>
+    <li><label>
+      Email </label>: 
+      
         <%= a.emer_email %>
-      </b>
+      
     </li>
 </ul>
-
+<br/>
 <h6>
 Flight Details
 </h6>
 
 
-<ul class="infosm">
-    <li>
-      Flight Number : 
-      <b>
+<ul class="vlsdet">
+    <li><label>
+      Flight Number </label>: 
+      
         <%= a.flight_no %>
-      </b>
+      
     </li>
-    <li>
-      Arrival Date : 
-      <b>
+    <li><label>
+      Arrival Date </label>: 
+      
         <%= a.flight_arrival_date %>
-      </b>
+      
     </li>
-    <li>
-      Arrival Time : 
-      <b>
+    <li><label>
+      Arrival Time </label>: 
+      
         <%= a.flight_arrival_time %>
-      </b>
+      
     </li>
-    <li>
-      Airport : 
-      <b>
+    <li><label>
+      Airport </label>: 
+      
         <%= a.flight_airport %>
-      </b>
+      
     </li>
 </ul>
