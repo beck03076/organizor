@@ -68,7 +68,7 @@ background: #fff;overflow:hidden}
             .popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
             </style>"
    
-      html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
+      html += "<div class='#{main_div} frbox' style='display:#{disp.to_s};'>"
       
       html += obj.label(obj_name.to_sym)
       html +="&nbsp;"
