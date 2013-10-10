@@ -354,8 +354,8 @@ input[type=radio]{padding-right:5px}
 .vlsdn{list-style:none;padding:10px 0 10px 0;margin:0}
 .vlsdn li{padding:15px 0 15px 10px;border-bottom:1px dashed #353535}
 .vlsdet{list-style:none;padding:10px 0 10px 0;margin:0}
-.vlsdet li{padding:5px 0 0 0;color:#000000;font-size:12px;font-weight:lighter;}
-.vlsdet li  label{color:#999;text-align:left;width:120px;font-weight:lighter;width:130px;white-space:nowrap}
+.vlsdet li{padding:5px 0 0 0;color:#444444;font-size:12px;font-weight:lighter;}
+.vlsdet li  label{color:#999;text-align:left;font-weight:lighter;width:130px;white-space:nowrap;font-size:12px;display:inline-block}
 /* LIST - ENDS */
 
 /* SHORT POPUP - STARTS */

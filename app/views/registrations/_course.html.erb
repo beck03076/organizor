@@ -10,42 +10,28 @@
                           [<%= i.application_status.name %>]
                         </span>
                         <%= link_to "change","#"%>
-                        <br/>
-                        <br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Institution :
+                        <div style="padding:10px;margin:5px">
+                        Institution :
                         <b>
                         <%= i.institution.try(:name).to_s %>,&nbsp;<%= i.city.try(:name).to_s %>,&nbsp;<%= i.country.try(:name).to_s %>
-                        </b>
-                        <br/>
-                        <br/>
-                        </li>
-                        <li class="padl30">&nbsp;&nbsp;&nbsp;&nbsp;
+                        </b><br/><br/>
                             <b>Course :</b>
-                            <br/>
-                            <br/>
                             <% if j == "University" %>
-                              
-                              Level : <b> <%= i.course_level.try(:name).titleize %> </b>
-                              <br/>
-                              Subject : <b> <%= i.try(:course_subject) %> </b>
-                              <br/>
-                              Intake Month : <b> <%= i.start_date.strftime("%B") rescue "" %> </b>
-                              <br/>
-                              Intake Year : <b> <%= i.start_date.strftime("%Y") rescue "" %> </b>
-                              <br/>
+                              <ul class="vlsdet">
+                              <li><label>Level</label>:<%= i.course_level.try(:name).titleize %></li>
+                              <li><label>Subject</label>:<%= i.try(:course_subject) %></li>
+                              <li><label>Intake Month</label>:<%= i.start_date.strftime("%B") rescue "" %></li>
+                              <li><label>Intake Year</label>:<%= i.start_date.strftime("%Y") rescue "" %></li>
+							  </ul>
                               
                             <% elsif j == "Language School" %>
-                              Name : <b> <%= i.try(:course_subject) %> </b>
-                              <br/>
-                              Start Date : <b> <%= i.start_date.to_date rescue "" %> </b>
-                              <br/>
-                              End Date : <b> <%= i.start_date.to_date rescue ""%> </b>
-                              <br/>
+                              <ul class="vlsdet">
+							  <li><label>Name</label>:<%= i.try(:course_subject) %></li>
+                              <li><label>Start Date</label>:<%= i.start_date.to_date rescue "" %></li>
+                              <li><label>End Date</label>:<%= i.start_date.to_date rescue ""%></li>
+                              </ul>
                             <% end %>
-
-                        </li>
-                        <br/>
-                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+							<br/>
                             Created by,&nbsp;
                             <i>
                                <b> <%= User.find(i.created_by).name rescue "" %> </b>
@@ -54,9 +40,8 @@
                             <i>
                                 <%= i.created_at %>
                             </i>
-                        </li>
                         <% if i.updated_by %>
-                        <li>&nbsp;&nbsp;&nbsp;&nbsp;
+						<br/>
                             Last modified by,&nbsp;
                             <i>
                                <b> <%= (User.find(i.updated_by).name) rescue "" %> </b>
@@ -65,6 +50,7 @@
                             <i>
                                 <%= i.updated_at %>
                             </i>
+							</div>
                         </li>
                         <% end %>
                         <br/>
