@@ -9,6 +9,10 @@ class EnquiriesController < ApplicationController
     render :partial => params[:type], :locals => { :p => Programme.new }
   end
   
+  def group_assign_to
+  
+  end
+  
   def tab
     set_url_params
     

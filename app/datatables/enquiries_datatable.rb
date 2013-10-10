@@ -1,5 +1,5 @@
 class EnquiriesDatatable
-  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_enquiry_path, to: :@view
+  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_enquiry_path,:check_box_tag, to: :@view
 
   def initialize(view,cols,sFil)
     @view = view
@@ -19,17 +19,22 @@ class EnquiriesDatatable
 private
 
   def data  
+    spc = "&nbsp;".html_safe
+    dspc = "&nbsp; &nbsp;".html_safe
+    
     final = []
     
     enquiries.map do |enq|
        temp = []
        
-       temp << link_to("edit ",edit_enquiry_path(enq.id)) + 
-               link_to("| delete",
+       temp << check_box_tag(:tr,enq.id) + dspc +
+               link_to(image_tag("/images/icons/vie.png"),
+                       "/enquiries/#{enq.id}") + dspc + 
+               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + dspc +
+               link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) +
-               link_to("| launch",
-                       "/enquiries/#{enq.id}")
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
+               
 
         @cols.map{|i|
           if i.is_a?(Array)
@@ -94,7 +99,7 @@ private
   end
 
   def sort_column
-    columns = [:first_name] + (@cols - ["statuses"])
+    columns = [:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 

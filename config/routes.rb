@@ -26,6 +26,8 @@ Organizor::Application.routes.draw do
 
   devise_for :users
   
+  match '/group_assign/:model/:model_ids/user/:user_id' => "application#group_assign"
+  
   match "/enquiries/tab/:status/:partial(/:enquiry_id)" => "enquiries#tab"
   
  match "/registrations/tab/:status/:partial(/:registration_id)" => "registrations#tab"  
