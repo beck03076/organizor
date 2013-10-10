@@ -2,7 +2,7 @@ class UserConfigsController < ApplicationController
   before_filter :set_cols
   
   def set_cols
-    @def_cols = {:country_id => [:country,:name],
+    @def_reg_cols = {:country_id => [:country,:name],
      :qua_id => [:qualification,:name],
      :reg_source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
@@ -11,6 +11,15 @@ class UserConfigsController < ApplicationController
      :created_by => :cre_by,
      :updated_by => :upd_by,
      :prof_eng_level_id => [:english_level,:name]}
+     
+    @def_enq_cols = {:country_id => [:country_of_origin,:name],
+     :source_id => [:student_source,:name],
+     :sub_agent_id => [:sub_agent,:name],
+     :assigned_to => [:assigned_to,:first_name],
+     :assigned_by => [:assigned_by,:first_name],
+     :created_by => [:created_by,:first_name],
+     :updated_by => [:updated_by,:first_name],
+     :status_id => [:status,:name]}
   end
   
   # GET /user_configs
@@ -71,19 +80,17 @@ class UserConfigsController < ApplicationController
   # PUT /user_configs/1.json
   def update
     @user_config = UserConfig.find(params[:id])
-    cols = params[:user_config][:reg_cols].map &:to_sym
-    params[:user_config][:reg_cols] = cols.map{|i| 
-    if @def_cols[i].nil? 
-      i 
-    else
-      if @def_cols[i].is_a?(Array)
-        @def_cols[i].unshift(i)
-      else
-        @def_cols[i]
+    
+    %w(reg enq).each do |i|
+      var = i + "_cols"
+      inst = eval("@def_" + i + "_cols")
+      par = params[:user_config][var.to_sym]
+      
+      if !par.nil?
+          sym_cols = par.map &:to_sym
+          params[:user_config][var.to_sym] = self.prepare_cols(sym_cols,inst)
       end
     end
-    }
-    p params[:user_config][:reg_cols]
 
     respond_to do |format|
       if @user_config.update_attributes(params[:user_config])
@@ -107,5 +114,19 @@ class UserConfigsController < ApplicationController
       format.html { redirect_to user_configs_url }
       format.json { head :no_content }
     end
+  end
+  
+  def prepare_cols(c,default)
+    c.map{|i| 
+    if default[i].nil? 
+      i 
+    else
+      if default[i].is_a?(Array)
+        default[i].unshift(i)
+      else
+        default[i]
+      end
+    end
+    }
   end
 end

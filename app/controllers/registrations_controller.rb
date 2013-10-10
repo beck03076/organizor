@@ -36,6 +36,33 @@ class RegistrationsController < ApplicationController
     render partial: @partial
 
   end
+  
+    
+  def action_partial
+    set_url_params
+    @registration = Registration.find(@registration_id)
+    
+    if @partial_name == "follow_up"
+          @d_f_u_days = UserConfig.find_by_user_id(current_user.id).def_follow_up_days
+          @follow_up = FollowUp.new(title: "First Follow Up", 
+                                    desc: "This enquiry does not have an update, yet!.
+                                           Should call this enquiry in 2 days.")
+
+    elsif @partial_name == "note"
+          @d_note = UserConfig.find_by_user_id(current_user.id).def_note
+          @note = Note.new(content: @d_note)
+          
+    elsif @partial_name == "todo"
+          @todo = Todo.new
+    end
+   
+    render :partial => "enquiries/" + @partial_name.to_s ,:locals => {:e => Email.new,
+                                                                      :id => @registration_id,
+                                                                      :obj => @registration,
+                                                                      :obj_id => :registration_id,
+                                                                      :obj_name => "registration"}
+     
+  end
 
   # GET /registrations/1
   # GET /registrations/1.json
@@ -132,9 +159,24 @@ class RegistrationsController < ApplicationController
   # PUT /registrations/1.json
   def update
     @registration = Registration.find(params[:id])
+    
+    if (params[:registration][:assign].to_s == "from_action")
+    
+      ass_to = User.find(params[:registration][:assigned_to]).first_name
+      ass_by = User.find(params[:registration][:assigned_by]).first_name
+    
+      Timeline.create!(user_id: current_user.id,
+                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
+                       m_name: "Registration",
+                       m_id: params[:id],
+                       created_at: Time.now,
+                       desc: 'This registration has been reassigned',
+                       comment: 'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
+                       action: 'assign_to')
+    end
 
     respond_to do |format|
-      if @registration.update_attributes(params[:registration])
+      if @registration.update_attributes(params[:registration].except("assign"))
         format.html { redirect_to @registration, notice: 'Registration was successfully updated.' }
         format.json { head :no_content }
       else

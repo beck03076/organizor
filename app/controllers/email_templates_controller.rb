@@ -6,7 +6,9 @@ class EmailTemplatesController < ApplicationController
    e = Email.new(subject: etemp.subject,body: etemp.body, signature: etemp.signature)
    render :partial => 'enquiries/email', :locals => {:e => e, 
                                                      :id => params[:e_id], 
-                                                     :etemp_name => etemp.name}  
+                                                     :etemp_name => etemp.name,
+                                                     :obj_id => @model.to_s + "_id",
+                                                     :obj_name => @model }  
   end
   # GET /email_templates
   # GET /email_templates.json

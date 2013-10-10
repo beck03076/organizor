@@ -1,5 +1,5 @@
 
-<% if @list.to_i == 1 && @enquiry.follow_ups.size > 0 %>
+<% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
       <tr>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-            <% @enquiry.follow_ups.each do |fu| %>
+            <% obj.follow_ups.each do |fu| %>
                 <tr>
                     <td><%= fu.title %></td>
                     <td><%= fu.desc %></td>
@@ -22,7 +22,7 @@
                     <td><%= User.find(fu.assigned_by).first_name %></td>
                </tr>
            <% end %>               
-				<tr>
+                <tr>
                     <td colspan="6" align="left"><a href="#">Back</a></td>
                </tr>
     </tbody>
@@ -31,12 +31,13 @@
 <br/>
 <% end %>
 <div class="htab">
-		<h6><b>New Follow up</b></h6>
+        <h6><b>New Follow up</b></h6>
 </div>
 <br/>
-<div id="followup-action" class="action-box">
+<div id="followup-action" class="action-box" >
 <%= form_for(@follow_up) do |g| %>
-  <%= g.hidden_field :enquiry_id, value: id %>
+  <%= hidden_field_tag "#{g.object_name}[model]", obj_name %>
+  <%= g.hidden_field obj_id.to_sym, value: id %>
                 <div class="cols">
                     <div class="col6">
                         <%= fbox(g,"title","text_field") %>
@@ -48,19 +49,26 @@
                                  :first_name,
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
-						<%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
-						<br/>
-						<span onclick="div_toggle(this,'#more_fields')" class="btns">more fields</span>
-						<div class="cl"></div>
-						<div class="cols" id="more_fields" style="display:none;">
-						  <%= fbox(g,[:ends_at,:class => "dateTimeField caltf"],"text_field",nil) %>
-						  <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add to google calendar ?") %>
-						  <%= fbox(g,:remind_before,"text_field") %> minutes
-						  <%= fbox(g,:venue,"text_field") %>
-						</div>
+                        <%= fbox(g,[:desc,:size => "2x2"],"text_area",nil,"Description") %>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span onclick="div_toggle(this,'#more_fields')" class="btns">more fields</span>
+
+                        <div class="cl"></div>
+                        <br/>
+                        <br/>
+                        <br/>
+            
+                        <div class="cols" id="more_fields" style="display:none;">
+                          <%= fbox(g,[:ends_at,:class => "dateTimeField caltf"],"text_field",nil) %>
+                          <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add to google calendar ?") %>
+                          <%= fbox(g,:remind_before,"text_field") %> minutes
+                          <%= fbox(g,:venue,"text_field") %>
+                        </div>
                     </div>
                 </div>
-	<br/>
+    <br/>
     <%= g.submit "Create",{:class => "btnp fl"} %>
     <div class="cl"></div>
 <% end %>

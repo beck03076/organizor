@@ -1,6 +1,7 @@
 class Email < ActiveRecord::Base
   belongs_to :enquiry 
   belongs_to :smtp
+  belongs_to :registration
   
   
   

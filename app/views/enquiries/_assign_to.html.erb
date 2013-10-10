@@ -1,4 +1,4 @@
-<%= form_for(@enquiry) do |f| %>
+<%= form_for(obj) do |f| %>
 <div id="assignto-action" class="action-box">
     <div class="cols">
         <div class="col6">
@@ -11,7 +11,7 @@
             <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
-			<br/>
+            <br/>
             <%= f.submit "Assign",{:class => "btnp"} %>
         </div>
     </div>

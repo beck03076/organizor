@@ -12,9 +12,7 @@ class EnquiriesController < ApplicationController
   def tab
     set_url_params
     
-    if @status == "all"
-      @enquiries = Enquiry.all
-    elsif @status == "new_enquiry"
+    if @status == "new_enquiry"
       @enquiry = Enquiry.new
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
@@ -28,7 +26,7 @@ class EnquiriesController < ApplicationController
       @p_types = ProgrammeType.all
       @enquiry.programmes.build
     else
-      @enquiries = Enquiry.joins(:status).where("enquiry_statuses.name = '#{@status}'")  
+      @cols = UserConfig.find(current_user).enq_cols
     end
     
     render :partial => @partial
@@ -53,18 +51,21 @@ class EnquiriesController < ApplicationController
     end
    
     render :partial => @partial_name, :locals => {:e => Email.new,
-                                                  :id => @enquiry_id}
+                                                  :id => @enquiry_id,
+                                                  :obj => @enquiry,
+                                                  :obj_id => "enquiry_id",
+                                                  :obj_name => "enquiry"}
      
   end
   
   # GET /enquiries
   # GET /enquiries.json
   def index
-    @enquiries = Enquiry.includes([:countries])
+    set_url_params
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @enquiries }
+      format.json {render :json => EnquiriesDatatable.new(view_context,eval(@sCols),@sFilter)}
     end
   end
 

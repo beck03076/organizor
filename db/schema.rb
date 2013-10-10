@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008135457) do
+ActiveRecord::Schema.define(:version => 20131009235309) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -228,11 +228,12 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.integer  "remind_before"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "enquiry_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
+    t.integer  "registration_id"
   end
 
   create_table "institutions", :force => true do |t|
@@ -459,11 +460,12 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.string   "priority"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "enquiry_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
+    t.integer  "registration_id"
   end
 
   create_table "user_configs", :force => true do |t|
@@ -473,6 +475,7 @@ ActiveRecord::Schema.define(:version => 20131008135457) do
     t.datetime "updated_at",         :null => false
     t.text     "def_note"
     t.text     "reg_cols"
+    t.text     "enq_cols"
   end
 
   create_table "users", :force => true do |t|

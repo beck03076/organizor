@@ -60,12 +60,12 @@ module ApplicationHelper
    
      html = "<style>
             .popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
-			.addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
+            .addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
 background: #fff;overflow:hidden}
-			.popupc{padding:3px 10px 2px 10px;text-align:left !important}
+            .popupc{padding:3px 10px 2px 10px;text-align:left !important}
 .popupc label{text-align:left !important;}
 .popupc textarea,.popupc input{margin-left:0}
-			.popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
+            .popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
             </style>"
    
       html += "<div class='#{main_div} fbox' style='display:#{disp.to_s};'>"
@@ -96,7 +96,7 @@ background: #fff;overflow:hidden}
       html += text_area_tag(:desc)
       html += "</div>"
       
-	  html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
+      html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
 
       html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span><div class='cl'></div><br/>"

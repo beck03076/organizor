@@ -3,7 +3,7 @@
     
 </script>
 
-<% if @list.to_i == 1 && @enquiry.todos.size > 0 %>
+<% if @list.to_i == 1 && obj.todos.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
       <tr>
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-            <% @enquiry.todos.each do |t| %>
+            <% obj.todos.each do |t| %>
                 <tr>
                     <td><%= t.topic.try(:name) %></td>
                     <td><%= t.desc %></td>
@@ -30,7 +30,7 @@
            <% end %> 
 <tr>
                     <td colspan="7" align="left"><a href="#">Back</a></td>
-               </tr>		   
+               </tr>           
 
     </tbody>
   </table>
@@ -44,11 +44,12 @@
 
 <div id="followup-action" class="action-box">
 <%= form_for(@todo) do |g| %>
-  <%= g.hidden_field :enquiry_id, value: id %>
+
+  <%= g.hidden_field obj_id.to_sym, value: id %>
                  <div class="cols">
                     <div class="col6">
-                        <%= hidden_field_tag "#{g.object_name}[sub_id]",@enquiry.id %>
-                        <%= hidden_field_tag "#{g.object_name}[sub_class]","Enquiry" %>
+                        <%= hidden_field_tag "#{g.object_name}[sub_id]",obj.id %>
+                        <%= hidden_field_tag "#{g.object_name}[sub_class]",obj_name.capitalize %>
                         <%= go_create(g,"todo_topic","topic_id","name",1) %> 
                         <%= go_create(g,"todo_status","status_id","name",1) %> 
                         <%= fbox(g,[:assigned_to, 
@@ -56,14 +57,14 @@
                                  :id, 
                                  :first_name,
                                  {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-						
-						<%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
+                        
+                        <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
                         <div class="fbox">
-						<label>&nbsp;</label>
-						<%= g.select(:priority,
+                        <label>Priority</label>
+                        <%= g.select(:priority,
                                      options_for_select(["High","Medium","Low"])) %>
                         </div> 
-						<%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                        <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
                         
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>

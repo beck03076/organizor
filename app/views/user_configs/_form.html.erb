@@ -4,13 +4,20 @@
         <%= f.label :default_follow_up_days %>
         <%= f.text_field :def_follow_up_days %>
         <br/>
-
+        <br/>
         <%= f.label :default_note %>
         <%= f.text_area :def_note,class: "tinymce"%>
         <br/>
-
-      <%= f.label :registration_columns %>
       <br/>
+      <br/>      
+      <br/>
+      <br/>
+      
+      <%= f.label :registration_columns %>
+      
+      <br/>
+      <br/>
+      
       <% Registration.column_names.push("statuses").sort.each_slice(5) do |j| %>
       <div class="fl">
         <% j.each do |i| %>
@@ -20,9 +27,32 @@
         <% end %>
       </div>
       <% end %>
+      
+      <div class="cl"></div>
+      <br/>
+      <br/>      
+      <br/>
+      <br/>            
+      
+      <%= f.label :enquiry_columns %>
+      
+      <br/>
+      <br/>
+      
+      <% Enquiry.column_names.sort.each_slice(5) do |j| %>
+      <div class="fl">
+        <% j.each do |i| %>
+          <%= check_box_tag "user_config[enq_cols][]",i %>
+          <%= i.titleize %>
+          <br/>
+        <% end %>
+      </div>
+      <% end %>
       <br/>
       <br/>
       <br/>      
+      
+      
       <%= f.submit "Save",{class: "fl btnp"} %>
 
 

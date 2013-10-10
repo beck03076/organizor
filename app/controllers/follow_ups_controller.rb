@@ -40,21 +40,26 @@ class FollowUpsController < ApplicationController
   # POST /follow_ups
   # POST /follow_ups.json
   def create
+  
+    m = params[:follow_up][:model]
+    m_id = (m + "_id").to_sym
+    params[:follow_up].delete(:model)
+  
     @follow_up = FollowUp.new(params[:follow_up])
     
     ass_to = User.find(params[:follow_up][:assigned_to]).first_name
     Timeline.create!(user_id: current_user.id,
                        user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       m_name: "Enquiry",
-                       m_id: params[:follow_up][:enquiry_id],
+                       m_name: m.capitalize,
+                       m_id: params[:follow_up][m_id],
                        created_at: Time.now,
-                       desc: 'A follow up has been created for this enquiry',
+                       desc: "A follow up has been created for this #{m}",
                        comment: params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + ass_to,
                        action: 'follow_up')
 
     respond_to do |format|
       if @follow_up.save
-        format.html { redirect_to '/enquiries/' + params[:follow_up][:enquiry_id].to_s }
+        format.html { redirect_to "/#{m.pluralize}/" + params[:follow_up][m_id].to_s }
         format.json { render json: @follow_up, status: :created, location: @follow_up }
       else
         format.html { render action: "new" }
