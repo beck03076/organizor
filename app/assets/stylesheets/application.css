@@ -82,8 +82,8 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 
 /* TABS - STARTS */
 .tab-container .tab-content{box-shadow:0 0 10px #ccc;border-radius:0 5px  5px  5px}
-.tab-menus{list-style:none;padding:0;margin:0}
-.tab-menus li{color:#666;font-size:13px;background:#EAEAEA;padding:7px 15px 5px 15px;display:inline-block;margin-right:15px;border-radius:5px 5px 0 0}
+.tab-menus{list-style:none;padding:0;margin:0;white-space:nowrap}
+.tab-menus li{color:#666;font-size:13px;background:#EAEAEA;padding:7px 15px 5px 15px;display:inline-block;margin-right:5px;border-radius:5px 5px 0 0}
 .tab-menus .active-tab,.tab-menus li:hover,.r-tab:hover{background:#E8F0FD;text-decoration:none;cursor:pointer;}
 .tab-menus .active-tab{font-weight:bold;box-shadow:0  -1px 3px #ccc}
 .subtab-menus{list-style:none;padding:0;margin:0}
@@ -124,12 +124,13 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .btnb,.btnb:active,.btnb:link,.btnb:visited{text-decoration:none;font-size:12px;background:#222222;color:#fff;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #000000 inset;margin-right:10px}
 .btnb:hover{cursor:pointer;text-decoration:none;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
-.fbox,.fsbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
+.fbox,.fsbox,.fnbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fnbox label{width:120px;display:inline-block; white-space:normal;text-align:left;font-weight:normal;vertical-align:top}
 .fpbox{width:90%;margin:10px 5px 10px 5px;vertical-align:top;white-space:nowrap;height:40px}
 .fpbox label{width:80px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
 .fpbox textarea{width:165px !important}
-.fbox .fields,.fsbox .fields{display:inline}
+.fbox .fields,.fsbox .fields,.fnbox{display:inline}
 .fsbox label{width:70px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal}
 input[type=radio]{padding-right:5px}
 .fabox{margin:10px 0 0 0;text-align:left;}
