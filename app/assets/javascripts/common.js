@@ -176,10 +176,10 @@ $("#"+objectId).css("display","inline");
 }
 
 $(document).ready(function(){
-    var backgroundColor="white";
+    var backgroundColor = "gray";
     setBGColor(backgroundColor+"-bg");
     /*SET THE THEME SESION VALUE HERE*/
-    var themeColor="blue";
+    var themeColor = "yellow";
     setThemeColor(themeColor+"-theme");
     
 });

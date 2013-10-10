@@ -7,6 +7,7 @@ $(function(){
   $("ul.tab-menus li.new_registration").attr('data-registration_id', '<%= @registration.id %>');
   $("ul.tab-menus li.new_registration").attr('data-cond', 'edit');
   $("ul.tab-menus li.new_registration").trigger("click");
+  activeMM("registrationsMM");
 });
 </script>
 

@@ -198,6 +198,13 @@ function enquiryTabSwitch(obj){
     
     $.get(url,function(table){
      
+    var backgroundColor = $.cookie('bgColor');
+    setBGColor(backgroundColor+"-bg");
+    /*SET THE THEME SESION VALUE HERE*/
+    var themeColor = $.cookie('themeColor');
+    setThemeColor(themeColor+"-theme");
+    
+    
       var $container = $('#'+lang).html(table);
       var $dateField = $('.dateField', $container);
       var $mSel = $('#multiselect',$container);
@@ -303,9 +310,15 @@ function registrationTabSwitch(obj){
             yearRange: '1980:2050' });
         }
     });
-    
-     
+}
 
+function storeThemeInSession(){ 
+
+  var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
+  var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
+  $.cookie('themeColor', themeColor , { path: '/' });
+  $.cookie('bgColor', bgColor , { path: '/' });
+  
 }
 
 

@@ -6,6 +6,7 @@ $(function(){
   $("ul.tab-menus li.launch").text('<%= @registration.first_name.titleize %>');
   $("ul.tab-menus li.launch").attr('data-registration_id', '<%= @registration.id %>');
   $("ul.tab-menus li.launch").trigger("click");
+  activeMM("registrationsMM");
 
 });
 

@@ -369,7 +369,7 @@ background: #fff;overflow:hidden}
 /* PRINT LAYOUT - STARTS */
 @media print
 {
-#body-content{margin-left:0}	
+#body-content{margin-left:0}    
 #header,#footer,#menu-main,.breadcrumb{display:none !important}
 body > * {visibility: hidden;}
 .prlayout {visibility:visible;display:block;width:100% !important}
