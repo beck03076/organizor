@@ -1,62 +1,33 @@
-<h5>User Configuration </h5>
-<%= form_for(@user_config) do |f| %>
- 
-        <%= f.label :default_follow_up_days %>
-        <%= f.text_field :def_follow_up_days %>
-        <br/>
-        <br/>
-        <%= f.label :default_note %>
-        <%= f.text_area :def_note,class: "tinymce"%>
-        <br/>
-      <br/>
-      <br/>      
-      <br/>
-      <br/>
-      
-      <%= f.label :registration_columns %>
-      
-      <br/>
-      <br/>
-      
-      <% Registration.column_names.push("statuses").sort.each_slice(5) do |j| %>
-      <div class="fl">
-        <% j.each do |i| %>
-          <%= check_box_tag "user_config[reg_cols][]",i %>
-          <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
-          <br/>
-        <% end %>
-      </div>
-      <% end %>
-      
+<div class="tab-container">
+
+<div class="tab-content" style="background: none repeat scroll 0% 0% rgb(232, 240, 0); display: block;">
+
+    <div class="htab">
+      <h5>
+        User Configuration
+      </h5>
       <div class="cl"></div>
-      <br/>
-      <br/>      
-      <br/>
-      <br/>            
-      
-      <%= f.label :enquiry_columns %>
-      
-      <br/>
-      <br/>
-      
-      <% Enquiry.column_names.sort.each_slice(5) do |j| %>
-      <div class="fl">
-        <% j.each do |i| %>
-          <%= check_box_tag "user_config[enq_cols][]",i %>
-          <%= i.titleize %>
-          <br/>
+    </div>
+    <br/>
+
+    <% tabs_arr = %w(Followup Note Columns Colors) %>
+    <div class="newtab-container">
+        <ul class="newtab-menus">
+        <% tabs_arr.each do |i|  %>
+            <% i1 = i.downcase %>
+            <li lang='<%= i1 + "-content" %>' id='<%= i1 %>'><%= i %></li>
         <% end %>
-      </div>
-      <% end %>
-      <br/>
-      <br/>
-      <br/>      
-      
-      
-      <%= f.submit "Save",{class: "fl btnp"} %>
+        </ul>
+        
+        <% tabs_arr.each do |i|  %>
+            <% i1 = i.downcase %>
+            <div class="newtab-content" id='<%= i1+ "-content" %>'>
+              <%= render i1 %>
+            </div>
+        <% end %>
+        
+    </div>
 
-
-<% end %>
 
 <script>
 
@@ -79,4 +50,24 @@ tinymce.init({
      autosave_ask_before_unload: false
 });
 
+activeNewSubTab("newtab-content","followup-content","followup");
+
+$(document).ready(function(){
+    /* ON CLICKING MAIN MENU*/
+    $(".newtab-menus li").click(function(){
+        /* HIDE ALL TABS CONTENT*/
+        $(".newtab-content").hide();
+        /* SHOW THE CORESPONDING TAB CONTENT*/
+        $("#"+this.lang).show();
+        /* INACTIVE ALL TABS */
+        $(".newtab-menus li").removeClass("active-tab");
+        /* ACTIVE CURRENT TABS */
+        $(this).addClass("active-tab");
+    });
+});
+
+
 </script>
+
+</div>
+</div>

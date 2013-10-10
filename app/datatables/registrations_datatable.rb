@@ -1,5 +1,6 @@
 class RegistrationsDatatable
-  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_registration_path, to: :@view
+  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_registration_path,
+  :check_box_tag, to: :@view
 
   def initialize(view,cols,sFil)
     @view = view
@@ -19,17 +20,20 @@ class RegistrationsDatatable
 private
 
   def data
-  
+    spc = "&nbsp;".html_safe
+    dspc = "&nbsp; &nbsp;".html_safe
+    
     final = []
     registrations.map do |reg|
        temp = []
        
-       temp << link_to("edit ",edit_registration_path(reg.id)) + 
-               link_to("| delete",
+       temp << check_box_tag(:tr,reg.id) + dspc +
+               link_to(image_tag("/images/icons/vie.png"),
+                       "/registrations/#{reg.id}") + dspc + 
+               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + dspc +
+               link_to(image_tag("/images/icons/del.png"),
                        "/registrations/#{reg.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) +
-               link_to("| launch",
-                       "/registrations/#{reg.id}")
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
 
         @cols.map{|i|
           if i.is_a?(Array)

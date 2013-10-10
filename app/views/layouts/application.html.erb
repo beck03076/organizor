@@ -41,30 +41,7 @@
         </li>
         <li><a href="#">Create Task</a></li>
     </ul>
-    <!-- THEME - STARTS -->
-    <ul class="lsb">
-        <li><a href="#">Theme</a></li>
-        <li><ul class="theme-colrs">
-    <li><span class="blue-theme" id="blue-theme" data-theme="blue" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    <li><span class="yellow-theme" id="yellow-theme" data-theme="yellow" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    <li><span class="green-theme"  id="green-theme" data-theme="green" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    <li><span class="pink-theme"  id="pink-theme" data-theme="pink" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    <li><span class="violet-theme" id="violet-theme" data-theme="violet" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    <li><span class="orange-theme" id="orange-theme" data-theme="orange" onclick="setThemeColor(this.id);">&nbsp;</span></li>
-    </ul></li>
-    </ul>
-    <!-- THEME - ENDS -->
-    <!-- BACKGROUND - STARTS -->
-    <ul class="lsb">
-    <li><a href="#">Background</a></li>
-    <li><ul class="theme-colrs" id="bg-color">
-    <li><span class="blue-bg" id="blue-bg" data-bg="blue" onclick="setBGColor(this.id);">&nbsp;</span></li>
-    <li><span class="cream-bg" id="cream-bg" data-bg="cream" onclick="setBGColor(this.id);">&nbsp;</span></li>
-    <li><span class="white-bg"  id="white-bg" data-bg="white" onclick="setBGColor(this.id);">&nbsp;</span></li>
-    <li><span class="gray-bg"  id="gray-bg" data-bg="gray" onclick="setBGColor(this.id);">&nbsp;</span></li>
-    </ul></li>
-    </ul>
-    <!-- BACKGROUND - ENDS -->
+  
     <ul  class="lsb">
         <li>
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
@@ -88,17 +65,17 @@
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="dashboard.html">Dashboard</a></li>
         
-        <li id="inquiresMM"  onMouseOut="MM_swapImgRestore()"
+        <li id="enquiriesMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM2','','/images/icons/org_inquiryb.png',1)">
         <img src="/images/icons/org_inquiry.png"  id="iconMM2"/><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="inquiry.html">Inquires</a></li>
+        <%= link_to "Enquiries", enquiries_path %>
         
-        <li id="registrationMM"  onMouseOut="MM_swapImgRestore()"
+        <li id="registrationsMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM3','','/images/icons/org_registrationb.png',1)">
         <img src="/images/icons/org_registration.png" id="iconMM3" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="registration.html">Registration</a></li>
+        <%= link_to "Registrations", registrations_path %>
         
         <li id="accountsMM"  onMouseOut="MM_swapImgRestore()"
      onMouseOver="MM_swapImage('iconMM4','','/images/icons/org_financeb.png',1)">
@@ -131,10 +108,11 @@
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Todos</a></li>
         <li id="settingMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM10','','/images/icons/org_todob.png',1)">
+     onMouseOver="MM_swapImage('iconMM10','','/images/icons/org_settingsb.png',1)">
         <img src="/images/icons/org_settings.png" id="iconMM10" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="#">Setting</a></li>
+        <%= link_to "Settings", "/user_configs/#{current_user.id}/edit" %>
+        </li>
     </ul>
     </div>
     <!-- MAIN MENU - ENDS -->
@@ -150,7 +128,7 @@
      </td>
      <td id="right-panel" valign="top" align="left">
         <ul class="vls">
-            <li><img src="image/icons/print.png" width="14"/><h6><b>Todos</b></h6></li>
+            <li><img src="images/icons/print.png" width="14"/><h6><b>Todos</b></h6></li>
             <li><br>
                 <a href="#"><b>To Inform Student</b></a><br/>
                 <small>Ask Hari ( IN 10098 ) & Inquir...</small>
@@ -171,7 +149,7 @@
         </ul>
         <br/>
         <ul class="vls">
-            <li><img src="image/icons/print.png" width="14"/><h6><b>Calender</b></h6></li>
+            <li><img src="images/icons/print.png" width="14"/><h6><b>Calender</b></h6></li>
             <li><br><div class="dateField"></div></li>
         </ul>        
     </td>

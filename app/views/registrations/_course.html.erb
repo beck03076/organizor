@@ -22,16 +22,16 @@
                               <li><label>Subject</label>:<%= i.try(:course_subject) %></li>
                               <li><label>Intake Month</label>:<%= i.start_date.strftime("%B") rescue "" %></li>
                               <li><label>Intake Year</label>:<%= i.start_date.strftime("%Y") rescue "" %></li>
-							  </ul>
+                              </ul>
                               
                             <% elsif j == "Language School" %>
                               <ul class="vlsdet">
-							  <li><label>Name</label>:<%= i.try(:course_subject) %></li>
+                              <li><label>Name</label>:<%= i.try(:course_subject) %></li>
                               <li><label>Start Date</label>:<%= i.start_date.to_date rescue "" %></li>
                               <li><label>End Date</label>:<%= i.start_date.to_date rescue ""%></li>
                               </ul>
                             <% end %>
-							<br/>
+                            <br/>
                             Created by,&nbsp;
                             <i>
                                <b> <%= User.find(i.created_by).name rescue "" %> </b>
@@ -41,7 +41,7 @@
                                 <%= i.created_at %>
                             </i>
                         <% if i.updated_by %>
-						<br/>
+                        <br/>
                             Last modified by,&nbsp;
                             <i>
                                <b> <%= (User.find(i.updated_by).name) rescue "" %> </b>
@@ -50,7 +50,7 @@
                             <i>
                                 <%= i.updated_at %>
                             </i>
-							</div>
+                            </div>
                         </li>
                         <% end %>
                         <br/>

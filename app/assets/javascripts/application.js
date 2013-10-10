@@ -198,6 +198,13 @@ function enquiryTabSwitch(obj){
     
     $.get(url,function(table){
      
+    var backgroundColor = $.cookie('bgColor');
+    setBGColor(backgroundColor+"-bg");
+    /*SET THE THEME SESION VALUE HERE*/
+    var themeColor = $.cookie('themeColor');
+    setThemeColor(themeColor+"-theme");
+    
+    
       var $container = $('#'+lang).html(table);
       var $dateField = $('.dateField', $container);
       var $mSel = $('#multiselect',$container);
@@ -266,6 +273,9 @@ function dataTableStart(table,filterValue,cols)
       aoData.push( { "name": "sFilter", "value": filterValue },
                    { "name": "sCols", "value": cols });
     },
+    "aoColumnDefs": [
+      { "bSortable": false, "aTargets": [ 0 ] }
+    ], 
   });
   
    $('select#mySelect').on('change',function(){
@@ -303,12 +313,44 @@ function registrationTabSwitch(obj){
             yearRange: '1980:2050' });
         }
     });
-    
-     
-
 }
 
+function storeThemeInSession(){ 
 
+  var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
+  var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
+  $.cookie('themeColor', themeColor , { path: '/' });
+  $.cookie('bgColor', bgColor , { path: '/' });
+  
+}
+
+function toggleAllCheck(obj,tableId){
+    var checkedStatus = obj.checked;
+    $("#" + tableId +' tbody tr').find('td:first :checkbox').each(function () {
+        $(this).prop('checked', checkedStatus);
+     });
+}
+
+function getCheckedRowsAsArray(tableId){
+       var idVal = '#' + tableId + ' #tr'
+       var rowIds = $(idVal + ':checked').map(function(){
+                                                  return $(this).val();
+                                                }).get(); 
+       return rowIds;
+}
+
+function groupAssignTo(tableId){
+       var rows = getCheckedRowsAsArray(tableId);
+       var user_id = $("select#group_assign_user_" + tableId).val();
+       var model = $("#group_assign_to_" + tableId).data("model");
+   
+       url = '/group_assign/' + model + '/' + rows + '/user/' + user_id;
+
+       $.get(url,function(table){
+         $("#group_assign_to_" + tableId).css("display","none");
+         $('#' + tableId).dataTable().fnDraw();
+       });
+}
 
 
 

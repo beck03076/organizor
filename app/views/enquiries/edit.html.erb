@@ -7,6 +7,7 @@ $(function(){
   $("ul.tab-menus li.new_enquiry").attr('data-enquiry_id', '<%= @enquiry.id %>');
   $("ul.tab-menus li.new_enquiry").attr('data-cond', 'edit');
   $("ul.tab-menus li.new_enquiry").trigger("click");
+  activeMM("enquiriesMM");
 });
 </script>
 

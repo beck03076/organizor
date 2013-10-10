@@ -3,7 +3,11 @@
 <table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
   <tr>
-      <th>Actions</th>
+      <th>
+      <%= check_box_tag "master",nil,false,{id: "master_check",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
+      &nbsp;
+      Actions
+      </th>
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
           <th><%= i[1].to_s.titleize %></th>
@@ -29,11 +33,22 @@
 
 </table>
 <br/>
-            <input type="button" value="Assign To" class="btnp">
+            <% div_id = "group_assign_to_" + _id %>
+            <%= link_to "Assign To", "#", {class: "btnp", onclick: "$('##{div_id}').show();"} %>
+            <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
+              <div class="col6">
+                User :
+                <%= select_tag "group_assign_user_#{_id}",
+                               options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
+                               {:prompt => "--User--"} %>
+                <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
+              </div>
+            </div>
             <input type="button" value="Send Email" class="btnp">
              <input type="button" value="Delete" class="btnpd">
             <input type="button" value=">" class="btnpd fr">
             <input type="button" value="<" class="btnpd fr">
+
             <div class="cl"></div>
 <script>
 

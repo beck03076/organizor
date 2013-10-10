@@ -3,7 +3,9 @@
 <table id='<%= _id %>' class="display" data-source="<%= registrations_url(format: "json") %>">
 <thead>
   <tr>
-      <th>Actions</th>
+      <th>
+      <%= check_box_tag "master",nil,false,{id: "master_check",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
+      &nbsp;Actions</th>
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
           <th><%= i[1].to_s.titleize %></th>
@@ -21,14 +23,31 @@
        <%= select_tag :abdc,
                       options_for_select(@cols.map{|i| i.is_a?(Array) ? i[0]  : i}.unshift("--Search by--")),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
-					  <div class="cl"></div>
+                      <div class="cl"></div>
 
 <tbody>
 
 </tbody>
 
 </table>
+<br/>
+            <% div_id = "group_assign_to_" + _id %>
+            <%= link_to "Assign To", "#", {class: "btnp", onclick: "$('##{div_id}').show();"} %>
+            <div id="<%= div_id %>" class="addNewPop" data-model="Registration" style="display: none; top: 483px; left: 455px;"> 
+              <div class="col6">
+                User :
+                <%= select_tag "group_assign_user_#{_id}",
+                               options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
+                               {:prompt => "--User--"} %>
+                <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
+              </div>
+            </div>
+            <input type="button" value="Send Email" class="btnp">
+             <input type="button" value="Delete" class="btnpd">
+            <input type="button" value=">" class="btnpd fr">
+            <input type="button" value="<" class="btnpd fr">
 
+            <div class="cl"></div>
 <style>
 #registrations_filter input{
 width:150px;

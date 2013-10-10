@@ -1,0 +1,13 @@
+
+<%= form_for(@user_config) do |f| %>
+ 
+        <%= f.label :default_note %>
+        <%= f.text_area :def_note,class: "tinymce"%>
+       <div class="cl"></div>
+      <br/>
+      <br/>      
+
+      <%= f.submit "Save",{class: "btnp"} %>
+       
+
+<% end %>

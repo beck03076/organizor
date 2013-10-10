@@ -4,6 +4,15 @@ class ApplicationController < ActionController::Base
   
   layout :layout
   
+  def group_assign
+    set_url_params
+    @model.camelize.constantize.where(id: params[:model_ids].split(",")).update_all(assigned_to: params[:user_id],
+                                                                   assigned_by: current_user.id)
+                                                                   
+    render text: "Successfully assigned!"
+  
+  end
+  
   private
   
   def set_current_user

@@ -16,7 +16,7 @@ Documents Received
               </b>
             </li>
             
-    <% end %>
+    <% end %><br/>
     <span class="btns">
     <%= submit_tag "Delete Selected",method: :delete %>
 	</span>
@@ -29,7 +29,9 @@ Documents Received
        <%= f.hidden_field :registration_id,value: @registration.id %>
        <%= go_create(f,"doc_category","category_id","name",1) %> 
        <%= fs(f,"name","text_field",nil) %>
-       <%= f.file_field :path %>
+       <div class="frbox"><label>File</label>
+	   <%= f.file_field :path %>
        <%= f.submit "Upload", class: "btnp" %>
+	   </div>
    
 <% end %>
