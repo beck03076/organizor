@@ -36,7 +36,7 @@ class Enquiry < ActiveRecord::Base
                   :follow_ups_attributes,:active,:notes_attributes,
                   :todos_attributes
                   
-  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos
+  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
  
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip

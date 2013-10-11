@@ -126,9 +126,12 @@
      <td class="brgr" style="padding-right:15px" valign="top" align="left">
       <%= yield %>
      </td>
+     <td valign="top">
+        <%= image_tag "/images/icons/exchange.png",{width: "20", onclick: "$('td#right-panel').slideToggle();"} %>
+     </td>
      <td id="right-panel" valign="top" align="left">
         <ul class="vls">
-            <li><img src="images/icons/print.png" width="14"/><h6><b>Todos</b></h6></li>
+            <li><img src="images/icons/org_todosb.png" width="14"/><h6><b>Todos</b></h6></li>
             <li><br>
                 <a href="#"><b>To Inform Student</b></a><br/>
                 <small>Ask Hari ( IN 10098 ) & Inquir...</small>
@@ -149,7 +152,7 @@
         </ul>
         <br/>
         <ul class="vls">
-            <li><img src="images/icons/print.png" width="14"/><h6><b>Calender</b></h6></li>
+            <li><img src="images/icons/org_calenderb.png" width="14"/><h6><b>Calender</b></h6></li>
             <li><br><div class="dateField"></div></li>
         </ul>        
     </td>

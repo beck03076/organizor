@@ -20,7 +20,6 @@ class EnquiriesController < ApplicationController
       @enquiry = Enquiry.new
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
-      @enquiry.programmes.build
     elsif @status == "launch"
       @enquiry = Enquiry.find(params[:enquiry_id])
       @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:enquiry_id]).order("created_at DESC")
@@ -28,12 +27,13 @@ class EnquiriesController < ApplicationController
       @enquiry = Enquiry.find(params[:enquiry_id])
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
-      @enquiry.programmes.build
     elsif @status == "clone"
-      @enquiry = Enquiry.find(params[:enquiry_id]).dup
+      orig = Enquiry.find(params[:enquiry_id])
+      @enquiry = orig.dup
+      @enquiry.programmes = orig.programmes
+      @enquiry.countries = orig.countries
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
-      @enquiry.programmes.build
     else
       @cols = UserConfig.find(current_user).enq_cols
     end
@@ -109,10 +109,9 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/new.json
   def new
     @enquiry = Enquiry.new
-#    self.pre
     @countries = self.basic_select(Country)
     @p_types = ProgrammeType.all
-    @enquiry.programmes.build
+
 
     respond_to do |format|
       format.html # new.html.erb

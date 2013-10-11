@@ -29,8 +29,8 @@ private
        
        temp << check_box_tag(:tr,reg.id) + spc +
                link_to(image_tag("/images/icons/vie.png"),
-                       "/registrations/#{reg.id}") + 
-               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + 
+                       "/registrations/#{reg.id}") + spc +
+               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/registrations/#{reg.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 

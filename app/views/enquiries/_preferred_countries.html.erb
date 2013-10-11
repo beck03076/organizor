@@ -2,15 +2,8 @@
 <div class="htab">
              <h5><b>Preferred countries</b></h5>
         </div><br/>
-<script>
-$(document).ready(function(){
-  $('#multiselect').multiSelect('deselect_all');
-  <% @enquiry.countries.each do |i| %>
-    $("#ms-multiselect .ms-selectable:first-child ul li[ms-value="+ <%= i.id %> + "]").trigger("click");
-  <% end %>
-  
-});  
-</script>
+
+<div id="ms-selected-countries" data-country_ids='<%= @enquiry.countries.map &:id %>'></div>
  <div class="cols">
        <div class="frbox">
        <label>Search</label>
