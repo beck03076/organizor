@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
   
   end
   
+   def group_delete
+    set_url_params
+    @model.camelize.constantize.where(id: params[:model_ids].split(",")).delete_all
+    render text: "Successfully assigned!"  
+  end
+  
   private
   
   def set_current_user

@@ -27,10 +27,10 @@ private
     registrations.map do |reg|
        temp = []
        
-       temp << check_box_tag(:tr,reg.id) + dspc +
+       temp << check_box_tag(:tr,reg.id) + spc +
                link_to(image_tag("/images/icons/vie.png"),
-                       "/registrations/#{reg.id}") + dspc + 
-               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + dspc +
+                       "/registrations/#{reg.id}") + 
+               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + 
                link_to(image_tag("/images/icons/del.png"),
                        "/registrations/#{reg.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
@@ -62,7 +62,7 @@ private
     end
 
     if sc.is_a?(Array)
-      scs = sc[1].to_s.pluralize
+      scs = set_asso(sc[1])
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
       regs = regs.joins(join).order("#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
@@ -76,7 +76,7 @@ private
     if params[:sSearch].present?
       res = @def_cols[params[:sSearch_0].to_sym] 
       if res.is_a?(Array)
-        ress = res[0].to_s.pluralize
+        ress = set_asso(res[0])
         regs = regs.includes(res[0]).where("#{ress}.#{res[1].to_s} like :search", search: "%#{params[:sSearch]}%")
       else
         regs = regs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
@@ -114,11 +114,15 @@ private
      :qua_id => [:qualification,:name],
      :reg_source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => :ass_to,
-     :assigned_by => :ass_by,
-     :created_by => :cre_by,
-     :updated_by => :upd_by,
+     :assigned_to => [:_assigned_to,:first_name],
+     :assigned_by => [:_assigned_by,:first_name],
+     :created_by => [:_created_by,:first_name],
+     :updated_by => [:_updated_by,:first_name],
      :prof_eng_level_id => [:english_level,:name]}
+  end
+  
+   def set_asso(var)
+    Registration.reflect_on_association(var).klass.name.underscore.pluralize
   end
   
     

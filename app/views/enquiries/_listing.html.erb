@@ -5,7 +5,7 @@
   <tr>
       <th>
       <%= check_box_tag "master",nil,false,{id: "master_check",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
-      &nbsp;
+
       Actions
       </th>
       <% @cols.each do |i| %>
@@ -44,16 +44,15 @@
                 <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
               </div>
             </div>
-            <input type="button" value="Send Email" class="btnp">
-             <input type="button" value="Delete" class="btnpd">
-            <input type="button" value=">" class="btnpd fr">
-            <input type="button" value="<" class="btnpd fr">
+            <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
+            <%= link_to "Delete", "#", {class: "btnp fr", onclick: "groupDelete('#{_id}');"} %>
 
             <div class="cl"></div>
 <script>
 
 $(function(){
-dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>")
+dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>");
+setColorsFromSession();
 });
 </script>
             

@@ -1,18 +1,73 @@
-<h2>Sign in</h2>
- <%= stylesheet_link_tag    "home" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sprint5</title>
+  <%= stylesheet_link_tag    "home" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+ 
+  
+  <!--p class="notice"><%= notice %></p-->
+  <!--p class="alert"><%= alert %></p-->
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#fade').cycle();
+});
+</script>
+<div id="fade">
+<img src="/images/b1.jpg" class="theme"/>
+<img src="/images/b2.jpg" class="theme"/>
+<img src="/images/b3.jpg" class="theme"/>
+</div>
+<div id="bg1">
+<div id="login-box">
+<table cellpadding="10" cellspacing="0" width="100%" height="100">
+<tr>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <td align="left" valign="bottom" class="tw" style="padding:10px 0 0 20px">
+     <%= f.label :email %>
+      
+    </td>
+    <td align="left" valign="bottom" class="tw" style="padding:10px 10px 0 20px">
+      <%= f.label :password %>
+      
+    </td>
+    
 
-<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email, :required => false, :autofocus => true %>
-    <%= f.input :password, :required => false %>
-    <%= f.input :remember_me, :as => :boolean if devise_mapping.rememberable? %>
-  </div>
+    <td align="center" valign="middle" rowspan="3" width="90" class="lb pad10">
+    <span class="th35">
+         <%= f.submit 'Go', :class => "white-button"%>
+    </span>
+    </td>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign in" %>
-  </div>
-<% end %>
 
+</tr>
+<tr>
+<td align="left" valign="top" style="padding:10px 0 0 20px">
+<%= f.email_field :email, :autofocus => true,:class=> "tfuw",:placeholder => "Enter your email id" %>
+</td>
+
+<td align="left" valign="top" style="padding:10px 10px 0 20px">
+<%= f.password_field :password,:class=> "tfup", :placeholder => "Enter your password" %>
+</td>
+</tr>
+<tr>
+<td class="white-text">
+<% if devise_mapping.rememberable? -%>
+ <%= f.check_box :remember_me %> <%= f.label :remember_me,:class => "white-text" %>
+<% end -%>
+</td>
+<td>
+<div align="right" class="white-link">
 <%= render "devise/shared/links" %>
+</div>
+</td>
+</tr>
+<% end %>
+</table>
+</div>
+</div>
+</body>
+</html>

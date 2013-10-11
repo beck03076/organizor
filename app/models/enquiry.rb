@@ -13,7 +13,7 @@ class Enquiry < ActiveRecord::Base
   
   belongs_to :student_source,:foreign_key => "source_id"
   
-  has_many :emails
+  has_and_belongs_to_many :emails
   
   has_many :follow_ups
   
@@ -21,10 +21,10 @@ class Enquiry < ActiveRecord::Base
   
   has_many :notes,foreign_key: "sub_id"
   
-  belongs_to :assigned_by, class_name: "User",foreign_key: "assigned_by"
-  belongs_to :assigned_to, class_name: "User",foreign_key: "assigned_to"
-  belongs_to :created_by, class_name: "User",foreign_key: "created_by"
-  belongs_to :updated_by, class_name: "User",foreign_key: "updated_by"
+  belongs_to :_assigned_by, class_name: "User",foreign_key: "assigned_by"
+  belongs_to :_assigned_to, class_name: "User",foreign_key: "assigned_to"
+  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
+  belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
   
   attr_accessible :emails_attributes,:programmes_attributes,
                   :assigned_by, :assigned_to, :created_by, 

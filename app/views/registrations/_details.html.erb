@@ -6,7 +6,7 @@ Education Background
   <% q = @registration.qualification %>
     <li>
       <label>Qualification </label>: 
-        <%= q.name %>
+        <%= q.name rescue "unknown" %>
     </li>
     
     <li>
@@ -55,7 +55,7 @@ English Language Proficiency
     <li><label>
       Level of English </label>: 
       
-        <%= a.english_level.name %>
+        <%= a.english_level.name rescue "unknown" %>
       
     </li>
     

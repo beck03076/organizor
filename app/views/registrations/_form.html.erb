@@ -24,6 +24,9 @@
             Personal Information
           </b>
       </h5>
+      <%= f.submit "Save",{:class => "btnp fr"} %>
+      <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
+      <div class="cl"></div>
   </div>
   <br/>  
       <div class="cols">
@@ -183,7 +186,7 @@
     <% end %>   
     
   <br/>
-      <%= f.link_to_add "Add more",:class => "btns fr", :programmes %>
+      <%= f.link_to_add "Add more",:programmes,{class: "btns fr"}%>
   <br/>
   <div class="cl"></div>
   <!-- Course of Interest - ENDS -->
@@ -236,7 +239,7 @@
           <div class="frbox">
             <%= f.label nil,"Relationship" %> 
             <%= f.select(:emer_relationship,%w(Father Mother Husband Wife Brother Sister Cousin Uncle Friend Other))%>
-		</div>
+        </div>
          
           <%= fs(f,"emer_mobile","text_field",1,"Mobile") %>
           <%= fs(f,"emer_email","text_field",nil,"Email") %>
@@ -286,13 +289,13 @@
                  <%= d.file_field :path %>
                  <%= d.hidden_field :registration_id %>
                  <span class="btns">
-				 <%= d.link_to_remove "Remove" %>
+                 <%= d.link_to_remove "Remove" %>
                 </span>
          <% end %>
          
-		 <span class="btns">
+         <span class="btns">
          <%= f.link_to_add "Attach document", :documents %>
-		 </span>
+         </span>
   </div>    
   <!-- Documents - ENDS -->
         <br/><br/>
@@ -309,15 +312,19 @@
         <%= fs(f,[:note, 
                     {:size => "5x3", :style => "width:165px;height:auto"}],"text_area",nil,"Note") %>
         
-		</div></div>
-		<br/><br/><br/>
-        <%= f.submit "Register",{:class => "btnp fl"} %>
-       
+        </div></div>
+        <br/><br/><br/>
+        <%= f.submit "Save",{:class => "btnp fr"} %>
+        <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
         <div class="cl"></div>
         
         </div>
         </div>
 
 <% end %>
-
+<script type="text/javascript">
+ $(function(){
+  setColorsFromSession();
+ });
+</script>
 

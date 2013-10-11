@@ -22,7 +22,14 @@
   
   
   <div class="actions" style="margin-bottom:10px;">
-   <%= f.submit "Create Enquiry",{:class => "btnp fr"} %>
+   <%= f.submit "Save",{:class => "btnp fr"} %>
+   <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
   </div>
   <div class="cl"></div>
 <% end %>
+
+<script type="text/javascript">
+ $(function(){
+  setColorsFromSession();
+ });
+</script>

@@ -6,19 +6,19 @@ class UserConfigsController < ApplicationController
      :qua_id => [:qualification,:name],
      :reg_source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => :ass_to,
-     :assigned_by => :ass_by,
-     :created_by => :cre_by,
-     :updated_by => :upd_by,
+     :assigned_to => [:_assigned_to,:first_name],
+     :assigned_by => [:_assigned_by,:first_name],
+     :created_by => [:_created_by,:first_name],
+     :updated_by => [:_updated_by,:first_name],
      :prof_eng_level_id => [:english_level,:name]}
      
     @def_enq_cols = {:country_id => [:country_of_origin,:name],
      :source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => [:assigned_to,:first_name],
-     :assigned_by => [:assigned_by,:first_name],
-     :created_by => [:created_by,:first_name],
-     :updated_by => [:updated_by,:first_name],
+     :assigned_to => [:_assigned_to,:first_name],
+     :assigned_by => [:_assigned_by,:first_name],
+     :created_by => [:_created_by,:first_name],
+     :updated_by => [:_updated_by,:first_name],
      :status_id => [:status,:name]}
   end
   

@@ -10,8 +10,12 @@
     </div>
     <br/>
 
-    <% tabs_arr = %w(Followup Note Columns Colors) %>
+    <% tabs_arr = %w(Followup Note Columns Colors Email) %>
     <div class="newtab-container">
+    <div id="loading" style="display:none;">
+      <%= image_tag "/images/icons/bload.gif" %><br/>
+      <h1> Saving ... </h1>
+    </div>
         <ul class="newtab-menus">
         <% tabs_arr.each do |i|  %>
             <% i1 = i.downcase %>

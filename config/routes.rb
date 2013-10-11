@@ -26,7 +26,11 @@ Organizor::Application.routes.draw do
 
   devise_for :users
   
+  match '/bulk_email/:model/:model_ids' => "emails#bulk_email"
+  
   match '/group_assign/:model/:model_ids/user/:user_id' => "application#group_assign"
+  
+  match '/group_delete/:model/:model_ids' => "application#group_delete"
   
   match "/enquiries/tab/:status/:partial(/:enquiry_id)" => "enquiries#tab"
   
@@ -34,9 +38,10 @@ Organizor::Application.routes.draw do
   
   match "/email_template/create" => "emails#template_create"
   
-  match "/email_templates/:etemp_id/:model/:e_id/:list" => "email_templates#partial"
+  match "/email_templates/partial" => "email_templates#partial"
   
   match 'enquiries_action_partial/:partial_name/:enquiry_id/:list' => "enquiries#action_partial"
+  
   match 'registrations_action_partial/:partial_name/:registration_id/:list' => "registrations#action_partial"
   
   match "/emails/new" => "emails#new"
@@ -57,7 +62,12 @@ Organizor::Application.routes.draw do
   resources :application_statuses
 
 
-  resources :registrations
+  resources :registrations do
+      member do
+        get :clone
+      end
+  end
+  
   match "/registrations.json/:status" => "registrations#index"
 
   resources :reg_courses
@@ -81,7 +91,11 @@ Organizor::Application.routes.draw do
   resources :institutions
 
 
-  resources :enquiries
+  resources :enquiries do
+      member do
+        get :clone
+      end
+  end
 
 
   resources :programmes

@@ -29,6 +29,11 @@ class EnquiriesController < ApplicationController
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
       @enquiry.programmes.build
+    elsif @status == "clone"
+      @enquiry = Enquiry.find(params[:enquiry_id]).dup
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+      @enquiry.programmes.build
     else
       @cols = UserConfig.find(current_user).enq_cols
     end
@@ -38,7 +43,7 @@ class EnquiriesController < ApplicationController
   
   def action_partial
     set_url_params
-    @enquiry = Enquiry.find(@enquiry_id)
+    
     
     if @partial_name == "follow_up"
           @d_f_u_days = UserConfig.find_by_user_id(current_user.id).def_follow_up_days
@@ -54,11 +59,26 @@ class EnquiriesController < ApplicationController
           @todo = Todo.new
     end
    
-    render :partial => @partial_name, :locals => {:e => Email.new,
+    if @partial_name == "email"
+      mail_to_use = UserConfig.find(current_user.id).def_enq_email.to_sym
+      
+      @subject = Enquiry.where(id: @enquiry_id)
+      @subject_ids = (@subject.map &:id).join(",")
+      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
+      render :partial => 'enquiries/email', :locals => {:e => Email.new(to: @email_to), 
+                                                     :id => params[:e_id],
+                                                     :obj => @subject,
+                                                     :obj_ids => "enquiry_ids",
+                                                     :obj_name => "enquiry" }
+
+    else
+      @enquiry = Enquiry.find(@enquiry_id)
+      render :partial => @partial_name, :locals => {:e => Email.new,
                                                   :id => @enquiry_id,
                                                   :obj => @enquiry,
                                                   :obj_id => "enquiry_id",
                                                   :obj_name => "enquiry"}
+    end
      
   end
   
@@ -91,13 +111,18 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.new
 #    self.pre
     @countries = self.basic_select(Country)
-@p_types = ProgrammeType.all
+    @p_types = ProgrammeType.all
     @enquiry.programmes.build
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enquiry }
     end
+  end
+  
+
+  def clone
+    @enquiry = Enquiry.find(params[:id])
   end
 
   # GET /enquiries/1/edit
@@ -112,8 +137,12 @@ class EnquiriesController < ApplicationController
 
     respond_to do |format|
       if @enquiry.save
-        format.html { redirect_to @enquiry, notice: 'Enquiry was successfully created.' }
-        format.json { render json: @enquiry, status: :created, location: @enquiry }
+        if params[:save_new] 
+          format.html { redirect_to new_enquiry_path, notice: 'Enquiry was successfully created.' }
+        else
+          format.html { redirect_to @enquiry, notice: 'Enquiry was successfully created.' }
+          format.json { render json: @enquiry, status: :created, location: @enquiry }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @enquiry.errors, status: :unprocessable_entity }

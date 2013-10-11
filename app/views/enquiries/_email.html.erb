@@ -1,31 +1,31 @@
 
 <br/>
-<% if @list.to_i == 1 && obj.emails.size > 0 %>
-<table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-     <thead>
-      <tr>
-                            <th>To</th>
-                            <th>From</th>
-                            <th>Subject</th>
-                            <th>Body</th>
-      </tr>
-    </thead>
-    <tbody>
-            <% obj.emails.each do |email| %>
-                <tr>
-                    <td><%= email.to %></td>
-                    <td><%= email.smtp.name %></td>
-                    <td><%= email.subject %></td>
-                    <td><%= truncate(email.body,length: 20) %></td>
-               </tr>
-           <% end %>
-                <tr>
-                    <td colspan="4" align="left"><a href="#">Back</a></td>
-               </tr>
+<% if @list.to_i == 1 && obj.first.emails.size > 0 %>
+    <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+         <thead>
+          <tr>
+                                <th>To</th>
+                                <th>From</th>
+                                <th>Subject</th>
+                                <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+                <% obj.first.emails.each do |email| %>
+                    <tr>
+                        <td><%= email.to %></td>
+                        <td><%= email.smtp.name rescue "unknown" %></td>
+                        <td><%= email.subject %></td>
+                        <td><%= truncate(strip_tags(email.body),length: 30) %></td>
+                   </tr>
+               <% end %>
+                    <tr>
+                        <td colspan="4" align="left"><a href="#">Back</a></td>
+                   </tr>
 
-    </tbody>
-  </table>
-<br/><br/>
+        </tbody>
+      </table>
+    <br/><br/>
 <% end %>
 
 <div id="email-action" class="action-box">
@@ -35,8 +35,7 @@
 
   <%= form_for(e) do |p| %>
     <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
-    <%= p.hidden_field obj_id.to_sym, value: id %>
-    
+    <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
     
     <div class="fbox">
          <%= p.label :email_template %>
@@ -66,10 +65,19 @@
     </div>
     <div class="fbox">
         <%= p.label :to %>
-        <%= p.text_field :to %>&nbsp; 
+        <%= p.text_field :to,{size: "0x0",id: "email_to"} %>&nbsp; 
         
-        <%= link_to "add cc","#",{ :id => "add_cc", :remote => true } %> |
-        <%= link_to "add bcc","#",{:id => "add_bcc", :remote => true } %>
+        <span onclick="$('.cc').slideToggle();">add cc</span> |
+        <span onclick="$('.bcc').slideToggle();">add bcc</span>
+
+    </div>
+    <div class="fbox cc" style="display:none;">
+        <%= p.label :cc %>
+        <%= p.text_field :cc %>
+    </div>
+    <div class="fbox bcc" style="display:none;">
+        <%= p.label :bcc %>
+        <%= p.text_field :bcc %>
     </div>
     <div class="fbox">
         <%= p.label :subject %>
@@ -78,7 +86,6 @@
     <div class="fbox" style="height:auto">
         <%= p.label :body %>
         <%= p.text_area(:body,{:class => "tinymce"}) %>
-      
     </div>
     <div class="fbox">
         <%= p.label :attachment %>
@@ -95,7 +102,7 @@
     </div>
   <% end %>
 
-</div>
+    </div>
 
 <script>
 

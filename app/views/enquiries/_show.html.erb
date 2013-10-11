@@ -1,3 +1,12 @@
+<script type="text/javascript">
+$(function(){
+
+  activeMM("enquiriesMM");
+  setColorsFromSession();
+
+});
+
+</script>
 <% a = @enquiry %>
 <div class="tab-content3" id="tab-content62">
         <div class="boxp">
@@ -12,7 +21,8 @@
                 </b>
             </h5>
             
-            <%= link_to "Edit", edit_enquiry_path(@enquiry), {class: "btnp fr"} %>
+            <%= link_to "Edit", edit_enquiry_path(a), {class: "btnp fr"} %>
+            <%= link_to "Clone", clone_enquiry_path(a), {class: "btnp fr"} %>
             
             <div class="cl"></div>
         </div>
@@ -128,4 +138,6 @@
           </div>
        </div>
 <!-- INQUIRY DETAILS - ENDS -->
+
+
 

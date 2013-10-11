@@ -1,0 +1,18 @@
+<%= form_for(@user_config) do |f| %>
+ 
+        <%= f.label :default_enquiry_email %>
+        <%= f.select :def_enq_email,["email1","email2"] %>
+        <br/>
+        <br/>
+        <%= f.label :default_registration_email %>
+        <%= f.select :def_reg_email, ["email1","email2"] %>
+    <div class="cl"></div>
+      <br/>
+      <br/>      
+      <br/>
+
+      <%= f.submit "Save",{class: "btnp"} %>
+       
+
+<% end %>
+        
