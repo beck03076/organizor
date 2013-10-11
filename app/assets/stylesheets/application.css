@@ -57,7 +57,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #left-panel{position:absolute;background:#CCC;height:auto;box-shadow: 3px 0 6px #ccc;border-right:1px solid #CACACA;}
 #right-panel{height:auto;width:200px;padding-left:10px;background:#fff}
 #main-body{position:relative;background:#fff}
-#body-content{margin-left:110px;padding:20px 0 20px 10px}
+#body-content{margin-left:110px;padding:20px 0 20px 10px;min-height:720px}
 #footer,#footerin{padding:10px 2% 10px 2%;width:96%;}
 #footerin{margin:10px auto 10px auto;font-size:11px;color:#444}
 /* LAYOUT - ENDS */
