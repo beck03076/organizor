@@ -1,32 +1,4 @@
-<script type="text/javascript">
 
- $('#multiselect').multiSelect({
-        keepOrder: true,
-        size: 5
-    });
-    
-    $('#deselect-all').click(function(){
-      $('#multiselect').multiSelect('deselect_all');
-      return false;
-    });
-
-    $(".searchKey").keyup(function(){
-    
-        var searchWord=$.trim(this.value);
-        searchWord=$.trim(searchWord.charAt(0).toUpperCase() + searchWord.slice(1));
-        
-        if(searchWord==''){
-            $("#ms-multiselect .ms-selectable:first-child ul li").show();
-            $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-        }
-        else{
-            $("#ms-multiselect .ms-selectable:first-child ul li").hide();
-            $("#ms-multiselect .ms-selectable:first-child ul li:contains('"+searchWord+"')").show();
-            $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-        }
-    });
-
-</script>
 
 <%= render 'form' %>
 

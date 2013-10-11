@@ -27,10 +27,10 @@ private
     enquiries.map do |enq|
        temp = []
        
-       temp << check_box_tag(:tr,enq.id) + dspc +
+       temp << check_box_tag(:tr,enq.id) + spc +
                link_to(image_tag("/images/icons/vie.png"),
-                       "/enquiries/#{enq.id}") + dspc + 
-               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + dspc +
+                       "/enquiries/#{enq.id}") + 
+               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + 
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
@@ -116,10 +116,10 @@ private
     @def_cols = {:country_id => [:country_of_origin,:name],
      :source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => [:assigned_to,:first_name],
-     :assigned_by => [:assigned_by,:first_name],
-     :created_by => [:created_by,:first_name],
-     :updated_by => [:updated_by,:first_name],
+     :assigned_to => [:_assigned_to,:first_name],
+     :assigned_by => [:_assigned_by,:first_name],
+     :created_by => [:_created_by,:first_name],
+     :updated_by => [:_updated_by,:first_name],
      :status_id => [:status,:name]}
   end
   

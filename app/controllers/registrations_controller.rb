@@ -28,6 +28,11 @@ class RegistrationsController < ApplicationController
       @registration = Registration.find(params[:registration_id])
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
+    elsif @status == "clone"
+      @registration = Registration.find(params[:registration_id]).dup
+      @countries = self.basic_select(Country)
+      @p_types = ProgrammeType.all
+      @registration.programmes.build
     else
       @cols = UserConfig.find(current_user).reg_cols
     end
@@ -124,6 +129,10 @@ class RegistrationsController < ApplicationController
       format.json { render json: @registration }
     end
   end
+  
+  def clone
+    @registration = Registration.find(params[:id])
+  end
 
   # GET /registrations/1/edit
   def edit
@@ -146,8 +155,12 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       if @registration.save
-        format.html { redirect_to "/registrations/new" }
-        format.json { render json: @registration, status: :created, location: @registration }
+        if params[:save_new] 
+          format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
+        else
+          format.html { redirect_to @registration }
+          format.json { render json: @registration, status: :created, location: @registration }
+        end  
       else
         format.html { render action: "new" }
         format.json { render json: @registration.errors, status: :unprocessable_entity }

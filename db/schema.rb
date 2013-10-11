@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131009235309) do
+ActiveRecord::Schema.define(:version => 20131010210436) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -142,6 +142,13 @@ ActiveRecord::Schema.define(:version => 20131009235309) do
     t.integer  "enquiry_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "emails_registrations", :force => true do |t|
+    t.integer  "registration_id"
+    t.integer  "email_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "english_levels", :force => true do |t|
@@ -476,6 +483,8 @@ ActiveRecord::Schema.define(:version => 20131009235309) do
     t.text     "def_note"
     t.text     "reg_cols"
     t.text     "enq_cols"
+    t.string   "def_enq_email"
+    t.string   "def_reg_email"
   end
 
   create_table "users", :force => true do |t|

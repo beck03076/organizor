@@ -30,6 +30,8 @@ $(function(){
     dateFormat: "yy-mm-dd",
     yearRange: '1980:2050'
     });
+    
+    setColorsFromSession();
 
 });
 
@@ -172,6 +174,9 @@ function sel_act(sel){
     var eTempId = sel.options[sel.selectedIndex].value;
     var enqId = $('#enquiry_id_div');
     var regId = $('#registration_id_div');
+    var emailTo = $('#email_to').val().split(', ');
+    var model = $('#email_model').val();
+    var subject_ids = $('#email_' + model + '_ids_').val();
     if (enqId.length != 0){
       var eId = enqId.data("enquiry_id");
       var model = enqId.data("model_sing");
@@ -179,9 +184,14 @@ function sel_act(sel){
       var eId = regId.data("registration_id");
       var model = regId.data("model_sing");
     }
-    $.get('/email_templates/'+eTempId+'/'+model+'/'+eId+'/0',function(partial){
-    $('#email-action').html(partial);  
-    });
+
+    $.post('/email_templates/partial', { etemp_id: eTempId, 
+                                    model: model, 
+                                    subject_ids: subject_ids, 
+                                    list: 0,
+                                    email_to: emailTo }, function (partial) {
+            $('#email-action').html(partial); 
+            });
 }
 
 // enquiries tabs switching
@@ -197,12 +207,6 @@ function enquiryTabSwitch(obj){
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
     
     $.get(url,function(table){
-     
-    var backgroundColor = $.cookie('bgColor');
-    setBGColor(backgroundColor+"-bg");
-    /*SET THE THEME SESION VALUE HERE*/
-    var themeColor = $.cookie('themeColor');
-    setThemeColor(themeColor+"-theme");
     
     
       var $container = $('#'+lang).html(table);
@@ -317,11 +321,17 @@ function registrationTabSwitch(obj){
 
 function storeThemeInSession(){ 
 
-  var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
-  var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
-  $.cookie('themeColor', themeColor , { path: '/' });
-  $.cookie('bgColor', bgColor , { path: '/' });
-  
+          //$('#loading').css("display","");
+          var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
+          var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
+          alert("theme " + themeColor);
+          alert("Bg " + bgColor);
+          $.cookie('themeColor', themeColor , { path: '/' });
+          $.cookie('bgColor', bgColor , { path: '/' });
+          alert("Saved. Theme Color : " + themeColor + ", Background Color : " + bgColor);
+          /*alert("bg " + $.cookie('bgColor'));
+          alert("th " + $.cookie('themeColor'));*/
+          //$('#loading').css("display","none");
 }
 
 function toggleAllCheck(obj,tableId){
@@ -350,6 +360,29 @@ function groupAssignTo(tableId){
          $("#group_assign_to_" + tableId).css("display","none");
          $('#' + tableId).dataTable().fnDraw();
        });
+}
+
+
+function groupDelete(tableId){
+       var rows = getCheckedRowsAsArray(tableId);
+       var model = $("#group_assign_to_" + tableId).data("model");
+   
+       url = '/group_delete/' + model + '/' + rows ;
+
+       $.get(url,function(table){
+         $('#' + tableId).dataTable().fnDraw();
+       });
+}
+
+function bulkEmail(tableId){
+       var rows = getCheckedRowsAsArray(tableId);
+       var model = $("#group_assign_to_" + tableId).data("model");
+       url = '/bulk_email/' + model + '/' + rows ;
+       
+       window.open(url,
+                   '_blank',
+                   'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+
 }
 
 

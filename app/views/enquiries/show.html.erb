@@ -6,8 +6,6 @@ $(function(){
   $("ul.tab-menus li.launch").text('<%= @enquiry.first_name.titleize %>');
   $("ul.tab-menus li.launch").attr('data-enquiry_id', '<%= @enquiry.id %>');
   $("ul.tab-menus li.launch").trigger("click");
-  activeMM("enquiriesMM");
-
 });
 
 </script>

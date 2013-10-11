@@ -176,25 +176,42 @@ $("#"+objectId).css("display","inline");
 
 }
 
-$(document).ready(function(){
-    var backgroundColor = "gray";
-    setBGColor(backgroundColor+"-bg");
+function setColorsFromSession(){
+    var backgroundColor = ($.cookie('bgColor') == undefined) ? "cream" : $.cookie('bgColor') ;
+    setBGColor(backgroundColor);
     /*SET THE THEME SESION VALUE HERE*/
-    var themeColor = "yellow";
-    setThemeColor(themeColor+"-theme");
+    var themeColor = ($.cookie('themeColor') == undefined) ? "blue" : $.cookie('themeColor') ;
+    setThemeColor(themeColor);
+}
     
-});
 
-function setThemeColor(objectId){
-    var theme=$("#"+objectId).data("theme");
+
+function activateColor(objectId){
+    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+    $(".theme-colrs li").removeClass("theme-colrs-active");
+    /* ADD ACTIVE THEME MENU CLASS NAME */
+    $("#"+objectId).parent().addClass("theme-colrs-active");
+
+}
+
+function activateBg(objectId){
+    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+    $("#bg-color li").removeClass("theme-colrs-active");
+    /* ADD ACTIVE THEME MENU CLASS NAME */
+    $("#"+objectId).parent().addClass("theme-colrs-active");
+
+}
+
+function setThemeColor(theme){
+   /* var theme=$("#"+objectId).data("theme");
     var mainColor="#2A88C8";
     var thickColor="#00336C";
     var lightColor="#3BA7F2";
     var lightestColor="#E8F0FD";
     /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
-    $(".theme-colrs li").removeClass("theme-colrs-active");
+    //$(".theme-colrs li").removeClass("theme-colrs-active");
     /* ADD ACTIVE THEME MENU CLASS NAME */
-    $("#"+objectId).parent().addClass("theme-colrs-active");
+   // $("#"+objectId).parent().addClass("theme-colrs-active");
     /* APPLY THEMES */
     switch(theme){
         case "yellow":{
@@ -263,14 +280,14 @@ function setThemeColor(objectId){
     });
 }
 /* ON CLICKING BG MENU*/
-function setBGColor(objectId){
-    var bg=$("#"+objectId).data("bg");
+function setBGColor(bg){
+    /*var bg=$("#"+objectId).data("bg");
     var bgColor="#fff";
-    var borderColor="#CDCDCD";
+    var borderColor="#CDCDCD";*/
     /* REMOVE ALL ACTIVE BG MENU CLASS NAME */
-    $("#bg-color li").removeClass("theme-colrs-active");
+//    $("#bg-color li").removeClass("theme-colrs-active");
     /* ADD ACTIVE BG MENU CLASS NAME */
-    $("#"+objectId).parent().addClass("theme-colrs-active");
+//    $("#"+objectId).parent().addClass("theme-colrs-active");
     /* APPLY BG */
     switch(bg){
         case "gray":{
@@ -280,6 +297,7 @@ function setBGColor(objectId){
         }
         case "white":{
             bgColor="#fff";
+            borderColor="#fff";
             break;
         }
         case "cream":{
@@ -294,6 +312,7 @@ function setBGColor(objectId){
         }
     }
     $("body").css({"background":bgColor});
+    $("tab-content-theme").css({"background":bgColor});
     $("#right-panel").css({"background":bgColor});
     $("#main-body").css({"background":bgColor});
     $(".boxstheme").css({"border-color":borderColor});

@@ -20,10 +20,16 @@ class Registration < ActiveRecord::Base
              
   belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
   
-  has_many :emails
+  has_and_belongs_to_many :emails 
   has_many :follow_ups
   has_many :notes,foreign_key: "sub_id"
   has_many :todos
+  
+  
+  belongs_to :_assigned_by, class_name: "User",foreign_key: "assigned_by"
+  belongs_to :_assigned_to, class_name: "User",foreign_key: "assigned_to"
+  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
+  belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
 
   attr_accessible :address_city, :address_country_id, :address_line1, 
   :address_line2, :address_others, :address_post_code, 
@@ -50,21 +56,6 @@ class Registration < ActiveRecord::Base
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
   end
   
-  def ass_to
-    User.find(self.assigned_to).name.titleize.strip rescue ""
-  end
-  
-  def ass_by
-    User.find(self.assigned_by).name.titleize.strip rescue ""
-  end
-
-  def cre_by
-    User.find(self.created_by).name.titleize.strip rescue ""
-  end
-
-  def upd_by
-    User.find(self.updated_by).name.titleize.strip rescue ""
-  end
   
   def statuses
     self.programmes.map{|i| i.application_status.try(:name)} rescue ""

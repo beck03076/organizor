@@ -9,7 +9,8 @@
             <% obj.notes.each do |n| %>
                 <tr>
                     <td>
-                    <%= n.content.html_safe %>
+                    <% note = strip_tags(n.content) %>
+                    <%= note.empty? ? "No note" : note %><br/><br/>
                           - <b><%= User.find(n.created_by).first_name %></b> <i> about <%= time_ago_in_words(n.created_at) %> ago </i>
 
                     </td>
