@@ -128,8 +128,8 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .fbox,.fsbox,.fnbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
 .fnbox label{width:120px;display:inline-block; white-space:normal;text-align:left;font-weight:normal;vertical-align:top}
-.fpbox{width:90%;margin:10px 5px 10px 5px;vertical-align:top;white-space:nowrap;height:40px}
-.fpbox label{width:80px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fpbox{width:80% !important;margin:10px 25px 10px 5px;vertical-align:top;height:40px;}
+.fpbox label{white-space:nowrap;text-align:left !important;font-weight:normal;vertical-align:top;width:60px !important; }
 .fpbox textarea{width:165px !important}
 .fbox .fields,.fsbox .fields,.fnbox{display:inline}
 .fsbox label{width:70px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal}
