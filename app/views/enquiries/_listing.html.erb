@@ -34,7 +34,7 @@
 </table>
 <br/>
             <% div_id = "group_assign_to_" + _id %>
-            <%= link_to "Assign To", "#", {class: "btnp", onclick: "$('##{div_id}').show();"} %>
+            <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
             <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
               <div class="col6">
                 User :
