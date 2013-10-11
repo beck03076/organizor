@@ -31,31 +31,31 @@
                           [<%= a.ref_no %>]
                         </span>
                         </h5>
-                        <ul class="infodls">
-                        <li>Mobile1 : <%= a.mobile1 %></li>
-                        <li>Mobile2 : <%= a.mobile1 %></li>
-                        <li>Email1 : <%= a.email1 %></li>
-                        <li>Email2 :<%= a.email2 %></li>
+                        <ul class="vlsdet">
+                        <li><label>Mobile1</label>: <%= a.mobile1 %></li>
+                        <li><label>Mobile2</label>: <%= a.mobile1 %></li>
+                        <li><label>Email1</label>: <%= a.email1 %></li>
+                        <li><label>Email2</label>:<%= a.email2 %></li>
                         </ul>
                     </div>
                     <div class="cl"></div>
                     <br/>
                     <h6><b>Personal information</b></h6>
-                    <ul class="infosm">
-                    <li>Date of Birth : <%= a.date_of_birth %></li>
-                    <li>Gender : <%= a.gender %></li>
-                    <li>Nationality : <%= a.country_of_origin.try(:name) %></li>
-                    <li>Address : <%= disp0(a,'address') %></li>
-                    <li>Home Phone : <%= a.home_phone %></li>
-                    <li>Work Phone : <%= a.work_phone %></li>
+                    <ul class="vlsdet">
+                    <li><label>Date of Birth</label>: <%= a.date_of_birth %></li>
+                    <li><label>Gender</label>: <%= a.gender %></li>
+                    <li><label>Nationality</label>: <%= a.country_of_origin.try(:name) %></li>
+                    <li><label>Address</label>: <%= disp0(a,'address') %></li>
+                    <li><label>Home Phone</label>: <%= a.home_phone %></li>
+                    <li><label>Work Phone</label>: <%= a.work_phone %></li>
                     </ul>
                     <br/>
                     <h6><b>Passport & Visa</b></h6>
-                    <ul class="infosm">
-                    <li>Passport Number : <%= a.passport_number %></li>
-                    <li>Passport Valid Till : <%= a.passport_valid_till %></li>
-                    <li>Visa Type : <%= a.visa_type %></li>
-                    <li>Visa Valid Till : <%= a.visa_valid_till %></li>
+                    <ul class="vlsdet">
+                    <li><label>Passport Number</label>: <%= a.passport_number %></li>
+                    <li><label>Passport Valid Till</label>: <%= a.passport_valid_till %></li>
+                    <li><label>Visa Type</label>: <%= a.visa_type %></li>
+                    <li><label>Visa Valid Till</label>: <%= a.visa_valid_till %></li>
                     </ul><br/>
                  </div>
             </div>
