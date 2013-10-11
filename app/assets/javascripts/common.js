@@ -10,6 +10,7 @@ $(document).ready(function(){
         $("#"+this.lang).show();
         /* INACTIVE ALL TABS */
         $(".tab-menus li").removeClass("active-tab");
+		$(".tab-menus li").css({"background":"#EAEAEA"});
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
     });
@@ -258,11 +259,6 @@ function setThemeColor(objectId){
         $(".tab-menus li").css({"background":"#EAEAEA"});
         $(".tab-menus .active-tab").css({"background":lightestColor});
     },function(){
-        $(this).css({"background":lightestColor});
-    });
-    
-    $(".tab-menus li").hover(function(){
-        $(".tab-menus li").css({"background":"#EAEAEA"});
         $(this).css({"background":lightestColor});
     });
 }
