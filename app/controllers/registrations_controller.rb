@@ -32,7 +32,6 @@ class RegistrationsController < ApplicationController
       @registration = Registration.find(params[:registration_id]).dup
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
-      @registration.programmes.build
     else
       @cols = UserConfig.find(current_user).reg_cols
     end
@@ -137,9 +136,9 @@ class RegistrationsController < ApplicationController
   # GET /registrations/1/edit
   def edit
     @registration = Registration.find(params[:id])
-        @countries = self.basic_select(Country)
-@p_types = ProgrammeType.all
-    @registration.programmes.build
+    @countries = self.basic_select(Country)
+    @p_types = ProgrammeType.all
+
     
     ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
     

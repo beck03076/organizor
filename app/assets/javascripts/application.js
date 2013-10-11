@@ -250,6 +250,7 @@ function enquiryTabSwitch(obj){
             }
            });
            $('#multiselect').multiSelect('deselect_all');
+           
            var c_ids = $('#ms-selected-countries').data('country_ids');
            $.each(c_ids, function( index, value ){
              $("#ms-multiselect .ms-selectable:first-child ul li[ms-value="+ value +"]").trigger("click");

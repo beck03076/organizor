@@ -29,8 +29,8 @@ private
        
        temp << check_box_tag(:tr,enq.id) + spc +
                link_to(image_tag("/images/icons/vie.png"),
-                       "/enquiries/#{enq.id}") + 
-               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + 
+                       "/enquiries/#{enq.id}") + spc +
+               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 

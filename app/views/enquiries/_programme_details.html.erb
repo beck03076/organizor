@@ -15,15 +15,14 @@ $(function(){
 });
 </script>
 <br/>
-<div class="cols boxstheme " style="width:97%">
-<div class="" >
-  
+
     <div class="fields">
      <% @p_types.each do |i| %>
           <%= p.radio_button :type_id,i.id,{:class => "programme_type",:lang => i.name,
                                             :onclick => "p_type_click(this,this.lang);" } %>
           &nbsp;<%= p.label i.name %>&nbsp;&nbsp;&nbsp;&nbsp;
         <% end %>
+        
     <div id="object_name" data-obj='<%= parent %>'>
     </div><br/>
      <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
@@ -87,10 +86,7 @@ $(function(){
         
           
        <div class="cl"></div><br/>
-         <span class="btns">
-          <%= p.link_to_remove "Remove" %>
-      </span>                        
-      <div class="cl"></div>
+         
 </div>
 <div class="col6">
         <div class="course_subject_text_div frbox" style='<%= sty[0] %>'>
@@ -123,5 +119,4 @@ $(function(){
 </div>
 <br/>
 
-</div>
-</div>
+
