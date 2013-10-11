@@ -10,6 +10,7 @@ $(document).ready(function(){
         $("#"+this.lang).show();
         /* INACTIVE ALL TABS */
         $(".tab-menus li").removeClass("active-tab");
+		$(".tab-menus li").css({"background":"#EAEAEA"});
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
     });
@@ -260,11 +261,6 @@ function setThemeColor(objectId){
     },function(){
         $(this).css({"background":lightestColor});
     });
-    
-    $(".tab-menus li").hover(function(){
-        $(".tab-menus li").css({"background":"#EAEAEA"});
-        $(this).css({"background":lightestColor});
-    });
 }
 /* ON CLICKING BG MENU*/
 function setBGColor(objectId){
@@ -301,6 +297,7 @@ function setBGColor(objectId){
     $("#right-panel").css({"background":bgColor});
     $("#main-body").css({"background":bgColor});
     $(".boxstheme").css({"border-color":borderColor});
+	$(".box-theme-ch").css({"background":bgColor});
     
     
 }

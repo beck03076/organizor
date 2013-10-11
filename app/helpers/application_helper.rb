@@ -83,7 +83,7 @@ background: #fff;overflow:hidden}
       html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
- html += "<div class='popuptitle'>Add new #{obj_name.tr('_',' ')}<span class='Bpclose close-icon' lang=#{main_div} onClick=closePop('#{main_div}');>x</span></div>"
+ html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePop('#{main_div}');>x</span><div class='cl'></div></div>"
       
       html += "<div class='fpbox'>"
       html += label_tag(name.to_sym)
