@@ -172,7 +172,9 @@ input[type=radio]{padding-right:5px}
 .dataTable tr th{background:#EDF2F6 !important;border:1px solid #DDD !important;border-bottom:1px #DDD !important;border-right:0 !important;border-left:0 !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#5E6E7F !important;cursor:pointer !important;font-weight:normal !important;text-align:left !important}
 .dataTable tr td:first-child{white-space:nowrap !important;width:auto !important}
 .dataTable tr th a,.dataTable tr th a:hover,.dataTable tr th a:active,.dataTable tr th a:link{font-size:12px !important;color:#5E6E7F !important;text-decoration:none !important;cursor:pointer !important}
-.dataTable tr td{background:#fff !important;border-bottom:1px dashed #fff !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#505050 !important;cursor:pointer !important;font-weight:normal !important}
+.dataTable tr td{background:#fff !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#505050 !important;cursor:pointer !important;font-weight:normal !important}
+.dataTable tr td{border-bottom:1px solid #F5F5F5 !important;border-right:1px solid #F5F5F5 !important}
+.dataTable tr td:last-child{border-right:0 !important}
 .dataTable tr:hover td{background:#FAFAFA !important;color:#000000 !important}
 .dataTable tr td a,.dataTable tr td a:hover,.dataTable tr td a:active,.dataTable tr td a:link{font-size:12px !important;color:#0F5491 !important;cursor:pointer !important}
 .dataTables_wrapper{border:1px solid #E2E2E2 !important}
