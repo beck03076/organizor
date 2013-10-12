@@ -58,15 +58,7 @@ module ApplicationHelper
    add_desc_id = "add_" + obj_name + "_description"
    create_id = "create_" + obj_name
    
-     html = "<style>
-            .popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
-            .addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
-background: #fff;overflow:hidden}
-            .popupc{padding:3px 10px 2px 10px;text-align:left !important}
-.popupc label{text-align:left !important;}
-.popupc textarea,.popupc input{margin-left:0}
-            .popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
-            </style>"
+     
    
       html += "<div class='#{main_div} #{box_cl}' style='display:#{disp.to_s};'>"
       
