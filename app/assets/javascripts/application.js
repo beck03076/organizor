@@ -110,10 +110,10 @@ function submit_link(obj,tog,obj_name){
             });
             
             }
-            //$(obj).parent().parent().find(tog).slideToggle();
+            $(obj).parent().parent().find(tog).css("display","none");
             $("input#name").val('');
             $("textarea#desc").val('');
-            $("#"+obj.lang).css("display","none");
+            //$("#"+obj.lang).css("display","none");
             return false;
 }
 
@@ -320,20 +320,7 @@ function registrationTabSwitch(obj){
     });
 }
 
-function storeThemeInSession(){ 
 
-          //$('#loading').css("display","");
-          var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
-          var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
-          alert("theme " + themeColor);
-          alert("Bg " + bgColor);
-          $.cookie('themeColor', themeColor , { path: '/' });
-          $.cookie('bgColor', bgColor , { path: '/' });
-          alert("Saved. Theme Color : " + themeColor + ", Background Color : " + bgColor);
-          /*alert("bg " + $.cookie('bgColor'));
-          alert("th " + $.cookie('themeColor'));*/
-          //$('#loading').css("display","none");
-}
 
 function toggleAllCheck(obj,tableId){
     var checkedStatus = obj.checked;

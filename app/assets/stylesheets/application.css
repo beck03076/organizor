@@ -394,20 +394,38 @@ body > * {visibility: hidden;}
 
 /* THEME & BACKGROUND - STARTS */
 .theme-colrs{padding:0;margin:0;list-style:none}
-.theme-colrs li{margin:0 5px 0 0;display:inline;border:1px solid #A0A0A0;padding:1px;background:#fff}
-.theme-colrs li:hover{cursor:pointer;border:1px solid #F29436;background:#FFE294}
-.theme-colrs .theme-colrs-active{cursor:pointer;border:1px solid #F29436;background:#FFE294}
-.blue-theme{background:#2A88C8;padding:0 6px 0 6px}
-.yellow-theme{background:#FFFF00;padding:0 6px 0 6px}
-.pink-theme{background:#C8158D;padding:0 6px 0 6px}
-.orange-theme{background:#FF6501;padding:0 6px 0 6px}
-.green-theme{background:#22B14C;padding:0 6px 0 6px}
-.violet-theme{background:#713F98;padding:0 6px 0 6px}
+.theme-colrs li{margin:0 5px 0 0;display:inline;border:0px solid #A0A0A0;padding:1px;background:#fff}
+.theme-colrs li span:hover{cursor:pointer;border:1px solid #F29436;background:#FFE294}
+.theme-colrs .theme-colrs-active{cursor:pointer;}
 
-.blue-bg{background:#E7ECF2;padding:0 6px 0 6px}
-.cream-bg{background:#FAF3E9;padding:0 6px 0 6px}
-.white-bg{background:#fff;padding:0 6px 0 6px}
-.gray-bg{background:#F3F0EB;padding:0 6px 0 6px}
+.blue-theme{background:#2A88C8;padding:25px 25px 25px 25px}
+.yellow-theme{background:#FFFF00;padding:25px 25px 25px 25px}
+.pink-theme{background:#C8158D;padding:25px 25px 25px 25px}
+.orange-theme{background:#FF6501;padding:25px 25px 25px 25px}
+.green-theme{background:#22B14C;padding:25px 25px 25px 25px}
+.violet-theme{background:#713F98;padding:25px 25px 25px 25px}
+.red-theme{background:#cc0000;padding:25px 25px 25px 25px}
+.darkorange-theme{background:#ce5c00;padding:25px 25px 25px 25px}
+
+.blue-bg{background:#E7ECF2;padding:25px 25px 25px 25px}
+.cream-bg{background:#FAF3E9;padding:25px 25px 25px 25px}
+.white-bg{background:#fff;padding:25px 25px 25px 25px}
+.gray-bg{background:#F3F0EB;padding:25px 25px 25px 25px}
+.darkblue-bg{background:#729fcf;padding:25px 25px 25px 25px}
+.green-bg{background:#E5FAE3;padding:25px 25px 25px 25px}
+.pink-bg{background:#FAE3E5;padding:25px 25px 25px 25px}
+.lightblack2-bg{background:#888a85;padding:25px 25px 25px 25px}
+.darkblue1-bg{background:#204a87;padding:25px 25px 25px 25px}
+
+
+.blue-wa{background:#E7ECF2;padding:25px 25px 25px 25px}
+.cream-wa{background:#FAF3E9;padding:25px 25px 25px 25px}
+.white-wa{background:#fff;padding:25px 25px 25px 25px}
+.gray-wa{background:#F3F0EB;padding:25px 25px 25px 25px}
+.darkblue-wa{background:#729fcf;padding:25px 25px 25px 25px}
+.green-wa{background:#E5FAE3;padding:25px 25px 25px 25px}
+.pink-wa{background:#FAE3E5;padding:25px 25px 25px 25px}
+
 /* THEME & BACKGROUND - ENDS */
 
 /* MARGIN - STARTS */

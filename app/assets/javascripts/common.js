@@ -10,7 +10,7 @@ $(document).ready(function(){
         $("#"+this.lang).show();
         /* INACTIVE ALL TABS */
         $(".tab-menus li").removeClass("active-tab");
-		$(".tab-menus li").css({"background":"#EAEAEA"});
+        $(".tab-menus li").css({"background":"#EAEAEA"});
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
     });
@@ -105,6 +105,7 @@ function showPopUp(objectId){
     $("#"+objectId).bPopup();    
 }
 
+
 function toggleHS(objectId,mainClassName){
     $("."+mainClassName).hide();
     $("#"+objectId).show();    
@@ -172,46 +173,90 @@ $("#"+objectId).css("display","inline");
         $("#"+objectId)
             .css("top",(e.pageY - xOffset) + "px")
             .css("left",(e.pageX + yOffset) + "px")
+            .fadeIn("slow");    
+
+}
+
+/* Senthil added this to use the parent() function to operate of the current go create pop  */
+function showPopGoCreate(objectId,e,obj){
+        xOffset = -10;
+        yOffset = -40;        
+
+        $(obj).parent().find("#"+objectId).css("display","inline");
+        $(obj).parent().find("#"+objectId)
+            .css("top",(e.pageY - xOffset) + "px")
+            .css("left",(e.pageX + yOffset) + "px")
             .fadeIn("fast");    
 
 }
+/* Senthil added this to use the parent() function to operate of the current go create pop  */
+function closePopGoCreate(objectId,obj){
+  $(obj).parent().parent().parent().find("#"+objectId).css("display","none");
+}
 
+
+/*Storing in sessions here*/
+function storeThemeInSession(){ 
+
+          var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
+          var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
+          var waColor = $("ul#wa-color > li.theme-colrs-active > span").data("wa");
+          $.cookie('themeColor', themeColor , { path: '/' });
+          $.cookie('bgColor', bgColor , { path: '/' });
+          $.cookie('waColor', waColor , { path: '/' });          
+          alert("Saved. Theme Color : " + themeColor + ", Background Color : " + bgColor + ", Work Area Color : " + waColor);
+
+}
+
+/*SET THE THEME SESION VALUE HERE*/
 function setColorsFromSession(){
-    var backgroundColor = ($.cookie('bgColor') == undefined) ? "cream" : $.cookie('bgColor') ;
+    var backgroundColor = ($.cookie('bgColor') == undefined) ? "white" : $.cookie('bgColor') ;
     setBGColor(backgroundColor);
-    /*SET THE THEME SESION VALUE HERE*/
+    
     var themeColor = ($.cookie('themeColor') == undefined) ? "blue" : $.cookie('themeColor') ;
     setThemeColor(themeColor);
-}
     
+    var waColor = ($.cookie('waColor') == undefined) ? "white" : $.cookie('waColor') ;
+    setWAColor(waColor);
+}
 
 
-function activateColor(objectId){
-    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
-    $(".theme-colrs li").removeClass("theme-colrs-active");
+function activateTheme(removeClass,objectId,what){
+
+/* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+    $("#"+objectId).parent().parent().find("li").removeClass("theme-colrs-active");
     /* ADD ACTIVE THEME MENU CLASS NAME */
     $("#"+objectId).parent().addClass("theme-colrs-active");
+    var col = $("#"+objectId).data(what);
+    if (what == "theme"){ setThemeColor(col); }
+    else if (what == "bg"){ setBGColor(col); }
+    else if (what == "wa"){ setWAColor(col); }
+
+}
+
+/* wrote 1 function that acticates the bkgrnd, wk area and theme */
+/*
+function activateColor(objectId){
+
+    $(".theme-colrs li").removeClass("theme-colrs-active");
+
+    $("#"+objectId).parent().addClass("theme-colrs-active");
+    
+    var themeColor = $("#"+objectId).data('theme');
+    
+    setThemeColor(themeColor);
 
 }
 
 function activateBg(objectId){
-    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
+  
     $("#bg-color li").removeClass("theme-colrs-active");
-    /* ADD ACTIVE THEME MENU CLASS NAME */
+  
     $("#"+objectId).parent().addClass("theme-colrs-active");
 
 }
-
+*/
 function setThemeColor(theme){
-   /* var theme=$("#"+objectId).data("theme");
-    var mainColor="#2A88C8";
-    var thickColor="#00336C";
-    var lightColor="#3BA7F2";
-    var lightestColor="#E8F0FD";
-    /* REMOVE ALL ACTIVE THEME MENU CLASS NAME */
-    //$(".theme-colrs li").removeClass("theme-colrs-active");
-    /* ADD ACTIVE THEME MENU CLASS NAME */
-   // $("#"+objectId).parent().addClass("theme-colrs-active");
     /* APPLY THEMES */
     switch(theme){
         case "yellow":{
@@ -256,6 +301,20 @@ function setThemeColor(theme){
             lightestColor="#FAD1ED";
             break;
         }
+        case "red":{
+            mainColor="#cc0000";
+            thickColor="#a40000";
+            lightColor="#d95151";
+            lightestColor="#f5e8e8";
+            break;
+        }
+        case "darkorange":{
+            mainColor="#ce5c00";
+            thickColor="#853010";
+            lightColor="#eecdaa";
+            lightestColor="#FFEFDF";
+            break;
+        }
     }
     $("#header").css({"background":mainColor,"border-bottom-color":thickColor});
     $(".btnp").css({"background":mainColor,"border-color":thickColor});
@@ -281,14 +340,7 @@ function setThemeColor(theme){
 }
 /* ON CLICKING BG MENU*/
 function setBGColor(bg){
-    /*var bg=$("#"+objectId).data("bg");
-    var bgColor="#fff";
-    var borderColor="#CDCDCD";*/
-    /* REMOVE ALL ACTIVE BG MENU CLASS NAME */
-//    $("#bg-color li").removeClass("theme-colrs-active");
-    /* ADD ACTIVE BG MENU CLASS NAME */
-//    $("#"+objectId).parent().addClass("theme-colrs-active");
-    /* APPLY BG */
+
     switch(bg){
         case "gray":{
             bgColor="#F3F0EB";
@@ -310,13 +362,79 @@ function setBGColor(bg){
             borderColor="#E7ECF2";
             break;
         }
+        case "darkblue":{
+            bgColor="#729fcf";
+            borderColor="#729fcf";
+            break;
+        }
+        case "green":{
+            bgColor="#E5FAE3";
+            borderColor="#E5FAE3";
+            break;
+        }
+        case "pink":{
+            bgColor="#FAE3E5";
+            borderColor="#FAE3E5";
+            break;
+        }
+        case "lightblack2":{
+            bgColor="#888a85";
+            borderColor="#888a85";
+            break;
+        }
+        case "darkblue1":{
+            bgColor="#204a87";
+            borderColor="#204a87";
+            break;
+        }
     }
-    $("body").css({"background":bgColor});
-    $("tab-content-theme").css({"background":bgColor});
+
+   // $(".tab-content-theme").css({"background":bgColor});
     $("#right-panel").css({"background":bgColor});
     $("#main-body").css({"background":bgColor});
-    $(".boxstheme").css({"border-color":borderColor});
-	$(".box-theme-ch").css({"background":bgColor});
+
+}
+
+
+
+/* ON CLICKING BG MENU*/
+function setWAColor(wa){
+
+    /* APPLY BG */
+    switch(wa){
+        case "gray":{
+            wa="#F3F0EB";
+            break;
+        }
+        case "white":{
+            wa="#fff";
+            break;
+        }
+        case "cream":{
+            wa="#FAF3E9";
+            break;
+        }
+        case "blue":{
+            wa="#E7ECF2";
+            break;
+        }
+        case "darkblue":{
+            wa="#729fcf";
+            break;
+        }
+        case "green":{
+            wa="#E5FAE3";
+            break;
+        }
+        case "pink":{
+            wa="#FAE3E5";
+            break;
+        }
+    }
+
+  //  $(".tab-content-theme").css({"background":wa});
+    $(".boxstheme").css({"border-color":wa});
+    $(".box-theme-ch").css({"background":wa});
     
     
 }
