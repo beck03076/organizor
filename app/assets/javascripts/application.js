@@ -334,6 +334,7 @@ function getCheckedRowsAsArray(tableId){
        var rowIds = $(idVal + ':checked').map(function(){
                                                   return $(this).val();
                                                 }).get(); 
+                                                
        return rowIds;
 }
 
@@ -347,6 +348,7 @@ function groupAssignTo(tableId){
        $.get(url,function(table){
          $("#group_assign_to_" + tableId).css("display","none");
          $('#' + tableId).dataTable().fnDraw();
+         
        });
 }
 

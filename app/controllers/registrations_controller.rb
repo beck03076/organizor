@@ -59,12 +59,25 @@ class RegistrationsController < ApplicationController
     elsif @partial_name == "todo"
           @todo = Todo.new
     end
-   
-    render :partial => "enquiries/" + @partial_name.to_s ,:locals => {:e => Email.new,
+    
+    if @partial_name == "email"
+      mail_to_use = UserConfig.find(current_user.id).def_reg_email.to_sym
+      
+      @subject = Registration.where(id: @registration_id)
+      @subject_ids = (@subject.map &:id).join(",")
+      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
+      render :partial => 'enquiries/email', :locals => {:e => Email.new(to: @email_to), 
+                                                     :id => params[:e_id],
+                                                     :obj => @subject,
+                                                     :obj_ids => "registration_ids",
+                                                     :obj_name => "registration" }
+    else
+     render :partial => "enquiries/" + @partial_name.to_s ,:locals => {:e => Email.new,
                                                                       :id => @registration_id,
                                                                       :obj => @registration,
                                                                       :obj_id => :registration_id,
                                                                       :obj_name => "registration"}
+    end
      
   end
 

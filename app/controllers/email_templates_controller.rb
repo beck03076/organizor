@@ -59,7 +59,7 @@ class EmailTemplatesController < ApplicationController
 
     respond_to do |format|
       if @email_template.save
-        format.html { redirect_to @email_template, notice: 'Email template was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Email template was successfully created.' }
         format.json { render json: @email_template, status: :created, location: @email_template }
       else
         format.html { render action: "new" }

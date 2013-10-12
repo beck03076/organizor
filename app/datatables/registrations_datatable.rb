@@ -66,7 +66,7 @@ private
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
       regs = regs.joins(join).order("#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
-      regs = regs.order("#{sc} #{sort_direction}")
+      regs = regs.order("registrations.#{sc} #{sort_direction}")
     else
       regs = Registration
     end

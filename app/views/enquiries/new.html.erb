@@ -4,6 +4,9 @@ $(function(){
   $(".tab-menus li").removeClass("active-tab");
   $("ul.tab-menus li.new_enquiry").addClass("active-tab");
   $("ul.tab-menus li.new_enquiry").trigger("click");
+  setColorsFromSession();
+  activeMM("enquiriesMM");
+  
 });
 </script>
 

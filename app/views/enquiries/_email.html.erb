@@ -65,12 +65,14 @@
     </div>
     <div class="fbox">
         <%= p.label :to %>
-        <%= p.text_field :to,{size: "0x0",id: "email_to"} %>&nbsp; 
-        
-        <span onclick="$('.cc').slideToggle();">add cc</span> |
-        <span onclick="$('.bcc').slideToggle();">add bcc</span>
-
+        <%= p.text_area :to,{id: "email_to",style: "height:85px;width:320px;overflow:auto",wrap: "hard"} %>&nbsp;
     </div>
+    <br/>
+    <div class="fbox">
+    <span onclick="$('.cc').slideToggle();">add cc</span> |
+        <span onclick="$('.bcc').slideToggle();">add bcc</span>
+    </div>
+    
     <div class="fbox cc" style="display:none;">
         <%= p.label :cc %>
         <%= p.text_field :cc %>

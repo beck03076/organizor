@@ -49,14 +49,14 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 /* DEFAULT STYLE - ENDS */
 
 /* LAYOUT - STARTS */
-#wrapper{max-width:1300px;min-width:1200px;margin:0 auto 0 auto;padding:0;border:1px solid #CACACA;box-shadow:0 0 4px #ccc;box-shadow:0 0 10px #ccc;border-radius:0 0 5px 5px;overflow:hidden;}
+#wrapper{max-width:1300px;min-width:1200px;margin:0 auto 0 auto;padding:0;border:1px solid #CACACA;box-shadow:0 0 4px #ccc;box-shadow:0 0 10px #ccc;border-radius:0;overflow:hidden;}
 #header{padding:10px 2% 15px 2%;width:96%; border-bottom:5px solid #00336C;color:#fff;position:relative}
 #left-panel{position:absolute;background:#CCC;height:auto;box-shadow: 3px 0 6px #ccc;border-right:1px solid #CACACA;}
 #right-panel{height:auto;width:200px;padding-left:10px;background:#fff}
 #main-body{position:relative;background:#fff}
 #body-content{margin-left:110px;padding:20px 0 20px 10px;min-height:720px}
 #footer,#footerin{padding:10px 2% 10px 2%;width:96%;}
-#footerin{margin:10px auto 10px auto;font-size:11px;color:#444}
+#footerin{font-size:11px;color:#444;background:#CCC;min-width:1200px;max-width:1250px;margin:0 auto 15px auto;border-radius:0 0 5px 5px;box-shadow:0 0 10px #ccc;}
 /* LAYOUT - ENDS */
 
 /* MAIN MENU - STARTS */
@@ -136,7 +136,7 @@ input[type=radio]{padding-right:5px}
 .frbox label{width:40px !important;}
 .frbox label:first-child{width:120px !important;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal !important;color:#666;vertical-align:top}
 .frbox input,.frbox select,.frbox textarea{margin-left:15px}
-.frbox .mand label{margin-right:-5px;color: #c24255 !important;}
+.mand label{margin-right:-5px;color: #c24255 !important;}
 .close-icon{float:right;border:1px solid #ccc;padding:0 5px 2px 5px;font-size:11px;background:#ccc;border-radius:1000px;color:#444444;cursor:pointer}
 .close-icon:hover{cursor:pointer;color:#222}
 .remove-icon{background:#AD0707;color:#fff;font-weight:bold;padding:0 5px 1px 5px;margin-right:3px;border-radius:5px}
@@ -171,7 +171,7 @@ input[type=radio]{padding-right:5px}
 .dataTable tr td:first-child{white-space:nowrap !important;width:auto !important}
 .dataTable tr th a,.dataTable tr th a:hover,.dataTable tr th a:active,.dataTable tr th a:link{font-size:12px !important;color:#5E6E7F !important;text-decoration:none !important;cursor:pointer !important}
 .dataTable tr td{background:#fff !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#505050 !important;cursor:pointer !important;font-weight:normal !important}
-.dataTable tr td{border-bottom:1px solid #F5F5F5 !important;border-right:1px solid #F5F5F5 !important}
+.dataTable tr td{border-bottom:1px solid #EAEAEA !important;border-right:1px solid #EAEAEA !important}
 .dataTable tr td:last-child{border-right:0 !important}
 .dataTable tr:hover td{background:#FAFAFA !important;color:#000000 !important}
 .dataTable tr td a,.dataTable tr td a:hover,.dataTable tr td a:active,.dataTable tr td a:link{font-size:12px !important;color:#0F5491 !important;cursor:pointer !important}
@@ -179,7 +179,7 @@ input[type=radio]{padding-right:5px}
 .fg-toolbar{background:#EAEAEA !important;border-top:1px dashed #F5F5F5 !important;border:1px solid #E2E2E2  !important;border:0  !important;padding:5px 10px 5px 10px !important;font-size:12px !important;color:#5E6E7F !important;cursor:pointer !important;font-weight:normal !important;text-align:left !important}
 .dataTable tr td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" !important;filter: alpha(opacity=50) !important;-moz-opacity: 0.5 !important;-khtml-opacity: 0.5 !important;opacity: 0.5 !important;}
 .dataTable tr:hover td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)" !important;filter: alpha(opacity=80) !important;-moz-opacity: 0.8 !important;-khtml-opacity: 0.8 !important;opacity: 0.8 !important;}
-
+div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 /* TABLE - ENDS */
 
 .sp{color:#FD9B00}
@@ -227,7 +227,7 @@ input[type=radio]{padding-right:5px}
 .btnbox{text-align:right;margin:5px 0 5px 0;padding:10px 0 5px 0}
 .boxp{border:1px solid #CBCCD1;background:#fff;padding:10px 15px 10px 15px}
 .boxs{border:1px solid #CDCDCD;background:#EAEAEA;padding:10px 15px 10px 15px}
-.boxstheme{border:1px solid #CDCDCD;background:#fff;padding:10px 15px 10px 15px;box-shadow:3px}
+.boxstheme{background:#eeeeec;padding:10px 15px 10px 15px;}
 /* BOX - STARTS */
 
 /* BREADCRUMB - STARTS */
@@ -315,6 +315,8 @@ input[type=radio]{padding-right:5px}
 .pop-layout{width:700px;display:none;border-radius: 10px;box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.9);border: 5px solid #444444;height:auto;background:#EAEAEA;color:#333}
 .pop-head {padding:15px 15px 5px 15px;font-size:14px}
 .pop-content{padding:5px 15px 10px 15px }
+.popuplayout{width:500px;background:#fff}
+.popupc{background:#fff;padding:15px 15px 10px 15px;font-size:12px;}
 /* POPUP BOX - ENDS */
 
 /* FONT SIZE & WEIGHT - STARTS */
@@ -392,11 +394,22 @@ body > * {visibility: hidden;}
 .glink:hover{text-decoration:underline;cursor:pointer;}
 /* LINKS - ENDS*/
 
+/* POPUP - STARTS */
+.popuptitle{font-size:14px;font-weight:bold;color:#fff;padding:5px 10px 5px 10px;background:#2A88C8} 
+.addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
+background: #fff;overflow:hidden}
+.popupc{padding:3px 10px 2px 10px;text-align:left !important}
+.popupc label{text-align:left !important;}
+.popupc textarea,.popupc input{margin-left:0}
+.popupbtns{background:#F4F4F4;border-top:1px solid #E8E8E8;padding:5px}
+/* POPUP - ENDS */
+
 /* THEME & BACKGROUND - STARTS */
 .theme-colrs{padding:0;margin:0;list-style:none}
-.theme-colrs li{margin:0 5px 0 0;display:inline;border:0px solid #A0A0A0;padding:1px;background:#fff}
-.theme-colrs li span:hover{cursor:pointer;border:1px solid #F29436;background:#FFE294}
-.theme-colrs .theme-colrs-active{cursor:pointer;}
+.theme-colrs li{margin:0 15px 0 0;display:inline;}
+.theme-colrs li span:hover{cursor:pointer;border:3px solid #F29436;}
+.theme-colrs li span{cursor:pointer;border:3px solid #fff;}
+.theme-colrs  li .theme-colrs-active{cursor:pointer;border:3px solid #fff;}
 
 .blue-theme{background:#2A88C8;padding:25px 25px 25px 25px}
 .yellow-theme{background:#FFFF00;padding:25px 25px 25px 25px}

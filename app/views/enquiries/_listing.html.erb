@@ -22,10 +22,14 @@
 
 
 </thead>
+
+       <span class="fr" onclick="$('.dataTables_filter input').val('').keyup();"> &nbsp;&nbsp;Reset&nbsp;</span>
+       
        <%= select_tag :abdc,
                       options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift("Search by")),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
-
+                      
+      
 <tbody>
 
 </tbody>
@@ -55,7 +59,7 @@
                 <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
                 <h5>Are you sure about this group delete?</h5>
                 <span class="btnp" onclick="groupDelete('#{_id}');"> Yes </span>
-                <span class="btnp" onclick="$('#<%= div_delete_id %>').hide();"> No </span>
+                <span class="btnp" onclick="bClose('#<%= div_delete_id %>');"> No </span>
               </div>
             </div>
 

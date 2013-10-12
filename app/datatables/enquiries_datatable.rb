@@ -69,7 +69,7 @@ private
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = enquiries.#{sc[0]}"
       enqs = enqs.joins(join).order("#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
-      enqs = enqs.order("#{sc} #{sort_direction}")
+      enqs = enqs.order("enquiries.#{sc} #{sort_direction}")
     else
       enqs = Enquiry
     end

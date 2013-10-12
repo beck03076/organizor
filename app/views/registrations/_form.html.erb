@@ -112,26 +112,29 @@
   <br/>  
   
   <div class="cols">
-        <div class="col6">
-        <%= go_create(f,"english_level","prof_eng_level_id","name",1) %> 
-                   
-          <%= f.fields_for :proficiency_exams do |prof| %>
-
-                    <%= go_create(prof,"exam_type","exam_type_id","name",1) %> 
-                 
-                 <div class="col6">
-                 
-                    <%= fs(prof,[:exam_date,:class => "dateField"],"text_field",nil,"Exam Date") %>
-                    <%= fs(prof,"exam_score","text_field") %>
-                 
-                 </div>
-                  
-
-           <% end %>
-           
-           <%= f.link_to_add "Add more", :proficiency_exams %>
-        </div>
+    <%= go_create(f,"english_level","prof_eng_level_id","name",1) %> 
   </div>
+  <%= f.fields_for :proficiency_exams do |prof| %>
+     <div class="cols boxstheme" style="width:97%">
+       
+       <div class="col6">
+           
+           <%= go_create(prof,"exam_type","exam_type_id","name",1) %> 
+           
+           <%= fs(prof,[:exam_date,:class => "dateField"],"text_field",nil,"Exam Date") %>
+           <%= fs(prof,"exam_score","text_field") %>
+       </div>
+       <%= f.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>
+       
+
+     </div>
+     <div class="cl">
+    </div>
+    <br/>
+  <% end %>
+ 
+  <%= f.link_to_add "Add more", :proficiency_exams,{:class => "btns fl"} %>
+  <div class="cl"> </div>
   <br/>
   <br/>
   <!-- ENGLISH LANGUAGE PROFICIENCY - ENDS -->
@@ -177,17 +180,12 @@
       </h5>
   </div>
   <br/>  
-  
 
-    <%= f.fields_for :programmes do |course| %>
-    
-     <%= render 'enquiries/programme_details', :p => course, :parent => f.object_name.to_s %>
-      
-    <% end %>   
-    
+     <%= render 'enquiries/preferred_programmes',:f => f %>
+
   <br/>
-      <%= f.link_to_add "Add more",:programmes,{class: "btns fr"}%>
-  <br/>
+   <br/>
+    <br/>
   <div class="cl"></div>
   <!-- Course of Interest - ENDS -->
   
@@ -280,24 +278,30 @@
       </h5>
   </div>
   <br/>
-  <div class="cols">
+ 
 
          <%= f.fields_for :documents do |d| %>
-
-                 <%= go_create(d,"doc_category","category_id","name",1) %> 
-                 <%= fs(d,"name","text_field",nil) %>
-                 <%= d.file_field :path %>
-                 <%= d.hidden_field :registration_id %>
-                 <span class="btns">
-                 <%= d.link_to_remove "Remove" %>
-                </span>
+               <div class=" cols boxstheme">
+                 <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
+                 <div class="col6 " >
+                     <%= go_create(d,"doc_category","category_id","name",1) %> 
+                     <%= fs(d,"name","text_field",nil) %>
+                     <%= fs(d,"path","file_field",nil) %>
+                     <%= d.hidden_field :registration_id %>
+                     <br/>
+                     <br/>
+                 </div>
+            
+              </div>
+              <div class="cl"></div>
+         <br/>
          <% end %>
-         
-         <span class="btns">
-         <%= f.link_to_add "Attach document", :documents %>
-         </span>
-  </div>    
+         <br/>
+        <div class="cl"></div>
+         <%= f.link_to_add "Attach document", :documents ,{:class => "btns fl"} %>
+  
   <!-- Documents - ENDS -->
+        <br/><br/>
         <br/><br/>
         <div class="htab">
       <h5>

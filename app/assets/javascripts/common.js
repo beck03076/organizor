@@ -318,7 +318,7 @@ function setThemeColor(theme){
     }
     $("#header").css({"background":mainColor,"border-bottom-color":thickColor});
     $(".btnp").css({"background":mainColor,"border-color":thickColor});
-    $(".theme").css({"background":mainColor});
+    $(".theme,.popuptitle").css({"background":mainColor});
     $(".uibox").css({"background":lightColor,"border-color":mainColor});
     $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
     $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
@@ -438,6 +438,35 @@ function setWAColor(wa){
     
     
 }
+/**
+*  THEME - STARTS
+**/
+$(document).ready(function(){
+    /* ON CLICKING MAIN THEME*/
+    $("#theme-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#theme-colrs li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+	
+	/* ON CLICKING BG THEME*/
+    $("#bg-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#bg-color li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+	
+	/* ON CLICKING WORK AREA THEME*/
+    $("#wa-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#wa-color li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+});
+
 /**
 *  REGISTRATION LAUNCH TABS - STARTS
 **/
