@@ -80,10 +80,10 @@ background: #fff;overflow:hidden}
                                     {:class => sel_cl })
                                     
 
-      html += "<span id='#{a_id}' class='plus' onClick=showPop('#{main_div}',event);>+</span>"
+      html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
 
       html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
- html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePop('#{main_div}');>x</span><div class='cl'></div></div>"
+ html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePopGoCreate('#{main_div}',this);>x</span><div class='cl'></div></div>"
       
       html += "<div class='fpbox'>"
       html += label_tag(name.to_sym)
@@ -98,7 +98,7 @@ background: #fff;overflow:hidden}
       html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
 
-      html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{form_id}','#{obj_name}'); >Create course </span><div class='cl'></div><br/>"
+      html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{main_div}','#{obj_name}'); >#{obj_name.titleize} </span><div class='cl'></div><br/>"
 
       
       html += "</div></div>"

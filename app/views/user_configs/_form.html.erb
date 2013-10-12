@@ -1,33 +1,247 @@
 <div class="tab-container">
 <ul class="tab-menus">
-  <li class="active-tab">
+  <li class="active-tab" lang="user_configuration_id">
   User Configuration
   </li>
+  
+  <li lang="theme_id">
+   Theme 
+  </li>
+  
 </ul>
-<div class="tab-content" style="background: none repeat scroll 0% 0% rgb(232, 240, 0); display: block;">
+<div id="user_configuration_id" class="tab-content" style="display: block;">
 <br/>
+<%= form_for(@user_config) do |f| %>
 
-    <% tabs_arr = %w(Followup Note Columns Colors Email) %>
-    <div class="newtab-container">
-    <div id="loading" style="display:none;">
-      <%= image_tag "/images/icons/bload.gif" %><br/>
-      <h1> Saving ... </h1>
-    </div>
-        <ul class="newtab-menus">
-        <% tabs_arr.each do |i|  %>
-            <% i1 = i.downcase %>
-            <li lang='<%= i1 + "-content" %>' id='<%= i1 %>'><%= i %></li>
+<div class="boxp box-theme-ch">
+  <!-- ---------------------Follow up----------------------------------- -->
+  <div class="htab">
+      <h5>
+          <b>
+            Follow Up
+          </b>
+      </h5>
+      <%= f.submit "Save",{:class => "btnp fr"} %>
+      <div class="cl"></div>
+  </div>
+  <br/>  
+  
+  <div class="cols">
+          <%= fs(f,"def_follow_up_days","text_field",1,nil) %>          
+  </div>
+  
+  <!-- ------------------------Columns to display-------------------------------- -->
+  
+  <div class="htab">
+      <h5>
+          <b>
+            Columns To Display
+          </b>
+      </h5>
+  </div>
+  <br/>
+  <h3>
+  Enquiry Columns
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols">
+  <% Enquiry.column_names.sort.each_slice(5) do |j| %>
+      <div class="col6">
+        <% j.each do |i| %>
+          <%= check_box_tag "user_config[enq_cols][]",i %>
+          <%= i.titleize %>
+          <br/>
         <% end %>
+      </div>
+      <% end %>
+  </div>
+  <br/>
+  <br/>
+  <h3>
+  Registration Columns
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols">
+    <!-- **************************** -->
+  <% Registration.column_names.sort.each_slice(5) do |j| %>
+      <div class="col6">
+        <% j.each do |i| %>
+          <%= check_box_tag "user_config[reg_cols][]",i %>
+          <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
+          <br/>
+        <% end %>
+      </div>
+  <% end %>
+  </div>
+  <br/>
+  <br/>
+  <!-- ------------------------Note-------------------------------- -->
+  <div class="htab">
+      <h5>
+          <b>
+            Note
+          </b>
+      </h5>
+  </div>
+  <br/>
+  
+  <div class="cols">
+      <div id="note-action" class="cols action-box">
+        <%= fbox(f,[:def_note,
+                  size: "6x6",
+                  class: "tinymce",
+                  style:"height:auto;"],"text_area",nil) %>
+      </div>
+  </div>
+  <div class="cl"></div>
+  <br/>
+  <br/>
+  <!-- ------------------------Email-------------------------------- -->
+  <div class="htab">
+      <h5>
+          <b>
+            Default Email To Use
+          </b>
+      </h5>
+  </div>
+  <br/>  
+  
+  <div class="cols">
+       <div class="fbox">
+        <%= f.label :enquiries %>
+        <%= f.select :def_enq_email,["email1","email2"] %>
+       </div>
+       <div class="fbox">
+        <%= f.label :registrations %>
+        <%= f.select :def_reg_email, ["email1","email2"] %>
+        </div>
+  </div>
+  
+  <br/>
+  <br/>
+  <%= f.submit "Save",{:class => "btnp fr"} %>
+  <br/>
+  <br/>
+<% end %>
+</div>
+</div>
+
+<!-- ------------------------Colors-------------------------------- -->
+
+    <div id="theme_id" class="tab-content" style="display: ;">
+    <div class="boxp box-theme-ch">
+      <div class="htab">
+          <h5>
+              <b>
+               Theme
+              </b>
+          </h5>
+      </div>
+      <br/>  
+      <div class="cols">
+
+      <!-- THEME - STARTS -->
+        <ul class="lsb">
+            <h3>
+            Accent
+            </h3>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <li>
+                <ul class="theme-colrs" id="theme-color">
+                  <% %w( blue darkorange violet red pink orange green yellow    ).each do |i| %>
+                      <li>
+                      <span class="<%= i %>-theme" id="<%= i %>-theme" data-theme="<%= i %>" onclick="activateTheme('theme-colrs',this.id,'theme');">
+                      &nbsp;
+                      </span>
+                      </li>
+                  <% end %>
+                </ul>
+            </li>
         </ul>
-        
-        <% tabs_arr.each do |i|  %>
-            <% i1 = i.downcase %>
-            <div class="newtab-content" id='<%= i1+ "-content" %>'>
-              <%= render i1 %>
-            </div>
-        <% end %>
-        
+        <!-- THEME - ENDS -->
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        <!-- BACKGROUND - STARTS -->
+        <ul class="lsb">
+        <h3>
+        Background
+        </h3>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        <li>
+        <ul class="theme-colrs" id="bg-color">
+                  <% %w( blue cream white gray green pink lightblack2 darkblue).each do |i| %>
+                      <li>
+                      <span class="<%= i %>-bg" id="<%= i %>-bg" data-bg="<%= i %>" onclick="activateTheme('theme-colrs',this.id,'bg');">
+                      &nbsp;
+                      </span>
+                      </li>
+                  <% end %>
+       </ul>
+       </li>
+       </ul>
+        <!-- BACKGROUND - ENDS -->
+            <br/>
+            <br/>
+            <br/>
+       
+        <h3>
+         Work Area
+        </h3>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        <li>
+        <ul class="theme-colrs" id="wa-color">
+                  <% %w( blue cream white gray darkblue green pink ).each do |i| %>
+                      <li>
+                      <span class="<%= i %>-wa" id="<%= i %>-wa" data-wa="<%= i %>" onclick="activateTheme('theme-colrs',this.id,'wa');">
+                      &nbsp;
+                      </span>
+                      </li>
+                  <% end %>
+       </ul>
+       </li>
+       </ul>
+        <!-- Work Area - ENDS -->
+
+          <br/>
+          <br/>      
+          <br/>
+          <br/>
+          <br/>      
+          <br/>
+        <input onclick="storeThemeInSession();" class="btnp" type="submit" value="Save" style="background: none repeat scroll 0% 0% rgb(42, 136, 200); border-color: rgb(0, 51, 108);">
+
+      </div>
+      
+      <br/>
+      <br/>
     </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
@@ -66,9 +280,31 @@ $(document).ready(function(){
         $(this).addClass("active-tab");
     });
 });
-
+activeMM("settingMM");
+setColorsFromSession();
 
 </script>
 
-</div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

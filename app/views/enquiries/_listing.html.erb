@@ -23,7 +23,7 @@
 
 </thead>
        <%= select_tag :abdc,
-                      options_for_select(@cols.map{|i| i.is_a?(Array) ? i[0]  : i}.unshift("--Search by--")),
+                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift("Search by")),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
 
 <tbody>
@@ -33,11 +33,13 @@
 
 </table>
 <br/>
-            <% div_id = "group_assign_to_" + _id %>
+           
+             <% div_id = "group_assign_to_" + _id %>
             <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
             <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
-              <div class="col6">
-                User :
+              <div class="frbox">
+                <%= image_tag "/images/icons/user_group.png" ,{size: "20x20"}%>
+                <%= label_tag :user %>
                 <%= select_tag "group_assign_user_#{_id}",
                                options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
                                {:prompt => "--User--"} %>
@@ -45,9 +47,21 @@
               </div>
             </div>
             <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
-            <%= link_to "Delete", "#", {class: "btnp fr", onclick: "groupDelete('#{_id}');"} %>
+            
+            <% div_delete_id = "group_delete_to_" + _id %>
+            <%= link_to "Delete", "#", {class: "btnp fr", onclick: "showPopUp('#{div_delete_id}');"} %>
+            <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+              <div class="frbox">
+                <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
+                <h5>Are you sure about this group delete?</h5>
+                <span class="btnp" onclick="groupDelete('#{_id}');"> Yes </span>
+                <span class="btnp" onclick="$('#<%= div_delete_id %>').hide();"> No </span>
+              </div>
+            </div>
 
             <div class="cl"></div>
+            
+            
 <script>
 
 $(function(){

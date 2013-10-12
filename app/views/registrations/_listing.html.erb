@@ -21,7 +21,7 @@
 
 </thead>
        <%= select_tag :abdc,
-                      options_for_select(@cols.map{|i| i.is_a?(Array) ? i[0]  : i}.unshift("--Search by--")),
+                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift("Search by")),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
                       <div class="cl"></div>
    
