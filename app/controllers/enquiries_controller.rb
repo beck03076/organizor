@@ -1,6 +1,8 @@
 class EnquiriesController < ApplicationController
 
-
+  def error
+    render 'shared/error'
+  end
   def programme
     @co = params[:co]
     @ci = params[:ci]

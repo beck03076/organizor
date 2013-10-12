@@ -113,7 +113,9 @@ Organizor::Application.routes.draw do
   match '/get_institutions/:geo/:c_id(/:p_type_id)' => 'json#institutions'  
 
 
- 
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'enquiries#error'
+  end
   
   #match '/programme_filter/:type/:country(/:city)' => 'enquiries#programme_filter'
   
