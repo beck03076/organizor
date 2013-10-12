@@ -318,6 +318,8 @@ input[type=radio]{padding-right:5px}
 .pop-layout{width:700px;display:none;border-radius: 10px;box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.9);border: 5px solid #444444;height:auto;background:#EAEAEA;color:#333}
 .pop-head {padding:15px 15px 5px 15px;font-size:14px}
 .pop-content{padding:5px 15px 10px 15px }
+.popuplayout{width:500px;background:#fff}
+.popupc{background:#fff;padding:15px 15px 10px 15px;font-size:12px;}
 /* POPUP BOX - ENDS */
 
 /* FONT SIZE & WEIGHT - STARTS */
