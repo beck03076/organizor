@@ -407,7 +407,7 @@ background: #fff;overflow:hidden}
 
 /* THEME & BACKGROUND - STARTS */
 .theme-colrs{padding:0;margin:0;list-style:none}
-.theme-colrs li{margin:0 15px 0 0;display:inline;background:#fff}
+.theme-colrs li{margin:0 15px 0 0;display:inline;}
 .theme-colrs li span:hover{cursor:pointer;border:3px solid #F29436;}
 .theme-colrs li span{cursor:pointer;border:3px solid #fff;}
 .theme-colrs  li .theme-colrs-active{cursor:pointer;border:3px solid #fff;}
