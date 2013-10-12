@@ -1,12 +1,10 @@
 
-<div class="htab">
-             <h5><b>Programmes Interested</b></h5>
-        </div><br/>  
+ 
   
   <%= f.fields_for :programmes do |p| %>
-    <div class="cols boxstheme " style="width:97%">
+    <div class="cols boxstheme" style="width:97%">
         <%= p.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
-        <%= render 'programme_details', :p => p, :parent => f.object_name.to_s %>
+        <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
     </div>
     
     <div class="cl">
@@ -14,5 +12,5 @@
     <br/>
   <% end %>
   
-  <%= f.link_to_add "Add one more programme", :programmes,{:class => "btns fl"} %>
+  <%= f.link_to_add "Add more", :programmes,{:class => "btns fl"} %>
    
