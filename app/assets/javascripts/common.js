@@ -439,6 +439,35 @@ function setWAColor(wa){
     
 }
 /**
+*  THEME - STARTS
+**/
+$(document).ready(function(){
+    /* ON CLICKING MAIN THEME*/
+    $("#theme-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#theme-colrs li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+	
+	/* ON CLICKING BG THEME*/
+    $("#bg-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#bg-color li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+	
+	/* ON CLICKING WORK AREA THEME*/
+    $("#wa-color li span").click(function(){
+        /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
+        $("#wa-color li span").removeClass("theme-colrs-active");
+        /* ACTIVE CURRENT THEME */
+        $(this).addClass("theme-colrs-active");
+    });
+});
+
+/**
 *  REGISTRATION LAUNCH TABS - STARTS
 **/
 $(document).ready(function(){
