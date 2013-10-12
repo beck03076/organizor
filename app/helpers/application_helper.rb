@@ -58,7 +58,7 @@ module ApplicationHelper
    add_desc_id = "add_" + obj_name + "_description"
    create_id = "create_" + obj_name
    
-     
+     html = ""
    
       html += "<div class='#{main_div} #{box_cl}' style='display:#{disp.to_s};'>"
       
