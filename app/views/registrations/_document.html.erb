@@ -15,8 +15,8 @@
                         <ul class="vlsdet">
                             <li>
                                 <%= check_box_tag "doc_id[]",cat.id %>
-                                <h4><%= cat.name %></h4>
-                                <label>[<%= cat.category.name %>]</label> 
+                                <h4><%= cat.name rescue "Unknown" %></h4>
+                                <label>[<%= cat.category.name rescue "Unknown" %>]</label> 
                             </li>
                         </ul>
                 <% end %>
