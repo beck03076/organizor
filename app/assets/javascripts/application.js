@@ -305,11 +305,14 @@ function registrationTabSwitch(obj){
     var cond = $(obj).data("cond");
     var partial = $(obj).data("partial");
     var _id = $(obj).data("registration_id");
+    var enquiry_id = $(obj).data("enquiry_id");
     var lang = $(obj).attr("lang");
     
     url = '/registrations/tab/' + cond + '/' + partial + '/'
     
     if (typeof _id !== "undefined"){ url = url + _id; }
+    
+    if (typeof enquiry_id !== "undefined"){ url = '/register/tab/new_registration/form/' + enquiry_id; }
 
     $.get(url,function(table){
      

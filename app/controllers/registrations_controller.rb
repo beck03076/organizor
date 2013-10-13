@@ -18,9 +18,41 @@ class RegistrationsController < ApplicationController
     set_url_params
     
     if @status == "new_registration"
-      @registration = Registration.new
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
+       if params[:enquiry_id]
+                    # e stands for enquiry
+                  e_obj = Enquiry.find(params[:enquiry_id])
+                  # deactivate the enquiry as it is going to be registered
+                  e_obj.update_attributes(active: false, audit_comment: params[:note].to_s)
+                  
+                  
+                  Timeline.create!(user_id: current_user.id,
+                                   user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
+                                   m_name: "Enquiry",
+                                   m_id: params[:enquiry_id],
+                                   created_at: Time.now,
+                                   desc: 'This enquiry has been deactivated in order to register',
+                                   comment: params[:note],
+                                   action: 'registration')
+                                   
+                                   
+                  e = e_obj.attributes.except("id","score","source_id",
+                                              "created_at","updated_at",
+                                              "status_id", "address","active")
+                  e[:note] = params[:note]
+                  
+                  @registration = Registration.new(e)
+                  
+                  if !e_obj.programmes.blank?
+                    @registration.programmes << e_obj.programmes
+                  end
+                  
+                  @countries = self.basic_select(Country)
+                  @p_types = ProgrammeType.all
+      else
+                  @registration = Registration.new
+                  @countries = self.basic_select(Country)
+                  @p_types = ProgrammeType.all
+      end
     elsif @status == "launch"
       @registration = Registration.find(@registration_id)
       @timelines = Timeline.where(m_name: "Registration", m_id: params[:registration_id]).order("created_at DESC")

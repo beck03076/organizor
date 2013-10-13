@@ -3,6 +3,7 @@ $(function(){
   $("ul.tab-menus li.new_registration").show();
   $(".tab-menus li").removeClass("active-tab");
   $("ul.tab-menus li.new_registration").addClass("active-tab");
+  $("ul.tab-menus li.new_registration").attr('data-enquiry_id', '<%= params[:enquiry_id] %>');
   $("ul.tab-menus li.new_registration").trigger("click");
   setColorsFromSession();
   activeMM("registrationsMM");
