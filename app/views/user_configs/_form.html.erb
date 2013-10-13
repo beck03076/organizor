@@ -12,7 +12,7 @@
 <div id="user_configuration_id" class="tab-content" style="display: block;">
 <br/>
 <%= form_for(@user_config) do |f| %>
-
+<%= f.hidden_field :user_id,value: current_user.id %>
 <div class="boxp box-theme-ch">
   <!-- ---------------------Follow up----------------------------------- -->
   <div class="htab">
@@ -49,7 +49,7 @@
   <% Enquiry.column_names.sort.each_slice(5) do |j| %>
       <div class="col6">
         <% j.each do |i| %>
-          <%= check_box_tag "user_config[enq_cols][]",i %>
+          <%= check_box_tag "user_config[enq_cols][]",i.to_sym %>
           <%= i.titleize %>
           <br/>
         <% end %>
@@ -68,7 +68,7 @@
   <% Registration.column_names.sort.each_slice(5) do |j| %>
       <div class="col6">
         <% j.each do |i| %>
-          <%= check_box_tag "user_config[reg_cols][]",i %>
+          <%= check_box_tag "user_config[reg_cols][]",i.to_sym %>
           <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
           <br/>
         <% end %>
