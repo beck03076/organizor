@@ -111,7 +111,8 @@ Organizor::Application.routes.draw do
   match '/get_cities/:co_id' => 'json#cities'
   
   match '/get_institutions/:geo/:c_id(/:p_type_id)' => 'json#institutions'  
-
+ 
+  match '/not_found' => 'enquiries#error'
 
   unless Rails.application.config.consider_all_requests_local
     match '*not_found', to: 'enquiries#error'

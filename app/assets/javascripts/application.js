@@ -47,6 +47,11 @@ function sel_toggle(obj,div1,div2){
     return false;
 }
 
+function regAppStatus(obj,div1){   
+    $(div1).slideToggle();
+    return false;
+}
+
 // Click on any of the radio buttons of programme_type(language_school or univeresity)
 function p_type_click(obj,lang){
     //Fetching the object_name either enquiry or registration
@@ -153,7 +158,9 @@ function prepareSelect(sourObj,destVar,hit)
 function action_partial(model,action,id)
 {
   $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
+      
       var $container = $("#action_div").html(partial);
+      setColorsFromSession();
       var $dTF = $('.dateTimeField', $container);
       if ($dTF.length > 0) {
         $dTF.datetimepicker({
@@ -207,11 +214,11 @@ function enquiryTabSwitch(obj){
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
     
     $.get(url,function(table){
-    
-    
+
       var $container = $('#'+lang).html(table);
       var $dateField = $('.dateField', $container);
       var $mSel = $('#multiselect',$container);
+
       
       if ($dateField.length > 0) {
         $dateField.datepicker({
@@ -257,8 +264,8 @@ function enquiryTabSwitch(obj){
            });
            
       }
-       
-        
+      
+      
 
     });
 
@@ -335,7 +342,12 @@ function getCheckedRowsAsArray(tableId){
                                                   return $(this).val();
                                                 }).get(); 
                                                 
-       return rowIds;
+       if (rowIds.length == 0){
+         info("Message","Mark at least one record. (Use checkboxes)");
+         throw "stop execution";
+       }else{
+         return rowIds;
+       }
 }
 
 function groupAssignTo(tableId){
@@ -361,6 +373,7 @@ function groupDelete(tableId){
 
        $.get(url,function(table){
          $('#' + tableId).dataTable().fnDraw();
+         $("#group_delete_to_" + tableId).bClose();
        });
 }
 

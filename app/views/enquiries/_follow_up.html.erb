@@ -41,7 +41,7 @@
                 <div class="cols">
                     <div class="col6">
                         <%= fbox(g,"title","text_field") %>
-                        <%= go_create(g,"event_type","event_type_id","name",1) %> 
+                        <%= go_create(g,"event_type","event_type_id","name",1,"fbox") %> 
                         <%= fbox(g,[:starts_at,:class => "dateTimeField caltf "],"text_field",nil) %>
                         <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 

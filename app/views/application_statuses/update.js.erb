@@ -1,0 +1,3 @@
+$("#reg_status_<%= @programme.id %>").html("<span id='reg_status_<%= @programme.id %>>' class='ref_no'> <h4>[ <%= @programme.application_status.name %> ]</h4> </span>");
+
+$("#status_select_<%= @programme.id %>").slideToggle();

@@ -1,0 +1,13 @@
+<% @programme.notes.each do |note| %>
+          
+           <div class="brg0"> </div>
+           <br/>
+           <h6>
+           <%= note.content %>
+           </h6>
+           <li>
+          <%= link_to note._created_by.first_name,"#" %> &nbsp;&nbsp; <%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %></li>
+         
+         <br/>
+          
+<% end %>

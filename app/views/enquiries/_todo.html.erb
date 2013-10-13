@@ -50,8 +50,8 @@
                     <div class="col6">
                         <%= hidden_field_tag "#{g.object_name}[sub_id]",obj.id %>
                         <%= hidden_field_tag "#{g.object_name}[sub_class]",obj_name.capitalize %>
-                        <%= go_create(g,"todo_topic","topic_id","name",1) %> 
-                        <%= go_create(g,"todo_status","status_id","name",1) %> 
+                        <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
+                        <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
                         <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 
                                  :id, 

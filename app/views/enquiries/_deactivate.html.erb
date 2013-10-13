@@ -1,14 +1,18 @@
+<div class="htab">
+<h6><b>Deactivate Enquiry</b></h6>
+</div>
+<br/>
 <div clas="cols">
 <div class="col6">
 <%= form_for(@enquiry) do |f| %>
   <div id="deactivate-action" class="action-box">
-			
-            <%= fbox(f,[:audit_comment,size: "2x2"],"text_area",nil,"Comments") %>
-            <br/>
+            
+            <%= fbox(f,[:audit_comment,size: "10x3",style: 'width:400px;'],"text_area",nil,"Comments") %>
+            <br/><br/>
             <%= f.hidden_field :active,value: false %>
             <%= hidden_field_tag "#{f.object_name}[deactivate]", "from_action" %>
             <%= f.submit "Deactivate",{class: "btnp",data: { confirm: 'Are you sure?' }} %>
-	</div>
+    </div>
 <% end %>
 </div></div>
 <div class="cl"></div>

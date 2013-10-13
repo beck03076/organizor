@@ -432,7 +432,7 @@ function setWAColor(wa){
         }
     }
 
-  //  $(".tab-content-theme").css({"background":wa});
+    $("div#tab-content62").css({"background":wa});
     $(".boxstheme").css({"border-color":wa});
     $(".box-theme-ch").css({"background":wa});
     

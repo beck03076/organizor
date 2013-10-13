@@ -42,37 +42,60 @@ $(function(){
                         </span>
                         </h5>
                         <ul class="vlsdet">
-                        <li><label>Mobile </label>: <%= a.mobile1 %>, <%= a.mobile2 %></li>
-                        <li><label>Email </label>: <%= a.email1 %>, <%= a.email2 %></li>
+                        <li><label>Mobile 1 </label>: <%= a.mobile1 %></li>
+                        <li><label>Mobile 2 </label>: <%= a.mobile2 %></li>
+                        <li><label>Email 1</label>: <%= a.email1 %></li>
+                        <li><label>Email 2</label>: <%= a.email2 %></li>
                         <li><label>Country of Origin </label>: <%= disp1(a,"country_of_origin") %></li>
                         </ul>
                     </div>
                     <div class="cl"></div>
                     <br/>
-                    <h6><b>Personal information</b></h6>
+                    <h4 class="htab">
+                    Personal information
+                    </h4>
                     <ul class="vlsdet">
                     <li><label>Date of Birth</label>: <%= a.date_of_birth %></li>
-                    <li><label>Gender</label>: <%= a.gender %></li>
+                    <li><label>Gender</label>: <%= a.gender == 'm' ? 'Male' : 'Female' %></li>
                     <li><label>Address</label>: <%= disp0(a,'address') %></li>
                     </ul><br/>
-                    <h6><b>Preferred countries</b></h6>
-                    <ul class="infosm">
+                    <h4 class="htab">
+                    Preferred countries
+                    </h4>
+                    <ul class="vlsdet">
                     <li><%= disp2(a,"countries") %></li>
                     </ul><br/>
-                    <h6><b>Programmes interested</b></h6>
-                    <ul class="infosm">
-                    <% a.programmes.each_with_index do |i,index| %>
-                      <% j = i.programme_type.try(:name) %>
-                         
-                        <li><%= index + 1 %>) &nbsp; <b> <%= j %> - </b>
-                        <%= [i.institution.try(:name),
-                             i.city.try(:name),
-                             i.country.try(:name)].join(", ") %></li>
-                        <li>&nbsp;&nbsp;&nbsp;&nbsp;<b> Course - </b>
-                        <%= i.course_level.name if j == "university" rescue "(course level was empty)" %>
-                        <%= i.course_subject %><li>
-                        <li><%= i.start_date %><li>
+                    <h4 class="htab">
+                    Programmes interested
+                    </h4>
+                    <ul class="vlsdet">
+                    <% a.programmes.each do |i| %>
+                      
+                      <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
+                                               
+                        <li><label>Type</label>: <%= j %></li>
+                        <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
+                        <li><label>City</label>: <%= i.city.try(:name) %></li>
+                        <li><label>Country</label>: <%= i.country.try(:name) %></li>
+                        
+                        <% if j == "University" %>
+                          <li><label>Course Level</label>: <%= i.course_level.try(:name)  %></li>
+                        <% end %>
+                        
+                        <li><label>Course Subject</label>: <%= i.course_subject_text %> </li>
+                        <li><label>Start Date</label>: <%= i.start_date %></li>
+                        <div class="cl"></div>
+                        <br/>
+                        <span class="fl">
+                        <%= link_to i._created_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %>
+                        </span>
+                        <br/>
+                        <br/>
+                        <div class="brg0"> </div>
+                        <br/>
+                        <br/>
                     <% end %>
+
                     </ul>
                 </div>
             </div>
@@ -116,20 +139,24 @@ $(function(){
                 </div>
             </div>
         </div>
-        
-        <br/><div class="htab">
-        <h5><b>Timeline</b></h5>
-        </div><br/>
-        <div id="scrollboxu"  style="height:440px">    
-        <ul class="vlsdn">
-            <%= render 'timeline' %>
-        </ul>
-        </div><br/><br/>
+        <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
+        <div id="timeline-display">
+            <br/><div class="htab">
+            <h5><b>Timeline</b></h5>
+            </div><br/>
+            <div id="scrollboxu"  style="height:440px">    
+            <ul class="vlsdn">
+                <%= render 'timeline' %>
+            </ul>
+            </div>
+        </div>
+        <br/><br/>
         
         <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>' data-model_sing='enquiry' data-model_plu='enquiries' >
         </div>
         <div class="htab">
         <h5><b>Action</b></h5>
+        
         </div>
         <div class="boxstheme">
           <%= render "actions" %>

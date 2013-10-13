@@ -62,6 +62,7 @@ class ApplicationStatusesController < ApplicationController
       if @application_status.update_attributes(params[:application_status])
         format.html { redirect_to @application_status, notice: 'Application status was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @application_status.errors, status: :unprocessable_entity }
