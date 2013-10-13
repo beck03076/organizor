@@ -475,6 +475,12 @@ size:14px;
 font-weight:bolder;
 }
 
+.best_in_place:hover {
+
+  padding-right: 40px;
+  background: url("/images/icons/edi.png") no-repeat right;
+  color:#C42525;
+}
 
 /* SENTHIL's  CSS - End */
 

@@ -37,7 +37,8 @@
                          <%= f.collection_select(:country_id, 
                                 Country.order(:name), 
                                 :id, 
-                                :name) %> &nbsp;&nbsp;
+                                :name,
+                                {:prompt => "--Country--"}) %> &nbsp;&nbsp;
                     </div>
                     <div class="frbox">
                          <%= go_create(f,"student_source","source_id","name",1) %>  

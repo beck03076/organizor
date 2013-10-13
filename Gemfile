@@ -66,6 +66,8 @@ gem 'attr_encrypted'
 gem 'sidekiq'
 gem 'tinymce-rails'
 gem 'simple_form'
+gem 'best_in_place'
+gem 'tinymce-rails-imageupload'
 
 
 

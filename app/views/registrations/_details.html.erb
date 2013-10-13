@@ -6,41 +6,44 @@ Education Background
   <% q = @registration.qualification %>
     <li>
       <label>Qualification </label>: 
-        <%= q.name rescue "unknown" %>
+        <%= best_in_place a,
+                          :qua_id,
+                          type: :select,
+                          collection: Qualification.order(:name).map{|i| [i.id,i.name]}%>
     </li>
     
     <li>
       <label>Subject </label>: 
       
-        <%= a.qua_subject %>
+        <%= best_in_place a, :qua_subject %>
       
     </li>
     
     <li>
       <label>Institution </label>: 
       
-        <%= a.qua_institution %>
+        <%= best_in_place a, :qua_institution %>
       
     </li>
     
     <li>
       <label>Grade </label>: 
       
-        <%= a.qua_grade %>
+        <%= best_in_place a, :qua_grade %>
       
     </li>
     
     <li><label>
       Exam </label>: 
       
-        <%= a.qua_exam %>
+        <%= best_in_place a, :qua_exam %>
       
     </li>
     
     <li><label>
       Score </label>: 
       
-        <%= a.qua_score %>
+        <%= best_in_place a, :qua_score %>
       
     </li>
 </ul>
@@ -57,7 +60,10 @@ English Language Proficiency
     <li><label>
       Level of English </label>: 
       
-        <%= a.english_level.name rescue "unknown" %>
+        <%= best_in_place a,
+                          :prof_eng_level_id,
+                          type: :select,
+                          collection: EnglishLevel.order(:name).map{|i| [i.id,i.name]}%>
       
     </li>
     
@@ -99,25 +105,29 @@ Emergency Contact
     <li><label>
       Full Name </label>: 
       
-        <%= a.emer_full_name %>
+        <%= best_in_place a, :emer_full_name %>
       
     </li>
     <li><label>
       Relationship </label>: 
-      
-        <%= a.emer_relationship %>
+<% arr = %w(Father Mother Husband Wife Brother Sister Cousin Uncle Friend Other).map{|i| [i,i]} %>
+
+        <%= best_in_place a,
+                          :emer_relationship,
+                          type: :select,
+                          collection: arr %>
       
     </li>
     <li><label>
       Mobile Number </label>: 
       
-        <%= a.emer_mobile %>
+        <%= best_in_place a, :emer_mobile %>
       
     </li>
     <li><label>
       Email </label>: 
       
-        <%= a.emer_email %>
+        <%= best_in_place a, :emer_email %>
       
     </li>
 </ul>
@@ -134,25 +144,27 @@ Flight Details
     <li><label>
       Flight Number </label>: 
       
-        <%= a.flight_no %>
+        <%= best_in_place a, :flight_no %>
       
     </li>
     <li><label>
       Arrival Date </label>: 
       
-        <%= a.flight_arrival_date %>
+        <%= best_in_place a, 
+                          :flight_arrival_date,
+                          :type => :date %>
       
     </li>
     <li><label>
       Arrival Time </label>: 
       
-        <%= a.flight_arrival_time %>
+        <%= best_in_place a, :flight_arrival_time%>
       
     </li>
     <li><label>
       Airport </label>: 
       
-        <%= a.flight_airport %>
+        <%= best_in_place a, :flight_airport %>
       
     </li>
 </ul>

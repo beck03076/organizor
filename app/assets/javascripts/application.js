@@ -16,6 +16,9 @@
 //= require jquery_nested_form
 //= require tinymce
 //= require dataTables/jquery.dataTables
+//= require jquery.purr
+//= require best_in_place
+
 
 
 

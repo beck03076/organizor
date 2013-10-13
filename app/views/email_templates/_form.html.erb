@@ -1,10 +1,143 @@
-<%= simple_form_for(@email_template) do |f| %>
-  <%= f.error_notification %>
+<!-- Tabs---------------------------->
+<div class="tab-container">
+<ul class="tab-menus">
+  <li class="email_template" lang="email_template"> 
+   Email Template 
+  </li>
+</ul>
+    <div class="tab-content" id="email_template">
+    <!-- Actual Form Starts---------------------------->
+    <%= form_for(@email_template) do |f| %>
 
-  <div class="form-inputs">
-  </div>
+         <div class="boxp box-theme-ch">
+            <%= link_to 'New', new_email_template_path,{class: "btnp fr"} %>
+            <%= link_to 'All', email_templates_path,{class: "btnp fr"} %>
+            <div class="cols">
+              <div class="col6">
+                <div class="fbox">
+                <%= f.label :name %>
+                <%= f.text_field :name,{size: "100"} %>
+                </div>
+                
+                <div class="fbox">
+                  <%= f.label :subject %>
+                  <%= f.text_area :subject,{style: 'width:350px;height:20px;'}  %>   
+                </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+              </div>
+            </div>
+            <br/>
+            <div class="cl"></div> 
+                <%= label_tag :body %>
+                <br/>
+                <br/>
+                <%= f.text_area :body,{:class=>"tinymce",:style => 'width:500px;height:700px;'} %>
+                <br/>
+                <br/>
+                <%= f.label :signature %>
+                <%= f.text_area :signature,{:class=>"tinymce",style: 'width:350px;height:200px;'} %>    
+                <br/>
+                <br/>
+                <div class="cl"></div> 
+                <%= f.submit "Create",{class: 'btnp fr'} %>
+
+          </div>
+    <% end %>
+    </div>
+</div>
+<!-- Actual Form Ends ---------------------------->
+
+<!-- Script, hidden forms and other things for uploading an image into the server and displaying it in the RTF Starts---------------------------->  
+  
+  <div style="display:none;">
+  <%= form_for Image.new, :html => {:multipart => true}, remote: true do |f| %>
+        <%= f.file_field :path %>
+        <%= f.submit %>
+  <% end %>
   </div>
-<% end %>
+  
+  
+<script>
+$(function(){
+  setColorsFromSession();
+  $("ul.tab-menus li.email_template").trigger('click');
+ });
+
+
+$("#image_path").on("change",function(){
+   $("#new_image").submit();
+});
+
+//Callback handler for form submit event
+$("#new_image").submit(function(e)
+{
+ 
+    var formObj = $(this);
+    var formURL = formObj.attr("action");
+    var formData = new FormData(this);
+    $.ajax({
+        url: formURL,
+    type: 'POST',
+        data:  formData,
+    mimeType:"multipart/form-data",
+    contentType: false,
+        cache: false,
+        processData:false,
+    success: function(data)
+    {
+       tinyMCE.activeEditor.execCommand('mceInsertContent', false, "<img src=" + data + ">");
+
+    },
+     error: function(jqXHR, textStatus, errorThrown) 
+     {  alert("failed!");
+     }
+    });
+    e.preventDefault(); //Prevent Default action.
+});
+
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     relative_urls: false,
+     setup : function(ed) {
+        // Add a custom button
+        ed.addButton('mybutton', {
+            title : 'Image Browse',
+            image : '/images/icons/username.png',
+            onclick : function() {
+                // Add you own code to execute something on click
+                ed.focus();
+                //ed.selection.setContent('Hello world!');
+                $("#image_path").trigger('click');
+                
+                
+                return false;
+            }
+        });
+    },
+     theme: "modern",
+     browser_spellcheck : true,
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor ",
+
+     ],
+     toolbar1: "insertfile undo redo |fontsizeselect styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons mybutton ",
+     image_advtab: true,
+     templates: [
+      {title: 'Test template 1', content: '<b>Test 1</b>'},
+      {title: 'Test template 2', content: '<em>Test 2</em>'},
+        {
+            title: "Timestamp",
+            url: "/enquiries_action_partial/register/1",
+            description: "Adds an editing timestamp."
+        }
+     ],
+     autosave_ask_before_unload: false,
+     
+});
+setColorsFromSession();
+</script>

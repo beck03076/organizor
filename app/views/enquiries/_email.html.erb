@@ -22,7 +22,7 @@
                    </tr>
                <% end %>
                     <tr>
-                        <td colspan="4" align="left"><a href="#">Back</a></td>
+                        <td colspan="5" align="left"><a href="#">Back</a></td>
                    </tr>
 
         </tbody>
@@ -52,7 +52,7 @@
                                 {:class => "email_templates_select",
                                  :onchange => "sel_act(this);"}) %>
                                  
-         <%= link_to "Create Email Template","/email_template/create",{remote: true} %>
+         <%= link_to "Create Email Template","/email_templates/new",{target: "_blank"} %>
          <div id="email_template_create"> </div>      
     </div>
     <div class="fbox">
@@ -85,19 +85,22 @@
     </div>
     <div class="fbox">
         <%= p.label :subject %>
-        <%= p.text_field :subject %>
+        <%= p.text_area :subject,{style: 'width:350px;height:20px;'} %>
     </div>
     <div class="fbox" style="height:auto">
         <%= p.label :body %>
         <%= p.text_area(:body,{:class => "tinymce"}) %>
     </div>
+    <br/>
+    <br/>
     <div class="fbox">
         <%= p.label :attachment %>
         <%= p.file_field :attachment %>
-    </div>    
+    </div>
+    <br/>    
     <div class="fbox"  style="height:auto">
         <%= p.label :signature %>
-        <%= p.text_area(:signature,{size: "5x5",style: "width:400px"}) %>
+        <%= p.text_area(:signature,{:class => "tinymce",size: "5x5",style: "width:400px"}) %>
     </div>
     <div class="fbox">
         <label>&nbsp;</label>

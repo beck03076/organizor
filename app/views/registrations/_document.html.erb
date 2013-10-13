@@ -7,6 +7,7 @@
     </h6>
     <br/>
     <br/>
+    <%= a.documents.size == 0 ? "<i>No documents uploaded</i>".html_safe : ""%>
 
         <%= form_tag(delete_documents_path,method: "delete") do %>
             <%= hidden_field_tag :reg_id,@registration.id %>

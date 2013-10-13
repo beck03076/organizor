@@ -3,6 +3,7 @@ $(function(){
 
   activeMM("registrationsMM");
   setColorsFromSession();
+  $('.best_in_place').best_in_place();
 
 });
 
@@ -42,30 +43,46 @@ $(function(){
                         </span>
                         </h5>
                         <ul class="vlsdet">
-                        <li><label>Mobile1</label>: <%= a.mobile1 %></li>
-                        <li><label>Mobile2</label>: <%= a.mobile1 %></li>
-                        <li><label>Email1</label>: <%= a.email1 %></li>
-                        <li><label>Email2</label>: <%= a.email2 %></li>
+                        <li><label>Mobile 1 </label>: <%= best_in_place a, :mobile1 %></li>
+                        <li><label>Mobile 2 </label>: <%= best_in_place a, :mobile2 %></li>
+                        <li><label>Email 1</label>: <%= best_in_place a, :email1 %></li>
+                        <li><label>Email 2</label>: <%= best_in_place a, :email2 %></li>
                         </ul>
                     </div>
                     <div class="cl"></div>
                     <br/>
                     <h4 class="htab">Personal information</h4>
                     <ul class="vlsdet">
-                    <li><label>Date of Birth</label>: <%= a.date_of_birth %></li>
-                    <li><label>Gender</label>: <%= a.gender %></li>
-                    <li><label>Nationality</label>: <%= a.country_of_origin.try(:name) %></li>
-                    <li><label>Address</label>:<%= disp0(a,'address') %></li>
-                    <li><label>Home Phone</label>: <%= a.home_phone %></li>
-                    <li><label>Work Phone</label>: <%= a.work_phone %></li>
+                    <li><label>Date of Birth</label>: <%= best_in_place a, 
+                                                           :date_of_birth,
+                                                           :type => :date %></li>
+                    <li><label>Gender</label>: <%= best_in_place a,
+                                                           :gender,
+                                                           type: :select,
+                                                           collection: [['m','male'],['f','female']] %></li>
+                    <li><label>Nationality</label>: <%= best_in_place a,
+                                                                      :country_id,
+                                                                      :type => :select, 
+                                                                      :collection => Country.order(:name).map{|i| [i.id,i.name]} %></li>
+                                                                      
+                    <li><label>Address</label>: <%= best_in_place a,
+                                                                  :address, 
+                                                                  :type => :textarea %></li>
+                                                                  
+                    <li><label>Home Phone</label>: <%= best_in_place a, :home_phone %></li>
+                    <li><label>Work Phone</label>: <%= best_in_place a, :work_phone %></li>
                     </ul>
                     <br/>
                     <h4 class="htab">Passport & Visa</h4>
                     <ul class="vlsdet">
-                    <li><label>Passport Number</label>: <%= a.passport_number %></li>
-                    <li><label>Passport Valid Till</label>: <%= a.passport_valid_till %></li>
-                    <li><label>Visa Type</label>: <%= a.visa_type %></li>
-                    <li><label>Visa Valid Till</label>: <%= a.visa_valid_till %></li>
+                    <li><label>Passport Number</label>: <%= best_in_place a, :passport_number %></li>
+                    <li><label>Passport Valid Till</label>: <%= best_in_place a, 
+                                                                              :passport_valid_till,
+                                                                              :type => :date %></li>
+                    <li><label>Visa Type</label>: <%= best_in_place a, :visa_type %></li>
+                    <li><label>Visa Valid Till</label>:  <%= best_in_place a,
+                                                                           :visa_valid_till,
+                                                                           :type => :date %></li>
                     </ul><br/>
                  </div>
             </div>

@@ -141,16 +141,30 @@ class EnquiriesController < ApplicationController
     
     respond_to do |format|
       if @enquiry.save
-        u = UserConfig.find(current_user.id)
-        temp = u.def_create_enquiry_email
-        to = u.def_enq_email
-        temp = UserConfig.find(current_user.id).def_create_enquiry_email
-        etemp = EmailTemplate.find_by_name(temp)
-        @enquiry.emails.create(subject: etemp.subject,
-                 body: etemp.body,
-                 signature: etemp.signature,
-                 to: @enquiry.send(to),
-                 from: u.def_from_email)
+        # after creating enquiry, checking conf for email and f_u
+        c = current_user.conf
+        
+        if c.auto_email_enq
+          temp = c.def_create_enquiry_email
+          to = c.def_enq_email
+          etemp = EmailTemplate.find_by_name(temp)
+
+          @enquiry.emails.create(subject: etemp.subject,
+                                 body: etemp.body,
+                                 signature: etemp.signature,
+                                 to: @enquiry.send(to),
+                                 from: c.def_from_email)
+        end
+        
+        if c.auto_cr_f_u
+          @enquiry.follow_ups.create(title: c.def_f_u_name,
+                                     desc: c.def_f_u_desc,
+                                     event_type_id: c.def_f_u_type,
+                                     starts_at: (Date.today + c.def_follow_up_days.to_i),
+                                     assigned_to: c.def_f_u_ass_to,
+                                     assigned_by: current_user.id)
+        end
+
         if params[:save_new] 
           format.html { redirect_to new_enquiry_path, notice: 'Enquiry was successfully created.' }
         else

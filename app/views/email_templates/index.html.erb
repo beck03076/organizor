@@ -1,21 +1,52 @@
-<h1>Listing email_templates</h1>
+<!-- EmailTemplate -->
+<!-- Tabs---------------------------->
+<div class="tab-container">
+<ul class="tab-menus">
+  <li class="email_template" lang="email_template"> 
+   Email Template 
+  </li>
+</ul>
+    <div class="tab-content" id="email_template">
+    <div class="boxp box-theme-ch">
+        <h4 class="htab">
+        All Email Templates
+        </h4>
+        <br/>
+        <br/>
+        <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+        <% @email_templates.each do |email_template| %>
+          <tr>
+            <td><%= email_template.name %></td>
+            <td><%= link_to 'Edit', edit_email_template_path(email_template) %></td>
+            <td><%= link_to 'Delete', email_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
 
-<% @email_templates.each do |email_template| %>
-  <tr>
-    <td><%= link_to 'Show', email_template %></td>
-    <td><%= link_to 'Edit', edit_email_template_path(email_template) %></td>
-    <td><%= link_to 'Destroy', email_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Email template', new_email_template_path %>
+        <br />
+        <br/>
+        <br/>
+        <%= link_to 'New Email template', new_email_template_path,{class: "btnp"} %>
+        <br/>
+        <br/>
+     </div>
+     </div>
+</div>
+<script>
+$(function(){
+  setColorsFromSession();
+  $("ul.tab-menus li.email_template").trigger('click');
+ });
+</script>
+ 
