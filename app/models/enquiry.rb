@@ -34,7 +34,7 @@ class Enquiry < ActiveRecord::Base
                   :surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,
                   :follow_ups_attributes,:active,:notes_attributes,
-                  :todos_attributes
+                  :todos_attributes,:contact_type_id
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
  

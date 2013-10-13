@@ -5,7 +5,7 @@ class Registration < ActiveRecord::Base
 
   has_many :programmes, dependent: :destroy
   has_many :exams
-  has_many :proficiency_exams,class_name: "Exam"
+  has_many :proficiency_exams,class_name: "Exam", dependent: :destroy
   belongs_to :sub_agent
   belongs_to :student_source, foreign_key: 'reg_source_id'  
   
@@ -31,6 +31,8 @@ class Registration < ActiveRecord::Base
   belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
   belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
 
+  attr_accessor :_destroy
+
   attr_accessible :address_city, :address_country_id, :address_line1, 
   :address_line2, :address_others, :address_post_code, 
   :assigned_by, :assigned_to, :country_id, 
@@ -47,7 +49,7 @@ class Registration < ActiveRecord::Base
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
-  :note,:documents_attributes
+  :note,:documents_attributes,:_destroy
   
   accepts_nested_attributes_for :programmes, :proficiency_exams, :documents, :allow_destroy => true
   
