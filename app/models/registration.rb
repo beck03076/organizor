@@ -22,7 +22,7 @@ class Registration < ActiveRecord::Base
   
   has_and_belongs_to_many :emails 
   has_many :follow_ups
-  has_many :notes,foreign_key: "sub_id"
+  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Registration"'
   has_many :todos
   
   

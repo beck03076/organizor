@@ -58,8 +58,8 @@
               <div class="frbox">
                 <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
                 <h5>Are you sure about this group delete?</h5>
-                <span class="btnp" onclick="groupDelete('#{_id}');"> Yes </span>
-                <span class="btnp" onclick="bClose('#<%= div_delete_id %>');"> No </span>
+                <span class="btnp" onclick="groupDelete('<%= _id %>');"> Yes </span>
+                <span class="btnp bClose"> No </span>
               </div>
             </div>
 

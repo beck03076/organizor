@@ -1,59 +1,82 @@
-
-<ul class="infosm">
-                    <% @registration.programmes.each_with_index do |i,index| %>
-                      <% j = i.programme_type.try(:name).titleize rescue ""%>
-                         
-                        <li>
-                        
-                        <%= index + 1 %>) &nbsp; <b> <%= j %> </b>
-                        <span id="reg_status" class='ref_no'>
-                          [<%= i.application_status.name %>]
+<script>
+</script>
+<h4 class="htab">
+  Applications In Progress
+</h4>
+<br/>
+<br/>
+<br/>
+<ul class="vlsdet">
+   <% @registration.programmes.each do |i| %>
+    <!-- @programme is used in 2 partials, change status and add note -->
+    <% @programme = i %>
+   
+    <h3><%= i.institution.name rescue "Unknown" %></h3>
+    <br/>
+    <br/>
+    <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
+    <div id="status_group_<%= i.id %>">
+    <li><label>Status</label>: <span id="reg_status_<%= i.id %>" class='ref_no'>
+                          <h4>[ <%= i.application_status.name %> ]</h4>
                         </span>
-                        <%= link_to "change","#"%>
-                        <div style="padding:10px;margin:5px">
-                        Institution :
-                        <b>
-                        <%= i.institution.try(:name).to_s %>,&nbsp;<%= i.city.try(:name).to_s %>,&nbsp;<%= i.country.try(:name).to_s %>
-                        </b><br/><br/>
-                            <b>Course :</b>
-                            <% if j == "University" %>
-                              <ul class="vlsdet">
-                              <li><label>Level</label>:<%= i.course_level.try(:name).titleize %></li>
-                              <li><label>Subject</label>:<%= i.try(:course_subject) %></li>
-                              <li><label>Intake Month</label>:<%= i.start_date.strftime("%B") rescue "" %></li>
-                              <li><label>Intake Year</label>:<%= i.start_date.strftime("%Y") rescue "" %></li>
-                              </ul>
-                              
-                            <% elsif j == "Language School" %>
-                              <ul class="vlsdet">
-                              <li><label>Name</label>:<%= i.try(:course_subject) %></li>
-                              <li><label>Start Date</label>:<%= i.start_date.to_date rescue "" %></li>
-                              <li><label>End Date</label>:<%= i.start_date.to_date rescue ""%></li>
-                              </ul>
-                            <% end %>
-                            <br/>
-                            Created by,&nbsp;
-                            <i>
-                               <b> <%= User.find(i.created_by).name rescue "" %> </b>
-                            </i>
-                            at 
-                            <i>
-                                <%= i.created_at %>
-                            </i>
-                        <% if i.updated_by %>
-                        <br/>
-                            Last modified by,&nbsp;
-                            <i>
-                               <b> <%= (User.find(i.updated_by).name) rescue "" %> </b>
-                            </i>
-                            at 
-                            <i>
-                                <%= i.updated_at %>
-                            </i>
-                            </div>
-                        </li>
-                        <% end %>
-                        <br/>
-                    <% end %>
-</ul>
+                        <span class="a1" onclick="regAppStatus(this,'#status_select_<%= i.id %>');">change</span>
+   </li>
+    <span id="status_select_<%= i.id %>" style="display:none;">
+      <%= render 'application_statuses/change_status' %>
+    </span>
+    </div>
+    <li><label>Type</label>: <%= j %></li>
+    <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
+    <li><label>City</label>: <%= i.city.try(:name) %></li>
+    <li><label>Country</label>: <%= i.country.try(:name) %></li>
+                        
+    <% if j == "University" %>
+      <li><label>Course Level</label>: <%= i.course_level.try(:name)  %></li>
+    <% end %>
+                        
+    <li><label>Course Subject</label>: <%= i.course_subject_text %> </li>
+    
+    <% if j == "Language School" %>
+      <li><label>Start Date</label>: <%= i.start_date %></li>
+      <li><label>End Date</label>: <%= i.end_date %></li>
+    <% else %>
+      <li><label>Intake Year</label>: <%= i.start_date.strftime("%Y") rescue "Unknown" %></li>
+      <li><label>Intake Month</label>: <%= i.start_date.strftime("%B") rescue "Unknown" %></li>
+    <% end %>
+    
+    
+    
+    <div class="cl"></div>
+    <br/>
 
+    <li><label>Created</label>:
+      <%= link_to i._created_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
+
+
+    <li><label>Last Modified</label>:
+      <%= link_to i._updated_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
+     <br/>
+     <br/>
+     <div id="programme_note_<%= i.id %>">
+          
+          <%= render 'programmes/note' %>
+     </div>
+     
+     
+     <h5 class="htab"> Notes For This Application<h5>
+     <%= nested_form_for(i,remote: true) do |r| %>
+      <%= r.fields_for :notes,i.notes.build do |n| %>
+        <%= n.hidden_field :sub_class, value: "Programme" %>
+        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
+      <% end %> 
+      <br/>
+      <%= r.submit "Write",{class: "btnp"} %>
+      <% end %>
+     <br/>
+
+    <div class="brg01"> </div>
+    <br/>
+    <br/>
+  <% end %>
+
+</ul>

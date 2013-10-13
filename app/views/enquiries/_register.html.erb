@@ -1,8 +1,8 @@
 <div id="register-action" class="action-box">
 <div class="htab">
-<h6><b>New Register</b></h6>
+<h6><b>New Registration</b></h6>
 </div>
-<br/>	
+<br/>
   <%= form_tag url_for(:controller => 'registrations', :action => 'new'),method: 'get' do %>
     <div class="fbox" style="height:auto"><label>Note</label>
     <%= hidden_field_tag :enquiry_id, id %>
@@ -10,7 +10,7 @@
                        nil,
                        {:size => '10x3', :style => 'width:400px;'} %> <br/><br/>
     </div>
-	<%= submit_tag "Register",{class: 'btnp',data: { confirm: 'Registering an enquiry, will deactivate the enquiry and convert it to a registration, are you sure to continue?' }} %>    
+        <%= submit_tag "Register",{class: 'btnp',data: { confirm: 'Registering an enquiry, will deactivate the enquiry and convert it to a registration, are you sure to continue?' }} %>    
   <% end %>
   
 </div>

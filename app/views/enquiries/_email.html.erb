@@ -4,19 +4,21 @@
     <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
          <thead>
           <tr>
-                                <th>To</th>
-                                <th>From</th>
                                 <th>Subject</th>
                                 <th>Body</th>
+                                <th>Date</th>
+                                <th>Sent By</th>
+                                <th>From</th>
           </tr>
         </thead>
         <tbody>
                 <% obj.first.emails.each do |email| %>
                     <tr>
-                        <td><%= email.to %></td>
-                        <td><%= email.smtp.name rescue "unknown" %></td>
                         <td><%= email.subject %></td>
                         <td><%= truncate(strip_tags(email.body),length: 30) %></td>
+                        <td><%= email.created_at.strftime("%F %R %p") %></td>
+                        <td><%= email._created_by.name rescue "" %></td>
+                        <td><%= email.smtp.name rescue "unknown" %></td>
                    </tr>
                <% end %>
                     <tr>
@@ -126,5 +128,6 @@ tinymce.init({
     ],
      autosave_ask_before_unload: false
 });
+
 
 </script>

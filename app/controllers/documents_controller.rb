@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   
   def create
     Document.create! params[:document]
-    redirect_to "/registrations"
+    redirect_to "/registrations/" + params[:document][:registration_id].to_s
   end
   
   def delete

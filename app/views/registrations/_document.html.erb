@@ -1,37 +1,52 @@
 <% a = @registration %>
-<ul class="infosm">
-<h6> 
-Documents Received
-</h6>
-<br/>
-<%= form_tag(delete_documents_path,method: "delete") do %>
-  <%= hidden_field_tag :reg_id,@registration.id %>
-    <% a.documents.includes(:category).each do |cat| %>
-    <br/>
-    Category : <b> <%= cat.category.name %> </b>
-            <li>
-              <%= check_box_tag "doc_id[]",cat.id %>
-              <b>
-                <%= cat.name %>
-              </b>
-            </li>
-            
-    <% end %><br/>
-    <span class="btns">
-    <%= submit_tag "Delete Selected",method: :delete %>
-	</span>
-<% end %>
-    
-</ul>
 
-<%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
-       
-       <%= f.hidden_field :registration_id,value: @registration.id %>
-       <%= go_create(f,"doc_category","category_id","name",1) %> 
-       <%= fs(f,"name","text_field",nil) %>
-       <div class="frbox"><label>File</label>
-	   <%= f.file_field :path %>
-       <%= f.submit "Upload", class: "btnp" %>
-	   </div>
-   
-<% end %>
+
+    <br/>
+    <h4 class="htab"> 
+    Documents Received
+    </h6>
+    <br/>
+    <br/>
+
+        <%= form_tag(delete_documents_path,method: "delete") do %>
+            <%= hidden_field_tag :reg_id,@registration.id %>
+                <% a.documents.includes(:category).each do |cat| %>
+                        <ul class="vlsdet">
+                            <li>
+                                <%= check_box_tag "doc_id[]",cat.id %>
+                                <h4><%= cat.name %></h4>
+                                <label>[<%= cat.category.name %>]</label> 
+                            </li>
+                        </ul>
+                <% end %>
+            <br/>
+
+            <%= submit_tag "Delete Selected",{method: :delete, class: "btnp"} %>
+
+        <% end %>
+    <br/>
+    <br/>
+
+        <h4 class="htab"> 
+        New Upload
+        </h6>
+        <br/>
+            <br/>
+    <br/>
+        <%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
+               
+               <%= f.hidden_field :registration_id,value: @registration.id %>
+               <%= go_create(f,"doc_category","category_id","name",1,"fbox") %> 
+               <%= fbox(f,"name","text_field",nil,nil) %>
+               <div class="fbox">
+                 <label>File</label>
+                 <%= f.file_field :path %>
+               </div>
+               <div class="fbox">
+               
+               <%= f.submit "Upload", class: "btnp" %>
+               </div>
+        <% end %>
+
+
+

@@ -1,0 +1,4 @@
+<%= form_for(@programme,remote: true) do |app_sta| %>
+      <%= app_sta.collection_select(:app_status_id,ApplicationStatus.order(:name),:id,:name) %>
+      <%= app_sta.submit "Change", {class: "btnp",name: "change_status"} %>
+<% end %>

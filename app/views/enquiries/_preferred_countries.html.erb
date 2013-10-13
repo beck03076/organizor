@@ -18,7 +18,7 @@
     <%= select_tag("#{f.object_name}[country_ids][]",
                    options_for_select(@countries),
                    {multiple: true,
-                    size: 5,
+                    size: 2,
                     include_blank: false, 
                     id: "multiselect"}) %><br/>
      <a href='#' id='deselect-all' class="btns fr">deselect all</a>

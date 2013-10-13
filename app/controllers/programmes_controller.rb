@@ -63,6 +63,11 @@ class ProgrammesController < ApplicationController
       if @programme.update_attributes(params[:programme])
         format.html { redirect_to @programme, notice: 'Programme was successfully updated.' }
         format.json { head :no_content }
+        if params[:change_status].nil?
+          format.js
+        else
+          format.js { render "application_statuses/update" } 
+        end   
       else
         format.html { render action: "edit" }
         format.json { render json: @programme.errors, status: :unprocessable_entity }
