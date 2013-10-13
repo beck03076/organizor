@@ -135,7 +135,10 @@ class EnquiriesController < ApplicationController
   # POST /enquiries.json
   def create
     @enquiry = Enquiry.new(params[:enquiry])
-
+    
+    stat_id = EnquiryStatus.find_by_name("pending").id
+    @enquiry.status_id = stat_id
+    
     respond_to do |format|
       if @enquiry.save
         u = UserConfig.find(current_user.id)

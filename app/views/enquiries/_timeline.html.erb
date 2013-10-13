@@ -1,21 +1,29 @@
-	<% @timelines.each do |t| %>
+<% @timelines.each do |t| %>
+<br/>
 <li>
   <%= image_tag "/images/icons/"+ t.action.to_s + ".png",{class: "fl", width: "35"} %>
   &nbsp;&nbsp;&nbsp;
-  <h4><b><%= t.comment %></b></h4>
+  <h4>
+  <%= t.comment %>
+  </h4>
   <br/>
-  &nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <span style="color:#999;">
   <%= t.desc.html_safe %>
+  </span>
   
   <br/>
-      <small>
+  <br/>
+
           &nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          
-          &nbsp;&nbsp;..<b><%= t.user_name %></b> <i>
-          <%= time_ago_in_words(t.created_at) %> ago</i>
-      </small>
+          &nbsp;&nbsp;&nbsp
+
+          <%= link_to t.user_name,"#" %> &nbsp;&nbsp; <%= t.created_at.strftime("%A, %F %R %p") %>
+
+
   
 </li>
+<br/>
+<div class="brg0"></div>
 <% end %>

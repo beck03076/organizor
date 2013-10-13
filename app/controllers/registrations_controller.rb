@@ -18,6 +18,11 @@ class RegistrationsController < ApplicationController
     set_url_params
     
     if @status == "new_registration"
+       ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
+    
+        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s
+        ym = Time.now.strftime("%y%m").to_s
+        @ref_no = ym + ref_temp_no
        if params[:enquiry_id]
                     # e stands for enquiry
                   e_obj = Enquiry.find(params[:enquiry_id])
@@ -37,7 +42,7 @@ class RegistrationsController < ApplicationController
                                    
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",
-                                              "status_id", "address","active")
+                                              "status_id", "address","active","contact_type_id")
                   e[:note] = params[:note]
                   
                   @registration = Registration.new(e)
@@ -152,7 +157,7 @@ class RegistrationsController < ApplicationController
                        
       e = e_obj.attributes.except("id","score","source_id",
                                   "created_at","updated_at",
-                                  "status_id", "address","active")
+                                  "status_id", "address","active","contact_type_id")
       e[:note] = params[:note]
       
       @registration = Registration.new(e)
