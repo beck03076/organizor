@@ -299,20 +299,22 @@ function dataTableStart(table,filterValue,cols)
 
 
 
-// enquiries tabs switching
+// registrations tabs switching
 function registrationTabSwitch(obj){
     
     var cond = $(obj).data("cond");
     var partial = $(obj).data("partial");
     var _id = $(obj).data("registration_id");
     var enquiry_id = $(obj).data("enquiry_id");
+    var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
-    
+
     url = '/registrations/tab/' + cond + '/' + partial + '/'
     
     if (typeof _id !== "undefined"){ url = url + _id; }
-    
-    if (typeof enquiry_id !== "undefined"){ url = '/register/tab/new_registration/form/' + enquiry_id; }
+    else if (typeof enquiry_id === "undefined" || enquiry_id.length == 0   ){ url = url + _id; }
+    else if (typeof enquiry_id !== "undefined" )
+    { url = '/register/tab/new_registration/form/' + enquiry_id + "/" + note; }
 
     $.get(url,function(table){
      
