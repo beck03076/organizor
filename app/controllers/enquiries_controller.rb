@@ -138,6 +138,16 @@ class EnquiriesController < ApplicationController
 
     respond_to do |format|
       if @enquiry.save
+        u = UserConfig.find(current_user.id)
+        temp = u.def_create_enquiry_email
+        to = u.def_enq_email
+        temp = UserConfig.find(current_user.id).def_create_enquiry_email
+        etemp = EmailTemplate.find_by_name(temp)
+        @enquiry.emails.create(subject: etemp.subject,
+                 body: etemp.body,
+                 signature: etemp.signature,
+                 to: @enquiry.send(to),
+                 from: u.def_from_email)
         if params[:save_new] 
           format.html { redirect_to new_enquiry_path, notice: 'Enquiry was successfully created.' }
         else

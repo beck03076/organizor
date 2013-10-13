@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131010210436) do
+ActiveRecord::Schema.define(:version => 20131013022330) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -489,13 +489,15 @@ ActiveRecord::Schema.define(:version => 20131010210436) do
   create_table "user_configs", :force => true do |t|
     t.integer  "def_follow_up_days"
     t.integer  "user_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.text     "def_note"
     t.text     "reg_cols"
     t.text     "enq_cols"
     t.string   "def_enq_email"
     t.string   "def_reg_email"
+    t.string   "def_create_enquiry_email"
+    t.string   "def_from_email"
   end
 
   create_table "users", :force => true do |t|

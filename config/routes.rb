@@ -36,7 +36,7 @@ Organizor::Application.routes.draw do
   
  match "/registrations/tab/:status/:partial(/:registration_id)" => "registrations#tab"  
  
- match "/register/tab/:status/:partial/:enquiry_id" => "registrations#tab" 
+ match "/register/tab/:status/:partial/:enquiry_id(/:note)" => "registrations#tab" 
   
   match "/email_template/create" => "emails#template_create"
   
