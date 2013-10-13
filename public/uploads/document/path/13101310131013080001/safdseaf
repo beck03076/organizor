@@ -1,0 +1,68 @@
+============
+zip -r CrawlFish_v1_prod.zip CrawlFish
+============
+mkdir code
+chmod 777 code
+============
+think@think:~/CrawlFish/public/Images$ scp U4f95KQ5B@180.179.50.152:/var/www/CrawlFish_v1_prod.zip /home/think/code
+think@think:~/code/CrawlFish_v2_dev$ scp CrawlFish_v2_dev.zip  U4f95KQ5B@180.179.50.152:/var/www/code
+============
+ mv  CrawlFish code
+unzip CrawlFish_v2_dev.zip -d ..
+
+============
+update config/database.yml
+update config/sphinx.yml
+
+============
+export RAILS_ENV=production
+echo $RAILS_ENV
+
+============
+vi Gemfile
+bundle install
+rm Gemfile.lock
+
+============
+vi Gemfile
+# removed rmagick gem because of ruby version error
+bundle install
+
+============
+rake db:migrate
+mysql> delete from customer_care_entries where customer_phone_no = "8438999691" limit 1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from customer_care_entries where customer_phone_no = "9962116430" limit 1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> update customer_care_entries set customer_name = customer_phone_no where customer_name="Not known";
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update customer_care_entries set customer_email = customer_phone_no where customer_email is null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update customer_care_entries set customer_email = customer_phone_no where customer_email="";
+Query OK, 8 rows affected (0.00 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> update customer_care_entries set customer_email = customer_phone_no where customer_email="na";
+Query OK, 34 rows affected (0.00 sec)
+Rows matched: 34  Changed: 34  Warnings: 0
+
+mysql> ALTER TABLE customer_care_entries DROP INDEX cce_name_phone;
+Query OK, 49 rows affected (0.01 sec)
+Records: 49  Duplicates: 0  Warnings: 0
+============
+
+
+
+============
+
+
+
+============
+
+
+============

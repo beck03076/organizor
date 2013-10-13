@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  include ActionView::Helpers::SanitizeHelper  
   # GET /notes
   # GET /notes.json
   def index
@@ -50,7 +51,7 @@ class NotesController < ApplicationController
                        m_name: params[:note][:sub_class],
                        m_id: params[:note][:sub_id],
                        created_at: Time.now,
-                       desc: params[:note][:content].to_s,
+                       desc: strip_tags(params[:note][:content].to_s),
                        comment: "Note by " + current_user.first_name.to_s + ' ' + current_user.surname.to_s,
                        action: 'note')
                        

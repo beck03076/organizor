@@ -17,7 +17,7 @@
     <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
     <div id="status_group_<%= i.id %>">
     <li><label>Status</label>: <span id="reg_status_<%= i.id %>" class='ref_no'>
-                          <h4>[ <%= i.application_status.name %> ]</h4>
+                          <h4>[ <%= i.application_status.name rescue "Unknown" %> ]</h4>
                         </span>
                         <span class="a1" onclick="regAppStatus(this,'#status_select_<%= i.id %>');">change</span>
    </li>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013022330) do
+ActiveRecord::Schema.define(:version => 20131013084111) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -177,12 +177,13 @@ ActiveRecord::Schema.define(:version => 20131013022330) do
     t.integer  "assigned_by"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "country_id"
     t.integer  "status_id"
     t.text     "address"
-    t.boolean  "active",        :default => true
+    t.boolean  "active",          :default => true
+    t.integer  "contact_type_id"
   end
 
   create_table "enquiry_sources", :force => true do |t|

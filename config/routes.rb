@@ -9,6 +9,8 @@ Organizor::Application.routes.draw do
 
 
   resources :todo_statuses
+  
+  resources :contact_types
 
 
   resources :todo_topics
