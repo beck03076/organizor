@@ -27,9 +27,36 @@
   <br/>  
   
   <div class="cols">
-          <%= fs(f,"def_follow_up_days","text_field",1,nil) %>          
+          <%= fs(f,"def_follow_up_days","text_field",nil,"Days to Wait") %>          
   </div>
   
+   <div class="cols">
+          <%= fs(f,"def_f_u_name","text_field",nil,"Default Title") %>          
+  </div>
+  
+  <div class="cols">
+          <%= fs(f,["def_f_u_desc",style: 'width:200px;height:40px;'],"text_area",nil,"Default Description") %>          
+  </div>
+  <br/>
+   <div class="cols">
+          <%= fs(f,[:def_f_u_type, 
+                     EventType.order(:name), 
+                     :id, 
+                     :name,
+                     {:prompt => "--Event Type--"}],"collection_select",nil,"Default Type") %>
+  </div>
+  
+  <div class="cols">
+          <%= fs(f,[:def_f_u_ass_to, 
+                     User.order(:first_name), 
+                     :id, 
+                     :name,
+                     {:prompt => "--Assign To--"}],"collection_select",nil,"Default Assign To") %>
+  </div>
+  
+  <div class="cols">
+          <%= fs(f,:auto_cr_f_u,"check_box",nil,"Auto Create") %>          
+  </div>
   <!-- ------------------------Columns to display-------------------------------- -->
   
   <div class="htab">
@@ -125,6 +152,8 @@
         <%= f.label :from_email %>
         <%= f.select :def_from_email, (Smtp.all.map &:name) %>
         </div>
+        <%= fbox(f,:auto_email_enq,"check_box",nil,"Auto Send") %>          
+      
   </div>
   
   <br/>

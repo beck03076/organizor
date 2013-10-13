@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
                   :remember_me,:branch_id, :created_by, 
                   :email_signature, :image, :role_id, 
                   :updated_by,:first_name,:surname
+                  
+  has_one :conf, class_name: "UserConfig"
 
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip

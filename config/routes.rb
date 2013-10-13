@@ -6,6 +6,8 @@ Organizor::Application.routes.draw do
       end
   end
   resources :doc_categories
+  
+  resources :images
 
 
   resources :todo_statuses

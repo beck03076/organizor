@@ -1,0 +1,45 @@
+scp root@184.106.160.226:/root/rails_project/sprint5.zip .
+
+==== IEC DB MIGRATION ================
+
+INSERT INTO inquiries SELECT null,null,fname,lname,null,concat(email,", ",email2),null,phone,null,mobile,null,null,now(),null,id FROM iec.iec_students;
+
+   
+INSERT INTO enrollments(inquiry_id,first_name,sur_name,date_of_birth,marital_status,
+email,home_phone,mobile_phone,passport_number,passport_city,passport_issue_date,passport_expiry_date,
+created_at) SELECT (SELECT id FROM inquiries WHERE iec.iec_students.id = temp_id) , fname,lname,dob,maritalstatus,concat(email,", ",email2),phone,mobile,passportno,issueplace,issuedate,expdate,now()
+FROM iec.iec_students;
+
+UPDATE enrollments
+SET passport_expiry_date=null
+WHERE '0000-00-00' = DATE_FORMAT(passport_expiry_date,'%Y-%m-%d');
+
+UPDATE enrollments
+SET passport_expiry_date=null
+WHERE passport_expiry_date = '1984-00-00';
+
+=====================================
+
+INSERT INTO schools(name,school_type,country_id) SELECT CenterName,"Language Center",(SELECT id from countries where name = (SELECT countryname from iec.iec_country where countryid=iec.iec_language_center.countryid))
+FROM iec.iec_language_center;
+
+
+INSERT INTO schools(name,school_type,country_id) SELECT UniversityName,"University",(SELECT id from countries where name = (SELECT countryname from iec.iec_country where countryid=iec.iec_universitylist.countryid))
+FROM iec.iec_universitylist;
+
+
+INSERT INTO programs(name) SELECT coursename FROM iec.iec_course_master;
+
+
+=================
+
+Change column name
+------------------
+alter table countries change continent continent varchar(255) ;
+
+
+INSERT INTO institutions(name,type_id,country_id) SELECT name,2,country_id
+FROM sprint5.schools WHERE school_type="university";
+
+INSERT INTO institutions(name,type_id,country_id) SELECT name,1,country_id
+FROM sprint5.schools WHERE school_type="language center";

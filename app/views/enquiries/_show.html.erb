@@ -3,7 +3,7 @@ $(function(){
 
   activeMM("enquiriesMM");
   setColorsFromSession();
-
+  $('.best_in_place').best_in_place();
 });
 
 </script>
@@ -15,7 +15,10 @@ $(function(){
                 <b>Contact type : 
                     <span class="sp">
                         <h6>
-                            <b><%= disp1(a,"contact_type") %> </b>
+                            <b><%= best_in_place a,
+                                :contact_type_id, 
+                                :type => :select, 
+                                :collection => ContactType.order(:name).map{|i| [i.id,i.name]} %> </b>
                         </h6>
                     </span>
                 </b>
@@ -38,15 +41,23 @@ $(function(){
                         </b>
                         <% stat = disp1(a,"status") %>
                         <span class='<%= stat %>'>
-                          [<%= stat %>]
+                          [<%= best_in_place a,
+                                :status_id, 
+                                :type => :select, 
+                                :collection => EnquiryStatus.order(:name).map{|i| [i.id,i.name]} %>]
                         </span>
                         </h5>
                         <ul class="vlsdet">
-                        <li><label>Mobile 1 </label>: <%= a.mobile1 %></li>
-                        <li><label>Mobile 2 </label>: <%= a.mobile2 %></li>
-                        <li><label>Email 1</label>: <%= a.email1 %></li>
-                        <li><label>Email 2</label>: <%= a.email2 %></li>
-                        <li><label>Country of Origin </label>: <%= disp1(a,"country_of_origin") %></li>
+                        <li><label>Mobile 1 </label>: <%= best_in_place a, :mobile1 %></li>
+                        <li><label>Mobile 2 </label>: <%= best_in_place a, :mobile2 %></li>
+                        <li><label>Email 1</label>: <%= best_in_place a, :email1 %></li>
+                        <li><label>Email 2</label>: <%= best_in_place a, :email2 %></li>
+                        <li><label>Country of Origin </label>: 
+                        <%= best_in_place a,
+                                :country_id, 
+                           :type => :select, 
+                           :collection => Country.order(:name).map{|i| [i.id,i.name]} %>
+                        </li>
                         </ul>
                     </div>
                     <div class="cl"></div>
@@ -55,9 +66,16 @@ $(function(){
                     Personal information
                     </h4>
                     <ul class="vlsdet">
-                    <li><label>Date of Birth</label>: <%= a.date_of_birth %></li>
-                    <li><label>Gender</label>: <%= a.gender == 'm' ? 'Male' : 'Female' %></li>
-                    <li><label>Address</label>: <%= disp0(a,'address') %></li>
+                    <li><label>Date of Birth</label>: 
+                    <%= best_in_place a, :date_of_birth, :type => :date %>
+                    </li>
+                    <li><label>Gender</label>: 
+                    <%= best_in_place a,:gender,type: :select,collection: [['m','male'],['f','female']] %></li>
+                    <li><label>Address</label>: 
+                    <%= best_in_place a,
+                                      :address, 
+                                      :type => :textarea %>
+                    </li>
                     </ul><br/>
                     <h4 class="htab">
                     Preferred countries
