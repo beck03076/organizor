@@ -28,7 +28,7 @@
                   e_obj = Enquiry.find(params[:enquiry_id])
                   # deactivate the enquiry as it is going to be registered
                   e_obj.update_attributes(active: false, audit_comment: params[:note].to_s)
-                  
+                  e_obj.update_attribute(:status_id,EnquiryStatus.find_by_name("deactivated").id)
                   
                   Timeline.create!(user_id: current_user.id,
                                    user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
