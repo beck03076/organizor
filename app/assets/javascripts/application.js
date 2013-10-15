@@ -201,6 +201,7 @@ function sel_act(sel){
                                     list: 0,
                                     email_to: emailTo }, function (partial) {
             $('#email-action').html(partial); 
+            setColorsFromSession();
             });
 }
 

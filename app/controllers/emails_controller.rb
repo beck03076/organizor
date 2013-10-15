@@ -9,7 +9,7 @@ class EmailsController < ApplicationController
     
     @email = Email.new(params[:email])
     if @email.save      
-      UserMailer.delay(:retry => false).send_email(@email.id,@email.smtp_id)
+#      UserMailer.delay(:retry => false).send_email(@email.id,@email.smtp_id)
       
        Timeline.create!(user_id: current_user.id,
                        user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
