@@ -15,6 +15,7 @@
 //= require_directory .
 //= require jquery_nested_form
 //= require tinymce
+//= require tinymce-jquery
 //= require dataTables/jquery.dataTables
 //= require jquery.purr
 //= require best_in_place
@@ -24,8 +25,7 @@
 
 
 $(function(){
-
-
+    
     $(".dateField").datepicker({
     inline: true,
     changeMonth: true, 
@@ -278,6 +278,8 @@ function dataTableStart(table,filterValue,cols)
 {
   tableId = "#" + table
   
+
+  
   var oTable = $(tableId).dataTable({
     "bJQueryUI": true,
     "bProcessing": true,
@@ -297,6 +299,11 @@ function dataTableStart(table,filterValue,cols)
         var selectedValue = $(this).val();
         oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
     });
+    
+   $('body').on('click', tableId + ' tbody tr', function () {
+       var subId = $(this).find("td > input").data('launch');
+       window.open(subId);
+   });
 
 }
 
@@ -395,6 +402,14 @@ function bulkEmail(tableId){
                    'location=yes,height=570,width=520,scrollbars=yes,status=yes');
 
 }
+
+
+function deselectAllCheck(divId){
+    $(divId).find(':checkbox').each(function () {
+        $(this).prop('checked',false);
+     });
+}
+
 
 
 

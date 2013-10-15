@@ -57,75 +57,8 @@
   <div class="cols">
           <%= fs(f,:auto_cr_f_u,"check_box",nil,"Auto Create") %>          
   </div>
-  <!-- ------------------------Columns to display-------------------------------- -->
   
-  <div class="htab">
-      <h5>
-          <b>
-            Columns To Display
-          </b>
-      </h5>
-  </div>
-  <br/>
-  <h3>
-  Enquiry Columns
-  </h3>
-  <br/>
-  <br/>
-  <div class="cols">
-  <% Enquiry.column_names.sort.each_slice(5) do |j| %>
-      <div class="col6">
-        <% j.each do |i| %>
-          <%= check_box_tag "user_config[enq_cols][]",i.to_sym %>
-          <%= i.titleize %>
-          <br/>
-        <% end %>
-      </div>
-      <% end %>
-  </div>
-  <br/>
-  <br/>
-  <h3>
-  Registration Columns
-  </h3>
-  <br/>
-  <br/>
-  <div class="cols">
-    <!-- **************************** -->
-  <% Registration.column_names.sort.each_slice(5) do |j| %>
-      <div class="col6">
-        <% j.each do |i| %>
-          <%= check_box_tag "user_config[reg_cols][]",i.to_sym %>
-          <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
-          <br/>
-        <% end %>
-      </div>
-  <% end %>
-  </div>
-  <br/>
-  <br/>
-  <!-- ------------------------Note-------------------------------- -->
-  <div class="htab">
-      <h5>
-          <b>
-            Note
-          </b>
-      </h5>
-  </div>
-  <br/>
-  
-  <div class="cols">
-      <div id="note-action" class="cols action-box">
-        <%= fbox(f,[:def_note,
-                  size: "6x6",
-                  class: "tinymce",
-                  style:"height:auto;"],"text_area",nil) %>
-      </div>
-  </div>
-  <div class="cl"></div>
-  <br/>
-  <br/>
-  <!-- ------------------------Email-------------------------------- -->
+    <!-- ------------------------Email-------------------------------- -->
   <div class="htab">
       <h5>
           <b>
@@ -156,15 +89,125 @@
       
   </div>
   
+ 
+
+
+  <!-- ------------------------Columns to display-------------------------------- -->
+  
+  <div class="htab">
+      <h5>
+          <b>
+            Columns To Display
+          </b>
+      </h5>
+  </div>
   <br/>
+  <h3>
+  Enquiry Columns <span class="a1" onclick="deselectAllCheck('#enq_cols');">deselect all </span>
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols" id="enq_cols">
+  <% enq_cols = Enquiry.column_names.sort %>
+  <% enq_cols_gr = enq_cols.group_by{|i| i[0]} %>
+  <% user_enq_cols = @user_config.enq_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
+  <% enq_cols_gr.keys.each do |j| %>
+     
+      <div class="col3">
+        <h2 class="brg01">
+         <%= j.titleize %>&nbsp;&nbsp;&nbsp;
+         </h2>
+         <br/>
+         <br/>
+        <% enq_cols_gr[j].each do |i| %>
+          <%= check_box_tag "user_config[enq_cols][]",i.to_sym,user_enq_cols.include?(i.to_sym) %>
+          <%= i.titleize %>
+          <br/>
+        <% end %>
+      </div>
+      <% end %>
+  </div>
+  <br/>
+  <br/>
+  <h3>
+  Enquiry - Default Column to Search
+  </h3>
+  <br/>
+  <br/>
+  <div class="frbox">
+      <%= label_tag :default_search %>
+      <%= f.select(:def_enq_search_col, 
+                   (enq_cols.map {|i| [i.titleize,i]}) )%>
+  </div>
+  <h3>
+  Registration Columns <span class="a1" onclick="deselectAllCheck('#reg_cols');">deselect all </span>
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols" id="reg_cols">
+    <!-- **************************** -->
+  <% reg_cols = Registration.column_names.sort %>
+  <% reg_cols_gr = reg_cols.group_by{|i| i[0]} %>
+  <% user_reg_cols = @user_config.reg_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
+  <% reg_cols_gr.keys.each do |j| %>
+      <div class="col3">
+        <h2 class="brg01">
+         <%= j.titleize %>&nbsp;&nbsp;&nbsp;
+         </h2>
+         <br/>
+         <br/>
+        <% reg_cols_gr[j].each do |i| %>
+          <%= check_box_tag "user_config[reg_cols][]",i.to_sym,user_reg_cols.include?(i.to_sym) %>
+          <%= i.gsub("qua","qualification").gsub("reg","registration").gsub("emer","emergency").gsub("prof","proficiency").titleize %>
+          <br/>
+        <% end %>
+      </div>
+  <% end %>
+  </div>
+  <br/>
+  <br/>
+
+  <h3>
+  Registration - Default Column to Search
+  </h3>
+  <br/>
+  <br/>
+  <div class="frbox">
+      <%= label_tag :default_search %>
+      <%= f.select(:def_reg_search_col, 
+                   (reg_cols.map {|i| [i.titleize,i]})) %>
+  </div>
+  <h3>
+  <!-- ------------------------Note-------------------------------- -->
+  <div class="htab">
+      <h5>
+          <b>
+            Note
+          </b>
+      </h5>
+  </div>
+  <br/>
+  
+  <div class="cols">
+      <div id="note-action" class="cols action-box">
+        <%= fbox(f,[:def_note,
+                  size: "6x6",
+                  class: "tinymce",
+                  style:"height:auto;"],"text_area",nil) %>
+      </div>
+  </div>
+  <div class="cl"></div>
+  <br/>
+  <br/>
+   <br/>
   <br/>
   <%= f.submit "Save",{:class => "btnp fr"} %>
   <br/>
-  <br/>
+  <br/>  
 <% end %>
+<!-- ------------------------Tab ENd-------------------------------- -->
 </div>
 </div>
-
 <!-- ------------------------Colors-------------------------------- -->
 
     <div id="theme_id" class="tab-content" style="display: ;">

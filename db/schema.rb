@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013225822) do
+ActiveRecord::Schema.define(:version => 20131015073657) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -501,6 +501,8 @@ ActiveRecord::Schema.define(:version => 20131013225822) do
     t.boolean  "auto_cr_f_u"
     t.boolean  "auto_email_enq"
     t.integer  "def_f_u_ass_to"
+    t.string   "def_enq_search_col"
+    t.string   "def_reg_search_col"
   end
 
   create_table "users", :force => true do |t|

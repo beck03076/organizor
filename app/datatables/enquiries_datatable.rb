@@ -1,5 +1,8 @@
-class EnquiriesDatatable
-  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_enquiry_path,:check_box_tag, to: :@view
+class EnquiriesDatatable < DeviseController
+  delegate :params, :h, :link_to, 
+  :number_to_currency,:image_tag,
+  :can?,:edit_enquiry_path,:check_box_tag, 
+  :current_user,to: :@view
 
   def initialize(view,cols,sFil)
     @view = view
@@ -10,7 +13,7 @@ class EnquiriesDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Enquiry.count,
+      iTotalRecords: Enquiry.active.count,
       iTotalDisplayRecords: enquiries.total_entries,
       aaData: data
     }
@@ -27,9 +30,8 @@ private
     enquiries.map do |enq|
        temp = []
        
-       temp << check_box_tag(:tr,enq.id) + spc +
-               link_to(image_tag("/images/icons/vie.png"),
-                       "/enquiries/#{enq.id}") + spc +
+       temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}"}}) + spc +
+               spc +
                link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
@@ -60,7 +62,7 @@ private
     sc = sort_column
 
     if !@sFilter.nil?
-      enqs = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries) || Enquiry 
+      enqs = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries) || Enquiry.active 
     end
 
     if sc.is_a?(Array)
@@ -71,7 +73,7 @@ private
     elsif !sc.nil?
       enqs = enqs.order("enquiries.#{sc} #{sort_direction}")
     else
-      enqs = Enquiry
+      enqs = Enquiry.active
     end
    
     enqs = enqs.page(page).per_page(per_page)
@@ -82,6 +84,8 @@ private
         ress = set_asso(res[0])
 #        ress = res[0].to_s.pluralize
         enqs = enqs.includes(res[0]).where("#{ress}.#{res[1].to_s} like :search", search: "%#{params[:sSearch]}%")
+      elsif params[:sSearch_0].empty?
+        enqs = enqs.where("#{@def_srch} like :search", search: "%#{params[:sSearch]}%")
       else
         enqs = enqs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
       end
@@ -121,10 +125,12 @@ private
      :created_by => [:_created_by,:first_name],
      :updated_by => [:_updated_by,:first_name],
      :status_id => [:status,:name]}
+     
+    @def_srch = current_user.conf.def_enq_search_col
   end
   
   def set_asso(var)
-    Enquiry.reflect_on_association(var).klass.name.underscore.pluralize
+    Enquiry.active.reflect_on_association(var).klass.name.underscore.pluralize
   end
   
     

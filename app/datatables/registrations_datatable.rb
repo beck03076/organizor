@@ -1,6 +1,7 @@
 class RegistrationsDatatable
-  delegate :params, :h, :link_to, :number_to_currency,:image_tag,:can?,:edit_registration_path,
-  :check_box_tag, to: :@view
+  delegate :params, :h, :link_to, 
+  :number_to_currency,:image_tag,:can?,
+  :edit_registration_path,:check_box_tag,:current_user, to: :@view
 
   def initialize(view,cols,sFil)
     @view = view
@@ -27,9 +28,7 @@ private
     registrations.map do |reg|
        temp = []
        
-       temp << check_box_tag(:tr,reg.id) + spc +
-               link_to(image_tag("/images/icons/vie.png"),
-                       "/registrations/#{reg.id}") + spc +
+       temp << check_box_tag(:tr,reg.id,false,{data: {launch: "/registrations/#{reg.id}"}}) + spc +
                link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/registrations/#{reg.id}",
@@ -78,6 +77,8 @@ private
       if res.is_a?(Array)
         ress = set_asso(res[0])
         regs = regs.includes(res[0]).where("#{ress}.#{res[1].to_s} like :search", search: "%#{params[:sSearch]}%")
+      elsif params[:sSearch_0].empty?
+        regs = regs.where("#{@def_srch} like :search", search: "%#{params[:sSearch]}%") 
       else
         regs = regs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
       end
@@ -119,6 +120,8 @@ private
      :created_by => [:_created_by,:first_name],
      :updated_by => [:_updated_by,:first_name],
      :prof_eng_level_id => [:english_level,:name]}
+     
+     @def_srch = current_user.conf.def_reg_search_col
   end
   
    def set_asso(var)

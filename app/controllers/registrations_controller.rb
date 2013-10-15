@@ -1,4 +1,4 @@
-class RegistrationsController < ApplicationController
+    class RegistrationsController < ApplicationController
 
   def basic_select(model,cond = true)
     model.where(cond).order(:name).map{|i| [i.name,i.id]}

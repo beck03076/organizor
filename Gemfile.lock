@@ -108,7 +108,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
-    multi_json (1.8.1)
+    multi_json (1.8.2)
     multipart-post (1.2.0)
     mysql2 (0.3.13)
     nested_form (0.3.2)
@@ -195,9 +195,6 @@ GEM
     timers (1.1.0)
     tinymce-rails (4.0.8)
       railties (>= 3.1.1)
-    tinymce-rails-imageupload (3.5.8.3)
-      railties (>= 3.1)
-      tinymce-rails (>= 3.4.9)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -242,7 +239,6 @@ DEPENDENCIES
   simple_form
   thin
   tinymce-rails
-  tinymce-rails-imageupload
   turn
   uglifier (>= 1.0.3)
   will_paginate

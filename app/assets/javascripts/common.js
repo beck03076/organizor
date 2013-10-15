@@ -204,7 +204,7 @@ function storeThemeInSession(){
           $.cookie('themeColor', themeColor , { path: '/' });
           $.cookie('bgColor', bgColor , { path: '/' });
           $.cookie('waColor', waColor , { path: '/' });          
-          alert("Saved. Theme Color : " + themeColor + ", Background Color : " + bgColor + ", Work Area Color : " + waColor);
+          info("Message","Saved your selection!.\ Theme Color : " + themeColor + ", Background Color : " + bgColor + ", Work Area Color : " + waColor);
 
 }
 
