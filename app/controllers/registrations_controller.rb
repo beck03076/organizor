@@ -20,9 +20,9 @@
     if @status == "new_registration"
        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
     
-        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s
+        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
         ym = Time.now.strftime("%y%m").to_s
-        @ref_no = ym + ref_temp_no
+        @ref_no = ym + (ref_temp_no.to_i + 1)
        if params[:enquiry_id]
                     # e stands for enquiry
                   e_obj = Enquiry.find(params[:enquiry_id])
@@ -133,11 +133,6 @@
   # GET /registrations/new
   # GET /registrations/new.json
   def new
-    ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
-    
-    ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s
-    ym = Time.now.strftime("%y%m").to_s
-    @ref_no = ym + ref_temp_no
     
     if !params[:enquiry_id].nil?
       # e stands for enquiry
