@@ -24,7 +24,7 @@ class EmailsController < ApplicationController
     else
       msg= "Email create failed!"
     end
-    redirect_to "/#{m.pluralize}/" + params[:email][m_id].to_s
+    redirect_to "/#{m.pluralize}/" + params[:email][m_ids][0].to_s
   end
   
   def template_create
