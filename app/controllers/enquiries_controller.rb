@@ -31,9 +31,9 @@ class EnquiriesController < ApplicationController
       @p_types = ProgrammeType.all
     elsif @status == "clone"
       orig = Enquiry.find(params[:enquiry_id])
-      @enquiry = orig.dup
-      @enquiry.programmes = orig.programmes
-      @enquiry.countries = orig.countries
+      @enquiry = orig.dup :include => [:programmes, :countries]
+#      @enquiry.programmes = orig.programmes.dup
+ #     @enquiry.countries = orig.countries.dup
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     else

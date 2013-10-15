@@ -63,6 +63,8 @@ GEM
     coffee-script-source (1.6.3)
     connection_pool (1.1.0)
     daemons (1.1.9)
+    deep_cloneable (1.5.5)
+      activerecord (>= 3.1.0)
     devise (3.1.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -220,6 +222,7 @@ DEPENDENCIES
   cancan
   carrierwave
   coffee-rails (~> 3.2.1)
+  deep_cloneable (~> 1.5.5)
   devise
   execjs
   fullcalendar-rails

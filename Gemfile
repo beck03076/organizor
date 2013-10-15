@@ -67,6 +67,7 @@ gem 'sidekiq'
 gem 'tinymce-rails'
 gem 'simple_form'
 gem 'best_in_place'
+gem 'deep_cloneable', '~> 1.5.5'
 
 
 
