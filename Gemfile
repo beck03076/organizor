@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 
 
@@ -67,7 +67,6 @@ gem 'sidekiq'
 gem 'tinymce-rails'
 gem 'simple_form'
 gem 'best_in_place'
-gem 'tinymce-rails-imageupload'
 
 
 

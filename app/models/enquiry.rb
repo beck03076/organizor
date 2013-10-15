@@ -1,4 +1,5 @@
 class Enquiry < ActiveRecord::Base
+
   audited
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries
@@ -25,6 +26,10 @@ class Enquiry < ActiveRecord::Base
   belongs_to :_assigned_to, class_name: "User",foreign_key: "assigned_to"
   belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
   belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
+  
+  scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
+  scope :active, includes(:status).where("enquiry_statuses.name != 'deactivated'")
+
   
   attr_accessible :emails_attributes,:programmes_attributes,
                   :assigned_by, :assigned_to, :created_by, 
