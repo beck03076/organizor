@@ -66,7 +66,8 @@
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     elsif @status == "clone"
-      @registration = Registration.find(params[:registration_id]).dup
+      orig = Registration.find(params[:registration_id])
+      @registration = orig.dup :include => [:programmes, :exams]
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     else
