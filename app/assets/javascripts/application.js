@@ -301,8 +301,8 @@ function dataTableStart(table,filterValue,cols)
         oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
     });
     
-   $('body').on('click', tableId + ' tbody tr', function () {
-       var subId = $(this).find("td > input").data('launch');
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child)', function () {
+       var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId);
    });
 
