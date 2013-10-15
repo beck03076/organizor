@@ -482,6 +482,14 @@ font-weight:bolder;
   color:#C42525;
 }
 
+.form_in_place input[type=text]{
+  width:110px !important;
+}
+
+.best_in_place select{
+  width:110px !important;
+}
+
 /* SENTHIL's  CSS - End */
 
 /* Add New Go Create Starts */
