@@ -1,5 +1,5 @@
 <!--- Complete registration form except applications are in separate partials -->
-<%= nested_form_for(@registration,:html=>{:multipart => true })  do |f| %>
+<%= nested_form_for(@registration,:html=>{:multipart => true ,:onsubmit => "return validateAll(this);"})  do |f| %>
 
   <%= f.hidden_field :ref_no, value: (@registration.ref_no.nil? ? @ref_no : @registration.ref_no) %>
   
