@@ -13,20 +13,24 @@
       format.json {render :json => RegistrationsDatatable.new(view_context,eval(@sCols),@sFilter)}
     end
   end
+  
+  def set_ref_no
+    # creating new reference number logic
+        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
+        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
+        ym = Time.now.strftime("%y%m").to_s
+        @ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
+  end
+   
 
    def tab
     set_url_params
     
     if @status == "new_registration"
-      
-        # creating new reference number logic
-        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
-        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
-        ym = Time.now.strftime("%y%m").to_s
-        @ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
+       self.set_ref_no
          
        if params[:enquiry_id]
-                    # e stands for enquiry
+                  # e stands for enquiry
                   e_obj = Enquiry.find(params[:enquiry_id])
                   # deactivate the enquiry as it is going to be registered
                   e_obj.update_attributes(active: false, audit_comment: params[:note].to_s)
@@ -68,8 +72,10 @@
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     elsif @status == "clone"
+      self.set_ref_no
       orig = Registration.find(params[:registration_id])
       @registration = orig.dup :include => [:programmes, :exams]
+      @registration.ref_no = @ref_no
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     else
@@ -135,12 +141,7 @@
   # GET /registrations/new
   # GET /registrations/new.json
   def new
-    ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
-    
-        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
-        ym = Time.now.strftime("%y%m").to_s
-        @ref_no = ym + (ref_temp_no.to_i + 1)
-    
+    self.set_ref_no
     if !params[:enquiry_id].nil?
       # e stands for enquiry
       e_obj = Enquiry.find(params[:enquiry_id])
