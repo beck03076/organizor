@@ -18,11 +18,13 @@
     set_url_params
     
     if @status == "new_registration"
-       ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
-    
+      
+        # creating new reference number logic
+        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
         ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
         ym = Time.now.strftime("%y%m").to_s
-        @ref_no = ym + (ref_temp_no.to_i + 1)
+        @ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
+         
        if params[:enquiry_id]
                     # e stands for enquiry
                   e_obj = Enquiry.find(params[:enquiry_id])
