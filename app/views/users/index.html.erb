@@ -1,35 +1,73 @@
-<h1>Listing users</h1>
+<script type="text/javascript">
+$(function(){
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Branch</th>
-    <th>Role</th>
-    <th>Image</th>
-    <th>Email signature</th>
-    <th>Created by</th>
-    <th>Updated by</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  activeMM("usersMM");
+  setColorsFromSession();
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.name %></td>
-    <td><%= user.branch_id %></td>
-    <td><%= user.role_id %></td>
-    <td><%= user.image %></td>
-    <td><%= user.email_signature %></td>
-    <td><%= user.created_by %></td>
-    <td><%= user.updated_by %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
+  $('li.all_users').addClass('active-tab');
+  
+   $('tr.user_name').hover(function(){
+    $('span.delete_user').hide();
+    $(this).find('span.delete_user').show();
+  });
+  
+});
 
-<%= link_to 'New User', new_user_path %>
+</script>
+
+<div class="tab-container">
+<%= render 'users/menus' %>
+<div class="tab-content" style="display:block">
+<div class="boxp box-theme-ch">
+<br/>
+<br/>
+        <h4 class="htab">
+        Organizor Users
+        </h4>
+        <br/>
+        <br/>
+        <br/>
+
+
+        <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+                 <thead>
+                  <tr>
+                                        <th>First Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Invitation</th>
+                                        <th>State</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+        <% @users.each do |user| %>
+          <tr class="user_name" onclick="window.open('/users/<%= user.id %>','_self',false);">
+            <td ><%= user.first_name %>
+            <span class="delete_user" style="display:none">
+                &nbsp;&nbsp;&nbsp;
+                <%= link_to 'delete',user, method: :delete, data: { confirm: 'Are you sure?' } %>
+           </span>
+            </td>
+            <td><b><%= user.email %></b></td>
+            <td><%= user.role.name.titleize rescue "Unassigned" %></td>
+            <td><%= user.confirmed_at ? "Accepted" : "Not Accepted" %></td>
+            <td><b><%= user.active_for_authentication? ? "Active" : "Inactive" %></b></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="7" align="left"></td>
+        </tr>
+
+        </tbody>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+</div>
+</div>
+</div>
+
+

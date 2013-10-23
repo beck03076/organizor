@@ -1,6 +1,6 @@
 class Enquiry < ActiveRecord::Base
-
   audited
+  
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries
   
@@ -45,6 +45,18 @@ class Enquiry < ActiveRecord::Base
  
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+  end
+  
+  def contact_type_name
+    self.contact_type.name rescue "Unknown"
+  end
+  
+  def status_name
+    self.status.name rescue "Unknown"
+  end
+  
+  def country_of_origin_name
+    self.country_of_origin.name rescue "Unknown"
   end
 
 

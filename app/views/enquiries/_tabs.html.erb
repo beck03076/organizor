@@ -6,6 +6,7 @@
   <% statuses = stat.constantize.all.map{|i| [i.name.capitalize,"","","listing"]} %>
   <% tabs += statuses %>
   <% tabs += [["New " + model.capitalize,"","fr new","form"]] %>
+
               
   <% tabs.each do |i| %>
       

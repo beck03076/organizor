@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(function(){
+
+  activeMM("usersMM");
+  setColorsFromSession();
+
+
+  $('li.new_role').addClass('active-tab');
+  
+});
+
+</script>
+<div class="tab-container">
+<%= render 'users/menus' %>
+<div class="tab-content" style="display:block">
+<div class="boxp box-theme-ch">
+
+<br/>
+<br/>
+
+<h4 class="htab">
+        New Role
+        </h4>
+        <br/>
+        <br/>
+
+<%= form_for(@role) do |role| %>
+    <%= fs(role,"name","text_field") %>
+    <%= fs(role,[:desc,size: "10x3",style: 'width:400px;'],"text_area",nil,"Description") %>
+    <br/>
+    <br/>
+    <br/>
+    
+    <h4 class="htab">
+        Manage Permissions
+    </h4>
+    <br/>
+    <br/>
+    <br/>
+    <% perms = @permissions %>
+    <table  class="tables3" border="0" cellpadding="0" cellspacing="0" width="100%">
+         <% r = perms.keys %>
+         <% r.delete("All") %>
+         <% r.each do |model| %>
+        
+              <tr colspan="5">
+              <td>
+              <h4 class="htab">
+              <%= model %>
+              </h4>
+              </td>
+              <% perms[model].each do |p| %>
+                <td>
+                        <%= check_box_tag "#{role.object_name}[permission_ids][]",
+                                                                          p.id, 
+                                                                          @role.permissions.include?(p) %>
+                        <%= label_tag(:permissions, p.action.titleize)%>
+                </td>
+             <% end %>
+             </tr>
+       
+        <% end %>
+        </table>
+        <br/>
+        <div class="actions" style="margin-bottom:10px;">
+         <%= role.submit "Save",{:class => "btnp fr"} %>
+        </div>
+        <div class="cl"></div>
+
+<% end %>
+

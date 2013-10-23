@@ -1,13 +1,13 @@
 <% @timelines.each do |t| %>
 <br/>
-
-  <%= image_tag "/images/icons/"+ t.action.to_s  + "_tl.png",{class: "fl", width: "35"} %>
+  <% u = User.find(t.user_id) %>
+  <%= image_tag (u.image? ? u.image_url : "/images/icons/user.png"),{class: "fl imgb", width: "40"} %>
   &nbsp;&nbsp;&nbsp;
   <h4>
   <%= t.comment %>
   </h4>
   <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <span style="color:#999;">
   <%= t.desc.html_safe %>
   </span>

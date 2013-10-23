@@ -1,5 +1,6 @@
 class Registration < ActiveRecord::Base
   audited
+  
   belongs_to :qualification, foreign_key: 'qua_id'
   belongs_to :country
 
@@ -69,6 +70,22 @@ class Registration < ActiveRecord::Base
      self.address_city.to_s,
      self.address_country.try(:name).to_s,
      self.address_post_code.to_s].join(', ').strip
+  end
+  
+  def country_of_origin_name
+    self.country_of_origin.name rescue "Unknown"
+  end
+  
+  def qualification_name
+    self.qualification.name rescue "Unknown"
+  end
+  
+  def english_level_name
+    self.english_level.name rescue "Unknown"
+  end
+  
+  def address_country_name
+    self.address_country.name rescue "Unknown"
   end
   
 end

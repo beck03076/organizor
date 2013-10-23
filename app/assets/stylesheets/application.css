@@ -68,7 +68,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #menu-main .active-main-menu a{color:#333333}
 #menu-main li:hover a{color:#333333}
 #menu-main li .menuar{display:none}
-#menu-main .active-main-menu .menuar{display:inline; position:absolute; right:-11px;margin-top:-20px}
+#menu-main .active-main-menu .menuar{display:inline; position:absolute; right:-11px;margin-top:-20px;}
 /* MAIN MENU - ENDS */
 
 /* THEME - STARTS */
@@ -155,7 +155,7 @@ input[type=radio]{padding-right:5px}
 .tb-stylev tr th:last-child,.tb-stylev tr td:last-child{border-right:0}
 .tb-stylev  .active-rows td{color:#000000 !important}
 
-.tables2{padding:0;margin:0;}
+.tables2{padding:0;margin:0;border:1px solid #CCC;}
 .tables2 tr th{background:#EDF2F6;border-bottom:1px dashed #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
 .tables2 tr th a,.tables2 tr th a:hover,.tables2 tr th a:active,.tables2 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
 .tables2 tr td{background:#fff;border-bottom:1px #cccccc;padding:5px 0 5px 5px;font-size:12px;color:#505050;cursor:pointer;font-weight:normal}
@@ -244,7 +244,7 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 
 /* COLOR - STARTS */
 .grayc{color:#C8CCCB}
-.whitec{color:#fff}
+.whitec{color:#fff;}
 .marc{color:#740403}
 .dgrayc{color:#6D6D6D}
 /* COLOR - ENDS*/
@@ -489,6 +489,48 @@ font-weight:bolder;
 .best_in_place select{
   width:110px !important;
 }
+
+.tables3{padding:0;margin:0;}
+.tables3 tr th{background:#EDF2F6;border-bottom:1px dashed #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables3 tr th a,.tables2 tr th a:hover,.tables2 tr th a:active,.tables2 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
+.tables3 tr:hover td{background:#FAFAFA;color:#000000}
+.tables3 tr td a,.tables2 tr td a:hover,.tables2 tr td a:active,.tables2 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
+.tables3 tr td{background:#F5F5F5;border-top:1px dashed #F5F5F5;border-bottom:1px solid #E2E2E2;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables3 tr td a{color:#6B84B4}
+.tables3 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
+
+
+
+/* TABS - STARTS */
+
+.tab-menus1{list-style:none;padding:0;margin:0;white-space:nowrap}
+.tab-menus1 li{color:#666;font-size:13px;background:#EAEAEA;padding:7px 15px 5px 15px;display:inline-block;margin-right:5px;border-radius:5px 5px 0 0}
+.tab-menus1 li a{color:#666;font-size:13px;}
+.tab-menus1 .active-tab,.tab-menus li:hover,.r-tab:hover{background:#E8F0FD;text-decoration:none;cursor:pointer;}
+.tab-menus1 .active-tab{font-weight:bold;box-shadow:0  -1px 3px #ccc}
+
+td.role_name{color:#444;font-size:13px;}
+td.role_name:hover{color:#008080;cursor:pointer;font-size:13px;}
+
+.vlsdet1{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet1 li{padding:5px 0 0 0;color:#000;font-size:12px;font-weight:lighter;}
+.vlsdet1 li label{color:#999;text-align:left;font-weight:lighter;width:50px;white-space:nowrap;font-size:12px;display:inline-block}
+
+
+.accept_invite{background: url("/images/invite.jpg");height:900px;}
+
+.frbox1{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
+.frbox1 label{width:40px !important;}
+.frbox1 label:first-child{width:120px !important;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal !important;color:#000;vertical-align:top}
+.frbox1 input,.frbox1 select,.frbox1 textarea{margin-left:15px}
+
+.toggler{font-size:10px;color:#00336C;}
+.toggler:hover{color:#FD9B00;cursor:pointer;}
+
+
+.padb30{padding-bottom:30px}
+.padb10{padding-bottom:10px}
+
 
 /* SENTHIL's  CSS - End */
 

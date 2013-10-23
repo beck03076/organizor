@@ -5,7 +5,6 @@
          <thead>
           <tr>
                                 <th>Subject</th>
-                                <th>Body</th>
                                 <th>Date</th>
                                 <th>Sent By</th>
                                 <th>From</th>
@@ -15,7 +14,6 @@
                 <% obj.first.emails.each do |email| %>
                     <tr>
                         <td><%= email.subject %></td>
-                        <td><%= truncate(strip_tags(email.body),length: 30) %></td>
                         <td><%= email.created_at.strftime("%F %R %p") %></td>
                         <td><%= email._created_by.name rescue "" %></td>
                         <td><%= email.smtp.name rescue "unknown" %></td>

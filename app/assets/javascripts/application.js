@@ -217,6 +217,8 @@ function enquiryTabSwitch(obj){
     
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
     
+    $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
+    
     $.get(url,function(table){
 
       var $container = $('#'+lang).html(table);
@@ -303,7 +305,7 @@ function dataTableStart(table,filterValue,cols)
     
    $('body').on('click', tableId + ' tbody tr td:not(:first-child)', function () {
        var subId = $(this).parent().find("td > input").data('launch');
-       window.open(subId);
+       window.open(subId,'_self',false);
    });
 
 }
@@ -327,6 +329,8 @@ function registrationTabSwitch(obj){
     else if (typeof enquiry_id !== "undefined" )
     { url = '/register/tab/new_registration/form/' + enquiry_id + "/" + note; }
 
+     $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
+   
     $.get(url,function(table){
      
       var $container = $('#'+lang).html(table);
@@ -352,12 +356,26 @@ function toggleAllCheck(obj,tableId){
      });
 }
 
+function toggleAllCheckRow(obj){
+    var checkedStatus = obj.checked;
+    $(obj).parent().parent().parent().parent().find('td :checkbox').each(function () {
+        $(this).prop('checked', checkedStatus);
+     });
+}
+
+function toggleAllCheckCol(obj){
+     var checkedStatus = obj.checked;
+     var index = $(obj).parent().index();
+        $(obj).closest('table').find('tr').each(function () {
+          $(this).find("td:eq("+index+") :checkbox").prop('checked', checkedStatus);
+        });
+}
+
 function getCheckedRowsAsArray(tableId){
        var idVal = '#' + tableId + ' #tr'
        var rowIds = $(idVal + ':checked').map(function(){
                                                   return $(this).val();
                                                 }).get(); 
-                                                
        if (rowIds.length == 0){
          info("Message","Mark at least one record. (Use checkboxes)");
          throw "stop execution";
@@ -409,6 +427,14 @@ function deselectAllCheck(divId){
     $(divId).find(':checkbox').each(function () {
         $(this).prop('checked',false);
      });
+}
+
+function manageRole(){
+   var role_id = $("#role_select").val();
+   $.get('/permissions/role/' + role_id,function(table){
+         $('#' + 'permissions_container').html(table);
+         $('#' + 'permissions_container').slideToggle();
+   });
 }
 
 

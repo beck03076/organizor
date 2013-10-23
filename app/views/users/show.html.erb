@@ -1,40 +1,222 @@
-<p id="notice"><%= notice %></p>
+<script type="text/javascript">
+$(function(){
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+  activeMM("usersMM");
+  setColorsFromSession();
+  $('.best_in_place').best_in_place();
+  $('li.view_user').css('display','');
+  $('li.view_user').addClass('active-tab');
+  $('li.view_user').text('<%= @user.name %>');
+  
+});
 
-<p>
-  <b>Branch:</b>
-  <%= @user.branch_id %>
-</p>
-
-<p>
-  <b>Role:</b>
-  <%= @user.role_id %>
-</p>
-
-<p>
-  <b>Image:</b>
-  <%= @user.image %>
-</p>
-
-<p>
-  <b>Email signature:</b>
-  <%= @user.email_signature %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @user.created_by %>
-</p>
-
-<p>
-  <b>Updated by:</b>
-  <%= @user.updated_by %>
-</p>
+</script>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="tab-container">
+<%= render 'users/menus' %>
+<div class="tab-content" style="display:block">
+<div class="boxp box-theme-ch">
+<% a = @user %>
+<% adm = current_user.adm? %>
+<div class="tab-content3" id="tab-content62">
+        <div class="boxp">
+               <div class="htab">
+                <h5>
+                    <b>Role : 
+                        <span class="sp">
+                            <h6>
+                            <% if adm %>
+                            <b><%= best_in_place a,
+                               :role_id,
+                               :type => :select, 
+                              :collection => Role.order(:name).map{|i| [i.id,i.name.titleize]} %> </b>
+                            <% else %>
+                             <b><%= a.role.name.titleize rescue "Unassigned" %></b>
+                            <% end %>
+                            </h6>
+                        </span>
+                    </b>
+                </h5>
+                <% if adm %>
+                <span class="toggler" onclick="$('#users_permissions').slideToggle();">(manage permissions)</span>
+                <% end %>
+                
+                <div id="users_permissions" style="display:none;">
+                  <%= render 'roles/permissions', role: a %>
+                </div>
+                
+                <div class="cl"></div>
+                
+               </div>
+               <br/>
+        <div class="cols brgb" style="padding-bottom:20px">
+            <div class="col8">
+                <div id="scrollboxu">
+                  <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
+                               {width: "100",
+                                class: "imgb fl",
+                                onclick: "showPopUp('upload_image');"}) %>
+
+                 <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                   <%= form_for(a) do |f| %>
+                    <div class="fbox">
+                      <%= f.label :local_image %>
+                      <%= f.file_field :image %>   
+                    </div>
+                    <div align="center">
+                    <h3>
+                    -- OR --
+                    </h3>
+                    </div>
+                    <div class="fbox">
+                      <%= f.label :remote_image_url %>
+                      <%= f.text_field :remote_image_url %>   
+                    </div>
+                    <%= f.submit "Upload", {class: "btnp"} %>
+                    <% end %>
+                 </div>
+
+                            <div class="fl padl20">
+                                    <h5>
+                                    <b>                        
+                                        <%= best_in_place_if (can? :update,a), a, :first_name %>
+                                        <%= best_in_place_if (can? :update,a), a, :surname %>
+                                    </b>
+                                    <span>
+                                      [<%= a.active_for_authentication? ? "Active" : "Inactive" %>]
+                                    </span>
+                                    </h5>
+                                    <ul class="vlsdet1">
+                                    <li><label>Mobile </label>: <%= best_in_place_if (can? :update,a),
+                                                                    a, :mobile %></li>
+                                    <li><label>Email</label>: <%= best_in_place_if (can? :update,a),
+                                                                  a, :email %></li>
+                                    </ul>
+                            </div>
+                            <div class="cl"></div>
+                            <br/>
+                            <h4 class="htab">
+                            Personal information
+                            </h4>
+                            <ul class="vlsdet">
+                            <li><label>Date of Birth</label>: 
+                            <%= best_in_place_if (can? :update,a),a,:date_of_birth,:type => :date %>
+                            </li>
+                            <li><label>Gender</label>: 
+                            <%= best_in_place_if (can? :update,a), a,
+                                              :gender,
+                                              type: :select,
+                                              collection: [['m','male'],['f','female']] %></li>
+                            <li><label>Address</label>: 
+                            <%= best_in_place_if (can? :update,a), a,
+                                              :address, 
+                                              :type => :textarea %>
+                            </li>
+                            <br/>
+                            <table>
+                <% %w(skype facebook linkedin twitter gplus blogger website).each do |s|%>
+                            <tr>
+                            <td><%= image_tag("/images/icons/" + s + ".png",{width: 24}) %></td>
+                            <td><li><label><%= s.titleize %></label> </li></td>
+                            <td> <%= best_in_place_if (can? :update,a), a, s.to_sym %></td>
+                            </tr>
+                <% end %>
+            </table>
+                            </ul>
+                            <br/>
+                            <div class="brg0"> </div>
+                            </ul>
+                            <br/>
+                            
+                            
+                </div>
+            </div>
+                <div class="col4 ">
+                    <div class="boxs">
+                        <ul class="infodhls">
+                            <li>User history</li>
+                            <li>
+                            <b>Invited at :</b> 
+                              <%= a.created_at.to_date %>
+                            </li>
+                            <li>
+                            <b>Invited by :</b> 
+                              <%= a.created_by %>
+                            </li>
+                            <br/>
+                            <li>
+                            <b>Sign in count :</b> 
+                                <%= a.sign_in_count %> times
+                            </li>
+                            <li>
+                            <li>
+                            <b>Last sign in at :</b> 
+                                <%= a.last_sign_in_at %>
+                            </li>
+                            <li>
+                            <b>Last sign in IP :</b> 
+                              <%= a.last_sign_in_ip %>
+                            </li>
+                            <li>
+                            <br/>
+                        </ul>
+                    </div>
+                    <br/>
+                    <br/>
+                    <%= form_for(a) do |d| %>
+                      <% if a.is_active %>
+                        <% b = "Deactivate" %>
+                        <% val = false %>
+                      <% else %>
+                        <% b = "Activate" %>
+                        <% val = true %>
+                      <% end %>
+                      <%= d.hidden_field :is_active, value: val %>
+                      <%= d.submit b,{class: "btnp fr"} %>
+                    <% end %>
+                </div>
+          </div>
+          
+         <div id="activities-display">
+            <br/><div class="htab">
+            <h5><b>Activities</b></h5>
+            </div><br/>
+            <div id="scrollboxu"  style="height:440px">    
+            <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+                 <thead>
+                  <tr>
+                                        <th>Action</th>
+                                        <th>Model</th>
+                                        <th>Ip address</th>
+                                        <th>About</th>
+                                        <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <% Audit.where(user_id: a.id).order("created_at desc").each do |i| %>
+                <tr>
+                 <td><%= i.action.capitalize %></td>
+                 <td><%= i.auditable_type %></td>
+                 <td><%= i.remote_address %></td> 
+                 <td><%= time_ago_in_words(i.created_at) %> ago</td>
+                 <td><%= i.created_at.strftime("%A, %F %R %p") %></td>
+                </tr>
+              <% end %>
+                <tr>
+                  <td colspan="5" align="left"></td>
+                </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+          
+
+</div>
+
+
+
+</div>
+</div>
+</div>
+

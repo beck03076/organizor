@@ -43,44 +43,62 @@ $(function(){
                         </span>
                         </h5>
                         <ul class="vlsdet">
-                        <li><label>Mobile 1 </label>: <%= best_in_place a, :mobile1 %></li>
-                        <li><label>Mobile 2 </label>: <%= best_in_place a, :mobile2 %></li>
-                        <li><label>Email 1</label>: <%= best_in_place a, :email1 %></li>
-                        <li><label>Email 2</label>: <%= best_in_place a, :email2 %></li>
+                        <li><label>Mobile 1 </label>: <%= best_in_place_if (can? :update,a), a, :mobile1 %></li>
+                        <li><label>Mobile 2 </label>: <%= best_in_place_if (can? :update,a), a, :mobile2 %></li>
+                        <li><label>Email 1</label>: <%= best_in_place_if (can? :update,a), a, :email1 %></li>
+                        <li><label>Email 2</label>: <%= best_in_place_if (can? :update,a), a, :email2 %></li>
                         </ul>
                     </div>
                     <div class="cl"></div>
                     <br/>
                     <h4 class="htab">Personal information</h4>
                     <ul class="vlsdet">
-                    <li><label>Date of Birth</label>: <%= best_in_place a, 
+                    <li><label>Date of Birth</label>: <%= best_in_place_if (can? :update,a), a, 
                                                            :date_of_birth,
                                                            :type => :date %></li>
-                    <li><label>Gender</label>: <%= best_in_place a,
+                    <li><label>Gender</label>: <%= best_in_place_if (can? :update,a), a,
                                                            :gender,
                                                            type: :select,
                                                            collection: [['m','male'],['f','female']] %></li>
-                    <li><label>Nationality</label>: <%= best_in_place a,
+                    <li><label>Nationality</label>: <%= best_in_place_if (can? :update,a), a,
                                                                       :country_id,
                                                                       :type => :select, 
-                                                                      :collection => Country.order(:name).map{|i| [i.id,i.name]} %></li>
+                                                                      :collection => Country.order(:name).map{|i| [i.id,i.name]},:display_as => "country_of_origin_name" %></li>
                                                                       
-                    <li><label>Address</label>: <%= best_in_place a,
-                                                                  :address, 
+                    <li><label>Home Phone</label>: <%= best_in_place_if (can? :update,a), a, :home_phone %></li>
+                    <li><label>Work Phone</label>: <%= best_in_place_if (can? :update,a), a, :work_phone %></li>
+                    </ul>
+                    <br/>
+                    <h4 class="htab">Home Address</h4>
+                    <ul class="vlsdet">
+                                                                      
+                    <li><label>Line 1</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_line1, 
                                                                   :type => :textarea %></li>
+                    <li><label>Line 2</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_line2, 
+                                                                  :type => :textarea %></li>
+                    <li><label>City</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_city %></li>
+                    <li><label>Country</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :country_id, 
+                                                                   :type => :select, 
+                                                                   :collection => Country.order(:name).map{|i| [i.id,i.name]},
+                                                                   :display_as => "address_country_name"%></li>
+                    <li><label>Post Code</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_post_code %></li>
                                                                   
-                    <li><label>Home Phone</label>: <%= best_in_place a, :home_phone %></li>
-                    <li><label>Work Phone</label>: <%= best_in_place a, :work_phone %></li>
+                   
                     </ul>
                     <br/>
                     <h4 class="htab">Passport & Visa</h4>
                     <ul class="vlsdet">
-                    <li><label>Passport Number</label>: <%= best_in_place a, :passport_number %></li>
-                    <li><label>Passport Valid Till</label>: <%= best_in_place a, 
+                    <li><label>Passport Number</label>: <%= best_in_place_if (can? :update,a), a, :passport_number %></li>
+                    <li><label>Passport Valid Till</label>: <%= best_in_place_if (can? :update,a), a, 
                                                                               :passport_valid_till,
                                                                               :type => :date %></li>
-                    <li><label>Visa Type</label>: <%= best_in_place a, :visa_type %></li>
-                    <li><label>Visa Valid Till</label>:  <%= best_in_place a,
+                    <li><label>Visa Type</label>: <%= best_in_place_if (can? :update,a), a, :visa_type %></li>
+                    <li><label>Visa Valid Till</label>:  <%= best_in_place_if (can? :update,a), a,
                                                                            :visa_valid_till,
                                                                            :type => :date %></li>
                     </ul><br/>

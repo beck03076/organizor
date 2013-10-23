@@ -1,0 +1,55 @@
+<script type="text/javascript">
+activeMenu("menu4","mainmenu-active","/images/mailb-w.png");
+activeSubMenu("rolesubmenuId","submenu-active");
+</script>
+<!-- HEADER - STARTS -->
+<h3>View role 
+<small class="infot">
+The role name and the list of permissions this role has in the system
+</small>
+</h3>
+<!-- HEADER - ENDS -->
+<!-- START - BREADCRUMB - STARTS -->
+<ul class="breadcrumb">
+    <li><a href="#">Access</a></li>
+    <li><a href="#">View role</a></li>
+</ul>
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="tb-stylev">
+    <tr>    
+        <td  valign="top">Name</td>
+        <td  valign="top" ><%= @role.name %></td>
+    </tr>
+    
+    <tr>    
+        <td  valign="top">Description</td>
+        <td  valign="top" ><%= @role.description %></td>
+
+    </tr>
+    <tr>   
+      <table>
+      <% @permissions.each_slice(2) do |chunk| %>        
+        <tr align="center">    
+         <% chunk.each do |i| %>
+           <td valign="top" align="center">
+           <h3><%= i[0] %></h3><br/>               
+               <% i[1].each do |j| %>
+                    <%= label_tag(:permissions, j.name.titleize)%>, <%= j.description %>
+                    <br/>  
+               <% end %>    
+           </td>
+         <% end %>
+        </tr>
+      <% end %>
+      </table>
+    </tr>
+
+</table>
+</div>
+<div class="bts-box">
+<%= link_to 'Edit', edit_role_path(@role) , {:class => "btnp"} %> 
+<%= link_to 'Back', roles_path , {:class => "btns"} %>
+</div>
+
+
+

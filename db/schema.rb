@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131015073657) do
+ActiveRecord::Schema.define(:version => 20131022114829) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.integer  "country_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.string   "desc"
-    t.integer  "created_by"
-    t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.integer  "capital_city_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "course_levels", :force => true do |t|
@@ -207,6 +209,15 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "exam_scores", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "exam_types", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -253,10 +264,10 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
 
   create_table "institutions", :force => true do |t|
     t.string   "name"
-    t.integer  "poc"
+    t.integer  "type_id"
     t.integer  "city_id"
     t.integer  "country_id"
-    t.integer  "type_id"
+    t.integer  "poc"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
@@ -271,6 +282,31 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "permissions", :force => true do |t|
+    t.string   "name"
+    t.string   "subject_class"
+    t.integer  "subject_id"
+    t.string   "action"
+    t.text     "description"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "subject_var"
+  end
+
+  create_table "permissions_roles", :force => true do |t|
+    t.integer  "role_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "permissions_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "preferred_countries", :force => true do |t|
@@ -397,6 +433,15 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.text     "note"
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+  end
+
   create_table "smtps", :force => true do |t|
     t.string   "name"
     t.string   "address"
@@ -508,14 +553,13 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
   create_table "users", :force => true do |t|
     t.integer  "branch_id"
     t.integer  "role_id"
-    t.integer  "image"
     t.text     "email_signature"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "encrypted_password",     :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -526,9 +570,36 @@ ActiveRecord::Schema.define(:version => 20131015073657) do
     t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "surname"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.integer  "invited_by_id"
+    t.string   "invited_by_type"
+    t.string   "mobile"
+    t.string   "gender"
+    t.date     "date_of_birth"
+    t.text     "address"
+    t.string   "image"
+    t.string   "skype"
+    t.string   "facebook"
+    t.string   "linkedin"
+    t.string   "twitter"
+    t.string   "website"
+    t.string   "gplus"
+    t.string   "blogger"
+    t.boolean  "is_active"
   end
 
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
+  add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

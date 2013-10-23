@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  # authorize_resource
   # GET /users
   # GET /users.json
   def index
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(:permissions).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,12 +25,14 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.json
   def new
+
     @user = User.new
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @user }
     end
+
   end
 
   # GET /users/1/edit
@@ -57,6 +60,16 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    authorize! :update, @user, id: current_user.id
+    # on actually updating an users role, you also have to update the users permissions, because roles are just templates of permissions
+    if !params[:user].nil?
+      if params[:user][:role_id]
+        p = Role.find(params[:user][:role_id]).permissions.map &:id
+        params[:user][:permission_ids] = p
+      end
+    else
+      params[:user] = {:permission_ids => []}
+    end
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

@@ -1,5 +1,6 @@
 <% _id =  @status + "_enquiries" %>
-
+<br/>
+<%= link_to "New Enquiry", new_enquiry_path, {class: "btnp"} %>
 <table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
   <tr>
@@ -23,12 +24,11 @@
 </thead>
 
        <span class="fr" onclick="$('.dataTables_filter input').val('').keyup();"> &nbsp;&nbsp;Reset&nbsp;</span>
-       
+
        <%= select_tag :abdc,
                       options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Choose",""])),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
-                      
-      
+
 <tbody>
 
 </tbody>
@@ -72,9 +72,6 @@ $(function(){
 dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>");
 setColorsFromSession();
 activeMM("enquiriesMM");
-
-
-
 
 });
 </script>

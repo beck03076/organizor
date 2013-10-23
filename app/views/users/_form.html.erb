@@ -1,17 +1,26 @@
-<%= simple_form_for(@user) do |f| %>
-  <%= f.error_notification %>
+<%= form_for(User.new) do |f| %>
+   <%= f.hidden_field :password, value: "12341234" %>
+   <%= f.hidden_field :password_confirmation, value: "12341234" %>
+   <div class="cols">
+    <div class="col6">
+      <%= fs(f,"email","text_field",1) %>
+      <%= fs(f,[:role_id, 
+                 (Role.order(:name)), 
+                 :id, 
+                 :name,
+                 {:prompt => "--Role--"},
+                 id: "role_select",
+                 onclick: "$('#manage').hide();$('#manage').slideToggle();$('#permissions_container').hide();"],"collection_select",1,"Role") %>
+      <br/>
+      <div class="fr padr30" id="manage" style="display:none;" onclick="manageRole();">
+      Manage Permissions? 
+      </div>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :branch_id %>
-    <%= f.input :role_id %>
-    <%= f.input :image %>
-    <%= f.input :email_signature %>
-    <%= f.input :created_by %>
-    <%= f.input :updated_by %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+    </div>
+   </div>
+   <div id="permissions_container">
+   </div>
+   <%= f.submit "Save",class: "btnp fl" %>
 <% end %>
+
+

@@ -62,14 +62,14 @@ private
     sc = sort_column
 
     if !@sFilter.nil?
-      enqs = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries) || Enquiry.active 
+      enqs = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries) || Enquiry.active
     end
 
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
       #scs = sc[1].to_s.pluralize
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = enquiries.#{sc[0]}"
-      enqs = enqs.joins(join).order("#{sc[2]} #{sort_direction}")
+      enqs = enqs.joins(join).order("#{scs}.#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
       enqs = enqs.order("enquiries.#{sc} #{sort_direction}")
     else
@@ -119,6 +119,7 @@ private
   def set_cols
     @def_cols = {:country_id => [:country_of_origin,:name],
      :source_id => [:student_source,:name],
+     :contact_type_id => [:contact_type,:name],
      :sub_agent_id => [:sub_agent,:name],
      :assigned_to => [:_assigned_to,:first_name],
      :assigned_by => [:_assigned_by,:first_name],

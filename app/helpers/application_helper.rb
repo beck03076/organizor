@@ -70,30 +70,35 @@ module ApplicationHelper
                                     name.to_sym,
                                     {:prompt => prompt },
                                     {:class => sel_cl })
-                                    
+      if (can? :create, model)
 
-      html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
+          html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
 
-      html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
- html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePopGoCreate('#{main_div}',this);>x</span><div class='cl'></div></div>"
+          html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
+     html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePopGoCreate('#{main_div}',this);>x</span><div class='cl'></div></div>"
+          
+          html += "<div class='fpbox'>"
+          html += label_tag(name.to_sym)
+          html += text_field_tag(name.to_sym)
+          html += "</div>"
+          
+          html += "<div id='#{desc_id}' style='display:none;' class='fpbox'>"
+          html += label_tag(:description)
+          html += text_area_tag(:desc)
+          html += "</div>"
+          
+          html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
+
+
+          html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{main_div}','#{obj_name}'); >#{obj_name.titleize} </span><div class='cl'></div><br/>"
+
+          
+          html += "</div>"
       
-      html += "<div class='fpbox'>"
-      html += label_tag(name.to_sym)
-      html += text_field_tag(name.to_sym)
+      end
+      
       html += "</div>"
       
-      html += "<div id='#{desc_id}' style='display:none;' class='fpbox'>"
-      html += label_tag(:description)
-      html += text_area_tag(:desc)
-      html += "</div>"
-      
-      html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
-
-
-      html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{main_div}','#{obj_name}'); >#{obj_name.titleize} </span><div class='cl'></div><br/>"
-
-      
-      html += "</div></div>"
       
       html.html_safe
 

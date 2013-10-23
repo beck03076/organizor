@@ -3,6 +3,7 @@ class EnquiriesController < ApplicationController
   def error
     render 'shared/error'
   end
+  
   def programme
     @co = params[:co]
     @ci = params[:ci]
@@ -10,18 +11,20 @@ class EnquiriesController < ApplicationController
     self.pre(p_type,params[:co],params[:ci])
     render :partial => params[:type], :locals => { :p => Programme.new }
   end
-  
-  def group_assign_to
-  
+  # h_new stands fpr help_new
+  def h_new
+    @enquiry = Enquiry.new
+    authorize! :create, @enquiry
+      
+    @countries = self.basic_select(Country)
+    @p_types = ProgrammeType.all
   end
   
   def tab
     set_url_params
     
     if @status == "new_enquiry"
-      @enquiry = Enquiry.new
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
+      self.h_new
     elsif @status == "launch"
       @enquiry = Enquiry.find(params[:enquiry_id])
       @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:enquiry_id]).order("created_at DESC")
@@ -32,12 +35,15 @@ class EnquiriesController < ApplicationController
     elsif @status == "clone"
       orig = Enquiry.find(params[:enquiry_id])
       @enquiry = orig.dup :include => [:programmes, :countries]
-#      @enquiry.programmes = orig.programmes.dup
- #     @enquiry.countries = orig.countries.dup
+      authorize! :create, @enquiry
+      
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     else
-      @cols = UserConfig.find(current_user).enq_cols
+      #c = current_user.conf.enq_cols
+      #ign = [:first_name,:surname,:date_of_birth]
+      #(c.map{|i| !i.is_a?(Array) ? i : i} - ign).sort.unshift(ign).flatten
+      @cols = current_user.conf.enq_cols
     end
     
     render :partial => @partial
@@ -48,13 +54,13 @@ class EnquiriesController < ApplicationController
     
     
     if @partial_name == "follow_up"
-          @d_f_u_days = UserConfig.find_by_user_id(current_user.id).def_follow_up_days
+          @d_f_u_days = current_user.conf.def_follow_up_days
           @follow_up = FollowUp.new(title: "First Follow Up", 
                                     desc: "This enquiry does not have an update, yet!.
                                            Should call this enquiry in 2 days.")
 
     elsif @partial_name == "note"
-          @d_note = UserConfig.find_by_user_id(current_user.id).def_note
+          @d_note = current_user.conf.def_note
           @note = Note.new(content: @d_note)
           
     elsif @partial_name == "todo"
@@ -62,7 +68,7 @@ class EnquiriesController < ApplicationController
     end
    
     if @partial_name == "email"
-      mail_to_use = UserConfig.find(current_user.id).def_enq_email.to_sym
+      mail_to_use = current_user.conf.def_enq_email.to_sym
       
       @subject = Enquiry.where(id: @enquiry_id)
       @subject_ids = (@subject.map &:id).join(",")
@@ -99,6 +105,8 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/1.json
   def show
     @enquiry = Enquiry.find(params[:id])
+    authorize! :read, @enquiry
+    
     @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")
 
     respond_to do |format|
@@ -110,32 +118,28 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/new
   # GET /enquiries/new.json
   def new
-    @enquiry = Enquiry.new
-    @countries = self.basic_select(Country)
-    @p_types = ProgrammeType.all
-
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @enquiry }
-    end
+    
   end
   
 
   def clone
+    # To have this next line, is to display the enquiry name on the tab, thats all
     @enquiry = Enquiry.find(params[:id])
+    authorize! :create, @enquiry
   end
 
   # GET /enquiries/1/edit
   def edit
     @enquiry = Enquiry.find(params[:id])
+    authorize! :update, @enquiry
   end
 
   # POST /enquiries
   # POST /enquiries.json
   def create
     @enquiry = Enquiry.new(params[:enquiry])
-    
+    authorize! :create, @enquiry
+     
     stat_id = EnquiryStatus.find_by_name("pending").id
     @enquiry.status_id = stat_id
     
@@ -182,33 +186,21 @@ class EnquiriesController < ApplicationController
   # PUT /enquiries/1.json
   def update
     @enquiry = Enquiry.find(params[:id])
+    authorize! :update, @enquiry
     
     if (params[:enquiry][:assign].to_s == "from_action")
     
       ass_to = User.find(params[:enquiry][:assigned_to]).first_name
       ass_by = User.find(params[:enquiry][:assigned_by]).first_name
     
-      Timeline.create!(user_id: current_user.id,
-                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       m_name: "Enquiry",
-                       m_id: params[:id],
-                       created_at: Time.now,
-                       desc: 'This enquiry has been reassigned',
-                       comment: 'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
-                       action: 'assign_to')
+      tl("Enquiry",:id,'This enquiry has been reassigned',
+         'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
+         'assign_to')
                        
     elsif (params[:enquiry][:deactivate].to_s == "from_action")
    
-      Timeline.create!(user_id: current_user.id,
-                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       m_name: "Enquiry",
-                       m_id: params[:id],
-                       created_at: Time.now,
-                       desc: 'This enquiry has been deactivated',
-                       comment: "Deactivated",
-                       action: 'deactivate')
-
-    
+      tl("Enquiry",:id,'This enquiry has been deactivated',
+         "Deactivated",'deactivate')
     end
 
     respond_to do |format|
@@ -226,31 +218,14 @@ class EnquiriesController < ApplicationController
   # DELETE /enquiries/1.json
   def destroy
     @enquiry = Enquiry.find(params[:id])
+    authorize! :destroy, @enquiry
+    
     @enquiry.destroy
 
     respond_to do |format|
-      format.html { redirect_to enquiries_url }
+      format.html { redirect_to enquiries_path, notice: 'Enquiry was successfully deleted.' }
       format.json { head :no_content }
     end
-  end
-  
-  def pre(p_type = 1,co = nil,ci = nil)
-    @countries = self.basic_select(Country)
-    if !co.nil? && !ci.nil?      
-      country = Country.find(co)
-      @cities = self.basic_select(country.cities)
-      city = City.find(ci)
-      @institutions = self.basic_select(city.institutions,{:type_id => p_type})
-    elsif !co.nil?     
-      country = Country.find(co)
-      @cities = self.basic_select(country.cities)
-      @institutions = []
-    elsif co.nil?       
-      @cities = []
-      @institutions = []
-    end  
-    @p_types = ProgrammeType.all
-    @c_levels = self.basic_select(CourseLevel)
   end
   
   def basic_select(model,cond = true)

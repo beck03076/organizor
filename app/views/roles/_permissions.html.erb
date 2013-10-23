@@ -1,0 +1,86 @@
+<br/>
+
+<%= form_for(role) do |f| %>
+    <% perms = (Permission.all.group_by &:subject_class) %>
+     <table  class="tables3" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <% r = perms.keys %>
+     <% defs = ["User","Enquiry","Registration"] %>
+     <% r.delete("All") %>
+     <% defs.each do |model| %>
+    
+          <tr colspan="5">
+          <td>
+          <h4 class="htab">
+          <%= model %>
+          </h4>
+          </td>
+          <% perms[model].each do |p| %>
+            <td>
+                    <%= check_box_tag "#{f.object_name}[permission_ids][]",
+                                                                      p.id, 
+                                                                      role.permissions.include?(p) %>
+                    <%= label_tag(:permissions, p.action.titleize)%>
+            </td>
+         <% end %>
+         </tr>
+   
+    <% end %>
+    <tr>
+    <td colspan="6">
+    <span class="toggler" onclick="$('.more_permissions').slideToggle();"> more </span>
+    </td>
+    </tr>
+     </table>
+     <table  class="tables3 more_permissions" border="0" cellpadding="0" cellspacing="0" width="100%"  style="display:none;">
+               <tr>
+               <td></td>
+               <% 4.times { %>
+               <td><%= check_box_tag "permissions_col",
+                                         nil,
+                                         nil,
+                                         {id: "col_check",
+                                         checked: false,
+                                         onclick: "toggleAllCheckCol(this);"} %> column</td>
+               <% } %>
+               </tr>
+               <% (r - defs).each do |model| %>
+                
+                      <tr colspan="5" >
+                      <td>
+                      <h4 class="htab">
+                      <%= model %>
+                      <span class="fr padr30">
+                      <%= check_box_tag "permissions_row",
+                                         nil,
+                                         nil,
+                                         {id: "row_check",
+                                         checked: false,
+                                         onclick: "toggleAllCheckRow(this);"} %>
+                      row
+                      </span>
+                      &nbsp;
+                      &nbsp;
+                      </h4>
+                      </td>
+                      <% perms[model].each do |p| %>
+                        <td>
+                                <%= check_box_tag "#{f.object_name}[permission_ids][]",
+                                                   p.id, 
+                                                   role.permissions.include?(p),{class: "permissions"} %>
+                                <%= label_tag(:permissions, p.action.titleize)%>
+                        </td>
+                     <% end %>
+                     </tr>
+               
+                <% end %>
+
+    </table>
+    <br/>
+    <div class="actions" style="margin-bottom:10px;">
+     <%= f.submit "Save",{:class => "btnp fr"} %>
+    </div>
+    <div class="cl"></div>
+    
+<% end %>
+<br/>
+<br/>

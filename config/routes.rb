@@ -1,10 +1,21 @@
 Organizor::Application.routes.draw do
 
+  get "handle/error"
+
+  get "handle/cancan"
+
   resources :documents do
       collection do
         delete :delete
       end
   end
+  
+  devise_for :users, :controllers => { :invitations => 'users/invitations' }
+  
+  
+  
+  resources :roles
+  
   resources :doc_categories
   
   resources :images
@@ -28,7 +39,8 @@ Organizor::Application.routes.draw do
   resources :follow_ups
 
 
-  devise_for :users
+  
+  match '/permissions/role/:role_id' => "roles#show_permissions"
   
   match '/bulk_email/:model/:model_ids' => "emails#bulk_email"
   

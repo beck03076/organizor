@@ -449,16 +449,16 @@ $(document).ready(function(){
         /* ACTIVE CURRENT THEME */
         $(this).addClass("theme-colrs-active");
     });
-	
-	/* ON CLICKING BG THEME*/
+    
+    /* ON CLICKING BG THEME*/
     $("#bg-color li span").click(function(){
         /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
         $("#bg-color li span").removeClass("theme-colrs-active");
         /* ACTIVE CURRENT THEME */
         $(this).addClass("theme-colrs-active");
     });
-	
-	/* ON CLICKING WORK AREA THEME*/
+    
+    /* ON CLICKING WORK AREA THEME*/
     $("#wa-color li span").click(function(){
         /* REMOVE ACTIVE CLASS FROM ALL SPAN TAGS */
         $("#wa-color li span").removeClass("theme-colrs-active");
@@ -482,6 +482,27 @@ $(document).ready(function(){
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
     });
+    
+    $("#addInviteUserEmail input[type='text']").on("blur",function(){
+        var totalEmptyTag=0;
+        
+        $("#addInviteUserEmail input[type='text']").each(function(){
+            if(this.value == "") 
+            totalEmptyTag=totalEmptyTag+1;
+        });
+        
+        if(totalEmptyTag==1 || totalEmptyTag==0){
+            var tag="<div class='frbox'><label>Email Address</label>";
+                tag+="&nbsp;<input type='text' placeholder='Email Address'/>&nbsp;&nbsp;";
+                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt'/></div>";
+            $("#addInviteUserEmail").append(tag);
+        }
+    });
+    
+    $("#addInviteUserEmail .jqAddUserRemove").on("click",function(){
+        $(this).parent().remove();
+    });
+
 });
     
 function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){

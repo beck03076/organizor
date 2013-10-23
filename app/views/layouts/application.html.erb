@@ -5,6 +5,16 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  
+<script type="text/javascript">
+$(function(){
+
+  showPopUp('message');
+
+});
+
+</script>
+
 </head>
 <body>
 
@@ -22,13 +32,16 @@
     <img src="/images/icons/search.png"/>&nbsp;
     <input type="text" placeholder="Search by name" >
     </div>
-    <img src="/images/icons/user.png" class="imgb fl" width="40" height="40"/>
+    <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                               {width: "40",
+                                height: "40",
+                                class: "imgb fl"}) %>
     <img src="/images/icons/down-arrow.png" class="fr" id="downarrow" />
     <h5>
-    &nbsp;&nbsp;<b><%= u.first_name.titleize %></b>
+    &nbsp;&nbsp;<b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
     </h5><br/>
     <small class="whitec">
-    &nbsp;&nbsp;&nbsp;<%= u.email %>
+    &nbsp;&nbsp;&nbsp;<%= u.role.name.titleize rescue "Role Unassigned" %>
     </small>
     <div class="cl"></div>
     <div class="uiboxs">
@@ -57,7 +70,16 @@
 </div>
 <!-- HEADER - ENDS -->
 
-
+<!-- KEEP message and type in between the P tag , without enter or space -->
+          <% if flash[:notice] %>
+            <h3 id="message" class="htab addNewPop" style="display: block; top: 483px; left: 455px;">
+              <%= flash[:notice] %>
+              <br/>
+              <small>
+              <i>Click outside to continue</i>
+              </small>
+            </h3>
+          <% end %>
 <!-- BODY - STARTS -->
 <div id="main-body">
     <!-- MAIN MENU - STARTS -->
@@ -115,7 +137,24 @@
      onMouseOver="MM_swapImage('iconMM10','','/images/icons/org_settingsb.png',1)">
         <img src="/images/icons/org_settings.png" id="iconMM10" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Settings", "/user_configs/#{current_user.id}/edit" %>
+        <%= link_to "Settings", "/user_configs/#{current_user.conf.id}/edit" %>
+        </li>
+        
+        <li id="usersMM"  onMouseOut="MM_swapImgRestore()"
+     onMouseOver="MM_swapImage('iconMM11','','/images/icons/userb.png',1)">
+        
+        <% if u.role?(:agency_administrator) %>
+        <img src="/images/icons/user.png" id="iconMM11" width="34" /><br/>
+        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+        <%= link_to "Users", "/users" %>
+        <% else %>
+        <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                               {width: "34",
+                                class: "imgb",
+                                id: "iconMM11"}) %> <br/>
+        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+        <%= link_to "Me", "/users/#{current_user.id}" %>
+        <% end %>
         </li>
     </ul>
     </div>

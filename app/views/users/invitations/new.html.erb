@@ -1,0 +1,73 @@
+<script type="text/javascript">
+$(function(){
+
+  activeMM("usersMM");
+  setColorsFromSession();
+
+
+  $('li.invite_users').addClass('active-tab');
+  
+});
+
+</script>
+
+<div class="tab-container">
+<%= render 'users/menus' %>
+<div class="tab-content" style="display:block">
+<div class="boxp box-theme-ch">
+
+<br/>
+<br/>
+<h4 class="htab">
+  Invite Users To Organizor
+</h4>
+<br/>
+<br/>
+
+<%= form_tag("/users/invitation",method: :post) do %>
+        <div class="cols">
+            <div class="col6 " id="addInviteUserEmail">
+                <div class="frbox">
+                    <label>Email Address</label>
+                    <input name="email[1]" type="text" placeholder="Email Address"/>
+                </div>
+                <div class="frbox">
+                    <label>Email Address</label>
+                    <input name="email[2]" type="text" placeholder="Email Address"/>
+                </div>
+                <div class="frbox">
+                    <label>Email Address</label>
+                    <input name="email[3]" type="text" placeholder="Email Address"/>
+                </div>
+          </div>
+          </div><br/><br/>
+          
+          
+          <div class="cols">
+            <div class="col6">
+                <div class="frbox">
+                    <label>Role</label>
+                    <%= select_tag "role_id",
+                                   options_from_collection_for_select(Role.order(:name), "id", "name"),
+                 {:prompt => "--Role--",
+                 id: "role_select",
+                 onclick: "$('#manage').hide();$('#manage').slideToggle();$('#permissions_container').hide();"} %>
+                 </div>
+                 <div class="frbox">
+                 <label>&nbsp;</label>
+                 <input type="submit" class="btnp" value="Invite User"/>
+                 </div>
+          <br/>
+          </div>
+          </div><br/><br/>
+         
+        <div class="cl"></div> 
+        <br/>
+        <br/>
+<% end %>
+</div>
+</div>
+</div>
+
+
+

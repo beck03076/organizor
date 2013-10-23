@@ -14,6 +14,7 @@ class UserConfigsController < ApplicationController
      
     @def_enq_cols = {:country_id => [:country_of_origin,:name],
      :source_id => [:student_source,:name],
+     :contact_type_id => [:contact_type,:name],
      :sub_agent_id => [:sub_agent,:name],
      :assigned_to => [:_assigned_to,:first_name],
      :assigned_by => [:_assigned_by,:first_name],
@@ -25,7 +26,7 @@ class UserConfigsController < ApplicationController
   # GET /user_configs
   # GET /user_configs.json
   def index
-    @user_config = UserConfig.find(current_user.id)
+    @user_config = current_user.conf
 
     respond_to do |format|
       format.html # index.html.erb
@@ -57,7 +58,7 @@ class UserConfigsController < ApplicationController
 
   # GET /user_configs/1/edit
   def edit
-    @user_config = UserConfig.find(current_user.id)
+    @user_config = current_user.conf
   end
 
   # POST /user_configs
