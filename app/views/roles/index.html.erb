@@ -37,7 +37,7 @@ $(function(){
   <span>
   <tr>
       <td class="role_name" onClick="$('tr.permissions').hide();$(this).parent('tr').next('tr.permissions').slideToggle();" >
-      <h5> <%= role.name.titleize %> </h5>
+      <%= role.name.titleize %>
       <span class="delete_role" style="display:none">
         &nbsp;&nbsp;&nbsp;
         <%= link_to 'delete', role, method: :delete, data: { confirm: 'Are you sure?' } %>
