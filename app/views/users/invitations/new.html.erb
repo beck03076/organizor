@@ -40,12 +40,12 @@ $(function(){
                 </div>
           </div>
           </div>
-		  <div class="cols">
+          <div class="cols">
             <div class="col6">
                 <div class="frbox">
                     <label>Role</label>
                     <%= select_tag "role_id",
-                                   options_from_collection_for_select(Role.order(:name), "id", "name"),
+                                   options_from_collection_for_select(Role.order(:name), "id", "title_name"),
                  {:prompt => "--Role--",
                  id: "role_select",
                  onclick: "$('#manage').hide();$('#manage').slideToggle();$('#permissions_container').hide();"} %>

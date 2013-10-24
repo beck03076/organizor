@@ -5,4 +5,10 @@ class Role < ActiveRecord::Base
   attr_accessible :name,:permission_ids,:desc,
                   :created_by,:updated_by
   accepts_nested_attributes_for :permissions
+  
+  def title_name
+     self.name.titleize
+  end
+  
+  
 end
