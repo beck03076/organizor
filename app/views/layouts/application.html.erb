@@ -85,75 +85,82 @@ $(function(){
     <!-- MAIN MENU - STARTS -->
     <div id="left-panel">
     <ul id="menu-main">
-        <li id="dashboardMM" onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM1','','/images/icons/org_dashboardb.png',1)">
-        <img src="/images/icons/org_dashboard.png" id="iconMM1" /><br/>
+        <li id="dashboardMM">
+        <img src="/images/icons/org_dashboard.png" id="iconMM1"width="36" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="dashboard.html">Dashboard</a></li>
         
-        <li id="enquiriesMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM2','','/images/icons/org_inquiryb.png',1)">
-        <img src="/images/icons/org_inquiry.png"  id="iconMM2"/><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Enquiries", enquiries_path %>
+        <li id="enquiriesMM">
         
-        <li id="registrationsMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM3','','/images/icons/org_registrationb.png',1)">
-        <img src="/images/icons/org_registration.png" id="iconMM3" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Registrations", registrations_path %>
+        <%= link_to enquiries_path  do %>
+          <img src="/images/icons/org_inquiry.png"  id="iconMM2"width="36"/><br/>
+          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+          Enquiries
+        <% end %>
         
-        <li id="accountsMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM4','','/images/icons/org_financeb.png',1)">
-        <img src="/images/icons/org_finance.png" id="iconMM4" /><br/>
+        <li id="registrationsMM">
+                
+        <%= link_to registrations_path do %>
+                  <img src="/images/icons/org_registration.png" id="iconMM3"width="36" /><br/>
+                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+                  Registration
+        <% end %>
+        
+        <li id="accountsMM">
+        <img src="/images/icons/org_finance.png" id="iconMM4"width="36"/><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Accounts</a></li>
-        <li id="contractsMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM5','','/images/icons/org_contractsb.png',1)">
-        <img src="/images/icons/org_contracts.png" id="iconMM5" /><br/>
+        <li id="contractsMM">
+        <img src="/images/icons/org_contracts.png" id="iconMM5"width="36"/><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Contracts</a></li>
-        <li id="emailMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM6','','/images/icons/org_emailb.png',1)">
-        <img src="/images/icons/org_email.png"  id="iconMM6"/><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Emails", email_templates_path %></li>
-        <li id="calendarMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM7','','/images/icons/org_calenderb.png',1)">
-        <img src="/images/icons/org_calender.png" id="iconMM7" /><br/>
+        <li id="emailMM">
+        <%= link_to  email_templates_path do %>
+          <img src="/images/icons/org_email.png"  id="iconMM6"width="36" /><br/>
+          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+          Emails
+        <% end %>
+        </li>
+        <li id="calendarMM">
+        <img src="/images/icons/org_calender.png" id="iconMM7"width="36" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Calendar</a></li>
-        <li id="reportsMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM8','','/images/icons/org_reportsb.png',1)">
-        <img src="/images/icons/org_reports.png" id="iconMM8" /><br/>
+        <li id="reportsMM">
+        <img src="/images/icons/org_reports.png" id="iconMM8"width="36" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Reports</a></li>
-        <li id="todosMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM9','','/images/icons/org_todosb.png',1)">
-        <img src="/images/icons/org_todos.png" id="iconMM9" /><br/>
+        <li id="todosMM">
+        <img src="/images/icons/org_todos.png" id="iconMM9"width="36" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Todos</a></li>
-        <li id="settingMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM10','','/images/icons/org_settingsb.png',1)">
-        <img src="/images/icons/org_settings.png" id="iconMM10" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Settings", "/user_configs/#{current_user.conf.id}/edit" %>
-        </li>
+        <li id="settingMM">
         
-        <li id="usersMM"  onMouseOut="MM_swapImgRestore()"
-     onMouseOver="MM_swapImage('iconMM11','','/images/icons/userb.png',1)">
-        
+        <%= link_to "/user_configs/#{current_user.conf.id}/edit" do %>
+          <img src="/images/icons/org_settings.png" id="iconMM10" width="36" /><br/>
+          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+          Settings
+        <% end %>
+        </li>        
+        <li id="usersMM">        
         <% if u.role?(:agency_administrator) %>
-        <img src="/images/icons/user.png" id="iconMM11" width="34" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Users", "/users" %>
+        
+            <%= link_to "/users" do %>
+              <img src="/images/icons/org_users.png" id="iconMM11"width="36" /><br/>
+              <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+              Users
+            
+            <% end %>
+        
         <% else %>
-        <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+        
+        <%= link_to "/users/#{current_user.id}" do %>
+             <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                {width: "34",
                                 class: "imgb",
                                 id: "iconMM11"}) %> <br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <%= link_to "Me", "/users/#{current_user.id}" %>
+             <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+             Me
+        <% end %>
         <% end %>
         </li>
     </ul>
