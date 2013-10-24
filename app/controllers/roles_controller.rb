@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-
+authorize_resource
  def show_permissions
    role = Role.find(params[:role_id])
    render partial: 'permissions',locals: {role: role }

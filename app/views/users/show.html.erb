@@ -53,12 +53,12 @@ $(function(){
         <div class="cols brgb" style="padding-bottom:20px">
             <div class="col8">
                 <div id="scrollboxu">
-				<div class="rel abs-plus-box">
+                <div class="rel abs-plus-box">
                   <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
                                {width: "100",class: "tooltip",title: "Upload your photo",
                                 class: "imgb fl",
                                 onclick: "showPopUp('upload_image');"}) %>
-				<span class="abs-plus">+</span></div>
+                <span class="abs-plus">+</span></div>
                  <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
                    <%= form_for(a) do |f| %>
                     <div class="fbox">
@@ -75,8 +75,8 @@ $(function(){
                       <%= f.text_field :remote_image_url %>   
                     </div>
                     <input type="button" value="Close" name="commit" class="btns fr bClose"/>
-					<%= f.submit "Upload", {class: "btnp fr"} %>
-					<div class="cl"></div>
+                    <%= f.submit "Upload", {class: "btnp fr"} %>
+                    <div class="cl"></div>
                     <% end %>
                  </div>
 
@@ -167,6 +167,7 @@ $(function(){
                     </div>
                     <br/>
                     <br/>
+                    <% if adm %>
                     <%= form_for(a) do |d| %>
                       <% if a.is_active %>
                         <% b = "Deactivate" %>
@@ -177,6 +178,9 @@ $(function(){
                       <% end %>
                       <%= d.hidden_field :is_active, value: val %>
                       <%= d.submit b,{class: "btnp fr"} %>
+                    <% end %>
+                    <% else %>
+                    <%= link_to "Deactivate", "#", {class: "btnpd fr"}%>
                     <% end %>
                 </div>
           </div>

@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
+
   # authorize_resource
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    authorize! :read, @users, id: current_user.id
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +17,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.includes(:permissions).find(params[:id])
+    authorize! :read, @user, id: current_user.id
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,12 +41,14 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    authorize! :update, @user, id: current_user.id
   end
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(params[:user])
+    authorize! :create, User
 
     respond_to do |format|
       if @user.save
@@ -86,6 +91,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
+    authorize! :destroy, @user, id: current_user.id
     @user.destroy
 
     respond_to do |format|
