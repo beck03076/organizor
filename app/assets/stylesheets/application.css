@@ -571,3 +571,7 @@ border:1px solid #3D3D3D;background:#3D3D3D;color:#FFFFFF;padding:5px;line-heigh
 .error-box{border:1px solid #F6ABAB !important;}
 .nowrap{white-space:nowrap}
 /*VALIDATION - ENDS */
+.abs-plus{font-size:20px;font-weight:bold;padding:2px 5px 1px 5px;position:absolute;top:0;left:0;display:none;;cursor:pointer}
+.abs-plus-box:hover .abs-plus{display:inline;}
+.abs-plus:hover{background:#ccc;cursor:pointer}
+.rel{position:relative}

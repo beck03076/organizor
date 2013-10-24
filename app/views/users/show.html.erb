@@ -53,11 +53,12 @@ $(function(){
         <div class="cols brgb" style="padding-bottom:20px">
             <div class="col8">
                 <div id="scrollboxu">
+				<div class="rel abs-plus-box">
                   <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
-                               {width: "100",
+                               {width: "100",class: "tooltip",title: "Upload your photo",
                                 class: "imgb fl",
                                 onclick: "showPopUp('upload_image');"}) %>
-
+				<span class="abs-plus">+</span></div>
                  <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
                    <%= form_for(a) do |f| %>
                     <div class="fbox">
