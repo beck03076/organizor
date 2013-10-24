@@ -49,5 +49,10 @@ class User < ActiveRecord::Base
   def adm?
     self.role.name == "agency_administrator"
   end
+  
+   def update_conf
+     self.conf = UserConfig.first.dup
+     self.save!
+   end
 
 end
