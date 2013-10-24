@@ -165,6 +165,16 @@ input[type=radio]{padding-right:5px}
 .tables2 tr:last-child td a{color:#6B84B4}
 .tables2 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
 
+.tables4{padding:0;margin:0;border:1px solid #CCC;}
+.tables4 tr th{background:#EDF2F6;border-bottom:1px dashed #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables4 tr th a,.tables4 tr th a:hover,.tables4 tr th a:active,.tables4 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
+.tables4 tr td{background:#fff;border-bottom:1px dotted #ccc;padding:5px 0 5px 5px;font-size:12px;color:#505050;cursor:pointer;font-weight:normal}
+.tables4 tr:hover td{background:#FAFAFA;color:#000000}
+.tables4 tr td a,.tables4 tr td a:hover,.tables4 tr td a:active,.tables4 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
+.tables4 tr:last-child td{background:#F5F5F5;border-top:1px dashed #F5F5F5;border-bottom:1px solid #E2E2E2;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables4 tr:last-child td a{color:#6B84B4;border-bottom:0}
+.tables4 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
+
 
 .dataTable{padding:0 !important;margin:0 !important}
 .dataTable tr th{background:#EDF2F6 !important;border:1px solid #DDD !important;border-bottom:1px #DDD !important;border-right:0 !important;border-left:0 !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#5E6E7F !important;cursor:pointer !important;font-weight:normal !important;text-align:left !important}
@@ -490,15 +500,15 @@ font-weight:bolder;
   width:110px !important;
 }
 
-.tables3{padding:0;margin:0;}
+.tables3{padding:0;margin:0;border:1px solid #DDDDDD;border-radius:5px;overflow:hidden;}
 .tables3 tr th{background:#EDF2F6;border-bottom:1px dashed #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
-.tables3 tr th a,.tables2 tr th a:hover,.tables2 tr th a:active,.tables2 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
+.tables3 tr th a,.tables3 tr th a:hover,.tables3 tr th a:active,.tables3 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
 .tables3 tr:hover td{background:#FAFAFA;color:#000000}
-.tables3 tr td a,.tables2 tr td a:hover,.tables2 tr td a:active,.tables2 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
+.tables3 tr td a,.tables3 tr td a:hover,.tables3 tr td a:active,.tables3 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
 .tables3 tr td{background:#F5F5F5;border-top:1px dashed #F5F5F5;border-bottom:1px solid #E2E2E2;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
 .tables3 tr td a{color:#6B84B4}
 .tables3 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
-
+.tables3 tr:last-child td{border-bottom:0;}
 
 
 /* TABS - STARTS */
