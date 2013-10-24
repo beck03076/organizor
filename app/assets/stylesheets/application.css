@@ -505,7 +505,7 @@ font-weight:bolder;
 
 .tab-menus1{list-style:none;padding:0;margin:0;white-space:nowrap}
 .tab-menus1 li{color:#666;font-size:13px;background:#EAEAEA;padding:7px 15px 5px 15px;display:inline-block;margin-right:5px;border-radius:5px 5px 0 0}
-.tab-menus1 li a{color:#666;font-size:13px;}
+.tab-menus1 li a,.tab-menus1 li a:hover,.tab-menus1 li a:active,.tab-menus1 li a:visited,.tab-menus1 li a:link{color:#666;font-size:13px;text-decoration:none}
 .tab-menus1 .active-tab,.tab-menus li:hover,.r-tab:hover{background:#E8F0FD;text-decoration:none;cursor:pointer;}
 .tab-menus1 .active-tab{font-weight:bold;box-shadow:0  -1px 3px #ccc}
 
