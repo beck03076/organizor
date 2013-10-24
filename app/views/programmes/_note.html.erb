@@ -2,7 +2,11 @@
           
            <div class="brg0"> </div>
            <br/>
-           <%= image_tag(note._created_by.image_url(:thumb),size: "40x40") %>
+           <% u = note._created_by %>
+           <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                               {width: "40",
+                                height: "40",
+                                class: "imgb"}) %>
            <h6>
            <%= note.content %>
            </h6>

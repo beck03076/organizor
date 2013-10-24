@@ -1,5 +1,14 @@
 <% _id =  @status + "_registrations" %>
 <%= form_tag(url_for: "/asdf") do %>
+
+<!----------------------- New Enquiry ---------------------------->
+<% if can? :create, Registration %>
+<%= link_to "New Registration", new_registration_path, {class: "btnp"} %>
+<% else %>
+<%= link_to "New Registration", "#", {class: "btnpd"} %>
+<% end %>
+<!---------------------------------------------------------------->
+
 <table id='<%= _id %>' class="display" data-source="<%= registrations_url(format: "json") %>">
 <thead>
   <tr>
@@ -33,9 +42,15 @@
 </tbody>
 
 </table>
-<br/>
+<br/>       
+            <!----------------------- Group Assign ---------------------------->
             <% div_id = "group_assign_to_" + _id %>
-            <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
+            
+            <% if can? :update, Registration %>
+              <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
+            <% else %>
+              <%= link_to "Assign To", "#", {class: "btnpd"} %>
+            <% end %>
             <div id="<%= div_id %>" class="addNewPop" data-model="Registration" style="display: none; top: 483px; left: 455px;"> 
               <div class="frbox">
                 <%= image_tag "/images/icons/user_group.png" ,{size: "20x20"}%>
@@ -46,10 +61,22 @@
                 <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
               </div>
             </div>
-            <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
+            <!----------------------- Bulk Email ---------------------------->
             
+            <% if can? :create, Email %>
+              <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
+            <% else %>
+              <%= link_to "Bulk Email", "#", {class: "btnpd"} %>
+            <% end %>
+            
+            <!----------------------- Group Delete ---------------------------->
             <% div_delete_id = "group_delete_to_" + _id %>
+            
+            <% if can? :destroy, Registration %>
             <%= link_to "Delete", "#", {class: "btnp fr", onclick: "showPopUp('#{div_delete_id}');"} %>
+            <% else %>
+            <%= link_to "Delete", "#", {class: "btnpd fr"} %>
+            <% end %>
             <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
               <div class="frbox">
                 <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>

@@ -29,6 +29,17 @@ class Enquiry < ActiveRecord::Base
   
   scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   scope :active, includes(:status).where("enquiry_statuses.name != 'deactivated'")
+  
+  scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
+  
+  scope :myactive, lambda{|user|
+  if user.adm?
+    includes(:status).where("enquiry_statuses.name != 'deactivated'")
+  else
+    includes(:status).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+  end
+  }
+
 
   
   attr_accessible :emails_attributes,:programmes_attributes,

@@ -113,7 +113,7 @@ select{border-radius:1px;border:1px solid #C0C0C0;height:23px;width:180px;paddin
 select:hover,select:visited{border:1px solid #A0A0A0;box-shadow: 1px 1px 1px 1px #EFEFEF;cursor:pointer}
 label{font-size:14px;font-weight:normal;text-align:left;}
 .btnp,.btnp:active,.btnp:link,.btnp:visited{text-decoration:none;font-size:12px;background:#2A88C8;color:#fff;padding:5px 15px 5px 15px;border:1px solid #3D7DAD; margin-right:10px}
-.btnpd,.btnpd:active,.btnpd:link,.btnpd:visited{text-decoration:none;font-size:12px;background:#7AABD3;color:#BADFFC;padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #87BBE0}
+.btnpd,.btnpd:active,.btnpd:link,.btnpd:visited{text-decoration:none;font-size:12px;background:#7AABD3;color:#fff;padding:5px 15px 5px 15px;margin-right:10px;border:1px solid #87BBE0}
 .btnp:hover{cursor:pointer;background:#267AB3;text-decoration:none;}
 .btnw,.btnw:active,.btnw:link,.btnw:visited{text-decoration:none;font-size:12px;background:#fff;color:#2A88C8;padding:5px 15px 5px 15px;margin-right:10px}
 .btnw:hover{cursor:pointer;background:#fff;text-decoration:none;}
@@ -541,6 +541,10 @@ td.role_name:hover{color:#008080;cursor:pointer;font-size:13px;}
 .padb30{padding-bottom:30px}
 .padb10{padding-bottom:10px}
 
+.todo_status{font-size:9px;color:#C42525}
+.todo_due{border:1px solid #ccc;background:#ccc;color:#444444}
+
+.brt0{border-top:1px solid #d3d7cf}
 
 /* SENTHIL's  CSS - End */
 

@@ -51,8 +51,7 @@ class EnquiriesController < ApplicationController
   
   def action_partial
     set_url_params
-    
-    
+
     if @partial_name == "follow_up"
           @d_f_u_days = current_user.conf.def_follow_up_days
           @follow_up = FollowUp.new(title: "First Follow Up", 
@@ -66,7 +65,7 @@ class EnquiriesController < ApplicationController
     elsif @partial_name == "todo"
           @todo = Todo.new
     end
-   
+    # next if block becase of separate renders
     if @partial_name == "email"
       mail_to_use = current_user.conf.def_enq_email.to_sym
       
@@ -198,6 +197,8 @@ class EnquiriesController < ApplicationController
          'assign_to')
                        
     elsif (params[:enquiry][:deactivate].to_s == "from_action")
+    
+      params[:enquiry][:status_id] = EnquiryStatus.de[0].id
    
       tl("Enquiry",:id,'This enquiry has been deactivated',
          "Deactivated",'deactivate')

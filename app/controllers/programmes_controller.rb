@@ -1,4 +1,5 @@
 class ProgrammesController < ApplicationController
+authorize_resource
   # GET /programmes
   # GET /programmes.json
   def index

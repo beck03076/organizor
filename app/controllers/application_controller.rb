@@ -5,24 +5,38 @@
   layout :layout
 
   rescue_from CanCan::AccessDenied do |e|
-    p "888888888888888888888"
-    p "unauthorized #{e.subject} and #{e.action}"
+    p "***********************"
+    p "unauthorized subject: #{e.subject} and action: #{e.action}"
+    p "***********************"
+    
     flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} any #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { render :js => "info('Unauthorized','#{flash[:notice]}');" }
+    end
   end
   
   def group_assign
     set_url_params
-    @model.camelize.constantize.where(id: params[:model_ids].split(",")).update_all(assigned_to: params[:user_id],
-                                                                   assigned_by: current_user.id)
-                                                                   
+    model = @model.camelize.constantize
+    authorize! :update, model
+    
+    to_update = model.where(id: params[:model_ids].split(","))
+    to_update.update_all(assigned_to: params[:user_id],
+                         assigned_by: current_user.id)
+    
     render text: "Successfully assigned!"
   
   end
   
   def group_delete
     set_url_params
-    @model.camelize.constantize.where(id: params[:model_ids].split(",")).delete_all
+    model = @model.camelize.constantize
+    authorize! :destroy, model
+    
+    to_delete = model.where(id: params[:model_ids].split(","))
+    to_delete.delete_all
+    
     render text: "Successfully assigned!"  
   end
   

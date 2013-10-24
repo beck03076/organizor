@@ -13,7 +13,7 @@ class EnquiriesDatatable < DeviseController
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Enquiry.active.count,
+      iTotalRecords: Enquiry.myactive(current_user).count,
       iTotalDisplayRecords: enquiries.total_entries,
       aaData: data
     }
@@ -62,7 +62,12 @@ private
     sc = sort_column
 
     if !@sFilter.nil?
-      enqs = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries) || Enquiry.active
+      if @sFilter.titleize == "Deactivated"
+        enqs = Enquiry.inactive
+      else
+        fet_stat = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries)
+        enqs = fet_stat.nil? ? Enquiry.myactive(current_user) : fet_stat.myactive(current_user)
+      end
     end
 
     if sc.is_a?(Array)
@@ -73,7 +78,7 @@ private
     elsif !sc.nil?
       enqs = enqs.order("enquiries.#{sc} #{sort_direction}")
     else
-      enqs = Enquiry.active
+      enqs = Enquiry.myactive(current_user)
     end
    
     enqs = enqs.page(page).per_page(per_page)
@@ -131,7 +136,7 @@ private
   end
   
   def set_asso(var)
-    Enquiry.active.reflect_on_association(var).klass.name.underscore.pluralize
+    Enquiry.myactive(current_user).reflect_on_association(var).klass.name.underscore.pluralize
   end
   
     

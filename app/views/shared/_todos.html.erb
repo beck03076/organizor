@@ -1,0 +1,53 @@
+<ul class="vls">
+  <li>
+  <img src="/images/icons/org_todosb.png" width="14"/>
+      <h6>
+          <b>
+            Todos
+          </b>
+      </h6>
+  </li>
+            
+    <% current_user.todos.includes(:status,:topic).each do |i| %>
+
+                <li>
+                <span style='font-size: 1.5em;'>
+                <%= best_in_place i, :done, type: :checkbox ,collection: ["&#x2610;".html_safe, "&#x2611;".html_safe]  %>
+                </span>
+                    <a href="#">
+                     <b>
+                      <%= i.topic.name.titleize rescue "Unknown Topic" %>
+                     </b>
+                    </a>
+                    - 
+                    <small>
+                    <%= truncate(i.desc,length: 20) %> 
+                    </small>
+                    <span class="todo_status">
+                    <%= best_in_place i,
+                                :status_id, 
+                                :type => :select, 
+                                :collection => TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
+                    </span>
+                    <br/>
+
+                    <small class="brt0">
+                    By: 
+                    <%= link_to i.ass_by,"#" %> &nbsp;&nbsp;                    
+                    Due On:
+                    <span class="todo_due">
+                    <%= best_in_place i,:duedate,type: :date, display_as: "due" %>
+                    
+
+                    </span>
+                    </small>
+                </li>
+
+    <% end %>
+</ul>
+<script type="text/javascript">
+$(function(){
+  $('.best_in_place').best_in_place();
+});
+
+</script>

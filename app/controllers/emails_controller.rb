@@ -38,7 +38,7 @@ class EmailsController < ApplicationController
   def bulk_email 
   
      set_url_params
-     mail_to_use = UserConfig.find(current_user.id).def_enq_email.to_sym
+     mail_to_use = current_u    ser.conf.def_enq_email.to_sym
      @subject = @model.camelize.constantize.where(id: @model_ids.split(","))
      @email_ids = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
      @subject_ids = (@subject.map &:id).join(",")
