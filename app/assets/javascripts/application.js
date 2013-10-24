@@ -294,7 +294,7 @@ function dataTableStart(table,filterValue,cols)
                    { "name": "sCols", "value": cols });
     },
     "aoColumnDefs": [
-      { "bSortable": false, "aTargets": [ 0 ] }
+      { "bSortable": false, "aTargets": [ 0,1 ] }
     ], 
   });
   

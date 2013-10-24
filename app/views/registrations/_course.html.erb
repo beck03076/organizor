@@ -57,10 +57,12 @@
       <%= link_to i._updated_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
      <br/>
      <br/>
-     <div id="programme_note_<%= i.id %>">
-          
+     <div class="brg0"></div>
+     <div id="programme_note_<%= i.id %>" >
           <%= render 'programmes/note' %>
      </div>
+     <br/>
+     <br/>
      
      
      <h5 class="htab"> Notes For This Application<h5>

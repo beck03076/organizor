@@ -1,4 +1,5 @@
 <% _id =  @status + "_registrations" %>
+<br/>
 <%= form_tag(url_for: "/asdf") do %>
 
 <!----------------------- New Enquiry ---------------------------->
@@ -14,7 +15,10 @@
   <tr>
       <th>
       <%= check_box_tag "master",nil,false,{id: "master_check",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
-      &nbsp;Actions</th>
+      </th>
+      <th>
+      Actions
+      </th>
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
           <th><%= i[1].to_s.titleize %></th>
@@ -29,12 +33,14 @@
 
 
 </thead>
+<%= image_tag "/images/icons/info.png",{class: "fr tooltip",
+                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
 
- <span class="fr btnp" style="margin-right:5px" onclick="$('.dataTables_filter input').val('').keyup();"> &nbsp;&nbsp;Reset&nbsp;</span>
+ <span class="fr btnp" style="margin-left:10px" onclick="$('.dataTables_filter input').val('').keyup();">Reset</span>&nbsp;
        <%= select_tag :abdc,
                       options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Choose",""])),
                       {id: "mySelect",style: "width:150px",class: "fr"} %>
-                      <div class="cl"></div><br/><br/>
+                   <br/><br/>
    
        
 <tbody>

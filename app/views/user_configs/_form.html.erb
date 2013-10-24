@@ -68,23 +68,52 @@
   <br/>  
   
   <div class="cols">
-       <div class="fbox">
+       <div class="frbox">
         <%= f.label :enquiries %>
         <%= f.select :def_enq_email,["email1","email2"] %>
        </div>
-       <div class="fbox">
+       <div class="frbox">
         <%= f.label :registrations %>
         <%= f.select :def_reg_email, ["email1","email2"] %>
         </div>
-        <div class="fbox">
+        <div class="frbox">
         <%= f.label :create_enquiry %>
         <%= f.select :def_create_enquiry_email, (EmailTemplate.all.map &:name) %>
         </div>
-        <div class="fbox">
+        <div class="frbox">
         <%= f.label :from_email %>
         <%= f.select :def_from_email, (Smtp.all.map &:name) %>
         </div>
-        <%= fbox(f,:auto_email_enq,"check_box",nil,"Auto Send") %>          
+        <%= fs(f,:auto_email_enq,"check_box",nil,"Auto Send") %>          
+      
+  </div>
+  
+  
+     <!-- ------------------------Defaul search------------------------------- -->
+  <div class="htab">
+      <h5>
+          <b>
+            Default Search
+          </b>
+      </h5>
+  </div>
+  <br/>  
+
+  <div class="cols">
+  
+       <% enq_cols = Enquiry.column_names.sort %>
+       <div class="frbox">
+          <%= label_tag :for_enquiry %>
+          <%= f.select(:def_enq_search_col, 
+                       (enq_cols.map {|i| [i.titleize,i]}) )%>
+      </div>
+      
+       <% reg_cols = Registration.column_names.sort %>
+      <div class="frbox">
+          <%= label_tag :for_registration %>
+          <%= f.select(:def_reg_search_col, 
+                       (reg_cols.map {|i| [i.titleize,i]})) %>
+      </div>
       
   </div>
   
@@ -102,17 +131,17 @@
   </div>
   <br/>
   <h3>
-  Enquiry Columns <span class="btnp" onclick="deselectAllCheck('#enq_cols');">deselect all </span>
+  For Enquiry <span class="btnp" onclick="deselectAllCheck('#enq_cols');">deselect all </span>
   </h3>
   <br/>
   <br/>
   <div class="cols" id="enq_cols">
-  <% enq_cols = Enquiry.column_names.sort %>
+  <!-- enq_cols is set in default search section -->
   <% enq_cols_gr = enq_cols.group_by{|i| i[0]} %>
   <% user_enq_cols = @user_config.enq_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
   <% enq_cols_gr.keys.each do |j| %>
      
-      <div class="col3">
+      <div class="col3" style="margin:40px;">
         <h2 class="brg01">
          <%= j.titleize %>&nbsp;&nbsp;&nbsp;
          </h2>
@@ -126,30 +155,21 @@
       </div>
       <% end %>
   </div>
-  <br/>
-  <br/>
+
+  
   <h3>
-  Enquiry - Default Column to Search
-  </h3>
-  <br/>
-  <br/>
-  <div class="frbox">
-      <%= label_tag :default_search %>
-      <%= f.select(:def_enq_search_col, 
-                   (enq_cols.map {|i| [i.titleize,i]}) )%>
-  </div>
-  <h3>
-  Registration Columns <span class="btnp" onclick="deselectAllCheck('#reg_cols');">deselect all </span>
+  For Registration <span class="btnp" onclick="deselectAllCheck('#reg_cols');">deselect all </span>
   </h3>
   <br/>
   <br/>
   <div class="cols" id="reg_cols">
     <!-- **************************** -->
-  <% reg_cols = Registration.column_names.sort %>
+  <!-- reg_cols is set in default search section -->
+ 
   <% reg_cols_gr = reg_cols.group_by{|i| i[0]} %>
   <% user_reg_cols = @user_config.reg_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
   <% reg_cols_gr.keys.each do |j| %>
-      <div class="col3">
+      <div class="col3" style="margin:40px;">
         <h2 class="brg01">
          <%= j.titleize %>&nbsp;&nbsp;&nbsp;
          </h2>
@@ -166,17 +186,7 @@
   <br/>
   <br/>
 
-  <h3>
-  Registration - Default Column to Search
-  </h3>
-  <br/>
-  <br/>
-  <div class="frbox">
-      <%= label_tag :default_search %>
-      <%= f.select(:def_reg_search_col, 
-                   (reg_cols.map {|i| [i.titleize,i]})) %>
-  </div>
-  <h3>
+  
   <!-- ------------------------Note-------------------------------- -->
   <div class="htab">
       <h5>

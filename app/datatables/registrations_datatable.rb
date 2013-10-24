@@ -28,8 +28,9 @@ private
     registrations.map do |reg|
        temp = []
        
-       temp << check_box_tag(:tr,reg.id,false,{data: {launch: "/registrations/#{reg.id}"}}) + spc +
-               link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
+       temp << check_box_tag(:tr,reg.id,false,{data: {launch: "/registrations/#{reg.id}"}}) 
+       
+       temp<<  link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/registrations/#{reg.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
@@ -97,7 +98,7 @@ private
   end
 
   def sort_column
-    columns = [:first_name] + (@cols - ["statuses"])
+    columns = [:id,:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 

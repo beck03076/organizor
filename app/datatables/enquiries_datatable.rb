@@ -30,9 +30,9 @@ private
     enquiries.map do |enq|
        temp = []
        
-       temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}"}}) + spc +
-               spc +
-               link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
+       temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}"}}) 
+       
+       temp << link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
@@ -108,7 +108,7 @@ private
   end
 
   def sort_column
-    columns = [:id] + (@cols - ["statuses"])
+    columns = [:id,:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 
