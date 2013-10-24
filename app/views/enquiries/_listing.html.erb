@@ -5,7 +5,7 @@
 <thead>
   <tr>
       <th>
-      <%= check_box_tag "master",nil,false,{id: "master_check",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
+      <%= check_box_tag "master",nil,false,{id: "master_check",class:"nowrap",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
       <%= label_tag :actions %>
       </th>
       <% @cols.each do |i| %>
@@ -23,11 +23,11 @@
 
 </thead>
 
-       <span class="fr" onclick="$('.dataTables_filter input').val('').keyup();"> &nbsp;&nbsp;Reset&nbsp;</span>
+       <span class="fr btnp" style="margin-left:5px"  onclick="$('.dataTables_filter input').val('').keyup();"> &nbsp;&nbsp;Reset&nbsp;</span>
 
        <%= select_tag :abdc,
                       options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Choose",""])),
-                      {id: "mySelect",style: "width:150px",class: "fr"} %>
+                      {id: "mySelect",style: "width:150px",class: "fr"} %><br/><br/>
 
 <tbody>
 
