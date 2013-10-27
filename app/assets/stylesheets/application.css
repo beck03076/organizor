@@ -125,6 +125,8 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
 .fbox,.fsbox,.fnbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fboxw{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
+.fboxw label{width:120px;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal;vertical-align:top;margin-right:10px}
 .fnbox label{width:120px;display:inline-block; white-space:normal;text-align:left;font-weight:normal;vertical-align:top}
 .fpbox{width:80% !important;margin:10px 25px 10px 5px;vertical-align:top;height:40px;}
 .fpbox label{white-space:nowrap;text-align:left !important;font-weight:normal;vertical-align:top;width:60px !important; }
