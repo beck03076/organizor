@@ -37,6 +37,4 @@ this.tooltip = function(){
 
 $(document).ready(function(){
 	tooltip();
-
-
 });
