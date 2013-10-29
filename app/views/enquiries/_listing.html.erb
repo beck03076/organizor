@@ -8,7 +8,7 @@
 <%= link_to "New Enquiry", "#", {class: "btnpd"} %>
 <% end %>
 <!---------------------------------------------------------------->
-
+<div class="datatable-scroll">
 <table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
   <tr>
@@ -49,6 +49,7 @@
 
 
 </table>
+</div>
 <br/>
             <!----------------------- Group Assign ---------------------------->
             <% div_id = "group_assign_to_" + _id %>
