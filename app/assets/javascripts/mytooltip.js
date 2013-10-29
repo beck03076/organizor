@@ -9,7 +9,7 @@
  */
  
 
-this.tooltip = function(){	
+this.mytooltip = function(){	
 	/* CONFIG */		
 		xOffset = 10;
 		yOffset = 20;		
@@ -36,5 +36,5 @@ this.tooltip = function(){
 
 
 $(document).ready(function(){
-	tooltip();
+	mytooltip();
 });
