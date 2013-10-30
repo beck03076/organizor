@@ -194,7 +194,7 @@ PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channe
       <%= yield %>
      </td>
      <td valign="top">
-        <%= image_tag "/images/icons/exchange.png",{width: "20", onclick: "$('td#right-panel').slideToggle();"} %>
+        <%= image_tag "/images/icons/exchange.png",{width: "20", onclick: "toggleRightPanel();"} %>
      </td>
      <td id="right-panel" valign="top" align="left">
         <%= render "shared/todos" %>
