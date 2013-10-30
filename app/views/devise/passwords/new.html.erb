@@ -23,14 +23,13 @@ $('#fade').cycle();
 </div>
 <div id="bg1">
 <div id="login-box">
-<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
 <table cellpadding="10" cellspacing="0" width="100%">
-<tr><td colspan="2" align="left">
-<%= f.error_notification %>
-</td></tr>
+<h2>Forgot Your Password?</h2>
 <tr>
     <td align="left" valign="bottom" class="tw" style="padding:10px 0 0 20px">
-     <%= f.input :email, :required => true, :autofocus => true %>
+     <%= f.label :email %>
+     <%= f.text_field :email %>
       
     </td>
     <td align="center" valign="middle" rowspan="2" width="90" class="lb pad10">
@@ -60,19 +59,3 @@ $('#fade').cycle();
 
 
 
-
-<h2>Forgot your password?</h2>
-
-<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email, :required => true, :autofocus => true %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
