@@ -52,11 +52,19 @@ $('#fade').cycle();
 		  <td align="left" valign="bottom" class="tw">
           <%= f.text_field :password_confirmation %></td>
           </tr>
+		  <tr>
+		  <td align="left" valign="bottom" class="tw" >
+          &nbsp;
+		  </td>
+		  <td align="center" valign="middle"   class="lb pad10">
+		<span class="th35">
+			 <%= f.submit 'Go', :class => "white-button"%>
+		</span>
+		</td>
+		</tr>
           </table>
           
-          <span class="th35">
-           <%= f.submit 'Go', :class => "white-button"%>
-          </span>
+          
           
 <% end %>
 </div>
