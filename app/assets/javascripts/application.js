@@ -19,9 +19,7 @@
 //= require dataTables/jquery.dataTables
 //= require jquery.purr
 //= require best_in_place
-
-
-
+//= require private_pub
 
 
 $(function(){

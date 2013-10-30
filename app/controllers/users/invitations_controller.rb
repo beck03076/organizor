@@ -5,8 +5,9 @@ class Users::InvitationsController < Devise::InvitationsController
       if !email_id.blank?
 
              @user = User.invite!(email: email_id)
+             @user.conf = UserConfig.first.dup
              
-               if params[:role_id]
+               if !params[:role_id].blank?
                  @user.update_attribute(:role_id, params[:role_id])
                  @user.update_attribute(:invited_by_id,current_user.id)
                  @user.update_attribute(:is_active, true)

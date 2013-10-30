@@ -13,6 +13,11 @@ $(function(){
 
 });
 
+
+PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channel) {
+  alert(data.message);
+});
+
 </script>
 
 </head>
@@ -43,6 +48,7 @@ $(function(){
     <small class="whitec">
     &nbsp;&nbsp;&nbsp;<%= u.role.name.titleize rescue "Role Unassigned" %>
     </small>
+    <div id="notification"> </div>
     <div class="cl"></div>
     <div class="uiboxs">
     <ul class="lsn">
@@ -69,6 +75,8 @@ $(function(){
     <!-- USER INFO BOX - ENDS -->
 </div>
 <!-- HEADER - ENDS -->
+
+<%= subscribe_to "/enquiries/" + current_user.id.to_s %>
 
 <!-- KEEP message and type in between the P tag , without enter or space -->
           <% if flash[:notice] %>

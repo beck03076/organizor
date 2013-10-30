@@ -203,11 +203,13 @@ class EnquiriesController < ApplicationController
       tl("Enquiry",:id,'This enquiry has been deactivated',
          "Deactivated",'deactivate')
     end
-
+    
+    PrivatePub.publish_to("/enquiries/" + params[:enquiry][:assigned_to].to_s, 
+                          message: "Enquiry has been assigned to you")
+    
     respond_to do |format|
       if @enquiry.update_attributes(params[:enquiry].except("assign","deactivate"))
         format.html { redirect_to @enquiry, notice: 'Enquiry was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @enquiry.errors, status: :unprocessable_entity }
