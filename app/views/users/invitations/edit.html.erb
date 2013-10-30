@@ -1,22 +1,29 @@
-  <%= stylesheet_link_tag    "application" %>
-<div class="tab-container" align="center">
-<div class="tab-content" style="display:block">
-<div class="boxp box-theme-ch accept_invite">
-<br/>
-<br/>
-
-<br/>
-<br/>
-<br/>
-    <div class="cols" >
-    
-        <div class="col6">
-        <h2><%= t 'devise.invitations.edit.header' %></h2>
-        <br/>
-        <br/>
-        <br/>
-    
-        <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set your password</title>
+  <%= stylesheet_link_tag    "home" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+ 
+  
+  <!--p class="notice"><%= notice %></p-->
+  <!--p class="alert"><%= alert %></p-->
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#fade').cycle();
+});
+</script>
+<div id="fade">
+<img src="/images/b1.jpg" class="theme"/>
+<img src="/images/b2.jpg" class="theme"/>
+<img src="/images/b3.jpg" class="theme"/>
+</div>
+<div id="bg1">
+<div id="login-box">
+<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
           <%= devise_error_messages! %>
           <%= f.hidden_field :invitation_token %>
           <div class="frbox1">
@@ -36,10 +43,8 @@
           <%= f.submit t("devise.invitations.edit.submit_button"),{class: "btnp"} %>
           </div>
         <% end %>
-        </div>
-        
+</div>
+</div>
+</body>
+</html>
 
-    </div>
-</div>
-</div>
-</div>

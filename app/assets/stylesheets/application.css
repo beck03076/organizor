@@ -52,7 +52,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #wrapper{max-width:1300px;min-width:1200px;margin:0 auto 0 auto;padding:0;border:1px solid #CACACA;box-shadow:0 0 4px #ccc;box-shadow:0 0 10px #ccc;border-radius:0;overflow:hidden;}
 #header{padding:10px 2% 15px 2%;width:96%; border-bottom:5px solid #00336C;color:#fff;position:relative}
 #left-panel{position:absolute;background:#CCC;height:auto;box-shadow: 3px 0 6px #ccc;border-right:1px solid #CACACA;}
-#right-panel{height:auto;width:200px;padding-left:10px;background:#fff}
+#right-panel{height:auto;width:245px !important;padding-left:10px;background:#fff}
 #main-body{position:relative;background:#fff}
 #body-content{margin-left:110px;padding:20px 0 20px 10px;min-height:1000px}
 #footer,#footerin{padding:10px 2% 10px 2%;width:96%;}
@@ -125,6 +125,8 @@ label{font-size:14px;font-weight:normal;text-align:left;}
 .btnsd,.btnsd:active,.btnsd:link,.btnsd:visited{text-decoration:none;font-size:12px;background:#C4C4C4;color:#E2E2E2;padding:5px 15px 5px 15px;box-shadow: 3px 4px 6px #BDBDBD inset;margin-right:10px}
 .fbox,.fsbox,.fnbox{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
 .fbox label{width:120px;display:inline-block; white-space:nowrap;text-align:left;font-weight:normal;vertical-align:top}
+.fboxw{width:97%;margin:10px 0 0 0;vertical-align:top;white-space:nowrap;height:40px}
+.fboxw label{width:120px;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal;vertical-align:top;margin-right:10px}
 .fnbox label{width:120px;display:inline-block; white-space:normal;text-align:left;font-weight:normal;vertical-align:top}
 .fpbox{width:80% !important;margin:10px 25px 10px 5px;vertical-align:top;height:40px;}
 .fpbox label{white-space:nowrap;text-align:left !important;font-weight:normal;vertical-align:top;width:60px !important; }
@@ -138,7 +140,8 @@ input[type=radio]{padding-right:5px}
 .frbox label:first-child{width:120px !important;display:inline-block; white-space:nowrap;text-align:right;font-weight:normal !important;color:#666;vertical-align:top}
 .frbox input,.frbox select,.frbox textarea{margin-left:15px}
 .mand label{color: #c24255 !important;}
-.close-icon{float:right;border:1px solid #ccc;padding:0 5px 2px 5px;font-size:11px;background:#ccc;border-radius:1000px;color:#444444;cursor:pointer}
+.close-icon{float:right;padding:0 5px 2px 5px;color:#444444;cursor:pointer;background:#fff;
+border:0;font-size:15px;font-family:"Comic Sans MS", cursive}
 .close-icon:hover{cursor:pointer;color:#222}
 .remove-icon{background:#AD0707;color:#fff;font-weight:bold;padding:0 5px 1px 5px;margin-right:3px;border-radius:5px}
 #note-action .fbox{height:auto}
@@ -329,7 +332,7 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 .pop-head {padding:15px 15px 5px 15px;font-size:14px}
 .pop-content{padding:5px 15px 10px 15px }
 .popuplayout{width:500px;background:#fff}
-.popupc{background:#fff;padding:15px 15px 10px 15px;font-size:12px;}
+.popupc{background:#fff;padding:10px 15px 10px 15px;font-size:12px;}
 /* POPUP BOX - ENDS */
 
 /* FONT SIZE & WEIGHT - STARTS */
@@ -411,7 +414,7 @@ body > * {visibility: hidden;}
 
 /* POPUP - STARTS */
 .popuptitlemsg{font-size:14px;font-weight:bold;color:#444;padding:5px 10px 5px 10px;background:#d3d7cf} 
-.popuptitle{font-size:14px;font-weight:bold;color:#444;padding:5px 10px 5px 10px;background:#d3d7cf} 
+.popuptitle{font-size:14px;font-weight:bold;color:#444;padding:5px 10px 5px 10px;background:#fff;margin:5px 10px 5px 10px;border-bottom:1px solid #E1E1E1}
 .addNewPop {padding: 0;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc;border-radius: 5px;display: none;position: absolute;z-index: 100000000000;
 background: #fff;overflow:hidden}
 .popupc{padding:25px 25px 25px 25px;text-align:left !important;font-size:16px;}
@@ -576,3 +579,9 @@ border:1px solid #3D3D3D;background:#3D3D3D;color:#FFFFFF;padding:5px;line-heigh
 .abs-plus-box:hover .abs-plus{display:inline;}
 .abs-plus:hover{background:#ccc;cursor:pointer}
 .rel{position:relative}
+
+/* OVERRIDE - STARTS */
+.boxstheme{width:auto}
+#right-panel{width:245px !important;}
+.datatable-scroll{width:800px !important;overflow:auto;}
+/* OVERRIDE - ENDS */
