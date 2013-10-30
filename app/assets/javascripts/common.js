@@ -518,3 +518,12 @@ function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){
 
 
 
+
+function toggleRightPanel(){
+$('td#right-panel').slideToggle(function(){
+	var width=$(".dataTables_wrapper").width();
+	width=(width>830) ? "820px" : "1100px";
+	$(".dataTables_wrapper").css({"width":width});
+});
+
+}
