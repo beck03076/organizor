@@ -171,6 +171,15 @@ PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channe
         <% end %>
         <% end %>
         </li>
+        
+        <li id="resourcesMM">
+        
+        <%= link_to "/user_configs/#{current_user.conf.id}/edit" do %>
+          <img src="/images/icons/org_settings.png" id="iconMM10" width="36" /><br/>
+          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+          Settings
+        <% end %>
+        </li>
     </ul>
     </div>
     <!-- MAIN MENU - ENDS -->

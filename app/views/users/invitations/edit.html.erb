@@ -23,26 +23,30 @@ $('#fade').cycle();
 </div>
 <div id="bg1">
 <div id="login-box">
+<h2>Set Your Password</h2>
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+
           <%= devise_error_messages! %>
           <%= f.hidden_field :invitation_token %>
-          <div class="frbox1">
-            <%= fs(f,"first_name","text_field",1) %>
-          </div>
-          <div class="frbox1">
-            <%= fs(f,"surname","text_field",1) %>
-          </div>
-          <div class="frbox1">
-            <%= fs(f,"password","password_field",1) %>
-          </div>
-          <div class="frbox1">
-            <%= fs(f,"password_confirmation","password_field",1, "Retype Password") %>
-          </div>
-          <div class="frbox1">
-          <label> &nbsp; </label>
-          <%= f.submit t("devise.invitations.edit.submit_button"),{class: "btnp"} %>
-          </div>
-        <% end %>
+          
+          <%= f.label :first_name %>
+          <%= f.text_field :first_name %>
+          <br/>
+          <%= f.label :surname %>
+          <%= f.text_field :surname %>
+          <br/>
+          <%= f.label :password %>
+          <%= f.text_field :password %>
+          <br/>
+          <%= f.label :retype_password %>
+          <%= f.text_field :password_confirmation %>
+          <br/>
+          
+          <span class="th35">
+           <%= f.submit 'Go', :class => "white-button"%>
+          </span>
+          
+<% end %>
 </div>
 </div>
 </body>
