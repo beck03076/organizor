@@ -583,5 +583,5 @@ border:1px solid #3D3D3D;background:#3D3D3D;color:#FFFFFF;padding:5px;line-heigh
 /* OVERRIDE - STARTS */
 .boxstheme{width:auto}
 #right-panel{width:245px !important;}
-.datatable-scroll{width:800px !important;overflow:auto;}
+.display{display:block;overflow:auto;width:820px !important;}
 /* OVERRIDE - ENDS */
