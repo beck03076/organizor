@@ -149,7 +149,7 @@ $(function(){
             :sub_agent,:todo_status,:todo_topic].each do |r| %>
             <li>
             <%= image_tag "/images/icons/" + r.to_s + ".png",{width: "16"} %>
-            <%= link_to r.to_s.titleize.pluralize,r.to_s.pluralize %></li>
+            <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %></li>
             <% end %>
         </ul>
         </li>
