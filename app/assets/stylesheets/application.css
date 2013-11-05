@@ -69,15 +69,17 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #menu-main  > li:hover a{color:#333333}
 #menu-main  > li .menuar{display:none}
 #menu-main  > .active-main-menu .menuar{display:inline; position:absolute; right:-11px;margin-top:-20px}
-#menu-main  > li .submenu{display:none;white-space:nowrap;position:absolute;z-index:999999999;margin:0;left:90px;top:10px;padding:0;}
-#menu-main  > li .submenu li{padding:5px 40px 5px 30px;border-right:1px solid #CACACA;border-left:1px solid #CACACA;color:#949494}
+#menu-main  > li .submenu{display:none;white-space:nowrap;position:absolute;z-index:999999999;margin:0;left:103px;top:5px;padding:0;box-shadow: 0 0 6px #ccc;
+border:1px solid #D9D9D9;border-radius:5px;}
+#menu-main  > li .submenu li{padding:9px 40px 9px 30px;color:#949494}
 #menu-main  > li .submenu li a{color:#949494;font-size:11px;font-weight:normal}
 #menu-main  > li .submenu li a:hover{text-decoration:none;color:#333333}
 #menu-main  > li .submenu li:nth-child(2n+1){background:#fff}
+#menu-main  > li .submenu li:last-child{border-radius:0 0 5px 5px}
+#menu-main  > li .submenu li:first-child{border-radius:5px 5px 0 0;}
 #menu-main  > li .submenu li:hover{background:#fff;color:#333333}
-#menu-main  > li .submenu li:last-child{border-radius:0 0 5px 0}
-#menu-main  > li .submenu li:first-child{border-radius:0 5px 0 0;border-top:1px solid #CACACA;}
 #menu-main  > li:hover .submenu{display:inline}
+.menual{position:absolute;left:-12px;top:5px}
 /* MAIN MENU - ENDS */
 
 /* THEME - STARTS */
