@@ -22,8 +22,8 @@ $(function(){
                     <td><%= fu.desc %></td>
                     <td><%= fu.starts_at.strftime("%F %R %p") %></td>
                     <td><%= fu.event_type.try(:name) %></td>
-                    <td><%= User.find(fu.assigned_to).first_name %></td>
-                    <td><%= User.find(fu.assigned_by).first_name %></td>
+                    <td><%= fu.ato %></td>
+                    <td><%= fu.aby %></td>
                </tr>
            <% end %>               
                 <tr>
