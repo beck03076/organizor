@@ -25,8 +25,8 @@ $(function(){
                     <td><%= t.status.try(:name) %></td>
                     <td><%= t.duedate %></td>
                     <td><%= t.priority %></td>
-                    <td><%= User.find(t.assigned_to).first_name %></td>
-                    <td><%= User.find(t.assigned_by).first_name %></td>
+                    <td><%= t.ato %></td>
+                    <td><%= t.aby %></td>
                </tr>
            <% end %> 
 <tr>
