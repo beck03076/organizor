@@ -527,3 +527,14 @@ $('td#right-panel').slideToggle(function(){
 });
 
 }
+
+function showNotifiy(){
+	$(".notify-msg").slideToggle(1000);
+	if($(".notify-down").hasClass("dn")){
+		$(".notify-up").addClass("dn");
+		$(".notify-down").removeClass("dn");
+	}else{
+		$(".notify-down").addClass("dn");
+		$(".notify-up").removeClass("dn");
+	}
+}
