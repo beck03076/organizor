@@ -23,7 +23,7 @@ module MyExtension
   
   def help(col)
     if col
-     User.find(col).first_name
+     User.find(col).first_name rescue "Unknown"
     else
      "Unknown"
     end
