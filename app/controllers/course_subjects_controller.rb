@@ -1,4 +1,5 @@
 class CourseSubjectsController < ApplicationController
+  authorize_resource
   # GET /course_subjects
   # GET /course_subjects.json
   def index
@@ -44,7 +45,7 @@ class CourseSubjectsController < ApplicationController
 
     respond_to do |format|
       if @course_subject.save
-        format.html { redirect_to @course_subject, notice: 'Course subject was successfully created.' }
+        format.html { redirect_to course_subjects_path, notice: 'Course subject was successfully created.' }
         format.json { render json: @course_subject, status: :created, location: @course_subject }
       else
         format.html { render action: "new" }

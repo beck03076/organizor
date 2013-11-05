@@ -1,0 +1,18 @@
+<h4 class="htab">
+Follow Up
+</h4>
+
+<ul class="vlsdet">
+   <li><label>Title </label>: <%= @follow_up.title %></li>
+   <li><label>Starts At </label>: <%= @follow_up.starts_at %></li>
+   <li><label>Ends At </label>: <%= @follow_up.ends_at %></li>
+   <li><label>Event Type </label>: <%= @follow_up.event_type.name rescue "Unknown" %></li>
+   <li><label>Venue </label>: <%= @follow_up.venue %></li>
+   <li><label>Remind Before </label>: <%= @follow_up.remind_before %></li>
+   <li><label>Created By </label>: <%= @follow_up.cby %></li>
+   <li><label>Created At </label>: <%= @follow_up.created_at.strftime("%F %R %p") %></li>
+   <li><label>Assigned To </label>: <%= @follow_up.ato %></li>
+   <li><label>Assigned By </label>: <%= @follow_up.aby %></li>
+   <li><label>Description </label>: <%= @follow_up.desc %></li>
+</ul>
+

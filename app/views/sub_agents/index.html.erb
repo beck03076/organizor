@@ -1,21 +1,7 @@
-<h1>Listing sub_agents</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render "shared/resources",{resource_disp1: "Sub Agent",
+                               resource_disp2: "Sub Agents",
+                               resource: @sub_agents,
+                               new_resource: SubAgent.new }   %>
 
-<% @sub_agents.each do |sub_agent| %>
-  <tr>
-    <td><%= link_to 'Show', sub_agent %></td>
-    <td><%= link_to 'Edit', edit_sub_agent_path(sub_agent) %></td>
-    <td><%= link_to 'Destroy', sub_agent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Sub agent', new_sub_agent_path %>

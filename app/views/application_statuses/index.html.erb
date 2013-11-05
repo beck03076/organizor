@@ -1,25 +1,8 @@
-<h1>Listing application_statuses</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Desc</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @application_statuses.each do |application_status| %>
-  <tr>
-    <td><%= application_status.name %></td>
-    <td><%= application_status.desc %></td>
-    <td><%= link_to 'Show', application_status %></td>
-    <td><%= link_to 'Edit', edit_application_status_path(application_status) %></td>
-    <td><%= link_to 'Destroy', application_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<%= render "shared/resources",{resource_disp1: "Application Status",
+                               resource_disp2: "Application Statuses",
+                               resource: @application_statuses,
+                               new_resource: ApplicationStatus.new }   %>
 
-<br />
 
-<%= link_to 'New Application status', new_application_status_path %>

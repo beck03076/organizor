@@ -5,24 +5,29 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  
+ 
 <script type="text/javascript">
 $(function(){
-
-  showPopUp('message');
-
+ showPopUp('message');
 });
 
+  PrivatePub.subscribe("/notify/<%= current_user.id.to_s %>", function(data, channel) {
+    info("Notification",data.message);
+     url = "/notify/<%= current_user.id.to_s %>"
+     $.get(url,function(reply){
+         $(reply).prependTo(".notifyls");
+         var noticount = $('div#notify_count_container').data("count");
+         $("#notify_no").html('<span class="notify-count">' + noticount + '</span>');
+     });
+  });
 
-PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channel) {
-  alert(data.message);
-});
 
 </script>
 
 </head>
 <body>
 
+ <%= subscribe_to "/notify/" + current_user.id.to_s %>
 <div id="wrapper">
 <!-- Shortening variable -->
 <% u = current_user %>
@@ -76,7 +81,41 @@ PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channe
 </div>
 <!-- HEADER - ENDS -->
 
-<%= subscribe_to "/enquiries/" + current_user.id.to_s %>
+    <!-- NOTIFICATION BOX - STARTS -->
+    <div id="notify-box" >
+        <center>
+        <div class="notify-msg" data-user_id="<%= current_user.id %>">
+        <ul class="notifyls">
+        <% Timeline.where(receiver_id: current_user.id).order("created_at desc").limit(8).each do |tl| %>
+
+              <%= render "shared/notifications", tl: tl, count: nil %>
+            
+        <% end %>
+            
+        </ul>
+        <br/>
+        <%= link_to "See all" %>
+        <br/>
+        <br/>
+        
+        </div>
+        <div class="notify-icon-box">
+        <div class="notify-icon" onclick="showNotifiy();" >
+        <center>
+        <br/>
+        <span id="notify_no">
+          <% unch = Timeline.where(receiver_id: current_user.id,checked: false).count %>
+          <%= unch == 0 ? '' : ('<span class="notify-count">' + unch.to_s + '</span>').html_safe %>
+        </span>
+        <br/>
+        <img src="/images/icons/down.png" width="12" class="notify-down"/>
+        <img src="/images/icons/up.png" width="12" class="notify-up dn"/>
+        </center>
+        </div></div>
+        </center>
+    </div>
+    <!-- NOTIFICATION BOX - ENDS -->
+
 
 <!-- KEEP message and type in between the P tag , without enter or space -->
           <% if flash[:notice] %>
@@ -93,6 +132,28 @@ PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channe
     <!-- MAIN MENU - STARTS -->
     <div id="left-panel">
     <ul id="menu-main">
+        <li id="resourcesMM">
+        
+        <%= link_to "#" do %>
+          <img src="/images/icons/org_resources.png" id="iconMM12" width="36" /><br/>
+          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+          Resources
+        <% end %>
+        
+        <ul class="submenu">
+            <img src="/images/icons/left-arrow.png" class="menual" width="13"/>
+            <% [:programme_type,:application_status,:contact_type,
+            :course_level,:course_subject,:doc_category,
+            :english_level,:enquiry_status,:event_type,
+            :exam_type,:qualification,:student_source,
+            :sub_agent,:todo_status,:todo_topic].each do |r| %>
+            <li>
+            <%= image_tag "/images/icons/" + r.to_s + ".png",{width: "16"} %>
+            <%= link_to r.to_s.titleize.pluralize,r.to_s.pluralize %></li>
+            <% end %>
+        </ul>
+        </li>
+        
         <li id="dashboardMM">
         <img src="/images/icons/org_dashboard.png" id="iconMM1"width="36" /><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
@@ -172,14 +233,7 @@ PrivatePub.subscribe("/enquiries/" + current_user.id.to_s, function(data, channe
         <% end %>
         </li>
         
-        <li id="resourcesMM">
         
-        <%= link_to "/user_configs/#{current_user.conf.id}/edit" do %>
-          <img src="/images/icons/org_settings.png" id="iconMM10" width="36" /><br/>
-          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-          Settings
-        <% end %>
-        </li>
     </ul>
     </div>
     <!-- MAIN MENU - ENDS -->

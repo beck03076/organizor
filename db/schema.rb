@@ -11,13 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131023164805) do
+ActiveRecord::Schema.define(:version => 20131105070631) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "audits", :force => true do |t|
@@ -57,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.string   "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "countries", :force => true do |t|
@@ -97,6 +101,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "documents", :force => true do |t|
@@ -200,6 +206,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "event_types", :force => true do |t|
@@ -207,6 +215,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "exam_scores", :force => true do |t|
@@ -330,6 +340,7 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "desc"
   end
 
   create_table "programmes", :force => true do |t|
@@ -487,15 +498,17 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
   create_table "timelines", :force => true do |t|
     t.integer  "user_id"
     t.string   "user_name"
-    t.datetime "created_at", :null => false
+    t.datetime "created_at",                     :null => false
     t.text     "desc"
     t.string   "a_name"
     t.integer  "a_id"
-    t.datetime "updated_at", :null => false
+    t.datetime "updated_at",                     :null => false
     t.text     "comment"
     t.string   "action"
     t.integer  "m_id"
     t.string   "m_name"
+    t.integer  "receiver_id"
+    t.boolean  "checked",     :default => false
   end
 
   create_table "todo_statuses", :force => true do |t|
@@ -503,6 +516,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "todo_topics", :force => true do |t|
@@ -510,6 +525,8 @@ ActiveRecord::Schema.define(:version => 20131023164805) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "todos", :force => true do |t|

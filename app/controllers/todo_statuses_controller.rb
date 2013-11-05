@@ -1,4 +1,5 @@
 class TodoStatusesController < ApplicationController
+  authorize_resource
   # GET /todo_statuses
   # GET /todo_statuses.json
   def index
@@ -44,7 +45,7 @@ class TodoStatusesController < ApplicationController
 
     respond_to do |format|
       if @todo_status.save
-        format.html { redirect_to @todo_status, notice: 'Todo status was successfully created.' }
+        format.html { redirect_to todo_statuses_path, notice: 'Todo status was successfully created.' }
         format.json { render json: @todo_status, status: :created, location: @todo_status }
       else
         format.html { render action: "new" }

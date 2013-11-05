@@ -1,21 +1,9 @@
-<h1>Listing contact_types</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render "shared/resources",{resource_disp1: "Contact Type",
+                               resource_disp2: "Contact Types",
+                               resource: @contact_types,
+                               new_resource: ContactType.new }   %>
 
-<% @contact_types.each do |contact_type| %>
-  <tr>
-    <td><%= link_to 'Show', contact_type %></td>
-    <td><%= link_to 'Edit', edit_contact_type_path(contact_type) %></td>
-    <td><%= link_to 'Destroy', contact_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
 
-<%= link_to 'New Contact type', new_contact_type_path %>
+

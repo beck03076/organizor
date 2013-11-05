@@ -1,0 +1,122 @@
+<script>
+$(function(){
+  setColorsFromSession();
+  $("ul.tab-menus li.all_smtps").trigger('click');
+  activeMM("emailMM");
+ });
+</script>
+
+
+<div class="tab-container">
+
+    <%= render "email_templates/menus" %>
+    <div class="tab-content" style="display:block">
+    <div class="boxp box-theme-ch">
+        <h4 class="htab">
+        All SMTPs
+        </h4>
+
+        <ul class="vlsdet">
+
+        <% @smtps.each do |s| %>
+           <br/>
+           <br/>
+           <h6 class="htab"> <%= s.name %>  &nbsp;&nbsp;&nbsp;
+          <%= link_to 'Delete', s, method: :delete, data: { confirm: 'Are you sure?' } %>
+           </h6>
+           <br/>
+           <br/>
+          <li>
+            <label> Address </label>: <%= s.address %>
+          </li>
+          
+          <li>
+            <label> Port </label>: <%= s.port %>
+          </li>
+          
+          <li>
+            <label> Domain </label>: <%= s.domain %>
+          </li>
+          
+          <li>
+            <label> User Name </label>: <%= s.user_name %>
+          </li>
+          
+          <li>
+            <% a = ""; s.password.size.times{  a  += "*"  }  %>
+            <label> Password </label>: <i> <%= a %></i>
+          </li>
+          
+          <li>
+            <label> Authentication </label>: <%= s.authentication %>
+          </li>
+          
+          <li>
+            <label> Enable Starttls Auto </label>: <%= s.enable_starttls_auto %>
+          </li>
+            
+          
+
+        <% end %>
+        </ul>
+
+        <br/>
+        <br/>
+        <br/>
+        <%= link_to 'New Smtp', "#",{class: "btnp", onclick: "$('#new_smtp_form').slideToggle();"} %>
+        <br/>
+        <br/>
+        <br/>
+        <div id="new_smtp_form" style="display:none;">
+        <%= form_for(Smtp.new) do |f| %>
+          <ul class="vlsdet">
+           <h6 class="htab"> New Smtp </h6>
+           <br/>
+           <br/>
+           
+          <li>
+            <label> Name </label> <%= f.text_field :name %>
+          </li>
+          
+          <li>
+            <label> Address </label> <%= f.text_field :address %>
+          </li>
+          
+          <li>
+            <label> Port </label> <%= f.text_field :port %>
+          </li>
+          
+          <li>
+            <label> Domain </label> <%= f.text_field :domain %>
+          </li>
+          
+          <li>
+            <label> User Name </label> <%= f.text_field :user_name %>
+          </li>
+          
+          <li>
+            <label> Password </label> <i> <%= f.password_field :password %></i>
+          </li>
+          
+          <li>
+            <label> Authentication </label> <%= f.text_field :authentication %>
+          </li>
+          
+          <li>
+            <label> Enable Starttls Auto </label> <%= f.text_field :enable_starttls_auto %>
+          </li>
+          <br/>
+
+          <li><%= f.button "Create", class: "btnp" %></li>
+        </ul>
+
+            
+         
+        <% end %>
+        </div>
+        <br/>
+        <br/>
+     </div>
+     </div>
+</div>
+

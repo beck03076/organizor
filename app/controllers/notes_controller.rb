@@ -43,23 +43,20 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(params[:note].except("note"))
     
-                           
-    if (params[:note][:note].to_s == "from_action")
+      s_class = params[:note][:sub_class]
+      s_id = params[:note][:sub_id]
+      r_id = s_class.camelize.constantize.find(s_id).assigned_to
    
-      Timeline.create!(user_id: current_user.id,
-                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       m_name: params[:note][:sub_class],
-                       m_id: params[:note][:sub_id],
-                       created_at: Time.now,
-                       desc: strip_tags(params[:note][:content].to_s),
-                       comment: "Note by " + current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       action: 'note')
+    if (params[:note][:note].to_s == "from_action")      
+      
+      tl(s_class,s_id,strip_tags(params[:note][:content].to_s),
+          "Note by " + current_user.first_name.to_s + ' ' + current_user.surname.to_s,'note',r_id)
                        
     end
 
     respond_to do |format|
       if @note.save
-        format.html { redirect_to "/#{params[:note][:sub_class].pluralize.downcase}/" + params[:note][:sub_id].to_s }
+        format.html { redirect_to "/#{s_class.pluralize.downcase}/" + s_id.to_s }
         format.json { render json: @note, status: :created, location: @note }
       else
         format.html { render action: "new" }

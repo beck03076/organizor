@@ -1,4 +1,5 @@
 class SubAgentsController < ApplicationController
+  authorize_resource
   # GET /sub_agents
   # GET /sub_agents.json
   def index
@@ -44,7 +45,7 @@ class SubAgentsController < ApplicationController
 
     respond_to do |format|
       if @sub_agent.save
-        format.html { redirect_to @sub_agent, notice: 'Sub agent was successfully created.' }
+        format.html { redirect_to sub_agents_path, notice: 'Sub agent was successfully created.' }
         format.json { render json: @sub_agent, status: :created, location: @sub_agent }
       else
         format.html { render action: "new" }

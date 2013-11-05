@@ -1,4 +1,4 @@
-
+<!-- emails to enquiry -->
 <br/>
 <% if @list.to_i == 1 && obj.first.emails.size > 0 %>
     <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -12,7 +12,7 @@
         </thead>
         <tbody>
                 <% obj.first.emails.each do |email| %>
-                    <tr>
+                    <tr class="preview" data-email_id='<%= email.id %>'>
                         <td><%= email.subject %></td>
                         <td><%= email.created_at.strftime("%F %R %p") %></td>
                         <td><%= email._created_by.name rescue "" %></td>
@@ -130,5 +130,8 @@ tinymce.init({
      autosave_ask_before_unload: false
 });
 
+$(function(){
+    imagePreview("email");
+});
 
 </script>

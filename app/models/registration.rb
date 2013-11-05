@@ -88,4 +88,12 @@ class Registration < ActiveRecord::Base
     self.address_country.name rescue "Unknown"
   end
   
+  def tit
+    self.first_name rescue "Title Unknown"
+  end
+  
+  def self.tit
+    "Registrations"
+  end
+  
 end

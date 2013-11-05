@@ -21,10 +21,22 @@
     model = @model.camelize.constantize
     authorize! :update, model
     
-    to_update = model.where(id: params[:model_ids].split(","))
+    ids = params[:model_ids].split(",")
+    
+    to_update = model.where(id: ids)
     to_update.update_all(assigned_to: params[:user_id],
                          assigned_by: current_user.id)
+                         
+
+    ass_to = User.find(params[:user_id]).first_name
+    ass_by = User.find(current_user.id).first_name
     
+    tl(@model.camelize,0,"#{ids.size} #{@model.camelize.pluralize} has been reassigned",
+         'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
+         'assign_to',params[:user_id])
+    
+    model.find(ids.first).update_attribute(:updated_at,Time.now)
+                          
     render text: "Successfully assigned!"
   
   end
@@ -38,6 +50,19 @@
     to_delete.delete_all
     
     render text: "Successfully assigned!"  
+  end
+  
+  def notify
+    @tl = Timeline.where(receiver_id: params[:id]).order("created_at desc").first
+    @notify_count = Timeline.where(receiver_id: params[:id],checked: false).count
+    
+    render :partial => "shared/notifications", :locals => {:tl => @tl,:count => @notify_count}
+    
+  end
+  
+  def mark_all_check
+    Timeline.where(receiver_id: params[:id]).update_all(checked: true)
+    render text: "Successfully marked!"  
   end
   
   private
@@ -76,18 +101,21 @@
     end    
   end
   
-  def tl(model,p_id,msg,comment,act)
+  def tl(model,p_id,msg,comment,act,r_id = nil)
   
    Timeline.create!(user_id: current_user.id,
                     user_name: current_user.name,
                     m_name: model,
-                    m_id: params[p_id],
+                    m_id: p_id,
                     created_at: Time.now,
                     desc: msg,
                     comment: comment,
-                    action: act)
+                    action: act,
+                    checked: false,
+                    receiver_id: r_id)
                     
   end
+  
   
   
   

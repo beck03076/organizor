@@ -1,4 +1,5 @@
 class DocCategoriesController < ApplicationController
+  authorize_resource
   # GET /doc_categories
   # GET /doc_categories.json
   def index
@@ -44,7 +45,7 @@ class DocCategoriesController < ApplicationController
 
     respond_to do |format|
       if @doc_category.save
-        format.html { redirect_to @doc_category, notice: 'Doc category was successfully created.' }
+        format.html { redirect_to doc_categories_path, notice: 'Doc category was successfully created.' }
         format.json { render json: @doc_category, status: :created, location: @doc_category }
       else
         format.html { render action: "new" }

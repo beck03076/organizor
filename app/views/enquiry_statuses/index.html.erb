@@ -1,25 +1,7 @@
-<h1>Listing enquiry_statuses</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Desc</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render "shared/resources",{resource_disp1: "Enquiry Status",
+                               resource_disp2: "Enquiry Statuses",
+                               resource: @enquiry_statuses,
+                               new_resource: EnquiryStatus.new }   %>
 
-<% @enquiry_statuses.each do |enquiry_status| %>
-  <tr>
-    <td><%= enquiry_status.name %></td>
-    <td><%= enquiry_status.desc %></td>
-    <td><%= link_to 'Show', enquiry_status %></td>
-    <td><%= link_to 'Edit', edit_enquiry_status_path(enquiry_status) %></td>
-    <td><%= link_to 'Destroy', enquiry_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Enquiry status', new_enquiry_status_path %>

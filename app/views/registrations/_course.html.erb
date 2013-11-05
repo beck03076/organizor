@@ -11,7 +11,7 @@
     <!-- @programme is used in 2 partials, change status and add note -->
     <% @programme = i %>
    
-    <h3><%= i.institution.name rescue "Unknown" %></h3>
+    <h3><%= i.institution.name rescue "Unknown" %></h3> <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
     <br/>
     <br/>
     <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>

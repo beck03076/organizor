@@ -150,8 +150,13 @@ class RegistrationsController < ApplicationController
       ass_to = User.find(params[:registration][:assigned_to]).first_name
       ass_by = User.find(params[:registration][:assigned_by]).first_name
       
-      tl("Registration",:id,'This registration has been reassigned',
-          'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to')
+      tl("Registration",params[:id],'This registration has been reassigned',
+          'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:registration][:assigned_to])
+    
+    else
+    
+      tl("Registration",params[:id],'Values of this registration has been updated',
+         "Updated",'Update',@registration.assigned_to)
     end
 
     respond_to do |format|
@@ -191,7 +196,7 @@ class RegistrationsController < ApplicationController
                                           audit_comment: params[:note].to_s,
                                           status_id: deact)
                   #create a timeline item
-                  tl("Enquiry",:enquiry_id,
+                  tl("Enquiry",params[:enquiry_id],
                      'This enquiry has been deactivated in order to register',params[:note],
                      "registration")
                                    

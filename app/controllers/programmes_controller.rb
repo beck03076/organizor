@@ -59,6 +59,13 @@ authorize_resource
   # PUT /programmes/1.json
   def update
     @programme = Programme.find(params[:id])
+    
+    if (params[:programme][:notes_attributes])
+          
+      tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
+         "#{(@programme.institution.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
+        
+    end
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
@@ -83,7 +90,7 @@ authorize_resource
     @programme.destroy
 
     respond_to do |format|
-      format.html { redirect_to programmes_url }
+      format.html { redirect_to @programme.registration }
       format.json { head :no_content }
     end
   end

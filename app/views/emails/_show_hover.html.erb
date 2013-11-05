@@ -1,0 +1,16 @@
+<h4 class="htab">
+Email
+</h4>
+
+<ul class="vlsdet">
+   <li><label>By </label>: <%= @email.cby %></li>
+   <li><label>Sent At </label>: <%= @email.created_at.strftime("%F %R %p") %></li>
+   <li><label>From </label>: <%= @email._from.name rescue "Unknown" %></li>
+   <li><label>To </label>: <%= @email.to %></li>
+   <li><label>Cc </label>: <%= @email.cc %></li>
+   <li><label>Bcc </label>: <%= @email.bcc %></li>
+   <li><label>Subject </label>: <%= @email.subject %></li>
+   <li><label>Body </label>: <%= @email.body.html_safe %></li>
+   <li><label>Signature </label>: <%= @email.signature.html_safe %></li>
+</ul>
+

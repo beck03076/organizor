@@ -8,4 +8,8 @@ class FollowUp < ActiveRecord::Base
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
   :registration_id
+  
+  def tit
+    self.title rescue "Title Unknown"
+  end
 end

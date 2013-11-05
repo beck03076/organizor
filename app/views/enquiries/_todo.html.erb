@@ -1,6 +1,7 @@
-<script type="text/javascript" charset="utf-8">
-    
-    
+<script>
+$(function(){
+    imagePreview("todo");
+});
 </script>
 
 <% if @list.to_i == 1 && obj.todos.size > 0 %>
@@ -18,7 +19,7 @@
     </thead>
     <tbody>
             <% obj.todos.each do |t| %>
-                <tr>
+                <tr  class="preview" data-todo_id='<%= t.id %>'>
                     <td><%= t.topic.try(:name) %></td>
                     <td><%= t.desc %></td>
                     <td><%= t.status.try(:name) %></td>

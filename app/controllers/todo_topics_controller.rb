@@ -1,4 +1,5 @@
 class TodoTopicsController < ApplicationController
+  authorize_resource
   # GET /todo_topics
   # GET /todo_topics.json
   def index
@@ -44,7 +45,7 @@ class TodoTopicsController < ApplicationController
 
     respond_to do |format|
       if @todo_topic.save
-        format.html { redirect_to @todo_topic, notice: 'Todo topic was successfully created.' }
+        format.html { redirect_to todo_topics_path, notice: 'Todo topic was successfully created.' }
         format.json { render json: @todo_topic, status: :created, location: @todo_topic }
       else
         format.html { render action: "new" }

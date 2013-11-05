@@ -1,4 +1,8 @@
-
+<script>
+$(function(){
+    imagePreview("follow_up");
+});
+</script>
 <% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
@@ -13,10 +17,10 @@
     </thead>
     <tbody>
             <% obj.follow_ups.each do |fu| %>
-                <tr>
+                <tr class="preview" data-follow_up_id='<%= fu.id %>'>
                     <td><%= fu.title %></td>
                     <td><%= fu.desc %></td>
-                    <td><%= fu.starts_at %></td>
+                    <td><%= fu.starts_at.strftime("%F %R %p") %></td>
                     <td><%= fu.event_type.try(:name) %></td>
                     <td><%= User.find(fu.assigned_to).first_name %></td>
                     <td><%= User.find(fu.assigned_by).first_name %></td>

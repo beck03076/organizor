@@ -1,5 +1,10 @@
 class TodosController < ApplicationController
 authorize_resource
+
+  def show_hover 
+    @todo = Todo.find(params[:id])
+    render partial: "todos/show_hover" 
+  end
   # GET /todos
   # GET /todos.json
   def index
@@ -46,14 +51,9 @@ authorize_resource
     if (params[:todo][:todo].to_s == "from_action")
       topic = TodoTopic.find(params[:todo][:topic_id]).name
       ass_to = User.find(params[:todo][:assigned_to]).first_name
-      Timeline.create!(user_id: current_user.id,
-                       user_name: current_user.first_name.to_s + ' ' + current_user.surname.to_s,
-                       m_name: params[:todo][:sub_class],
-                       m_id: params[:todo][:sub_id],
-                       created_at: Time.now,
-                       desc: "Assigned to " + ass_to,
-                       comment: topic + ' task, due on ' + params[:todo][:duedate],
-                       action: 'todo')
+      
+       tl(params[:todo][:sub_class],params[:todo][:sub_id],"Assigned to " + ass_to,
+         topic + ' task, due on ' + params[:todo][:duedate],'todo',params[:todo][:assigned_to])
                        
     end
 

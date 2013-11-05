@@ -1,4 +1,5 @@
 class EnglishLevelsController < ApplicationController
+  authorize_resource
   # GET /english_levels
   # GET /english_levels.json
   def index
@@ -44,7 +45,7 @@ class EnglishLevelsController < ApplicationController
 
     respond_to do |format|
       if @english_level.save
-        format.html { redirect_to @english_level, notice: 'English level was successfully created.' }
+        format.html { redirect_to english_levels_path, notice: 'English level was successfully created.' }
         format.json { render json: @english_level, status: :created, location: @english_level }
       else
         format.html { render action: "new" }

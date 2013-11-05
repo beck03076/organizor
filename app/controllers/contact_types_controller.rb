@@ -1,4 +1,5 @@
 class ContactTypesController < ApplicationController
+  authorize_resource
   # GET /contact_types
   # GET /contact_types.json
   def index
@@ -44,7 +45,7 @@ class ContactTypesController < ApplicationController
 
     respond_to do |format|
       if @contact_type.save
-        format.html { redirect_to @contact_type, notice: 'Contact type was successfully created.' }
+        format.html { redirect_to contact_types_path, notice: 'Contact type was successfully created.' }
         format.json { render json: @contact_type, status: :created, location: @contact_type }
       else
         format.html { render action: "new" }

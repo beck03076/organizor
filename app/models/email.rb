@@ -5,6 +5,8 @@ class Email < ActiveRecord::Base
   
   belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
   
+  belongs_to :_from, class_name: "Smtp",foreign_key: "smtp_id"
+  
   attr_accessible :attachment, :bcc, :body, 
   :cc, :created_by, :enquiry_id, 
   :from, :registration_id, :subject, 
@@ -12,4 +14,5 @@ class Email < ActiveRecord::Base
   :smtp_id,:signature,:enquiry_ids,:registration_ids
   
   accepts_nested_attributes_for :enquiries
+  
 end

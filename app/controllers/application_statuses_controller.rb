@@ -1,4 +1,5 @@
 class ApplicationStatusesController < ApplicationController
+  authorize_resource
   # GET /application_statuses
   # GET /application_statuses.json
   def index
@@ -44,7 +45,7 @@ class ApplicationStatusesController < ApplicationController
 
     respond_to do |format|
       if @application_status.save
-        format.html { redirect_to @application_status, notice: 'Application status was successfully created.' }
+        format.html { redirect_to application_statuses_path, notice: 'Application status was successfully created.' }
         format.json { render json: @application_status, status: :created, location: @application_status }
       else
         format.html { render action: "new" }

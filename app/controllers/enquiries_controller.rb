@@ -192,27 +192,31 @@ class EnquiriesController < ApplicationController
       ass_to = User.find(params[:enquiry][:assigned_to]).first_name
       ass_by = User.find(params[:enquiry][:assigned_by]).first_name
     
-      tl("Enquiry",:id,'This enquiry has been reassigned',
+      tl("Enquiry",params[:id],'This enquiry has been reassigned',
          'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
-         'assign_to')
+         'assign_to',params[:enquiry][:assigned_to])
                        
     elsif (params[:enquiry][:deactivate].to_s == "from_action")
     
       params[:enquiry][:status_id] = EnquiryStatus.de[0].id
    
-      tl("Enquiry",:id,'This enquiry has been deactivated',
-         "Deactivated",'deactivate')
-    end
+      tl("Enquiry",params[:id],'This enquiry has been deactivated',
+         "Deactivated",'deactivate',@enquiry.assigned_to)
     
-    PrivatePub.publish_to("/enquiries/" + params[:enquiry][:assigned_to].to_s, 
-                          message: "Enquiry has been assigned to you")
+    else
+    
+      tl("Enquiry",params[:id],'Values of this enquiry has been updated',
+         "Updated",'Update',@enquiry.assigned_to)
+    end
     
     respond_to do |format|
       if @enquiry.update_attributes(params[:enquiry].except("assign","deactivate"))
         format.html { redirect_to @enquiry, notice: 'Enquiry was successfully updated.' }
+        format.json { head :ok, notice: "Enquiry was successfully updated." }
       else
         format.html { render action: "edit" }
         format.json { render json: @enquiry.errors, status: :unprocessable_entity }
+        
       end
     end
   end

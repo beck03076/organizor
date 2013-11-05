@@ -24,4 +24,8 @@ class Todo < ActiveRecord::Base
     self.duedate.strftime("%F")
   end
   
+  def tit
+    self.topic.name rescue "Title Unknown"
+  end
+  
 end

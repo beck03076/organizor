@@ -20,6 +20,8 @@ class Enquiry < ActiveRecord::Base
   
   has_many :todos
   
+  belongs_to :users, class_name: "User"
+  
   has_many :notes,foreign_key: "sub_id"
   
   belongs_to :_assigned_by, class_name: "User",foreign_key: "assigned_by"
@@ -68,6 +70,14 @@ class Enquiry < ActiveRecord::Base
   
   def country_of_origin_name
     self.country_of_origin.name rescue "Unknown"
+  end
+  
+  def tit
+    self.first_name rescue "Title Unknown"
+  end
+  
+  def self.tit
+    "Enquiries"
   end
 
 

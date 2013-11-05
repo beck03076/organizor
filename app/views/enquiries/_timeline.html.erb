@@ -5,7 +5,7 @@
                 {class: "fl imgb", 
                  width: "40",
                  style: "margin-right:10px;"} %>
-  <h4>
+  <h4 class="preview" data-<%= t.m_name.underscore %>_id='<%= t.m_id %>'>
   <%= t.comment %>
   </h4>
   <br/>
@@ -15,7 +15,7 @@
   
   <br/>
   <br/>
-  <%= link_to t.user_name,"#" %> &nbsp;&nbsp; <%= t.created_at.strftime("%A, %F %R %p") %>
+  <%= link_to t.user_name,"/users/#{t.user_id}" %> &nbsp;&nbsp; <%= t.created_at.strftime("%A, %F %R %p") %>
 
 
   

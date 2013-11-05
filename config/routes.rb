@@ -1,5 +1,7 @@
 Organizor::Application.routes.draw do
 
+  get "resources/index"
+
   get "handle/error"
 
   get "handle/cancan"
@@ -12,7 +14,7 @@ Organizor::Application.routes.draw do
   
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
   
-  
+  resources :smtps
   
   resources :roles
   
@@ -37,8 +39,16 @@ Organizor::Application.routes.draw do
   resources :event_types
 
   resources :follow_ups
+  
+  match "/email_hover/:id" => "emails#show_hover"
+  
+  match "/follow_up_hover/:id" => "follow_ups#show_hover"
+  
+  match "/todo_hover/:id" => "todos#show_hover"
 
-
+  match "/notify/:id" => "application#notify"
+  
+  match "/mark_all_check/:id" => "application#mark_all_check"
   
   match '/permissions/role/:role_id' => "roles#show_permissions"
   

@@ -1,4 +1,5 @@
 class QualificationsController < ApplicationController
+  authorize_resource
   # GET /qualifications
   # GET /qualifications.json
   def index
@@ -44,7 +45,7 @@ class QualificationsController < ApplicationController
 
     respond_to do |format|
       if @qualification.save
-        format.html { redirect_to @qualification, notice: 'Qualification was successfully created.' }
+        format.html { redirect_to qualifications_path, notice: 'Qualification was successfully created.' }
         format.json { render json: @qualification, status: :created, location: @qualification }
       else
         format.html { render action: "new" }

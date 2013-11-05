@@ -1,4 +1,5 @@
 class ExamTypesController < ApplicationController
+  authorize_resource
   # GET /exam_types
   # GET /exam_types.json
   def index
@@ -44,7 +45,7 @@ class ExamTypesController < ApplicationController
 
     respond_to do |format|
       if @exam_type.save
-        format.html { redirect_to @exam_type, notice: 'Exam type was successfully created.' }
+        format.html { redirect_to exam_types_path, notice: 'Exam type was successfully created.' }
         format.json { render json: @exam_type, status: :created, location: @exam_type }
       else
         format.html { render action: "new" }

@@ -1,25 +1,7 @@
-<h1>Listing todo_statuses</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Desc</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render "shared/resources",{resource_disp1: "Todo Status",
+                               resource_disp2: "Todo Statuses",
+                               resource: @todo_statuses,
+                               new_resource: TodoStatus.new }   %>
 
-<% @todo_statuses.each do |todo_status| %>
-  <tr>
-    <td><%= todo_status.name %></td>
-    <td><%= todo_status.desc %></td>
-    <td><%= link_to 'Show', todo_status %></td>
-    <td><%= link_to 'Edit', edit_todo_status_path(todo_status) %></td>
-    <td><%= link_to 'Destroy', todo_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Todo status', new_todo_status_path %>

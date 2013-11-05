@@ -54,5 +54,9 @@ class User < ActiveRecord::Base
      self.conf = UserConfig.first.dup
      self.save!
    end
+   
+   def tit
+    self.first_name rescue "Title Unknown"
+  end
 
 end

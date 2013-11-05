@@ -1,4 +1,5 @@
 class StudentSourcesController < ApplicationController
+  authorize_resource
   # GET /student_sources
   # GET /student_sources.json
   def index
@@ -44,7 +45,7 @@ class StudentSourcesController < ApplicationController
 
     respond_to do |format|
       if @student_source.save
-        format.html { redirect_to @student_source, notice: 'Student source was successfully created.' }
+        format.html { redirect_to student_sources_path, notice: 'Student source was successfully created.' }
         format.json { render json: @student_source, status: :created, location: @student_source }
       else
         format.html { render action: "new" }

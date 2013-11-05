@@ -1,4 +1,5 @@
 class ProgrammeTypesController < ApplicationController
+  authorize_resource
   # GET /programme_types
   # GET /programme_types.json
   def index
@@ -44,7 +45,7 @@ class ProgrammeTypesController < ApplicationController
 
     respond_to do |format|
       if @programme_type.save
-        format.html { redirect_to @programme_type, notice: 'Programme type was successfully created.' }
+        format.html { redirect_to programme_types_path, notice: 'Programme type was successfully created.' }
         format.json { render json: @programme_type, status: :created, location: @programme_type }
       else
         format.html { render action: "new" }
