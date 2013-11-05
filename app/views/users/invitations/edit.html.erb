@@ -22,29 +22,49 @@ $('#fade').cycle();
 <img src="/images/b3.jpg" class="theme"/>
 </div>
 <div id="bg1">
-<div id="login-box">
-<h2>Set Your Password</h2>
+<div id="login-box" style="width:450px">
+<center><h2  style="color:#fff">Set Your Password</h2></center>
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
 
           <%= devise_error_messages! %>
           <%= f.hidden_field :invitation_token %>
+          <table cellpadding="5" cellspacing="5">
+		  <tr>
+		  <td align="left" valign="bottom" class="tw" width="150"><%= f.label :first_name %></td>
+		  <td align="left" valign="bottom" class="tw"><%= f.text_field :first_name %></td>
+          </tr>
+          <tr>
+		  <td align="left" valign="bottom" class="tw" ><%= f.label :surname %></td>
+		  <td align="left" valign="bottom" class="tw">
+          <%= f.text_field :surname %></td>
+          </tr>
+		  
+          <tr>
+		  <td align="left" valign="bottom" class="tw" >
+          <%= f.label :password %></td>
+		  <td align="left" valign="bottom" class="tw">
+          <%= f.text_field :password %></td>
+          </tr>
           
-          <%= f.label :first_name %>
-          <%= f.text_field :first_name %>
-          <br/>
-          <%= f.label :surname %>
-          <%= f.text_field :surname %>
-          <br/>
-          <%= f.label :password %>
-          <%= f.text_field :password %>
-          <br/>
-          <%= f.label :retype_password %>
-          <%= f.text_field :password_confirmation %>
-          <br/>
+		  <tr>
+		  <td align="left" valign="bottom" class="tw" >
+          <%= f.label :retype_password %></td>
+		  <td align="left" valign="bottom" class="tw">
+          <%= f.text_field :password_confirmation %></td>
+          </tr>
+		  <tr>
+		  <td align="left" valign="bottom" class="tw" >
+          &nbsp;
+		  </td>
+		  <td align="center" valign="middle"   class="lb pad10">
+		<span class="th35">
+			 <%= f.submit 'Go', :class => "white-button"%>
+		</span>
+		</td>
+		</tr>
+          </table>
           
-          <span class="th35">
-           <%= f.submit 'Go', :class => "white-button"%>
-          </span>
+          
           
 <% end %>
 </div>
