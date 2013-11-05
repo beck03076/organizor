@@ -5,6 +5,6 @@ test:
   server: "http://localhost:9292/faye"
   secret_token: "secret"
 production:
-  server: "http://thecrawlfish.com/faye"
+  server: "http://thecrawlfish.com:9292/faye"
   secret_token: "e1728dd8ca11fdf948710e1ebc70bd23cecca40b05068ebd18094ccc975c305b"
   signature_expiration: 3600 # one hour
