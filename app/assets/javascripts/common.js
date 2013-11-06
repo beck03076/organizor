@@ -558,6 +558,7 @@ this.imagePreview = function(matter){
         if ($(this).find('td.sload').length == 0){
           $('td.sload').remove();
           $(this).prepend('<td class="sload"><img src="/images/icons/sload.gif"></td>');
+          $("#preview").remove();
         }
         $.data(this, "timer", setTimeout($.proxy(function() {
         
@@ -580,7 +581,7 @@ this.imagePreview = function(matter){
                
             });
         $('td.sload').remove();
-        
+        clearTimeout($.data(this, "timer"));
         }, this), 1500));
         
 

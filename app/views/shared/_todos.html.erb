@@ -13,7 +13,7 @@
                 <li>
                 <div class="todo_container">
                     <span style='font-size: 1.5em;'>
-                      <%= best_in_place i, :done, type: :checkbox ,collection: ["<i data-state='empty'>&#x2610;</i>".html_safe, "<i data-state='fill'>&#x2611;</i>".html_safe], classes: "todo_checkbox"  %>
+                      <%= best_in_place i, :done, type: :checkbox ,collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, "<span data-state='fill'>&#x2611;</span>".html_safe], classes: "todo_checkbox"  %>
                     </span>
                     <span class="preview" data-todo_id='<%= i.id %>'>
                        <b>
