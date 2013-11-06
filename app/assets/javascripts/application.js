@@ -328,6 +328,8 @@ function dataTableStart(table,filterValue,cols)
     "aoColumnDefs": [
       { "bSortable": false, "aTargets": [ 0,1 ] }
     ], 
+    "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+    "iDisplayLength": 25
   });
   
    $('select#mySelect').on('change',function(){

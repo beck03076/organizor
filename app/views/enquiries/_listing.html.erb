@@ -7,8 +7,49 @@
 <% else %>
 <%= link_to "New Enquiry", "#", {class: "btnpd"} %>
 <% end %>
-<img src="/images/icons/org_settingsb.png" width="17"/>
-Settings
+<!----------------------- Group Assign ---------------------------->
+            <% div_id = "group_assign_to_" + _id %>
+            
+            <% if can? :update, Enquiry %>
+              <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
+            <% else %>
+              <%= link_to "Assign To", "#", {class: "btnpd"} %>
+            <% end %>
+            
+            <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
+              <div class="frbox">
+                <%= image_tag "/images/icons/user_group.png" ,{size: "20x20"}%>
+                <%= label_tag :user %>
+                <%= select_tag "group_assign_user_#{_id}",
+                               options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
+                               {:prompt => "--User--"} %>
+                <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
+              </div>
+            </div>
+           <!----------------------- Bulk Email ---------------------------->
+           
+           <% if can? :create, Email %>
+             <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
+           <% else %>
+             <%= link_to "Bulk Email", "#", {class: "btnpd"} %>
+           <% end %>
+                       
+           <!----------------------- Group Delete ---------------------------->
+            <% div_delete_id = "group_delete_to_" + _id %>
+            
+            <% if can? :destroy, Enquiry %>
+              <%= link_to "Delete", "#", {class: "btnp ", onclick: "showPopUp('#{div_delete_id}');"} %>
+            <% else %>
+              <%= link_to "Delete", "#", {class: "btnpd "} %>
+            <% end %>
+            <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+              <div class="frbox">
+                <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
+                <h5>Are you sure about this group delete?</h5>
+                <span class="btnp" onclick="groupDelete('<%= _id %>');"> Yes </span>
+                <span class="btnp bClose"> No </span>
+              </div>
+            </div>
 <!---------------------------------------------------------------->
 <table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
@@ -51,52 +92,7 @@ Settings
 
 
 </table>
-<br/>
-            <!----------------------- Group Assign ---------------------------->
-            <% div_id = "group_assign_to_" + _id %>
-            
-            <% if can? :update, Enquiry %>
-              <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
-            <% else %>
-              <%= link_to "Assign To", "#", {class: "btnpd"} %>
-            <% end %>
-            
-            <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
-              <div class="frbox">
-                <%= image_tag "/images/icons/user_group.png" ,{size: "20x20"}%>
-                <%= label_tag :user %>
-                <%= select_tag "group_assign_user_#{_id}",
-                               options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
-                               {:prompt => "--User--"} %>
-                <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
-              </div>
-            </div>
-           <!----------------------- Bulk Email ---------------------------->
-           
-           <% if can? :create, Email %>
-             <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
-           <% else %>
-             <%= link_to "Bulk Email", "#", {class: "btnpd"} %>
-           <% end %>
-                       
-           <!----------------------- Group Delete ---------------------------->
-            <% div_delete_id = "group_delete_to_" + _id %>
-            
-            <% if can? :destroy, Enquiry %>
-              <%= link_to "Delete", "#", {class: "btnp fr", onclick: "showPopUp('#{div_delete_id}');"} %>
-            <% else %>
-              <%= link_to "Delete", "#", {class: "btnpd fr"} %>
-            <% end %>
-            <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
-              <div class="frbox">
-                <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
-                <h5>Are you sure about this group delete?</h5>
-                <span class="btnp" onclick="groupDelete('<%= _id %>');"> Yes </span>
-                <span class="btnp bClose"> No </span>
-              </div>
-            </div>
 
-            <div class="cl"></div>
             
             
 <script>

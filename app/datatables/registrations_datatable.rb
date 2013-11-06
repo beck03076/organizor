@@ -64,7 +64,7 @@ private
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
-      regs = regs.joins(join).order("#{sc[2]} #{sort_direction}")
+      regs = regs.joins(join).order("#{scs}.#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
       regs = regs.order("registrations.#{sc} #{sort_direction}")
     else

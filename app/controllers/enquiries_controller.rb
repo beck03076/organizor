@@ -40,10 +40,10 @@ class EnquiriesController < ApplicationController
       @countries = self.basic_select(Country)
       @p_types = ProgrammeType.all
     else
-      #c = current_user.conf.enq_cols
-      #ign = [:first_name,:surname,:date_of_birth]
-      #(c.map{|i| !i.is_a?(Array) ? i : i} - ign).sort.unshift(ign).flatten
-      @cols = current_user.conf.enq_cols
+      # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.enq_cols
+      b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
+      @cols = ((b & a) + (a - b))
     end
     
     render :partial => @partial
