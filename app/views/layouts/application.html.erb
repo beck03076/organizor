@@ -102,12 +102,12 @@ $(function(){
         <div class="notify-icon-box">
         <div class="notify-icon" onclick="showNotifiy();" >
         <center>
-        <br/>
+        
         <span id="notify_no">
           <% unch = Timeline.where(receiver_id: current_user.id,checked: false).count %>
           <%= unch == 0 ? '' : ('<span class="notify-count">' + unch.to_s + '</span>').html_safe %>
         </span>
-        <br/>
+        
         <img src="/images/icons/down.png" width="12" class="notify-down"/>
         <img src="/images/icons/up.png" width="12" class="notify-up dn"/>
         </center>
