@@ -615,4 +615,16 @@ this.imagePreview = function(matter,matter_id){
 
 };
 
+$(document).ready(function(){
+	$(".close-pre").live("click",function(){
+		$("div[id^='preview']").remove();
+	});
+	$(".close-pre").delegate("click",function(){
+		$("div[id^='preview']").remove();
+	});
+	$(".close-pre").on("click",function(){
+		$("div[id^='preview']").remove();
+	});
+});
+
 
