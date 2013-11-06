@@ -4,7 +4,7 @@ class JsonController < ApplicationController
   
     set_url_params
     country = Country.find(@co_id)
-    @cities = country.cities
+    @cities = country.cities.includes(:institutions).where("institutions.id is not null").order("cities.name")
     
     respond_to do |format|
       format.html 

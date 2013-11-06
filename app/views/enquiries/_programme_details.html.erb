@@ -35,9 +35,10 @@ $(function(){
     <div class="cols">
     <div class="col6">
     <div class="frbox">
+        <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
         <%= label_tag :country %>
         <%= p.collection_select(:country_id, 
-                                Country.order(:name), 
+                                good_country, 
                                 :id, 
                                 :name,
                                 {:prompt => "--Country--"},

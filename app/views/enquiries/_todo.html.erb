@@ -15,11 +15,12 @@ $(function(){
                             <th>Priority</th>
                             <th>Assigned To</th>
                             <th>Assigned By</th>
+                            <th>View All</th>
       </tr>
     </thead>
     <tbody>
             <% obj.todos.each do |t| %>
-                <tr  class="preview" data-todo_id='<%= t.id %>'>
+                <tr >
                     <td><%= t.topic.try(:name) %></td>
                     <td><%= t.desc %></td>
                     <td><%= t.status.try(:name) %></td>
@@ -27,6 +28,7 @@ $(function(){
                     <td><%= t.priority %></td>
                     <td><%= t.ato %></td>
                     <td><%= t.aby %></td>
+                    <td  class="preview" data-todo_id='<%= t.id %>'>...</td>
                </tr>
            <% end %> 
 <tr>

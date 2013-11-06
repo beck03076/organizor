@@ -576,7 +576,7 @@ this.imagePreview = function(matter,matter_id){
                 if(differenceWidth<450){
                     yOffsetY=-400;
                 }else{
-                    yOffsetY=40;
+                    yOffsetY=-200;
                     }
                 
                 $("body").append('<div id="preview"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
@@ -616,15 +616,9 @@ this.imagePreview = function(matter,matter_id){
 };
 
 $(document).ready(function(){
-	$(".close-pre").live("click",function(){
-		$("div[id^='preview']").remove();
-	});
-	$(".close-pre").delegate("click",function(){
-		$("div[id^='preview']").remove();
-	});
-	$(".close-pre").on("click",function(){
-		$("div[id^='preview']").remove();
-	});
+  $(".close-pre").on("click",function(){
+   $("div[id^='preview']").remove();
+ });
 });
 
 

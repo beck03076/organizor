@@ -8,15 +8,17 @@
                                 <th>Date</th>
                                 <th>Sent By</th>
                                 <th>From</th>
+                                <th>View all</th>
           </tr>
         </thead>
         <tbody>
                 <% obj.first.emails.each do |email| %>
-                    <tr class="preview" data-email_id='<%= email.id %>'>
+                    <tr>
                         <td><%= email.subject %></td>
                         <td><%= email.created_at.strftime("%F %R %p") %></td>
                         <td><%= email._created_by.name rescue "" %></td>
                         <td><%= email.smtp.name rescue "unknown" %></td>
+                        <td  class="preview" data-email_id='<%= email.id %>'>...</td>
                    </tr>
                <% end %>
                     <tr>

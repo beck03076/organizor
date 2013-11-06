@@ -13,17 +13,19 @@ $(function(){
                             <th>Event Type</th>
                             <th>Assigned To</th>
                             <th>Assigned By</th>
+                            <th>View All</th>
       </tr>
     </thead>
     <tbody>
             <% obj.follow_ups.each do |fu| %>
-                <tr class="preview" data-follow_up_id='<%= fu.id %>'>
+                <tr>
                     <td><%= fu.title %></td>
                     <td><%= fu.desc %></td>
                     <td><%= fu.starts_at.strftime("%F %R %p") %></td>
                     <td><%= fu.event_type.try(:name) %></td>
                     <td><%= fu.ato %></td>
                     <td><%= fu.aby %></td>
+                    <td class="preview" data-follow_up_id='<%= fu.id %>'>...</td>
                </tr>
            <% end %>               
                 <tr>
