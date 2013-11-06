@@ -555,12 +555,12 @@ this.imagePreview = function(matter,matter_id){
                 
     /* END CONFIG */
     $(".preview").hover(function(e){
-        if ($(this).find('td.sload').length == 0){
-          $('td.sload').remove();
-          $(this).prepend('<td class="sload"><img src="/images/icons/sload.gif"></td>');
+        //if ($(this).find('td.sload').length == 0){
+        //  $('td.sload').remove();
+        //    $(this).prepend('<td class="sload"><img src="/images/icons/sload.gif"></td>');
           $("#preview").remove();
-        }
-        $.data(this, "timer", setTimeout($.proxy(function() {
+        //}
+//        $.data(this, "timer", setTimeout($.proxy(function() {
         
             this.title='';
             if (typeof matter_id === "undefined"){
@@ -586,15 +586,15 @@ this.imagePreview = function(matter,matter_id){
                     .fadeIn("fast");
                
             });
-        $('td.sload').remove();
-        clearTimeout($.data(this, "timer"));
-        }, this), 1500));
+//        $('td.sload').remove();
+//        clearTimeout($.data(this, "timer"));
+//        }, this), 1500));
         
 
     },function(){
-          clearTimeout($.data(this, "timer"));
-          $('td.sload').remove();
-       
+          //clearTimeout($.data(this, "timer"));
+//          $('td.sload').remove();
+          
           $(".close-pre").click(function(){
                 $("#preview").remove();
             });

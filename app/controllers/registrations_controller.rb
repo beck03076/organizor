@@ -99,7 +99,7 @@ class RegistrationsController < ApplicationController
   # GET /registrations/new
   # GET /registrations/new.json
   def new
-    self.h_new
+    #self.h_new
     
     respond_to do |format|
       format.html # new.html.erb
@@ -197,8 +197,8 @@ class RegistrationsController < ApplicationController
                                           status_id: deact)
                   #create a timeline item
                   tl("Enquiry",params[:enquiry_id],
-                     'This enquiry has been deactivated in order to register',params[:note],
-                     "registration")
+                     'This enquiry has been deactivated in order to register',(params[:note] || "Registered"),
+                     "registration",e_obj.assigned_to)
                                    
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",

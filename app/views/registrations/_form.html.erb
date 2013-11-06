@@ -50,6 +50,11 @@
                              :onchange => "prepareSelect(this,
                                            \'enquiry_programmes_attributes_index_city_id\',
                                            \'/get_cities/\');"}],"collection_select",1,"country") %>
+         <%= fs(f,[:assigned_to, 
+                     User.order(:first_name), 
+                     :id, 
+                     :first_name,
+                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
         </div>
         <div class="col6">
           <%= fs(f,"surname","text_field",1) %>
