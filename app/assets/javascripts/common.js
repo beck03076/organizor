@@ -546,13 +546,13 @@ function showNotifiy(){
 }
 
 
-this.imagePreview = function(matter){    
+this.imagePreview = function(matter,matter_id){    
     /* CONFIG */
         
         xOffsetX = 12;
         yOffsetY = 40;
         var differenceWidth=0;
-        
+                
     /* END CONFIG */
     $(".preview").hover(function(e){
         if ($(this).find('td.sload').length == 0){
@@ -563,7 +563,13 @@ this.imagePreview = function(matter){
         $.data(this, "timer", setTimeout($.proxy(function() {
         
             this.title='';
-            var id = $(this).data(matter + "_id");
+            if (typeof matter_id === "undefined"){
+              var id = $(this).data(matter + "_id");
+            }
+            else{
+              var id = matter_id
+            }
+            
             $.get('/' + matter +'_hover/' + id,function(reply){
                 var bodyContent = reply;
                 differenceWidth=parseInt($(window).width())-parseInt(e.pageX);

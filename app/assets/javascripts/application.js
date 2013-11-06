@@ -20,6 +20,7 @@
 //= require jquery.purr
 //= require best_in_place
 //= require private_pub
+//= require fullcalendar
 
 
 $(function(){
@@ -42,6 +43,31 @@ $(function(){
         $(this).parent().parent().find('small.todo_desc').css("text-decoration","line-through");
        } 
     });
+    
+    $('#calendar').fullCalendar({
+    editable: true,
+    draggable: true,
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'month',
+    height: 500,
+    slotMinutes: 30,
+    eventSources: [
+      {
+        url: '/follow_ups'
+      }
+    ],
+    timeFormat: 'h:mm t{ - h:mm t} ',
+    dragOpacity: "0.5",
+    eventRender: function(event, jsEvent, view) { 
+      imagePreview("follow_up",event.id);
+    },
+    className: "preview"
+
+  });
 
 });
 

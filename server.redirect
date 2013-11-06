@@ -1,0 +1,5 @@
+<VirtualHost *:80>
+    ServerName thecrawlfish.com
+    ServerAlias www.organizor.org organizor.org www.organizor.in organizor.in www.organizor.net organizor.net www.organizor.co.uk organizor.co.uk
+    Redirect 301 / http://www.thecrawlfish.com/
+</VirtualHost>

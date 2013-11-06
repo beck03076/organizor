@@ -1,41 +1,14 @@
-<h1>Listing follow_ups</h1>
+<div class="tab-container">
+    <div class="tab-content" style="display: block;">
+        <div class="boxp box-theme-ch">
+            <div id='calendar'> 
+            </div>
+        </div>
+    </div>
+</div>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Desc</th>
-    <th>Starts at</th>
-    <th>Ends at</th>
-    <th>Api</th>
-    <th>Event type</th>
-    <th>Venue</th>
-    <th>Remind before</th>
-    <th>Created by</th>
-    <th>Updated by</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @follow_ups.each do |follow_up| %>
-  <tr>
-    <td><%= follow_up.title %></td>
-    <td><%= follow_up.desc %></td>
-    <td><%= follow_up.starts_at %></td>
-    <td><%= follow_up.ends_at %></td>
-    <td><%= follow_up.api %></td>
-    <td><%= follow_up.event_type_id %></td>
-    <td><%= follow_up.venue %></td>
-    <td><%= follow_up.remind_before %></td>
-    <td><%= follow_up.created_by %></td>
-    <td><%= follow_up.updated_by %></td>
-    <td><%= link_to 'Show', follow_up %></td>
-    <td><%= link_to 'Edit', edit_follow_up_path(follow_up) %></td>
-    <td><%= link_to 'Destroy', follow_up, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Follow up', new_follow_up_path %>
+<script>
+$(function(){
+    activeMM("calendarMM");
+});
+</script>

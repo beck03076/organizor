@@ -70,6 +70,7 @@ gem 'best_in_place'
 gem 'deep_cloneable', '~> 1.5.5'
 gem 'devise_invitable'
 gem 'private_pub'
+gem 'fullcalendar-rails' 
 
 
 
