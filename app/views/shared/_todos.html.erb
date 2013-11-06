@@ -11,37 +11,37 @@
     <% current_user.todos.includes(:status,:topic).each do |i| %>
 
                 <li>
-                <span style='font-size: 1.5em;'>
-                <%= best_in_place i, :done, type: :checkbox ,collection: ["&#x2610;".html_safe, "&#x2611;".html_safe]  %>
-                </span>
+                <div class="todo_container">
+                    <span style='font-size: 1.5em;'>
+                      <%= best_in_place i, :done, type: :checkbox ,collection: ["<i data-state='empty'>&#x2610;</i>".html_safe, "<i data-state='fill'>&#x2611;</i>".html_safe], classes: "todo_checkbox"  %>
+                    </span>
                     <a href="#">
-                     <b>
-                      <%= i.topic.name.titleize rescue "Unknown Topic" %>
-                     </b>
+                      <b>
+                        <%= i.topic.name.titleize rescue "Unknown Topic" %>
+                      </b>
                     </a>
                     - 
-                    <small>
-                    <%= truncate(i.desc,length: 20) %> 
+                    <small class="todo_desc <%= i.done ? 'checkit' : 'uncheckit' %>">
+                      <%= truncate(i.desc,length: 20) %> 
                     </small>
                     <span class="todo_status">
-                    <%= best_in_place i,
-                                :status_id, 
-                                :type => :select, 
-                                :collection => TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
+                      <%= best_in_place i,
+                               :status_id, 
+                         :type => :select, 
+                         :collection => TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
                     </span>
                     <br/>
 
                     <small class="brt0">
-                    By: 
-                    <%= link_to i.ass_by,"#" %> &nbsp;&nbsp;                    
-                    Due On:
-                    <span class="todo_due">
-                    <%= best_in_place i,:duedate,type: :date, display_as: "due" %>
-                    
-
-                    </span>
-                    </small>
-                </li>
+                      By: 
+                      <%= link_to i.ass_by,"#" %> &nbsp;&nbsp;                    
+                      Due On:
+                      <span class="todo_due">
+                        <%= best_in_place i,:duedate,type: :date, display_as: "due" %>
+                      </span>
+                   </small>
+               </div>
+               </li>
 
     <% end %>
 </ul>

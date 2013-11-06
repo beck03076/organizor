@@ -13,7 +13,7 @@ class EnquiriesController < ApplicationController
   end
   # h_new stands fpr help_new
   def h_new
-    @enquiry = Enquiry.new
+    @enquiry = Enquiry.new(assigned_to: current_user.id)
     authorize! :create, @enquiry
       
     @countries = self.basic_select(Country)

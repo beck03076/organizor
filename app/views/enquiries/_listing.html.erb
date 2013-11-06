@@ -7,6 +7,8 @@
 <% else %>
 <%= link_to "New Enquiry", "#", {class: "btnpd"} %>
 <% end %>
+<img src="/images/icons/org_settingsb.png" width="17"/>
+Settings
 <!---------------------------------------------------------------->
 <table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
@@ -31,6 +33,7 @@
 
 
 </thead>
+
 <%= image_tag "/images/icons/info.png",{class: "fr tooltip",
                                         title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
        <span class="fr btnp" style="margin-left:10px"  onclick="$('.dataTables_filter input').val('').keyup();">

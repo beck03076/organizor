@@ -581,19 +581,19 @@ this.imagePreview = function(matter){
             });
         $('td.sload').remove();
         
-        }, this), 1000));
+        }, this), 1500));
         
 
     },function(){
           clearTimeout($.data(this, "timer"));
           $('td.sload').remove();
-          $("#preview").remove();
+       
           $(".close-pre").click(function(){
                 $("#preview").remove();
             });
     });
     
-    
+    /*
     $(".preview").mousemove(function(e){
         differenceWidth=parseInt($(window).width())-parseInt(e.pageX);
         if(differenceWidth<450){
@@ -604,7 +604,7 @@ this.imagePreview = function(matter){
         $("#preview")
             .css("top",(e.pageY - xOffsetX) + "px")
             .css("left",(e.pageX + yOffsetY) + "px");
-    });        
+    });        */
 
 };
 

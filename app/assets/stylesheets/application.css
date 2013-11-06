@@ -569,6 +569,9 @@ td.role_name:hover{color:#008080;cursor:pointer;font-size:13px;}
 
 td.grey{background:#F5FFFF !important;}
 
+small.checkit{text-decoration:line-through;}
+small.uncheckit{text-decoration:none;}
+
 /* SENTHIL's  CSS - End */
 
 /* Add New Go Create Starts */
