@@ -15,11 +15,12 @@
                     <span style='font-size: 1.5em;'>
                       <%= best_in_place i, :done, type: :checkbox ,collection: ["<i data-state='empty'>&#x2610;</i>".html_safe, "<i data-state='fill'>&#x2611;</i>".html_safe], classes: "todo_checkbox"  %>
                     </span>
-                    <a href="#">
-                      <b>
+                    <span class="preview" data-todo_id='<%= i.id %>'>
+                       <b>
                         <%= i.topic.name.titleize rescue "Unknown Topic" %>
                       </b>
-                    </a>
+                    </span>
+                     
                     - 
                     <small class="todo_desc <%= i.done ? 'checkit' : 'uncheckit' %>">
                       <%= truncate(i.desc,length: 20) %> 
@@ -48,6 +49,7 @@
 <script type="text/javascript">
 $(function(){
   $('.best_in_place').best_in_place();
+  imagePreview("todo");
 });
 
 </script>
