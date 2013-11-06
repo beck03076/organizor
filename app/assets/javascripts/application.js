@@ -36,10 +36,10 @@ $(function(){
     setColorsFromSession();
     
     $('span.todo_checkbox').on("click",function(){
-      if ($(this).find('i').data('state') == 'fill'){
+      if ($(this).find('span').data('state') == 'fill'){
         $(this).parent().parent().find('small.todo_desc').css("text-decoration","none");
        } 
-      else if ($(this).find('i').data('state') == 'empty'){
+      else if ($(this).find('span').data('state') == 'empty'){
         $(this).parent().parent().find('small.todo_desc').css("text-decoration","line-through");
        } 
     });
@@ -66,8 +66,7 @@ $(function(){
       imagePreview("follow_up",event.id);
     },
     className: "preview"
-
-  });
+    });
 
 });
 
