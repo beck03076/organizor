@@ -17,7 +17,7 @@
                         <td><%= email.subject %></td>
                         <td><%= email.created_at.strftime("%F %R %p") %></td>
                         <td><%= email._created_by.name rescue "" %></td>
-                        <td><%= email.smtp.name rescue "unknown" %></td>
+                        <td><%= email.from rescue "unknown" %></td>
                         <td  class="preview" data-email_id='<%= email.id %>'>...</td>
                    </tr>
                <% end %>

@@ -160,15 +160,24 @@ class EnquiriesController < ApplicationController
                                  signature: etemp.signature,
                                  to: @enquiry.send(to),
                                  from: c.def_from_email)
+                                 
+           tl('Enquiry',@enquiry.id,
+              "An email has been sent to this enquiry",
+              etemp.subject,'email',@enquiry.assigned_to)
         end
         
         if c.auto_cr_f_u
+          s = (Date.today + c.def_follow_up_days.to_i)
           @enquiry.follow_ups.create(title: c.def_f_u_name,
                                      desc: c.def_f_u_desc,
                                      event_type_id: c.def_f_u_type,
-                                     starts_at: (Date.today + c.def_follow_up_days.to_i),
+                                     starts_at: s,
+                                     ends_at: s + 1,
                                      assigned_to: c.def_f_u_ass_to,
                                      assigned_by: current_user.id)
+           tl('Enquiry',@enquiry.id,
+              "A follow up has been created for this enquiry",
+              c.def_f_u_name.to_s + ' at ' + s.to_s + ' | assigned(follow up) to: ' + c.def_f_u_ass_to.to_s,'follow_up',c.def_f_u_ass_to)
         end
 
         if params[:save_new] 

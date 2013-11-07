@@ -1,6 +1,6 @@
 class NotificationObserver < ActiveRecord::Observer
  # please note the group assign notification is done in the controller side
-  observe :enquiry,:registration,:todo,:follow_up,:programme,:note
+  observe :enquiry,:registration,:todo,:follow_up,:programme,:note,:email
    
    def after_save(record)
      
