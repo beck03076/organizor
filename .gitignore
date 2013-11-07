@@ -15,3 +15,5 @@
 /tmp
 public/uploads/*
 public/assets/*
+db/schema.rb
+
