@@ -16,7 +16,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.includes(:permissions).find(params[:id])
+    if params[:id].nil?
+        @user = current_user
+    else
+        @user = User.includes(:permissions).find(params[:id])
+    end    
     authorize! :read, @user, id: current_user.id
 
     respond_to do |format|
@@ -93,6 +97,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize! :destroy, @user, id: current_user.id
     @user.destroy
+    Timeline.where(user_id: @user.id).delete_all
 
     respond_to do |format|
       format.html { redirect_to users_url }

@@ -2,6 +2,7 @@
 <%= nested_form_for(@registration,:html=>{:multipart => true ,:onsubmit => "return validateAll(this);"})  do |f| %>
 
   <%= f.hidden_field :ref_no, value: (@registration.ref_no.nil? ? @ref_no : @registration.ref_no) %>
+  <%= f.hidden_field :enquiry_id, value: @enquiry_id %>
   
   <% if @registration.errors.any? %>
     <div id="error_explanation">

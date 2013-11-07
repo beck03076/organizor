@@ -67,6 +67,19 @@ $(function(){
     },
     className: "preview"
     });
+    
+     $('form#invite_users').submit(function(event){
+        
+        var sel = $('#role_select').val();
+        if (sel.length == 0){
+          event.preventDefault();
+          info("No Role","Assign a role to the user(s) before inviting them to Organizor");
+        }
+        else{
+          return true;
+        }
+        
+    });
 
 });
 
@@ -471,9 +484,32 @@ function manageRole(){
    });
 }
 
+function checkAssign(model,before,ato,obj){
+  var chosen = $('#' + model + '_assigned_to').val(); 
+  if (chosen == before){
+    info('Assigned Already','This '+ model + ' is already assigned to ' + ato + '. Try a different user.');
+    return false
+  }else{
+    var valuesToSubmit = $(obj).serialize();
+    $.ajax({
+        url: $(this).attr('action'), //sumbits it to the given url of the form
+        data: valuesToSubmit,
+        dataType: "HTML" // you want a difference between normal and ajax-calls, and json is standard
+    }).success(function(json){
+        return true
+    });
+    return false;
+  }
+}
 
-
-
+function checkRole(e){
+      e.preventDefault();
+      var sel = $('#role_select').val();
+      if (typeof sel === "undefined"){
+        alert("Choose a role");
+      }
+      return false
+  }
 
 
 

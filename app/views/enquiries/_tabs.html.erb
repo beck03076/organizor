@@ -7,10 +7,10 @@
   <% tabs += statuses %>
   <% tabs += [["New " + model.capitalize,"","fr new","form"]] %>
 
+  <% tabs = (!current_user.adm? ? tabs.reject{|j| j[0].downcase == "deactivated" } : tabs ) %>
               
   <% tabs.each do |i| %>
-      
-      
+
            <% i1 = i[0].tr(" ","_").downcase %>
            
            <li lang='<%= i1 + '_id' %>'  class='<%= i1 %>' style='display:<%= i[1] %>' 

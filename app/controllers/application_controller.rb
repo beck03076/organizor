@@ -11,8 +11,9 @@
     
     flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} any #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
     respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js { render :js => "info('Unauthorized','#{flash[:notice]}');" }
+      format.html { redirect_to '/handle/cancan'  }
+      format.js { redirect_to '/handle/cancan' }
+#      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
   end
   
@@ -47,9 +48,17 @@
     authorize! :destroy, model
     
     to_delete = model.where(id: params[:model_ids].split(","))
-    to_delete.delete_all
+    deact = EnquiryStatus.find_by_name("deactivated").id
+    to_delete.update_all(active: false,
+                         status_id: deact)
+     to_delete.each do |e|
+     #create a timeline item
+     tl("Enquiry",e.id,
+        'This enquiry has been deactivated as a group','Deactivated',
+         "Deactivate",e.assigned_to)
+     end
     
-    render text: "Successfully assigned!"  
+    render text: "Successfully deactivated!"  
   end
   
   def notify

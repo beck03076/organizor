@@ -12,7 +12,7 @@ class RegistrationsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Registration.count,
+      iTotalRecords: Registration.mine(current_user).count,
       iTotalDisplayRecords: registrations.total_entries,
       aaData: data
     }
@@ -57,10 +57,12 @@ private
     set_cols
     sc = sort_column
 
-    if !@sFilter.nil?
-      regs = ApplicationStatus.find_by_name(@sFilter.titleize).try(:registrations) || Registration 
+    if !@sFilter.nil?      
+      fet_stat= ApplicationStatus.find_by_name(@sFilter.titleize).try(:registrations)
+      regs = fet_stat.nil? ? Registration.mine(current_user) : fet_stat.mine(current_user)
     end
-
+    p "***********"
+    p  regs
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
@@ -68,7 +70,7 @@ private
     elsif !sc.nil?
       regs = regs.order("registrations.#{sc} #{sort_direction}")
     else
-      regs = Registration
+      regs = Registration.mine(current_user)
     end
    
     regs = regs.page(page).per_page(per_page)
@@ -126,7 +128,7 @@ private
   end
   
    def set_asso(var)
-    Registration.reflect_on_association(var).klass.name.underscore.pluralize
+    Registration.mine(current_user).reflect_on_association(var).klass.name.underscore.pluralize
   end
   
     

@@ -7,7 +7,7 @@ class FollowUpsController < ApplicationController
   # GET /follow_ups
   # GET /follow_ups.json
   def index
-    @follow_ups = FollowUp.all.reject{|i| i.starts_at.nil? || i.ends_at.nil?}
+    @follow_ups = FollowUp.where(assigned_to: current_user.id).reject{|i| i.starts_at.nil? || i.ends_at.nil?}
 
     respond_to do |format|
       format.html # index.html.erb

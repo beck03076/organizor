@@ -32,7 +32,7 @@ class Enquiry < ActiveRecord::Base
   scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   scope :active, includes(:status).where("enquiry_statuses.name != 'deactivated'")
   
-  scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
+  #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   
   scope :myactive, lambda{|user|
   if user.adm?
@@ -52,7 +52,7 @@ class Enquiry < ActiveRecord::Base
                   :surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,
                   :follow_ups_attributes,:active,:notes_attributes,
-                  :todos_attributes,:contact_type_id
+                  :todos_attributes,:contact_type_id,:registered
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
  
@@ -79,6 +79,5 @@ class Enquiry < ActiveRecord::Base
   def self.tit
     "Enquiries"
   end
-
-
+  
 end

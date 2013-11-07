@@ -4,8 +4,9 @@ $(function(){
   activeMM("usersMM");
   setColorsFromSession();
 
-
+  
   $('li.invite_users').addClass('active-tab');
+  
   
 });
 
@@ -23,7 +24,7 @@ $(function(){
 <br/>
 <br/>
 
-<%= form_tag("/users/invitation",method: :post) do %>
+<%= form_tag("/users/invitation",method: :post,id: 'invite_users') do %>
         <div class="cols">
             <div class="col6 " id="addInviteUserEmail">
                 <div class="frbox">
@@ -44,11 +45,11 @@ $(function(){
             <div class="col6">
                 <div class="frbox">
                     <label>Role</label>
+                    <% r = Role.all.reject{|i| i.name == "agency_administrator"} %>
                     <%= select_tag "role_id",
-                                   options_from_collection_for_select([current_user.role], "id", "title_name"),
+                                   options_from_collection_for_select(r, "id", "title_name"),
                  {:prompt => "--Role--",
-                 id: "role_select",
-                 onclick: "$('#manage').hide();$('#manage').slideToggle();$('#permissions_container').hide();"} %>
+                 id: "role_select" } %>
                  </div>
                  <div class="frbox">
                  <label>&nbsp;</label>

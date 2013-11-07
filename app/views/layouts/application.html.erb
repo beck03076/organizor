@@ -17,7 +17,7 @@ $(function(){
      $.get(url,function(reply){
          $(reply).prependTo(".notifyls");
          var noticount = $('div#notify_count_container').data("count");
-         $("#notify_no").html('<span class="notify-count">' + noticount + '</span>');
+         $("#notify_no").html('<div style="margin-top:5px"><span class="notify-count">' + noticount + '</span></div>');
      });
   });
 
@@ -36,6 +36,7 @@ $(function(){
     <img src="/images/icons/reportm.png" class="fl mt10">
     <h1>&nbsp;Organizor</h1>
     <h6>&nbsp;&nbsp;&nbsp;Process Management System</h6>
+    
     <!-- USER INFO BOX - STARTS -->
     <div class="uibox theme-lc">
     <div class="sbox theme-lc">
@@ -53,10 +54,16 @@ $(function(){
     <small class="whitec">
     &nbsp;&nbsp;&nbsp;<%= u.role.name.titleize rescue "Role Unassigned" %>
     </small>
+    
     <div id="notification"> </div>
     <div class="cl"></div>
     <div class="uiboxs">
     <ul class="lsn">
+        <li>
+        <small class="whitec">
+          <%= u.email rescue "Email Unassigned" %>
+        </small>
+        </li>
         <li>
         <%= link_to "My Settings", "/user_configs/#{current_user.id}/edit" %>
         </li>
@@ -105,7 +112,7 @@ $(function(){
         
         <span id="notify_no">
           <% unch = Timeline.where(receiver_id: current_user.id,checked: false).count %>
-          <%= unch == 0 ? '' : ('<span class="notify-count">' + unch.to_s + '</span>').html_safe %>
+          <%= unch == 0 ? '' : ('<div style="margin-top:5px"><span class="notify-count">' + unch.to_s + '</span></div>').html_safe %>
         </span>
         
         <img src="/images/icons/down.png" width="12" class="notify-down"/>
@@ -132,6 +139,7 @@ $(function(){
     <!-- MAIN MENU - STARTS -->
     <div id="left-panel">
     <ul id="menu-main">
+        
         <li id="resourcesMM">
         
         <%= link_to "#" do %>
@@ -147,9 +155,13 @@ $(function(){
             :english_level,:enquiry_status,:event_type,
             :exam_type,:qualification,:student_source,
             :sub_agent,:todo_status,:todo_topic].each do |r| %>
+             <% if can? :read, r.to_s.camelize.constantize %>
             <li>
-            <%= image_tag "/images/icons/" + r.to_s + ".png",{width: "16"} %>
-            <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %></li>
+            
+               <%= image_tag "/images/icons/" + r.to_s + ".png",{width: "16"} %>
+               <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+            </li>
+            <% end %>
             <% end %>
         </ul>
         </li>

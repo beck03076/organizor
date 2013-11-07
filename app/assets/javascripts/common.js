@@ -322,7 +322,8 @@ function setThemeColor(theme){
     $(".uibox").css({"background":lightColor,"border-color":mainColor});
     $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
     $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
-    $(".tb-stylev tr th,.theme-l").css({"background":lightColor,"color":thickColor});
+    $(".tb-stylev tr th,.theme-l,theme-ls").css({"background":lightColor,"color":thickColor});
+
 
     
     $(".uibox").hover(function(){
@@ -579,7 +580,7 @@ this.imagePreview = function(matter,matter_id){
                     yOffsetY=-200;
                     }
                 
-                $("body").append('<div id="preview"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
+                $("body").append('<div id="preview" class="box-theme-ch theme-ls"><div class="boxp"><span class="close-pre fr">x</span>'+bodyContent+'</div></div>');                                 
                 $("#preview")
                     .css("top",(e.pageY - xOffsetX) + "px")
                     .css("left",(e.pageX + yOffsetY) + "px")
@@ -620,5 +621,8 @@ $(document).ready(function(){
    $("div[id^='preview']").remove();
  });
 });
+
+
+
 
 

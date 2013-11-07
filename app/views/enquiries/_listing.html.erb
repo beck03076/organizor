@@ -1,3 +1,4 @@
+<!-- Listing of enquiries -->
 <% _id =  @status + "_enquiries" %>
 <br/>
 
@@ -23,7 +24,7 @@
                 <%= select_tag "group_assign_user_#{_id}",
                                options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
                                {:prompt => "--User--"} %>
-                <span class="btnp" onclick="groupAssignTo('<%= _id %>');">Assign</span>
+                <span class="btnp bClose" onclick="groupAssignTo('<%= _id %>');">Assign</span>
               </div>
             </div>
            <!----------------------- Bulk Email ---------------------------->
@@ -46,7 +47,7 @@
               <div class="frbox">
                 <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
                 <h5>Are you sure about this group delete?</h5>
-                <span class="btnp" onclick="groupDelete('<%= _id %>');"> Yes </span>
+                <span class="btnp bClose" onclick="groupDelete('<%= _id %>');"> Yes </span>
                 <span class="btnp bClose"> No </span>
               </div>
             </div>
@@ -102,6 +103,7 @@ $(function(){
 dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>");
 setColorsFromSession();
 activeMM("enquiriesMM");
+
 
 });
 </script>

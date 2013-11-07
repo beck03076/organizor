@@ -1,5 +1,10 @@
-
-        <% %w(Email Follow\ up Note Todo Assign\ to Register Deactivate).each do |elem| %>
+        
+  <% actions = %w(Email Follow\ up Note Todo Assign\ to Register Deactivate) %>    
+  <% actions = @enquiry.registered ? actions - ['Register'] : actions %>
+  <% actions = @enquiry.active ? actions : actions - ['Deactivate'] %>
+  
+        <% actions.each do |elem| %>
+        
           <!--  Shortening variable names -->
           <% e = elem.downcase %>
           <%= radio_button_tag 'action',

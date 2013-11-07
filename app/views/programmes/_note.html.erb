@@ -1,23 +1,28 @@
 <% @programme.notes.each do |note| %>
+<% u = note._created_by %>
+<% if !u.nil? %>
+           <br/>
+           
+           
+               <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                   {width: "40",
+                                    class: "imgb fl",
+                                    style: "margin-right:10px;"}) %>
+               <span style="color:#999;padding-top:10px;">
+               <%= note.content %>
+               </span>
+               <br/>
+               <br/>
 
-           <br/>
-           <% u = note._created_by %>
-           <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
-                               {width: "40",
-                                class: "imgb fl",
-                                style: "margin-right:10px;"}) %>
-           <span style="color:#999;padding-top:10px;">
-           <%= note.content %>
-           </span>
-           <br/>
-           <br/>
-
-          <%= link_to note._created_by.first_name,"#" %> 
-          &nbsp;&nbsp; 
-          <%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %>
+              <%= link_to u.first_name,u %> 
+              &nbsp;&nbsp; 
+              <%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %>
+          
 <br/>
 <br/>
 <div class="brg0"></div>
+
+<% end %>
 
 <% end %>
 

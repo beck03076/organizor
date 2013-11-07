@@ -129,6 +129,7 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       if @registration.save
+        Enquiry.find(@registration.enquiry_id).update_attribute(:registered, true)
         if params[:save_new] 
           format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
         else
@@ -205,9 +206,11 @@ class RegistrationsController < ApplicationController
                                    
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",
-                                              "status_id", "address","active","contact_type_id")
+                                              "status_id", "address",
+                                              "active","contact_type_id",
+                                              "registered")
                   e[:note] = params[:note]
-                  
+                  @enquiry_id = params[:enquiry_id]
                   @registration = Registration.new(e)
                   authorize! :create, @registration
                   

@@ -6,8 +6,9 @@
 <div id="assignto-action" class="action-box">
     <div class="cols">
         <div class="col6">
+           <% n_user = User.order(:first_name).reject{|i| i.id == f.object.assigned_to }  %>
            <%= fbox(f,[:assigned_to, 
-                     User.order(:first_name), 
+                     n_user, 
                      :id, 
                      :first_name,
                      {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
@@ -16,11 +17,10 @@
             
             <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
             <br/><br/><br/>
-            <%= f.submit "Assign",{:class => "btnp"} %>
+            <%= f.submit "Assign",{:class => "btnp" } %>
         </div>
     </div>
     
 </div>
 <% end %>
-
 

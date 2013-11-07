@@ -27,6 +27,9 @@ class EnquiriesController < ApplicationController
       self.h_new
     elsif @status == "launch"
       @enquiry = Enquiry.find(params[:enquiry_id])
+      if @enquiry.active == false
+        authorize! :manage, :all
+      end
       @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:enquiry_id]).order("created_at DESC")
     elsif @status == "edit"
       @enquiry = Enquiry.find(params[:enquiry_id])

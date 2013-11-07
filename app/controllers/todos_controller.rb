@@ -1,5 +1,6 @@
 class TodosController < ApplicationController
 authorize_resource
+skip_authorize_resource :only => :show_hover
 
   def show_hover 
     @todo = Todo.find(params[:id])

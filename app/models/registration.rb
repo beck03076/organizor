@@ -50,10 +50,18 @@ class Registration < ActiveRecord::Base
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
-  :note,:documents_attributes,:_destroy
+  :note,:documents_attributes,:_destroy,:enquiry_id
   
   accepts_nested_attributes_for :programmes, :proficiency_exams, :documents, :allow_destroy => true
   
+  
+  scope :mine, lambda{|user|
+  if user.adm?
+   scoped
+  else
+   where("registrations.assigned_to = #{user.id}")
+  end
+  }
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
