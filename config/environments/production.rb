@@ -63,7 +63,7 @@ Organizor::Application.configure do
   config.active_support.deprecation = :notify
 
   # devise
-  config.action_mailer.default_url_options = { :host => 'www.thecrawlfish.com' } 
+  config.action_mailer.default_url_options = { :host => 'www.organizor.org' } 
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
