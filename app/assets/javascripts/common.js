@@ -13,6 +13,8 @@ $(document).ready(function(){
         $(".tab-menus li").css({"background":"#EAEAEA"});
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
+		/* SET DATATABLE WIDTH */
+		setDataTableWidth();
     });
     
     /* ON CLICKING MAIN MENU*/
@@ -527,6 +529,12 @@ $('td#right-panel').slideToggle(function(){
     $(".dataTables_wrapper").css({"width":width});
 });
 
+}
+
+function setDataTableWidth(){
+	var width=$(".dataTables_wrapper").width();
+    width=(width>830) ? "820px" : "1100px";
+    $(".dataTables_wrapper").css({"width":width});
 }
 
 
