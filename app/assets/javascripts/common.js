@@ -587,7 +587,7 @@ this.imagePreview = function(matter,matter_id){
                     yOffsetY=-200;
                     }
                 
-                $("body").append('<div id="preview"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
+                $("body").append('<div id="preview" class="otbox"><div class="previewBox"><span class="close-pre fr">x</span>'+bodyContent+'</div></div>');                                 
                 $("#preview")
                     .css("top",(e.pageY - xOffsetX) + "px")
                     .css("left",(e.pageX + yOffsetY) + "px")

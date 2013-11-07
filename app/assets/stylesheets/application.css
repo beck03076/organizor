@@ -645,8 +645,10 @@ border:1px solid #3D3D3D;background:#3D3D3D;color:#FFFFFF;padding:5px;line-heigh
 
 /* Hover preview - Starts */
 #preview{line-height:1em;border:1px solid #ccc;padding:10px;color:#222;display:none;position:absolute;z-index:100000000000;font-size:13px;
-background:#fff;line-height:1.6em;filter:alpha(opacity=100);-moz-opacity: 1;opacity: 1;box-shadow:0px 0px 10px #888888;cursor:pointer;min-width:150px;max-width:340px;border-radius:4px;max-height:300px;overflow:auto;}
-
+line-height:1.6em;filter:alpha(opacity=100);-moz-opacity: 1;opacity: 1;box-shadow:0px 0px 10px #888888;cursor:pointer;width:400px;border-radius:4px;max-height:340px;}
+.previewBox{border:1px solid #CBCCD1;background:#fff;padding:10px 15px 10px 15px;width:350px;margin-left:auto;margin-right:auto;
+overflow:auto;max-height:300px;}
+.otbox{background:#E8F0FD;padding:10px;}
 /* Hover preview - Ends */
 
 
