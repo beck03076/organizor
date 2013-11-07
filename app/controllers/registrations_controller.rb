@@ -129,7 +129,9 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       if @registration.save
-        Enquiry.find(@registration.enquiry_id).update_attribute(:registered, true)
+        if @registration.enquiry_id
+          Enquiry.find(@registration.enquiry_id).update_attribute(:registered, true)
+        end
         if params[:save_new] 
           format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
         else
