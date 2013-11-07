@@ -80,6 +80,23 @@ $(function(){
         }
         
     });
+    
+    
+    
+    $('#mini-calendar').fullCalendar({
+        theme: true,
+        editable: true,
+        eventSources: [
+      {
+        url: '/follow_ups'
+      }
+    ],
+      eventMouseover: function(event, jsEvent, view) {
+            if (view.name !== 'agendaDay') {
+                $(jsEvent.target).attr('title', event.title);
+            }
+        }
+    });
 
 });
 
@@ -350,6 +367,11 @@ function dataTableStart(table,filterValue,cols)
         oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
     });
     
+    $('select#followUpSelect').on('change',function(){
+        var selectedValue = $(this).val();
+        oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
+    });
+    
    $('body').on('click', tableId + ' tbody tr td:not(:first-child)', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
@@ -484,23 +506,6 @@ function manageRole(){
    });
 }
 
-function checkAssign(model,before,ato,obj){
-  var chosen = $('#' + model + '_assigned_to').val(); 
-  if (chosen == before){
-    info('Assigned Already','This '+ model + ' is already assigned to ' + ato + '. Try a different user.');
-    return false
-  }else{
-    var valuesToSubmit = $(obj).serialize();
-    $.ajax({
-        url: $(this).attr('action'), //sumbits it to the given url of the form
-        data: valuesToSubmit,
-        dataType: "HTML" // you want a difference between normal and ajax-calls, and json is standard
-    }).success(function(json){
-        return true
-    });
-    return false;
-  }
-}
 
 function checkRole(e){
       e.preventDefault();

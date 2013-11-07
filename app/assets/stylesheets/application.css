@@ -354,7 +354,7 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 /* LIST - STARTS */
 .vls{list-style:none;margin:0}
 .vls li{list-style:none;padding:5px 0 5px 0;margin:0;display:block}
-.vls li:first-child{border-bottom:1px dashed #353535;padding:5px 0 5px 0}
+.vls li:first-child{border-bottom:1px solid #E5E5E5;padding:5px 0 5px 0}
 .vls li img{padding-right:5px}
 .lnb{list-style:none}
 .lnb li{list-style:none;padding:3px 0 0 0;margin:0;display:block}
@@ -575,6 +575,34 @@ small.uncheckit{text-decoration:none;}
 
 .btnpb{font-size:25px;}
 
+
+#mini-calendar {
+    width: 250px;
+    margin: 0 auto;
+    font-size: 10px;
+}
+#mini-calendar .fc-header-title h2 {
+    font-size: .9em;
+    white-space: normal !important;
+}
+#mini-calendar .fc-view-month .fc-event, .fc-view-agendaWeek .fc-event {
+    font-size: 0;
+    overflow: hidden;
+    height: 2px;
+}
+#mini-calendar .fc-view-agendaWeek .fc-event-vert {
+    font-size: 0;
+    overflow: hidden;
+    width: 2px !important;
+}
+#mini-calendar .fc-agenda-axis {
+    width: 20px !important;
+    font-size: .7em;
+}
+
+#mini-calendar .fc-button-content {
+    padding: 0;
+}
 
 /* SENTHIL's  CSS - End */
 

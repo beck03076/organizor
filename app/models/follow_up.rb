@@ -2,6 +2,7 @@ class FollowUp < ActiveRecord::Base
   belongs_to :enquiry
   belongs_to :event_type
   belongs_to :registration
+  belongs_to :enquiries,class_name: "Enquiry",foreign_key: "enquiry_id"
   
   attr_accessible :api, :created_by, :desc, 
   :ends_at, :event_type_id, :remind_before, 

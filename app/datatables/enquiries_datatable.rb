@@ -94,6 +94,8 @@ private
       else
         enqs = enqs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
       end
+    elsif params[:sSearch_1].present?
+      enqs = enqs.send(params[:sSearch_1])
     end
     
     enqs

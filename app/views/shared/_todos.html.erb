@@ -8,42 +8,37 @@
       </h6>
   </li>
             
-    <% current_user.todos.includes(:status,:topic).each do |i| %>
+    <% current_user.todos.includes(:status,:topic).where(done: false).take(5).each do |i| %>
 
                 <li>
                 <div class="todo_container">
+                    <%= image_tag((i._aby.image? ? i._aby.image_url : "/images/icons/user.png"),
+                                   {width: "30",
+                                    class: "fl",
+                                    style: "margin-right:2px;"}) %>
                     <span style='font-size: 1.5em;'>
                       <%= best_in_place i, :done, type: :checkbox ,collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, "<span data-state='fill'>&#x2611;</span>".html_safe], classes: "todo_checkbox"  %>
                     </span>
-                    
-                       <b>
-                        <%= i.topic.name.titleize rescue "Unknown Topic" %>
-                      </b>
-                    <span class="preview" data-todo_id='<%= i.id %>'>
-                    ...
-                    </span>
-                     
-                    - 
                     <small class="todo_desc <%= i.done ? 'checkit' : 'uncheckit' %>">
-                      <%= truncate(i.desc,length: 20) %> 
+                      <%= truncate((i.desc.blank? ? i.topic.name : i.desc),length: 35) %> 
                     </small>
-                    <span class="todo_status">
-                      <%= best_in_place i,
-                               :status_id, 
-                         :type => :select, 
-                         :collection => TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
-                    </span>
+                    &nbsp;
+
                     <br/>
 
                     <small class="brt0">
-                      By: 
-                      <%= link_to i.ass_by,"#" %> &nbsp;&nbsp;                    
-                      Due On:
+
+                      <%= link_to i.ass_by,i._aby %> 
+
                       <span class="todo_due">
-                        <%= best_in_place i,:duedate,type: :date, display_as: "due" %>
+                        <%= i.due %>
+                      </span>
+                      <span class="preview" data-todo_id='<%= i.id %>'>
+                        ...
                       </span>
                    </small>
                </div>
+
                </li>
 
     <% end %>

@@ -81,11 +81,19 @@
        <span class="fr btnp" style="margin-left:10px"  onclick="$('.dataTables_filter input').val('').keyup();">
        Reset
        </span>
-       
+      
 
        <%= select_tag :abdc,
-                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Choose",""])),
-                      {id: "mySelect",style: "width:150px",class: "fr"} %><br/><br/>
+                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Search",""])),
+                      {id: "mySelect",style: "width:150px",class: "fr"} %>
+                      
+
+       <%= select_tag :abdc,
+                      options_for_select([["FollowUp",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"]]),
+                      {id: "followUpSelect",style: "width:150px",class: "fr"} %>
+                      
+                      
+                      <br/><br/>
        
 <tbody>
 

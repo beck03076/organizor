@@ -21,7 +21,7 @@ class Todo < ActiveRecord::Base
   end
 
   def due
-    self.duedate.strftime("%F")
+    self.duedate.strftime("%F %R %p")
   end
   
   def tit

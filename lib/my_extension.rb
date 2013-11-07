@@ -21,6 +21,22 @@ module MyExtension
     help(self.assigned_by)
   end
   
+  def _cby
+    help_m(self.created_by)
+  end
+  
+  def _uby
+    help_m(self.updated_by)
+  end
+  
+  def _ato
+    help_m(self.assigned_to)
+  end
+  
+  def _aby
+    help_m(self.assigned_by)
+  end
+  
   def help(col)
     if col
      User.find(col).first_name rescue "Unknown"
@@ -28,6 +44,14 @@ module MyExtension
      "Unknown"
     end
   end 
+  
+  def help_m(col)
+    if col
+     User.find(col)
+    else
+     "Unknown"
+    end
+  end
   
   module ClassMethods
   # nothing yet

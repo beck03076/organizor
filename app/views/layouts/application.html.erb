@@ -9,6 +9,7 @@
 <script type="text/javascript">
 $(function(){
  showPopUp('message');
+
 });
 
   PrivatePub.subscribe("/notify/<%= current_user.id.to_s %>", function(data, channel) {
@@ -20,6 +21,8 @@ $(function(){
          $("#notify_no").html('<div style="margin-top:5px"><span class="notify-count">' + noticount + '</span></div>');
      });
   });
+
+
 
 
 </script>
@@ -270,8 +273,12 @@ $(function(){
         <%= render "shared/todos" %>
         <br/>
         <ul class="vls">
-            <li><img src="images/icons/org_calenderb.png" width="14"/><h6><b>Calender</b></h6></li>
-            <li><br><div class="dateField"></div></li>
+            <li><img src="images/icons/org_calenderb.png" width="14"/>
+            <h6>
+            <b>Calendar</b>
+            </h6>
+            </li>
+            <li><br><div id="mini-calendar"></div></li>
         </ul>        
     </td>
     </tr>

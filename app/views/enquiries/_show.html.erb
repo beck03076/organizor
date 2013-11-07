@@ -158,6 +158,16 @@ $(function(){
                         </li> 
                     </ul>
                 </div>
+                <br/>
+                <br/>
+                <% if current_user.adm? %>
+                  <% if !a.active %>
+                    <%= form_for(a) do |d| %>
+                      <%= d.hidden_field :active, value: true %>
+                      <%= d.submit "Activate",{class: "btnp fr"} %>
+                    <% end %>
+                  <% end %>
+                <% end %>
             </div>
         </div>
         <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
