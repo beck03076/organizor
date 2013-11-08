@@ -533,8 +533,9 @@ $('td#right-panel').slideToggle(function(){
 }
 
 function setDataTableWidth(){
+	var disp=$("td#right-panel").css("display");
 	var width=$(".dataTables_wrapper").width();
-    width=(width>830) ? "820px" : "1100px";
+    width=(disp!="none") ? "820px" : "1100px";
     $(".dataTables_wrapper").css({"width":width});
 }
 
