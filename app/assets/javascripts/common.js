@@ -586,10 +586,10 @@ this.imagePreview = function(matter,matter_id){
                 if(differenceWidth<450){
                     yOffsetY=-400;
                 }else{
-                    yOffsetY=-200;
+                    yOffsetY=-500;
                     }
 
-                $("body").append('<div id="preview" class="otbox"><div class="previewBox"><span class="close-pre fr">x</span>'+bodyContent+'</div></div>');                                 
+                $("body").append('<div id="preview" class="otbox"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
 
                 $("#preview")
                     .css("top",(e.pageY - xOffsetX) + "px")

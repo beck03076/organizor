@@ -1,7 +1,8 @@
-<h4 class="htab">
+<h4>
 Todo
 </h4>
-
+<div class="htab" style="height:0">&nbsp;</div>
+<div class="previewBox">
 <ul class="vlsdet">
    <li><label>Topic </label>: <%= @todo.topic.name rescue "Unknown" %></li>
    <li><label>Status </label>: <%= @todo.status.name rescue "Unknown" %></li>
@@ -13,4 +14,5 @@ Todo
    <li><label>Created At </label>: <%= @todo.created_at.strftime("%F %R %p") %></li>
    <li><label>Description </label>: <%= @todo.desc %></li>
 </ul>
+</div>
 
