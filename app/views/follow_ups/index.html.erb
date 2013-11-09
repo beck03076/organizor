@@ -7,14 +7,7 @@
           <img src="/images/icons/org_calender.png" width="25"/>
               <h2>Your Calendar
               </h2>
-              <% if current_user.adm? %>
-                  &nbsp;&nbsp;
-                  User Calendar: 
-                  <%= select_tag("User Calendar",
-                  options_from_collection_for_select(User.order(:first_name),'id','name',@user_id),
-                  {autocomplete: "off", id: "calendar_user"}) %>
-              <% end %>
-          </li>
+           </li>
           <br/>
           <br/>
          </ul>
