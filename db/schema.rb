@@ -539,13 +539,13 @@ ActiveRecord::Schema.define(:version => 20131107214637) do
     t.string   "priority"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "enquiry_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
     t.integer  "registration_id"
-    t.boolean  "done",            :default => true
+    t.boolean  "done",            :default => false
   end
 
   create_table "user_configs", :force => true do |t|
