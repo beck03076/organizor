@@ -1,7 +1,8 @@
-<h4 class="htab">
+<h4 >
 Email
 </h4>
-
+<div class="htab" style="height:0">&nbsp;</div>
+<div class="previewBox">
 <ul class="vlsdet">
    <li><label>By </label>: <%= @email.cby %></li>
    <li><label>Sent At </label>: <%= @email.created_at.strftime("%F %R %p") %></li>
@@ -13,4 +14,5 @@ Email
    <li><label>Body </label>: <%= @email.body.html_safe %></li>
    <li><label>Signature </label>: <%= @email.signature.html_safe %></li>
 </ul>
+</div>
 
