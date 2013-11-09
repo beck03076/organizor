@@ -24,11 +24,11 @@ class FollowUp < ActiveRecord::Base
     :title => self.title,  
     :description => self.desc || "",  
     :start => self.starts_at.rfc822,  
-    :end => self.ends_at.rfc822,  
+    :end => (self.ends_at.nil? ? self.starts_at.rfc822 : self.ends_at.rfc822),  
     #:allDay => self.allday,  
     :recurring => false,  
     :url => Rails.application.routes.url_helpers.follow_up_path(id),  
-    :className => "preview"
+    :className => "tooltip",
    }  
   end 
   

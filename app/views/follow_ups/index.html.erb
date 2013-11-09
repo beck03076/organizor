@@ -1,8 +1,73 @@
+<!-- Calendar -->
 <div class="tab-container">
     <div class="tab-content" style="display: block;">
         <div class="boxp box-theme-ch">
+         <ul class="vls">
+          <li>
+          <img src="/images/icons/org_calender.png" width="25"/>
+              <h2>Your Calendar
+              </h2>
+              <% if current_user.adm? %>
+                  &nbsp;&nbsp;
+                  User Calendar: 
+                  <%= select_tag("User Calendar",
+                  options_from_collection_for_select(User.order(:first_name),'id','name',@user_id),
+                  {autocomplete: "off", id: "calendar_user"}) %>
+              <% end %>
+          </li>
+          <br/>
+          <br/>
+         </ul>
+
+ 
             <div id='calendar'> 
             </div>
+         <% if false %>
+         <br/>
+         <br/>
+         <ul class="vls">
+          <li>
+          <img src="/images/icons/sub_black_add.png" width="25"/>
+              <h2>New Event
+              </h2>
+          </li>
+          <%= form_for(FollowUp.new) do |g| %>
+                  <div class="cols">
+                    <div class="col6">
+                        <%= fbox(g,"title","text_field") %>
+                        <%= go_create(g,"event_type","event_type_id","name",1,"fbox") %> 
+                        <%= fbox(g,[:starts_at,:class => "dateTimeField caltf "],"text_field",nil) %>
+                        <%= fbox(g,[:assigned_to, 
+                                 User.order(:first_name), 
+                                 :id, 
+                                 :first_name,
+                                 {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                        <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <span onclick="div_toggle(this,'#more_fields')" class="btns">more fields</span>
+
+                        <div class="cl"></div>
+                        <br/>
+                        <br/>
+                        <br/>
+            
+                        <div class="cols" id="more_fields" style="display:none;">
+                          <%= fbox(g,[:ends_at,:class => "dateTimeField caltf"],"text_field",nil) %>
+                          <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add To Google?") %>
+                          <%= fbox(g,:remind_before,"text_field") %>
+                          <%= fbox(g,:venue,"text_field") %>
+                        </div>
+                    </div>
+                </div>
+    <br/>
+    <%= g.submit "Create",{:class => "btnp fl"} %>
+    <div class="cl"></div>
+            <% end %>
+          <% end %>
+          
         </div>
     </div>
 </div>

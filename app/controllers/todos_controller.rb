@@ -9,14 +9,29 @@ skip_authorize_resource :only => :show_hover
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.all
+    set_url_params
+    if @ass_by.to_i == current_user.id
+     @todos = Todo.includes(:status,:topic).where(assigned_by: @ass_by).order('done asc')
+    elsif @ass_to.to_i == current_user.id
+     @todos = Todo.includes(:status,:topic).where(assigned_to: @ass_to).order('done asc')
+    elsif current_user.adm? && @ass_to
+     @todos = Todo.includes(:status,:topic).where(assigned_to: @ass_to).order('done asc')
+    elsif current_user.adm? && @ass_by
+     @todos = Todo.includes(:status,:topic).where(assigned_by: @ass_by).order('done asc')
+    else
+      @todos = current_user.todos.includes(:status,:topic).order('done asc')
+    end
+    
+    @todo = Todo.new
+    # supressing the listing of todos associated with enqs/regs
+    @list = 0
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @todos }
     end
   end
-
+  
   # GET /todos/1
   # GET /todos/1.json
   def show
@@ -60,7 +75,13 @@ skip_authorize_resource :only => :show_hover
 
     respond_to do |format|
       if @todo.save
-        format.html { redirect_to "/#{params[:todo][:sub_class].pluralize.downcase}/" + params[:todo][:sub_id].to_s }
+        format.html { 
+        if params[:todo][:sub_class]
+          redirect_to "/#{params[:todo][:sub_class].pluralize.downcase}/" + params[:todo][:sub_id].to_s 
+        else
+          redirect_to todos_path
+        end
+        }
         format.json { render json: @todo, status: :created, location: @todo }
       else
         format.html { render action: "new" }

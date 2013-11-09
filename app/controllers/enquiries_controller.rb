@@ -46,7 +46,7 @@ class EnquiriesController < ApplicationController
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.enq_cols
       b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
-      @cols = ((b & a) + (a - b))
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]
     end
     
     render :partial => @partial
@@ -56,10 +56,11 @@ class EnquiriesController < ApplicationController
     set_url_params
 
     if @partial_name == "follow_up"
-          @d_f_u_days = current_user.conf.def_follow_up_days
-          @follow_up = FollowUp.new(title: "First Follow Up", 
-                                    desc: "This enquiry does not have an update, yet!.
-                                           Should call this enquiry in 2 days.")
+          
+          #@d_f_u_days = current_user.conf.def_follow_up_days
+          con = current_user.conf
+          @follow_up = FollowUp.new(title: con.def_f_u_name, 
+                                    desc: con.def_f_u_desc)
 
     elsif @partial_name == "note"
           @d_note = current_user.conf.def_note

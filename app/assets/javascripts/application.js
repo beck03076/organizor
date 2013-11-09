@@ -33,6 +33,23 @@ $(function(){
     yearRange: '1980:2050'
     });
     
+    $.datepicker.setDefaults({
+        inline: true,
+        changeMonth: true, 
+        changeYear: true, 
+        dateFormat: "yy-mm-dd",
+        yearRange: '1980:2050'
+    });
+    
+    $(".dateTimeField").datetimepicker({
+            inline: true,
+            changeMonth: true, 
+            changeYear: true, 
+            yearRange: '1950:2030',
+            controlType: 'select',
+            dateFormat: 'yy-mm-dd', 
+            timeFormat: 'hh:mm:ss'});
+    
     setColorsFromSession();
     
     $('span.todo_checkbox').on("click",function(){
@@ -58,14 +75,22 @@ $(function(){
     eventSources: [
       {
         url: '/follow_ups'
+      },
+      {
+        url: '/todos'
       }
     ],
     timeFormat: 'h:mm t{ - h:mm t} ',
     dragOpacity: "0.5",
-    eventRender: function(event, jsEvent, view) { 
-      imagePreview("follow_up",event.id);
+    eventRender: function(event, element) { 
+      element.parent().find('a.todo_this > .fc-event-inner').attr('class','todo_class');
+      /*var target = element.parent().find('a  .fc-event-title');
+      target.data("follow_up_id",event.id);
+      target.attr('class','fc_event_title preview');
+     
+      imagePreview("follow_up");*/
     },
-    className: "preview"
+
     });
     
      $('form#invite_users').submit(function(event){
@@ -89,16 +114,35 @@ $(function(){
         eventSources: [
       {
         url: '/follow_ups'
+      },
+      {
+        url: '/todos'
       }
     ],
       eventMouseover: function(event, jsEvent, view) {
             if (view.name !== 'agendaDay') {
                 $(jsEvent.target).attr('title', event.title);
             }
-        }
-    });
+        },
+    eventRender: function(event, element) { 
+      element.parent().find('a.todo_this > .fc-event-inner').attr('class','todo_class');
 
+      //imagePreview("follow_up",event.id);
+    },
+    });
+    
+    dropdownUser('select#assigned_to_todo','/todo_assigned_to/');
+    dropdownUser('select#assigned_by_todo','/todo_assigned_by/');
+    //dropdownUser('select#calendar_user','/calendar_user/');
 });
+
+function dropdownUser(elem,url){
+  $(elem).change(function(event){
+     var id = $(this).val();
+     window.open(url + id,'_self',false);    
+    });
+}
+
 
 function div_toggle(obj,div){   
     $(obj).parent().find(div).slideToggle();

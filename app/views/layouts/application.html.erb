@@ -9,6 +9,7 @@
 <script type="text/javascript">
 $(function(){
  showPopUp('message');
+ setColorsFromSession();
 
 });
 
@@ -182,6 +183,7 @@ $(function(){
           Enquiries
         <% end %>
         
+        </li>
         <li id="registrationsMM">
                 
         <%= link_to registrations_path do %>
@@ -189,7 +191,7 @@ $(function(){
                   <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
                   Registration
         <% end %>
-        
+        </li>
         <li id="accountsMM">
         <img src="/images/icons/org_finance.png" id="iconMM4"width="36"/><br/>
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
@@ -218,9 +220,14 @@ $(function(){
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#">Reports</a></li>
         <li id="todosMM">
-        <img src="/images/icons/org_todos.png" id="iconMM9"width="36" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="#">Todos</a></li>
+        
+         <%= link_to todos_path do %>
+                  <img src="/images/icons/org_todos.png" id="iconMM9" width="36" /><br/>
+                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+                  Todos
+        <% end %>
+        
+        </li>
         <li id="settingMM">
         
         <%= link_to "/user_configs/#{current_user.conf.id}/edit" do %>

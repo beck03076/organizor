@@ -14,9 +14,10 @@ this.mytooltip = function(){
 		xOffset = 10;
 		yOffset = 20;		
 	/* END CONFIG */		
-	$(".tooltip").hover(function(e){											  
+	$(".tooltip").hover(function(e){	
+
 		this.t = this.title;
-		this.title = "";									  
+		this.title = "";
 		$("body").append("<span id='tooltip'>"+ this.t +"</span>");
 		$("#tooltip")
 			.css("top",(e.pageY - xOffset) + "px")

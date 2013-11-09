@@ -1,35 +1,133 @@
-<h1>Listing todos</h1>
+<!-- resources -->
 
-<table>
-  <tr>
-    <th>Topic</th>
-    <th>Desc</th>
-    <th>Status</th>
-    <th>Duedate</th>
-    <th>Priority</th>
-    <th>Created by</th>
-    <th>Updated by</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @todos.each do |todo| %>
-  <tr>
-    <td><%= todo.topic_id %></td>
-    <td><%= todo.desc %></td>
-    <td><%= todo.status_id %></td>
-    <td><%= todo.duedate %></td>
-    <td><%= todo.priority %></td>
-    <td><%= todo.created_by %></td>
-    <td><%= todo.updated_by %></td>
-    <td><%= link_to 'Show', todo %></td>
-    <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
-    <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<div class="tab-container">
+    <div class="tab-content" style="display: block;">
+        <div class="boxp box-theme-ch">
+        <ul class="vls">
+          <li>
+          <img src="/images/icons/org_todos.png" width="25"/>
+              <h2>Your Todo List
+              </h2>
+              <% if current_user.adm? %>
+                  &nbsp;&nbsp;
+                  Assigned To: 
+                  <%= select_tag("Assigned To",
+                  options_from_collection_for_select(User.order(:first_name),'id','name',@ass_to),
+                  {autocomplete: "off", id: "assigned_to_todo"}) %>
+                  &nbsp;&nbsp;
+                  OR
+                  &nbsp;&nbsp;
+                  Assigned By: 
+                  <%= select_tag("Assigned By",
+                  options_from_collection_for_select(User.order(:first_name),'id','name',@ass_by),
+                  {autocomplete: "off", id: "assigned_by_todo"}) %>
+              <% else %>
+                <%= link_to "View Assigned By Me",'/todo_assigned_by/' + current_user.id.to_s %> | 
+                <%= link_to "View Assigned To Me",'/todo_assigned_to/' + current_user.id.to_s %>
+              <% end %>
+          </li>
+          <br/>
+          <% topics = TodoTopic.order(:name).map{|i| [i.id,i.name]} %>
+          <% stats = TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
+          <% @todos.each do |i| %>
+                <% edi = i.assigned_by == current_user.id %>
+                <li>
+                <div class="todo_container">
+                    <%= image_tag((i._aby.image? ? i._aby.image_url : "/images/icons/user.png"),
+                                   {width: "30",
+                                    class: "fl",
+                                    style: "margin-right:2px;"}) %>
+                    <span style='font-size: 1.5em;'>
+                      <%= best_in_place_if (i.assigned_to == current_user.id), i, :done, type: :checkbox ,collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, "<span data-state='fill'>&#x2611;</span>".html_safe], classes: "todo_checkbox"  %>
+                    </span>
 
-<br />
 
-<%= link_to 'New Todo', new_todo_path %>
+                     <%= best_in_place_if (edi),i,
+                         :topic_id,
+                         :type => :select, 
+                         :collection => topics,
+                         :display_as => "tit" %> -
+
+                    <small class="todo_desc <%= i.done ? 'checkit' : 'uncheckit' %>">
+                      <%= best_in_place_if (edi),i,
+                          :desc,
+                          type: "textarea" %> 
+                    </small>
+                    &nbsp;
+                    
+                    &nbsp;
+                    <small>
+                     Status: <%= best_in_place_if (edi),i,
+                         :status_id,
+                         :type => :select, 
+                         :collection => stats,
+                         :display_as => "tit" %>
+                    </small>
+                    <br/>
+
+                    <small class="brt0">
+                      Assigned By:
+                      <%= (link_to i.ass_by,i._aby) rescue "User deleted" %> 
+                      &nbsp; &nbsp;
+                      Assigned To:
+                      <%= (link_to i.ass_to,i._ato) rescue "User deleted" %> 
+                      &nbsp; &nbsp;
+                      <span class="todo_due">
+                        Due on: <%= best_in_place_if (edi),i,
+                         :duedate,
+                         :type => :date, 
+                         :display_as => "due" %>
+                      </span>
+                    </small>
+               </div>
+
+               </li>
+               <br/>
+
+       <% end %> 
+       </ul>
+          <br/>
+
+          <ul class="vls">
+          <li>
+          <img src="/images/icons/sub_black_add.png" width="25"/>
+              <h2>New Todo</h2>
+          </li>
+          </ul>
+          <br/>
+        <%= form_for(@todo) do |g| %>
+          <div class="cols">
+            <div class="col6">
+              <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
+              <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
+              <%= fbox(g,[:assigned_to, 
+                         User.order(:first_name), 
+                         :id, 
+                         :first_name,
+                         {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+              <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
+              <div class="fbox">
+                <label>Priority</label>
+                   <%= g.select(:priority,
+                                options_for_select(["High","Medium","Low"])) %>
+              </div> 
+              <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+              <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+            </div>
+          </div>
+          <%= g.submit "Create",{:class => "btnp fl"} %>
+            <div class="cl"></div>
+        <% end %>
+         
+         
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+ activeMM("todosMM");
+});
+</script>
+
+

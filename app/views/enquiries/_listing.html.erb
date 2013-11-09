@@ -76,7 +76,8 @@
 
 </thead>
 
-<%= image_tag "/images/icons/info.png",{class: "fr tooltip",
+
+<%= image_tag "/images/icons/info.png",{class: "tooltip fr",
                                         title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
        <span class="fr btnp" style="margin-left:10px"  onclick="$('.dataTables_filter input').val('').keyup();">
        Reset
@@ -111,7 +112,7 @@ $(function(){
 dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>");
 setColorsFromSession();
 activeMM("enquiriesMM");
-
+mytooltip();
 
 });
 </script>

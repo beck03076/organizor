@@ -29,16 +29,16 @@ class Enquiry < ActiveRecord::Base
   belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
   belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
   
-  scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
-  scope :active, includes(:status).where("enquiry_statuses.name != 'deactivated'")
+  scope :inactive,includes(:status,:follow_ups).where("enquiry_statuses.name = 'deactivated'")
+  scope :active, includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated'")
   
   #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   
   scope :myactive, lambda{|user|
   if user.adm?
-    includes(:status).where("enquiry_statuses.name != 'deactivated'")
+    includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated'")
   else
-    includes(:status).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+    includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
   end
   }
   
@@ -87,6 +87,10 @@ class Enquiry < ActiveRecord::Base
   
   def self.tit
     "Enquiries"
+  end
+  
+  def follow_up_date
+    ((self.follow_ups.map{|i| i.starts_at.strftime('%F') }).join(", ")) rescue "Unknown"
   end
 
 end

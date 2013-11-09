@@ -22,23 +22,25 @@ Organizor::Application.routes.draw do
   
   resources :images
 
-
   resources :todo_statuses
   
   resources :contact_types
 
-
   resources :todo_topics
-
 
   resources :todos
   
   resources :notes
 
-
   resources :event_types
 
   resources :follow_ups
+  
+  match "/calendar_user/:user_id" => "follow_ups#index"
+  
+  match "/todo_assigned_to/:ass_to" => "todos#index"
+  
+  match "/todo_assigned_by/:ass_by" => "todos#index"
   
   match "/email_hover/:id" => "emails#show_hover"
   

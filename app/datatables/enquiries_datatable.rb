@@ -6,7 +6,7 @@ class EnquiriesDatatable < DeviseController
 
   def initialize(view,cols,sFil)
     @view = view
-    @cols = cols
+    @cols = cols 
     @sFilter = sFil
   end
 
@@ -140,6 +140,8 @@ private
   def set_asso(var)
     Enquiry.myactive(current_user).reflect_on_association(var).klass.name.underscore.pluralize
   end
+  
+  
   
     
 end

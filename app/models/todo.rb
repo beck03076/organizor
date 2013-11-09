@@ -12,6 +12,21 @@ class Todo < ActiveRecord::Base
   :updated_by,:assigned_to, :assigned_by,
   :enquiry_id,:registration_id,:done
   
+  def as_json(options = {})  
+   {  
+    :id => self.id,  
+    :title => (self.topic.name rescue "Untitled"),  
+    :description => self.desc || "No Description",  
+    :status => (self.status.name rescue "No Status"),
+    :start => self.duedate.rfc822,  
+    :end => self.duedate.rfc822,  
+    #:allDay => self.allday,  
+    :priority => self.priority,  
+    :url => Rails.application.routes.url_helpers.todo_path(id),  
+    :className => "todo_this",
+   }  
+  end
+  
   def ass_to
     User.find(self.assigned_to).first_name
   end
@@ -21,11 +36,17 @@ class Todo < ActiveRecord::Base
   end
 
   def due
-    self.duedate.strftime("%F %R %p") rescue "Not Set"
+    self.duedate.strftime("%A, %F") rescue "Not Set"
   end
   
   def tit
     self.topic.name rescue "Title Unknown"
   end
+  
+  def stat
+    self.status.name rescue "Title Unknown"
+  end
+ 
+
   
 end
