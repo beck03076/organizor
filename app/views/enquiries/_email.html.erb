@@ -12,12 +12,12 @@
           </tr>
         </thead>
         <tbody>
-                <% obj.first.emails.each do |email| %>
+                <% obj.first.emails.includes(:smtp).each do |email| %>
                     <tr>
                         <td><%= email.subject %></td>
                         <td><%= email.created_at.strftime("%F %R %p") %></td>
                         <td><%= email._created_by.name rescue "" %></td>
-                        <td><%= email.from rescue "unknown" %></td>
+                        <td><%= (email.from.nil? ? email.smtp.name : email.from) rescue "unknown" %></td>
                         <td  class="preview" data-email_id='<%= email.id %>'>...</td>
                    </tr>
                <% end %>
