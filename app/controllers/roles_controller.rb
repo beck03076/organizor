@@ -10,7 +10,7 @@ authorize_resource
     @roles = Role.includes(:permissions).all.reject {|i| i.name == "agency_administrator"}
     
     respond_to do |format|
-      format.html { render layout: "users" }
+      format.html { }#render layout: "users" }
       format.json { render json: @roles }
     end
     
@@ -30,7 +30,7 @@ authorize_resource
     permissions
     @role = Role.new
     
-    render layout: "users"
+    #render layout: "users"
   end
 
   # GET /roles/1/edit
