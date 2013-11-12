@@ -72,6 +72,7 @@ gem 'devise_invitable'
 gem 'private_pub'
 gem 'fullcalendar-rails' 
 gem 'rubyzip'
+gem 'prawn'
 
 
 
