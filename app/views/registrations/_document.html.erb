@@ -1,3 +1,4 @@
+<!-- Documents for regs -->
 <% a = @registration %>
 
 
@@ -7,24 +8,36 @@
     </h6>
     <br/>
     <br/>
-    <%= a.documents.size == 0 ? "<i>No documents uploaded</i>".html_safe : ""%>
-
-        <%= form_tag(delete_documents_path,method: "delete") do %>
+    <% if a.documents.size == 0  %>
+    
+      <i>No documents uploaded</i>
+    
+    <% else %>
+    
+        <%= form_tag('/documents/delete_or_download') do %>
             <%= hidden_field_tag :reg_id,@registration.id %>
                 <% a.documents.includes(:category).each do |cat| %>
                         <ul class="vlsdet">
                             <li>
                                 <%= check_box_tag "doc_id[]",cat.id %>
                                 <h4><%= cat.name rescue "Unknown" %></h4>
-                                <label>[<%= cat.category.name rescue "Unknown" %>]</label> 
+                                <label>[<%= cat.category.name rescue "Unknown" %>]</label>
+                                <br/> 
+                                <%= link_to "Download",cat %> 
                             </li>
+
                         </ul>
                 <% end %>
             <br/>
 
-            <%= submit_tag "Delete Selected",{method: :delete, class: "btnp"} %>
+            <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btnp",data: { confirm: 'Are you sure?' }} %>
+            <%= submit_tag "Download Selected",{name: "doc_download", class: "btnp"} %>
+            
+            <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btnp", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
 
         <% end %>
+    
+    <% end %>
     <br/>
     <br/>
 
@@ -34,20 +47,51 @@
         <br/>
             <br/>
     <br/>
-        <%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
-               
-               <%= f.hidden_field :registration_id,value: @registration.id %>
-               <%= go_create(f,"doc_category","category_id","name",1,"fbox") %> 
-               <%= fbox(f,"name","text_field",nil,nil) %>
-               <div class="fbox">
-                 <label>File</label>
-                 <%= f.file_field :path %>
-               </div>
-               <div class="fbox">
-               
-               <%= f.submit "Upload", class: "btnp" %>
-               </div>
+        <!-- Commenting out this block for nested documents form -->
+        <% if false %>
+                <%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
+                       
+                       <%= f.hidden_field :registration_id,value: @registration.id %>
+                       <%= go_create(f,"doc_category","category_id","name",1,"fbox") %> 
+                       <%= fbox(f,"name","text_field",nil,nil) %>
+                       <div class="fbox">
+                         <label>File</label>
+                         <%= f.file_field :path %>
+                       </div>
+                       <div class="fbox">
+                       
+                       <%= f.submit "Upload", class: "btnp" %>
+                       </div>
+                <% end %>
         <% end %>
+        
+        
+        <%=  nested_form_for(a) do |reg| %>
+        <%= reg.fields_for :documents,a.documents.build do |d| %>
+               <div class=" cols boxstheme">
+                 <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
+                 <div class="col5" >
+                     <%= go_create(d,"doc_category","category_id","name",1) %> 
+                 </div>
+                 <div class="col5" >
+                     <%= fs(d,"name","text_field",nil) %>
+                 </div>
+                 <div class="col5" >
+                     <%= fs(d,"path","file_field",nil) %>
+                 </div>
+              </div>
+                    <%= d.hidden_field :registration_id %>
+              <br/>
+              <div class="cl"></div>
 
+         <% end %>
 
+        <%= reg.link_to_add "Attach more document", :documents ,{:class => "btns fl"} %>
+        <div class="cl"></div>
+        <br/>
+        <br/>
+        <%= reg.submit "Upload",{:class => "btnp"} %>
+        <% end %> 
+        
+        
 

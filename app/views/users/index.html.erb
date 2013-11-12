@@ -42,9 +42,11 @@ $(function(){
             <td><%= user.role.name.titleize rescue "Unassigned" %></td>
             <td><%= user.confirmed_at ? "Accepted" : "Not Accepted" %></td>
             <td><b><%= user.active_for_authentication? ? "Active" : "Inactive" %></b></td>
+            <% if (!user.adm? rescue "OK") %>
             <td>
             <%= link_to image_tag("/images/icons/del.png"),user, method: :delete, data: { confirm: 'Are you sure?' }  %>
             </td>
+            <% end %>
           </tr>
 
         <% end %>

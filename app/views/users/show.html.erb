@@ -204,7 +204,7 @@ $(function(){
               <% Audit.where(user_id: a.id).order("created_at desc").each do |i| %>
                 <tr>
                  <td><%= i.action.capitalize %></td>
-                 <td><%= i.auditable_type %></td>
+                 <td><%= link_to i.auditable_type,"/#{i.auditable_type.downcase.pluralize}/#{i.auditable_id}" %></td>
                  <td><%= i.remote_address %></td> 
                  <td><%= time_ago_in_words(i.created_at) %> ago</td>
                  <td><%= i.created_at.strftime("%A, %F %R %p") %></td>

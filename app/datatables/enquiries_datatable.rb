@@ -29,13 +29,35 @@ private
     
     enquiries.map do |enq|
        temp = []
+       # setting the class so that the row be green for registered enqs
+       reg = (enq.registered ? "enq_reg" : "")
+       # setting the class so that the row be red for todays follow up
+       fu_now_temp = enq.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       # setting the class so that the row be red for this weeks follow up
+       fu_week_temp = enq.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
        
-       temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}"}}) 
+       v_fu_now = (fu_now_temp ? "fu_now" : "")
+       v_fu_week = (fu_week_temp ? "fu_week" : "")
+       
+       if enq.score > 7
+        like = image_tag("/images/icons/green.png")
+       elsif enq.score < 3
+        like = image_tag("/images/icons/red.png")
+       else
+        like = image_tag("/images/icons/yellow.png")
+       end
+       
+       temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}",
+                                                      registered: reg,
+                                                      fu_now: v_fu_now,
+                                                      fu_week: v_fu_week }}) + spc + like + spc
+       
+      
        
        temp << link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
+              {:method => "delete",data: { confirm: 'Are you sure this delete?' }})
                
 
         @cols.map{|i|
@@ -140,8 +162,5 @@ private
   def set_asso(var)
     Enquiry.myactive(current_user).reflect_on_association(var).klass.name.underscore.pluralize
   end
-  
-  
-  
-    
+
 end

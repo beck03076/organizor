@@ -71,6 +71,10 @@ gem 'deep_cloneable', '~> 1.5.5'
 gem 'devise_invitable'
 gem 'private_pub'
 gem 'fullcalendar-rails' 
+gem 'rubyzip'
+gem 'prawn'
+gem 'soap4r'
+gem "jquery-fileupload-rails"
 
 
 

@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
+  audited
   mount_uploader :image, HumanImageUploader
+  before_save :default_values
 
   def self.current
     Thread.current[:user]
@@ -55,8 +57,12 @@ class User < ActiveRecord::Base
      self.save!
    end
    
-   def tit
+  def tit
     self.first_name rescue "Title Unknown"
+  end
+  
+  def default_values
+    self.permissions << Permission.where(subject_class: "User", action: ["update","read"])
   end
 
 end

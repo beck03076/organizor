@@ -12,6 +12,10 @@ Organizor::Application.routes.draw do
       end
   end
   
+  match "/show_browser/:id/:disposition" => "documents#show"  
+
+  match "/documents/delete_or_download" => "documents#delete_or_download"
+  
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
   
   resources :smtps

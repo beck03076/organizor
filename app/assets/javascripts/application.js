@@ -21,7 +21,7 @@
 //= require best_in_place
 //= require private_pub
 //= require fullcalendar
-
+//= require jquery-fileupload
 
 $(function(){
     
@@ -111,6 +111,29 @@ $(function(){
     $('#mini-calendar').fullCalendar({
         theme: true,
         editable: true,
+        header: {
+      left: 'prev,next today',
+      right: 'month,agendaWeek,agendaDay'
+    },
+     selectable: true,
+			selectHelper: true,
+			select: function(start, end, allDay) {
+				var title = prompt('Event Title:');
+				var a = prompt('a:');
+				if (title) {
+					calendar.fullCalendar('renderEvent',
+						{
+							title: title,
+							start: start,
+							end: end,
+							allDay: allDay
+						},
+						true // make the event "stick"
+					);
+				}
+				calendar.fullCalendar('unselect');
+			},
+
         eventSources: [
       {
         url: '/follow_ups'
@@ -386,7 +409,7 @@ function enquiryTabSwitch(obj){
 function dataTableStart(table,filterValue,cols)
 {
   tableId = "#" + table
-  
+  alert(cols.split(",").length);
 
   
   var oTable = $(tableId).dataTable({
@@ -403,7 +426,16 @@ function dataTableStart(table,filterValue,cols)
       { "bSortable": false, "aTargets": [ 0,1 ] }
     ], 
     "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
-    "iDisplayLength": 25
+    "iDisplayLength": 25,
+     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+          var reg = $(aData[0]).data('registered');
+          var fu_now = $(aData[0]).data('fu-now');
+          var fu_week = $(aData[0]).data('fu-week');
+          $(nRow).addClass(reg);
+          $(nRow).addClass(fu_week);
+          $(nRow).addClass(fu_now);
+         
+        }
   });
   
    $('select#mySelect').on('change',function(){

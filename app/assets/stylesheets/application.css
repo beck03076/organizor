@@ -11,6 +11,7 @@
  *= require_self
  *= require_tree .
  *= require fullcalendar
+ *= require jquery.fileupload-ui
  */
  
  
@@ -192,6 +193,8 @@ border:0;font-size:15px;font-family:"Comic Sans MS", cursive}
 .tables4 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
 
 
+
+
 .dataTable{padding:0 !important;margin:0 !important}
 .dataTable tr th{background:#EDF2F6 !important;border:1px solid #DDD !important;border-bottom:1px #DDD !important;border-right:0 !important;border-left:0 !important;padding:5px 0 5px 5px !important;font-size:12px !important;color:#5E6E7F !important;cursor:pointer !important;font-weight:normal !important;text-align:left !important;white-space:nowrap; }
 .dataTable tr td:first-child{white-space:nowrap !important;width:auto !important}
@@ -206,6 +209,8 @@ border:0;font-size:15px;font-family:"Comic Sans MS", cursive}
 .dataTable tr td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" !important;filter: alpha(opacity=50) !important;-moz-opacity: 0.5 !important;-khtml-opacity: 0.5 !important;opacity: 0.5 !important;}
 .dataTable tr:hover td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)" !important;filter: alpha(opacity=80) !important;-moz-opacity: 0.8 !important;-khtml-opacity: 0.8 !important;opacity: 0.8 !important;}
 div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
+
+
 /* TABLE - ENDS */
 
 .sp{color:#FD9B00}
@@ -324,6 +329,7 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 
 /* PADDING - STARTS */
 .padr30{padding-right:30px}
+.padr10{padding-right:10px}
 .padl30{padding-left:30px}
 .padl20{padding-left:20px}
 /* PADDING - ENDS */
@@ -605,6 +611,11 @@ small.uncheckit{text-decoration:none;}
 }
 
 .todo_class{background:#FD9B00;border:1px solid #FD9B00; }
+
+.dataTable tr.enq_reg td {background: #e1f5e0 !important; }
+.dataTable tr.fu_week td {background: #f8f4b0 !important; }
+.dataTable tr.fu_now td {background: #f7d0d0 !important; }
+
 
 /* SENTHIL's  CSS - End */
 
