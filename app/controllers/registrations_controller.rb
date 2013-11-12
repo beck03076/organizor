@@ -40,7 +40,7 @@ class RegistrationsController < ApplicationController
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.reg_cols
       b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
-      @cols = ((b & a) + (a - b))
+      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
     end
     
     render partial: @partial

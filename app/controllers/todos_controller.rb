@@ -35,12 +35,7 @@ skip_authorize_resource :only => :show_hover
   # GET /todos/1
   # GET /todos/1.json
   def show
-    @todo = Todo.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @todo }
-    end
+    redirect_to '/todos'
   end
 
   # GET /todos/new
@@ -62,23 +57,29 @@ skip_authorize_resource :only => :show_hover
   # POST /todos
   # POST /todos.json
   def create
-    @todo = Todo.new(params[:todo].except("sub_id","sub_class","todo"))
-    
-    if (params[:todo][:todo].to_s == "from_action")
-      topic = TodoTopic.find(params[:todo][:topic_id]).name
-      ass_to = User.find(params[:todo][:assigned_to]).first_name
-      
-       tl(params[:todo][:sub_class],params[:todo][:sub_id],"Assigned to " + ass_to,
-         topic + ' task, due on ' + params[:todo][:duedate],'todo',params[:todo][:assigned_to])
-                       
+  
+    if params[:todo][:model]
+        m = params[:todo][:model]
+        m_id = (m + "_id").to_sym
+        params[:todo].delete(:model)
     end
+    
+    @todo = Todo.new(params[:todo].except("sub_id","sub_class","todo"))
 
     respond_to do |format|
       if @todo.save
         format.html { 
-        if params[:todo][:sub_class]
-          redirect_to "/#{params[:todo][:sub_class].pluralize.downcase}/" + params[:todo][:sub_id].to_s 
+        if !m.blank? && !params[:follow_up][m_id].blank?
+        
+          tl(m.capitalize,params[:todo][m_id],"Assigned to " + @todo._ato.name,
+         @todo.topic.name + ' task, due on ' + params[:todo][:duedate],'todo',params[:todo][:assigned_to])
+         
+          redirect_to "/#{m.pluralize.downcase}/" + params[:todo][m_id].to_s 
         else
+        
+          tl("Todo",@todo.id,"Assigned to " + @todo._ato.name,
+         @todo.topic.name + ' task, due on ' + params[:todo][:duedate],'todo',params[:todo][:assigned_to])
+         
           redirect_to todos_path
         end
         }
@@ -95,7 +96,15 @@ skip_authorize_resource :only => :show_hover
   # PUT /todos/1.json
   def update
     @todo = Todo.find(params[:id])
-
+    
+    if params[:todo][:done]
+      tl("Todo",@todo.id,'This todo has been marked done',
+          @todo.topic,'todo',@todo.assigned_by)
+    else
+      tl("Todo",@todo.id,'This todo has been updated',
+          @todo.topic,'todo',@todo.assigned_to)
+    end
+    
     respond_to do |format|
       if @todo.update_attributes(params[:todo])
         format.html { redirect_to @todo, notice: 'Todo was successfully updated.' }

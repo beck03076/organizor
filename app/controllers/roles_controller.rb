@@ -21,6 +21,8 @@ authorize_resource
   # GET /roles/1
   # GET /roles/1.json
   def show
+  
+    @role = Role.find(params[:id])
     @permissions = @role.permissions.group_by &:subject_class
   end
 

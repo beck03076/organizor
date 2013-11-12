@@ -28,7 +28,17 @@ private
     registrations.map do |reg|
        temp = []
        
-       temp << check_box_tag(:tr,reg.id,false,{data: {launch: "/registrations/#{reg.id}"}}) 
+       # setting the class so that the row be red for todays follow up
+       fu_now_temp = reg.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       # setting the class so that the row be red for this weeks follow up
+       fu_week_temp = reg.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
+       
+       v_fu_now = (fu_now_temp ? "fu_now" : "")
+       v_fu_week = (fu_week_temp ? "fu_week" : "")
+       
+       temp << check_box_tag(:tr,reg.id,false,{data: {launch: "/registrations/#{reg.id}",
+                                                      fu_now: v_fu_now,
+                                                      fu_week: v_fu_week}}) 
        
        temp<<  link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
@@ -61,8 +71,7 @@ private
       fet_stat= ApplicationStatus.find_by_name(@sFilter.titleize).try(:registrations)
       regs = fet_stat.nil? ? Registration.mine(current_user) : fet_stat.mine(current_user)
     end
-    p "***********"
-    p  regs
+
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
       join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
@@ -85,8 +94,10 @@ private
       else
         regs = regs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
       end
-    end
-    
+    elsif params[:sSearch_1].present?
+      regs = regs.send(params[:sSearch_1])
+    end 
+
     regs
     
   end

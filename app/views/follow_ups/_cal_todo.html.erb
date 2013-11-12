@@ -1,0 +1,40 @@
+<!-- new follow up on calendar click -->
+    
+             <ul class="vls">
+              <li>
+              <img src="/images/icons/sub_black_add.png" width="25"/>
+             <h2 onclick="$('#new_todo').css('display','none');$('#new_follow_up').css('display','');">
+                  New Event 
+             </h2> 
+             
+             <h2> | </h2>
+             
+             <h2 onclick="$('#new_todo').css('display','');$('#new_follow_up').css('display','none');">
+                  New Todo 
+             </h2>
+              </li>
+              <%= form_for(@todo) do |g| %>
+                      <div class="cols">
+                        <div class="col6">
+                            <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
+                            <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
+                            <%= fbox(g,[:assigned_to, 
+                                     User.order(:first_name), 
+                                     :id, 
+                                     :first_name,
+                                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                            
+                            <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
+                            <div class="fbox">
+                            <label>Priority</label>
+                            <%= g.select(:priority,
+                                         options_for_select(["High","Medium","Low"])) %>
+                            </div> 
+                            <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                        </div>
+                    </div>
+                <br/>
+                <%= g.submit "Create",{:class => "btnp fl"} %>
+                <div class="cl"></div>
+                <% end %>
+   

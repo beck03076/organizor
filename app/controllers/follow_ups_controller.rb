@@ -1,5 +1,12 @@
 class FollowUpsController < ApplicationController
 
+  def cal_click
+    set_url_params
+    @follow_up = FollowUp.new(starts_at: @start, ends_at: @end)
+    @todo = Todo.new(duedate: @start)
+    render partial: 'cal_click'
+  end
+
   def show_hover 
     @follow_up = FollowUp.find(params[:id])
     render partial: "follow_ups/show_hover" 
@@ -19,12 +26,7 @@ class FollowUpsController < ApplicationController
   # GET /follow_ups/1
   # GET /follow_ups/1.json
   def show
-    @follow_up = FollowUp.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @follow_up }
-    end
+    redirect_to '/follow_ups'
   end
 
   # GET /follow_ups/new
@@ -47,23 +49,38 @@ class FollowUpsController < ApplicationController
   # POST /follow_ups.json
   def create
   
-    m = params[:follow_up][:model]
-    m_id = (m + "_id").to_sym
-    params[:follow_up].delete(:model)
+    if params[:follow_up][:model]
+        m = params[:follow_up][:model]
+        m_id = (m + "_id").to_sym
+        params[:follow_up].delete(:model)
+    end
   
     @follow_up = FollowUp.new(params[:follow_up])
     
-    ass_to = User.find(params[:follow_up][:assigned_to]).first_name
-                       
-     tl(m.capitalize,params[:follow_up][m_id],
-        "A follow up has been created for this #{m}",
-         params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + ass_to,
-         'follow_up',
-         params[:follow_up][:assigned_to])
-
     respond_to do |format|
       if @follow_up.save
-        format.html { redirect_to "/#{m.pluralize}/" + params[:follow_up][m_id].to_s }
+        format.html { 
+        
+        if !m.blank? && !params[:follow_up][m_id].blank?
+        
+          tl(m.capitalize,params[:follow_up][m_id],
+        "A follow up has been created for this #{m}",
+         params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + @follow_up._ato.name,
+         'follow_up',
+         @follow_up.assigned_to)
+         
+          redirect_to "/#{m.pluralize}/" + params[:follow_up][m_id].to_s 
+        else
+        
+          tl("FollowUp",@follow_up.id,
+        "A follow up has been created",
+         params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + @follow_up._ato.name,
+         'follow_up',
+         @follow_up.assigned_to)
+         
+          redirect_to follow_ups_path 
+        end
+          }
         format.json { render json: @follow_up, status: :created, location: @follow_up }
       else
         format.html { render action: "new" }

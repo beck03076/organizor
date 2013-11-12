@@ -12,6 +12,8 @@ Organizor::Application.routes.draw do
       end
   end
   
+  match '/cal_click/:start(/:end)' => 'follow_ups#cal_click'
+  
   match "/show_browser/:id/:disposition" => "documents#show"  
 
   match "/documents/delete_or_download" => "documents#delete_or_download"

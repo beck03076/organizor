@@ -20,8 +20,10 @@ class NotificationObserver < ActiveRecord::Observer
                           
      elsif (record.assigned_to != record.assigned_by rescue false)
        # this condition is added to ignore updating done field of todo to be notified
-       if (record.class.name == "Todo" && !record.done.nil?)
-         nil
+       if (record.class.name == "Todo" && record.done)
+         PrivatePub.publish_to("/notify/" + record.assigned_by.to_s, 
+                          message: "#{record.class.name} has been re-assigned/changed",
+                          ass_by: record.assigned_by)
        else
          PrivatePub.publish_to("/notify/" + record.assigned_to.to_s, 
                           message: "#{record.class.name} has been re-assigned/changed",

@@ -42,15 +42,15 @@ class Enquiry < ActiveRecord::Base
   end
   }
   
+  
   scope :todays, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
                                WHERE date(fu.starts_at) = '#{Date.today}')")
                                
   scope :this_weeks, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
-                               WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_week}' AND '#{Date.today.at_end_of_week}')")
-                               
+                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_week}' AND '#{Date.today.at_end_of_week}')")
+                                   
   scope :this_months, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
-                               WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month}' AND '#{Date.today.at_end_of_month}')") 
-
+                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month}' AND '#{Date.today.at_end_of_month}')")
 
   
   attr_accessible :emails_attributes,:programmes_attributes,
@@ -91,6 +91,10 @@ class Enquiry < ActiveRecord::Base
   
   def follow_up_date
     ((self.follow_ups.map{|i| i.starts_at.strftime('%F') }).join(", ")) rescue "Unknown"
+  end
+  
+  def self.no_followups
+    includes(:follow_ups).where( :follow_ups => {:enquiry_id => nil} )
   end
 
 end

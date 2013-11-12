@@ -1,0 +1,113 @@
+<!-- new follow up on calendar click -->
+<div id="cal_click" class="addNewPop" style="display: none; top: 483px; left: 455px;">
+  <div id="new_follow_up"> 
+             <ul class="vls">
+              <li>
+              <img src="/images/icons/sub_black_add.png" width="25"/>
+             <h2 onclick="showHide('new_todo','new_follow_up');">
+                  New Event 
+             </h2> 
+             
+             <h2> | </h2>
+             
+             <h2 onclick="showHide('new_follow_up','new_todo');">
+                  New Todo 
+             </h2>
+              </li>
+              <%= form_for(@follow_up) do |g| %>
+                      <div class="cols">
+                        <div class="col6">
+                            <%= fbox(g,"title","text_field") %>
+                            <%= go_create(g,"event_type","event_type_id","name",1,"fbox") %> 
+                           
+                            <%= fbox(g,[:assigned_to, 
+                                     User.order(:first_name), 
+                                     :id, 
+                                     :first_name,
+                                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                            <a onclick="showHide('cal_reg','cal_enq');$('#follow_up_model').val('enquiry');">Enquiry </a>
+                            <h4> | </h4>
+                            <a onclick="showHide('cal_enq','cal_reg');$('#follow_up_model').val('registration');">Registration </a>
+                            <br/>
+                            <br/>
+                            <span id="cal_enq">
+                              <%= fbox(g,"enquiry_id","text_field") %>
+                            </span>
+                            <span id="cal_reg" style="display:none">
+                              <%= fbox(g,"registration_id","text_field") %>
+                            </span>
+                            
+                            <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                            <%= g.hidden_field :model, :value => "enquiry" %>
+                            <%= g.hidden_field :starts_at, :value => g.object.starts_at %>
+                            <%= g.hidden_field :ends_at, :value => g.object.ends_at %>
+                            
+                             <br/>
+                             <br/>
+             <span onclick="div_toggle(this,'#more_fields')" class="btns">Description</span>
+                       <div class="cl"></div>
+                        <br/>
+
+                            <div class="cols" id="more_fields" style="display:none;">
+                               <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                            </div>
+                        </div>
+                    </div>
+                <br/>
+                <%= g.submit "Create",{:class => "btnp fl"} %>
+                <div class="cl"></div>
+                <% end %>
+    </div>
+    <div id="new_todo" style="display: none; top: 483px; left: 455px;">
+      <!-- new follow up on calendar click -->
+    
+             <ul class="vls">
+              <li>
+              <img src="/images/icons/sub_black_add.png" width="25"/>
+             <h2 onclick="$('#new_todo').css('display','none');$('#new_follow_up').css('display','');">
+                  New Event 
+             </h2> 
+             
+             <h2> | </h2>
+             
+             <h2 onclick="$('#new_todo').css('display','');$('#new_follow_up').css('display','none');">
+                  New Todo 
+             </h2>
+              </li>
+              <%= form_for(@todo) do |g| %>
+                      <div class="cols">
+                        <div class="col6">
+                            <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
+                            <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+                            <a onclick="showHide('todo_reg','todo_enq');$('#todo_model').val('enquiry');">Enquiry </a>
+                            <h4> | </h4>
+                            <a onclick="showHide('todo_enq','todo_reg');$('#todo_model').val('registration');">Registration </a>
+                            <br/>
+                            <br/>
+                            <span id="todo_enq">
+                              <%= fbox(g,"enquiry_id","text_field") %>
+                            </span>
+                            <span id="todo_reg" style="display:none">
+                              <%= fbox(g,"registration_id","text_field") %>
+                            </span>
+                            <br/>
+                           <br/>
+                            <%= fbox(g,[:assigned_to, 
+                                     User.order(:first_name), 
+                                     :id, 
+                                     :first_name,
+                                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                                     
+                            <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                            <%= g.hidden_field :sub_class, :value => "enquiry" %>
+                            <%= g.hidden_field :sub_class, :value => "enquiry" %>
+                            <%= g.hidden_field :duedate, :value => g.object.duedate %>
+                        </div>
+                    </div>
+                <br/>
+                <%= g.submit "Create",{:class => "btnp fl"} %>
+                <div class="cl"></div>
+                <% end %>
+    </div>
+
+</div>

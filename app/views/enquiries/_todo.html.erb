@@ -48,11 +48,11 @@ $(function(){
 <div id="followup-action" class="action-box">
 <%= form_for(@todo) do |g| %>
 
-  <%= g.hidden_field obj_id.to_sym, value: id %>
+                 <%= g.hidden_field obj_id.to_sym, value: id %>
                  <div class="cols">
                     <div class="col6">
-                        <%= hidden_field_tag "#{g.object_name}[sub_id]",obj.id %>
-                        <%= hidden_field_tag "#{g.object_name}[sub_class]",obj_name.capitalize %>
+
+                        <%= hidden_field_tag "#{g.object_name}[model]",obj_name.downcase %>
                         <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
                         <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
                         <%= fbox(g,[:assigned_to, 
@@ -72,7 +72,7 @@ $(function(){
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                 </div>
-    <%= hidden_field_tag "#{g.object_name}[todo]", "from_action" %>
+
     <%= g.submit "Create",{:class => "btnp fl"} %>
     <div class="cl"></div>
 <% end %>

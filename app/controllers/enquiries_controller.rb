@@ -46,7 +46,7 @@ class EnquiriesController < ApplicationController
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.enq_cols
       b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
-      @cols = [:follow_up_date] + ((b & a) + (a - b)) 
+      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
     end
     
     render :partial => @partial

@@ -117,14 +117,10 @@ GEM
     hike (1.2.3)
     http_parser.rb (0.5.3)
     httpauth (0.2.0)
-    httpclient (2.3.4.1)
     i18n (0.6.1)
     journey (1.0.4)
     jquery-datatables-rails (1.11.2)
       jquery-rails
-    jquery-fileupload-rails (0.4.1)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -223,8 +219,6 @@ GEM
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
-    soap4r (1.5.8)
-      httpclient (>= 2.1.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -275,7 +269,6 @@ DEPENDENCIES
   fullcalendar-rails
   google-api-client
   jquery-datatables-rails
-  jquery-fileupload-rails
   jquery-rails
   jquery-ui-rails
   mysql2
@@ -291,7 +284,6 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sidekiq
   simple_form
-  soap4r
   thin
   tinymce-rails
   turn

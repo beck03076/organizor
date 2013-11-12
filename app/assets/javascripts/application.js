@@ -74,12 +74,38 @@ $(function(){
     slotMinutes: 30,
     eventSources: [
       {
-        url: '/follow_ups'
+        url: '/follow_ups',
+        ignoreTimezone: false
       },
       {
-        url: '/todos'
+        url: '/todos',
+        ignoreTimezone: false
       }
     ],
+    selectable: true,
+    selectHelper: true,
+    select: function(start, end, allDay) {
+
+               $.get('/cal_click/'+ start + '/' + end,function(table){
+
+                 var $container = $("#cal_click_container").html(table);
+                 setColorsFromSession();
+                  var $dTF = $('.dateTimeField', $container);
+                  if ($dTF.length > 0) {
+                    $dTF.datetimepicker({
+                        inline: true,
+                        changeMonth: true, 
+                        changeYear: true, 
+                        yearRange: '1950:2030',
+                        controlType: 'select',
+                        dateFormat: 'yy-mm-dd', 
+                        timeFormat: 'hh:mm:ss'});
+                  }
+                 
+                 showPopUp('cal_click');
+               });
+
+            },
     timeFormat: 'h:mm t{ - h:mm t} ',
     dragOpacity: "0.5",
     eventRender: function(event, element) { 
@@ -115,24 +141,7 @@ $(function(){
       left: 'prev,next today',
       right: 'month,agendaWeek,agendaDay'
     },
-     selectable: true,
-			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				var a = prompt('a:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-				}
-				calendar.fullCalendar('unselect');
-			},
+     
 
         eventSources: [
       {
@@ -406,11 +415,10 @@ function enquiryTabSwitch(obj){
 
 }
 
-function dataTableStart(table,filterValue,cols)
+function dataTableStart(table,filterValue,cols,cols_size)
 {
-  tableId = "#" + table
-  alert(cols.split(",").length);
-
+  tableId = "#" + table;
+  var hide_follow_up_sort = parseInt(cols_size);
   
   var oTable = $(tableId).dataTable({
     "bJQueryUI": true,
@@ -423,7 +431,7 @@ function dataTableStart(table,filterValue,cols)
                    { "name": "sCols", "value": cols });
     },
     "aoColumnDefs": [
-      { "bSortable": false, "aTargets": [ 0,1 ] }
+      { "bSortable": false, "aTargets": [ 0,1,hide_follow_up_sort ] }
     ], 
     "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
     "iDisplayLength": 25,
@@ -592,5 +600,10 @@ function checkRole(e){
       return false
   }
 
+
+function showHide(one,two){
+  $('#' + one).css('display','none');
+  $('#' + two).css('display','');
+}
 
 

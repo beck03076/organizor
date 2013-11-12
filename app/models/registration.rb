@@ -57,11 +57,20 @@ class Registration < ActiveRecord::Base
   
   scope :mine, lambda{|user|
   if user.adm?
-   scoped
+   includes(:follow_ups).scoped
   else
-   where("registrations.assigned_to = #{user.id}")
+   includes(:follow_ups).where("registrations.assigned_to = #{user.id}")
   end
   }
+  
+   scope :todays, where("registrations.id IN (SELECT fu.registration_id FROM follow_ups fu 
+                               WHERE date(fu.starts_at) = '#{Date.today}')")
+                               
+  scope :this_weeks, where("registrations.id IN (SELECT fu.registration_id FROM follow_ups fu 
+                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_week}' AND '#{Date.today.at_end_of_week}')")
+                                   
+  scope :this_months, where("registrations.id IN (SELECT fu.registration_id FROM follow_ups fu 
+                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month}' AND '#{Date.today.at_end_of_month}')")
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
@@ -102,6 +111,14 @@ class Registration < ActiveRecord::Base
   
   def self.tit
     "Registrations"
+  end
+  
+  def follow_up_date
+    ((self.follow_ups.map{|i| i.starts_at.strftime('%F') }).join(", ")) rescue "Unknown"
+  end
+  
+  def self.no_followups
+    includes(:follow_ups).where( :follow_ups => {:registration_id => nil} )
   end
   
 end

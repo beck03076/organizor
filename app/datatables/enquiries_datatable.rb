@@ -132,7 +132,7 @@ private
   end
 
   def sort_column
-    columns = [:id,:id] + (@cols - ["statuses","test"])
+    columns = [:id,:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 
