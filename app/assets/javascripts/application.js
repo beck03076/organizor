@@ -21,7 +21,7 @@
 //= require best_in_place
 //= require private_pub
 //= require fullcalendar
-//= require jquery-fileupload
+
 
 $(function(){
     
