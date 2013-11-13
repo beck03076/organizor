@@ -173,3 +173,4 @@ var submitForm=false;
 	submitForm=(errorCount==0) ? true : false;
 	return submitForm;
 }
+
