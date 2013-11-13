@@ -120,10 +120,10 @@ dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size + 1 
 setColorsFromSession();
 activeMM("enquiriesMM");
 mytooltip();
+setDataTableWidth();
+
 $('.dataTables_filter .srch_sel').remove();
 $('.srch_sel').prependTo('#<%= _id %>_filter');
-
-
 });
 </script>
             

@@ -443,6 +443,16 @@ background: #fff;overflow:hidden}
 /* POPUP - ENDS */
 
 /* THEME & BACKGROUND - STARTS */
+
+.theme-colrs-lg{padding:0;margin:0;list-style:none}
+.theme-colrs-lg li{margin:0 15px 0 0;display:inline;}
+.theme-colrs-lg li span:hover{cursor:pointer;border:1px solid #F29436;}
+.theme-colrs-lg li span{cursor:pointer;border:1px solid #fff;}
+.theme-colrs-lg  li .theme-colrs-active{cursor:pointer;border:1px solid #fff;}
+
+.blue-theme-todo{background:#FD9B00;padding:0 7px 0 7px}
+.blue-theme-followup{background:#3A87AD;padding:0 7px 0 7px}
+
 .theme-colrs{padding:0;margin:0;list-style:none}
 .theme-colrs li{margin:0 15px 0 0;display:inline;}
 .theme-colrs li span:hover{cursor:pointer;border:3px solid #F29436;}

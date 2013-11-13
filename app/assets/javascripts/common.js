@@ -340,7 +340,7 @@ function setThemeColor(theme){
     $(".btnp").css({"background":mainColor,"border-color":thickColor});
     $(".theme,.popuptitle").css({"background":mainColor});
     $(".uibox").css({"background":lightColor,"border-color":mainColor});
-    $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover").css({"background":lightestColor});
+    $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover,.tab-menus1 .active-tab,.tab-menus1 li:hover").css({"background":lightestColor});
     $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
     $(".tb-stylev tr th,.theme-l,theme-ls").css({"background":lightColor,"color":thickColor});
 
@@ -353,9 +353,9 @@ function setThemeColor(theme){
             $(".uibox").css({"background":lightColor,"border-color":mainColor});
     });
     
-    $(".tab-menus li").click(function(){
-        $(".tab-menus li").css({"background":"#EAEAEA"});
-        $(".tab-menus .active-tab").css({"background":lightestColor});
+    $(".tab-menus li,.tab-menus1 li").click(function(){
+        $(".tab-menus li,.tab-menus1 li").css({"background":"#EAEAEA"});
+        $(".tab-menus .active-tab,.tab-menus1 .active-tab").css({"background":lightestColor});
     },function(){
         $(this).css({"background":lightestColor});
     });
