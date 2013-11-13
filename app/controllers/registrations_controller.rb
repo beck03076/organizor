@@ -151,24 +151,29 @@ class RegistrationsController < ApplicationController
     @registration = Registration.find(params[:id])
     authorize! :update, @registration
     
-    if (params[:registration][:assign].to_s == "from_action")
-    
-      ass_to = User.find(params[:registration][:assigned_to]).first_name
-      ass_by = User.find(params[:registration][:assigned_by]).first_name
-      
-      tl("Registration",params[:id],'This registration has been reassigned',
-          'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:registration][:assigned_to])
-    
-    else
-    
-      tl("Registration",params[:id],'Values of this registration has been updated',
-         "Updated",'Update',@registration.assigned_to)
-    end
-
     respond_to do |format|
       if @registration.update_attributes(params[:registration].except("assign"))
+      
+        if (params[:registration][:assign].to_s == "from_action")
+    
+          ass_to = User.find(params[:registration][:assigned_to]).first_name
+          ass_by = User.find(params[:registration][:assigned_by]).first_name
+          
+          tl("Registration",params[:id],'This registration has been reassigned',
+              'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:registration][:assigned_to])
+        
+        elsif params[:registration][:notes]
+          tl("Registration",params[:id],'A note has been created for this registration',
+             "Note created",'note',@registration.assigned_to)    
+        else
+        
+          tl("Registration",params[:id],'Values of this registration has been updated',
+             "Updated",'Update',@registration.assigned_to)
+        end
+              
         format.html { redirect_to @registration, notice: 'Registration was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @registration.errors, status: :unprocessable_entity }

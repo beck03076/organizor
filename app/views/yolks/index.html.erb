@@ -1,0 +1,23 @@
+<h1>Listing yolks</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @yolks.each do |yolk| %>
+  <tr>
+    <td><%= yolk.name %></td>
+    <td><%= link_to 'Show', yolk %></td>
+    <td><%= link_to 'Edit', edit_yolk_path(yolk) %></td>
+    <td><%= link_to 'Destroy', yolk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Yolk', new_yolk_path %>

@@ -98,9 +98,9 @@ $(function(){
         <center>
         <div class="notify-msg" data-user_id="<%= current_user.id %>">
         <ul class="notifyls">
-        <% Timeline.where(receiver_id: current_user.id).order("created_at desc").limit(8).each do |tl| %>
+        <% Timeline.includes(:user).where(receiver_id: current_user.id).order("created_at desc").limit(8).each do |tl| %>
 
-              <%= render "shared/notifications", tl: tl, count: nil %>
+              <%= render "shared/notifications", tl: tl, count: nil, u: tl.user %>
             
         <% end %>
             

@@ -1,5 +1,8 @@
 Organizor::Application.routes.draw do
 
+  resources :yolks
+
+
   get "resources/index"
 
   get "handle/error"

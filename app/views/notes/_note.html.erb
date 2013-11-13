@@ -1,4 +1,5 @@
-<% @programme.notes.each do |note| %>
+
+<% sub.notes.each do |note| %>
 <% u = note._created_by %>
 <% if !u.nil? %>
            <br/>
@@ -9,7 +10,7 @@
                                     class: "imgb fl",
                                     style: "margin-right:10px;"}) %>
                <span style="color:#999;padding-top:10px;">
-               <%= note.content %>
+               <%= note.content.html_safe %>
                </span>
                <br/>
                <br/>

@@ -9,7 +9,7 @@
     p "unauthorized subject: #{e.subject} and action: #{e.action}"
     p "***********************"
     
-    flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} any #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
+    flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} this #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
     respond_to do |format|
       format.html { redirect_to '/handle/cancan'  }
       format.js { redirect_to '/handle/cancan' }
@@ -65,7 +65,7 @@
     @tl = Timeline.where(receiver_id: params[:id]).order("created_at desc").first
     @notify_count = Timeline.where(receiver_id: params[:id],checked: false).count
     
-    render :partial => "shared/notifications", :locals => {:tl => @tl,:count => @notify_count}
+    render :partial => "shared/notifications", :locals => {:tl => @tl,:count => @notify_count,u: @tl.user}
     
   end
   

@@ -170,18 +170,7 @@ $(function(){
                 <% end %>
             </div>
         </div>
-        <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
-        <div id="timeline-display">
-            <br/><div class="htab">
-            <h5><b>Timeline</b></h5>
-            </div><br/>
-            <div id="scrollboxu"  style="height:440px">    
-            <ul>
-                <%= render 'timeline' %>
-            </ul>
-            </div>
-        </div>
-        <br/><br/>
+        
         
         <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>' data-model_sing='enquiry' data-model_plu='enquiries' >
         </div>
@@ -195,6 +184,22 @@ $(function(){
           <div id="action_div">
           </div>
        </div>
+        <br/><br/>
+        <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
+        
+        <div id="timeline-display">
+            <br/><div class="htab">
+            <h5><b>Timeline</b></h5>
+            </div><br/>
+            <div id="scrollboxu"  style="height:440px">    
+            <ul>
+                <%= render 'timeline' %>
+            </ul>
+            </div>
+        </div>
+        <br/><br/>
+        
+        
 <!-- INQUIRY DETAILS - ENDS -->
 
 

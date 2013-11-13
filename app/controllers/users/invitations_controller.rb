@@ -4,7 +4,9 @@ class Users::InvitationsController < Devise::InvitationsController
     params[:email].values.each do |email_id|
       if !email_id.blank?
              @user = User.invite!(email: email_id)
-             @user.conf = UserConfig.first.dup
+             temp = UserConfig.first.dup
+             temp.def_f_u_ass_to = @user.id
+             @user.conf = temp
              
                if !params[:role_id].blank?
                  @user.update_attribute(:role_id, params[:role_id])

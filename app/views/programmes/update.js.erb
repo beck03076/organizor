@@ -1,3 +1,3 @@
- $("#programme_note_" + "<%= @programme.id %>").html("<%= escape_javascript(render('programmes/note',:locals => {:i => @programme})) %>");
+ $("#programme_note_" + "<%= @programme.id %>").html("<%= escape_javascript(render :partial => 'notes/note', :locals => {:sub => @programme}) %>");
  $(".app_note").val("");
 

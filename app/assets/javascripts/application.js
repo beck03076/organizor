@@ -87,8 +87,8 @@ $(function(){
     select: function(start, end, allDay) {
 
                $.get('/cal_click/'+ start + '/' + end,function(table){
-
-                 var $container = $("#cal_click_container").html(table);
+                 $(".cal_click_container").empty();
+                 var $container = $(".cal_click_container").html(table);
                  setColorsFromSession();
                   var $dTF = $('.dateTimeField', $container);
                   if ($dTF.length > 0) {
@@ -433,7 +433,7 @@ function dataTableStart(table,filterValue,cols,cols_size)
     "aoColumnDefs": [
       { "bSortable": false, "aTargets": [ 0,1,hide_follow_up_sort ] }
     ], 
-    "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+    "aLengthMenu": [[25, 50, 75, 100], [25, 50, 75, 100]],
     "iDisplayLength": 25,
      "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
           var reg = $(aData[0]).data('registered');
@@ -456,7 +456,7 @@ function dataTableStart(table,filterValue,cols,cols_size)
         oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
     });
     
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child)', function () {
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:nth-child(2))', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });

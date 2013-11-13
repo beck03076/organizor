@@ -1,0 +1,2 @@
+module YolksHelper
+end

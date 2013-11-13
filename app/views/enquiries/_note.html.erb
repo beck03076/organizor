@@ -1,65 +1,40 @@
+<!-------------------------NOTE for Enq and Reg-------------------------------------->
 <% if @list.to_i == 1 && obj.notes.size > 0 %>
-<table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-     <thead>
-      <tr>
-                            <th>Note</th>
-      </tr>
-    </thead>
-    <tbody>
-            <% obj.notes.each do |n| %>
-                <tr>
-                    <td>
-                    <% note = n.content.html_safe %>
-                    <%= note.empty? ? "No note" : note %><br/><br/>
-                          - <b><%= User.find(n.created_by).first_name %></b> <i> about <%= time_ago_in_words(n.created_at) %> ago </i>
-
-                    </td>
-               </tr>
-           <% end %> 
-           <tr>
-                    <td  align="left"><a href="#">Back</a></td>
-               </tr>
-
-    </tbody>
-  </table>
+<div class="brg0"></div>
+     <div id="programme_note_<%= obj.id %>" style="background:#fff;padding-left:10px;" >
+          <%= render 'notes/note', sub: obj %>
+     </div>
 <br/>
 <br/>
 
 <% end %>
-<div class="htab">
-<h6><b>New Note</b></h6>
-</div>
-<br/>
-<%= form_for(@note) do |g| %>
- <div id="note-action" class="action-box">
-            <%= fbox(g,[:content,size: "6x6",class: "tinymce" ,style:"height:auto;"],"text_area",nil,"Note") %>
-            <br/>
-            <%= g.hidden_field :sub_class,value: obj_name.capitalize %>
-            <%= g.hidden_field :sub_id,value: obj.id %>
-            <%= hidden_field_tag "#{g.object_name}[note]", "from_action" %>
-            <%= g.submit "Add note",{class: "btnp"} %>
-</div>
-<% end %>
+
+
+<!--------------------------------------------------------------->    
+
+<h5 class="htab"> Notes For This Application<h5>
+     <%= nested_form_for(obj,remote: true) do |r| %>
+      <%= r.fields_for :notes,obj.notes.build do |n| %>
+        <%= n.hidden_field :sub_class, value: obj_name.capitalize %>
+        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note tinymce"} %>
+      <% end %> 
+      <br/>
+      <%= r.submit "Write",{class: "btnp"} %>
+      <% end %>
+     <br/>
+
+    <div class="brg01"> </div>
+    <br/>
+    <br/>
+<!--------------------------------------------------------------->
 
 <script>
 
 tinymce.init({
-     selector: "textarea.tinymce",
-     theme: "modern",
-     plugins: [
-      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-      "searchreplace wordcount visualblocks visualchars code fullscreen",
-      "insertdatetime media nonbreaking save table contextmenu directionality",
-      "emoticons template paste textcolor "
-     ],
-     toolbar1: "insertfile undo redo | styleselect | sizeselect | bold italic | fontselect |  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-     toolbar2: "print preview media | forecolor backcolor emoticons",
-     image_advtab: true,
-     templates:[ 
-        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
-        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
-    ],
-     autosave_ask_before_unload: false
+      selector: "textarea.tinymce",
+      toolbar1: "bold  italic",
+      menubar: "false",
+      statusbar: "false"
 });
 
 </script>

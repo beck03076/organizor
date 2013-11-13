@@ -1,6 +1,13 @@
 module MyExtension
   extend ActiveSupport::Concern
-
+  
+  def initialize
+      belongs_to :_ass_by, class_name: "User",foreign_key: "assigned_by"
+      belongs_to :_ass_to, class_name: "User",foreign_key: "assigned_to"
+      belongs_to :_cre_by, class_name: "User",foreign_key: "created_by"
+      belongs_to :_upd_by, class_name: "User",foreign_key: "updated_by"
+  end
+  
   def tname
     self.name.titleize rescue "Unknown"
   end

@@ -81,14 +81,18 @@
  <span class="fr btnp" style="margin-left:10px" onclick="$('.dataTables_filter input').val('').keyup();">Reset</span>&nbsp;
 <!----------------------- Search filter ---------------------------->
        <%= select_tag :abdc,
-                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["Choose",""])),
-                      {id: "mySelect",style: "width:150px",class: "fr"} %>
+                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["--Filter By--",""])),
+                      {id: "mySelect",style: "width:150px;margin-left:10px;height:24px;",class: "fr srch_sel"} %>
                       
                              
 <!----------------------- FollowUp filter ---------------------------->
        <%= select_tag :abdc,
-                      options_for_select([["FollowUp",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
+                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
                       {id: "followUpSelect",style: "width:150px",class: "fr"} %>
+                      
+       <%= label_tag "follow_up_filter:",
+               nil,
+               {class: "fr",style: "margin-right:5px;margin-bottom:10px;"} %>
                    <br/><br/>
    
        
@@ -114,5 +118,8 @@ $(function(){
 dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>","<%= @cols.size + 1 %>");
 setColorsFromSession();
 mytooltip();
+$('.dataTables_filter .srch_sel').remove();
+$('.srch_sel').prependTo('#<%= _id %>_filter');
+
 });
 </script>

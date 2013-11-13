@@ -73,7 +73,9 @@ gem 'private_pub'
 gem 'fullcalendar-rails' 
 gem 'rubyzip'
 gem 'prawn'
-
+group :development do
+  gem "better_errors"
+end
 
 
 

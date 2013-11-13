@@ -200,14 +200,32 @@ function closePopGoCreate(objectId,obj){
 /*Storing in sessions here*/
 function storeThemeInSession(){ 
 
-          var themeColor = $("ul#theme-color > li.theme-colrs-active > span").data("theme");
-          var bgColor = $("ul#bg-color > li.theme-colrs-active > span").data("bg");
-          var waColor = $("ul#wa-color > li.theme-colrs-active > span").data("wa");
+          var themeColor = selectColorData("theme");
+          var bgColor = selectColorData("bg");
+          var waColor = selectColorData("wa");
           $.cookie('themeColor', themeColor , { path: '/' });
           $.cookie('bgColor', bgColor , { path: '/' });
           $.cookie('waColor', waColor , { path: '/' });          
           info("Message","Saved your selection!.\ Theme Color : " + themeColor + ", Background Color : " + bgColor + ", Work Area Color : " + waColor);
 
+}
+
+function selectColorData(what){
+  var temp = $("ul#" + what + "-color > li.theme-colrs-active > span").data(what);
+  if (what == "bg"){
+    var sub = "background";
+  }else if (what == "theme"){
+    var sub = "accent";
+  }else if (what == "wa"){
+    var sub = "workarea";
+  }
+  
+  if (temp == null){
+    info('Select a color for ' + sub,'You have not chosen a color for ' + sub + ', Please choose!');
+    throw "stop execution";
+  }else{
+    return temp;
+  }
 }
 
 /*SET THE THEME SESION VALUE HERE*/

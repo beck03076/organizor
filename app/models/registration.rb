@@ -50,9 +50,10 @@ class Registration < ActiveRecord::Base
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
-  :note,:documents_attributes,:_destroy,:enquiry_id
+  :note,:documents_attributes,:_destroy,:enquiry_id,
+  :notes_attributes
   
-  accepts_nested_attributes_for :programmes, :proficiency_exams, :documents, :allow_destroy => true
+  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos,:proficiency_exams, :documents, :allow_destroy => true
   
   
   scope :mine, lambda{|user|
