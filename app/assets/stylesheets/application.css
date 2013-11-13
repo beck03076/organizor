@@ -209,7 +209,7 @@ border:0;font-size:15px;font-family:"Comic Sans MS", cursive}
 .dataTable tr td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" !important;filter: alpha(opacity=50) !important;-moz-opacity: 0.5 !important;-khtml-opacity: 0.5 !important;opacity: 0.5 !important;}
 .dataTable tr:hover td img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)" !important;filter: alpha(opacity=80) !important;-moz-opacity: 0.8 !important;-khtml-opacity: 0.8 !important;opacity: 0.8 !important;}
 div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
-
+.dataTable tr td:first-child img{-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)" !important;filter: alpha(opacity=100) !important;-moz-opacity: 1 !important;-khtml-opacity: 1 !important;opacity: 1 !important;}
 
 /* TABLE - ENDS */
 
