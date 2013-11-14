@@ -632,7 +632,14 @@ $(document).ready(function(){
  });
 });
 
-
-
+/**
+* CALL THIS FUNCTION TO SHOW NOTIFICATION FOR SOME SECOND AND HIDE
+**/
+function showNotificationMsg(msg){
+	$(".jqnotifymsg").remove();
+	var tag="<center><div class='info-msg jqnotifymsg'>"+msg+"</div></center>";
+	$(".notify-icon-box").append(tag);
+	setTimeout(function(){$(".jqnotifymsg").fadeOut( "slow" );},4000);
+}
 
 
