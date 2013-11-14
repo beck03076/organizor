@@ -104,6 +104,9 @@ function activeMM(menuId){
 }
 
 function showPopUp(objectId){
+	if("cal_click"==objectId){
+		$("div[id^='cal_click']").remove();
+	}
     $("#"+objectId).bPopup();    
 }
 
@@ -516,7 +519,7 @@ $(document).ready(function(){
         if(totalEmptyTag==1 || totalEmptyTag==0){
             var tag="<div class='frbox'><label>Email Address</label>";
                 tag+="&nbsp;<input type='text' placeholder='Email Address'/>&nbsp;&nbsp;";
-                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt'/></div>";
+                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt' onclick='removeInviteUser(this);'/></div>";
             $("#addInviteUserEmail").append(tag);
         }
     });
@@ -526,7 +529,11 @@ $(document).ready(function(){
     });
 
 });
-    
+
+function removeInviteUser(object){
+        $(object).parent().remove();
+}
+
 function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){
     /* HIDE ALL TABS CONTENT*/
     $("."+mainContentClass).hide();
@@ -650,7 +657,14 @@ $(document).ready(function(){
  });
 });
 
-
-
+/**
+* CALL THIS FUNCTION TO SHOW NOTIFICATION FOR SOME SECOND AND HIDE
+**/
+function showNotificationMsg(msg){
+	$(".jqnotifymsg").remove();
+	var tag="<center><div class='info-msg jqnotifymsg'>"+msg+"</div></center>";
+	$(".notify-icon-box").append(tag);
+	setTimeout(function(){$(".jqnotifymsg").fadeOut(1500);},3000);
+}
 
 
