@@ -1,0 +1,22 @@
+<div class="tab-container">
+<div class="tab-content" id="email_template" style="display:block">
+<div class="boxp box-theme-ch">
+<h2 class="htab">
+        All Notifications
+</h2>
+<br/>
+<br/>
+        <ul class="notifyls">
+        <% @tls.each do |tl| %>
+
+              <%= render "shared/notifications", tl: tl, count: nil, u: tl.user %>
+            
+        <% end %>
+            
+        </ul>
+        <br/>
+        <br/>
+</div>
+</div>
+</div>
+

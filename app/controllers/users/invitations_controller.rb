@@ -1,6 +1,7 @@
 class Users::InvitationsController < Devise::InvitationsController
   layout false, only: :edit
   def create
+    @current_user = current_user
     params[:email].values.each do |email_id|
       if !email_id.blank?
              @user = User.invite!(email: email_id)

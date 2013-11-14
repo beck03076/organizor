@@ -13,7 +13,10 @@ class EnquiriesController < ApplicationController
   end
   # h_new stands fpr help_new
   def h_new
-    @enquiry = Enquiry.new(assigned_to: current_user.id)
+    @enquiry = Enquiry.new(assigned_to: current_user.id,
+                           date_of_birth: (Date.today - 21.years),
+                           gender: "m",
+                           score: 5)
     authorize! :create, @enquiry
       
     @countries = self.basic_select(Country)

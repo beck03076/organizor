@@ -32,6 +32,9 @@ $(function(){
        <% elsif parent == "registration" %>
          <% sty = ['display:none;',nil,nil,''] %>
        <% end %>
+ 
+       <% p_type_show = (p.object.programme_type.name == "language_school" rescue nil) ? "display:none;" : "display:block;" %>
+
     <div class="cols">
     <div class="col6">
     <div class="frbox">
@@ -95,8 +98,8 @@ $(function(){
             <%= label_tag :course_subject %>
             <%= p.text_field :course_subject_text %>
        </div>
-        <div class="frbox">
-       <%= go_create(p,"course_level","level_id","name") %>
+        <div class="frbox" style="<%= p_type_show %>">
+       <%= go_create(p,"course_level","level_id","name",'') %>
       </div>
       <div class="frbox">
        <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  

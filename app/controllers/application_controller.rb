@@ -74,6 +74,11 @@
     render text: "Successfully marked!"  
   end
   
+  def all_notifications
+    @tls = Timeline.includes(:user).where(receiver_id: current_user.id).order("created_at desc")
+    render 'shared/all_notifications'
+  end
+  
   private
   
   def set_current_user

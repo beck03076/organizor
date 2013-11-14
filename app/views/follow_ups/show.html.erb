@@ -1,55 +1,15 @@
-<p id="notice"><%= notice %></p>
+<!-- Calendar -->
+<div class="tab-container">
+    <div class="tab-content" style="display: block;">
+        <div class="boxp box-theme-ch">
+          <%= render 'show_hover' %>
+          
+        </div>
+    </div>
+</div>
 
-<p>
-  <b>Title:</b>
-  <%= @follow_up.title %>
-</p>
-
-<p>
-  <b>Desc:</b>
-  <%= @follow_up.desc %>
-</p>
-
-<p>
-  <b>Starts at:</b>
-  <%= @follow_up.starts_at %>
-</p>
-
-<p>
-  <b>Ends at:</b>
-  <%= @follow_up.ends_at %>
-</p>
-
-<p>
-  <b>Api:</b>
-  <%= @follow_up.api %>
-</p>
-
-<p>
-  <b>Event type:</b>
-  <%= @follow_up.event_type_id %>
-</p>
-
-<p>
-  <b>Venue:</b>
-  <%= @follow_up.venue %>
-</p>
-
-<p>
-  <b>Remind before:</b>
-  <%= @follow_up.remind_before %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @follow_up.created_by %>
-</p>
-
-<p>
-  <b>Updated by:</b>
-  <%= @follow_up.updated_by %>
-</p>
-
-
-<%= link_to 'Edit', edit_follow_up_path(@follow_up) %> |
-<%= link_to 'Back', follow_ups_path %>
+<script>
+$(function(){
+    activeMM("calendarMM");
+});
+</script>

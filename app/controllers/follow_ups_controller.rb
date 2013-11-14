@@ -29,7 +29,7 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
   # GET /follow_ups/1
   # GET /follow_ups/1.json
   def show
-    redirect_to '/follow_ups'
+    @follow_up = FollowUp.find(params[:id])    
   end
 
   # GET /follow_ups/new

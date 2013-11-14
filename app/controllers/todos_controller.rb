@@ -35,7 +35,7 @@ skip_authorize_resource :only => :show_hover
   # GET /todos/1
   # GET /todos/1.json
   def show
-    redirect_to '/todos'
+    @todo = Todo.find(params[:id])
   end
 
   # GET /todos/new

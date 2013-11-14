@@ -1,10 +1,38 @@
 <h4>
+<img src="/images/icons/org_calender.png" width=20 />
 Follow Up
 </h4>
-<div class="htab" style="height:0">&nbsp;</div>
+<br/>
+<br/>
+<div style="height:0">&nbsp;</div>
 <div class="previewBox">
+<% if !@follow_up.enquiry_id.nil? %>
+  Associated with: <%= link_to 'Enquiry',"/enquiries/#{@follow_up.enquiry_id}" %>
+<% end %>
+<% if !@follow_up.registration_id.nil? %>
+  Associated with: <%= link_to 'Registration',"/registrations/#{@follow_up.registration_id}" %>
+<% end %>
+<% u = @follow_up._ass_by %>
+<%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                   {width: "40",
+                                    class: "imgb fl",
+                                    style: "margin-right:10px;"}) %>
+               <span style="color:#999;">
+                <ul class="vlsdet">
+                   <li><label>Title </label>: <%= @follow_up.title %></li>
+                   <br/>
+                   
+                
+                </ul>
+               </span>
+               <%= link_to u.first_name,u %> 
+              &nbsp;&nbsp; 
+              <%= @follow_up.created_at.strftime("%A, %F %R %p") rescue "Unknown" %>
+               <br/>
+               <br/>
+
+
 <ul class="vlsdet">
-   <li><label>Title </label>: <%= @follow_up.title %></li>
    <li><label>Starts At </label>: <%= @follow_up.starts_at %></li>
    <li><label>Ends At </label>: <%= @follow_up.ends_at %></li>
    <li><label>Event Type </label>: <%= @follow_up.event_type.name rescue "Unknown" %></li>
@@ -17,3 +45,5 @@ Follow Up
    <li><label>Description </label>: <%= @follow_up.desc %></li>
 </ul>
 </div>
+<br/>
+<br/>

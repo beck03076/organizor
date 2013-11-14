@@ -1,16 +1,17 @@
 <!-- new follow up on calendar click -->
-<div id="cal_click" class="addNewPop" style="display: none; top: 483px; left: 455px;">
+<div id="cal_click" class="addNewPop cal_click" style="display: none; top: 483px; left: 455px;">
+  <img src="/images/icons/quit.png" class="bClose fr" width=16 /> 
   <div id="new_follow_up"> 
              <ul class="vls">
               <li>
               <img src="/images/icons/sub_black_add.png" width="25"/>
-             <h2 onclick="showHide('new_todo','new_follow_up');">
+             <h2 class="togglerb" onclick="showHide('new_todo','new_follow_up');">
                   New Event 
              </h2> 
              
              <h2> | </h2>
              
-             <h2 onclick="showHide('new_follow_up','new_todo');">
+             <h2 class="togglerb" onclick="showHide('new_follow_up','new_todo');">
                   New Todo 
              </h2>
               </li>
@@ -64,13 +65,13 @@
              <ul class="vls">
               <li>
               <img src="/images/icons/sub_black_add.png" width="25"/>
-             <h2 onclick="$('#new_todo').css('display','none');$('#new_follow_up').css('display','');">
+             <h2 class="togglerb" onclick="$('#new_todo').css('display','none');$('#new_follow_up').css('display','');">
                   New Event 
              </h2> 
              
              <h2> | </h2>
              
-             <h2 onclick="$('#new_todo').css('display','');$('#new_follow_up').css('display','none');">
+             <h2 class="togglerb" onclick="$('#new_todo').css('display','');$('#new_follow_up').css('display','none');">
                   New Todo 
              </h2>
               </li>

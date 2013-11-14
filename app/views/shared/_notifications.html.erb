@@ -1,3 +1,4 @@
+<% begin %>
 <% model = tl.m_name.camelize.constantize %>
 <% item =  tl.m_id == 0 ? model : model.find(tl.m_id) %>
 
@@ -31,4 +32,7 @@
 <div id="notify_count_container" data-count="<%= count %>" data-pig="senthil" >
 
 </div>
+<% end %>
+<% rescue %>
+<% nil %>
 <% end %>

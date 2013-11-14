@@ -13,32 +13,46 @@
         </div><br/>
           <div class="cols">
                <div class="col6">
-                    <div class="frbox">
-                         <%= f.label :first_name %>
-                         <%= f.text_field :first_name,{tabindex: "1"} %>
+                    <div class="frbox mand">
+                         <%= f.label "First Name*" %>
+                         <%= f.text_field :first_name,{tabindex: "1",
+                                                       :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'AS');" } %>
                     </div>
-                    <div class="frbox">
-                          <%= f.label :mobile1 %>
-                          <%= f.text_field :mobile1,{tabindex: "3"} %>
+                    <div class="frbox mand">
+                          <%= f.label "Mobile1*" %>
+                          <%= f.text_field :mobile1,{tabindex: "3",
+                                                     :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'ANS');"} %>
                     </div>
-                    <div class="frbox">
-                         <%= f.label :email1 %>
-                         <%= f.text_field :email1,{tabindex: "5"} %>
+                    <div class="frbox mand">
+                         <%= f.label "Email1*" %>
+                         <%= f.text_field :email1,{tabindex: "5",
+                                                   :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'E');"} %>
                     </div>
-                    <div class="frbox">
-                         <%= f.label :gender %>
+                    <div class="frbox mand">
+                         <%= f.label "Gender*" %>
                          <% {male: 'm', female: 'f'}.each do |i| %>
                             <%= f.radio_button :gender, i[1] %>
                             <%= f.label i[0].to_s.strip %>
                           <% end %>
                     </div>
-                    <div class="frbox">
-                         <%= f.label :country_of_origin %>
+                    <div class="frbox mand">
+                         <%= f.label "country_of_origin*" %>
                          <%= f.collection_select(:country_id, 
                                 Country.order(:name), 
                                 :id, 
-                                :name,
-                                {:prompt => "--Country--"}) %> &nbsp;&nbsp;
+                                :name) %> &nbsp;&nbsp;
                     </div>
                     <div class="frbox">
                          <%= go_create(f,"student_source","source_id","name",1) %>  
@@ -49,9 +63,14 @@
                     
                </div>
                <div class="col6">
-                    <div class="frbox">
-                         <%= f.label :surname %>
-                         <%= f.text_field :surname,{tabindex: "2"} %>
+                    <div class="frbox mand">
+                         <%= f.label "Surname*" %>
+                         <%= f.text_field :surname,{tabindex: "2",
+                                                    :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'AS');"} %>
                     </div>
                     <div class="frbox">
                          <%= f.label :mobile2 %>
@@ -61,21 +80,24 @@
                          <%= f.label :email2 %>
                          <%= f.text_field :email2,{tabindex: "6"} %>
                     </div>
-                    <div class="frbox">
-                         <%= f.label :date_of_birth %>
+                    <div class="frbox mand">
+                         <%= f.label "Date_of_birth*" %>
                          <%= f.text_field :date_of_birth,{class: "dateField caltf ",tabindex: "7"} %>
                     </div>
-                    <div class="frbox">
-                         <%= f.label :score %>
-                         <%= f.select :score,
-                                   options_for_select((1..10)) %>
-
-                    </div>
+                    
                     <%= fs(f,[:assigned_to, 
                      User.order(:first_name), 
                      :id, 
                      :first_name,
                      {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
+                     
+                     <div class="frbox">
+                         <%= f.label :score %>
+                         <%= f.select :score,
+                                   options_for_select((1..10),5) %>
+
+                    </div>
+                     
   <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
                </div>
           </div><br/><br/>

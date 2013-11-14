@@ -87,7 +87,6 @@ $(function(){
     select: function(start, end, allDay) {
 
                $.get('/cal_click/'+ start + '/' + end,function(table){
-                 $(".cal_click_container").empty();
                  var $container = $(".cal_click_container").html(table);
                  setColorsFromSession();
                   var $dTF = $('.dateTimeField', $container);
@@ -101,8 +100,8 @@ $(function(){
                         dateFormat: 'yy-mm-dd', 
                         timeFormat: 'hh:mm:ss'});
                   }
-                 
-                 showPopUp('cal_click');
+                  $('.cal_click').bPopup();
+                  $(".cal_click_container").remove();
                });
 
             },

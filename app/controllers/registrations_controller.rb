@@ -131,6 +131,9 @@ class RegistrationsController < ApplicationController
       if @registration.save
         if @registration.enquiry_id
           Enquiry.find(@registration.enquiry_id).update_attribute(:registered, true)
+          tl("Registration",@registration.id,
+             'An enquiry has been registered',"Registered",
+             "registration",@registration.assigned_to)
         end
         if params[:save_new] 
           format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
@@ -162,9 +165,15 @@ class RegistrationsController < ApplicationController
           tl("Registration",params[:id],'This registration has been reassigned',
               'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:registration][:assigned_to])
         
-        elsif params[:registration][:notes]
+        elsif params[:registration][:notes_attributes]
           tl("Registration",params[:id],'A note has been created for this registration',
-             "Note created",'note',@registration.assigned_to)    
+             "Note created",'note',@registration.assigned_to)
+             
+        elsif params[:registration][:documents_attributes]
+          doc_no = params[:registration][:documents_attributes].size
+          tl("Registration",params[:id],"#{doc_no} document(s) has been uploaded to this registration",
+             "Docs Uploaded",'document',@registration.assigned_to)
+             
         else
         
           tl("Registration",params[:id],'Values of this registration has been updated',
@@ -208,8 +217,8 @@ class RegistrationsController < ApplicationController
                                           status_id: deact)
                   #create a timeline item
                   tl("Enquiry",params[:enquiry_id],
-                     'This enquiry has been deactivated in order to register',(params[:note] || "Registered"),
-                     "registration",e_obj.assigned_to)
+                     'This enquiry has been deactivated in order to register',(params[:note] || "Deactivated"),
+                     "Deactivated",e_obj.assigned_to)
                                    
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",
@@ -225,7 +234,9 @@ class RegistrationsController < ApplicationController
                     @registration.programmes << e_obj.programmes
                   end
       else
-                  @registration = Registration.new
+                  @registration = Registration.new(assigned_to: current_user.id,
+                                                   date_of_birth: (Date.today - 21.years),
+                                                   gender: "m")
                   authorize! :create, @registration
       end
       

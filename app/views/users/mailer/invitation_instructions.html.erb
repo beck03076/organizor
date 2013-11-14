@@ -1,8 +1,30 @@
-<p>Hello <%= @resource.email %>!</p>
-
-<p>Someone has invited you to <%= root_url %>, you can accept it through the link below.</p>
-
-<p><%= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @token) %></p>
-
-<p>If you don't want to accept the invitation, please ignore this email.<br />
-Your account won't be created until you access the link above and set your password.</p>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Organizor</title>
+<style>
+body{color:#444444;font-family:arial,sans-serif;}
+.outbx{background:#E9E9E9;padding:20px 10px 20px 10px}
+.inbox{margin:20px auto 20px auto;width:420px;border:1px solid #3BA7F2;padding:20px 30px 20px 30px;background:#fff}
+h1{color:#3BA7F2}
+a{color:#3BA7F2;text-decoration:none;font-size:12px;font-weight:normal;}
+a:hover,a:visited,a:active{text-decoration:none;cursor:pointer;}
+span{color:#666666;font-size:12px;line-height:25px}
+.btnp,.btnp:active,.btnp:link,.btnp:visited{text-decoration:none;font-size:14px;background:#3BA7F2;color:#fff;padding:10px 15px 10px 15px;border:1px solid #3BA7F2; margin-right:10px;font-weight:bold}
+.btnp:hover{cursor:pointer;background:#3BA7F2;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="outbx">
+<div class="inbox">
+<h1>Welcome to Organizor</h1>
+<span>You are invited to join <%= root_url %>. To activate your account, please verify your mail address by clicking the button below.</span><br/><br/>
+<%= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @token),{class: 'btnp'} %>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<hr/>
+<span>Want some help on how to use Organizor?</span><br/>
+<span>Check out our <a href="#" >getting started tutorial</a> or watch this <a href="#">video</a>.</span>
+<br/><br/>
+</div>
+</body>
+</html>

@@ -15,12 +15,12 @@ $(function(){
 });
 
   PrivatePub.subscribe("/notify/<%= current_user.id.to_s %>", function(data, channel) {
-    info("Notification",data.message);
+    showNotificationMsg(data.message);
      url = "/notify/<%= current_user.id.to_s %>/" + data.id
      $.get(url,function(reply){
          $(reply).prependTo(".notifyls");
          var noticount = $('div#notify_count_container').data("count");
-         $("#notify_no").html('<div style="margin-top:5px"><span class="notify-count">' + noticount + '</span></div>');
+         $("#notify_no").html('<div style="margin-top:5px"><span class="notify-count">' + noticount + '</span></div>').hide().toggle( "bounce", { times: 5 }, "slow" );;
      });
   });
 
@@ -106,7 +106,7 @@ $(function(){
             
         </ul>
         <br/>
-        <%= link_to "See all" %>
+        <%= link_to "See all",'/all_notifications' %>
         <br/>
         <br/>
         
@@ -288,6 +288,11 @@ $(function(){
             </li>
             <li><br><div id="mini-calendar"></div></li>
         </ul>        
+        
+        <div class="fl brg0">
+        <ul class="theme-colrs-lg">
+        <li><span class="blue-theme-todo"></span>&nbsp;Todos</li>
+        <li><span class="blue-theme-followup"></span>&nbsp;Follow Ups</li></ul></div>
     </td>
     </tr>
     </table>

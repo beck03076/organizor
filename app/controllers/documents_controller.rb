@@ -17,6 +17,7 @@ class DocumentsController < ApplicationController
   
   def create
     Document.create! params[:document]
+    
     redirect_to "/registrations/" + params[:document][:registration_id].to_s
   end
   
@@ -123,9 +124,6 @@ class DocumentsController < ApplicationController
 
   def download_all
     attachments = Upload.find(:all, :conditions => ["source_id = ?", params[:id]]) 
-
-    
-
   end
   
   

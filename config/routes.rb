@@ -44,6 +44,8 @@ Organizor::Application.routes.draw do
   
   resources :emails
   
+  match "/all_notifications" => "application#all_notifications"
+  
   match "/email_sent_by/:sent_by" => "emails#index"
   
   match "/calendar_user/:user_id" => "follow_ups#index"

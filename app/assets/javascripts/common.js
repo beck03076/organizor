@@ -13,8 +13,8 @@ $(document).ready(function(){
         $(".tab-menus li").css({"background":"#EAEAEA"});
         /* ACTIVE CURRENT TABS */
         $(this).addClass("active-tab");
-		/* SET DATATABLE WIDTH */
-		setDataTableWidth();
+        /* SET DATATABLE WIDTH */
+        setDataTableWidth();
     });
     
     /* ON CLICKING MAIN MENU*/
@@ -104,11 +104,9 @@ function activeMM(menuId){
 }
 
 function showPopUp(objectId){
-	if("cal_click"==objectId){
-		$("div[id^='cal_click']").remove();
-	}
-    $("#"+objectId).bPopup();    
+   $("#"+objectId).bPopup();    
 }
+
 
 
 function toggleHS(objectId,mainClassName){
@@ -519,7 +517,7 @@ $(document).ready(function(){
         if(totalEmptyTag==1 || totalEmptyTag==0){
             var tag="<div class='frbox'><label>Email Address</label>";
                 tag+="&nbsp;<input type='text' placeholder='Email Address'/>&nbsp;&nbsp;";
-                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt' onclick='removeInviteUser(this);'/></div>";
+                tag+="<img src='/images/icons/quit.png' width=24 class='jqAddUserRemove pt' onclick='removeInviteUser(this);'/></div>";
             $("#addInviteUserEmail").append(tag);
         }
     });
@@ -558,8 +556,8 @@ $('td#right-panel').slideToggle(function(){
 }
 
 function setDataTableWidth(){
-	var disp=$("td#right-panel").css("display");
-	var width=$(".dataTables_wrapper").width();
+    var disp=$("td#right-panel").css("display");
+    var width=$(".dataTables_wrapper").width();
     width=(disp!="none") ? "820px" : "1100px";
     $(".dataTables_wrapper").css({"width":width});
 }
@@ -661,10 +659,9 @@ $(document).ready(function(){
 * CALL THIS FUNCTION TO SHOW NOTIFICATION FOR SOME SECOND AND HIDE
 **/
 function showNotificationMsg(msg){
-	$(".jqnotifymsg").remove();
-	var tag="<center><div class='info-msg jqnotifymsg'>"+msg+"</div></center>";
-	$(".notify-icon-box").append(tag);
-	setTimeout(function(){$(".jqnotifymsg").fadeOut(1500);},3000);
+    var tag="<center><div class='info-msg jqnotifymsg'><img class='fl padr10' src='/images/icons/notify.png' width=16/>"+msg+"</div></center>";
+    $(".notify-icon-box").append(tag);
+    setTimeout(function(){$(".jqnotifymsg").fadeOut(500);},7000);
 }
 
 
