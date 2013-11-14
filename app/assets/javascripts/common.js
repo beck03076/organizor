@@ -104,6 +104,9 @@ function activeMM(menuId){
 }
 
 function showPopUp(objectId){
+	if("cal_click"==objectId){
+		$("div[id^='cal_click']").remove();
+	}
     $("#"+objectId).bPopup();    
 }
 
