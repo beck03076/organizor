@@ -34,7 +34,16 @@ $(function(){
         <div class="cols brgb" style="padding-bottom:20px">
             <div class="col8">
                 <div id="scrollboxu">
-                    <img src="/images/icons/user.png" width="100"  class="imgb fl"/>
+                    <div class="rel abs-plus-box">
+                      <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
+                                   {width: "100",class: "tooltip",title: "Upload your photo",
+                                    class: "imgb fl"
+                                    }) %>
+                      <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                    </div>
+                     <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                       <%= render 'shared/img_upload', a: a %>
+                     </div>
                     <div class="fl padl20">
                         <h5>
                         <b>                        
@@ -108,7 +117,7 @@ $(function(){
                         <div class="cl"></div>
                         <br/>
                         <span class="fl">
-                        <%= link_to i._created_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %>
+                        <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %>
                         </span>
                         <br/>
                         <br/>
@@ -134,7 +143,7 @@ $(function(){
                         </li>
                         <li>
                         <b>Created by :</b> 
-                            <%= (User.where(id: a.created_by).map &:first_name)[0] %>
+                            <%= a._cre_by.first_name rescue "Unknown" %>
                         </li>
                         <li>
                         <b>Created at :</b> 
@@ -144,17 +153,17 @@ $(function(){
                         <br>
                         <b>Last modified</b></li>
                         <li><b>By :</b> 
-                            <%= (User.where(id: a.updated_by).map &:first_name)[0] %>
+                            <%= a._upd_by.first_name rescue "Unknown"%>
                         </li>
                         <li><b>At :</b> 
                             <%= a.updated_at %>
                         </li>
                         <li><br><b>Currently Assigned</b></li>
                         <li><b>To :</b>
-                            <%= (User.where(id: a.assigned_to).map &:first_name)[0] %>
+                            <%= a._ass_to.first_name rescue "Unknown" %>
                         </li>
                         <li><b>By :</b> 
-                            <%= a._assigned_by.first_name %>
+                            <%= a._ass_by.first_name rescue "Unknown" %>
                         </li> 
                     </ul>
                 </div>

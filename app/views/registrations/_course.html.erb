@@ -50,11 +50,11 @@
     <br/>
 
     <li><label>Created</label>:
-      <%= link_to i._created_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
+      <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
 
 
     <li><label>Last Modified</label>:
-      <%= link_to i._updated_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
+      <%= link_to i._upd_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
      <br/>
      <br/>
      <div class="brg0"></div>

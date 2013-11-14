@@ -42,6 +42,10 @@ Organizor::Application.routes.draw do
 
   resources :follow_ups
   
+  resources :emails
+  
+  match "/email_sent_by/:sent_by" => "emails#index"
+  
   match "/calendar_user/:user_id" => "follow_ups#index"
   
   match "/todo_assigned_to/:ass_to" => "todos#index"
@@ -54,7 +58,7 @@ Organizor::Application.routes.draw do
   
   match "/todo_hover/:id" => "todos#show_hover"
 
-  match "/notify/:id" => "application#notify"
+  match "/notify/:receiver_id/:t_id" => "application#notify"
   
   match "/mark_all_check/:id" => "application#mark_all_check"
   
@@ -109,8 +113,6 @@ Organizor::Application.routes.draw do
   resources :reg_courses
 
 
-  get "emails/save_send"
-
   resources :course_levels
   
    resources :student_sources
@@ -142,7 +144,7 @@ Organizor::Application.routes.draw do
 
   resources :enquiry_sources
   
-  match '/emails' => 'emails#save_send'
+ 
   
   match '/get_cities/:co_id' => 'json#cities'
   

@@ -1,5 +1,6 @@
 class Enquiry < ActiveRecord::Base
   audited
+  mount_uploader :image, HumanImageUploader
   
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries
@@ -24,21 +25,24 @@ class Enquiry < ActiveRecord::Base
   
   has_many :notes,foreign_key: "sub_id"
   
-  belongs_to :_assigned_by, class_name: "User",foreign_key: "assigned_by"
-  belongs_to :_assigned_to, class_name: "User",foreign_key: "assigned_to"
-  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
-  belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
-  
-  scope :inactive,includes(:status,:follow_ups).where("enquiry_statuses.name = 'deactivated'")
-  scope :active, includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated'")
+  scope :inactive,includes(:status,
+                           :follow_ups,
+                           :country_of_origin).where("enquiry_statuses.name = 'deactivated'")
+  scope :active, includes(:status,
+                          :follow_ups,
+                          :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
   
   #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   
   scope :myactive, lambda{|user|
   if user.adm?
-    includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated'")
+    includes(:status,
+             :follow_ups,
+             :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
   else
-    includes(:status,:follow_ups).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+    includes(:status,
+             :follow_ups,
+             :country_of_origin).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
   end
   }
   
@@ -61,7 +65,8 @@ class Enquiry < ActiveRecord::Base
                   :surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,
                   :follow_ups_attributes,:active,:notes_attributes,
-                  :todos_attributes,:contact_type_id,:registered
+                  :todos_attributes,:contact_type_id,:registered,
+                  :image,:remote_image_url
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
  

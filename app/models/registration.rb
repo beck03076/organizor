@@ -1,8 +1,8 @@
 class Registration < ActiveRecord::Base
   audited
-  
+  mount_uploader :image, HumanImageUploader
   belongs_to :qualification, foreign_key: 'qua_id'
-  belongs_to :country
+
 
   has_many :programmes, dependent: :destroy
   has_many :exams
@@ -26,12 +26,6 @@ class Registration < ActiveRecord::Base
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Registration"'
   has_many :todos
   
-  
-  belongs_to :_assigned_by, class_name: "User",foreign_key: "assigned_by"
-  belongs_to :_assigned_to, class_name: "User",foreign_key: "assigned_to"
-  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
-  belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
-
   attr_accessor :_destroy
 
   attr_accessible :address_city, :address_country_id, :address_line1, 
@@ -51,16 +45,18 @@ class Registration < ActiveRecord::Base
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
   :note,:documents_attributes,:_destroy,:enquiry_id,
-  :notes_attributes
+  :notes_attributes,:image,:remote_image_url
   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos,:proficiency_exams, :documents, :allow_destroy => true
   
   
   scope :mine, lambda{|user|
   if user.adm?
-   includes(:follow_ups).scoped
+   includes(:follow_ups,
+            :country_of_origin).scoped
   else
-   includes(:follow_ups).where("registrations.assigned_to = #{user.id}")
+   includes(:follow_ups,
+            :country_of_origin).where("registrations.assigned_to = #{user.id}")
   end
   }
   

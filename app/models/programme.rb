@@ -9,8 +9,7 @@ class Programme < ActiveRecord::Base
   belongs_to :course_subject, :foreign_key => 'subject_id'
   belongs_to :application_status,:foreign_key => 'app_status_id'
   
-  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
-  belongs_to :_updated_by, class_name: "User",foreign_key: "updated_by"
+
   
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Programme"'
   

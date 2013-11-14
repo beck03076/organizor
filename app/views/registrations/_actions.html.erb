@@ -1,15 +1,22 @@
+        <% actions = {email:     ["Email",:create],
+                      follow_up: ["FollowUp",:create],
+                      note:      ["Note",:create],
+                      todo:      ["Todo",:create],
+                      assign_to: ["Registration",:update]} %>
 
-        <% %w(Email Follow\ up Note Todo Assign\ to).each do |elem| %>
-          <!--  Shortening variable names -->
-          <% e = elem.downcase %>
-          <%= radio_button_tag 'action',
-                               e,
-                               false,
-                               onclick: "action_partial('registrations',
-                                                        '#{e.tr(" ", "_")}',
-                                                        '#{@registration.id}');" %>
-          <%= label_tag elem.titleize %>
-          &nbsp;&nbsp;&nbsp;&nbsp;
+        <% actions.keys.each do |elem| %>
+          <% if can? actions[elem][1],actions[elem][0].constantize %>
+              <!--  Shortening variable names -->
+              <% e = elem.to_s.titleize %>
+              <%= radio_button_tag 'action',
+                                   e,
+                                   false,
+                                   onclick: "action_partial('registrations',
+                                                            '#{e.downcase.tr(" ", "_")}',
+                                                            '#{@registration.id}');" %>
+              <%= label_tag elem.to_s.titleize %>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>
         <% end %>
 <br/>
 <br/>

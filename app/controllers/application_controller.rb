@@ -62,8 +62,8 @@
   end
   
   def notify
-    @tl = Timeline.where(receiver_id: params[:id]).order("created_at desc").first
-    @notify_count = Timeline.where(receiver_id: params[:id],checked: false).count
+    @tl = Timeline.find(params[:t_id])
+    @notify_count = Timeline.where(receiver_id: params[:receiver_id],checked: false).count
     
     render :partial => "shared/notifications", :locals => {:tl => @tl,:count => @notify_count,u: @tl.user}
     

@@ -56,28 +56,12 @@ $(function(){
                 <div class="rel abs-plus-box">
                   <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
                                {width: "100",class: "tooltip",title: "Upload your photo",
-                                class: "imgb fl",
-                                onclick: "showPopUp('upload_image');"}) %>
-                <span class="abs-plus">+</span></div>
+                                class: "imgb fl"
+                                }) %>
+                  <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                </div>
                  <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
-                   <%= form_for(a) do |f| %>
-                    <div class="fbox">
-                      <%= f.label :local_image %>
-                      <%= f.file_field :image %>   
-                    </div>
-                    <div align="center">
-                    <div style="font-size:11px">
-      <b>              -- OR --</b>
-</div>
-                    </div>
-                    <div class="fbox">
-                      <%= f.label :remote_image_url %>
-                      <%= f.text_field :remote_image_url %>   
-                    </div>
-                    <input type="button" value="Close" name="commit" class="btns fr bClose"/>
-                    <%= f.submit "Upload", {class: "btnp fr"} %>
-                    <div class="cl"></div>
-                    <% end %>
+                   <%= render 'shared/img_upload', a: a %>
                  </div>
 
                             <div class="fl padl20">

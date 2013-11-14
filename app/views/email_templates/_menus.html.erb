@@ -1,18 +1,31 @@
 <ul class="tab-menus1">
 
-<li class = "my_emails">
-<%= link_to "Emails", new_user_invitation_path %>
+<% if can? :create, Email %>
+<li class = "emails">
+<%= link_to "Emails", emails_path %>
 </li>
+<% end %>
 
 <% if can? :read, EmailTemplate %>
-<li class="all_email_templates"> 
+<li class="email_templates"> 
 <%= link_to "Email Templates", email_templates_path %>
 </li>
 <% end %>
 
+<% if can? :create, Email %>
+<li class="new_email"> 
+<%= link_to "New Email", new_email_path %>
+</li>
+<% end %>
+
+<% if can? :create, EmailTemplate %>
+<li class="new_email_template"> 
+<%= link_to "New Email Template", new_email_template_path %>
+</li>
+<% end %>
 
 <% if can? :read,Smtp %>
-<li class = "all_smtps">
+<li class = "smtps">
 <%= link_to "Configure SMTP",smtps_path %>
 </li>
 <% end %>

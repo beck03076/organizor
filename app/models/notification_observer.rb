@@ -1,4 +1,12 @@
 class NotificationObserver < ActiveRecord::Observer
+  observe :timeline
+  
+  def after_save(record)
+    PrivatePub.publish_to("/notify/" + record.receiver_id.to_s, 
+                          message: [record.comment.to_s,record.desc.to_s].join(', '),
+                          id: record.id)
+  end
+=begin
  # please note the group assign notification is done in the controller side
   observe :enquiry,:registration,:todo,:follow_up,:programme,:note,:email
    
@@ -32,13 +40,5 @@ class NotificationObserver < ActiveRecord::Observer
      end
      
    end
-=begin   
-    if record.class.name == "Programme"
-       
-       ass_to = record.registration.assigned_to
-       PrivatePub.publish_to("/notify/" + ass_to.to_s, 
-                          message: "A programme is created/updated for your registration")
-       
-     els
 =end
 end

@@ -1,21 +1,30 @@
         
-  <% actions = %w(Email Follow\ up Note Todo Assign\ to Register Deactivate) %>    
-  <% actions = @enquiry.registered ? actions - ['Register'] : actions %>
-  <% actions = @enquiry.active ? actions : actions - ['Deactivate'] %>
+  <% actions = {email:     ["Email",:create],
+                follow_up: ["FollowUp",:create],
+                note:      ["Note",:create],
+                todo:      ["Todo",:create],
+                assign_to: ["Enquiry",:update],
+                register: ["Enquiry",:update],
+                deactivate: ["Enquiry",:update] }  %>
+                
+  <% @enquiry.registered ? actions.delete(:register) : nil %>
+  <% @enquiry.active ? nil : actions.delete(:deactivate) %>
   
-        <% actions.each do |elem| %>
-        
-          <!--  Shortening variable names -->
-          <% e = elem.downcase %>
-          <%= radio_button_tag 'action',
-                               e,
-                               false,
-                               onclick: "action_partial('enquiries',
-                                                        '#{e.tr(" ", "_")}',
-                                                        '#{@enquiry.id}');" %>
-          <%= label_tag elem.titleize %>
-          &nbsp;&nbsp;&nbsp;&nbsp;
+        <% actions.keys.each do |elem| %>
+          <% if can? actions[elem][1],actions[elem][0].constantize %>
+              <!--  Shortening variable names -->
+              <% e = elem.to_s.titleize %>
+              <%= radio_button_tag 'action',
+                                   e,
+                                   false,
+                                   onclick: "action_partial('enquiries',
+                                                            '#{e.downcase.tr(" ", "_")}',
+                                                            '#{@enquiry.id}');" %>
+              <%= label_tag elem.to_s.titleize %>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>
         <% end %>
+        
 <br/>
 <br/>
 

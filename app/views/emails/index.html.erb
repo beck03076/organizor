@@ -1,0 +1,88 @@
+<!-- emails raw-->
+
+<div class="tab-container">
+
+<%= render "email_templates/menus" %>
+    <div class="tab-content" id="email_template" style="display:block">
+    <div class="boxp box-theme-ch">
+        <h4 class="htab">
+        All Emails 
+        
+        <% if current_user.adm? %>
+        <div class="fr">
+                  &nbsp;&nbsp;
+                  Sent By: 
+                  <%= select_tag("Sent By",
+                  options_from_collection_for_select(User.order(:first_name),'id','name',@sent_by),
+                  {autocomplete: "off", id: "sent_by_email"}) %>
+        </div>
+        <% end %>
+        
+        </h4>
+        <br/>
+        <br/>
+        <br/>
+      <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+         <thead>
+          <tr>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Sent By</th>
+                                <th>From</th>
+                                <th>View all</th>
+          </tr>
+        </thead>
+        <tbody>
+               <% @emails.includes(:smtp).each do |email| %>
+                    <tr>
+                        <td><%= email.subject %></td>
+                        <td><%= email.created_at.strftime("%F %R %p") %></td>
+                        <td><%= email._cre_by.name rescue "" %></td>
+                        <td><%= (email.from.nil? ? email.smtp.name : email.from) rescue "unknown" %></td>
+                        <td  class="preview" data-email_id='<%= email.id %>'>...</td>
+                   </tr>
+                   
+               <% end %>
+               <%= @emails.size == 0 ? "<tr><td>No emails sent by this user, yet!</td></tr>".html_safe : nil %>
+                    <tr>
+                        <td colspan="5" align="left"><a href="#">Back</a></td>
+                   </tr>
+
+        </tbody>
+      </table>
+      
+      <br/><br/>
+
+
+</div>
+</div>
+</div>
+<script>
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     theme: "modern",
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor "
+     ],
+     toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons",
+     image_advtab: true,
+     templates:[ 
+        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
+        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
+    ],
+     autosave_ask_before_unload: false
+});
+
+$(function(){
+    imagePreview("email");
+    setColorsFromSession();
+    $("ul.tab-menus1 li.emails").trigger('click');
+    activeMM("emailMM");
+});
+
+</script>

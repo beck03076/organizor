@@ -69,7 +69,7 @@ skip_authorize_resource :only => :show_hover
     respond_to do |format|
       if @todo.save
         format.html { 
-        if !m.blank? && !params[:follow_up][m_id].blank?
+        if !m.blank? && !params[:todo][m_id].blank?
         
           tl(m.capitalize,params[:todo][m_id],"Assigned to " + @todo._ato.name,
          @todo.topic.name + ' task, due on ' + params[:todo][:duedate],'todo',params[:todo][:assigned_to])

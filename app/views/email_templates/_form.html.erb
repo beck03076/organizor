@@ -1,11 +1,7 @@
 <!-- Tabs---------------------------->
 <div class="tab-container">
-<ul class="tab-menus">
-  <li class="email_template" lang="email_template"> 
-   Email Template 
-  </li>
-</ul>
-    <div class="tab-content" id="email_template">
+ <%= render "menus" %>
+    <div class="tab-content" id="email_template" style="display:block">
     <!-- Actual Form Starts---------------------------->
     <%= form_for(@email_template) do |f| %>
 
@@ -142,4 +138,6 @@ tinymce.init({
      
 });
 setColorsFromSession();
+activeMM("emailMM");
+$("ul.tab-menus1 li.new_email_template").trigger('click');
 </script>

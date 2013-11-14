@@ -57,9 +57,9 @@
                </tr>
                <% (r - (defs + ["User"])).each do |model| %>
                 
-                      <tr colspan="5"  align="center" >
+                      <tr colspan="5"  align="center" class="htab">
                       <td>
-                      <h4 class="htab">
+                      <h4 >
                       <%= model %>
                       <span class="fl padr10">
                       <%= check_box_tag "permissions_row",
@@ -74,14 +74,15 @@
                       &nbsp;
                       </h4>
                       </td>
+                      
                       <% perms[model].each do |p| %>
                         <td align="center">
                                 <%= check_box_tag "#{f.object_name}[permission_ids][]",
                                                    p.id, 
                                                    role.permissions.include?(p),{class: "permissions"} %>
-                                
                         </td>
-                     <% end %>
+                      <% end %>
+
                      </tr>
                
                 <% end %>

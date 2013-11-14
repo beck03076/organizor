@@ -74,8 +74,8 @@ private
 
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
-      join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = registrations.#{sc[0]}"
-      regs = regs.joins(join).order("#{scs}.#{sc[2]} #{sort_direction}")
+      join = "LEFT OUTER JOIN #{scs} asso ON asso.id = registrations.#{sc[0]}"
+      regs = regs.joins(join).order("asso.#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
       regs = regs.order("registrations.#{sc} #{sort_direction}")
     else
@@ -125,14 +125,14 @@ private
   
    
   def set_cols
-    @def_cols = {:country_id => [:country,:name],
+    @def_cols = {:country_id => [:country_of_origin,:name],
      :qua_id => [:qualification,:name],
      :reg_source_id => [:student_source,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => [:_assigned_to,:first_name],
-     :assigned_by => [:_assigned_by,:first_name],
-     :created_by => [:_created_by,:first_name],
-     :updated_by => [:_updated_by,:first_name],
+     :assigned_to => [:_ass_to,:first_name],
+     :assigned_by => [:_ass_by,:first_name],
+     :created_by => [:_cre_by,:first_name],
+     :updated_by => [:_upd_by,:first_name],
      :prof_eng_level_id => [:english_level,:name]}
      
      @def_srch = current_user.conf.def_reg_search_col

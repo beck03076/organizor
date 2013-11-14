@@ -3,7 +3,7 @@ class Email < ActiveRecord::Base
   belongs_to :smtp
   has_and_belongs_to_many :registrations
   
-  belongs_to :_created_by, class_name: "User",foreign_key: "created_by"
+
   
   belongs_to :_from, class_name: "Smtp",foreign_key: "smtp_id"
   

@@ -78,10 +78,10 @@
 <%= image_tag "/images/icons/info.png",{class: "fr tooltip",
                                         title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
 
- <span class="fr btnp" style="margin-left:10px" onclick="$('.dataTables_filter input').val('').keyup();">Reset</span>&nbsp;
+ <span class="fr btnp" style="margin-left:10px" onclick="resetDataTable();">Reset</span>&nbsp;
 <!----------------------- Search filter ---------------------------->
        <%= select_tag :abdc,
-                      options_for_select(@cols.map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["--Filter By--",""])),
+                      options_for_select((@cols - [:follow_up_date]).map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["--Filter By--",""])),
                       {id: "mySelect",style: "width:150px;margin-left:10px;height:24px;",class: "fr srch_sel"} %>
                       
                              

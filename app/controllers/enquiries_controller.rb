@@ -147,7 +147,12 @@ class EnquiriesController < ApplicationController
     @enquiry.status_id = stat_id
     
     respond_to do |format|
+      
       if @enquiry.save
+      
+        tl('Enquiry',@enquiry.id,
+            "A new enquiry has been created",
+            @enquiry.first_name,'Create Enquiry',@enquiry.assigned_to)
         # after creating enquiry, checking conf for email and f_u
         c = current_user.conf
         

@@ -165,6 +165,7 @@ $(function(){
     
     dropdownUser('select#assigned_to_todo','/todo_assigned_to/');
     dropdownUser('select#assigned_by_todo','/todo_assigned_by/');
+    dropdownUser('select#sent_by_email','/email_sent_by/');
     //dropdownUser('select#calendar_user','/calendar_user/');
 });
 
@@ -604,6 +605,10 @@ function checkRole(e){
 function showHide(one,two){
   $('#' + one).css('display','none');
   $('#' + two).css('display','');
+}
+
+function resetDataTable(){
+  $('.dataTables_filter input').val('').keyup();$('#mySelect').val($('#mySelect option:first').val()).trigger('change');$('#followUpSelect').val($('#followUpSelect option:first').val()).trigger('change');
 }
 
 

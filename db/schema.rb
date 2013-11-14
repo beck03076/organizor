@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113080111) do
+ActiveRecord::Schema.define(:version => 20131114150338) do
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(:version => 20131113080111) do
     t.integer  "contact_type_id"
     t.boolean  "registered",      :default => false
     t.boolean  "active",          :default => true
+    t.string   "image"
   end
 
   create_table "enquiry_sources", :force => true do |t|
@@ -444,6 +445,7 @@ ActiveRecord::Schema.define(:version => 20131113080111) do
     t.integer  "prof_exam_id"
     t.text     "note"
     t.integer  "enquiry_id"
+    t.string   "image"
   end
 
   create_table "roles", :force => true do |t|

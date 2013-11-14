@@ -95,8 +95,8 @@ private
     if sc.is_a?(Array)
       scs = set_asso(sc[1])
       #scs = sc[1].to_s.pluralize
-      join = "LEFT OUTER JOIN #{scs} ON #{scs}.id = enquiries.#{sc[0]}"
-      enqs = enqs.joins(join).order("#{scs}.#{sc[2]} #{sort_direction}")
+      join = "LEFT OUTER JOIN #{scs} asso ON asso.id = enquiries.#{sc[0]}"
+      enqs = enqs.joins(join).order("asso.#{sc[2]} #{sort_direction}")
     elsif !sc.nil?
       enqs = enqs.order("enquiries.#{sc} #{sort_direction}")
     else
@@ -112,9 +112,9 @@ private
 #        ress = res[0].to_s.pluralize
         enqs = enqs.includes(res[0]).where("#{ress}.#{res[1].to_s} like :search", search: "%#{params[:sSearch]}%")
       elsif params[:sSearch_0].empty?
-        enqs = enqs.where("#{@def_srch} like :search", search: "%#{params[:sSearch]}%")
+        enqs = enqs.where("enquiries.#{@def_srch} like :search", search: "%#{params[:sSearch]}%")
       else
-        enqs = enqs.where("#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
+        enqs = enqs.where("enquiries.#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
       end
     elsif params[:sSearch_1].present?
       enqs = enqs.send(params[:sSearch_1])
@@ -150,10 +150,10 @@ private
      :source_id => [:student_source,:name],
      :contact_type_id => [:contact_type,:name],
      :sub_agent_id => [:sub_agent,:name],
-     :assigned_to => [:_assigned_to,:first_name],
-     :assigned_by => [:_assigned_by,:first_name],
-     :created_by => [:_created_by,:first_name],
-     :updated_by => [:_updated_by,:first_name],
+     :assigned_to => [:_ass_to,:first_name],
+     :assigned_by => [:_ass_by,:first_name],
+     :created_by => [:_cre_by,:first_name],
+     :updated_by => [:_upd_by,:first_name],
      :status_id => [:status,:name]}
      
     @def_srch = current_user.conf.def_enq_search_col

@@ -32,7 +32,16 @@ $(function(){
         <div class="cols" style="padding-bottom:20px">
             <div class="col8">
                 <div id="scrollboxu">
-                    <img src="/images/icons/user.png" width="100"  class="imgb fl"/>
+                    <div class="rel abs-plus-box">
+                      <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
+                                   {width: "100",class: "tooltip",title: "Upload your photo",
+                                    class: "imgb fl"
+                                    }) %>
+                      <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                    </div>
+                     <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                       <%= render 'shared/img_upload', a: a %>
+                     </div>
                     <div class="fl padl20">
                         <h5>
                         <b>                        
@@ -145,6 +154,17 @@ $(function(){
             </div>
         </div>
 <br/>
+<div class="htab">
+        <h5><b>Action</b></h5>
+        </div>
+        <div class="boxstheme">
+          <%= render "actions" %>
+          <!-- Action container -->
+          <div id="action_div">
+          </div>
+       </div>
+       <br/><br/>
+
 <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#application-display').slideToggle();"} %>
 <div id="application-display">
     <div class="htab">
@@ -174,7 +194,12 @@ $(function(){
         </div>
 </div>
 
-<%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
+
+           <div id="registration_id_div" data-registration_id='<%= a.id %>' data-model_sing='registration' data-model_plu='registrations' ></div>      
+
+
+        
+       <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
 <div id="timeline-display">
         <br/><div class="htab">
             <h5><b>Timeline</b></h5>
@@ -183,20 +208,8 @@ $(function(){
             <ul>
                 <%= render 'enquiries/timeline' %>
             </ul>
-            </div><br/><br/>
+            </div>
 </div>
-           <div id="registration_id_div" data-registration_id='<%= a.id %>' data-model_sing='registration' data-model_plu='registrations' ></div>      
-
-
-        <div class="htab">
-        <h5><b>Action</b></h5>
-        </div>
-        <div class="boxstheme">
-          <%= render "actions" %>
-          <!-- Action container -->
-          <div id="action_div">
-          </div>
-       </div>
 
 <!-- INQUIRY DETAILS - ENDS -->
 

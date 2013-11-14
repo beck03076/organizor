@@ -1,0 +1,18 @@
+<%= form_for(a) do |f| %>
+                    <div class="fbox">
+                      <%= f.label :local_image %>
+                      <%= f.file_field :image %>   
+                    </div>
+                    <div align="center">
+                    <div style="font-size:11px">
+      <b>              -- OR --</b>
+</div>
+                    </div>
+                    <div class="fbox">
+                      <%= f.label :remote_image_url %>
+                      <%= f.text_field :remote_image_url %>   
+                    </div>
+                    <input type="button" value="Close" name="commit" class="btns fr bClose"/>
+                    <%= f.submit "Upload", {class: "btnp fr"} %>
+                    <div class="cl"></div>
+<% end %>

@@ -1,15 +1,12 @@
 <script type="text/javascript">
 $(function(){
-
-  activeMM("usersMM");
-  setColorsFromSession();
-
-
   $('li.roles_path').addClass('active-tab');
   $('td.role_name').hover(function(){
     $('span.delete_role').hide();
     $(this).find('span.delete_role').show();
   });
+  activeMM("usersMM");
+  setColorsFromSession();
   
 });
 

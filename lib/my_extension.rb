@@ -1,11 +1,13 @@
 module MyExtension
   extend ActiveSupport::Concern
   
-  def initialize
+  def self.included(klazz)  # klazz is that class object that included this module
+    klazz.class_eval do
       belongs_to :_ass_by, class_name: "User",foreign_key: "assigned_by"
       belongs_to :_ass_to, class_name: "User",foreign_key: "assigned_to"
       belongs_to :_cre_by, class_name: "User",foreign_key: "created_by"
       belongs_to :_upd_by, class_name: "User",foreign_key: "updated_by"
+    end
   end
   
   def tname

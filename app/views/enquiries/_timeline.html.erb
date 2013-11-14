@@ -1,26 +1,35 @@
-<% @timelines.each do |t| %>
-<br/>
-  <% u = User.find(t.user_id) %>
-  <%= image_tag (u.image? ? u.image_url : "/images/icons/user.png"),
-                {class: "fl imgb", 
-                 width: "40",
-                 style: "margin-right:10px;"} %>
-  <h4 class="preview" data-<%= t.m_name.underscore %>_id='<%= t.m_id %>'>
-  <%= t.comment %>
-  </h4>
-  <br/>
-  <span style="color:#999;">
-  <%= t.desc.html_safe %>
-  </span>
-  
-  <br/>
-  <br/>
-  <%= link_to t.user_name,"/users/#{t.user_id}" %> &nbsp;&nbsp; <%= t.created_at.strftime("%A, %F %R %p") %>
+<!-- Timeline displayed in enquiries and registrations -->
+<% if @timelines.size == 0 %>
+   <h4>
+   <i align="center">
+     No timeline items to display
+   </i>
+   </h4>
+<% else %>
+    <% @timelines.each do |t| %>
+    <br/>
+      <% u = User.find(t.user_id) %>
+      <%= image_tag (u.image? ? u.image_url : "/images/icons/user.png"),
+                    {class: "fl imgb", 
+                     width: "40",
+                     style: "margin-right:10px;"} %>
+      <h4 class="preview" data-<%= t.m_name.underscore %>_id='<%= t.m_id %>'>
+      <%= t.comment %>
+      </h4>
+      <br/>
+      <span style="color:#999;">
+      <%= t.desc.html_safe %>
+      </span>
+      
+      <br/>
+      <br/>
+      <%= link_to t.user_name,"/users/#{t.user_id}" %> &nbsp;&nbsp; <%= t.created_at.strftime("%A, %F %R %p") %>
 
 
-  
-</li>
-<br/>
-<br/>
-<div class="brg0"></div>
+      
+    </li>
+    <br/>
+    <br/>
+    <div class="brg0"></div>
+    <% end %>
 <% end %>

@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   belongs_to :_invited_by, class_name: "User",foreign_key: "invited_by_id"
   
   has_many :todos, class_name: "Todo",foreign_key: "assigned_to"
+  has_many :emails, class_name: "Email",foreign_key: "created_by"
   
   
   accepts_nested_attributes_for :permissions
