@@ -498,7 +498,7 @@ $(document).ready(function(){
         if(totalEmptyTag==1 || totalEmptyTag==0){
             var tag="<div class='frbox'><label>Email Address</label>";
                 tag+="&nbsp;<input type='text' placeholder='Email Address'/>&nbsp;&nbsp;";
-                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt'/></div>";
+                tag+="<img src='/images/icons/deactivate.png' class='jqAddUserRemove pt' onclick='removeInviteUser(this);'/></div>";
             $("#addInviteUserEmail").append(tag);
         }
     });
@@ -508,7 +508,11 @@ $(document).ready(function(){
     });
 
 });
-    
+
+function removeInviteUser(object){
+        $(object).parent().remove();
+}
+
 function activeNewSubTab(mainContentClass,activeTabContentId,activeTabId){
     /* HIDE ALL TABS CONTENT*/
     $("."+mainContentClass).hide();
