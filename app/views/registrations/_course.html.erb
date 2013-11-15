@@ -25,7 +25,9 @@
       <%= render 'application_statuses/change_status' %>
     </span>
     </div>
+    <li><label>Reference Number</label>: <%= i.ins_ref_no rescue "Unassigned" %></li>
     <li><label>Type</label>: <%= j %></li>
+    
     <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
     <li><label>City</label>: <%= i.city.try(:name) %></li>
     <li><label>Country</label>: <%= i.country.try(:name) %></li>
