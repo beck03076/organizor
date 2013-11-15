@@ -611,9 +611,27 @@ this.imagePreview = function(matter,matter_id){
                 }else{
                     yOffsetY=-500;
                     }
-
-                $("body").append('<div id="preview" class="otbox"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
-
+				/* TYPE SHOULD BE (E,T,F) like data-type="E" */
+				var type=$(this).data("type");
+				if(type!="E"){
+					$("#preview").css("width","320px");
+					$(".previewBox").css("width","280px");
+					yOffsetY=-250;
+				}else{
+					$("#preview").css("width","730px");
+					$(".previewBox").css("width","700px");
+				}
+                $("body").append('<div  class="otbox" id="preview"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
+				
+				if(type!="E"){
+					$("#preview").css("width","320px");
+					$(".previewBox").css("width","280px");
+					yOffsetY=-250;
+				}else{
+					$("#preview").css("width","730px");
+					$(".previewBox").css("width","700px");
+				}
+		
                 $("#preview")
                     .css("top",(e.pageY - xOffsetX) + "px")
                     .css("left",(e.pageX + yOffsetY) + "px")
