@@ -13,10 +13,11 @@
 
            <% i1 = i[0].tr(" ","_").downcase %>
            
-           <li lang='<%= i1 + '_id' %>'  class='<%= i1 %>' style='display:<%= i[1] %>' 
-           onclick=<%= model+"TabSwitch(this);" %> data-cond='<%= i1 %>' data-partial='<%= i[3] %>'>
+           <li lang='<%= i1 + '_id' %>'  class='<%= i1 %> ' style='display:<%= i[1] %>' 
+           onclick=<%= model+"TabSwitch(this);" %> data-cond='<%= i1 %>' data-partial='<%= i[3] %>'
+           title="<%= i[0] %>" >
            
-             <%= i[0] %>
+             <%= truncate(i[0], length: 10) %>
              
            </li>
            
