@@ -21,7 +21,7 @@ class Todo < ActiveRecord::Base
     :description => self.desc || "No Description",  
     :status => (self.status.name rescue "No Status"),
     :start => (self.duedate.rfc822 rescue nil),  
-    :end => (self.duedate.rfc822),  
+    :end => (self.duedate.rfc822 rescue nil),  
     #:allDay => self.allday,  
     :priority => self.priority,  
     :url => Rails.application.routes.url_helpers.todo_path(id),  
