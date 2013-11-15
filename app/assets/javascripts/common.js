@@ -339,7 +339,7 @@ function setThemeColor(theme){
     }
     $("#header").css({"background":mainColor,"border-bottom-color":thickColor});
     $(".btnp").css({"background":mainColor,"border-color":thickColor});
-    $(".theme,.popuptitle").css({"background":mainColor});
+    $(".theme").css({"background":mainColor});
     $(".uibox").css({"background":lightColor,"border-color":mainColor});
     $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover,.tab-menus1 .active-tab,.tab-menus1 li:hover").css({"background":lightestColor});
     $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
