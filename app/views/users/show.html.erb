@@ -129,7 +129,7 @@ $(function(){
                             </li>
                             <li>
                             <b>Invited by :</b> 
-                              <%= a.created_by %>
+                              <%= User.find(a.invited_by_id).name rescue "Unknown" %>
                             </li>
                             <br/>
                             <li>

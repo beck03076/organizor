@@ -341,7 +341,7 @@ function setThemeColor(theme){
     $(".btnp").css({"background":mainColor,"border-color":thickColor});
     $(".theme").css({"background":mainColor});
     $(".uibox").css({"background":lightColor,"border-color":mainColor});
-    $(".tab-content,.tab-menus .active-tab,.tab-menus li:hover,.tab-menus1 .active-tab,.tab-menus1 li:hover").css({"background":lightestColor});
+    $(".otbox,.tab-content,.tab-menus .active-tab,.tab-menus li:hover,.tab-menus1 .active-tab,.tab-menus1 li:hover").css({"background":lightestColor});
     $(".btnpd").css({"background":lightColor,"border-color":mainColor,"color":mainColor});
     $(".tb-stylev tr th,.theme-l,theme-ls").css({"background":lightColor,"color":thickColor});
 
@@ -602,8 +602,9 @@ this.imagePreview = function(matter,matter_id){
             else{
               var id = matter_id
             }
+            var type=$(this).data("type");
             
-            $.get('/' + matter +'_hover/' + id,function(reply){
+            $.get('/' + matter +'_hover/' + id,function(reply,obj){
                 var bodyContent = reply;
                 differenceWidth=parseInt($(window).width())-parseInt(e.pageX);
                 if(differenceWidth<450){
@@ -611,27 +612,20 @@ this.imagePreview = function(matter,matter_id){
                 }else{
                     yOffsetY=-500;
                     }
-				/* TYPE SHOULD BE (E,T,F) like data-type="E" */
-				var type=$(this).data("type");
-				if(type!="E"){
-					$("#preview").css("width","320px");
-					$(".previewBox").css("width","280px");
-					yOffsetY=-250;
-				}else{
-					$("#preview").css("width","730px");
-					$(".previewBox").css("width","700px");
-				}
-                $("body").append('<div  class="otbox" id="preview"><span class="close-pre fr">x</span>'+bodyContent+'</div>');                                 
-				
-				if(type!="E"){
-					$("#preview").css("width","320px");
-					$(".previewBox").css("width","280px");
-					yOffsetY=-250;
-				}else{
-					$("#preview").css("width","730px");
-					$(".previewBox").css("width","700px");
-				}
-		
+                /* TYPE SHOULD BE (E,T,F) like data-type="E" */
+                
+               
+                $("body").append('<div  class="otbox" id="preview"><img src="/images/icons/quit.png" class="close-pre fr" width=24/>'+bodyContent+'</div>');                                 
+                
+                if(type!="E"){
+                    $("#preview").css("width","320px");
+                    $(".previewBox").css("width","280px");
+                    yOffsetY=-400;
+                }else{
+                    $("#preview").css("width","730px");
+                    $(".previewBox").css("width","700px");
+                }
+        
                 $("#preview")
                     .css("top",(e.pageY - xOffsetX) + "px")
                     .css("left",(e.pageX + yOffsetY) + "px")

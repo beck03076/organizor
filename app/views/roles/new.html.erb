@@ -41,7 +41,7 @@ $(function(){
     <table  class="tables3" border="0" cellpadding="0" cellspacing="0" width="100%">
          
          <% r = perms.keys %>
-         <% r.delete("All") %>
+         <% r = r - ["All","Country","City"]  %>
          
          <tr>
          <td></td>

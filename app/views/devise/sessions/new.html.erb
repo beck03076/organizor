@@ -42,7 +42,15 @@ $('#fade').cycle();
          <%= f.submit 'Go', :class => "white-button"%>
     </span>
     </td>
-
+<% if flash[:notice] %>
+            <h3 id="message" class="htab addNewPop" style="display: block; top: 483px; left: 455px;">
+              <%= flash[:notice] %>
+              <br/>
+              <small>
+              <i>Click outside to continue</i>
+              </small>
+            </h3>
+<% end %>
 
 </tr>
 <tr>
