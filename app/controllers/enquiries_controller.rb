@@ -263,10 +263,14 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.find(params[:id])
     authorize! :destroy, @enquiry
     
-    @enquiry.destroy
+    stat = EnquiryStatus.find_by_name("deactivated").id
+    @enquiry.update_attributes(status_id: stat,active: false)
+    
+    tl("Enquiry",params[:id],'This enquiry has been deactivated',
+                 "Deactivated",'deactivate',@enquiry.assigned_to)
 
     respond_to do |format|
-      format.html { redirect_to enquiries_path, notice: 'Enquiry was successfully deleted.' }
+      format.html { redirect_to enquiries_path, notice: 'Enquiry was successfully deactivated.' }
       format.json { head :no_content }
     end
   end

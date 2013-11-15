@@ -54,14 +54,14 @@
             <% div_delete_id = "group_delete_to_" + _id %>
             
             <% if can? :destroy, Enquiry %>
-              <%= link_to "Delete", "#", {class: "btnp ", onclick: "showPopUp('#{div_delete_id}');"} %>
+              <%= link_to "Deactivate", "#", {class: "btnp ", onclick: "showPopUp('#{div_delete_id}');"} %>
             <% else %>
-              <%= link_to "Delete", "#", {class: "btnpd "} %>
+              <%= link_to "Deactivate", "#", {class: "btnpd "} %>
             <% end %>
             <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
               <div class="frbox">
                 <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
-                <h5>Are you sure about this group delete?</h5>
+                <h5>Are you sure about this group deactivate?</h5>
                 <span class="btnp bClose" onclick="groupDelete('<%= _id %>');"> Yes </span>
                 <span class="btnp bClose"> No </span>
               </div>

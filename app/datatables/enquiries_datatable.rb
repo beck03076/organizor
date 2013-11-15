@@ -57,7 +57,7 @@ private
        temp << link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
                link_to(image_tag("/images/icons/del.png"),
                        "/enquiries/#{enq.id}",
-              {:method => "delete",data: { confirm: 'Are you sure this delete?' }})
+              {:method => "delete",data: { confirm: 'Are you sure to deactivate this enquiry?' }})
                
 
         @cols.map{|i|
