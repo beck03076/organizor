@@ -11,8 +11,6 @@ class Ability
           end
         else
           can permission.action.to_sym, permission.subject_class.constantize, :id => user.id
-          p "********************&&&&&&&&&&&&****"
-          p user.id
         end
       end
   end
