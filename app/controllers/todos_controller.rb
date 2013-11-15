@@ -98,11 +98,12 @@ skip_authorize_resource :only => :show_hover
     @todo = Todo.find(params[:id])
     
     if params[:todo][:done]
-      tl("Todo",@todo.id,'This todo has been marked done',
-          @todo.topic,'todo',@todo.assigned_by)
+      res = (params[:todo][:done].to_s == "true" ? "done" : "undone")
+      tl("Todo",@todo.id,'This todo has been marked ' + res,
+          (@todo.topic.name rescue nil),'todo',@todo.assigned_by)
     else
       tl("Todo",@todo.id,'This todo has been updated',
-          @todo.topic,'todo',@todo.assigned_to)
+          (@todo.topic.name rescue nil),'todo',@todo.assigned_to)
     end
     
     respond_to do |format|

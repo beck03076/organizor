@@ -6,6 +6,8 @@ Todo
 <br/>
 <div style="height:0">&nbsp;</div>
 <div class="previewBox">
+
+
 <% if !@todo.enquiry_id.nil? %>
   Associated with: <%= link_to 'Enquiry',"/enquiries/#{@todo.enquiry_id}" %>
 <% end %>
@@ -31,7 +33,7 @@ Todo
                <br/>
                <br/>
 
-
+<h2><%= @todo.done ? "Done" : "Not Completed" %></h2>
 
 <ul class="vlsdet">
 
