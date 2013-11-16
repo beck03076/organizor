@@ -91,31 +91,33 @@
 
 </thead>
 
-<!----------------------- Tooltip ---------------------------->
-<%= image_tag "/images/icons/info.png",{class: "tooltip fr",
-                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
-<!----------------------- Reset filter---------------------------->
-       <div class="srch_reset btnp fr" style="margin-left:10px;"  onclick="resetDataTable();">
-       Reset
-       </div>&nbsp;
-      
+
+
 <!----------------------- Search filter---------------------------->
        <%= select_tag :abdc,
                       options_for_select((@cols - [:follow_up_date]).map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["--Filter By--",""])),
-                      {id: "mySelect",style: "width:150px;margin-left:10px;height:24px;",class: "srch_sel fr"} %>
+                      {id: "mySelect",style: "width:150px;margin-left:10px;height:24px;",class: "srch_sel"} %>
 
 
 
 <!----------------------- FollowUp filter ---------------------------->
-       <%= select_tag :abdc,
-                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
-                      {id: "followUpSelect",style: "width:150px",class: "fr"} %>
+       
                       
                       
        <%= label_tag "follow_up_filter:",
                nil,
-               {class: "fr",style: "margin-right:5px;margin-bottom:10px;"} %>
-                      
+               {class: "",style: "margin-left:15px;margin-right:5px;margin-bottom:10px;"} %>
+       <%= select_tag :abdc,
+                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
+                      {id: "followUpSelect",style: "width:150px",class: ""} %>
+
+<!----------------------- Reset filter---------------------------->
+       <span class="srch_reset btnp" style="margin-left:5px;"  onclick="resetDataTable();">
+       Reset
+       </span>
+<!----------------------- Tooltip ---------------------------->
+<%= image_tag "/images/icons/info.png",{class: "tooltip",
+                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>      					  
                       <br/><br/>
        
 <tbody>
