@@ -86,10 +86,7 @@
 
 
 </thead>
-<%= image_tag "/images/icons/info.png",{class: "fr tooltip",
-                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
 
- <span class="fr btnp" style="margin-left:10px" onclick="resetDataTable();">Reset</span>&nbsp;
 
 <!----------------------- Search filter ---------------------------->
        <%= select_tag :abdc,
@@ -98,14 +95,23 @@
                       
                              
 <!----------------------- FollowUp filter ---------------------------->
-       <%= select_tag :abdc,
-                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
-                      {id: "followUpSelect",style: "width:150px",class: "fr"} %>
-                      
-       <%= label_tag "follow_up_filter:",
+
+<%= label_tag "follow_up_filter:",
                nil,
-               {class: "fr",style: "margin-right:5px;margin-bottom:10px;"} %>
-                   <br/><br/>
+               {class: "",style: "margin-left:15px;margin-right:5px;margin-bottom:10px;"} %>
+			   
+<%= select_tag :abdc,
+                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
+                      {id: "followUpSelect",style: "width:150px",class: ""} %>
+                      
+       
+ <span class="btnp" style="margin-left:5px" onclick="resetDataTable();">Reset</span>
+ 
+ <%= image_tag "/images/icons/info.png",{class: "tooltip",
+                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>
+
+										
+			   <br/><br/>
    
        
 <tbody>
