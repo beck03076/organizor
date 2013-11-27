@@ -56,7 +56,7 @@ module MyExtension
   
   def help_m(col)
     if col
-     User.find(col)
+     User.find(col) rescue nil
     else
      "Unknown"
     end
