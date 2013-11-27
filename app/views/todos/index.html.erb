@@ -31,7 +31,9 @@
           <% topics = TodoTopic.order(:name).map{|i| [i.id,i.name]} %>
           <% stats = TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
           <% @todos.each do |i| %>
+           
                 <% edi = i.assigned_by == current_user.id %>
+                <% if !i._aby.nil? %>
                 <li>
                 <div class="todo_container">
                     <%= image_tag((i._aby.image? ? i._aby.image_url : "/images/icons/user.png"),
@@ -83,6 +85,7 @@
                </div>
 
                </li>
+               <% end %>
                <br/>
 
        <% end %> 
