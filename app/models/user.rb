@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
                   :remember_me,:branch_id, :created_by, 
                   :email_signature, :image, :role_id, 
                   :updated_by,:first_name,:surname,
-                  :permission_ids,:role,:gender,
+                  :permission_ids,:role,:gender,:confirmed_at, :invitation_accepted_at,
                   :date_of_birth,:address, :remote_image_url,
                   :skype,:facebook,:linkedin,:twitter,:website,:gplus,:blogger,:is_active,
                   :permission_ids,:mobile

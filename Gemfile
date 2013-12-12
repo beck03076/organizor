@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.15'
 
 
 
@@ -75,6 +75,7 @@ gem 'rubyzip'
 gem 'prawn'
 group :development do
   gem "better_errors"
+  gem "rails-dev-tweaks"
 end
 gem 'hirb'
 
