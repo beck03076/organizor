@@ -79,7 +79,9 @@ gem 'json' #important, was not set as a dependency, so I add it manually
 gem 'google_currency'
 #gem "omnicontacts"
 
-
+group :development do
+  gem "rails-dev-tweaks"
+end
 
 
 

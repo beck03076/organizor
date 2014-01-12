@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.integer :branch_id
       t.integer :role_id
-      t.integer :image
+      t.string :image
       t.text :email_signature
       t.integer :created_by
       t.integer :updated_by
