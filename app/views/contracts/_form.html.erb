@@ -1,0 +1,22 @@
+<%= simple_form_for(@contract) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :initiate_date %>
+    <%= f.input :current_contract_start_date %>
+    <%= f.input :current_contract_end_date %>
+    <%= f.input :renewal_reminder_date %>
+    <%= f.input :commission_rate %>
+    <%= f.input :invoicing_deadline %>
+    <%= f.input :partners_target %>
+    <%= f.input :internal_target %>
+    <%= f.input :recruitment_territories %>
+    <%= f.input :desc %>
+    <%= f.input :institution_id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

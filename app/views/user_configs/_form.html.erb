@@ -1,3 +1,4 @@
+<!-- Settings for the current_user---------- -->
 <div class="tab-container">
 <ul class="tab-menus">
   <li class="active-tab" lang="user_configuration_id">
@@ -101,7 +102,10 @@
 
   <div class="cols">
   
-       <% enq_cols = Enquiry.column_names.sort %>
+       <% enq_cols = (Enquiry.column_names.sort - ["image",
+                                                   "assigned_by",
+                                                   "created_by"]) %>
+       
        <div class="frbox">
           <%= label_tag :for_enquiry %>
           <%= f.select(:def_enq_search_col, 
@@ -113,6 +117,20 @@
           <%= label_tag :for_registration %>
           <%= f.select(:def_reg_search_col, 
                        (reg_cols.map {|i| [i.titleize,i]})) %>
+      </div>
+      
+      <% ins_cols = Institution.column_names.sort %>
+      <div class="frbox">
+          <%= label_tag :for_institution %>
+          <%= f.select(:def_ins_search_col, 
+                       (ins_cols.map {|i| [i.titleize,i]})) %>
+      </div>
+      
+      <% per_cols = Person.column_names.sort %>
+      <div class="frbox">
+          <%= label_tag :for_person %>
+          <%= f.select(:def_per_search_col, 
+                       (per_cols.map {|i| [i.titleize,i]})) %>
       </div>
       
   </div>
@@ -138,7 +156,17 @@
   <div class="cols" id="enq_cols">
   <!-- enq_cols is set in default search section -->
   <% enq_cols_gr = enq_cols.group_by{|i| i[0]} %>
-  <% user_enq_cols = @user_config.enq_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
+  <% user_enq_cols = @user_config.enq_cols.map {|i| i.is_a?(Array) ? i[0].to_s : i.to_s} %>
+   
+  <%= cols_to_display("enq_cols",enq_cols.map {|i| [i.titleize,i]},user_enq_cols) %>
+  
+  
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  
+  
   <% enq_cols_gr.keys.each do |j| %>
      
       <div class="col3" style="margin:40px;">
@@ -183,6 +211,65 @@
       </div>
   <% end %>
   </div>
+  
+  
+  <h3>
+  For Institution <span class="toggler " onclick="deselectAllCheck('#ins_cols');">deselect all </span>
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols" id="ins_cols">
+    <!-- **************************** -->
+  <!-- ins_cols is set in default search section -->
+ 
+  <% ins_cols_gr = ins_cols.group_by{|i| i[0]} %>
+  <% user_ins_cols = @user_config.ins_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
+  <% ins_cols_gr.keys.each do |j| %>
+      <div class="col3" style="margin:40px;">
+        <h2 class="brg01">
+         <%= j.titleize %>&nbsp;&nbsp;&nbsp;
+         </h2>
+         <br/>
+         <br/>
+        <% ins_cols_gr[j].each do |i| %>
+          <%= check_box_tag "user_config[ins_cols][]",i.to_sym,user_ins_cols.include?(i.to_sym) %>
+          <%= i.titleize %>
+          <br/>
+        <% end %>
+      </div>
+  <% end %>
+  </div>
+  
+  <br/>
+  <br/>
+  
+  <h3>
+  For People <span class="toggler " onclick="deselectAllCheck('#per_cols');">deselect all </span>
+  </h3>
+  <br/>
+  <br/>
+  <div class="cols" id="per_cols">
+    <!-- **************************** -->
+  <!-- per_cols is set in default search section -->
+ 
+  <% per_cols_gr = per_cols.group_by{|i| i[0]} %>
+  <% user_per_cols = @user_config.per_cols.map {|i| i.is_a?(Array) ? i[0] : i} %>
+  <% per_cols_gr.keys.each do |j| %>
+      <div class="col3" style="margin:40px;">
+        <h2 class="brg01">
+         <%= j.titleize %>&nbsp;&nbsp;&nbsp;
+         </h2>
+         <br/>
+         <br/>
+        <% per_cols_gr[j].each do |i| %>
+          <%= check_box_tag "user_config[per_cols][]",i.to_sym,user_per_cols.include?(i.to_sym) %>
+          <%= i.titleize %>
+          <br/>
+        <% end %>
+      </div>
+  <% end %>
+  </div>
+  
   <br/>
   <br/>
 
@@ -371,6 +458,32 @@ $(document).ready(function(){
 });
 activeMM("settingMM");
 setColorsFromSession();
+
+$(function(){
+
+$('#enq_cols').multiSelect({header: "Choose an Option!",
+                            height: 250});
+
+var cols = $('#ms-selected-enq_cols').data('enq_cols');
+
+$.each(cols, function( index, value ){
+  $("#ms-enq_cols .ms-selectable:first-child ul li[ms-value="+ value +"]").trigger("click");
+});
+
+
+
+$("#ms-enq_cols .ms-selectable:first-child ul").click(function(){
+  var colsNo = $("#ms-enq_cols ul.ms-list > li.ms-elem-selected").length ;
+  
+  if (colsNo > 10){
+    info("It wont look good","You can select only 10 columns to display!");
+    $("#ms-enq_cols ul.ms-list > li.ms-elem-selected:last-child").trigger("click");
+  }
+  
+});
+
+});
+
 
 </script>
 

@@ -3,12 +3,13 @@ class FollowUp < ActiveRecord::Base
   belongs_to :event_type
   belongs_to :registration
   belongs_to :enquiries,class_name: "Enquiry",foreign_key: "enquiry_id"
+  belongs_to :institution
   
   attr_accessible :api, :created_by, :desc, 
   :ends_at, :event_type_id, :remind_before, 
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
-  :registration_id
+  :registration_id,:institution_id
   
   scope :between, lambda {|start_time, end_time|  
    {:conditions => ["? < start < ?", FollowUp.format_date(start_time),FollowUp.format_date(end_time)] }  

@@ -11,15 +11,15 @@ skip_authorize_resource :only => :show_hover
   def index
     set_url_params
     if @ass_by.to_i == current_user.id
-     @todos = Todo.includes(:status,:topic).where(assigned_by: @ass_by).order('done asc')
+     @todos = Todo.includes(:topic).where(assigned_by: @ass_by).order('done asc')
     elsif @ass_to.to_i == current_user.id
-     @todos = Todo.includes(:status,:topic).where(assigned_to: @ass_to).order('done asc')
+     @todos = Todo.includes(:topic).where(assigned_to: @ass_to).order('done asc')
     elsif current_user.adm? && @ass_to
-     @todos = Todo.includes(:status,:topic).where(assigned_to: @ass_to).order('done asc')
+     @todos = Todo.includes(:topic).where(assigned_to: @ass_to).order('done asc')
     elsif current_user.adm? && @ass_by
-     @todos = Todo.includes(:status,:topic).where(assigned_by: @ass_by).order('done asc')
+     @todos = Todo.includes(:topic).where(assigned_by: @ass_by).order('done asc')
     else
-      @todos = current_user.todos.includes(:status,:topic).order('done asc')
+      @todos = current_user.todos.includes(:topic).order('done asc')
     end
     
     @todo = Todo.new
@@ -68,7 +68,16 @@ skip_authorize_resource :only => :show_hover
 
     respond_to do |format|
       if @todo.save
+        
         format.html { 
+        # this is the part where the todo is going to be saved to google
+        if @todo.api
+          session[:todo_id] = @todo.id
+          session[:destination] = '/todos/google_create'
+          redirect_to "/auth/google_oauth2"
+          return
+        end
+        
         if !m.blank? && !params[:todo][m_id].blank?
         
           tl(m.capitalize,params[:todo][m_id],"Assigned to " + @todo._ato.name,
@@ -98,7 +107,14 @@ skip_authorize_resource :only => :show_hover
     @todo = Todo.find(params[:id])
     
     if params[:todo][:done]
-      res = (params[:todo][:done].to_s == "true" ? "done" : "undone")
+    
+             if params[:todo][:done].to_s == "true" 
+              res = "done"
+              params[:todo][:done_at] = Time.now
+             else 
+              res = "undone"
+              params[:todo][:done_at] = nil
+             end
       tl("Todo",@todo.id,'This todo has been marked ' + res,
           (@todo.topic.name rescue nil),'todo',@todo.assigned_by)
     else
@@ -128,4 +144,221 @@ skip_authorize_resource :only => :show_hover
       format.json { head :no_content }
     end
   end
+  
+  def google_create
+    # finding and setting the todo from session todo_id
+    @todo = Todo.find(session[:todo_id])
+    # preparing a json todo accepatable by google
+    todo = self.create_google_task(@todo)
+    
+    self.set_api
+    self.check_and_sync_tasklists
+        
+    @result = @client.execute(
+                     :api_method => @service.tasks.insert,
+                     :parameters => {'tasklist' => (@todo.topic.api_id || '@default')},
+                     :body => JSON.dump(todo),
+                     :headers => {'Content-Type' => 'application/json'})
+    
+    #updating the created do with the id of the google api
+    @todo.update_attribute(:api_id, @result.data.id)
+    redirect_to '/todos'
+  end  
+  
+  def start_sync
+    @todos = current_user.todos.where(api: false)
+    session[:destination] = '/todos/google_sync'
+    redirect_to "/auth/google_oauth2"
+    return
+  end
+  
+  
+  def google_sync
+  
+    self.set_api  
+    self.check_and_sync_tasklists
+    self.check_and_sync_tasks
+        
+    if @todos.blank?
+      flash[:notice] = "No todos for you to sync!"
+      redirect_to '/handle/cancan'
+    else
+      @todos.update_all(api: true)
+      flash[:notice] = "Todos Sync successful, check your google tasks!"
+      redirect_to '/todos'
+    end
+    
+  end
+  
+  def check_and_sync_tasks
+
+    topics = current_user.todos.includes(:topic).map{|i| i.topic}.uniq
+    task_json_arr = []
+    
+    topics.each do |parent_topic|
+        self.set_google_tasks(parent_topic)
+        task_ids = @google_tasks.map &:id
+        todos = parent_topic.user_todos(current_user.id)
+        
+        todos.map do |todo|
+
+          if !task_ids.include?(todo.api_id) or todo.api_id.nil?
+          
+             p "###==INSERT NEW TASK - #{todo.title} ==###"
+             
+               todo_json = self.create_google_task(todo)
+               
+               result = {:api_method => @service.tasks.insert,
+                             :parameters => {'tasklist' => (todo.topic.api_id || '@default'),
+                             "todo_id" => todo.id},
+                             :body => JSON.dump(todo_json),
+                             :headers => {'Content-Type' => 'application/json'},
+                            }
+                            
+               task_json_arr << result
+          else
+          
+             
+             
+               @google_tasks.map {|i| if i.id == todo.api_id; @g_task = i ; end; }
+
+               if todo.updated_at.to_time > @g_task["updated"].to_time
+               
+                  p "###==UPDATE OLD TASK - #{todo.title}==###"
+                   
+                   todo_json = self.create_google_task(todo,todo.api_id)
+                  
+                   result = {:api_method => @service.tasks.update,
+                             :parameters => {'tasklist' => (todo.topic.api_id || '@default'),
+                                             "todo_id" => todo.id,
+                                             "task" => todo.api_id},
+                             :body => JSON.dump(todo_json),
+                             :headers => {'Content-Type' => 'application/json'},
+                            }
+                   task_json_arr << result
+               end
+          end
+        end
+
+    end
+
+    if !task_json_arr.blank?
+        # creating a google batch object
+        batch = Google::APIClient::BatchRequest.new do |result|
+          Todo.find(result.request.parameters["todo_id"].to_i).update_attribute(:api_id, result.data.id) 
+        end
+        # add all the json items in the array(todos) as one batch request in 'batch'
+        task_json_arr.map {|i| batch.add(i)}
+        @client.execute(batch)
+    end
+  
+  end
+=begin
+  def set_result(json,method,todo)
+    {:api_method => @service.tasks.send(method),
+     :parameters => {'tasklist' => (todo.topic.api_id || '@default'),
+     "todo_id" => todo.id,
+     "task" => ""},
+     :body => JSON.dump(json),
+     :headers => {'Content-Type' => 'application/json'},
+    }
+  end
+=end
+  def check_and_sync_tasklists
+    @todotopics = TodoTopic.all
+    tasklist_json_arr = []
+  
+    self.set_google_tasklists
+    tasklist_ids = @google_tasklists.map &:id
+    
+    @todotopics.map do |topic|
+      if !tasklist_ids.include?(topic.api_id)
+        
+        p "&&&==INSERT NEW TASKLIST - #{topic.name}==&&&"
+        
+        tasklist = {
+                      "kind" => "tasks#taskList",
+                      "title" => topic.name
+                      }
+                      
+          result = {
+                     :api_method => @service.tasklists.insert,
+                     :parameters => {"topic_id" => topic.id},
+                     :body => JSON.dump(tasklist),
+                     :headers => {'Content-Type' => 'application/json'}
+                   }
+                   
+           tasklist_json_arr << result
+      end
+    end
+
+        
+    if !tasklist_json_arr.blank?
+        # creating a google batch object
+        batch = Google::APIClient::BatchRequest.new do |result|
+          TodoTopic.find(result.request.parameters["topic_id"].to_i).update_attribute(:api_id, result.data.id)
+        end
+        # add all the json items in the array(todos) as one batch request in 'batch'
+        tasklist_json_arr.map {|i| batch.add(i)}
+        @client.execute(batch)
+    end
+    
+  end
+  
+  def set_google_tasks(topic)
+  
+   result = @client.execute(
+          :api_method => @service.tasks.list,
+          :parameters => {'tasklist' => (topic.api_id rescue '@default') },
+          :headers => {'Content-Type' => 'application/json'})
+   @google_tasks = result.data.items
+
+  end  
+  
+  def set_google_tasklists
+  
+   result = @client.execute(
+          :api_method => @service.tasklists.list,
+          :headers => {'Content-Type' => 'application/json'})
+   @google_tasklists = result.data.items
+  
+  end
+  
+  def create_google_task(obj,api_id = nil)
+
+      out = {
+              "kind" => "tasks#task",
+              "title" => (obj.title rescue "Untitled"),
+              "updated" => rfc(obj.uptd),
+              "notes" => (obj.desc rescue "No description"),
+              "status" => obj.done ? "completed" : "needsAction",
+              "due" => rfc(obj.due),
+              "completed" => rfc(obj.comp),
+              "deleted" => false,
+              "hidden" => false
+            }
+      if api_id.nil? 
+        out
+      else
+        out["id"] = api_id
+        out
+      end
+  end
+  
+  def rfc(t)
+    if !t.nil?
+     DateTime.parse(t).strftime('%FT%T') + ".000Z"
+    else
+     nil
+    end
+  end
+  
+  def set_api
+  # setting the authentication token from session, set in application controller determine_redirect
+    token = session[:token]
+    @client = Google::APIClient.new
+    @client.authorization.access_token = token
+    @service = @client.discovered_api('tasks')
+  end
+  
 end

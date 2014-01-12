@@ -1,0 +1,18 @@
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.launch").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.launch").addClass("active-tab");
+  $("ul.tab-menus li.launch").text('<%= @person.name.titleize %>');
+  $("ul.tab-menus li.launch").attr('data-person_id', '<%= @person.id %>');
+  $("ul.tab-menus li.launch").trigger("click");
+});
+
+</script>
+
+<div class="tab-container">
+ <%= render 'enquiries/tabs', :stat => "PersonType",:model => "person" %> 
+    <div class="tab-content" id="launch_id">
+
+    </div>
+</div>

@@ -1,4 +1,8 @@
 class Enquiry < ActiveRecord::Base
+  validates :first_name, 
+            uniqueness: {scope: [:surname,:date_of_birth], 
+                         message: " Surname and Date of Birth already exists as another enquiry, please check!" }
+  
   audited
   mount_uploader :image, HumanImageUploader
   
@@ -23,7 +27,7 @@ class Enquiry < ActiveRecord::Base
   
   belongs_to :users, class_name: "User"
   
-  has_many :notes,foreign_key: "sub_id"
+  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'
   
   scope :inactive,includes(:status,
                            :follow_ups,
@@ -38,11 +42,13 @@ class Enquiry < ActiveRecord::Base
   if user.adm?
     includes(:status,
              :follow_ups,
-             :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
+             :country_of_origin,
+             :_ass_to,:_upd_by).where("enquiry_statuses.name != 'deactivated'")
   else
     includes(:status,
              :follow_ups,
-             :country_of_origin).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+             :country_of_origin,
+             :user).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
   end
   }
   
@@ -69,7 +75,11 @@ class Enquiry < ActiveRecord::Base
                   :image,:remote_image_url
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
- 
+  
+  def dob
+   self.date_of_birth.strftime("%d-%m-%Y") rescue "Not Captured"
+  end
+  
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
   end
@@ -95,8 +105,10 @@ class Enquiry < ActiveRecord::Base
   end
   
   def follow_up_date
-    ((self.follow_ups.map{|i| i.starts_at.strftime('%F') }).join(", ")) rescue "Unknown"
+    out = self.follow_ups.map{|i| dat(i.starts_at) }.sort
+    out.size > 1 ? out[0] + "<span title='#{out.join(", ")}' class=tooltip>...</span>".html_safe : out[0]
   end
+  
   
   def self.no_followups
     includes(:follow_ups).where( :follow_ups => {:enquiry_id => nil} )

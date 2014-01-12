@@ -1,40 +1,18 @@
-<p id="notice"><%= notice %></p>
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.launch").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.launch").addClass("active-tab");
+  $("ul.tab-menus li.launch").text('<%= @institution.name.titleize %>');
+  $("ul.tab-menus li.launch").attr('data-institution_id', '<%= @institution.id %>');
+  $("ul.tab-menus li.launch").trigger("click");
+});
 
-<p>
-  <b>Name:</b>
-  <%= @institution.name %>
-</p>
+</script>
 
-<p>
-  <b>Poc:</b>
-  <%= @institution.poc %>
-</p>
+<div class="tab-container">
+ <%= render 'enquiries/tabs', :stat => "InstitutionType",:model => "institution" %> 
+    <div class="tab-content" id="launch_id">
 
-<p>
-  <b>City:</b>
-  <%= @institution.city_id %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%= @institution.country_id %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @institution.type_id %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @institution.created_by %>
-</p>
-
-<p>
-  <b>Updated by:</b>
-  <%= @institution.updated_by %>
-</p>
-
-
-<%= link_to 'Edit', edit_institution_path(@institution) %> |
-<%= link_to 'Back', institutions_path %>
+    </div>
+</div>

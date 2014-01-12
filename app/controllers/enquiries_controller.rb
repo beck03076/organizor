@@ -11,7 +11,7 @@ class EnquiriesController < ApplicationController
     self.pre(p_type,params[:co],params[:ci])
     render :partial => params[:type], :locals => { :p => Programme.new }
   end
-  # h_new stands fpr help_new
+  # h_new stands for help_new
   def h_new
     @enquiry = Enquiry.new(assigned_to: current_user.id,
                            date_of_birth: (Date.today - 21.years),

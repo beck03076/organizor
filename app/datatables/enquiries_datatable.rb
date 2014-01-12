@@ -32,9 +32,9 @@ private
        # setting the class so that the row be green for registered enqs
        reg = (enq.registered ? "enq_reg" : "")
        # setting the class so that the row be red for todays follow up
-       fu_now_temp = enq.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       fu_now_temp = enq.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true) rescue nil
        # setting the class so that the row be red for this weeks follow up
-       fu_week_temp = enq.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
+       fu_week_temp = enq.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true) rescue nil
        
        v_fu_now = (fu_now_temp ? "fu_now" : "")
        v_fu_week = (fu_week_temp ? "fu_week" : "")
@@ -47,10 +47,13 @@ private
         like = image_tag("/images/icons/yellow.png")
        end
        
+       
+       
        temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}",
                                                       registered: reg,
                                                       fu_now: v_fu_now,
-                                                      fu_week: v_fu_week }}) + spc + like + spc
+                                                      fu_week: v_fu_week,
+                                                       }}) + spc + like + spc
        
       
        
@@ -64,7 +67,7 @@ private
           if i.is_a?(Array)
             temp << enq.send(i[1].to_s).try(i[2].to_s)
           else
-            temp << enq.send(i.to_s)
+            temp << enq.send(i.to_s).to_s
           end
         }
        

@@ -10,4 +10,11 @@ class Country < ActiveRecord::Base
   has_one :registration
   
   accepts_nested_attributes_for :preferred_countries
+  
+  has_many :prohibited_countries
+  has_many :contracts, :through => :prohibited_countries
+  
+  belongs_to :region
+  
+  has_one :currency
 end

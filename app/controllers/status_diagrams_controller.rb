@@ -1,0 +1,3 @@
+class StatusDiagramsController < ApplicationController
+
+end

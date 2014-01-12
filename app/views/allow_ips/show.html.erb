@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>From:</b>
+  <%= @allow_ip.from %>
+</p>
+
+<p>
+  <b>To:</b>
+  <%= @allow_ip.to %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @allow_ip.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_allow_ip_path(@allow_ip) %> |
+<%= link_to 'Back', allow_ips_path %>

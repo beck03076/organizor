@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @contract_doc_category.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @contract_doc_category.desc %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @contract_doc_category.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @contract_doc_category.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_doc_category_path(@contract_doc_category) %> |
+<%= link_to 'Back', contract_doc_categories_path %>

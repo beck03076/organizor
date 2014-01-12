@@ -23,7 +23,7 @@ $(function(){
                 <tr >
                     <td><%= t.topic.try(:name) %></td>
                     <td><%= t.desc %></td>
-                    <td><%= t.status.try(:name) %></td>
+                    <td><%= t.status %></td>
                     <td><%= t.duedate %></td>
                     <td><%= t.priority %></td>
                     <td><%= t.ato %></td>
@@ -54,7 +54,7 @@ $(function(){
 
                         <%= hidden_field_tag "#{g.object_name}[model]",obj_name.downcase %>
                         <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
-                        <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
+                        <%= fbox(g,"title","text_field",nil) %>
                         <%= fbox(g,[:assigned_to, 
                                  User.order(:first_name), 
                                  :id, 
@@ -69,10 +69,13 @@ $(function(){
                         </div> 
                         <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
                         
+                        <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add To Google?") %>
+                        
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                     </div>
                 </div>
-
+    <br/>
+    <br/>
     <%= g.submit "Create",{:class => "btnp fl"} %>
     <div class="cl"></div>
 <% end %>

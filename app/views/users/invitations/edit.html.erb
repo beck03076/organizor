@@ -31,26 +31,26 @@ $('#fade').cycle();
           <table cellpadding="5" cellspacing="5">
           <tr>
           <td align="left" valign="bottom" class="tw" width="150"><%= f.label :first_name %></td>
-          <td align="left" valign="bottom" class="tw"><%= f.text_field :first_name %></td>
+          <td align="left" valign="bottom" class="tw"><%= f.text_field :first_name, {autocomplete: "off"}  %></td>
           </tr>
           <tr>
           <td align="left" valign="bottom" class="tw" ><%= f.label :surname %></td>
           <td align="left" valign="bottom" class="tw">
-          <%= f.text_field :surname %></td>
+          <%= f.text_field :surname, {autocomplete: "off"} %></td>
           </tr>
           
           <tr>
           <td align="left" valign="bottom" class="tw" >
           <%= f.label :password %></td>
           <td align="left" valign="bottom" class="tw">
-          <%= f.password_field :password %></td>
+          <%= f.password_field :password, {autocomplete: "off"} %></td>
           </tr>
           
           <tr>
           <td align="left" valign="bottom" class="tw" >
           <%= f.label :retype_password %></td>
           <td align="left" valign="bottom" class="tw">
-          <%= f.password_field :password_confirmation %></td>
+          <%= f.password_field :password_confirmation, {autocomplete: "off"} %></td>
           </tr>
           <tr>
           <td align="left" valign="bottom" class="tw" >

@@ -17,12 +17,7 @@ $(function(){
 </script>
 <br/>
 
-    <div class="fields">
-     <% @p_types.each do |i| %>
-          <%= p.radio_button :type_id,i.id,{:class => "programme_type",:lang => i.name,
-                                            :onclick => "p_type_click(this,this.lang);" } %>
-          &nbsp;<%= p.label i.name %>&nbsp;&nbsp;&nbsp;&nbsp;
-        <% end %>
+<div class="fields">
         
     <div id="object_name" data-obj='<%= parent %>'>
     </div><br/>
@@ -36,92 +31,96 @@ $(function(){
        <% p_type_show = (p.object.programme_type.name == "language_school" rescue nil) ? "display:none;" : "display:block;" %>
 
     <div class="cols">
-    <div class="col6">
-    <div class="frbox">
-        <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
-        <%= label_tag :country %>
-        <%= p.collection_select(:country_id, 
-                                good_country, 
-                                :id, 
-                                :name,
-                                {:prompt => "--Country--"},
-                                {:class => "countries_select",
-                                 :onchange => "prepareSelect(this,
-                                               '_programmes_attributes_index_city_id',
-                                               '/get_cities/');
-                                               prepareSelect(this,
-                                               '_programmes_attributes_index_institution_id',
-                                               '/get_institutions/country/');"}) %>
-    </div>
-    <div class="frbox">
-       <%= label_tag :city %>
-        <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
-        <% one = p.object.city_id %>
-        <% two = one.blank? ? [] : City.where(id: one) %>
-        <%= p.collection_select(:city_id, 
-                                two, 
-                                :id, 
-                                :name,
-                                {:prompt => "--City--"},
-                                {:class => "cities_select",
-                                 :onchange => "prepareSelect(this,
-                                               '_programmes_attributes_index_institution_id',
-                                               '/get_institutions/city/');"}) %> &nbsp;&nbsp;
-       
-    </div>      
-    <div class="frbox">
-         <%= p.label :school %>
-         <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
-        <% four = p.object.institution_id %>
-        <% five = four.blank? ? [] : Institution.where(id: four) %>
-        <%= p.collection_select(:institution_id, 
-                                five, 
-                                :id, 
-                                :name,
-                                {:prompt => "--Institution--"},
-                                {:class => "institutions_select"}) %>
-                                
-    </div>
- 
+        <div class="col6">
+            <div class="frbox">
+                <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
+                <%= label_tag :country %>
+                <%= p.collection_select(:country_id, 
+                                        good_country, 
+                                        :id, 
+                                        :name,
+                                        {:prompt => "--Country--"},
+                                        {:class => "countries_select",
+                                         :onchange => "prepareSelect(this,
+                                                       '_programmes_attributes_index_city_id',
+                                                       '/get_cities/');"}) %>
+            </div>
+            <div class="frbox">
+               <%= label_tag :city %>
+                <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
+                <% one = p.object.city_id %>
+                <% two = one.blank? ? [] : City.where(id: one) %>
+                <%= p.collection_select(:city_id, 
+                                        two, 
+                                        :id, 
+                                        :name,
+                                        {:prompt => "--City--"},
+                                        {:class => "cities_select",
+                                         :onchange => "setInsTypeData(this,'.institution_type_select');
+                                         $('.institution_type_select').fadeOut(1000); 
+                                         $('.institution_type_select').fadeIn(1000); "}) %> &nbsp;&nbsp;
+               
+            </div>      
+            
+            <div class="frbox">
+                 <%= p.label :institution_type %>
+                 <!-- Newly added institution type replaced programme type  -->
 
-       <div class="frbox">
-        <%= label_tag :start_date,nil,{class: 'start_date'} %>
-          <%= p.text_field :start_date,{class: 'dateField  caltf'} %>
+                <%= p.collection_select(:type_id, 
+                                        InstitutionType.edu, 
+                                        :id, 
+                                        :name,
+                                        {:prompt => "--Institution Type--"},
+                                        {class: "institution_type_select",
+                                         onchange: "ins_type_change(this);
+                                                    changeInsType(this,
+                                                    '_programmes_attributes_index_institution_id');" }) %>
+                                        
+            </div>
+            
+            <div class="frbox">
+                 <%= p.label :school %>
+                 <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
+                <% four = p.object.institution_id %>
+                <% five = four.blank? ? [] : Institution.where(id: four) %>
+                <%= p.collection_select(:institution_id, 
+                                        five, 
+                                        :id, 
+                                        :name,
+                                        {:prompt => "--Institution--"},
+                                        {:class => "institutions_select",
+                                         onchange: "validateRecruit(this);"}) %>
+                                        
+            </div>
         </div>
-        
-          
-       <div class="cl"></div><br/>
-         
-</div>
-<div class="col6">
-        <div class="course_subject_text_div frbox" style='<%= sty[0] %>'>
-            <%= label_tag :course_subject %>
-            <%= p.text_field :course_subject_text %>
-       </div>
-        <div class="frbox" style="<%= p_type_show %>">
-       <%= go_create(p,"course_level","level_id","name",'') %>
-      </div>
-      <div class="frbox">
-       <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
-       </div>
-        <div class="end_date_div frbox">
-              <%= label_tag :end_date %>
-              <%= p.text_field :end_date,{class: 'dateField caltf '} %>
-        </div>
-        <div class="frbox">
-        <%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
-        </div>
-        
-        
-        
-        <div class="ins_ref_no frbox" style='<%= sty[3] %>'>
-             <%= fs(p,"ins_ref_no","text_field") %>
+        <div class="col6">
+              <div class="frbox">
+                <%= label_tag :start_date,nil,{class: 'start_date'} %>
+                  <%= p.text_field :start_date,{class: 'dateField  caltf'} %>
+              </div>
+              <div class="end_date_div frbox">
+                      <%= label_tag :end_date %>
+                      <%= p.text_field :end_date,{class: 'dateField caltf '} %>
+              </div>
+              <div class="course_subject_text_div frbox" style='<%= sty[0] %>'>
+                    <%= label_tag :course_subject %>
+                    <%= p.text_field :course_subject_text %>
+              </div>
+              <div class="frbox" style="<%= p_type_show %>">
+               <%= go_create(p,"course_level","level_id","name",'') %>
+              </div>
+              <div class="frbox">
+               <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
+              </div>
+              <div class="frbox">
+                <%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
+              </div>
+              <div class="ins_ref_no frbox" style='<%= sty[3] %>'>
+                     <%= fs(p,"ins_ref_no","text_field") %>
+              </div>
         </div>
     </div>
-  
-     
 </div>
-</div>
-<br/>
+
 
 

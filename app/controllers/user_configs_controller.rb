@@ -21,6 +21,16 @@ class UserConfigsController < ApplicationController
      :created_by => [:_cre_by,:first_name],
      :updated_by => [:_upd_by,:first_name],
      :status_id => [:status,:name]}
+
+    @def_ins_cols = {type_id: [:type,:name],
+                     group_id: [:group,:name],
+                     country_id: [:country, :name],
+                     city_id: [:city,:name]}
+                     
+    @def_per_cols =  {type_id: [:type,:name],
+                     institution_id: [:institution,:name],
+                     country_id: [:country, :name],
+                     city_id: [:city,:name]}
   end
   
   # GET /user_configs
@@ -82,7 +92,7 @@ class UserConfigsController < ApplicationController
   def update
     @user_config = UserConfig.find(params[:id])
     
-    %w(reg enq).each do |i|
+    %w(reg enq ins per).each do |i|
       var = i + "_cols"
       inst = eval("@def_" + i + "_cols")
       par = params[:user_config][var.to_sym]

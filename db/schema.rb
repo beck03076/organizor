@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115181826) do
+ActiveRecord::Schema.define(:version => 20140109083508) do
+
+  create_table "allow_ips", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "allowed_ips", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "application_statuses", :force => true do |t|
     t.string   "name"
@@ -43,6 +58,25 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
   add_index "audits", ["created_at"], :name => "index_audits_on_created_at"
   add_index "audits", ["user_id", "user_type"], :name => "user_index"
 
+  create_table "branches", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "city_id"
+    t.integer  "country_id"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_post_code"
+    t.string   "image"
+    t.integer  "managed_by"
+  end
+
   create_table "cities", :force => true do |t|
     t.string   "country_code"
     t.string   "name"
@@ -54,6 +88,28 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "updated_by"
   end
 
+  create_table "commission_statuses", :force => true do |t|
+    t.string   "name"
+    t.integer  "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "commissions", :force => true do |t|
+    t.decimal  "paid",          :precision => 8, :scale => 2
+    t.date     "date_received"
+    t.decimal  "remaining",     :precision => 8, :scale => 2
+    t.integer  "status_id"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "payment_id"
+    t.string   "currency"
+  end
+
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.string   "desc"
@@ -61,6 +117,36 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "contract_doc_categories", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "contracts", :force => true do |t|
+    t.string   "name"
+    t.date     "initiate_date"
+    t.string   "current_contract_start_date"
+    t.string   "current_contract_end_date"
+    t.date     "renewal_reminder_date"
+    t.string   "commission_rate"
+    t.string   "invoicing_deadline"
+    t.string   "partners_target"
+    t.string   "internal_target"
+    t.string   "recruitment_territories"
+    t.text     "desc"
+    t.integer  "institution_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.boolean  "commission_specified"
+    t.boolean  "territory_specified"
   end
 
   create_table "countries", :force => true do |t|
@@ -76,6 +162,18 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at",      :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.integer  "region_id"
+  end
+
+  create_table "countries_currencies", :primary_key => "id_countries", :force => true do |t|
+    t.string  "name",             :limit => 200
+    t.string  "iso_alpha2",       :limit => 2
+    t.string  "iso_alpha3",       :limit => 3
+    t.integer "iso_numeric"
+    t.string  "currency_code",    :limit => 3
+    t.string  "currency_name",    :limit => 32
+    t.string  "currrency_symbol", :limit => 3
+    t.string  "flag",             :limit => 6
   end
 
   create_table "course_levels", :force => true do |t|
@@ -96,6 +194,19 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "currencies", :force => true do |t|
+    t.string   "iso_alpha2"
+    t.string   "iso_alpha3"
+    t.integer  "iso_numeric"
+    t.string   "code"
+    t.string   "name"
+    t.string   "symbol"
+    t.string   "country_name"
+    t.integer  "country_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "doc_categories", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -110,8 +221,10 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.string   "path"
     t.integer  "category_id"
     t.integer  "registration_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "contract_id"
+    t.integer  "contract_category_id"
   end
 
   create_table "email_templates", :force => true do |t|
@@ -150,6 +263,13 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "enquiry_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "emails_institutions", :force => true do |t|
+    t.integer  "email_id"
+    t.integer  "institution_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "emails_registrations", :force => true do |t|
@@ -265,6 +385,7 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "assigned_to"
     t.integer  "assigned_by"
     t.integer  "registration_id"
+    t.integer  "institution_id"
   end
 
   create_table "images", :force => true do |t|
@@ -274,16 +395,47 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "institution_groups", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "institution_types", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "educational"
+  end
+
   create_table "institutions", :force => true do |t|
     t.string   "name"
     t.integer  "type_id"
     t.integer  "city_id"
     t.integer  "country_id"
-    t.integer  "poc"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "website"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_post_code"
+    t.string   "image"
+    t.text     "desc"
+    t.integer  "person_id"
+    t.integer  "group_id"
+    t.integer  "assigned_to"
+    t.integer  "assigned_by"
   end
 
   create_table "notes", :force => true do |t|
@@ -294,6 +446,50 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "payments", :force => true do |t|
+    t.float    "tuition_fee"
+    t.string   "commission"
+    t.float    "amount"
+    t.integer  "programme_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "currency"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "first_name"
+    t.string   "surname"
+    t.string   "mobile"
+    t.string   "email"
+    t.string   "work_phone"
+    t.string   "home_phone"
+    t.date     "date_of_birth"
+    t.string   "gender"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.integer  "city_id"
+    t.integer  "country_id"
+    t.string   "address_post_code"
+    t.string   "image"
+    t.string   "skype"
+    t.string   "facebook"
+    t.string   "linkedin"
+    t.string   "twitter"
+    t.string   "gplus"
+    t.string   "blogger"
+    t.string   "website"
+    t.text     "desc"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "institution_id"
+    t.integer  "type_id"
+    t.integer  "assigned_to"
+    t.integer  "assigned_by"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.string   "job_title"
   end
 
   create_table "permissions", :force => true do |t|
@@ -319,6 +515,29 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "permission_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "permitted_countries", :force => true do |t|
+    t.integer  "country_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "permitted_regions", :force => true do |t|
+    t.integer  "region_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "person_types", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "preferred_countries", :force => true do |t|
@@ -366,6 +585,20 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.string   "course_subject_text"
   end
 
+  create_table "prohibited_countries", :force => true do |t|
+    t.integer  "country_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "prohibited_regions", :force => true do |t|
+    t.integer  "region_id"
+    t.integer  "contract_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "qualifications", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -391,6 +624,13 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "registration_id"
+  end
+
+  create_table "regions", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "registrations", :force => true do |t|
@@ -472,6 +712,14 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at",           :null => false
   end
 
+  create_table "status_diagrams", :force => true do |t|
+    t.integer  "status_id"
+    t.integer  "user_id"
+    t.integer  "programme_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "statuses", :force => true do |t|
     t.string   "name"
     t.text     "desc"
@@ -485,6 +733,14 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "contact_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "students", :force => true do |t|
+    t.string   "name"
+    t.integer  "creator"
+    t.integer  "updator"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -531,6 +787,7 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.text     "api_id"
   end
 
   create_table "todos", :force => true do |t|
@@ -548,6 +805,11 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "assigned_by"
     t.integer  "registration_id"
     t.boolean  "done",            :default => false
+    t.integer  "institution_id"
+    t.boolean  "api"
+    t.datetime "done_at"
+    t.string   "title"
+    t.text     "api_id"
   end
 
   create_table "user_configs", :force => true do |t|
@@ -570,6 +832,11 @@ ActiveRecord::Schema.define(:version => 20131115181826) do
     t.integer  "def_f_u_ass_to"
     t.string   "def_enq_search_col"
     t.string   "def_reg_search_col"
+    t.string   "reg_view"
+    t.string   "def_ins_search_col"
+    t.text     "ins_cols"
+    t.string   "def_per_search_col"
+    t.text     "per_cols"
   end
 
   create_table "users", :force => true do |t|

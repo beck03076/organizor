@@ -5,9 +5,12 @@ class Programme < ActiveRecord::Base
   belongs_to :country
   belongs_to :city
   belongs_to :institution
-  belongs_to :programme_type, :foreign_key => 'type_id'
+  belongs_to :institution_type, :foreign_key => 'type_id'
   belongs_to :course_subject, :foreign_key => 'subject_id'
   belongs_to :application_status,:foreign_key => 'app_status_id'
+  has_many :status_diagrams
+  
+  has_one :payment
   
 
   

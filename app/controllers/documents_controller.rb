@@ -28,7 +28,12 @@ class DocumentsController < ApplicationController
          d = Document.where(id: params[:doc_id])
          d.map &:remove_path! # deleting files
          d.delete_all # deleting records
-         redirect_to "/registrations/"+params[:reg_id].to_s
+         if !params[:reg_id].nil?
+           redirect_to "/registrations/"+params[:reg_id].to_s
+         elsif !params[:contract_id].nil?
+           redirect_to "/institutions/"+params[:contract_id].to_s
+         end
+
          
      elsif params[:doc_download]
      
@@ -38,7 +43,12 @@ class DocumentsController < ApplicationController
          temp.pop
          reg_path = temp.join "/"
          
-         final_zip = "#{first_doc.registration.ref_no}_download_selected.zip"
+         if !first_doc.registration_id.nil?
+           final_zip = "#{first_doc.registration.ref_no}_download_selected.zip"
+         elsif !first_doc.contract_id.nil?
+           final_zip = "#{first_doc.contract_id}_download_selected.zip"
+         end
+         
          zip_file_path = "#{Rails.root}/public#{reg_path}/#{final_zip}"
          
          # see if the file exists already, and if it does, delete it.
@@ -51,7 +61,7 @@ class DocumentsController < ApplicationController
            d.each do |attachment|
            #document_file_name shd contain filename 
            #with extension(.jpg, .csv etc) and url is the path of the document.
-             zipfile.add(attachment.name, "#{Rails.root}/public/" + attachment.path.to_s) 
+             zipfile.add(attachment.name, "#{Rails.root}/public" + attachment.path.to_s) 
            end
          } 
          

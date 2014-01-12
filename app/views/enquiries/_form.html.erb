@@ -2,15 +2,13 @@
   <% if @enquiry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@enquiry.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
-
       <ul>
       <% @enquiry.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <%= msg %>
       <% end %>
       </ul>
     </div>
   <% end %>
-
                    
                    
   <%= render 'enquiry_information', :f => f %>

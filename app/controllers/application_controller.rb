@@ -1,5 +1,7 @@
+require "ipaddr"
+
  class ApplicationController < ActionController::Base
-  before_filter :authenticate_user!, :set_current_user
+  before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
   protect_from_forgery
   
   layout :layout
@@ -15,6 +17,49 @@
       format.js { redirect_to '/handle/cancan' }
 #      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
+  end
+  
+  def determine_redirect
+   p "==== determining redirect====="
+   #What data comes back from OmniAuth?     
+   @auth = request.env["omniauth.auth"]
+   #Use the token from the data to request a list of calendars
+   session[:token] = @auth["credentials"]["token"]
+      
+    redirect_to session[:destination]
+  end
+  
+  def validate_recruit
+    set_url_params
+    
+    contract = Institution.find(@ins_id).contracts.where(territory_specified: true).first
+    
+    pro_coun = contract.all_prohibited_countries.map &:id
+    pro_reg = contract.all_prohibited_regions.map &:id
+    pro_regions_coun = Country.includes(:region).where(region_id: pro_reg).map &:id
+    
+    pro = pro_coun + pro_regions_coun
+    
+    per_coun = contract.all_permitted_countries.map &:id
+    per_reg = contract.all_permitted_regions.map &:id
+    per_regions_coun = Country.includes(:region).where(region_id: per_reg).map &:id
+    
+    per = per_coun + per_regions_coun
+    
+    if pro.include?(@co_id.to_i)
+      out = "This students country of origin is a prohibited territory as per this institutions contract"
+    else    
+      out = "Not a prohibited territory!"
+    end
+    
+    if !per.empty? && per.include?(@co_id.to_i)
+      out = "Permitted territory!"
+    else
+      out = "This students country of origin is not a permitted territory as per this institutions contract"
+    end
+    
+    render text: out
+  
   end
   
   def group_assign
@@ -83,6 +128,27 @@
   
   def set_current_user
       User.current = current_user
+  end
+  
+  def ban_ip
+    if (    !current_user.adm? rescue nil)
+        result = []
+    
+        AllowIp.all.each do |o|
+          t = o.to
+          f = o.from
+          if (!t.nil? && !f.nil?)
+            low = IPAddr.new(f).to_i
+            high = IPAddr.new(t).to_i
+            ip = IPAddr.new(request.remote_ip).to_i
+            result << ((low..high)===ip)
+          end
+        end
+
+        if !result.include?(true)
+          redirect_to banned_path
+        end
+    end
   end
 
   def layout

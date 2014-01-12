@@ -1,0 +1,3 @@
+ $("#contract_note_" + "<%= @contract.id %>").html("<%= escape_javascript(render :partial => 'notes/note', :locals => {:sub => @contract}) %>");
+ $(".app_note").val("");
+

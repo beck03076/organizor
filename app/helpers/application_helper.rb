@@ -46,7 +46,7 @@ module ApplicationHelper
 
   end
   
-  def go_create(obj,obj_name,id,name,disp = "none",box_cl = "frbox")
+  def go_create(obj,obj_name,id,name,disp = "none",box_cl = "frbox",tabindex = nil)
    
    prompt = "--" + obj_name.titleize + "--"
    model = obj_name.camelize.constantize
@@ -69,7 +69,8 @@ module ApplicationHelper
                                     :id,
                                     name.to_sym,
                                     {:prompt => prompt },
-                                    {:class => sel_cl })
+                                    {:class => sel_cl,
+                                     :tabindex => tabindex })
       if (can? :create, model)
 
           html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
@@ -120,5 +121,16 @@ module ApplicationHelper
     obj.send(asso1).includes(asso2.to_sym).map{|i| i.send(asso2).try(var)}.join(", ") || default
   end
   
+  def tym(a)
+    a.strftime("%a, %F %R %p") rescue "Unknown"
+  end
+  
+  def dat(a)
+    a.strftime("%d-%m-%Y") rescue "Unknown"
+  end
+  
+  def da_ty(a)
+    a.strftime("%d-%m-%Y %H:%M") rescue "Unknown"
+  end
 
 end

@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @contract.name %>
+</p>
+
+<p>
+  <b>Initiate date:</b>
+  <%= @contract.initiate_date %>
+</p>
+
+<p>
+  <b>Current contract start date:</b>
+  <%= @contract.current_contract_start_date %>
+</p>
+
+<p>
+  <b>Current contract end date:</b>
+  <%= @contract.current_contract_end_date %>
+</p>
+
+<p>
+  <b>Renewal reminder date:</b>
+  <%= @contract.renewal_reminder_date %>
+</p>
+
+<p>
+  <b>Commission rate:</b>
+  <%= @contract.commission_rate %>
+</p>
+
+<p>
+  <b>Invoicing deadline:</b>
+  <%= @contract.invoicing_deadline %>
+</p>
+
+<p>
+  <b>Partners target:</b>
+  <%= @contract.partners_target %>
+</p>
+
+<p>
+  <b>Internal target:</b>
+  <%= @contract.internal_target %>
+</p>
+
+<p>
+  <b>Recruitment territories:</b>
+  <%= @contract.recruitment_territories %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @contract.desc %>
+</p>
+
+<p>
+  <b>Institution:</b>
+  <%= @contract.institution_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

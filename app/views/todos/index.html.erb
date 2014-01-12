@@ -8,7 +8,9 @@
           <li>
           <img src="/images/icons/org_todos.png" width="25"/>
               <h2>Your Todo List
-              </h2>
+              </h2><br/>
+              <%= link_to "Sync my Todos with Google Tasks", '/todos/start_sync' %>
+              
               <% if current_user.adm? %>
                   &nbsp;&nbsp;
                   Assigned To: 
@@ -29,7 +31,7 @@
           </li>
           <br/>
           <% topics = TodoTopic.order(:name).map{|i| [i.id,i.name]} %>
-          <% stats = TodoStatus.order(:name).map{|i| [i.id,i.name]} %>
+
           <% @todos.each do |i| %>
            
                 <% edi = i.assigned_by == current_user.id %>
@@ -57,15 +59,6 @@
                           type: "textarea" %> 
                     </small>
                     &nbsp;
-                    
-                    &nbsp;
-                    <small>
-                     Status: <%= best_in_place_if (edi),i,
-                         :status_id,
-                         :type => :select, 
-                         :collection => stats,
-                         :display_as => "tit" %>
-                    </small>
                     <br/>
 
                     <small class="brt0">
@@ -103,7 +96,9 @@
           <div class="cols">
             <div class="col6">
               <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
-              <%= go_create(g,"todo_status","status_id","name",1,"fbox") %> 
+              
+              <%= fbox(g,"title","text_field",nil) %>
+              
               <%= fbox(g,[:assigned_to, 
                          User.order(:first_name), 
                          :id, 
@@ -116,6 +111,9 @@
                                 options_for_select(["High","Medium","Low"])) %>
               </div> 
               <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
+              
+              <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add To Google?") %>
+              
               <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
             </div>
           </div>

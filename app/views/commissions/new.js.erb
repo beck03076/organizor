@@ -1,0 +1,15 @@
+ $("#new_commission").html("<%= escape_javascript(render :partial => 'commissions/new') %>");
+
+$(".dateField").datepicker({
+    inline: true,
+    changeMonth: true, 
+    changeYear: true, 
+    dateFormat: "yy-mm-dd",
+    yearRange: '1980:2050'
+});
+
+ 
+$('#new_commission').bPopup();
+
+
+

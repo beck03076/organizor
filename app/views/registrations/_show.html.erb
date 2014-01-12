@@ -3,7 +3,14 @@ $(function(){
 
   activeMM("registrationsMM");
   setColorsFromSession();
-  $('.best_in_place').best_in_place();
+  $('.best_in_place').best_in_place();  
+
+  if(window.location.hash) {
+      var li = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+      if (li == "payment"){
+        $('li#payment').trigger("click");
+      }
+  } 
 
 });
 
@@ -175,7 +182,7 @@ $(function(){
     </div>
     <br/>
 
-        <% tabs_arr = %w(Course Details Document) %>
+        <% tabs_arr = %w(Course Details Document Payment) %>
         <div class="newtab-container">
             <ul class="newtab-menus">
             <% tabs_arr.each do |i|  %>

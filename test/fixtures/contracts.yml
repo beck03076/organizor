@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  initiate_date: 2013-12-03
+  current_contract_start_date: MyString
+  current_contract_end_date: MyString
+  renewal_reminder_date: 2013-12-03
+  commission_rate: MyString
+  invoicing_deadline: MyString
+  partners_target: MyString
+  internal_target: MyString
+  recruitment_territories: MyString
+  desc: MyText
+  institution_id: 1
+
+two:
+  name: MyString
+  initiate_date: 2013-12-03
+  current_contract_start_date: MyString
+  current_contract_end_date: MyString
+  renewal_reminder_date: 2013-12-03
+  commission_rate: MyString
+  invoicing_deadline: MyString
+  partners_target: MyString
+  internal_target: MyString
+  recruitment_territories: MyString
+  desc: MyText
+  institution_id: 1

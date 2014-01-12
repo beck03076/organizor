@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     else
         @user = User.includes(:permissions).find(params[:id])
     end    
-    authorize! :read, @user, id: current_user.id
+   # authorize! :read, @user, id: current_user.id
 
     respond_to do |format|
       format.html # show.html.erb

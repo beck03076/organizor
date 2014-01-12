@@ -1,0 +1,3 @@
+ $("#<%= @obj_name %>_note_<%= @obj.id %>").html("<%= escape_javascript(render :partial => 'notes/note', :locals => { :sub => @obj }) %>");
+ $(".app_note").val("");
+

@@ -23,7 +23,13 @@
 //= require fullcalendar
 
 
+
 $(function(){
+
+      dom_tokens('.token_coun_pro',"/srch_countries.json");
+      dom_tokens('.token_coun_per',"/srch_countries.json");
+      dom_tokens('.token_reg_pro',"/srch_regions.json");
+      dom_tokens('.token_reg_per',"/srch_regions.json");
     
     $(".dateField").datepicker({
     inline: true,
@@ -194,32 +200,33 @@ function regAppStatus(obj,div1){
 }
 
 // Click on any of the radio buttons of programme_type(language_school or univeresity)
-function p_type_click(obj,lang){
+function ins_type_change(obj){
+    lang = obj.options[obj.selectedIndex].text;
     //Fetching the object_name either enquiry or registration
     var o = $('#object_name').data('obj');
     //The parent div that contains the whole programme form
-    i = $(obj).parent();
+    i = $(obj).parent().parent().parent();
     // Setting the value of the countries_select to --Country-- when the radio button of programme_type is switched
-    i.find('.countries_select').val($(".countries_select option:first").val());
+    //i.find('.countries_select').val($(".countries_select option:first").val());
     // Emptying the cities_select and institutions_select when the radio button of programme_type is switched
-    empPromptSelect(i,'.cities_select','--City--');
-    empPromptSelect(i,'.institutions_select','--Institution--');    
+    //empPromptSelect(i,'.cities_select','--City--');
+    //empPromptSelect(i,'.institutions_select','--Institution--');    
     // Based on the object_name and programme_type, the divs are shown and hidden
     if( o == "registration"){
       i.find(".ins_ref_no").show();
       i.find(".application_status_div").show();
     }
-    if(lang == "language_school" && o == "enquiry"){
+    if(lang == "Language School" && o == "enquiry"){
         i.find(".course_level_div").hide();
-    }else if(lang == "university" && o == "enquiry") {
+    }else if(lang == "University" && o == "enquiry") {
         i.find(".course_level_div").show();
-    }else if(lang == "language_school" && o == "registration") {
+    }else if(lang == "Language School" && o == "registration") {
         i.find(".course_subject_div").show();
         i.find(".course_level_div").hide();
         i.find(".course_subject_text_div").hide();
         i.find(".end_date_div").show();
         i.find(".start_date").text('Start date');
-    }else if(lang == "university" && o == "registration") {
+    }else if(lang == "University" && o == "registration") {
         i.find(".course_subject_div").hide();
         i.find(".course_level_div").show();
         i.find(".course_subject_text_div").show();
@@ -244,6 +251,7 @@ function submit_link(obj,tog,obj_name){
                var sel = '.' + obj_name + '_select'
                obj_name = (obj_name == 'todo_status') ? 'todo_statuse' : obj_name
                obj_name = (obj_name == 'doc_category') ? 'doc_categorie' : obj_name
+                obj_name = (obj_name == 'contract_doc_category') ? 'contract_doc_categorie' : obj_name
                obj_name = (obj_name == 'application_status') ? 'application_statuse' : obj_name
            $.ajax({
                 url: '/'+obj_name+'s', //sumbits it to the given url of the form
@@ -278,21 +286,8 @@ function prepareSelect(sourObj,destVar,hit)
         else{
             var urlTo = hit + itemId + '/' + pTypeId;
         }
-    
-              if (itemId.length != 0){
-                $.ajax({
-                    url: urlTo,
-                    type: 'GET',
-                    dataType: "JSON",
-                    success: function( json ) {
-                        $(destDiv).empty();
-                        $(destDiv).append('<option value= selected="selected">--Choose--</option>');
-                        $.each(json, function(i,value) {                          
-                          $(destDiv).append($('<option>').text(value.name).attr('value', value.id));
-                        });
-                    }
-                });
-              }
+    selectUpdate(itemId,urlTo,destDiv);
+
 }
 
 //list is 1 so the previous actions table for the enquirie will be returned in this partial
@@ -456,10 +451,12 @@ function dataTableStart(table,filterValue,cols,cols_size)
         oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
     });
     
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:nth-child(2))', function () {
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:nth-child(2),:last-child)', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
+   
+   
 
 }
 
@@ -501,6 +498,49 @@ function registrationTabSwitch(obj){
 }
 
 
+
+// institutions tabs switching
+function institutionTabSwitch(obj){
+  TabSwitch(obj,'institution','institutions');
+}
+
+// people tabs switching
+function personTabSwitch(obj){
+  TabSwitch(obj,'person','people');
+}
+
+// generic tabs switching
+function TabSwitch(obj,model,model_pl){
+    
+    var cond = $(obj).data("cond");
+    var partial = $(obj).data("partial");
+    // (eg) model = institution
+    var institution_id = $(obj).data(model + "_id");
+    var note = $(obj).data("note");
+    var lang = $(obj).attr("lang");
+    
+    // (eg) model_pl = institutions
+    url = '/' + model_pl + '/tab/' + cond + '/' + partial + '/'
+    
+    if (typeof institution_id !== "undefined"){ url = url + institution_id; }
+    
+    $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
+   
+    $.get(url,function(table){
+     
+      var $container = $('#'+lang).html(table);
+      var $dateField = $('.dateField', $container);
+      
+      if ($dateField.length > 0) {
+        $dateField.datepicker({
+            inline: true,
+            changeMonth: true, 
+            changeYear: true, 
+            dateFormat: "yy-mm-dd",
+            yearRange: '1980:2050' });
+        }
+    });
+}
 
 function toggleAllCheck(obj,tableId){
     var checkedStatus = obj.checked;
@@ -609,5 +649,138 @@ function showHide(one,two){
 function resetDataTable(){
   $('.dataTables_filter input').val('').keyup();$('#mySelect').val($('#mySelect option:first').val()).trigger('change');$('#followUpSelect').val($('#followUpSelect option:first').val()).trigger('change');
 }
+
+function simplePrepareSelect(sourObj,destSel,hit)
+{
+  var itemId = sourObj.options[sourObj.selectedIndex].value;
+  var urlTo = hit + itemId + "/simple";
+  selectUpdate(itemId,urlTo,destSel);
+}
+
+function prepSelect(sourObj,destSel,hit)
+{
+  var itemId = sourObj.options[sourObj.selectedIndex].value;
+  var urlTo = hit + itemId;
+  selectUpdate(itemId,urlTo,destSel);
+}
+
+function showInstitution(obj){
+   if (obj.options[obj.selectedIndex].text == "Institution"){
+    $('.institution').fadeIn(1000);
+   }else{
+    $('.institution').fadeOut(1000);
+   }
+}
+
+
+//Creates the multiple areas text box
+function tokens(textFieldId,url){
+
+   $(textFieldId).tokenInput(url, {
+    propertyToSearch: "name",
+    crossDomain: false,
+    theme: "facebook",
+//    onAdd: updateNumbers,
+//    onDelete: updateNumbers,
+    prePopulate: $(textFieldId).data("pre"),
+//    tokenDelimiter: "-",
+    noResultsText: "Organizor found no results!",
+    searchingText: "Organizor is searching...",
+    preventDuplicates: true,
+    resultsLimit:10,
+//    tokenLimit:3,
+    hintText: "Start searching..."
+  });
+}
+
+function dom_tokens(cl,url){
+  $(cl).each(function(){
+        tokens('#' + this.id,url);
+  });
+}
+
+function validateRecruit(obj){
+  var country_id = $('#enquiry_country_id').val();
+  var institution_id = obj.options[obj.selectedIndex].value;
+  url= '/validate_recruit/' + country_id + '/' + institution_id
+  $.get(url,function(out){
+    alert(out);
+  });
+}
+
+function selectUpdate(itemId,urlTo,destSel){
+  if (itemId.length != 0){
+    $(destSel).fadeOut(1000);
+                $.ajax({
+                    url: urlTo,
+                    type: 'GET',
+                    dataType: "JSON",
+                    success: function( json ) {
+                        $(destSel).empty();
+                        $(destSel).append('<option value= selected="selected">--Choose--</option>');
+                        $.each(json, function(i,value) {                          
+                          $(destSel).append($('<option>').text(value.name).attr('value', value.id));
+                        });
+                    }
+                });
+    $(destSel).fadeIn(1000); 
+  }
+}
+
+function setInsTypeData(obj,dest){
+  var itemId = obj.options[obj.selectedIndex].value;
+  $(dest).data('city_id',itemId);
+}
+
+function changeInsType(obj,dest){
+  var cityId = $(obj).data('city_id');
+  var itemId = obj.options[obj.selectedIndex].value;
+  var url = '/get_institutions/city/' + cityId + '/' + itemId
+  var index = obj.id.split("_")[3];
+  var obj = $('div#object_name').data("obj");
+  var destDiv = '#' + obj + dest.replace("index", index);
+  selectUpdate(itemId,url,destDiv);
+}
+
+function calcComm(obj,comm,amt){
+
+  var fee = parseFloat(obj.value);
+  
+  var this_comm = $(obj).parent().parent().find(comm);
+  var this_amt = $(obj).parent().parent().find(amt);
+  
+  var commission = parseFloat($(this_comm).val());
+  var result = (fee / 100) * commission;
+  
+  if (!isNaN(result)){
+   $(this_amt).val(result);
+  }else{
+   $(this_amt).val('');
+  }
+  
+}
+
+function calcRemaining(obj,amt,rem){
+
+  var paid = parseFloat(obj.value);
+  
+  var this_amt = $(obj).parent().parent().find(amt);
+  var this_rem = $(obj).parent().parent().find(rem);
+  
+  var amount = parseFloat($(this_amt).val());
+  var result = amount - paid;
+  
+  if (!isNaN(result)){
+  $(this_rem).val(result);
+  }else{
+   $(this_rem).val('');
+  }
+}
+
+function importContacts(url){
+  $('#import_contacts_button').text("Importing...")
+  $(this).submit();
+}
+
 
 

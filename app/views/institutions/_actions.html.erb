@@ -1,0 +1,23 @@
+        <% actions = {email:     ["Email",:create],
+                      follow_up: ["FollowUp",:create],
+                      note:      ["Note",:create],
+                      todo:      ["Todo",:create],
+                      assign_to: ["Registration",:update]} %>
+
+        <% actions.keys.each do |elem| %>
+          <% if can? actions[elem][1],actions[elem][0].constantize %>
+              <!--  Shortening variable names -->
+              <% e = elem.to_s.titleize %>
+              <%= radio_button_tag 'action',
+                                   e,
+                                   false,
+                                   onclick: "action_partial('institutions',
+                                                            '#{e.downcase.tr(" ", "_")}',
+                                                            '#{@institution.id}');" %>
+              <%= label_tag elem.to_s.titleize %>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>
+        <% end %>
+<br/>
+<br/>
+

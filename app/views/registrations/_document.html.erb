@@ -70,14 +70,14 @@
         <%= reg.fields_for :documents,a.documents.build do |d| %>
                <div class=" cols boxstheme">
                  <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
-                 <div class="col5" >
-                     <%= go_create(d,"doc_category","category_id","name",1) %> 
+                 <div class="col6" >
+                   <%= fs(d,"path","file_field",nil) %>
                  </div>
-                 <div class="col5" >
+                 <div class="col4" >
                      <%= fs(d,"name","text_field",nil) %>
                  </div>
-                 <div class="col5" >
-                     <%= fs(d,"path","file_field",nil) %>
+                 <div class="col6" >
+                     <%= go_create(d,"doc_category","category_id","name",1) %> 
                  </div>
               </div>
                     <%= d.hidden_field :registration_id %>

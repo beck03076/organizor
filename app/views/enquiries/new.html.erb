@@ -12,6 +12,9 @@ $(function(){
 
 
 <div class="tab-container">
+
+<% flash[:notice] = @enquiry.errors.full_messages.join(" ,")  rescue nil %>
+
  <%= render 'tabs', :stat => "EnquiryStatus",:model => "enquiry" %> 
     <div class="tab-content" id="new_enquiry_id">
 

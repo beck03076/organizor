@@ -1,0 +1,8 @@
+<% if @flag == "normal" %>
+  $('.bClose').trigger("click");
+  $("#all_payments").html("<%= escape_javascript(render :partial => 'registrations/payment') %>");
+<% elsif @flag == "only_last" %>
+  info("Commission Create","You cannot pay more than the required amount, <%= @payment.amount %>. In which you have already paid <%= @payment_all_comm %>");
+<% elsif @flag == "full_paid" %>  
+  info("Commission Create","You have fully paid the amount and setting the status as partially paid. Please try again.");
+<% end %>

@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <link rel="shortcut icon" type="image/x-icon" href="/images/icons/reportm.png">
- 
+  <%= csrf_meta_tag %>
 <script type="text/javascript">
 $(function(){
  showPopUp('message');
@@ -40,7 +40,7 @@ $(function(){
 <div id="header" class="theme">
     <img src="/images/icons/reportm.png" class="fl mt10">
     <h1>&nbsp;Organizor</h1>
-    <h6>&nbsp;&nbsp;&nbsp;Process Management System</h6>
+
     
     <!-- USER INFO BOX - STARTS -->
     <div class="uibox theme-lc">
@@ -159,7 +159,9 @@ $(function(){
             :course_level,:course_subject,:doc_category,
             :english_level,:enquiry_status,:event_type,
             :exam_type,:qualification,:student_source,
-            :sub_agent,:todo_status,:todo_topic].each do |r| %>
+            :sub_agent,:todo_status,:todo_topic,
+            :institution_type,:institution_group,:contract_doc_category,
+            :person_type,:commission_status,:allow_ip,:branch].sort.each do |r| %>
              <% if can? :read, r.to_s.camelize.constantize %>
             <li>
             
@@ -190,7 +192,7 @@ $(function(){
         <%= link_to registrations_path do %>
                   <img src="/images/icons/org_registration.png" id="iconMM3"width="36" /><br/>
                   <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  Registration
+                  Registrations
         <% end %>
         </li>
         <li id="accountsMM">
@@ -198,9 +200,36 @@ $(function(){
         <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
         <a href="#" style="text-decoration:line-through">Accounts</a></li>
         <li id="contractsMM">
-        <img src="/images/icons/org_contracts.png" id="iconMM5"width="36"/><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="#" style="text-decoration:line-through">Contracts</a></li>
+        
+        <%= link_to contracts_path do %>
+                  <img src="/images/icons/org_contracts.png" id="iconMM3"width="36" /><br/>
+                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+                  Contracts
+        <% end %>
+      
+        </li>
+        
+        <li id="peopleMM">
+        
+        <%= link_to people_path do %>
+                  <img src="/images/icons/org_people.png" id="iconMM3"width="36" /><br/>
+                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+                  People
+        <% end %>
+      
+        </li>
+        
+        <li id="institutionsMM">
+        
+        <%= link_to institutions_path do %>
+                  <img src="/images/icons/org_institutions.png" id="iconMM3"width="36" /><br/>
+                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
+                  Institutions
+        <% end %>
+      
+        </li>
+        
+        
         <li id="emailMM">
         <%= link_to  emails_path do %>
           <img src="/images/icons/org_email.png"  id="iconMM6"width="36" /><br/>
@@ -277,9 +306,11 @@ $(function(){
      <td valign="top" width="10">
         <%= image_tag "/images/icons/exchange.png",{width: "20", onclick: "toggleRightPanel();"} %>
      </td>
+     <!-- Removing the right panel as per Jonathans idea 
      <td id="right-panel" valign="top" align="left">
         <%= render "shared/todos" %>
         <br/>
+        
         <ul class="vls">
             <li><img src="/images/icons/org_calenderb.png" width="14"/>
             <h6>
@@ -294,6 +325,7 @@ $(function(){
         <li><span class="blue-theme-todo">&nbsp;</span>&nbsp;Todos</li>
         <li><span class="blue-theme-followup">&nbsp;</span>&nbsp;Follow Ups</li></ul></div>
     </td>
+    -->
     </tr>
     </table>
     </div>

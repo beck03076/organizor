@@ -1,4 +1,4 @@
-class Users::InvitationsController < Devise::InvitationsController
+ class Users::InvitationsController < Devise::InvitationsController
   layout false, only: :edit
   def create
     @current_user = current_user

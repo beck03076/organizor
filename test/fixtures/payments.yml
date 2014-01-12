@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tuition_fee: 
+  commission: MyString
+  amount: 
+  programme_id: 1
+
+two:
+  tuition_fee: 
+  commission: MyString
+  amount: 
+  programme_id: 1

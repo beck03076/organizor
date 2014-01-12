@@ -58,23 +58,36 @@ authorize_resource
   # PUT /programmes/1
   # PUT /programmes/1.json
   def update
-    @programme = Programme.find(params[:id])
-    
-    if (params[:programme][:notes_attributes])
-          
-      tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
-         "#{(@programme.institution.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
-        
-    end
+    @programme = Programme.find(params[:id])    
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
+        if (params[:programme][:notes_attributes])
+          
+          tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
+             "#{(@programme.institution.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
+            
+        end
+      
         format.html { redirect_to @programme, notice: 'Programme was successfully updated.' }
         format.json { head :no_content }
+        
         if params[:change_status].nil?
           format.js { render "programmes/update" }
         else
+        
+          StatusDiagram.create!(user_id: current_user.id,
+                                status_id: params[:programme][:app_status_id],
+                                programme_id: params[:id])
+          tl("Registration",
+             @programme.registration.id,
+             'Status of an application has been changed for this registration',
+             "#{(@programme.institution.name rescue "Unknown")}",
+             'StatusChange',
+             @programme.registration.assigned_to)
+             
           format.js { render "application_statuses/update" } 
+          
         end   
       else
         format.html { render action: "edit" }

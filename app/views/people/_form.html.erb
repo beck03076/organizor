@@ -1,0 +1,235 @@
+<!-- People form -->
+<%= form_for(@person, :html => {:onsubmit => "return validateAll(this);"}) do |f| %>
+      <% if @person.errors.any? %>
+       <div id="error_explanation">
+       <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+       <ul>
+         <% @person.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+         <% end %>
+       </ul>
+       </div>
+      <% end %>
+
+          <!-- NEW PERSON  - STARTS -->
+        <div class="boxp box-theme-ch">
+          <div>
+        <!-- PERSON INFORMATION - STARTS -->
+          <div class="htab">
+             <h6><b>Primary Information</b></h6>
+              
+               <%= f.submit "Save",{:class => "btnp fr"} %>
+               <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
+              <div class="cl"></div>
+        </div><br/>
+           <div class="cols">
+               <div class="col6">
+                    <div class="frbox mand">
+                         <%= f.label "First Name*" %>
+                         <%= f.text_field :first_name,{tabindex: "1",
+                                                       :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'AS');" } %>
+                    </div>
+                    <div class="frbox mand">
+                          <%= f.label "Mobile*" %>
+                          <%= f.text_field :mobile,{tabindex: "3",
+                                                     :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'ANS');"} %>
+                    </div>
+                    <div class="frbox mand">
+                          <%= f.label "Job Title*" %>
+                          <%= f.text_field :job_title,{tabindex: "5",
+                                                     :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'ANS');"} %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label "Gender" %>
+                         <% {male: 'm', female: 'f'}.each do |i| %>
+                            <%= f.radio_button :gender, i[1] %>
+                            <%= f.label i[0].to_s.strip %>
+                          <% end %>
+                    </div>
+                    
+               </div>
+               <div class="col6">
+                    <div class="frbox mand">
+                         <%= f.label "Surname*" %>
+                         <%= f.text_field :surname,{tabindex: "2",
+                                                    :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'AS');"} %>
+                    </div>
+                    <div class="frbox mand">
+                         <%= f.label "Email*" %>
+                         <%= f.text_field :email,{tabindex: "4",
+                                                   :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'E');"} %>
+                    </div>
+                     <div class="frbox">
+                         <%= f.label "Date_of_birth*" %>
+                         <%= f.text_field :date_of_birth,{class: "dateField caltf ",tabindex: "7"} %>
+                    </div>
+               </div>
+          </div>
+        <div class="htab">
+             <h6><b>Assign</b></h6>
+        </div>
+        <br/>
+        
+        <div class="cols">
+               <div class="col6">
+                    <div class="frbox">
+                          <%= fs(f,[:assigned_to, 
+                             User.order(:first_name), 
+                             :id, 
+                             :first_name,{},
+                                    {tabindex: 14}],"collection_select",nil,"Assign To") %>
+                    </div>
+                    <div class="frbox institution" style="display:none;">
+                         <%= f.label "Institution Type" %>
+                 <%= select_tag(:abcd,
+                     options_for_select(InstitutionType.order(:name).collect {|p| [ p.name, p.id ] }.unshift(["--Institution Type--",""])), 
+                    {tabindex: 13,
+                     :onchange => "prepSelect(this,
+                                             '#person_institution_id',
+                                             '/institution_type/');"}) %>
+                     </div>
+               </div>
+               <div class="col6">
+                    <div class="frbox">
+                          <%= fs(f,[:type_id, 
+                             PersonType.order(:name), 
+                             :id, 
+                             :name,{},
+                             {tabindex: 14,
+                              :onchange => "showInstitution(this);"}],
+                             "collection_select",nil,"Person Type") %>
+                    </div>
+                     <div class="frbox institution" style="display:none;">
+                         <%= f.label "Institution" %>
+                         <%= f.collection_select(:institution_id, 
+                                            [], 
+                                            :id, 
+                                            :name,
+                                            {:prompt => "--Institution Type--"},
+                                            {tabindex: 13}) %>
+                     </div>
+               </div>
+        </div>
+        <br/>
+        
+        <div class="htab">
+             <h6><b>Address & Contact</b></h6>
+        </div>
+        <br/>
+        <div class="cols">
+               <div class="col6">
+                    <div class="frbox">
+                          <%= f.label "Home Phone" %>
+                          <%= f.text_field :home_phone,{tabindex: "7",
+                                                     :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'ANS');"} %>
+                    </div>
+                    <div class="frbox">
+                         <%= f.label "Address line1*" %>
+                         <%= f.text_field :address_line1,{tabindex: "11",
+                                                   :data => {:maxlength => "",
+                                                                 :minlength => "",
+                                                                 :label => "",
+                                                                 :req => "Y"},
+                                                       :onblur => "validate(this.id,'');"} %>
+                    </div>
+                    <div class="frbox">
+                    <%= label_tag "Country" %>
+                    <%= f.collection_select(:country_id, 
+                                            Country.order(:name), 
+                                            :id, 
+                                            :name,
+                                            {:prompt => "--Country--"},
+                                            {tabindex: 13,
+                                             :class => "countries_select",
+                                             :onchange => "simplePrepareSelect(this,
+                                                           '#person_city_id',
+                                                           '/get_cities/');"}) %>
+                    </div>
+                    <div class="frbox">
+                          <%= f.label "Post Code" %>
+                          <%= f.text_field :address_post_code,{tabindex: 15} %>
+                    </div>
+                     
+                    <div class="frbox">
+                          <%= f.label "Description" %>
+                          <%= f.text_area :desc,{tabindex: 17,
+                                                 style: "width=400px;",
+                                                 size: "13x3"} %>
+                    </div>
+                    
+               </div>
+               <div class="col6">
+                    <div class="frbox">
+                         <%= f.label :work_phone %>
+                         <%= f.text_field :work_phone,{tabindex: "6"} %>
+                    </div>
+                 
+                    <div class="frbox">
+                          <%= f.label "Address line2" %>
+                          <%= f.text_field :address_line2,{tabindex: "10"} %>
+                    </div>
+                    <%= fs(f,[:city_id, 
+                            City.order(:name), 
+                            :id, 
+                            :name,{},
+                            {tabindex: 12}],"collection_select",nil,"city") %>
+                     
+                    <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
+               </div>
+           </div>    
+         </div>
+         
+ 
+  <br/> 
+  <br/>
+      
+  <div class="actions" style="margin-bottom:10px;">
+   <%= f.submit "Save",{:class => "btnp fr"} %>
+   <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
+  </div>
+   <div class="cl"></div>
+<% end %>
+  
+
+
+<script type="text/javascript">
+ $(function(){
+  setColorsFromSession();
+  $(document).on('nested:fieldAdded', function(event){
+      var field = event.field; 
+      var dateField = field.find('.dateField');
+      dateField.datepicker({
+        inline: true,
+        changeMonth: true, 
+        changeYear: true, 
+        dateFormat: "yy-mm-dd",
+        yearRange: '1980:2050' });
+      setColorsFromSession();
+    })
+});
+</script>
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  status_id: 1
+  user_id: 1
+  programme_id: 1
+
+two:
+  status_id: 1
+  user_id: 1
+  programme_id: 1

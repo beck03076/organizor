@@ -32,7 +32,7 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
        
        #If sending email to only one enquiry, trigger a notification.
        if params[:email][m_ids].size == 1
-         receiver_id = m.camelize.constantize.find(params[:email][m_ids]).first.assigned_to
+         receiver_id = m.camelize.constantize.find(params[:email][m_ids]).first.assigned_to rescue nil
        else 
          receiver_id = nil
        end

@@ -1,0 +1,12 @@
+<h1>New person</h1>
+
+<%= render 'form' %>
+
+<% flash[:notice] = @person.errors.full_messages.join(" ,")  rescue nil %>
+
+<%= link_to 'Back', people_path %>
+
+
+
+
+

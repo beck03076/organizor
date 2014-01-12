@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  paid: 9.99
+  date_received: 2013-12-19
+  remaining: 9.99
+  status_id: 1
+  created_by: 1
+  updated_by: 1
+
+two:
+  paid: 9.99
+  date_received: 2013-12-19
+  remaining: 9.99
+  status_id: 1
+  created_by: 1
+  updated_by: 1

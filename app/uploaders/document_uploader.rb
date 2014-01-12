@@ -13,7 +13,11 @@ class DocumentUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.registration.ref_no}"
+    if !model.registration_id.nil?      
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.registration.ref_no}"
+    elsif !model.contract_id.nil?
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.contract_id}"
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -48,6 +52,6 @@ class DocumentUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
   def filename
-    "#{model.name}"
+    "#{model.name.tr(" ","_")}"
   end
 end

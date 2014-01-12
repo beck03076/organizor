@@ -28,7 +28,7 @@ test:
   database: organizortest
   pool: 8
   username: root
-  password: password
+  password: Sector@123
   socket: /var/run/mysqld/mysqld.sock
 
 production:

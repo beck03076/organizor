@@ -1,7 +1,7 @@
 <!-------------------------NOTE for Enq and Reg-------------------------------------->
 
 <div class="brg0"></div>
-     <div id="programme_note_<%= obj.id %>" style="background:#fff;padding-left:10px;" >
+     <div id="enquiry_note_<%= obj.id %>" style="background:#fff;padding-left:10px;" >
           <%= render 'notes/note', sub: obj %>
      </div>
 <br/>
@@ -18,6 +18,7 @@
         <%= n.hidden_field :sub_class, value: obj_name.capitalize %>
         <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
       <% end %> 
+      <br/>
       <br/>
       <%= r.submit "Write",{class: "btnp"} %>
       <% end %>

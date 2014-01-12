@@ -1,0 +1,51 @@
+<!-- New form pop up for commission -->
+<img src="/images/icons/quit.png" class="bClose fr" width=16 /> 
+<h3>
+   New Payment
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</h3> 
+<br/>
+<br/>
+<div class="brg01"></div>
+<br/>
+<br/>
+<%= form_for(@commission,remote: true) do |comm| %>
+        <%= comm.hidden_field :payment_id, value: @payment.id %>
+        <% r = @payment.current_comm rescue @payment.amount %>
+                            <h3 class="fr padr40">
+                             Total Remaining : <%= r %>
+                            </h3>
+                            <br/>
+                            <br/>
+                <div class="cols padl30">
+                        <div class="col6">
+                            
+                            <%= hidden_field_tag :pmt_amt, @payment.amount %>
+                            <%= hidden_field_tag :current_remaining, r %>
+                            
+                            <div class="fbox">
+                              <%= comm.label :currency %>
+                              <%= comm.select(:currency,all_currencies(Money::Currency.table), {:include_blank => 'Select a Currency'}) %>
+                            </div>
+                            
+                            <%= fbox(comm,[:paid,
+                                          onkeyup: "calcRemaining(this,
+                                                   '#current_remaining',
+                                                   '#commission_remaining');"],"text_field") %>
+                            <%= fbox(comm,[:date_received,
+                                           class: "dateField caltf"],"text_field") %>
+                            <%= fbox(comm,"remaining","text_field") %>
+                            <%= go_create(comm,"commission_status","status_id","name",1,"fbox") %>  
+                        </div>
+                        <br/>
+                        <div class="cl"></div>
+                <%= comm.submit "Create",{:class => "btnp fl"} %>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                </div>
+                
+<% end %>
+

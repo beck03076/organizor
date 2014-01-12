@@ -10,6 +10,18 @@ module MyExtension
     end
   end
   
+  def tym(a)
+    a.strftime("%a, %F %R %p") rescue "Unknown"
+  end
+  
+  def dat(a)
+    a.strftime("%d-%m-%Y") rescue "Unknown"
+  end
+  
+  def da_ty(a)
+    a.strftime("%d-%m-%Y %H:%M") rescue "Unknown"
+  end
+  
   def tname
     self.name.titleize rescue "Unknown"
   end
@@ -61,6 +73,9 @@ module MyExtension
      "Unknown"
     end
   end
+  
+  
+  
   
   module ClassMethods
   # nothing yet

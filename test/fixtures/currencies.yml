@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  iso_alpha2: MyString
+  iso_alpha3: MyString
+  iso_numeric: 1
+  code: MyString
+  name: MyString
+  symbol: MyString
+  country_name: MyString
+  country_id: 1
+
+two:
+  iso_alpha2: MyString
+  iso_alpha3: MyString
+  iso_numeric: 1
+  code: MyString
+  name: MyString
+  symbol: MyString
+  country_name: MyString
+  country_id: 1

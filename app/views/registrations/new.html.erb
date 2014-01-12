@@ -11,7 +11,7 @@ $(function(){
 });
 </script>
 
-
+<% flash[:notice] = @registration.errors.full_messages.join(" ,")  rescue nil %>
 <div class="tab-container">
  <%= render 'enquiries/tabs', :stat => "ApplicationStatus",:model => "registration" %> 
     <div class="tab-content" id="new_registration_id">

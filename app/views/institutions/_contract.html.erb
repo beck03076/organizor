@@ -1,0 +1,80 @@
+<script>
+</script>
+<h4 class="htab">
+  Contract Information
+</h4>
+<br/>
+<br/>
+
+<ul class="vlsdet">
+   <% @institution.contracts.each do |i| %>
+    <!-- @programme is used in 2 partials, change status and add note -->
+    <% @contract = i %>
+   
+    <h3><%= i.name rescue "Unknown" %></h3> <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br/>
+    <br/>
+
+    <li><label>Initiate Date</label>: <%= i.initiate_date rescue "Uninitiated" %></li>
+    <li><label>Start Date</label>: <%= i.current_contract_start_date %></li>
+    <li><label>End Date</label>: <%= i.current_contract_end_date %></li>
+    <li><label>Remind Renew On</label>: <%= i.renewal_reminder_date %></li>
+    
+    <li><label>Commission Rate</label>: <%= i.commission_rate %> %</li>
+    <li><label>Invoicing Deadline</label>: <%= i.invoicing_deadline %></li>
+    <li><label>Partners Target</label>: <%= i.partners_target %></li>
+    <li><label>Internal Target</label>: <%= i.internal_target %></li>
+    <li><label>Commission Specified</label>: <%= i.commission_specified %></li>
+    <li><label>Territory Specified</label>: <%= i.territory_specified %></li>
+    <li><label>Recruitment Territories</label>: <%= i.recruitment_territories %></li>
+    <li><label>Desc</label>: <%= i.desc %></li>
+    
+    <% %w(all_prohibited_countries all_permitted_countries 
+       all_prohibited_regions all_permitted_regions).each do |elem| %>
+    
+       <%= recruit_ter(i,elem) %>
+    
+    <% end %>
+   
+    
+    
+    <div class="cl"></div>
+    <br/>
+
+    <li><label>Created</label>:
+      <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= tym(i.created_at) %></li>
+
+
+    <li><label>Last Modified</label>:
+      <%= link_to i._upd_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= tym(i.created_at) %></li>
+     <br/>
+     <br/>
+     <%= render 'contracts/document' %>
+     <br/>
+     <br/>
+
+     <h5 class="htab"> Notes For This Contract<h5>
+     <div id="contract_note_<%= i.id %>" >
+          <%= render 'notes/note', sub: @contract %>
+     </div>
+     <br/>
+     <br/>
+     
+     
+     
+     <%= nested_form_for(i,remote: true) do |r| %>
+      <%= r.fields_for :notes,i.notes.build do |n| %>
+        <%= n.hidden_field :sub_class, value: "Contract" %>
+        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
+      <% end %> 
+      <br/>
+      <%= r.submit "Write",{class: "btnp"} %>
+      <% end %>
+     <br/>
+
+    <div class="brg01"> </div>
+    <br/>
+    <br/>
+  <% end %>
+
+</ul>

@@ -1,5 +1,21 @@
-<h1>New institution</h1>
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.new_institution").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.new_institution").addClass("active-tab");
+  $("ul.tab-menus li.new_institution").trigger("click");
+  setColorsFromSession();
+  activeMM("institutionsMM");
+  
+});
+</script>
 
-<%= render 'form' %>
+<% flash[:notice] = @institution.errors.full_messages.join(" ,")  rescue nil %>
 
-<%= link_to 'Back', institutions_path %>
+<div class="tab-container">
+ <%= render 'enquiries/tabs', :stat => "InstitutionType",:model => "institution" %> 
+    <div class="tab-content" id="new_institution_id">
+
+    </div>
+</div>
+

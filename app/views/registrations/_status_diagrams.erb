@@ -1,0 +1,24 @@
+<!-- named as status diagram because in future it is going to be a diagram -->
+
+     
+
+               <% u = sd.user %>
+               <br/>
+               <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                   {width: "40",
+                                    class: "imgb fl",
+                                    style: "margin-right:10px;"}) %>
+               <span style="padding-top:10px;padding-right:100px;">
+                    <%= sd.application_status.name rescue "Unknown Status" %>
+                   <br/>
+                   <span class="lil">
+                    at <%= sd.created_at.strftime("%e-%m-%Y %H:%M %p") %>
+                   </span>
+                   <br/>
+                   <%= link_to u.name,u %> 
+               
+               </span>
+               <div class="brg0"></div>
+
+      
+

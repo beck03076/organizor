@@ -73,10 +73,12 @@ gem 'private_pub'
 gem 'fullcalendar-rails' 
 gem 'rubyzip'
 gem 'prawn'
-group :development do
-  gem "better_errors"
-end
-gem 'hirb'
+gem 'money-rails'
+gem 'eu_central_bank'
+gem 'json' #important, was not set as a dependency, so I add it manually
+gem 'google_currency'
+#gem "omnicontacts"
+
 
 
 

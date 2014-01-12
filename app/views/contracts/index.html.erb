@@ -1,0 +1,45 @@
+<h1>Listing contracts</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Initiate date</th>
+    <th>Current contract start date</th>
+    <th>Current contract end date</th>
+    <th>Renewal reminder date</th>
+    <th>Commission rate</th>
+    <th>Invoicing deadline</th>
+    <th>Partners target</th>
+    <th>Internal target</th>
+    <th>Recruitment territories</th>
+    <th>Desc</th>
+    <th>Institution</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @contracts.each do |contract| %>
+  <tr>
+    <td><%= contract.name %></td>
+    <td><%= contract.initiate_date %></td>
+    <td><%= contract.current_contract_start_date %></td>
+    <td><%= contract.current_contract_end_date %></td>
+    <td><%= contract.renewal_reminder_date %></td>
+    <td><%= contract.commission_rate %></td>
+    <td><%= contract.invoicing_deadline %></td>
+    <td><%= contract.partners_target %></td>
+    <td><%= contract.internal_target %></td>
+    <td><%= contract.recruitment_territories %></td>
+    <td><%= contract.desc %></td>
+    <td><%= contract.institution_id %></td>
+    <td><%= link_to 'Show', contract %></td>
+    <td><%= link_to 'Edit', edit_contract_path(contract) %></td>
+    <td><%= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Contract', new_contract_path %>

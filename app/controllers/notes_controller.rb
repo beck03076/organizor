@@ -88,10 +88,15 @@ class NotesController < ApplicationController
   def destroy
     @note = Note.find(params[:id])
     @note.destroy
-
+    
+    @obj_name = params[:sub].underscore
+    @obj = params[:sub].camelize.constantize.find(params[:sub_id])
+    
+    
     respond_to do |format|
       format.html { redirect_to notes_url }
       format.json { head :no_content }
+      format.js
     end
   end
 end

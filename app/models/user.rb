@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   audited
   mount_uploader :image, HumanImageUploader
   before_save :default_values
-
+  
   def self.current
     Thread.current[:user]
   end

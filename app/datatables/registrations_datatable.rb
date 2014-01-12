@@ -49,7 +49,7 @@ private
           if i.is_a?(Array)
             temp << reg.send(i[1].to_s).try(i[2].to_s)
           else
-            temp << reg.send(i.to_s)
+            temp << reg.send(i.to_s).to_s
           end
         }
        
@@ -112,7 +112,9 @@ private
 
   def sort_column
     columns = [:id,:id] + (@cols - ["statuses"])
+    p  columns[params[:iSortCol_0].to_i]
     columns[params[:iSortCol_0].to_i]
+    
   end
 
   def sort_direction

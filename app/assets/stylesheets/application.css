@@ -73,7 +73,7 @@ small{font-size: 11px;color:#666666;font-weight:normal;}
 #menu-main  > .active-main-menu .menuar{display:inline; position:absolute; right:-11px;margin-top:-20px}
 #menu-main  > li .submenu{display:none;white-space:nowrap;position:absolute;z-index:999999999;margin:0;left:103px;top:5px;padding:0;box-shadow: 0 0 6px #ccc;
 border:1px solid #D9D9D9;border-radius:5px;}
-#menu-main  > li .submenu li{padding:9px 70px 9px 10px;color:#949494}
+#menu-main  > li .submenu li{padding:9px 100px 9px 10px;color:#949494}
 #menu-main  > li .submenu li a{color:#00336C;font-size:11px;font-weight:normal}
 #menu-main  > li .submenu li a:hover{text-decoration:none;color:#FD9B00}
 #menu-main  > li .submenu li:nth-child(2n+1){background:#fff}
@@ -183,14 +183,15 @@ border:0;font-size:15px;font-family:"Comic Sans MS", cursive}
 .tables2 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
 
 .tables4{padding:0;margin:0;border:1px solid #CCC;}
-.tables4 tr th{background:#EDF2F6;border-bottom:1px dashed #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
+.tables4 tr th{background:#EDF2F6;border-bottom:1px solid #DDD;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
 .tables4 tr th a,.tables4 tr th a:hover,.tables4 tr th a:active,.tables4 tr th a:link{font-size:12px;color:#5E6E7F;text-decoration:none;cursor:pointer}
-.tables4 tr td{background:#fff;border-bottom:1px dotted #ccc;padding:5px 0 5px 5px;font-size:12px;color:#505050;cursor:pointer;font-weight:normal}
-.tables4 tr:hover td{background:#FAFAFA;color:#000000}
+.tables4 tr td{background:#fff;border-bottom:1px solid #ccc;padding:5px 0 5px 5px;font-size:12px;color:#505050;cursor:pointer;font-weight:normal}
 .tables4 tr td a,.tables4 tr td a:hover,.tables4 tr td a:active,.tables4 tr td a:link{font-size:12px;color:#0F5491;cursor:pointer}
 .tables4 tr:last-child td{background:#F5F5F5;border-top:1px dashed #F5F5F5;border-bottom:1px solid #E2E2E2;padding:5px 0 5px 5px;font-size:12px;color:#5E6E7F;cursor:pointer;font-weight:normal;text-align:left}
 .tables4 tr:last-child td a{color:#6B84B4;border-bottom:0}
 .tables4 tr td img{opacity:0.4;filter:alpha(opacity=40); /* For IE8 and earlier */}
+
+
 
 
 
@@ -307,7 +308,7 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 
 /* SCROLL BOX - STARTS */
 .scrollbox {overflow: scroll;height: 510px;margin:0 0 10px 0;}
-#scrollboxu {overflow: auto;height: 350px;}
+#scrollboxu {overflow: auto;height: 550px;}
 #ascrail2000{display:block !important;opacity:1 !important}
 /* SCROLL BOX - ENDS */
 
@@ -328,6 +329,8 @@ div.dataTables_wrapper .ui-widget-header{background:#EAEAEA !important; }
 /* MARGIN - ENDS */
 
 /* PADDING - STARTS */
+.padr200{padding-right:200px}
+.padr40{padding-right:40px}
 .padr30{padding-right:30px}
 .padr10{padding-right:10px}
 .padl30{padding-left:30px}
@@ -501,8 +504,8 @@ background: #fff;overflow:hidden}
 /* SENTHIL's  CSS - Start */
 .sp{color:#FD9B00}
 .pending{color:#FD9B00}
-.following,.ref_no{color:#008080}
-.deactivated{color:#C42525}
+.following,.ref_no,.joined,.green{color:#008080}
+.deactivated,.other_status,.red{color:#C42525}
 .activated{color:#008000}
 .Unknown{color:#2A88C8}
 
@@ -635,6 +638,16 @@ small.uncheckit{text-decoration:none;}
 .dataTable tr.fu_now td {background: #f7d0d0 !important; }
 
 .legends{background: #fff !important;padding-bottom:5px;}
+
+.lil{font-size: 9px;color: #888a85;}
+
+.imgmore{border:1px solid #ccc;background:#d3d7cf;cursor:pointer;}
+
+.tables4 td.pending {background: #a40000;color: #fff;font-weight:bold;}
+.tables4 td.partially_paid {background: #204a87;color: #fff;font-weight:bold;}
+.tables4 td.fully_paid {background: #4e9a06;color: #fff;font-weight:bold;}
+.tables4 td.amount {background: #eeeeec;font-weight:bold;}
+.tables4 td.amount_result {background: #eeeeec;font-weight:bold;text-decoration:underline;}
 
 /* SENTHIL's  CSS - End */
 

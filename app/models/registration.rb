@@ -1,4 +1,8 @@
 class Registration < ActiveRecord::Base
+  validates :first_name, 
+            uniqueness: {scope: [:surname,:date_of_birth], 
+                         message: " Surname and Date of Birth already exists as another registration, please check!" }
+  
   audited
   mount_uploader :image, HumanImageUploader
   belongs_to :qualification, foreign_key: 'qua_id'
@@ -47,7 +51,9 @@ class Registration < ActiveRecord::Base
   :note,:documents_attributes,:_destroy,:enquiry_id,
   :notes_attributes,:image,:remote_image_url
   
-  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos,:proficiency_exams, :documents, :allow_destroy => true
+  accepts_nested_attributes_for :programmes,:emails,:follow_ups,
+  :notes,:todos,:proficiency_exams, 
+  :documents, :allow_destroy => true
   
   
   scope :mine, lambda{|user|

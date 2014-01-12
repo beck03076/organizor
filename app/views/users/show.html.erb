@@ -58,7 +58,9 @@ $(function(){
                                {width: "100",class: "tooltip",title: "Upload your photo",
                                 class: "imgb fl"
                                 }) %>
+                  <% if (can? :update,a) %>
                   <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                  <% end %>
                 </div>
                  <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
                    <%= render 'shared/img_upload', a: a %>
@@ -119,6 +121,7 @@ $(function(){
                             
                 </div>
             </div>
+                <% if adm %>
                 <div class="col4 ">
                     <div class="boxs">
                         <ul class="infodhls">
@@ -151,7 +154,7 @@ $(function(){
                     </div>
                     <br/>
                     <br/>
-                    <% if adm %>
+                    
                     <%= form_for(a) do |d| %>
                       <% if a.is_active %>
                         <% b = "Deactivate" %>
@@ -163,12 +166,11 @@ $(function(){
                       <%= d.hidden_field :is_active, value: val %>
                       <%= d.submit b,{class: "btnp fr"} %>
                     <% end %>
-                    <% else %>
-                    <%= link_to "Deactivate", "#", {class: "btnpd fr"}%>
-                    <% end %>
+                    
                 </div>
+                <% end %>
           </div>
-          
+         <% if adm %> 
          <div id="activities-display">
             <br/><div class="htab">
             <h5><b>Activities</b></h5>
@@ -201,7 +203,7 @@ $(function(){
              </table>
             </div>
         </div>
-          
+        <% end %>
 
 </div>
 

@@ -1,45 +1,190 @@
-<%= form_for(@institution) do |f| %>
+<!-- New institution form -->
+<%= nested_form_for(@institution, :html => {:onsubmit => "return validateAll(this);"}) do |f| %>
   <% if @institution.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@institution.errors.count, "error") %> prohibited this institution from being saved:</h2>
-
-      <ul>
-      <% @institution.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+   <div id="error_explanation">
+   <h2><%= pluralize(@institution.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+   <ul>
+     <% @institution.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+     <% end %>
+   </ul>
+   </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <%= render 'institution_information', :f => f %>
+    
+  <div class="cl"></div>
+  <br/>
+  <br/>
+  
+  <!-- CONTRACT - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            Contracts
+          </b>
+      </h5>
   </div>
-  <div class="field">
-    <%= f.label :poc %><br />
-    <%= f.number_field :poc %>
-  </div>
-  <div class="field">
-    <%= f.label :city_id %><br />
-    <%= f.number_field :city_id %>
-  </div>
-  <div class="field">
-    <%= f.label :country_id %><br />
-    <%= f.number_field :country_id %>
-  </div>
-  <div class="field">
-    <%= f.label :type_id %><br />
-    <%= f.number_field :type_id %>
-  </div>
-  <div class="field">
-    <%= f.label :created_by %><br />
-    <%= f.number_field :created_by %>
-  </div>
-  <div class="field">
-    <%= f.label :updated_by %><br />
-    <%= f.number_field :updated_by %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <br/>  
+  
+  <%= f.fields_for :contracts do |c| %>
+   <%= c.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>       
+     <div class="cols boxstheme" style="width:97%">
+     
+          <br/>
+          <h3>
+            Contract Details
+          </h3>
+          <br/>
+          <br/>
+       <div class="col6">
+           <!-- setting a default contract name -->
+           <% c_name = [Organizor::Application::ORG_NAME,@institution.name].join("_").tr(" ","_") %>
+           <%= fs(c,[:name,value: c_name],"text_field") %>
+           <%= fs(c,[:current_contract_start_date,:class => "dateField caltf"],"text_field",nil,"Current Start Date") %>
+           <%= fs(c,[:renewal_reminder_date,:class => "dateField caltf"],"text_field",nil,"Remind Renew on") %>
+           
+           <%= fs(c,"invoicing_deadline","text_field") %>
+           <%= fs(c,"internal_target","text_field") %>
+           <%= fs(c,"territory_specified","check_box") %>
+           <!-- Recruitment Territories - STARTS-->
+     
+          <br/>
+           <h3>
+                Recruitment Territories
+          </h3>
+          <br/>
+          <br/>
+           <% out = prep_pre(c) %>
+
+           <%= fs(c,[:prohibited_countries, class: "token_coun_pro",
+                     data: { pre: out[:all_prohibited_countries] }],"text_field") %>
+           <%= fs(c,[:permitted_countries,class: "token_coun_per",
+                     data: { pre: out[:all_permitted_countries] }],"text_field") %>
+           <%= fs(c,[:prohibited_regions,class: "token_reg_pro",
+                     data: { pre: out[:all_prohibited_regions] }],"text_field") %>
+           <%= fs(c,[:permitted_regions,class: "token_reg_per",
+                     data: { pre: out[:all_permitted_regions] }],"text_field") %>
+           
+           <!-- Recruitment Territories - ENDS-->
+          <br/>
+          <h3>
+             Contract Description
+          </h3>
+          <br/>
+          <br/>
+           <div class="frbox">
+                          <%= c.label "Description" %>
+                          <%= c.text_area :desc,{size: "2x3"} %>
+           </div>
+           <div class="cl"> </div>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+       
+       <div class="col6">
+           <%= fs(c,[:initiate_date,:class => "dateField caltf"],"text_field",nil,"Initiate Date") %>
+           <%= fs(c,[:current_contract_end_date,:class => "dateField caltf"],"text_field",nil,"Current End Date") %>
+           <%= fs(c,"commission_rate","text_field",1,"Commission Rate") %>
+           <%= fs(c,"partners_target","text_field") %>           
+           <%= fs(c,"commission_specified","check_box") %>
+       </div>
+     </div>
+     <div class="cl"></div>
+    <br/>
+
 <% end %>
+<!-- Contract Nested Form ENds -->
+ 
+  <%= f.link_to_add "Add more", :contracts,{:class => "btns fl"} %>
+  <div class="cl"> </div>
+  <br/>
+  <br/>
+  <!-- Contracts - ENDS -->
+  
+  
+  
+  <!-- People - STARTS -->
+  <div class="htab">
+      <h5>
+          <b>
+            People 
+          </b>
+      </h5>
+  </div>
+  <br/>  
+  
+  <%= f.fields_for :people do |p| %>
+   <%= p.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>       
+     <div class="cols boxstheme" style="width:97%">
+      
+       <div class="col6">
+           <%= fs(p,"first_name","text_field",1) %>
+           <%= fs(p,"mobile","text_field",1) %>
+           <div class="frbox">
+                          <%= p.label "Description" %>
+                          <%= p.text_area :desc,{size: "2x3"} %>
+           </div>
+           <div class="cl"> </div>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+       
+       <div class="col6">
+           <%= fs(p,"surname","text_field",1) %>
+           <%= fs(p,"email","text_field",1) %>
+       </div>
+     </div>
+     <div class="cl"></div>
+    <br/>
+  <% end %>
+ 
+  <%= f.link_to_add "Quick Add", :people,{:class => "btns fl"} %>
+  <%= link_to "Add(with all details)","#" %>
+  
+  <div class="cl"> </div>
+  <br/>
+  <br/>
+  <!-- People - ENDS -->
+  <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
+  <div class="actions" style="margin-bottom:10px;">
+   <%= f.submit "Save",{:class => "btnp fr"} %>
+   <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
+  </div>
+  <div class="cl"></div>
+<% end %>
+
+<script type="text/javascript">
+ $(function(){
+  // Nested form load
+  $(document).on('nested:fieldAdded', function(event){
+      
+      var field = event.field; 
+      var dateField = field.find('.dateField');
+      dateField.datepicker({
+        inline: true,
+        changeMonth: true, 
+        changeYear: true, 
+        dateFormat: "yy-mm-dd",
+        yearRange: '1980:2050' 
+      });
+      setColorsFromSession();
+      // multi select token field
+      var id1 = field.find('.token_coun_pro').attr("id");
+      var id2 = field.find('.token_coun_per').attr("id");
+      var id3 = field.find('.token_reg_pro').attr("id");
+      var id4 = field.find('.token_reg_per').attr("id");
+
+      tokens('#' + id1,"/srch_countries.json");
+      tokens('#' + id2,"/srch_countries.json");
+      tokens('#' + id3,"/srch_regions.json");
+      tokens('#' + id4,"/srch_regions.json");
+   });
+   // General DOM load, setting colors from session
+   setColorsFromSession();
+ 
+});
+</script>
+

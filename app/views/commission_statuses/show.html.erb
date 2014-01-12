@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @commission_status.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @commission_status.desc %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @commission_status.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @commission_status.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_commission_status_path(@commission_status) %> |
+<%= link_to 'Back', commission_statuses_path %>

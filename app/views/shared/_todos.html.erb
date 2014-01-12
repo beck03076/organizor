@@ -8,7 +8,7 @@
       </h6>
   </li>
             
-    <% current_user.todos.includes(:status,:topic,:user).where(done: false).take(5).each do |i| %>
+    <% current_user.todos.includes(:topic,:user).where(done: false).take(5).each do |i| %>
 
                 <li>
                 <div class="todo_container">

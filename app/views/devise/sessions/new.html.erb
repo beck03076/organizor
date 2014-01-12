@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    "home" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= csrf_meta_tag %>
   <link rel="shortcut icon" type="image/x-icon" href="/images/icons/reportm.png">
  
   
@@ -26,7 +27,7 @@ $('#fade').cycle();
 <div id="login-box">
 <table cellpadding="10" cellspacing="0" width="100%" height="100">
 <tr>
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| %>
     <td align="left" valign="bottom" class="tw" style="padding:10px 0 0 20px">
      <%= f.label :email %>
       
