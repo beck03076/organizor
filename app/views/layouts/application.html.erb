@@ -1,344 +1,96 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Organizor</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <link rel="shortcut icon" type="image/x-icon" href="/images/icons/reportm.png">
-  <%= csrf_meta_tag %>
-<script type="text/javascript">
-$(function(){
- showPopUp('message');
- setColorsFromSession();
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
-});
+    <title>Organizor</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-  PrivatePub.subscribe("/notify/<%= current_user.id.to_s %>", function(data, channel) {
-    showNotificationMsg(data.message);
-     url = "/notify/<%= current_user.id.to_s %>/" + data.id
-     $.get(url,function(reply){
-         $(reply).prependTo(".notifyls");
-         var noticount = $('div#notify_count_container').data("count");
-         $("#notify_no").html('<div style="margin-top:5px"><span class="notify-count">' + noticount + '</span></div>').hide().toggle( "bounce", { times: 5 }, "slow" );;
-     });
-  });
-
-
-
-
-</script>
-
-</head>
-<body>
-
- <%= subscribe_to "/notify/" + current_user.id.to_s %>
-<div id="wrapper">
-<!-- Shortening variable -->
-<% u = current_user %>
-<!-- HEADER - STARTS -->
-<div id="header" class="theme">
-    <img src="/images/icons/reportm.png" class="fl mt10">
-    <h1>&nbsp;Organizor</h1>
-
-    
-    <!-- USER INFO BOX - STARTS -->
-    <div class="uibox theme-lc">
-    <div class="sbox theme-lc">
-    <img src="/images/icons/search.png"/>&nbsp;
-    <input type="text" placeholder="Search by name" >
+  <body>
+  <!-- Shortening variable -->
+  <% u = current_user %>
+    <div id="header">
+      <div class="container">
+          <div class="col-md-9">
+            <h1 class="text-left">Organizor</h1>
+          </div>
+          <div class="col-md-3 profile">
+            <div class="col-md-3">
+              <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                         {width: "50",
+                                          height: "50",
+                                          class: "img-rounded"}) %>
+            </div>
+            <div class="col-md-9">
+              <small><%= u.first_name.titleize rescue "Mr. Unknown" %></small>
+              <small class="block">Logout</small>
+            </div>
+          </div>
+      </div>
     </div>
-    <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
-                               {width: "40",
-                                height: "40",
-                                class: "imgb fl"}) %>
-    <img src="/images/icons/down-arrow.png" class="fr" id="downarrow" />
-    <h5>
-    &nbsp;&nbsp;<b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
-    </h5><br/>
-    <small class="whitec">
-    &nbsp;&nbsp;&nbsp;<%= u.role.name.titleize rescue "Role Unassigned" %>
-    </small>
-    
-    <div id="notification"> </div>
-    <div class="cl"></div>
-    <div class="uiboxs">
-    <ul class="lsn">
-        <li>
-        <small class="whitec">
-          <%= u.email rescue "Email Unassigned" %>
-        </small>
-        </li>
-        <li>
-        <%= link_to "My Settings", "/user_configs/#{current_user.id}/edit" %>
-        </li>
-    </ul>
-     <ul class="lsn">
-        <li>
-        <%= link_to "New Enquiry", new_enquiry_path %>
-        </li>
-        <li>
-        <%= link_to "New Registration", new_registration_path %>
-        </li>
-    </ul>
-  
-    <ul  class="lsb">
-        <li>
-        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-       </li>
-    </ul>
-    </div>
-    </div>
-    <!-- USER INFO BOX - ENDS -->
-</div>
-<!-- HEADER - ENDS -->
 
-    <!-- NOTIFICATION BOX - STARTS -->
-    <div id="notify-box" >
-        <center>
-        <div class="notify-msg" data-user_id="<%= current_user.id %>">
-        <ul class="notifyls">
-        <% Timeline.includes(:user).where(receiver_id: current_user.id).order("created_at desc").limit(8).each do |tl| %>
+    <!-- Wrap all page content here -->
+    <div id="wrap" class="container">
 
-              <%= render "shared/notifications", tl: tl, count: nil, u: tl.user %>
-            
-        <% end %>
-            
-        </ul>
-        <br/>
-        <%= link_to "See all",'/all_notifications' %>
-        <br/>
-        <br/>
-        
+      <!-- Begin page content -->
+      <div class="container main">
+        <div class="row">
+          <div class="col-md-2 left-nav">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a></li>
+              <li><%= link_to enquiries_path  do %><span class="glyphicon glyphicon-earphone"></span>Enquiries<% end %></li>
+              <li><%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registration<% end %></li>
+              <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
+              <li><%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %></li>
+              <li><%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calender<% end %></li>
+              <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
+              <li><%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %></li>
+              <li><%= link_to "/user_configs/#{current_user.conf.id}/edit" do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
+              <li>
+                <% if u.role?(:agency_administrator) %>
+                    <%= link_to "/users" do %>
+                      <span class="glyphicon glyphicon-user"></span>Users
+                    <% end %>
+                <% else %>
+                  <%= link_to "/users/#{current_user.id}" do %>
+                      <span class="glyphicon glyphicon-user"></span>My account
+                  <% end %>
+                <% end %>
+              </li>
+              <li class="active"><%= link_to "#" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %></li>
+            </ul>
+          </div>
+          <div class="col-md-10 col-md-offset-2 main-content">
+            <%= render "shared/resources" %>
+          </div>
         </div>
-        <div class="notify-icon-box">
-        <div class="notify-icon" onclick="showNotifiy();" >
-        <center>
-        
-        <span id="notify_no">
-          <% unch = Timeline.where(receiver_id: current_user.id,checked: false).count %>
-          <%= unch == 0 ? '' : ('<div style="margin-top:5px"><span class="notify-count">' + unch.to_s + '</span></div>').html_safe %>
-        </span>
-        
-        <img src="/images/icons/down.png" width="12" class="notify-down"/>
-        <img src="/images/icons/up.png" width="12" class="notify-up dn"/>
-        </center>
-        </div></div>
-        </center>
+      </div>
     </div>
-    <!-- NOTIFICATION BOX - ENDS -->
+
+    <div id="footer">
+      <div class="container">
+        <p class="text-right"><small><em>Organizor © 2013</em></small></p>
+      </div>
+    </div>
 
 
-<!-- KEEP message and type in between the P tag , without enter or space -->
-          <% if flash[:notice] %>
-            <h3 id="message" class="htab addNewPop" style="display: block; top: 483px; left: 455px;">
-              <%= flash[:notice] %>
-              <br/>
-              <small>
-              <i>Click outside to continue</i>
-              </small>
-            </h3>
-          <% end %>
-<!-- BODY - STARTS -->
-<div id="main-body">
-    <!-- MAIN MENU - STARTS -->
-    <div id="left-panel">
-    <ul id="menu-main">
-        
-        <li id="resourcesMM">
-        
-        <%= link_to "#" do %>
-          <img src="/images/icons/org_resources.png" id="iconMM12" width="36" /><br/>
-          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-          Resources
-        <% end %>
-        
-        <ul class="submenu">
-            <img src="/images/icons/left-arrow.png" class="menual" width="13"/>
-            <% [:programme_type,:application_status,:contact_type,
-            :course_level,:course_subject,:doc_category,
-            :english_level,:enquiry_status,:event_type,
-            :exam_type,:qualification,:student_source,
-            :sub_agent,:todo_status,:todo_topic,
-            :institution_type,:institution_group,:contract_doc_category,
-            :person_type,:commission_status,:allow_ip,:branch].sort.each do |r| %>
-             <% if can? :read, r.to_s.camelize.constantize %>
-            <li>
-            
-               <%= image_tag "/images/icons/" + r.to_s + ".png",{width: "16"} %>
-               <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
-            </li>
-            <% end %>
-            <% end %>
-        </ul>
-        </li>
-        
-        <li id="dashboardMM">
-        <img src="/images/icons/org_dashboard.png" id="iconMM1"width="36" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="dashboard.html" style="text-decoration:line-through">Dashboard</a></li>
-        
-        <li id="enquiriesMM">
-        
-        <%= link_to enquiries_path  do %>
-          <img src="/images/icons/org_inquiry.png"  id="iconMM2"width="36"/><br/>
-          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-          Enquiries
-        <% end %>
-        
-        </li>
-        <li id="registrationsMM">
-                
-        <%= link_to registrations_path do %>
-                  <img src="/images/icons/org_registration.png" id="iconMM3"width="36" /><br/>
-                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  Registrations
-        <% end %>
-        </li>
-        <li id="accountsMM">
-        <img src="/images/icons/org_finance.png" id="iconMM4"width="36"/><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="#" style="text-decoration:line-through">Accounts</a></li>
-        <li id="contractsMM">
-        
-        <%= link_to contracts_path do %>
-                  <img src="/images/icons/org_contracts.png" id="iconMM3"width="36" /><br/>
-                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  Contracts
-        <% end %>
-      
-        </li>
-        
-        <li id="peopleMM">
-        
-        <%= link_to people_path do %>
-                  <img src="/images/icons/org_people.png" id="iconMM3"width="36" /><br/>
-                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  People
-        <% end %>
-      
-        </li>
-        
-        <li id="institutionsMM">
-        
-        <%= link_to institutions_path do %>
-                  <img src="/images/icons/org_institutions.png" id="iconMM3"width="36" /><br/>
-                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  Institutions
-        <% end %>
-      
-        </li>
-        
-        
-        <li id="emailMM">
-        <%= link_to  emails_path do %>
-          <img src="/images/icons/org_email.png"  id="iconMM6"width="36" /><br/>
-          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-          Emails
-        <% end %>
-        </li>
-        <li id="calendarMM">
-            <%= link_to "/follow_ups" do %>
-              <img src="/images/icons/org_calender.png" id="iconMM11"width="36" /><br/>
-              <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-              Calendar
-            
-            <% end %>
-        </li>
-        <li id="reportsMM">
-        <img src="/images/icons/org_reports.png" id="iconMM8"width="36" /><br/>
-        <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-        <a href="#" style="text-decoration:line-through">Reports</a></li>
-        <li id="todosMM">
-        
-         <%= link_to todos_path do %>
-                  <img src="/images/icons/org_todos.png" id="iconMM9" width="36" /><br/>
-                  <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-                  Todos
-        <% end %>
-        
-        </li>
-        <li id="settingMM">
-        
-        <%= link_to "/user_configs/#{current_user.conf.id}/edit" do %>
-          <img src="/images/icons/org_settings.png" id="iconMM10" width="36" /><br/>
-          <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-          Settings
-        <% end %>
-        </li>        
-        <li id="usersMM">        
-        <% if u.role?(:agency_administrator) %>
-        
-            <%= link_to "/users" do %>
-              <img src="/images/icons/org_users.png" id="iconMM11"width="36" /><br/>
-              <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-              Users
-            
-            <% end %>
-        
-        <% else %>
-        
-        <%= link_to "/users/#{current_user.id}" do %>
-             <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
-                               {width: "34",
-                                class: "imgb",
-                                id: "iconMM11"}) %> <br/>
-             <img src="/images/icons/right-arrow.png" class="menuar" width="13"/>
-             Me
-        <% end %>
-        <% end %>
-        </li>
-        
-        
-    </ul>
-    </div>
-    <!-- MAIN MENU - ENDS -->
-    
-    <!-- BODY CONTENT - STARTS -->
-   
-    <div id="body-content">
-    <table width="98%" cellpadding="5" cellspacing="5">
-    
-     <tr>
-     <td class="brgr" style="padding-right:15px" valign="top" align="left">
-      <%= yield %>
-     </td>
-     <td valign="top" width="10">
-        <%= image_tag "/images/icons/exchange.png",{width: "20", onclick: "toggleRightPanel();"} %>
-     </td>
-     <!-- Removing the right panel as per Jonathans idea 
-     <td id="right-panel" valign="top" align="left">
-        <%= render "shared/todos" %>
-        <br/>
-        
-        <ul class="vls">
-            <li><img src="/images/icons/org_calenderb.png" width="14"/>
-            <h6>
-            <b>Calendar</b>
-            </h6>
-            </li>
-            <li><br><div id="mini-calendar"></div></li>
-        </ul>        
-        
-        <div class="fl brg0">
-        <ul class="theme-colrs-lg">
-        <li><span class="blue-theme-todo">&nbsp;</span>&nbsp;Todos</li>
-        <li><span class="blue-theme-followup">&nbsp;</span>&nbsp;Follow Ups</li></ul></div>
-    </td>
-    -->
-    </tr>
-    </table>
-    </div>
- <!-- BODY CONTENT - ENDS -->
- 
-</div>
-<!-- BODY - ENDS -->
-</div>
-<!-- FOOTER - STARTS -->
-<div id="footerin">
-<center>Copyright 2012 Organizor | All rights reserved</center>
-</div>
-<!-- FOOTER - ENDS --> 
-
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-1.10.2.min.js"></script>
+  </body>
 </html>

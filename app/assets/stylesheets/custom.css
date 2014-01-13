@@ -1,0 +1,144 @@
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */ }
+
+.block {
+  display: block; }
+
+.form-last {
+  margin-bottom: 0; }
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  position: relative;
+  min-height: 100%;
+  margin-top: -70px;
+  margin-bottom: -50px; }
+  #wrap:after {
+    content: "";
+    display: block;
+    height: 70px; }
+  #wrap:before {
+    content: "";
+    display: block;
+    height: 70px; }
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 50px;
+  background-color: #A9DEF0; }
+  #footer p {
+    margin-top: 1.3rem; }
+
+#header {
+  height: 70px;
+  background-color: #004156;
+  color: #FFFFFF; }
+  #header h1 {
+    font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    margin: 1.3rem 0; }
+  #header .profile {
+    padding-top: 1rem; }
+
+.main .left-nav {
+  position: absolute;
+  top: 70px;
+  bottom: 50px;
+  z-index: -1;
+  padding-top: 2rem;
+  padding-right: 0;
+  border-right: 1px solid #dddddd; }
+  .main .left-nav li.active a, .main .left-nav li.active a:hover, .main .left-nav li.active a:focus {
+    background-color: #004156; }
+  .main .left-nav a {
+    color: #004156; }
+.main .main-content {
+  padding-top: 2rem; }
+  .main .main-content h3 {
+    margin-top: 0; }
+  .main .main-content .row {
+    margin-left: 0;
+    margin-top: 2rem; }
+  .main .main-content .row-top {
+    margin-top: 0; }
+  .main .main-content .row-right {
+    margin-right: 0; }
+  .main .main-content .form-heading {
+    margin-top: 0;
+    margin-bottom: 15px; }
+  .main .main-content .inline-control {
+    width: 150px; }
+  .main .main-content .label-right {
+    margin-left: 1rem; }
+  .main .main-content .row-first {
+    margin-top: 4rem; }
+  .main .main-content .seperator {
+    border-bottom: 1px solid #DDDDDD; }
+  .main .main-content .badge-green {
+    background-color: lightgreen; }
+  .main .main-content .badge-red {
+    background-color: orangered; }
+  .main .main-content .badge-yellow {
+    background-color: yellow; }
+  .main .main-content .badge {
+    color: #000000; }
+  .main .main-content .to-do .well {
+    margin-bottom: 10px; }
+  .main .main-content .to-do .overdue .todo-date {
+    color: red; }
+  .main .main-content .to-do .overdue .well {
+    border: 1px solid red; }
+  .main .main-content .to-do .complete {
+    color: #aaaaaa; }
+    .main .main-content .to-do .complete .todo-text {
+      text-decoration: line-through; }
+  .main .main-content .data-table .well {
+    padding-left: 0;
+    padding-top: 24px; }
+  .main .main-content .data-table .form-control {
+    height: 25px;
+    padding: 2px;
+    margin: 0 5px; }
+  .main .main-content .data-table .btn {
+    height: 25px;
+    padding: 2px 14px; }
+  .main .main-content .form-control.hor-first {
+    margin: 0; }
+  .main .main-content .theme-color {
+    margin-left: 0; }
+    .main .main-content .theme-color .brown {
+      margin-right: 30px;
+      width: 90px;
+      height: 90px;
+      background-color: #743b00; }
+    .main .main-content .theme-color .dark-blue {
+      margin-right: 30px;
+      width: 90px;
+      height: 90px;
+      background-color: #004156; }
+    .main .main-content .theme-color .blue {
+      margin-right: 30px;
+      width: 90px;
+      height: 90px;
+      background-color: #1d005a; }
+    .main .main-content .theme-color .wine {
+      margin-right: 30px;
+      width: 90px;
+      height: 90px;
+      background-color: #67002d; }
+    .main .main-content .theme-color .green {
+      margin-right: 30px;
+      width: 90px;
+      height: 90px;
+      background-color: #3f6d00; }
+    .main .main-content .theme-color .active {
+      border: 7px solid #999999; }
+
+.glyphicon {
+  margin-right: 1rem; }
+
+.light {
+  color: #777777; }
