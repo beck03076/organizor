@@ -1,0 +1,11 @@
+<!-- All resources to configure -->
+<div class="col-md-3">
+              <ul class="nav nav-pills nav-stacked">
+                <% [:follow_up,:email,:search,
+                    :columns_to_display,:note,:theme].sort.each do |r| %>
+                   <li id='<%= r.to_s %>' >
+                     <%= link_to r.to_s.titleize,"/user_configs/manage/#{r.to_s}" %>
+                   </li>
+                <% end %>
+              </ul>
+</div>

@@ -1,13 +1,30 @@
+                    
+                     <%= fbox(f,[:def_note,
+                          size: "6x6",
+                          class: "tinymce",
+                          style:"height:auto;"],"text_area",nil) %>   
 
-<%= form_for(@user_config) do |f| %>
- 
-        <%= f.label :default_note %>
-        <%= f.text_area :def_note,class: "tinymce"%>
-       <div class="cl"></div>
-      <br/>
-      <br/>      
 
-      <%= f.submit "Save",{class: "btnp"} %>
-       
 
-<% end %>
+<script>
+
+tinymce.init({
+     selector: "textarea.tinymce",
+     theme: "modern",
+     plugins: [
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+      "searchreplace wordcount visualblocks visualchars code fullscreen",
+      "insertdatetime media nonbreaking save table contextmenu directionality",
+      "emoticons template paste textcolor "
+     ],
+     toolbar1: "insertfile undo redo | styleselect | sizeselect | bold italic | fontselect |  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+     toolbar2: "print preview media | forecolor backcolor emoticons",
+     image_advtab: true,
+     templates:[ 
+        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
+        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
+    ],
+     autosave_ask_before_unload: false
+});
+
+</script>

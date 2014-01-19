@@ -1,15 +1,21 @@
-<div class="tab-container">
-    <div class="tab-content" style="display: block;">
-        <div class="boxp box-theme-ch">
-          <ul>
-              <% @resources.each do |r| %>
-                <li class="<%= r %>">  
-                  <%= link_to r.titleize, "#" %>
-                </li>
-              <% end %>
-          </ul>
+<!-- index page of resources -->
 
-        </div>
+<%= render 'menu' %>
+
+
+<div class="col-md-9">
+  <div class="config-content">
+    <div class="row row-top">
+      <h3>Configuration</h3>
     </div>
+    <div class="row">
+      <h4>Click on a resource to configure.</h4>
+    </div>
+       
+  </div>
+   
+<%= image_tag "/images/icons/cupboard.png",{size: "400x400", align: "middle", style: "padding-top: 50px;"} %>
 </div>
+
+
 

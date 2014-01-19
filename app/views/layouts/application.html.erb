@@ -49,9 +49,19 @@
       <div class="container main">
         <div class="row">
           <div class="col-md-2 left-nav">
-            <ul class="nav nav-pills nav-stacked">
-              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a></li>
-              <li><%= link_to enquiries_path  do %><span class="glyphicon glyphicon-earphone"></span>Enquiries<% end %></li>
+            <ul class="nav nav-pills nav-stacked main-menu">
+              <li class="disabled">
+                  <a href="#">
+                  <span class="glyphicon glyphicon-th"></span>
+                  Dashboard
+                  </a>
+              </li>
+              <li id="enquiries">
+                  <%= link_to enquiries_path  do %>
+                  <span class="glyphicon glyphicon-earphone"></span>
+                  Enquiries
+                  <% end %>
+              </li>
               <li><%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registration<% end %></li>
               <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
               <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
@@ -59,7 +69,7 @@
               <li><%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calender<% end %></li>
               <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
               <li><%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %></li>
-              <li><%= link_to "/user_configs/#{current_user.conf.id}/edit" do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
+              <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
               <li>
                 <% if u.role?(:agency_administrator) %>
                     <%= link_to "/users" do %>
@@ -71,7 +81,12 @@
                   <% end %>
                 <% end %>
               </li>
-              <li class="active"><%= link_to "#" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %></li>
+              <li class="active">
+                  <%= link_to "/configuration" do %>
+                  <span class="glyphicon glyphicon-list"></span>
+                  Configuration
+                  <% end %>
+              </li>
             </ul>
           </div>
           <div class="col-md-10 col-md-offset-2 main-content">
@@ -88,10 +103,5 @@
       </div>
     </div>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="jquery-1.10.2.min.js"></script>
   </body>
 </html>

@@ -1,7 +1,23 @@
-<ul>
-<% @user_config.each do |i| %>
-<li>
-  <%>
-</li>
-<% end %>
-</ul>
+<!-- settings menu --->
+<%= render 'user_configs/menu' %>
+
+<div class="col-md-9">
+  <div class="config-content">
+    <div class="row row-top">
+      <h3>Settings</h3>
+    </div>
+    <div class="row">
+      <h4>Manage the app to suit your taste. Start by selecting an item.</h4>
+    </div>
+    <%= image_tag "/images/icons/settings.jpg",{size: "500x500", align: "middle"} %>
+  </div>
+</div>
+
+
+
+
+<script>
+
+ actmm('settings'); 
+
+</script>

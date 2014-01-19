@@ -1,0 +1,24 @@
+                   
+                    <%= bs(f,"def_follow_up_days","text_field",["Days to Wait",3],5) %>
+                    
+                    <%= bs(f,"def_f_u_name","text_field",["Default Title",3],5) %>
+                    
+                    <%= bs(f,[:def_f_u_desc,size: ""],"text_area",["Default Description",3],5) %>
+                    
+                    <%= bs(f,[:def_f_u_type,EventType.order(:name), 
+                                            :id, 
+                                            :name,
+                                            {prompt: "-event type-"},
+                                            {}],
+                                            "collection_select",
+                                            ["Default Type",3],5) %>
+                                            
+                    <%= bs(f,[:def_f_u_ass_to,User.order(:first_name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-assign to-"},{}],
+                                              "collection_select",
+                                              ["Default Assign To",3],5) %>
+                                              
+                    <%= bs(f,:auto_cr_f_u,"check_box",["Auto Create",3],5) %>    
+

@@ -1,5 +1,7 @@
+<div class="row">
+<div class="col-md-12">
+<ul class="nav nav-pills seperator">
 
-<ul class="tab-menus">
   <!-- [tab_name,display,class,partial]  -->
   <% tabs =  [["Launch","none","launch","show"], 
               ["All","","all","listing"]] %>
@@ -13,17 +15,22 @@
 
            <% i1 = i[0].tr(" ","_").downcase %>
            
-           <li lang='<%= i1 + '_id' %>'  class='<%= i1 %> ' style='display:<%= i[1] %>' 
-           onclick=<%= model+"TabSwitch(this);" %> data-cond='<%= i1 %>' data-partial='<%= i[3] %>'
-           title="<%= i[0] %>" >
+           <li id="<%= i1 %>">
            
-             <%= truncate(i[0], length: 10) %>
+             <%= link_to truncate(i[0]),"#",{onclick: model+"TabSwitch(this);",
+                                             data: {cond: i1 , partial: i[3] },
+                                             lang: i1 + "_id",
+                                             class: i1,
+                                             style: "display: #{i[1]}",
+                                             title: i[0] } %>
              
            </li>
            
            
   <% end %>
 </ul>
+</div>
+</div>
 
     <div class="tab-content" id="all_id"> </div>
 

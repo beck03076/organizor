@@ -36,12 +36,28 @@ class UserConfigsController < ApplicationController
   # GET /user_configs
   # GET /user_configs.json
   def index
-    @user_config = current_user.conf
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @user_configs }
+  end
+  
+  def manage
+    set_url_params
+    
+    @user_config = current_user.conf
+    
+    if ["columns_to_display","search"].include?(@partial)
+    
+      @enq_cols = (Enquiry.column_names.sort - ["image",
+                                                   "assigned_by",
+                                                   "created_by"])
+                                                   
+      @reg_cols = Registration.column_names.sort
+      
+      @ins_cols = Institution.column_names.sort 
+      
+      @per_cols = Person.column_names.sort
+      
     end
+    
   end
 
   # GET /user_configs/1

@@ -230,7 +230,7 @@ function selectColorData(what){
 }
 
 /*SET THE THEME SESION VALUE HERE*/
-function setColorsFromSession(){
+function setColorsFromSession1(){
     var backgroundColor = ($.cookie('bgColor') == undefined) ? "white" : $.cookie('bgColor') ;
     setBGColor(backgroundColor);
     

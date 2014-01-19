@@ -29,6 +29,8 @@ private
     
     enquiries.map do |enq|
        temp = []
+
+
        # setting the class so that the row be green for registered enqs
        reg = (enq.registered ? "enq_reg" : "")
        # setting the class so that the row be red for todays follow up
@@ -47,29 +49,27 @@ private
         like = image_tag("/images/icons/yellow.png")
        end
        
-       
+
        
        temp << check_box_tag(:tr,enq.id,false,{data: {launch: "/enquiries/#{enq.id}",
                                                       registered: reg,
                                                       fu_now: v_fu_now,
                                                       fu_week: v_fu_week,
-                                                       }}) + spc + like + spc
-       
-      
-       
-       temp << link_to(image_tag("/images/icons/edi.png"),edit_enquiry_path(enq.id)) + spc +
-               link_to(image_tag("/images/icons/del.png"),
-                       "/enquiries/#{enq.id}",
-              {:method => "delete",data: { confirm: 'Are you sure to deactivate this enquiry?' }})
-               
+                                                       }})
 
         @cols.map{|i|
           if i.is_a?(Array)
-            temp << enq.send(i[1].to_s).try(i[2].to_s)
+            temp << enq.send(i[1]).try(i[2])
           else
-            temp << enq.send(i.to_s).to_s
+            temp << enq.send(i)
           end
         }
+        
+        temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        edit_enquiry_path(enq.id)) + spc +
+               link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                       "/enquiries/#{enq.id}",
+              {:method => "delete",data: { confirm: 'Are you sure to deactivate this enquiry?' }})
        
        final << temp
      end
@@ -115,6 +115,7 @@ private
 #        ress = res[0].to_s.pluralize
         enqs = enqs.includes(res[0]).where("#{ress}.#{res[1].to_s} like :search", search: "%#{params[:sSearch]}%")
       elsif params[:sSearch_0].empty?
+        # not implemeted if def search is selected as asso
         enqs = enqs.where("enquiries.#{@def_srch} like :search", search: "%#{params[:sSearch]}%")
       else
         enqs = enqs.where("enquiries.#{params[:sSearch_0]} like :search", search: "%#{params[:sSearch]}%")
@@ -130,12 +131,12 @@ private
     params[:iDisplayStart].to_i/per_page + 1
   end
 
-  def per_page
+  def per_page 
     params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
   end
 
   def sort_column
-    columns = [:id,:id] + (@cols - ["statuses"])
+    columns = [:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 

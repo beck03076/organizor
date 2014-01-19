@@ -1,13 +1,26 @@
 <script type="text/javascript">
 $(function(){
-  $("ul.tab-menus li.all").trigger('click');
-  activeMM("enquiriesMM");
+  $("ul.seperator > li > a.all").trigger('click');
 });
 
 </script>
-<div class="tab-container">
-   <%= render 'enquiries/tabs', :stat => "EnquiryStatus",:model => "enquiry" %>  
-</div>
 
+            <div class="row row-top">
+              <div class="col-md-10">
+                <h3>Enquiries</h3>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group form-last pull-right">
+                  <button type="submit" class="btn btn-primary">New Enquiry</button>
+                </div>
+              </div>
+            </div>
+            
+
+  <%= render 'enquiries/tabs', :stat => "EnquiryStatus",:model => "enquiry" %>  
+  
+
+
+ <script src="/dt-bootstrap.js"></script>
 
 

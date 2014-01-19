@@ -1,18 +1,31 @@
-<%= form_for(@user_config) do |f| %>
- 
-        <%= f.label :default_enquiry_email %>
-        <%= f.select :def_enq_email,["email1","email2"] %>
-        <br/>
-        <br/>
-        <%= f.label :default_registration_email %>
-        <%= f.select :def_reg_email, ["email1","email2"] %>
-    <div class="cl"></div>
-      <br/>
-      <br/>      
-      <br/>
 
-      <%= f.submit "Save",{class: "btnp"} %>
-       
+                       <%= bs(f,["def_enq_email",
+                                 ["email1","email2"],
+                                 {},
+                                 {}],
+                                 "select",
+                                 ["Default Enquiry Email",4],5) %>
+                       
+                       <%= bs(f,["def_reg_email",
+                                 ["email1","email2"],
+                                 {},
+                                 {}],
+                                 "select",
+                                 ["Default Registration Email",4],5) %>
+                                 
+                       <%= bs(f,["def_create_enquiry_email",
+                                 (EmailTemplate.all.map &:name),
+                                 {},
+                                 {}],
+                                 "select",
+                                 ["Default Create Enquiry Email",4],5) %>
 
-<% end %>
-        
+                      <%= bs(f,["def_from_email",
+                                 (Smtp.all.map &:name),
+                                 {},
+                                 {}],
+                                 "select",
+                                 ["Default Create Enquiry Email",4],5) %>
+
+                      <%= bs(f,:auto_email_enq,"check_box",["Auto Send",4],5) %> 
+

@@ -1,6 +1,10 @@
 Organizor::Application.routes.draw do
 
   resources :branches
+  
+  match '/user_configs/manage/:partial' => 'user_configs#manage'
+  
+  match '/configuration' => 'resources#index'
 
 
   # this url will be hit once the google authentication is succesful

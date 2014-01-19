@@ -1,23 +1,6 @@
-<div class="col-md-3">
-  <ul class="nav nav-pills nav-stacked">
-      <% [:programme_type,:application_status,:contact_type,
-      :course_level,:course_subject,:doc_category,
-      :english_level,:enquiry_status,:event_type,
-      :exam_type,:qualification,:student_source,
-      :sub_agent,:todo_status,:todo_topic].each do |r| %>
-      <% if can? :read, r.to_s.camelize.constantize %>
-      <li>
-         <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
-      </li>
-      <% end %>
-      <% end %>
-  </ul>
-</div>
-<!-- resources -->
-<% resource_disp1 = "Programme Type" %>
-<% resource_disp2 = "Programme Types" %>
-<% resource = ProgrammeType.all %>
-<% new_resource = ProgrammeType.new %>
+<!-- rendering the left menu -->
+<%= render 'resources/menu' %>
+
 <div class="col-md-9">
   <div class="config-content">
     <div class="row row-top">
@@ -80,3 +63,8 @@
     </div>
   </div>
 </div>
+
+<!-- To activate the currently clicked resource menu -->
+<script>
+    $(".col-md-3 > ul.nav-pills > li#<%= resource_disp1.underscore.tr(" ","_") %>").attr('class','active');
+</script>

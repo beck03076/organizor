@@ -1,81 +1,116 @@
-<!-- Listing of enquiries -->
-<div class="brg0 legends" align="center">
-        <ul class="theme-colrs-lg">
-        <li><b>Legends</b></li>
-        <li><span class="red-theme-today"></span>&nbsp;Today</li>
-        <li><span class="yellow-theme-week"></span>&nbsp;This Week</li>
-        <li><span class="green-theme-reg"></span>&nbsp;Registered</li>
-        <li><img src='/images/icons/red.png'/>&nbsp;Score < 3</li>
-        <li><img src='/images/icons/yellow.png'/>&nbsp;Score 3-7</li>
-        <li><img src='/images/icons/green.png'/>&nbsp;Score > 7</li>
-        </ul>
-</div>
-
-<div class="cl"></div>
-<br/>
-
+<!-- Setting id  -->
 <% _id =  @status + "_enquiries" %>
+<!-- Displaying data in the jquery datatable -->
+            <div class="row">
+              <div class="col-md-12 data-table">
+            <div class="well">
+            <% div_id = "group_assign_to_" + _id %>
+            <div id="<%= div_id %>" data-model="Enquiry"></div>
+            <div class="row row-top">
+              <div class="col-md-2">
+                <select id="mass-actions" class="form-control hor-first">
+                    <option>-Mass Actions-</option>
+                    <!----------------------- Group Assign Start---------------------------->
+                    <% if can? :update, Enquiry %>
+                      <option value="assignTo">Assign to</option>
+                      <% js = 'groupAssignTo' %>
+                    <% end %>
+                    <!----------------------- Group Assign End---------------------------->
+                    <!----------------------- Bulk Email Start---------------------------->
+                    <% if can? :create, Email %>
+                      <option value="bulkEmail">Bulk email</option>
+                      <% js = 'bulkEmail' %>
+                    <% end %>
+                    <!----------------------- Bulk Email End---------------------------->
+                    <!----------------------- Group Delete Start--------------------------->
+                    <% if can? :destroy, Enquiry %>
+                      <option value="deactivate">Deactivate</option>
+                    <% end %>
+                    <!----------------------- Group Delete End--------------------------->
+                </select>
+                <!----------------------- Group Assign Modal Start---------------------------->
+                <% ctnt = '<form class="form-inline" role="form">' +
+                          label_tag(:user,"User") +
+                          select_tag("group_assign_user_#{_id}",
+                          options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
+                          {prompt: "-user-",
+                          class: "form-control hor-first",
+                          data: {model: "Enquiry"}}) +
+                          '</form>' %>
+                
+                <%= render 'shared/modal',id: 'assignToModal', 
+                           content: ctnt.html_safe,
+                           header: 'Assign To',
+                           button: "<button onclick=groupAssignTo('#{_id}');>Assign</button>" %>
+                <!----------------------- Group Assign Modal End---------------------------->
+                <!----------------------- Bulk Email Start---------------------------->
+                <% ctnt = 'Are you sure you want to send email to all the selected email ids ?' %>
+                
+                <%= render 'shared/modal',id: 'bulkEmailModal', 
+                           content: ctnt.html_safe,
+                           header: 'Bulk Email',
+                           button: "<button onclick=bulkEmail('#{_id}');>Yes</button>" %>
+                <!-----------------------Bulk Email Modal End---------------------------->
+                <!----------------------- Group Delete Modal Start---------------------------->
+                <% ctnt = 'Are you sure you want to deactivate the selected enquiries ?' %>
+                
+                <%= render 'shared/modal',id: 'deactivateModal', 
+                           content: ctnt.html_safe,
+                           header: 'Group Delete',
+                           button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
+                <!-----------------------Group Delete Modal End---------------------------->
+                
+                
+              </div>
+              <!-----------------------Search Start---------------------------->
+              <div class="col-md-7 text-center filter-center">
+                <form class="form-inline" role="form">
+                  <div class="form-group">
+                    <label for="id_column">Filter by</label>
+                    <%= select_tag :abdc,
+                        options_for_select((@cols - [:follow_up_date]).map{|i| 
+                        i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] 
+                        }.unshift(["-column name-",""])),
+                        {id: "mySelect",class: "form-control hor-first"} %>
+                  </div>
+                  <div class="form-group">
+                    <label for="id_search">containing</label>
+                    <input type="text" class="form-control inline-control" id="id_search" placeholder="search term">
+                  </div>
+                  <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
+                </form>
+              </div>
+             <!-----------------------Search End---------------------------->
+             <!-----------------------FollowUp Filter Start---------------------------->
+              <div class="col-md-3">
+                <form class="form-inline" role="form">
+                  <div class="form-group pull-right">
+                    <label for="id_column">Follow up</label>
+                    <%= select_tag :abdc,
+                      options_for_select([["All Time",""],
+                                         ["Today","todays"],
+                                         ["This Week","this_weeks"],
+                                         ["This Month","this_months"],
+                                         ["No FollowUp","no_followups"]]),
+                      {id: "followUpSelect",class: "form-control hor-first"} %>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-----------------------FollowUp Filter End---------------------------->
 <br/>
 
-<!----------------------- New Enquiry ---------------------------->
-<% if can? :create, Enquiry %>
-<%= link_to "New Enquiry", new_enquiry_path, {class: "btnp"} %>
-<% else %>
-<%= link_to "New Enquiry", "#", {class: "btnpd"} %>
-<% end %>
-<!----------------------- Group Assign ---------------------------->
-            <% div_id = "group_assign_to_" + _id %>
-            
-            <% if can? :update, Enquiry %>
-              <%= link_to "Assign To", "#", {class: "btnp", onclick: "showPopUp('#{div_id}');"} %>
-            <% else %>
-              <%= link_to "Assign To", "#", {class: "btnpd"} %>
-            <% end %>
-            
-            <div id="<%= div_id %>" class="addNewPop" data-model="Enquiry" style="display: none; top: 483px; left: 455px;"> 
-              <div class="frbox">
-                <%= image_tag "/images/icons/user_group.png" ,{size: "20x20"}%>
-                <%= label_tag :user %>
-                <%= select_tag "group_assign_user_#{_id}",
-                               options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
-                               {:prompt => "--User--"} %>
-                <span class="btnp bClose" onclick="groupAssignTo('<%= _id %>');">Assign</span>
-              </div>
-            </div>
-           <!----------------------- Bulk Email ---------------------------->
-           
-           <% if can? :create, Email %>
-             <%= link_to "Bulk Email", "#", {class: "btnp", onclick: "bulkEmail('#{_id}');"} %>
-           <% else %>
-             <%= link_to "Bulk Email", "#", {class: "btnpd"} %>
-           <% end %>
-                       
-           <!----------------------- Group Delete ---------------------------->
-            <% div_delete_id = "group_delete_to_" + _id %>
-            
-            <% if can? :destroy, Enquiry %>
-              <%= link_to "Deactivate", "#", {class: "btnp ", onclick: "showPopUp('#{div_delete_id}');"} %>
-            <% else %>
-              <%= link_to "Deactivate", "#", {class: "btnpd "} %>
-            <% end %>
-            <div id="<%= div_delete_id %>" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
-              <div class="frbox">
-                <%= image_tag "/images/icons/folder_delete.png" ,{size: "20x20"}%>
-                <h5>Are you sure about this group deactivate?</h5>
-                <span class="btnp bClose" onclick="groupDelete('<%= _id %>');"> Yes </span>
-                <span class="btnp bClose"> No </span>
-              </div>
-            </div>
-<!---------------------------------------------------------------->
-<table id='<%= _id %>' class="display" data-source="<%= enquiries_url(format: "json") %>">
+<table id='<%= _id %>' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= enquiries_url(format: "json") %>">
 <thead>
   <tr>
       <th>
-      <%= check_box_tag "master",nil,false,{id: "master_check",class:"nowrap",checked: false, onclick: "toggleAllCheck(this,'#{_id}');"} %>
+      <%= check_box_tag "master",nil,false,{id: "master_check",
+                                            class:"nowrap",
+                                            checked: false, 
+                                            onclick: "toggleAllCheck(this,'#{_id}');",
+                                            autocomplete: "off"} %>
       </th>
-      <th>
-      <%= label_tag :actions %>
-      </th>
+      
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
           <th><%= i[1].to_s.titleize %></th>
@@ -85,67 +120,38 @@
           </th>
         <% end %>
       <% end %>
+      
+      <th>
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+      </th>
      
   </tr>
-
-
 </thead>
-
-
-
-<!----------------------- Search filter---------------------------->
-       <%= select_tag :abdc,
-                      options_for_select((@cols - [:follow_up_date]).map{|i| i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] }.unshift(["--Filter By--",""])),
-                      {id: "mySelect",style: "width:150px;margin-left:10px;height:24px;",class: "srch_sel fr"} %>
-
-
-
-<!----------------------- FollowUp filter ---------------------------->
-       
-                      
-                      
-       <%= label_tag "follow_up_filter:",
-               nil,
-               {class: "",style: "margin-left:15px;margin-right:5px;margin-bottom:10px;"} %>
-       <%= select_tag :abdc,
-                      options_for_select([["--All Time--",""],["Today","todays"],["This Week","this_weeks"],["This Month","this_months"],["No FollowUp","no_followups"]]),
-                      {id: "followUpSelect",style: "width:150px",class: ""} %>
-
-<!----------------------- Reset filter---------------------------->
-       <span class="srch_reset btnp" style="margin-left:5px;"  onclick="resetDataTable();">
-       Reset
-       </span>
-<!----------------------- Tooltip ---------------------------->
-<%= image_tag "/images/icons/info.png",{class: "tooltip",
-                                        title: "Use the dropdown to filter search. Use reset to clear the search box"} %>      					  
-                      <br/><br/>
-       
-<tbody>
-
-</tbody>
-
 
 </table>
 
-            
-            
 <script>
 
-$(function(){
+ var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');
+ 
+ $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
+                           '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
+                           '<option>10</option>' +
+                           '<option>20</option>' +
+                           '<option>30</option>' +
+                           '<option>40</option>' +
+                           '<option>50</option>' +
+                           '</select>'+
+                           '<label for="id_column" class="label-right">rows per page</label>' +
+                           '</div></form>');
+                           
+ $('#mass-actions').click(function(){
+   var rows = getCheckedRowsAsArray('<%= _id %>');
+   var clicked = $("#mass-actions").val();
+   $('#' + clicked + 'Modal').modal('show');
+ });
 
-dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size + 1 %>');
-setColorsFromSession();
-activeMM("enquiriesMM");
-mytooltip();
-setDataTableWidth();
+ actmm('enquiries'); 
 
-$('.dataTables_filter .srch_sel').remove();
-$('.srch_sel').prependTo('#<%= _id %>_filter');
-});
 </script>
-            
-            
-            
-            
-            
-            
+

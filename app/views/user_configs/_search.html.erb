@@ -1,0 +1,28 @@
+
+
+
+      <%= bs(f,["def_enq_search_col",
+                 (@enq_cols.map {|i| [i.titleize,i]}),
+                 {},{}],
+                "select",
+                ["Default Enquiry Search",4],5) %>
+      
+      
+      <%= bs(f,["def_reg_search_col",
+                 (@reg_cols.map {|i| [i.titleize,i]}),
+                 {},{}],
+                "select",
+                ["Default Registration Search",4],5) %>
+
+      <%= bs(f,["def_ins_search_col",
+                         (@ins_cols.map {|i| [i.titleize,i]}),
+                         {},{}],
+                        "select",
+                        ["Default Institution Search",4],5) %>
+      
+      <%= bs(f,["def_per_search_col",
+                         (@per_cols.map {|i| [i.titleize,i]}),
+                         {},{}],
+                        "select",
+                        ["Default People Search",4],5) %>
+      

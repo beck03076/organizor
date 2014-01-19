@@ -4,18 +4,17 @@ module UserConfigsHelper
   
    html = ""
    
-   html += "<div id='ms-selected-enq_cols' data-enq_cols='#{data_values}'></div>"
+   html += "<div id=#{model} class='ms-selected-cols' data-cols='#{data_values}'></div>"
    
-   html += '<div class="field" style="display:inline-block;">'
+   html += '<div class="form-group">
+                      <div class="col-md-12">'
    
    html +=  select_tag("user_config[#{model}][]",
            options_for_select(values),
                       {multiple: true,
-                              size: 2,
-                 include_blank: false, 
-                      id: model}) 
+                       class: "multiple-select"}) 
    
-   html += '<br/> <div class="cl"></div> </div>'
+   html += '</div> </div>'
                
    html.html_safe
   

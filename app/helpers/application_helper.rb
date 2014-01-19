@@ -1,5 +1,36 @@
 module ApplicationHelper
 
+  # bs -stands for bootstrap
+  def bs(f,n,elem,lab,div,mand = nil)
+
+    if lab[0].nil?
+      l = n.is_a?(Array) ? n[0].to_s : n.to_s
+    else
+      l = lab[0]
+    end
+    
+    if n.kind_of?(Array)
+      p "**********"
+      p n
+      n.last[:class] =  "form-control"
+      name = n
+    else 
+      name = [n,class: "form-control"]
+    end
+    p "^^^^^^^"
+    p name
+
+    ('<div class="form-group">' +
+    f.label((name.kind_of?(Array) ? n[0].to_sym : n.to_sym),
+              l.titleize,
+              {class: "control-label col-sm-" + lab[1].to_s }) + 
+     "<div class=col-sm-#{div} >" + 
+     f.send(elem,*name) + 
+     "</div>" +
+     "</div>" ).html_safe
+    
+  end
+
   # f  object, name = attribute name, man = mandatory, lab = label name, cl_add = extra classes to add.
   def fs(f,name,elem,mand = nil,lab = nil,cl_add = nil)
   

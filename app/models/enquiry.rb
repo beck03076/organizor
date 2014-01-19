@@ -54,13 +54,13 @@ class Enquiry < ActiveRecord::Base
   
   
   scope :todays, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
-                               WHERE date(fu.starts_at) = '#{Date.today}')")
+                               WHERE date(fu.starts_at) = '#{Date.today.to_s(:db)}')")
                                
   scope :this_weeks, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
-                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_week}' AND '#{Date.today.at_end_of_week}')")
+                                   WHERE fu.starts_at BETWEEN '#{Date.today.at_beginning_of_week.to_s(:db)}' AND '#{Date.today.at_end_of_week.to_s(:db)}')")
                                    
   scope :this_months, where("enquiries.id IN (SELECT fu.enquiry_id FROM follow_ups fu 
-                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month}' AND '#{Date.today.at_end_of_month}')")
+                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month.to_s(:db)}' AND '#{Date.today.at_end_of_month.to_s(:db)}')")
 
   
   attr_accessible :emails_attributes,:programmes_attributes,
@@ -106,7 +106,7 @@ class Enquiry < ActiveRecord::Base
   
   def follow_up_date
     out = self.follow_ups.map{|i| dat(i.starts_at) }.sort
-    out.size > 1 ? out[0] + "<span title='#{out.join(", ")}' class=tooltip>...</span>".html_safe : out[0]
+    out.size > 1 ? out[0] + "<span title='#{out.join(", ")}' class=tooltip-c>...</span>".html_safe : out[0]
   end
   
   

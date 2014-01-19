@@ -1,0 +1,78 @@
+<!-- settings menu --->
+<%= render 'user_configs/menu' %>
+
+<!-- Search settings -->
+<div class="col-md-9">
+              <div class="row row-top">
+                <h3><%= @partial.titleize %></h3>
+              </div>
+              <div class="row">
+                <div class="well">
+                   <%= form_for(@user_config, html: {class: "form-horizontal"}) do |f| %>
+                    <%= f.hidden_field :user_id,value: current_user.id %>
+                       <!-- Contains the content of the form, same form since all just edits the user_configs table -->
+                       <%= render @partial, f: f %>
+
+                    <br/>
+                    
+                    <div class="form-group form-last">
+                      <div class="col-sm-offset-10 col-sm-5">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+</div>
+
+<script>
+ 
+ 
+ actmm('settings');
+ 
+ $(".col-md-3 > ul.nav-pills > li#<%= @partial %>").attr('class','active');  
+
+
+$('.multiple-select').multiSelect({
+        selectableHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        selectionHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        afterInit: function(ms){
+          var that = this,
+              $selectableSearch = that.$selectableUl.prev(),
+              $selectionSearch = that.$selectionUl.prev(),
+              selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+              selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+          .on('keydown', function(e){
+            if (e.which === 40){
+              that.$selectableUl.focus();
+              return false;
+            }
+          });
+
+          that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+          .on('keydown', function(e){
+            if (e.which == 40){
+              that.$selectionUl.focus();
+              return false;
+            }
+          });
+        },
+        afterSelect: function(){
+          this.qs1.cache();
+          this.qs2.cache();
+        },
+        afterDeselect: function(){
+          this.qs1.cache();
+          this.qs2.cache();
+        }
+      });
+
+colsClick("enq_cols");
+colsClick("reg_cols");
+colsClick("ins_cols");
+colsClick("per_cols");
+
+
+</script>
