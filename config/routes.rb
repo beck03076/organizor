@@ -2,6 +2,8 @@ Organizor::Application.routes.draw do
 
   resources :branches
   
+  match '/edit_resource/:r_name/:r_id' => "resources#edit"
+  
   match '/user_configs/manage/:partial' => 'user_configs#manage'
   
   match '/configuration' => 'resources#index'
@@ -195,7 +197,7 @@ Organizor::Application.routes.draw do
     end
   end
   
-  match '/enquiries/:id/:partial' => "enquiries#show"
+  
   
   resources :enquiries do
       member do

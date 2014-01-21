@@ -39,6 +39,10 @@
     <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
     <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
     
+
+                                              
+    <%= link_to "Create Email Template","/email_templates/new",{target: "_blank"} %>
+         <div id="email_template_create"> </div>  
     <div class="fbox">
          <%= p.label :email_template %>
          
@@ -55,38 +59,31 @@
          <%= link_to "Create Email Template","/email_templates/new",{target: "_blank"} %>
          <div id="email_template_create"> </div>      
     </div>
-    <div class="fbox">
-        <%= label_tag :send_from %></td>
-        <%= p.collection_select(:smtp_id,
-                                Smtp.all,
-                                :id,
-                                :name,
-                                {:prompt => "--From--"},
-                                {:class => "countries_select"}) %>
-                                
-    </div>
-    <div class="fbox">
-        <%= p.label :to %>
-        <%= p.text_area :to,{id: "email_to",style: "height:85px;width:320px;overflow:auto",wrap: "hard"} %>&nbsp;
-    </div>
-    <br/>
-    <div class="fbox">
-    <span onclick="$('.cc').slideToggle();">add cc</span> |
-        <span onclick="$('.bcc').slideToggle();">add bcc</span>
-    </div>
     
-    <div class="fbox cc" style="display:none;">
-        <%= p.label :cc %>
-        <%= p.text_field :cc %>
-    </div>
-    <div class="fbox bcc" style="display:none;">
-        <%= p.label :bcc %>
-        <%= p.text_field :bcc %>
-    </div>
-    <div class="fbox">
-        <%= p.label :subject %>
-        <%= p.text_area :subject,{style: 'width:350px;height:20px;'} %>
-    </div>
+    <div class="row">
+    <%= bs(p,[:smtp_id,Smtp.order(:name), 
+                       :id, 
+                       :name,
+                       {prompt: "-send from-"},
+                       {:class => "countries_select"}],
+                       "collection_select",
+                       ["Send From",4],8,6,"row") %>
+                       
+    <%= bs(p,[:to,
+              {id: "email_to",style: "height:85px;width:320px;overflow:auto",wrap: "hard"}],
+              "text_area",
+              [nil,4],8,6,"row") %>
+
+    <span onclick="$('.cc').slideToggle();">add cc</span> |
+    <span onclick="$('.bcc').slideToggle();">add bcc</span>
+    
+    <%= bs(p,:cc,"text_field",[nil,4],8,6,"row cc 'style=display:none;'") %>
+    
+    <%= bs(p,:bcc,"text_field",[nil,4],8,6,"row bcc 'style=display:none;'") %>
+    
+    <%= bs(p,:subject,"text_field",[nil,4],8,6,"row") %>
+    
+
     <div class="fbox" style="height:auto">
         <%= p.label :body %>
         <%= p.text_area(:body,{:class => "tinymce"}) %>

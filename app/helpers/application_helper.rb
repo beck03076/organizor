@@ -21,7 +21,7 @@ module ApplicationHelper
   end
 
   # bs -stands for bootstrap
-  def bs(f,n,elem,lab,div,div2 = nil,mand = nil)
+  def bs(f,n,elem,lab,div,div2 = nil,div3 = nil, mand = nil)
 
     if lab[0].nil?
       l = n.is_a?(Array) ? n[0].to_s : n.to_s
@@ -38,8 +38,12 @@ module ApplicationHelper
     
     div2_head = div2.nil? ? "" : "<div class='col-md-#{div2}'>"
     div2_tail = div2.nil? ? "" : "</div>"
+    
+    div3_head = div3.nil? ? "" : "<div class='#{div3}'>"
+    div3_tail = div3.nil? ? "" : "</div>"
 
-    (div2_head + 
+    (div3_head +
+     div2_head + 
     '<div class="form-group">' +
     f.label((name.kind_of?(Array) ? n[0].to_sym : n.to_sym),
               l.titleize,
@@ -48,9 +52,11 @@ module ApplicationHelper
      f.send(elem,*name) + 
      "</div>" +
      "</div>" + 
-     div2_tail).html_safe
+     div2_tail +
+     div3_tail).html_safe
     
   end
+
 
   # f  object, name = attribute name, man = mandatory, lab = label name, cl_add = extra classes to add.
   def fs(f,name,elem,mand = nil,lab = nil,cl_add = nil)

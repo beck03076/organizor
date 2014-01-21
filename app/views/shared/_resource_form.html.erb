@@ -1,0 +1,25 @@
+<!-- edit any standard name-desc resource -->
+<div class="row">
+      <div class="well">
+        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+          <h4 class="form-heading">New <%= resource_disp1 %></h4>
+          <div class="form-group">
+            <label for="id_name" class="control-label col-sm-2">Name</label>
+            <div class="col-sm-6">
+              <%= f.text_field :name, {class: 'form-control', size: nil} %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="id_des" class="control-label col-sm-2">Description</label>
+            <div class="col-sm-6">
+              <%= f.text_area :desc, {class: 'form-control', cols: nil, rows: nil} %>
+            </div>
+          </div>
+          <div class="form-group form-last">
+            <div class="col-sm-offset-2 col-sm-5">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+</div>
