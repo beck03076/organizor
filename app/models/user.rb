@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   mount_uploader :image, HumanImageUploader
   before_save :default_values
   
+  
+  
   def self.current
     Thread.current[:user]
   end
@@ -34,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :todos, class_name: "Todo",foreign_key: "assigned_to"
   has_many :emails, class_name: "Email",foreign_key: "created_by"
   
+  belongs_to :branch
   
   accepts_nested_attributes_for :permissions
 

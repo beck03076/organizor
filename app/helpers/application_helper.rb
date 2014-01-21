@@ -1,7 +1,27 @@
 module ApplicationHelper
 
+  def prefer_countries(main,sub,values,data_values)
+  
+   html = ""
+   
+   html += "<div id=#{main}-#{sub} class='ms-selected-cols' data-items='#{data_values}'></div>"
+   
+   html += '<div class="form-group">
+                      <div class="col-sm-8 col-sm-offset-2">'
+   
+   html +=  select_tag("#{main}[#{sub}][]",
+           options_for_select(values),
+                      {multiple: true,
+                       class: "multiple-select"}) 
+   
+   html += '</div> </div>'
+               
+   html.html_safe
+  
+  end
+
   # bs -stands for bootstrap
-  def bs(f,n,elem,lab,div,mand = nil)
+  def bs(f,n,elem,lab,div,div2 = nil,mand = nil)
 
     if lab[0].nil?
       l = n.is_a?(Array) ? n[0].to_s : n.to_s
@@ -10,24 +30,25 @@ module ApplicationHelper
     end
     
     if n.kind_of?(Array)
-      p "**********"
-      p n
-      n.last[:class] =  "form-control"
+      n.last[:class] = n.last[:class].present? ? (n.last[:class] + " form-control") : "form-control"
       name = n
     else 
       name = [n,class: "form-control"]
     end
-    p "^^^^^^^"
-    p name
+    
+    div2_head = div2.nil? ? "" : "<div class='col-md-#{div2}'>"
+    div2_tail = div2.nil? ? "" : "</div>"
 
-    ('<div class="form-group">' +
+    (div2_head + 
+    '<div class="form-group">' +
     f.label((name.kind_of?(Array) ? n[0].to_sym : n.to_sym),
               l.titleize,
               {class: "control-label col-sm-" + lab[1].to_s }) + 
      "<div class=col-sm-#{div} >" + 
      f.send(elem,*name) + 
      "</div>" +
-     "</div>" ).html_safe
+     "</div>" + 
+     div2_tail).html_safe
     
   end
 

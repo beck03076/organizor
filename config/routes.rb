@@ -194,7 +194,9 @@ Organizor::Application.routes.draw do
         get :clone
     end
   end
-
+  
+  match '/enquiries/:id/:partial' => "enquiries#show"
+  
   resources :enquiries do
       member do
         get :clone

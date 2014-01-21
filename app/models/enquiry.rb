@@ -6,6 +6,8 @@ class Enquiry < ActiveRecord::Base
   audited
   mount_uploader :image, HumanImageUploader
   
+  belongs_to :branch
+  
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries
   
@@ -72,7 +74,7 @@ class Enquiry < ActiveRecord::Base
                   :name,:address,:status_id,:country_id,
                   :follow_ups_attributes,:active,:notes_attributes,
                   :todos_attributes,:contact_type_id,:registered,
-                  :image,:remote_image_url
+                  :image,:remote_image_url,:branch_id
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
   

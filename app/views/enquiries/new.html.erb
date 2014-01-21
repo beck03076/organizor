@@ -1,23 +1,59 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.new_enquiry").show();
-  $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.new_enquiry").addClass("active-tab");
-  $("ul.tab-menus li.new_enquiry").trigger("click");
-  setColorsFromSession();
-  activeMM("enquiriesMM");
-  
-});
+<!-- create a new enquiry -->
+            <div class="row row-top">
+              <div class="col-md-12">
+                <h3>New Enquiry</h3>
+              </div>
+            </div>
+           
+            <div class="new-enq-reg">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well">
+                     <%= nested_form_for(@enquiry, :html => {onsubmit: "return validateAll(this);",
+                                                    class: "form-horizontal"}) do |f| %>
+                          <% if @enquiry.errors.any? %>
+                            <div id="error_explanation">
+                              <h2><%= pluralize(@enquiry.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+                              <ul>
+                              <% @enquiry.errors.full_messages.each do |msg| %>
+                                <%= msg %>
+                              <% end %>
+                              </ul>
+                            </div>
+                          <% end %>
+ <!-- Assigning the current_user's id to assigned_by and passing with the form as hidden input -->
+                      <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                      
+                      <!-- rendering the partial enquiry_information that captures personal info of an enquiry by passing the form object f -->
+                      <%= render 'enquiry_information', :f => f %>
+                      <br/>
+                      <%= render 'preferred_countries', :f => f %>
+                      <br/>
+                      <%= render 'preferred_programmes', :f => f %>
+                      
+                      
+
+                      <div class="row row-top">
+                        <div class="text-center">
+                          <div class="form-group form-last">
+                            <%= f.submit "Save",{class: "btn btn-primary"} %>
+                            <%= f.submit "Save and New",{class: "btn btn-primary", 
+                                                   name: 'save_new'} %>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      
+                   <% end %>
+                  </div>
+                </div>
+              </div>
+             </div>
+
+<script>
+
+ actmm('enquiries'); 
+
 </script>
-
-
-<div class="tab-container">
-
-<% flash[:notice] = @enquiry.errors.full_messages.join(" ,")  rescue nil %>
-
- <%= render 'tabs', :stat => "EnquiryStatus",:model => "enquiry" %> 
-    <div class="tab-content" id="new_enquiry_id">
-
-    </div>
-</div>
-

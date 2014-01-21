@@ -12,16 +12,15 @@
   
         <% actions.keys.each do |elem| %>
           <% if can? actions[elem][1],actions[elem][0].constantize %>
-              <!--  Shortening variable names -->
-              <% e = elem.to_s.titleize %>
-              <%= radio_button_tag 'action',
-                                   e,
-                                   false,
-                                   onclick: "action_partial('enquiries',
+            <!--  Shortening variable names -->
+            <% e = elem.to_s.titleize %>
+              <li id=<%= "#{elem}" %> >
+                <%= link_to elem.to_s.titleize,
+                    "#",
+                     {onclick: "action_partial('enquiries',
                                                             '#{e.downcase.tr(" ", "_")}',
-                                                            '#{@enquiry.id}');" %>
-              <%= label_tag elem.to_s.titleize %>
-              &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            '#{@enquiry.id}');"} %>
+              </li>
           <% end %>
         <% end %>
         

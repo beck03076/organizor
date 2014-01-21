@@ -1,14 +1,17 @@
-
+<!-- prefer programmes -->
+<h4 class="form-heading">Preferred Programmes</h4>
  
-  
   <%= f.fields_for :programmes do |p| %>
-    <div class="cols boxstheme" style="width:97%">
-        <%= p.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
+        <div class="text-right">
+          <%= p.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
+        </div>
         <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
-    </div>
-    
-    <div class="cl"></div><br/>
+        
   <% end %>
+
+  <%= f.link_to_add "Add more", :programmes %>
+
+   
   
-  <%= f.link_to_add "Add more", :programmes,{:class => "btns fl"} %>
+  
    

@@ -15,12 +15,11 @@ $(function(){
 
 });
 </script>
-<br/>
 
-<div class="fields">
         
     <div id="object_name" data-obj='<%= parent %>'>
-    </div><br/>
+    </div>
+    
      <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
        <% if parent == "enquiry" %>
          <% sty = ['','none','none','display:none;'] %>
@@ -30,97 +29,111 @@ $(function(){
  
        <% p_type_show = (p.object.programme_type.name == "language_school" rescue nil) ? "display:none;" : "display:block;" %>
 
-    <div class="cols">
-        <div class="col6">
-            <div class="frbox">
-                <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
-                <%= label_tag :country %>
-                <%= p.collection_select(:country_id, 
-                                        good_country, 
-                                        :id, 
-                                        :name,
-                                        {:prompt => "--Country--"},
-                                        {:class => "countries_select",
-                                         :onchange => "prepareSelect(this,
+       <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
+               <%= bs(p,[:country_id,good_country, 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-country-"},
+                                              {class: "countries_select",
+                                               onchange: "prepareSelect(this,
                                                        '_programmes_attributes_index_city_id',
-                                                       '/get_cities/');"}) %>
-            </div>
-            <div class="frbox">
-               <%= label_tag :city %>
-                <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
+                                                       '/get_cities/');"}],
+                                              "collection_select",
+                                              [nil,4],8,6) %>
+            <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
                 <% one = p.object.city_id %>
                 <% two = one.blank? ? [] : City.where(id: one) %>
-                <%= p.collection_select(:city_id, 
-                                        two, 
-                                        :id, 
-                                        :name,
-                                        {:prompt => "--City--"},
-                                        {:class => "cities_select",
-                                         :onchange => "setInsTypeData(this,'.institution_type_select');
-                                         $('.institution_type_select').fadeOut(1000); 
-                                         $('.institution_type_select').fadeIn(1000); "}) %> &nbsp;&nbsp;
-               
-            </div>      
-            
-            <div class="frbox">
-                 <%= p.label :institution_type %>
-                 <!-- Newly added institution type replaced programme type  -->
-
-                <%= p.collection_select(:type_id, 
-                                        InstitutionType.edu, 
-                                        :id, 
-                                        :name,
-                                        {:prompt => "--Institution Type--"},
-                                        {class: "institution_type_select",
+                
+                <%= bs(p,[:city_id,
+                          two, 
+                          :id, 
+                          :name,
+                          {prompt: "-city-"},
+                          {class: "cities_select",
+                          onchange: "setInsTypeData(this,'.institution_type_select');
+                                     $('.institution_type_select').fadeOut(1000); 
+                                     $('.institution_type_select').fadeIn(1000);"}],
+                           "collection_select",
+                           [nil,4],8,6) %>
+                           
+                <%= bs(p,[:type_id,
+                          InstitutionType.edu, 
+                          :id, 
+                          :name,
+                          {prompt: "-institution type-"},
+                          {class: "institution_type_select",
                                          onchange: "ins_type_change(this);
                                                     changeInsType(this,
-                                                    '_programmes_attributes_index_institution_id');" }) %>
-                                        
-            </div>
-            
-            <div class="frbox">
-                 <%= p.label :school %>
-                 <!-- Setting the default selected institution as the programmes institution if chosen in the enquiry -->
+                                                    '_programmes_attributes_index_institution_id');" }],
+                           "collection_select",
+                           [nil,4],8,6) %>
+
                 <% four = p.object.institution_id %>
                 <% five = four.blank? ? [] : Institution.where(id: four) %>
-                <%= p.collection_select(:institution_id, 
-                                        five, 
-                                        :id, 
-                                        :name,
-                                        {:prompt => "--Institution--"},
-                                        {:class => "institutions_select",
-                                         onchange: "validateRecruit(this);"}) %>
-                                        
-            </div>
-        </div>
-        <div class="col6">
-              <div class="frbox">
-                <%= label_tag :start_date,nil,{class: 'start_date'} %>
-                  <%= p.text_field :start_date,{class: 'dateField  caltf'} %>
-              </div>
-              <div class="end_date_div frbox">
-                      <%= label_tag :end_date %>
-                      <%= p.text_field :end_date,{class: 'dateField caltf '} %>
-              </div>
-              <div class="course_subject_text_div frbox" style='<%= sty[0] %>'>
-                    <%= label_tag :course_subject %>
-                    <%= p.text_field :course_subject_text %>
-              </div>
-              <div class="frbox" style="<%= p_type_show %>">
-               <%= go_create(p,"course_level","level_id","name",'') %>
-              </div>
-              <div class="frbox">
-               <%= go_create(p,"course_subject","subject_id","name",sty[1]) %>  
-              </div>
-              <div class="frbox">
-                <%= go_create(p,"application_status","app_status_id","name",sty[2]) %>
-              </div>
-              <div class="ins_ref_no frbox" style='<%= sty[3] %>'>
-                     <%= fs(p,"ins_ref_no","text_field") %>
-              </div>
-        </div>
-    </div>
-</div>
+                
+                <%= bs(p,[:institution_id,
+                          five, 
+                          :id, 
+                          :name,
+                          {prompt: "-institution-"},
+                          {class: "institutions_select",
+                           onchange: "validateRecruit(this);"}],
+                           "collection_select",
+                           [nil,4],8,6) %>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <%= label_tag :start_date,nil,{class: 'control-label col-sm-4'} %>
+                      <div class="col-sm-8">
+                        <%= p.text_field :start_date,{class: 'form-control datepicker'} %>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group end_date_div">
+                      <%= label_tag :end_date,nil,{class: 'control-label col-sm-4'} %>
+                      <div class="col-sm-8">
+                        <%= p.text_field :end_date,{class: 'form-control datepicker'} %>
+                      </div>
+                    </div>
+                </div>
+                
+                
+               <div class="col-md-6">
+                    <div class="form-group course_subject_text_div">
+                      <%= label_tag :course_subject,nil,{class: 'control-label col-sm-4'} %>
+                      <div class="col-sm-8">
+                        <%= p.text_field :course_subject_text,{class: 'form-control datepicker'} %>
+                      </div>
+                    </div>
+               </div>
+               
+               <%= bs(p,[:level_id,
+                          CourseLevel.order(:name), 
+                          :id, 
+                          :name,
+                          {prompt: "-course level-"},{}],
+                           "collection_select",
+                           [nil,4],8,"6 course_level_div 'style=#{p_type_show}'") %>
+
+              <%= bs(p,[:subject_id,
+                        CourseSubject.order(:name), 
+                        :id, 
+                        :name,
+                        {prompt: "-course subject-"},{}],
+                         "collection_select",
+                         [nil,4],8,"6 course_subject_div 'style=display:#{sty[1]};") %>
+
+              <%= bs(p,[:app_status_id,
+                        ApplicationStatus.order(:name), 
+                        :id, 
+                        :name,
+                        {prompt: "-application status-"},{}],
+                         "collection_select",
+                         [nil,4],8,"6 application_status_div 'style=display:#{sty[2]};") %>
+                         
+              <%= bs(p,:ins_ref_no,"text_field",[nil,4],8,"6 ins_ref_no 'style=#{sty[3]};") %>
 
 
 

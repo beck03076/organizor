@@ -16,7 +16,6 @@
 //= require jquery_nested_form
 //= require tinymce
 //= require tinymce-jquery
-
 //= require jquery.purr
 //= require best_in_place
 //= require private_pub
@@ -25,6 +24,44 @@
 
 
 $(function(){
+
+    
+$('.multiple-select').multiSelect({
+        selectableHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        selectionHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        afterInit: function(ms){
+          var that = this,
+              $selectableSearch = that.$selectableUl.prev(),
+              $selectionSearch = that.$selectionUl.prev(),
+              selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+              selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+          .on('keydown', function(e){
+            if (e.which === 40){
+              that.$selectableUl.focus();
+              return false;
+            }
+          });
+
+          that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+          .on('keydown', function(e){
+            if (e.which == 40){
+              that.$selectionUl.focus();
+              return false;
+            }
+          });
+        },
+        afterSelect: function(){
+          this.qs1.cache();//= require turbolinks
+          this.qs2.cache();
+        },
+        afterDeselect: function(){
+          this.qs1.cache();
+          this.qs2.cache();
+        }
+      });
+
 
       dom_tokens('.token_coun_pro',"/srch_countries.json");
       dom_tokens('.token_coun_per',"/srch_countries.json");
@@ -56,7 +93,6 @@ $(function(){
             dateFormat: 'yy-mm-dd',
             timeFormat: 'hh:mm:ss'});
 
- //   setColorsFromSession();
 
     $('span.todo_checkbox').on("click",function(){
       if ($(this).find('span').data('state') == 'fill'){
@@ -205,7 +241,7 @@ function ins_type_change(obj){
     //Fetching the object_name either enquiry or registration
     var o = $('#object_name').data('obj');
     //The parent div that contains the whole programme form
-    i = $(obj).parent().parent().parent();
+    i = $('.fields');
     // Setting the value of the countries_select to --Country-- when the radio button of programme_type is switched
     //i.find('.countries_select').val($(".countries_select option:first").val());
     // Emptying the cities_select and institutions_select when the radio button of programme_type is switched
@@ -829,6 +865,11 @@ function importContacts(url){
 function actmm(what){
   $('ul.main-menu li').removeClass('active');
   $('ul.main-menu li#' + what).addClass('active');
+}
+
+function actsm(what){
+    $('ul.nav li').removeClass("active");
+    $('ul.nav li#email').addClass("active");
 }
 
 function colsClick(model){

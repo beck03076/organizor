@@ -30,6 +30,8 @@ class Registration < ActiveRecord::Base
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Registration"'
   has_many :todos
   
+  belongs_to :branch
+  
   attr_accessor :_destroy
 
   attr_accessible :address_city, :address_country_id, :address_line1, 

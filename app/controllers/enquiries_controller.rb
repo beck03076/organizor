@@ -114,6 +114,43 @@ class EnquiriesController < ApplicationController
     authorize! :read, @enquiry
     
     @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")
+    
+    t = params[:partial]
+    @partial = (t.nil? ? "basic" : t) 
+    @list = 1
+    @enquiry_id = @enquiry.id
+    
+    if @partial == "follow_up"
+          
+          #@d_f_u_days = current_user.conf.def_follow_up_days
+          con = current_user.conf
+          @follow_up = FollowUp.new(title: con.def_f_u_name, 
+                                    desc: con.def_f_u_desc)
+
+    elsif @partial == "note"
+          @d_note = current_user.conf.def_note
+          @note = Note.new(content: @d_note)
+          
+    elsif @partial == "todo"
+          @todo = Todo.new
+    end
+    # next if block becase of separate renders
+    if @partial == "email"
+      mail_to_use = current_user.conf.def_enq_email.to_sym
+      
+      @subject = Enquiry.where(id: @enquiry.id)
+      @subject_ids = (@subject.map &:id).join(",")
+      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
+      @locals =   {:e => Email.new(to: @email_to), 
+                   :id => @enquiry.id,
+                   :obj => @subject,
+                   :obj_ids => "enquiry_ids",
+                   :obj_name => "enquiry",
+                   :a => @enquiry }
+
+    else
+      @enquiry = Enquiry.find(@enquiry_id)
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -124,7 +161,14 @@ class EnquiriesController < ApplicationController
   # GET /enquiries/new
   # GET /enquiries/new.json
   def new
-    
+    @enquiry = Enquiry.new(assigned_to: current_user.id,
+                           date_of_birth: (Date.today - 21.years),
+                           gender: "m",
+                           score: 5)
+    authorize! :create, @enquiry
+      
+    @countries = self.basic_select(Country)
+    @p_types = ProgrammeType.all
   end
   
 

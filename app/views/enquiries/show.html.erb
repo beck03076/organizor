@@ -1,23 +1,43 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.launch").show();
-  $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.launch").addClass("active-tab");
-  $("ul.tab-menus li.launch").text('<%= @enquiry.first_name.titleize %>');
-  $("ul.tab-menus li.launch").attr('data-enquiry_id', '<%= @enquiry.id %>');
-  $("ul.tab-menus li.launch").trigger("click");
-});
+<!-- Enquiry show page -->
+<div class="row">
+<div class="col-md-10">
+  <h4><strong><%= @enquiry.name %></strong></h4>
+</div>
+
+<% a = @enquiry %>
+<div class="col-md-2">
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>-Actions-</option>
+                    <option>Clone</option>
+                    <option>Edit</option>
+                    <option>Assign</option>
+                    <option>Register</option>
+                    <option>Deactivate</option>
+                  </select>
+                </div>
+              </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+      <ul class="nav nav-pills seperator">
+        <li id="basic" class="active">
+          <%= link_to "Basic","/enquiries/#{a.id}/basic" %>
+        </li>
+        <%= render "actions" %>
+      </ul>
+      <div id="action_div">
+        <%= render @partial, @locals %>
+      </div>
+  </div>
+</div>
+
+
+
+<script>
+
+ actmm('enquiries'); 
 
 </script>
-
-<!-- INQUIRY DETAILS - STARTS 
--- disp0, disp1, disp2 is defined in enquiries_helper.rb
--- a will represent @enquiry in this whole file for convenience
--->
-
-<div class="tab-container">
- <%= render 'tabs', :stat => "EnquiryStatus",:model => "enquiry" %> 
-    <div class="tab-content" id="launch_id">
-
-    </div>
-</div>

@@ -1,0 +1,130 @@
+<!-- basic info for enquiry show page -->
+<% a = @enquiry %>
+                      <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
+                                   {width: "100",class: "tooltip",title: "Upload your photo",
+                                    class: "imgb fl"
+                                    }) %>
+                      <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+             <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                 <%= render 'shared/img_upload', a: a %>
+             </div>
+             
+              <h4 class="htab">
+                    Personal information
+                    </h4>
+                        <% stat = disp1(a,"status") %>
+
+                        <ul style="list-style-type:none">
+                        <li><label>Enquiry Status </label>: <%= best_in_place_if (can? :update,a), a,
+                                :status_id, 
+                                :type => :select, 
+                                :collection => EnquiryStatus.order(:name).map{|i| [i.id,i.name]},
+                                :display_as => "status_name" %></li>
+                        <li><label>Contact Type </label>: <%= best_in_place_if (can? :update,a), a,
+                                :contact_type_id, 
+                                :type => :select, 
+                                :collection => ContactType.order(:name).map{|i| [i.id,i.name]},
+                                :display_as => "contact_type_name" %></li>
+                        <li><label>Mobile 1 </label>: <%= best_in_place_if (can? :update,a), a, :mobile1 %></li>
+                        <li><label>Mobile 2 </label>: <%= best_in_place_if (can? :update,a), a, :mobile2 %></li>
+                        <li><label>Email 1</label>: <%= best_in_place_if (can? :update,a), a, :email1 %></li>
+                        <li><label>Email 2</label>: <%= best_in_place_if (can? :update,a), a, :email2 %></li>
+                        <li><label>Country of Origin </label>: 
+                        <%= best_in_place_if (can? :update,a), a,
+                           :country_id, 
+                           :type => :select, 
+                           :collection => Country.order(:name).map{|i| [i.id,i.name]},
+                           :display_as => "country_of_origin_name" %>
+                        </li>
+                        </ul>
+                    
+                    <ul class="vlsdet" style="list-style-type:none">
+                    <li><label>Date of Birth</label>: 
+                    <%= best_in_place_if (can? :update,a), a, :date_of_birth, :type => :date %>
+                    </li>
+                    <li><label>Gender</label>: 
+                    <%= best_in_place_if (can? :update,a), a,:gender,type: :select,collection: [['m','male'],['f','female']] %></li>
+                    <li><label>Address</label>: 
+                    <%= best_in_place_if (can? :update,a), a,
+                                      :address, 
+                                      :type => :textarea %>
+                    </li>
+                    </ul>
+                    <h4 class="htab">
+                    Preferred countries
+                    </h4>
+                    <ul class="vlsdet">
+                    <li><%= disp2(a,"countries") %></li>
+                    </ul>
+                    <h4 class="htab">
+                    Programmes interested
+                    </h4>
+                    <ul class="vlsdet" style="list-style-type:none">
+                    <% a.programmes.each do |i| %>
+                      
+                      <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
+                                               
+                        <li><label>Type</label>: <%= j %></li>
+                        <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
+                        <li><label>City</label>: <%= i.city.try(:name) %></li>
+                        <li><label>Country</label>: <%= i.country.try(:name) %></li>
+                        
+                        <% if j == "University" %>
+                          <li><label>Course Level</label>: <%= i.course_level.try(:name)  %></li>
+                        <% end %>
+                        
+                        <li><label>Course Subject</label>: <%= i.course_subject_text %> </li>
+                        <li><label>Start Date</label>: <%= i.start_date %></li>
+                        <li><label>End Date</label>: <%= i.end_date %></li>
+
+                        <span class="fl">
+                        <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %>
+                        </span>
+                    <% end %>
+
+                    </ul>
+<h4>Enquiry history</h4>
+                    <ul class="infodhls" style="list-style-type:none">
+                        
+                        <li>
+                        <b>Inquiry date :</b> 
+                          <%= a.created_at.to_date %>
+                        </li>
+                        <li>
+                        <b>Enquiry Source :</b> 
+                          <%= disp1(a,'student_source') %>
+                        </li>
+                        <li>
+                        <b>Created by :</b> 
+                            <%= a._cre_by.first_name rescue "Unknown" %>
+                        </li>
+                        <li>
+                        <b>Created at :</b> 
+                          <%= a.created_at %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Last modified</b></li>
+                        <li><b>By :</b> 
+                            <%= a._upd_by.first_name rescue "Unknown"%>
+                        </li>
+                        <li><b>At :</b> 
+                            <%= a.updated_at %>
+                        </li>
+                        <li><br><b>Currently Assigned</b></li>
+                        <li><b>To :</b>
+                            <%= a._ass_to.first_name rescue "Unknown" %>
+                        </li>
+                        <li><b>By :</b> 
+                            <%= a._ass_by.first_name rescue "Unknown" %>
+                        </li> 
+                    </ul>
+
+                <% if current_user.adm? %>
+                  <% if !a.active %>
+                    <%= form_for(a) do |d| %>
+                      <%= d.hidden_field :active, value: true %>
+                      <%= d.submit "Activate",{class: "btnp fr"} %>
+                    <% end %>
+                  <% end %>
+                <% end %>
