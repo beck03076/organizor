@@ -61,7 +61,7 @@ class CommissionStatusesController < ApplicationController
 
     respond_to do |format|
       if @commission_status.update_attributes(params[:commission_status])
-        format.html { redirect_to @commission_status, notice: 'Commission status was successfully updated.' }
+        format.html { redirect_to commission_statuses_path, notice: 'Commission status was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

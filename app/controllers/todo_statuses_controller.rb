@@ -61,7 +61,7 @@ class TodoStatusesController < ApplicationController
 
     respond_to do |format|
       if @todo_status.update_attributes(params[:todo_status])
-        format.html { redirect_to @todo_status, notice: 'Todo status was successfully updated.' }
+        format.html { redirect_to todo_statuses_path, notice: 'Todo status was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

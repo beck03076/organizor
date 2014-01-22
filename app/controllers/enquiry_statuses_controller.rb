@@ -61,7 +61,7 @@ class EnquiryStatusesController < ApplicationController
 
     respond_to do |format|
       if @enquiry_status.update_attributes(params[:enquiry_status])
-        format.html { redirect_to @enquiry_status, notice: 'Enquiry status was successfully updated.' }
+        format.html { redirect_to enquiry_statuses_path, notice: 'Enquiry status was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

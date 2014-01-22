@@ -19,20 +19,25 @@
         </thead>
         <tbody>
           <% resource.each do |r| %>
+             <% r_name = resource_disp1.downcase.tr(" ","_") %>
             <tr>
               <td>
-                <%= best_in_place_if (can? :update,r), r, :name,display_as: :tname %>
+                <%= link_to(r.tname,
+                            "/show_resource/#{r_name}/#{r.id}",
+                            {remote: true,
+                             onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'}) %>
               </td>
               <td>
-                <%= best_in_place_if (can? :update,r), r, :desc,:type => :textarea %>
+                <%= truncate(r.desc,length: 20) %>
               </td>
-              <td><%= r.cby %>(<%= r.created_at.strftime("%F %R %p") rescue "Unknown" %>)</td>
-              <td><%= r.uby %>(<%= r.updated_at.strftime("%F %R %p") rescue "Unknown" %>)</td>
+              <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
+              <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
               <td>
-                <% r_name = resource_disp1.downcase.tr(" ","_") %>
+               
                 <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
                             "/edit_resource/#{r_name}/#{r.id}",
-                            {remote: true} %>
+                            {remote: true,
+                            onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
                 <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
                             r, 
                             method: :delete, 
@@ -47,9 +52,11 @@
     </div>
 
     <%= render 'shared/resource_form', {new_resource: new_resource,
-                                        resource_disp1: resource_disp1} %>
+                                        resource_disp1: resource_disp1,
+                                        div: "well",
+                                        h: "New"} %>
                                         
-    <div id="tester"></div>
+    <div id="edit-resource-container"></div>
   </div>
 </div>
 

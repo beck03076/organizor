@@ -61,7 +61,7 @@ class ContactTypesController < ApplicationController
 
     respond_to do |format|
       if @contact_type.update_attributes(params[:contact_type])
-        format.html { redirect_to @contact_type, notice: 'Contact type was successfully updated.' }
+        format.html { redirect_to contact_types_path, notice: 'Contact type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

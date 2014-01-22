@@ -61,7 +61,7 @@ class CourseLevelsController < ApplicationController
 
     respond_to do |format|
       if @course_level.update_attributes(params[:course_level])
-        format.html { redirect_to @course_level, notice: 'Course level was successfully updated.' }
+        format.html { redirect_to course_levels_path, notice: 'Course level was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

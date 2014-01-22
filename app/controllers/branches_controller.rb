@@ -20,6 +20,7 @@ authorize_resource
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @branch }
+      format.js
     end
   end
 
@@ -62,7 +63,7 @@ authorize_resource
 
     respond_to do |format|
       if @branch.update_attributes(params[:branch])
-        format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
+        format.html { redirect_to branches_path, notice: 'Branch was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

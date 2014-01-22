@@ -61,7 +61,7 @@ class CourseSubjectsController < ApplicationController
 
     respond_to do |format|
       if @course_subject.update_attributes(params[:course_subject])
-        format.html { redirect_to @course_subject, notice: 'Course subject was successfully updated.' }
+        format.html { redirect_to  course_subjects_path, notice: 'Course subject was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

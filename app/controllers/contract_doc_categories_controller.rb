@@ -61,7 +61,7 @@ class ContractDocCategoriesController < ApplicationController
 
     respond_to do |format|
       if @contract_doc_category.update_attributes(params[:contract_doc_category])
-        format.html { redirect_to @contract_doc_category, notice: 'Contract doc category was successfully updated.' }
+        format.html { redirect_to contract_doc_categories_path, notice: 'Contract doc category was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

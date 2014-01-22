@@ -1,8 +1,11 @@
 <!-- edit any standard name-desc resource -->
 <div class="row">
-      <div class="well">
+      <div class="<%= div %>">
         <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+          <% if h=="New" %>
           <h4 class="form-heading">New <%= resource_disp1 %></h4>
+          <br/>
+          <% end %>
           <div class="form-group">
             <label for="id_name" class="control-label col-sm-2">Name</label>
             <div class="col-sm-6">

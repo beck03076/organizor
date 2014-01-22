@@ -868,8 +868,8 @@ function actmm(what){
 }
 
 function actsm(what){
-    $('ul.nav li').removeClass("active");
-    $('ul.nav li#email').addClass("active");
+    $('ul.sub-menu li').removeClass("active");
+    $('ul.sub-menu li#' + what).addClass("active");
 }
 
 function colsClick(model){

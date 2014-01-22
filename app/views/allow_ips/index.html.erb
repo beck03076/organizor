@@ -1,97 +1,64 @@
 <!-- rendering the left menu -->
 <%= render 'resources/menu' %>
 <!-- resources -->
-<% resource_disp1 = "Allow New Ip Range" %>
+<% resource_disp1 = "Allow Ip Range" %>
 <% resource_disp2 = "Allowed Ips" %>
 <% resource = @allow_ips %>
 <% new_resource = AllowIp.new %>
-
-<div class="tab-container">
-    <div class="tab-content" style="display: block;">
-        <div class="boxp box-theme-ch">
-        <h2 class="htab">All <%= resource_disp2 %></h2>
-        <br/>
-        <br/>
-        <br/>
-          <table  class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
+<div class="col-md-9">
+  <div class="config-content">
+        <div class="row row-top">
+          <h3><%= resource_disp2 %></h3>
+        </div>
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
               <tr>
                 <th>From</th>
                 <th>To</th>
-                <th colspan="2">Description</th>
-                <th>Created At</th>
-                <th>Last Modified At</th>
-                <th>Delete</th>
+                <th>Description</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th colspan=2>&nbsp;</th>
               </tr>
-
-            <% resource.each do |r| %>
-              <tr>
-                <td>
-                  <%= best_in_place_if (can? :update,r), r, :from %>
-                </td>
-                <td>
-                  <%= best_in_place_if (can? :update,r), r, :to %>
-                </td>
-                <td colspan="2">
-                  <%= best_in_place_if (can? :update,r), r, :desc,:type => :textarea %>
-                </td>
-                <td class="grey"><%= r.created_at.strftime("%F %R %p") rescue "Unknown" %></td>
-                <td class="grey"><%= r.updated_at.strftime("%F %R %p") rescue "Unknown" %></td>
-                <td>
-                  <%= link_to image_tag("/images/icons/del.png"),r, method: :delete, data: { confirm: 'Are you sure?' }  %>
-                </td>
-              </tr>
-            <% end %>
-            <tr>
-              <td colspan="1" align="left">
-                <%= link_to 'Enquiries',enquiries_path%>
-              </td>
-              <td colspan="1" align="left">
-                <%= link_to 'Registrations',registrations_path%>
-              </td>
-              <td colspan="6" align="left">
-              </td>
-            </tr>
+            </thead>
+            <tbody>
+              <% resource.each do |r| %>
+                <tr>
+                  <td><%= r.from %></td>
+                  <td><%= r.to %></td>
+                  <td><%= truncate(r.desc,length: 20) %></td>
+                  <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
+                  <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
+                  <td>
+                    <% r_name = resource_disp1.downcase.tr(" ","_") %>
+                    <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                                edit_allow_ip_path(r),
+                                {remote: true,
+                                onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
+                                r, 
+                                method: :delete, 
+                                data: { confirm: 'Are you sure?' }  %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
           </table>
-          <br/>
-          <br/>
-          <br/>
-          
-         <div id="new_resource_form">
-         <%= form_for(new_resource) do |f| %>
-          <ul class="vlsdet">
-           <h2 class="htab"> <%= resource_disp1 %> </h2>
-           <br/>
-           <br/>
-           
-          <li class="frbox">
-            <label> From </label> <%= f.text_field :from %>
-          </li>
-          
-          <li class="frbox">
-            <label> To </label> <%= f.text_field :to %>
-          </li>
-          
-          <li class="frbox">
-            <label> Description </label> <%= f.text_area :desc, {size: "10x3",style: 'width:400px;'} %>
-          </li>
-          <br/>
-          <br/>
-          <br/>
-          <li class="frbox">
-
-          <%= f.button "Create", class: "btnp" %>
-          </li>
-          </ul>
-
-        <% end %>
         </div>
-        </div>
-    </div>
+
+  <%= render "form", {new_resource: new_resource,
+                      resource_disp1: resource_disp1,
+                      div: "well",
+                      h: "New"} %>
+                      
+  <div id="edit-resource-container"></div>
+</div>
 </div>
 <script type="text/javascript">
-$(function(){
- activeMM("resourcesMM");
-});
+
+ actsm("allow_ip");
+
 </script>
 
 

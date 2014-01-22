@@ -61,7 +61,7 @@ class EnglishLevelsController < ApplicationController
 
     respond_to do |format|
       if @english_level.update_attributes(params[:english_level])
-        format.html { redirect_to @english_level, notice: 'English level was successfully updated.' }
+        format.html { redirect_to english_levels_path, notice: 'English level was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -61,7 +61,7 @@ class StudentSourcesController < ApplicationController
 
     respond_to do |format|
       if @student_source.update_attributes(params[:student_source])
-        format.html { redirect_to @student_source, notice: 'Student source was successfully updated.' }
+        format.html { redirect_to student_sources_path, notice: 'Student source was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

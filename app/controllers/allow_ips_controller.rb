@@ -61,7 +61,7 @@ class AllowIpsController < ApplicationController
 
     respond_to do |format|
       if @allow_ip.update_attributes(params[:allow_ip])
-        format.html { redirect_to @allow_ip, notice: 'Allow ip was successfully updated.' }
+        format.html { redirect_to allow_ips_path, notice: 'Allow ip was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

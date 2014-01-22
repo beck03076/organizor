@@ -9,4 +9,9 @@ actions = %w[create read update delete]
     @r = @r_name.camelize.constantize.find(@r_id)
   end
   
+  def show
+    set_url_params
+    @r = @r_name.camelize.constantize.find(@r_id)
+  end
+  
 end

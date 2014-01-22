@@ -61,7 +61,7 @@ class EventTypesController < ApplicationController
 
     respond_to do |format|
       if @event_type.update_attributes(params[:event_type])
-        format.html { redirect_to @event_type, notice: 'Event type was successfully updated.' }
+        format.html { redirect_to event_types_path, notice: 'Event type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -60,7 +60,7 @@ class SmtpsController < ApplicationController
 
     respond_to do |format|
       if @smtp.update_attributes(params[:smtp])
-        format.html { redirect_to @smtp, notice: 'Smtp was successfully updated.' }
+        format.html { redirect_to smtps_path, notice: 'Smtp was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

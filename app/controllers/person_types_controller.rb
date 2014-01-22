@@ -61,7 +61,7 @@ class PersonTypesController < ApplicationController
 
     respond_to do |format|
       if @person_type.update_attributes(params[:person_type])
-        format.html { redirect_to @person_type, notice: 'Person type was successfully updated.' }
+        format.html { redirect_to person_types_path, notice: 'Person type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

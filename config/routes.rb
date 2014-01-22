@@ -4,6 +4,8 @@ Organizor::Application.routes.draw do
   
   match '/edit_resource/:r_name/:r_id' => "resources#edit"
   
+  match '/show_resource/:r_name/:r_id' => "resources#show"
+  
   match '/user_configs/manage/:partial' => 'user_configs#manage'
   
   match '/configuration' => 'resources#index'
@@ -207,9 +209,6 @@ Organizor::Application.routes.draw do
 
 
   resources :programmes
-
-
-  resources :programme_types
 
 
   resources :enquiry_sources

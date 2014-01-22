@@ -61,7 +61,7 @@ class ExamTypesController < ApplicationController
 
     respond_to do |format|
       if @exam_type.update_attributes(params[:exam_type])
-        format.html { redirect_to @exam_type, notice: 'Exam type was successfully updated.' }
+        format.html { redirect_to exam_types_path, notice: 'Exam type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

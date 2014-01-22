@@ -61,7 +61,7 @@ class DocCategoriesController < ApplicationController
 
     respond_to do |format|
       if @doc_category.update_attributes(params[:doc_category])
-        format.html { redirect_to @doc_category, notice: 'Doc category was successfully updated.' }
+        format.html { redirect_to doc_categories_path, notice: 'Doc category was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

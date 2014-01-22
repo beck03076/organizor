@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140120145324) do
+ActiveRecord::Schema.define(:version => 20140122120329) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20140120145324) do
     t.text     "desc"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "allowed_ips", :force => true do |t|
@@ -90,11 +92,11 @@ ActiveRecord::Schema.define(:version => 20140120145324) do
 
   create_table "commission_statuses", :force => true do |t|
     t.string   "name"
-    t.integer  "desc"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "desc"
   end
 
   create_table "commissions", :force => true do |t|

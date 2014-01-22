@@ -1,0 +1,43 @@
+<!-- show branch -->
+<% a = @branch %>
+<div class="row">
+              <div class="row row-top ">
+                <div class="col-md-6">
+                  <div class="col-md-4 text-right light">Name</div>
+                  <div class="col-md-8"><%= a.name %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Manager</div>
+                  <div class="col-md-8"><%= a.manager.name rescue nil %></div> 
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Description</div>
+                  <div class="col-md-8"><%= a.desc %></div> 
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Phone</div>
+                  <div class="col-md-8"><%= a.phone %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Email</div>
+                  <div class="col-md-8"><%= a.email %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Fax</div>
+                  <div class="col-md-8"><%= a.fax %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Address</div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Line 1</div>
+                  <div class="col-md-8"><%= a.address_line1 %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Line 2</div>
+                  <div class="col-md-8"><%= a.address_line2 %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Post Code</div>
+                  <div class="col-md-8"><%= a.address_post_code %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">City</div>
+                  <div class="col-md-8"><%= a.city.name  rescue nil %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Country</div>
+                  <div class="col-md-8"><%= a.country.name  rescue nil %></div>
+                  <div style="clear:both;"></div>
+                </div>
+               </div>
+</div>

@@ -1,2 +1,0 @@
-module EnquirySourcesHelper
-end

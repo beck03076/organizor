@@ -61,7 +61,7 @@ class InstitutionGroupsController < ApplicationController
 
     respond_to do |format|
       if @institution_group.update_attributes(params[:institution_group])
-        format.html { redirect_to @institution_group, notice: 'Institution group was successfully updated.' }
+        format.html { redirect_to institution_groups_path, notice: 'Institution group was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

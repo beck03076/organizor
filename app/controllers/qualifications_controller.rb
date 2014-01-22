@@ -61,7 +61,7 @@ class QualificationsController < ApplicationController
 
     respond_to do |format|
       if @qualification.update_attributes(params[:qualification])
-        format.html { redirect_to @qualification, notice: 'Qualification was successfully updated.' }
+        format.html { redirect_to qualifications_path, notice: 'Qualification was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

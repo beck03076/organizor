@@ -20,12 +20,7 @@
 .well tr.fu_now td {background: #f7d0d0 !important; }
 
 
-.modal-dialog {
-margin-top:50%;
-}
-.modal-content {
-margin-top:-50%;
-}
+
 
 .tooltip-c {
   position: absolute;

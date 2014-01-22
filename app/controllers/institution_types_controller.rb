@@ -19,6 +19,7 @@ class InstitutionTypesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @institution_type }
+      format.js
     end
   end
 
@@ -61,7 +62,7 @@ class InstitutionTypesController < ApplicationController
 
     respond_to do |format|
       if @institution_type.update_attributes(params[:institution_type])
-        format.html { redirect_to @institution_type, notice: 'Institution type was successfully updated.' }
+        format.html { redirect_to institution_types_path, notice: 'Institution type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

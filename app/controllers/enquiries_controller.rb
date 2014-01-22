@@ -168,7 +168,7 @@ class EnquiriesController < ApplicationController
     authorize! :create, @enquiry
       
     @countries = self.basic_select(Country)
-    @p_types = ProgrammeType.all
+    @p_types = InstitutionType.where(educational: true)
   end
   
 
