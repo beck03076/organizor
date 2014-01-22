@@ -1,0 +1,24 @@
+<!-- User page menu -->
+<ul class="nav nav-pills seperator">
+     <% if current_user.adm? %>
+        <li class="all_users active"> 
+          <%= link_to "All Users", users_path,{size: 12} %>
+        </li>
+        <li class = "invite_users">
+        <%= link_to "Invite Users", new_user_invitation_path %>
+        </li>
+     <% end %>
+     
+     <% if can? :read,Role %>
+     
+        <li class = "roles_path">
+        <%= link_to "Roles",roles_path %>
+        </li>
+     <% end %>
+        
+     <% if can? :create,Role %>
+        <li class="new_role">
+        <%= link_to "Add Role",new_role_path %>
+        </li>
+     <% end %>
+</ul>

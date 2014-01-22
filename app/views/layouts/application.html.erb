@@ -70,7 +70,7 @@
               <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
               <li><%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %></li>
               <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
-              <li>
+              <li id="users">
                 <% if u.role?(:agency_administrator) %>
                     <%= link_to "/users" do %>
                       <span class="glyphicon glyphicon-user"></span>Users

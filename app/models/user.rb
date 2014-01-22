@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
   belongs_to :branch
   
   accepts_nested_attributes_for :permissions
+  
+  def br
+    (self.branch.name) + "(#{self.branch.country.name})"  rescue "Unassigned"
+  end
 
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
