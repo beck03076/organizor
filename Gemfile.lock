@@ -196,9 +196,6 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
-    rails-dev-tweaks (0.6.1)
-      actionpack (~> 3.1)
-      railties (~> 3.1)
     rails3-jquery-autocomplete (1.0.11)
       rails (~> 3.0)
     railties (3.2.13)
@@ -299,7 +296,6 @@ DEPENDENCIES
   prawn
   private_pub
   rails (= 3.2.13)
-  rails-dev-tweaks
   rails3-jquery-autocomplete
   rmagick
   rubyzip

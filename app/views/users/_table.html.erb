@@ -1,0 +1,35 @@
+<!-- listing users -->
+<table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Branch</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Invitation</th>
+                    <th>State</th>
+                    <th colspan=2>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @users.each do |user| %>
+                    <% un = user.first_name.nil? ? "Mr. Unknown" : user.first_name %>
+                      <tr>
+                        <td><%= link_to un,user  %></td>
+                        <td><%= user.br %></td>
+                        <td><%= user.role.name.titleize rescue "Unassigned" %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.confirmed_at ? "Accepted" : "Not Accepted" %></td>
+                        <td><%= user.active_for_authentication? ? "Active" : "Inactive" %></td>
+                        <td>
+                        <% if (!user.adm? rescue "OK") %>
+                        <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                                    user, 
+                                    method: :delete, 
+                                    data: { confirm: 'Are you sure?' } %>
+                        <% end %>
+                        </td>
+                      </tr>
+                  <% end %>
+                </tbody>
+              </table>

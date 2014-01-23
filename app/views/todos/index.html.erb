@@ -1,134 +1,143 @@
-<!-- resources -->
+<!-- todos index -->
 
-
-<div class="tab-container">
-    <div class="tab-content" style="display: block;">
-        <div class="boxp box-theme-ch">
-        <ul class="vls">
-          <li>
-          <img src="/images/icons/org_todos.png" width="25"/>
-              <h2>Your Todo List
-              </h2><br/>
-              <%= link_to "Sync my Todos with Google Tasks", '/todos/start_sync' %>
-              
-              <% if current_user.adm? %>
-                  &nbsp;&nbsp;
-                  Assigned To: 
-                  <%= select_tag("Assigned To",
-                  options_from_collection_for_select(User.order(:first_name),'id','name',@ass_to),
-                  {autocomplete: "off", id: "assigned_to_todo"}) %>
-                  &nbsp;&nbsp;
-                  OR
-                  &nbsp;&nbsp;
-                  Assigned By: 
-                  <%= select_tag("Assigned By",
-                  options_from_collection_for_select(User.order(:first_name),'id','name',@ass_by),
-                  {autocomplete: "off", id: "assigned_by_todo"}) %>
-              <% else %>
-                <%= link_to "View Assigned By Me",'/todo_assigned_by/' + current_user.id.to_s %> | 
-                <%= link_to "View Assigned To Me",'/todo_assigned_to/' + current_user.id.to_s %>
-              <% end %>
-          </li>
-          <br/>
-          <% topics = TodoTopic.order(:name).map{|i| [i.id,i.name]} %>
-
-          <% @todos.each do |i| %>
-           
-                <% edi = i.assigned_by == current_user.id %>
-                <% if !i._aby.nil? %>
-                <li>
-                <div class="todo_container">
-                    <%= image_tag((i._aby.image? ? i._aby.image_url : "/images/icons/user.png"),
-                                   {width: "30",
-                                    class: "fl",
-                                    style: "margin-right:2px;"}) %>
-                    <span style='font-size: 1.5em;'>
-                      <%= best_in_place_if (i.assigned_to == current_user.id), i, :done, type: :checkbox ,collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, "<span data-state='fill'>&#x2611;</span>".html_safe], classes: "todo_checkbox"  %>
-                    </span>
-
-
-                     <%= best_in_place_if (edi),i,
-                         :topic_id,
-                         :type => :select, 
-                         :collection => topics,
-                         :display_as => "tit" %> -
-
-                    <small class="todo_desc <%= i.done ? 'checkit' : 'uncheckit' %>">
-                      <%= best_in_place_if (edi),i,
-                          :desc,
-                          type: "textarea" %> 
-                    </small>
-                    &nbsp;
-                    <br/>
-
-                    <small class="brt0">
-                      Assigned By:
-                      <%= (link_to i.ass_by,i._aby) rescue "User deleted" %> 
-                      &nbsp; &nbsp;
-                      Assigned To:
-                      <%= (link_to i.ass_to,i._ato) rescue "User deleted" %> 
-                      &nbsp; &nbsp;
-                      <span class="todo_due">
-                        Due on: <%= best_in_place_if (edi),i,
-                         :duedate,
-                         :type => :date, 
-                         :display_as => "due" %>
-                      </span>
-                    </small>
-               </div>
-
-               </li>
-               <% end %>
-               <br/>
-
-       <% end %> 
-       </ul>
-          <br/>
-
-          <ul class="vls">
-          <li>
-          <img src="/images/icons/sub_black_add.png" width="25"/>
-              <h2>New Todo</h2>
-          </li>
-          </ul>
-          <br/>
-        <%= form_for(@todo) do |g| %>
-          <div class="cols">
-            <div class="col6">
-              <%= go_create(g,"todo_topic","topic_id","name",1,"fbox") %> 
-              
-              <%= fbox(g,"title","text_field",nil) %>
-              
-              <%= fbox(g,[:assigned_to, 
-                         User.order(:first_name), 
-                         :id, 
-                         :first_name,
-                         {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-              <%= fbox(g,[:duedate,:class => "dateTimeField caltf "],"text_field",nil) %>
-              <div class="fbox">
-                <label>Priority</label>
-                   <%= g.select(:priority,
-                                options_for_select(["High","Medium","Low"])) %>
-              </div> 
-              <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
-              
-              <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add To Google?") %>
-              
-              <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+            <div class="row row-top">
+              <div class="col-md-10">
+                <h3>Todos</h3>
+                
+              </div>
+              <div class="col-md-2">
+                <div class="form-group form-last pull-right">
+                  <%= link_to "Sync my Todos with Google Tasks",
+                              '/todos/start_sync',
+                              {class: "btn btn-primary",
+                               data: { confirm: 'This can take a few moments, are you sure?' }} %>
+                </div>
+              </div>              
             </div>
+
+          <div class="row">
+                  <div class="col-md-12">
+                    <div class="to-do">
+                      <div class="well well-sm" style="background-color: #f8f4b0;">
+                        <div class="row row-top" id="todo-filter" >
+                          <div class="col-md-1">
+                            <h4>Filter</h4>
+                          </div>
+                          <div class="col-md-2" >
+                            <%= select_tag :abdc,
+                                  options_for_select([["-all time-",""],
+                                                     ["Today","todays"],
+                                                     ["This Week","this_weeks"],
+                                                     ["This Month","this_months"]]),
+                                  {id: "period",class: "form-control"} %>
+                          </div>
+                          <div class="col-md-2" >
+                            <%= select_tag :topic_id,
+                                options_for_select(TodoTopic.order(:name).map{|i| [i.name,i.id]}),
+                                {prompt: "-topic-",
+                                 class: "form-control",
+                                 id: "topic"} %>
+                          </div>
+                          <div class="col-md-2" >
+                            <%= select_tag :done,
+                                options_for_select([["completed",1],["not completed",0]]),
+                                {prompt: "-status-",
+                                 class: "form-control",
+                                 id: "done"} %>
+                          </div>                         
+                          <div class="col-md-2" >
+                            <%= select_tag :assigned_by,
+                                options_for_select(User.order(:first_name).map{|i| [i.first_name,i.id]}),
+                                {prompt: "-assigned by-",
+                                 class: "form-control",
+                                 id: "assigned_by"} %>
+                          </div>
+                          <div class="col-md-2">
+                            <%= text_field_tag :duedate,nil,{placeholder: "due on",
+                                                             id: "duedate",
+                                                             class: "datepicker"} %>
+                          </div>
+                          <div class="col-md-1 text-right">
+                            <span class="glyphicon glyphicon-remove" onclick="filterTodosReset();"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
           </div>
-          <%= g.submit "Create",{:class => "btnp fl"} %>
-            <div class="cl"></div>
-        <% end %>
-         
-         
-        </div>
-    </div>
-</div>
+          
+          <%= form_for(Todo.new) do |g| %>
+          <%= g.hidden_field :assigned_by, value: current_user.id %>
+          <div class="row">
+                  <div class="col-md-12">
+                    <div class="to-do">
+                      <div class="well well-sm" style="background-color: #e1f5e0;">
+                        <div class="row row-top todo_container" >
+                          <div class="col-md-1">
+                            <h4>New</h4>
+                          </div>
+                          <div class="col-md-3">
+                            <%= g.text_field :title,{placeholder: "Add a todo"} %>
+                          </div>
+                          <div class="more-fields" style="display: none;">
+                              <div class="col-md-2">
+                                <%= g.collection_select :topic_id,
+                                              TodoTopic.order(:name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-topic-"},
+                                              {class: "form-control"} %>
+                              </div>
+                              <div class="col-md-2">
+                                 <%= g.collection_select :assigned_to,
+                                                  User.order(:first_name), 
+                                                  :id, 
+                                                  :first_name,
+                                                  {prompt: "-assign to-"},
+                                                  {class: "form-control"} %>
+                              </div>
+                              <div class="col-md-2">
+                              <%= g.text_field :duedate,{placeholder: "due on",class: "datepicker"} %>
+                              </div>
+                          </div>
+                          <div class="col-md-1">
+                          <%= g.submit "Add" %>
+                          <span onclick="$('.more-fields').toggle();">
+                            <small>more</small>
+                          </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          </div>
+          <% end %>
+         <div id="show-todos">
+           <%= render 'show' %>
+         </div>
+
+          
+
 <script type="text/javascript">
-$(function(){
- activeMM("todosMM");
-});
+ 
+ actmm("todos");
+ $('#todo-filter select').change(function(){
+       filterTodos();
+ });
+ 
+  $('span.todo_checkbox').on("click",function(){
+      if ($(this).find('span').data('state') == 'fill'){
+        e = $(this).parent().parent().parent().parent();
+        e.removeClass("complete");
+       }
+      else if ($(this).find('span').data('state') == 'empty'){
+        e = $(this).parent().parent().parent().parent();
+        e.addClass("complete");
+       }
+  });
+  
+  $(".best_in_place").best_in_place();
+ 
 </script>
 
 

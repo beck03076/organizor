@@ -2,6 +2,10 @@ Organizor::Application.routes.draw do
 
   resources :branches
   
+  post '/filter_todos' => 'todos#index'
+  
+  match '/filter_users/:model(/:f_id)' => "users#index"
+  
   match '/edit_resource/:r_name/:r_id' => "resources#edit"
   
   match '/show_resource/:r_name/:r_id' => "resources#show"

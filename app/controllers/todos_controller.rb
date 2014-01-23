@@ -9,26 +9,29 @@ skip_authorize_resource :only => :show_hover
   # GET /todos
   # GET /todos.json
   def index
-    set_url_params
-    if @ass_by.to_i == current_user.id
-     @todos = Todo.includes(:topic).where(assigned_by: @ass_by).order('done asc')
-    elsif @ass_to.to_i == current_user.id
-     @todos = Todo.includes(:topic).where(assigned_to: @ass_to).order('done asc')
-    elsif current_user.adm? && @ass_to
-     @todos = Todo.includes(:topic).where(assigned_to: @ass_to).order('done asc')
-    elsif current_user.adm? && @ass_by
-     @todos = Todo.includes(:topic).where(assigned_by: @ass_by).order('done asc')
-    else
-      @todos = current_user.todos.includes(:topic).order('done asc')
-    end
+
+    temp = current_user.todos.includes(:topic,:_ass_by)
     
-    @todo = Todo.new
-    # supressing the listing of todos associated with enqs/regs
-    @list = 0
+    if !params[:filter].nil?
+      hsh = {}
+      [:done,:assigned_by,:duedate,:topic_id].each do |i|
+        if !params[i].blank?
+          hsh[i] = params[i]
+        end
+      end
+      if params[:period].present?
+        @todos = temp.where(hsh).send(params[:period])
+      else
+        @todos = temp.where(hsh)
+      end
+    else    
+      @todos = temp.order('done asc')
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @todos }
+      format.json { render json: @todos }      
+      format.js
     end
   end
   
@@ -62,6 +65,14 @@ skip_authorize_resource :only => :show_hover
         m = params[:todo][:model]
         m_id = (m + "_id").to_sym
         params[:todo].delete(:model)
+    end
+    
+    # assigning defaults in not given if nothing is given
+    if params[:todo][:topic_id].blank?
+      params[:todo][:topic_id] = TodoTopic.find_by_name("default").id
+    end
+    if params[:todo][:assigned_to].blank?
+      params[:todo][:assigned_to] = current_user.id
     end
     
     @todo = Todo.new(params[:todo].except("sub_id","sub_class","todo"))
@@ -178,15 +189,10 @@ skip_authorize_resource :only => :show_hover
     self.set_api  
     self.check_and_sync_tasklists
     self.check_and_sync_tasks
-        
-    if @todos.blank?
-      flash[:notice] = "No todos for you to sync!"
-      redirect_to '/handle/cancan'
-    else
-      @todos.update_all(api: true)
-      flash[:notice] = "Todos Sync successful, check your google tasks!"
-      redirect_to '/todos'
-    end
+    
+    current_user.todos.update_all(api: true)
+    flash[:notice] = "Todos Sync successful, check your google tasks!"
+    redirect_to '/todos'
     
   end
   

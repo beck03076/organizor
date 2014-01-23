@@ -8,5 +8,8 @@ class Branch < ActiveRecord::Base
   
   belongs_to :city
   belongs_to :country
+  has_many :users
+  has_many :enquiries
+  has_many :registrations
   
 end

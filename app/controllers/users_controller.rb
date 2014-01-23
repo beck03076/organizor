@@ -4,12 +4,17 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:f_id].present?
+      @users = params[:model].camelize.constantize.find(params[:f_id]).users
+    else
+      @users = User.order(:first_name)
+    end
     authorize! :read, @users, id: current_user.id
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
+      format.js
     end
   end
 

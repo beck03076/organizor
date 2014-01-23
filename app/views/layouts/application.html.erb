@@ -68,7 +68,14 @@
               <li><%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %></li>
               <li><%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calender<% end %></li>
               <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
-              <li><%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %></li>
+              
+              <li id="todos">
+              <%= link_to todos_path do %>
+              <span class="glyphicon glyphicon-check"></span>
+              Todos
+              <% end %>
+              </li>
+              
               <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
               <li id="users">
                 <% if u.role?(:agency_administrator) %>

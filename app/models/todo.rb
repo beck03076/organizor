@@ -31,6 +31,12 @@ class Todo < ActiveRecord::Base
    }  
   end
   
+   scope :todays, where("date(duedate) = '#{Date.today.to_s(:db)}'")
+                               
+  scope :this_weeks, where("date(duedate) BETWEEN '#{Date.today.at_beginning_of_week.to_s(:db)}' AND '#{Date.today.at_end_of_week.to_s(:db)}'")
+                                   
+  scope :this_months, where("date(duedate) BETWEEN '#{Date.today.at_beginning_of_month.to_s(:db)}' AND '#{Date.today.at_end_of_month.to_s(:db)}'")
+  
 
   
   def status

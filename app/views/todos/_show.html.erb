@@ -1,0 +1,56 @@
+<!-- show todo items -->
+<% if @todos.any? %>
+<% a = @todos.group_by(&:topic) %>
+<% a.keys.each do |k| %>
+           <h4 class="col-md-4"><%= k.name.titleize %> todos</h4>
+           <br/>
+           <% a[k].each do |i| %>
+                <% edi = i.assigned_by == current_user.id %>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="to-do">
+                      <div class="well well-sm <%= i.done ? 'complete' : 'to-do' %>">
+                        <div class="row row-top row-right todo_container">
+                          <div class="col-md-4">
+                            <span style='font-size: 1.5em;'>
+                              <%= best_in_place_if (i.assigned_to == current_user.id), 
+                                  i,
+                                  :done, 
+                                  type: :checkbox ,
+                                  collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, 
+                                               "<span data-state='fill'>&#x2611;</span>".html_safe],
+                                  classes: "todo_checkbox"  %>
+                            </span>
+                            <strong class="todo-text">
+                              <%= best_in_place_if (edi),i,
+                                  :title,
+                                  type: "textarea" %> 
+                            </strong>                            
+                          </div>
+                          <div class="col-md-4 text-center">
+                            <small>By: <%= (link_to i._ass_by.name,i._ass_by) rescue "Unknown" %> </small>
+                          </div>
+                          <div class="col-md-4 text-right">
+                            <small><%= best_in_place_if (edi),i,
+                                       :duedate,
+                                       :type => :date, 
+                                       :display_as => "due" %></small>
+                            <div class="col-md-4 text-right">
+                            <% if edi %>
+                                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
+                                i, 
+                                method: :delete, 
+                                data: { confirm: 'Are you sure?' }  %>
+                            <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+         <% end %>
+<% end %>
+<% else %>
+ <h3> Nothing to display</h3>
+<% end %>

@@ -24,7 +24,7 @@
 
 
 $(function(){
-
+$('.datepicker').datepicker();
     
 $('.multiple-select').multiSelect({
         selectableHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
@@ -94,14 +94,7 @@ $('.multiple-select').multiSelect({
             timeFormat: 'hh:mm:ss'});
 
 
-    $('span.todo_checkbox').on("click",function(){
-      if ($(this).find('span').data('state') == 'fill'){
-        $(this).parent().parent().find('small.todo_desc').css("text-decoration","none");
-       }
-      else if ($(this).find('span').data('state') == 'empty'){
-        $(this).parent().parent().find('small.todo_desc').css("text-decoration","line-through");
-       }
-    });
+   
 
     $('#calendar').fullCalendar({
     editable: true,
@@ -208,6 +201,9 @@ $('.multiple-select').multiSelect({
     dropdownUser('select#assigned_by_todo','/todo_assigned_by/');
     dropdownUser('select#sent_by_email','/email_sent_by/');
     //dropdownUser('select#calendar_user','/calendar_user/');
+    
+    
+    
 });
 
 function dropdownUser(elem,url){
@@ -890,6 +886,42 @@ function colsClick(model){
       
     });
 
+}
+
+function filterUsers(obj,model){
+  $('.users > h3').append("<img class=temp src=/images/icons/sload.gif >");
+  $.getScript("/filter_users/" + model +"/" + obj.value); 
+}
+
+function filterTodos(){
+  $('h3').append("<img class=temp src=/images/icons/sload.gif >");
+  var e = ['period', 'done', 'assigned_by','topic'];
+  
+  $.each(e, function(key, value) {
+    window[value] = $('#todo-filter #' + value).val();
+  });
+
+  var duedate = $('#todo-filter #duedate').val();
+  
+  $.post('/filter_todos.js', { filter: true,
+                     period: period,
+                     done: done,
+                     assigned_by: assigned_by,
+                     topic_id: topic,
+                     duedate: duedate});
+}
+
+function filterTodosReset(){
+  $('input#duedate').val('');
+  var e = ['period', 'done', 'assigned_by','topic'];
+  
+  $.each(e, function(key, value) {
+    $('#' + value).val($('#' + value + ' option:first').val());
+    // triggering change on select to reset the whole table.
+    if (key == 3){
+      $('#' + value).val($('#' + value + ' option:first').val()).trigger("change");
+    }
+  });
 }
 
 
