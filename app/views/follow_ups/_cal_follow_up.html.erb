@@ -1,0 +1,42 @@
+<!-- calendar click follow up create form -->
+<%= form_for(@follow_up, html: {class: "form-horizontal"}) do |g| %>
+                    <!-- Event Details -------------->
+                    <h5 class="col-md-12">Event Details</h5><br/>
+                      <%= bs(g,"title","text_field",[nil,3],8) %>
+                      <%= bs(g,[:event_type_id,EventType.order(:name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-event type-"},{}],
+                                              "collection_select",
+                                              [nil,3],8) %>
+                      <%= bs(g,[:assigned_to,User.order(:first_name), 
+                                              :id, 
+                                              :first_name,
+                                              {prompt: "-assigned_to-"},{}],
+                                              "collection_select",
+                                              ["Assign To",3],8) %>
+                    <!-- Link Event -------------->
+                      <h5 class="col-md-12">Link with Registration</h5><br/><br/>
+                      <div class="form-group">
+                          <label for="follow_up_t" class="control-label col-sm-3">Reference No</label>
+                          <div class="col-sm-8">
+                            <%= text_field_tag "follow_up[ref_no]",nil,{class: "form-control"} %>
+                          </div>
+                      </div>
+                    <!-- Event hidden fields -------------->
+                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                        <%= g.hidden_field :model, :value => "enquiry" %>
+                        <%= g.hidden_field :starts_at, :value => g.object.starts_at %>
+                        <%= g.hidden_field :ends_at, :value => g.object.ends_at %>
+                    <!-- Event Description-------------->
+                        <h5 class="col-md-12">
+                        Description
+                        </h5><br/>
+                        <%= bs(g,["desc",rows: nil,cols: nil],"text_area",[nil,3],8) %>
+                    <!-- Event submit -------------->
+                      <div class="form-group form-last">
+                       <div class="col-sm-offset-3 col-sm-5">
+                        <%= g.submit "Create",{class: "btn btn-primary"} %>
+                       </div>
+                      </div>
+<% end %>

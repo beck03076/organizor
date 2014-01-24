@@ -25,43 +25,6 @@
 
 $(function(){
 $('.datepicker').datepicker();
-    
-$('.multiple-select').multiSelect({
-        selectableHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
-        selectionHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
-        afterInit: function(ms){
-          var that = this,
-              $selectableSearch = that.$selectableUl.prev(),
-              $selectionSearch = that.$selectionUl.prev(),
-              selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-              selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
-          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-          .on('keydown', function(e){
-            if (e.which === 40){
-              that.$selectableUl.focus();
-              return false;
-            }
-          });
-
-          that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-          .on('keydown', function(e){
-            if (e.which == 40){
-              that.$selectionUl.focus();
-              return false;
-            }
-          });
-        },
-        afterSelect: function(){
-          this.qs1.cache();//= require turbolinks
-          this.qs2.cache();
-        },
-        afterDeselect: function(){
-          this.qs1.cache();
-          this.qs2.cache();
-        }
-      });
-
 
       dom_tokens('.token_coun_pro',"/srch_countries.json");
       dom_tokens('.token_coun_per',"/srch_countries.json");
@@ -105,7 +68,7 @@ $('.multiple-select').multiSelect({
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'month',
-    height: 500,
+    height: 700,
     slotMinutes: 30,
     eventSources: [
       {
@@ -120,10 +83,9 @@ $('.multiple-select').multiSelect({
     selectable: true,
     selectHelper: true,
     select: function(start, end, allDay) {
-
                $.get('/cal_click/'+ start + '/' + end,function(table){
                  var $container = $(".cal_click_container").html(table);
-                 setColorsFromSession();
+
                   var $dTF = $('.dateTimeField', $container);
                   if ($dTF.length > 0) {
                     $dTF.datetimepicker({
@@ -135,20 +97,15 @@ $('.multiple-select').multiSelect({
                         dateFormat: 'yy-mm-dd',
                         timeFormat: 'hh:mm:ss'});
                   }
-                  $('.cal_click').bPopup();
-                  $(".cal_click_container").remove();
+                  $('#cal_create').modal("show");
                });
 
             },
     timeFormat: 'h:mm t{ - h:mm t} ',
     dragOpacity: "0.5",
     eventRender: function(event, element) {
-      element.parent().find('a.todo_this > .fc-event-inner').attr('class','todo_class');
-      /*var target = element.parent().find('a  .fc-event-title');
-      target.data("follow_up_id",event.id);
-      target.attr('class','fc_event_title preview');
-
-      imagePreview("follow_up");*/
+      element.parent().find('a.todo_item div.fc-event-inner').addClass('cal_todo');
+      element.parent().find('a.follow_up_item > .fc-event-inner').addClass('cal_follow_up');
     },
 
     });
@@ -782,6 +739,7 @@ function selectUpdate(itemId,urlTo,destSel){
                     type: 'GET',
                     dataType: "JSON",
                     success: function( json ) {
+                        if (json == "") {  alert("No institutions configured"); }
                         $(destSel).empty();
                         $(destSel).append('<option value= selected="selected">--Choose--</option>');
                         $.each(json, function(i,value) {
@@ -922,6 +880,45 @@ function filterTodosReset(){
       $('#' + value).val($('#' + value + ' option:first').val()).trigger("change");
     }
   });
+}
+
+function actMultiSelect(cl){
+  $('.' + cl).multiSelect({
+        selectableHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        selectionHeader: "<input type='text' class='form-control' autocomplete='off' placeholder='Search...'>",
+        afterInit: function(ms){
+          var that = this,
+              $selectableSearch = that.$selectableUl.prev(),
+              $selectionSearch = that.$selectionUl.prev(),
+              selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+              selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+          .on('keydown', function(e){
+            if (e.which === 40){
+              that.$selectableUl.focus();
+              return false;
+            }
+          });
+
+          that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+          .on('keydown', function(e){
+            if (e.which == 40){
+              that.$selectionUl.focus();
+              return false;
+            }
+          });
+        },
+        afterSelect: function(){
+          this.qs1.cache();
+          this.qs2.cache();
+        },
+        afterDeselect: function(){
+          this.qs1.cache();
+          this.qs2.cache();
+        }
+      });
+
 }
 
 

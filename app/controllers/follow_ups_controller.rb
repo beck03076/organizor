@@ -57,6 +57,15 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
         m_id = (m + "_id").to_sym
         params[:follow_up].delete(:model)
     end
+    
+    # if ref_no is passed, find the registration and assign
+    if params[:follow_up][:ref_no]
+      temp = params[:follow_up][:ref_no]
+      if !temp.blank?
+        params[:follow_up][:registration_id] = Registration.find_by_ref_no(temp).id
+      end
+      params[:follow_up].delete(:ref_no)
+    end
   
     @follow_up = FollowUp.new(params[:follow_up])
     

@@ -26,16 +26,12 @@
 </div>
 
 <script>
- 
- 
- actmm('settings');
- 
- $(".col-md-3 > ul.nav-pills > li#<%= @partial %>").attr('class','active');  
+actmm('settings');
+$(".col-md-3 > ul.nav-pills > li#<%= @partial %>").attr('class','active'); 
+actMultiSelect('multiple-select');
 
 colsClick("enq_cols");
 colsClick("reg_cols");
 colsClick("ins_cols");
 colsClick("per_cols");
-
-
 </script>

@@ -66,7 +66,14 @@
               <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
               <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
               <li><%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %></li>
-              <li><%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calender<% end %></li>
+               
+              <li id="follow_ups">
+              <%= link_to "/follow_ups" do %>
+                <span class="glyphicon glyphicon-calendar"></span>
+                Calendar
+              <% end %>
+              </li>
+              
               <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
               
               <li id="todos">

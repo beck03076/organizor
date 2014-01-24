@@ -14,12 +14,13 @@ class Todo < ActiveRecord::Base
   :priority, :status_id, :topic_id, 
   :updated_by,:assigned_to, :assigned_by,
   :enquiry_id,:registration_id,:done,
-  :institution_id,:done_at,:api,:title
+  :institution_id,:done_at,:api,:title,
+  :ref_no
   
   def as_json(options = {})  
    {  
     :id => self.id,  
-    :title => (self.topic.name rescue "Untitled"),  
+    :title => (self.title rescue self.topic.name),  
     :description => self.desc || "No Description",  
     :status => (self.status.name rescue "No Status"),
     :start => (self.duedate.rfc822 rescue nil),  
@@ -27,7 +28,7 @@ class Todo < ActiveRecord::Base
     #:allDay => self.allday,  
     :priority => self.priority,  
     :url => Rails.application.routes.url_helpers.todo_path(id),  
-    :className => "todo_this",
+    :className => "todo_item",
    }  
   end
   

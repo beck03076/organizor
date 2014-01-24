@@ -9,7 +9,8 @@ class FollowUp < ActiveRecord::Base
   :ends_at, :event_type_id, :remind_before, 
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
-  :registration_id,:institution_id
+  :registration_id,:institution_id,:ref_no  
+
   
   scope :between, lambda {|start_time, end_time|  
    {:conditions => ["? < start < ?", FollowUp.format_date(start_time),FollowUp.format_date(end_time)] }  
@@ -29,7 +30,7 @@ class FollowUp < ActiveRecord::Base
     #:allDay => self.allday,  
     :recurring => false,  
     :url => Rails.application.routes.url_helpers.follow_up_path(id),  
-    :className => "tooltip",
+    :className => "follow_up_item",
    }  
   end 
   

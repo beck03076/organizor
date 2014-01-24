@@ -1,48 +1,39 @@
 <!-- Calendar -->
-<div class="tab-container">
-    <div class="tab-content" style="display: block;">
-        <div class="boxp box-theme-ch">
-         <ul class="vls">
-          <li>
-          <img src="/images/icons/org_calender.png" width="25"/>
-              <h2>Your Calendar
-              </h2>
-           </li>
-
-         </ul>
-<br/>
-<div>
-<small>
-Choose a date(click) or a date range(click & drag) to create a follow up/todo
-</small>
-
-<div class="fr brg0">
-<ul class="theme-colrs-lg">
-<li><span class="blue-theme-todo">&nbsp;</span>&nbsp;Todos</li>
-<li><span class="blue-theme-followup">&nbsp;</span>&nbsp;Follow Ups</li></ul></div>
-<br/>
-<br/>
-<div class="brg01"></div>
-<div class="cl"></div>
+<div class="row row-top">
+              <div class="col-md-10">
+                <h3>Calendar</h3><br/>
+                
+                    <span class="cal_follow_up">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;Follow Ups&nbsp;
+                    <span class="cal_todo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;Todos&nbsp;
+                    
+                    [<small>
+                      Choose a date(click) or a date range(click & drag) to create a follow up/todo
+                    </small>]
+              </div>
+              <div class="col-md-2">
+                <div class="form-group form-last pull-right">
+                  <%= link_to "Sync my Events with Google Calendar",
+                              '/todos/start_sync',
+                              {class: "btn btn-primary",
+                               data: { confirm: 'This can take a few moments, are you sure?' }} %>
+                </div>
+              </div>
 </div>
-<br/>
 
 
- 
-            <div id='calendar'> 
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well">
+                  <div id='calendar'> 
+                  </div>
+                        <div class='cal_click_container'> 
+                        </div>
+                </div>
+              </div>
             </div>
-            <div class='cal_click_container'> 
-            </div>
-            <span class="bClose" >
-            </span>
-         
-          
-        </div>
-    </div>
-</div>
 
 <script>
-$(function(){
-    activeMM("calendarMM");
-});
+
+  actmm("follow_ups");
+
 </script>

@@ -9,7 +9,10 @@ skip_authorize_resource :only => :show_hover
   # GET /todos
   # GET /todos.json
   def index
-
+    request.params[:y] = 5
+    p "********"
+    p request.params
+    
     temp = current_user.todos.includes(:topic,:_ass_by)
     
     if !params[:filter].nil?
@@ -65,6 +68,15 @@ skip_authorize_resource :only => :show_hover
         m = params[:todo][:model]
         m_id = (m + "_id").to_sym
         params[:todo].delete(:model)
+    end
+    
+    # if ref_no is passed, find the registration and assign
+    if params[:todo][:ref_no]
+      temp = params[:todo][:ref_no]
+      if !temp.blank?
+        params[:todo][:registration_id] = Registration.find_by_ref_no(temp).id
+      end
+      params[:todo].delete(:ref_no)
     end
     
     # assigning defaults in not given if nothing is given

@@ -284,7 +284,7 @@ Organizor::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
   
-  root :to => "users#show"
+  root :to => "users#index"
  # match '(*foo)' =>  'whitelist#index', constraints: BlacklistConstraint.new
 
   # See how all your routes lay out with "rake routes"
