@@ -923,6 +923,24 @@ function actMultiSelect(cl){
 }
 
 
+function token(model,filter){
+$('#filter_container').html('');
+  $.get('/get_column_names/' + model + '/' + filter,function(out){
+      $.each(out, function(i,col){
+         $('#filter_container').append('<input class="col-md-3" id="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
+         $("#" + col).tokenInput("/search/" + model + '/' +  col +"/token.json", {
+           placeHolderText: col,
+           propertyToSearch: col,
+           crossDomain: false,
+           theme: "facebook",
+           preventDuplicates: true,
+           resultsLimit:10,
+           tokenLimit:5,
+         });
+      });
+  });
+}
+
 
 
 

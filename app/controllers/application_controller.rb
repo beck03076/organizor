@@ -19,6 +19,22 @@ require "ipaddr"
     end
   end
   
+  def token_search
+    set_url_params
+    @result = @model.camelize.constantize.where("#{@col} like ?", "%#{params[:q]}%")
+      respond_to do |format|
+        format.html
+        format.json { render :json => @result.map(&:attributes) }
+      end
+  
+  end
+  
+  def get_column_names
+    set_url_params
+    out = @model.camelize.constantize.column_names.grep(/^#{@filter}\d*$/)
+    render json: out
+  end
+  
   def determine_redirect
    p "==== determining redirect====="
    #What data comes back from OmniAuth?     

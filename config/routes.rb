@@ -2,6 +2,12 @@ Organizor::Application.routes.draw do
 
   resources :branches
   
+  post '/emails/filter' => "emails#filter"
+  
+  get '/search/:model/:col/token.json' => "application#token_search"
+  
+  get '/get_column_names/:model/:filter' => "application#get_column_names"
+  
   post '/filter_todos' => 'todos#index'
   
   match '/filter_users/:model(/:f_id)' => "users#index"

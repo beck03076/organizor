@@ -2,15 +2,27 @@ class EmailsController < ApplicationController
 authorize_resource
 skip_authorize_resource :only => [:show_hover,:bulk_email]
 
-  def index
+  def filter
     set_url_params
     
-    if current_user.adm? && @sent_by
-      @emails = Email.includes(:_cre_by).where(created_by: @sent_by).order("created_at desc")
-    else 
-      @emails = current_user.emails.includes(:_cre_by)
+    @sent_by = @sent_by.blank? ? nil : @sent_by
+    @sent_to = @sent_to.blank? ? nil : @sent_to
+    who = @sent_by || @sent_to
+    
+    ids = params[who.to_sym].values.reject(&:empty?).join(",")
+    
+    if (!@from_date.blank? && !@to_date.blank?)
+      cond = "#{who.pluralize}.id in (#{ids}) AND date(emails.created_at) BETWEEN '#{@from_date}' AND '#{@to_date}'"
+    else
+      cond = { id: ids}
     end
+    
+    @emails = (who.camelize.constantize.includes(:emails).where(cond).map &:emails).flatten
+    
+  end
 
+  def index
+    @emails = current_user.emails.includes(:_cre_by)
   end
   
   def new

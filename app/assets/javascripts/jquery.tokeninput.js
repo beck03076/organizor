@@ -26,6 +26,7 @@ var DEFAULT_SETTINGS = {
     searchingText: "Searching...",
     deleteText: "&times;",
     animateDropdown: true,
+    placeHolderText: 'Type..',
 
 	// Tokenization settings
     tokenLimit: null,
@@ -189,6 +190,7 @@ $.TokenList = function (input, url_or_data, settings) {
         .css({
             outline: "none"
         })
+        .attr("placeholder", settings.placeHolderText)
         .attr("id", settings.idPrefix + input.id)
         .focus(function () {
             if (settings.tokenLimit === null || settings.tokenLimit !== token_count) {

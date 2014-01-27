@@ -1,88 +1,78 @@
-<!-- emails raw-->
+<!-- User index -->
 
-<div class="tab-container">
 
-<%= render "email_templates/menus" %>
-    <div class="tab-content" id="email_template" style="display:block">
-    <div class="boxp box-theme-ch">
-        <h4 class="htab">
-        All Emails 
-        
-        <% if current_user.adm? %>
-        <div class="fr">
-                  &nbsp;&nbsp;
-                  Sent By: 
-                  <%= select_tag("Sent By",
-                  options_from_collection_for_select(User.order(:first_name),'id','name',@sent_by),
-                  {autocomplete: "off", id: "sent_by_email"}) %>
-        </div>
-        <% end %>
-        
-        </h4>
-        <br/>
-        <br/>
-        <br/>
-      <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-         <thead>
-          <tr>
-                                <th>Subject</th>
-                                <th>Date</th>
-                                <th>Sent By</th>
-                                <th>From</th>
-                                <th>View all</th>
-          </tr>
-        </thead>
-        <tbody>
-               <% @emails.includes(:smtp).each do |email| %>
-                    <tr>
-                        <td><%= email.subject %></td>
-                        <td><%= email.created_at.strftime("%F %R %p") %></td>
-                        <td><%= email._cre_by.name rescue "" %></td>
-                        <td><%= (email.from.nil? ? email.smtp.name : email.from) rescue "unknown" %></td>
-                        <td  class="preview" data-email_id='<%= email.id %>' data-type="E">...</td>
-                   </tr>
-                   
-               <% end %>
-               <%= @emails.size == 0 ? "<tr><td>No emails sent by this user, yet!</td></tr>".html_safe : nil %>
-                    <tr>
-                        <td colspan="5" align="left"><a href="#">Back</a></td>
-                   </tr>
+<div class="row row-top">
+    <div class="col-md-10 emails">
+      <h3>Emails</h3>
+    </div>
+    <div class="col-md-2">
+      <div class="form-group form-last pull-right">
+        <%= link_to "New Email", new_user_invitation_path,{class: "btn btn-primary"} %>
+      </div>
+    </div>
+</div>
 
-        </tbody>
-      </table>
-      
-      <br/><br/>
 
+<div class="row">
+<div class="col-md-12 data-table">
+<div class="well well-sm" style="background-color: #f8f4b0;">
+                        <div class="row row-top" id="todo-filter" >
+                          <div class="col-md-1">
+                            <h4>Filter</h4>
+                          </div>
+                          <%= form_tag "/emails/filter",{method: "post", remote: true} do %>
+                          <div class="col-md-2" >
+                            <%= select_tag :abdc,
+                                  options_for_select([["sent to","to"],
+                                                     ["sent by","by"]]),
+                                  {prompt: "-sent-",
+                                   id: "sent",
+                                   class: "form-control",
+                                   onchange: "$('#to,#by').hide();
+                                              $('#' + this.value).show();
+                                              $('select#sent_to,select#sent_by').val('');"} %>
+                          </div>
+                          <div class="col-md-2" id="by" style="display:none;">
+                                <%= select_tag :sent_by,
+                                    options_for_select([["User","user"]]),
+                                    {prompt: "-who-",
+                                    class: "form-control",
+                                    onchange: "token(this.value,'email');"} %>
+                          </div>
+                          <div class="col-md-2" id="to" style="display:none;">
+                                <%= select_tag :sent_to,
+                                    options_for_select([["Enquiry","enquiry"],
+                                                         ["Registration","registration"],
+                                                         ["Institution","institution"],
+                                                         ["Person","person"]]),
+                                    {prompt: "-who-",
+                                     class: "form-control",
+                                     onchange: "token(this.value,'email');"} %>
+                          </div>
+                          <%= link_to "date","#",{onclick: "$('#id_from_date,#id_to_date').toggle();"}  %>
+                          <div class="col-md-2" id="id_from_date" style="display:none;">
+                              <%= text_field_tag :from_date,nil,{class: "datepicker",placeholder: "from date" }%>
+                          </div>
+                          <div class="col-md-2" id="id_to_date" style="display:none;">
+                              <%= text_field_tag :to_date,nil,{class: "datepicker",placeholder: "to date" }%>
+                          </div>
+                          
+                          <div id="filter_container" class="col-md-3" ></div>
+                          
+<%= submit_tag "Search",{onclick: "$('.emails > h3').append('<img class=temp src=/images/icons/sload.gif >');"} %>
+                          <% end %>
+                        </div>
+                      </div>
+
+            <div id="emails-table">
+                <%= render 'table' %>
+            </div>
 
 </div>
 </div>
-</div>
+
 <script>
-
-tinymce.init({
-     selector: "textarea.tinymce",
-     theme: "modern",
-     plugins: [
-      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-      "searchreplace wordcount visualblocks visualchars code fullscreen",
-      "insertdatetime media nonbreaking save table contextmenu directionality",
-      "emoticons template paste textcolor "
-     ],
-     toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-     toolbar2: "print preview media | forecolor backcolor emoticons",
-     image_advtab: true,
-     templates:[ 
-        {title: 'Some title 1', description: 'Some desc 1', content: 'My content'}, 
-        {title: 'Some title 2', description: 'Some desc 2', url: '/email_templates/3/partial'} 
-    ],
-     autosave_ask_before_unload: false
-});
-
-$(function(){
-    imagePreview("email");
-    setColorsFromSession();
-    $("ul.tab-menus1 li.emails").trigger('click');
-    activeMM("emailMM");
-});
-
+actmm("emails"); 
 </script>
+
+

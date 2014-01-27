@@ -1,0 +1,27 @@
+<!-- listing emails -->
+<h4>Total : <%= @emails.size %> emails</h4>
+
+<table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>To</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Sent By</th>
+                    <th>From</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @emails.each do |e| %>
+                      <tr>
+                        <% t = e.to.split(",").size %>
+                        <% to_size = (t == 0 ? "Unknown" : t) %>
+                        <td><%= truncate(e.to,length: 20) %> <%= to_size == 1 ? nil : "[#{to_size}]" %> </td>
+                        <td><%= e.subject %></td>
+                        <td><%= e.created_at.to_s %></td>
+                        <td><%= e.email._cre_by.name rescue "Unknown" %></td>
+                        <td><%= (e.from.nil? ? e.smtp.name : e.from) rescue "unknown"%></td>
+                      </tr>
+                  <% end %>
+                </tbody>
+              </table>
