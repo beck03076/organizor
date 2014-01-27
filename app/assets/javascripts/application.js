@@ -26,6 +26,13 @@
 
 
 $(function(){
+
+dataConfirmModal.setDefaults({
+  title: 'Confirm your action',
+  commit: 'Continue',
+  cancel: 'Cancel'
+});
+
 $('.datepicker').datepicker();
 
       dom_tokens('.token_coun_pro',"/srch_countries.json");
