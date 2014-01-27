@@ -21,6 +21,7 @@
 //= require private_pub
 //= require fullcalendar
 //= require dataTables/jquery.dataTables
+//= require data-confirm-modal
 
 
 

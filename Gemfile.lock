@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/ifad/data-confirm-modal.git
+  revision: e1f5a4b40e6890c3b8e94bdf5964ee3568933de3
+  specs:
+    data-confirm-modal (1.0.1)
+      railties (>= 3.0)
+      twitter-bootstrap-rails (~> 2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -255,6 +263,11 @@ GEM
     ttfunk (1.0.3)
     turn (0.9.6)
       ansi
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.38)
     uglifier (2.2.1)
       execjs (>= 0.3.0)
@@ -276,6 +289,7 @@ DEPENDENCIES
   cancan
   carrierwave
   coffee-rails (~> 3.2.1)
+  data-confirm-modal!
   deep_cloneable (~> 1.5.5)
   devise
   devise_invitable
