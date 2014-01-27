@@ -22,6 +22,10 @@
                           <div class="col-sm-8">
                             <%= text_field_tag "follow_up[ref_no]",nil,{class: "form-control"} %>
                           </div>
+                          
+                          <div class="col-sm-8">
+                            <%= g.text_field :ref_no,{class: "form-control"} %>
+                          </div>
                       </div>
                     <!-- Event hidden fields -------------->
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>

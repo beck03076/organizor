@@ -16,6 +16,7 @@ class SmtpsController < ApplicationController
     @smtp = Smtp.find(params[:id])
 
     respond_to do |format|
+      format.js
       format.html # show.html.erb
       format.json { render json: @smtp }
     end

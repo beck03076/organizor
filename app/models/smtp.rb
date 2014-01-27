@@ -3,7 +3,8 @@ class Smtp < ActiveRecord::Base
   
   attr_accessible :address, :authentication, :created_by, 
   :domain, :enable_starttls_auto, :name, 
-  :password, :port, :updated_by, :user_name
+  :password, :port, :updated_by, :user_name,
+  :desc
   
   
   

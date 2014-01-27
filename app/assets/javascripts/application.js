@@ -20,6 +20,7 @@
 //= require best_in_place
 //= require private_pub
 //= require fullcalendar
+//= require dataTables/jquery.dataTables
 
 
 

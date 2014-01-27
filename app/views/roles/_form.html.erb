@@ -1,60 +1,26 @@
-<%= form_for(@role, :html => {:onsubmit => "return validateAll(this);"}) do |f| %>
-  <% if @role.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h2>
-
-      <ul>
-      <% @role.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-<table>
-    <tr>    
-        <td  valign="top"><%= f.label :name %></td>
-        <td  valign="top" ><%= f.text_field :name , {:data => {:maxlength => "",:minlength => "4",:label => "Name", :req => "Y"},:onblur => "validate(this.id,'ANS');" } %></td>
-
-    </tr>
-    
-    <tr>    
-        <td  valign="top"><%= f.label :description %></td>
-        <td  valign="top" ><%= f.text_area :description %></td>
-
-    </tr>
-  <tr align="center">
-     <td >
-     <h4>
-     Tick the permissions for this role from below
-     </h4>
-     </td>
-  </tr>  
-  <tr>   
-  <table>
-  <% @permissions.each_slice(2) do |chunk| %>        
-    <tr align="center">    
-     <% chunk.each do |i| %>
-       <td valign="top" align="left">
-       <h3><%= i[0] %></h3><br/>
-           
-           <% i[1].each do |j| %>
-                <%= check_box_tag "#{f.object_name}[permission_ids][]",
-                                                                  j.id, 
-                                                                  @role.permissions.include?(j) %>
-                <%= label_tag(:permissions, j.name.titleize)%>, <%= j.description %>
-                <br/>  
-           <% end %>    
-       </td>
-     <% end %>
-    </tr>
-  <% end %>
-  </table>
-  </tr>
-  </table>
+<!-- edit only roles -->
+<div class="row">
+      <div class="<%= div %>">
+        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+        
+          <% if h == "New" %>
+              <h4 class="form-heading"><%= h %> <%= resource_disp1 %></h4>
+              <br/>
+          <% end %>
+          <%= bs(f,"name","text_field",[nil,3],6) %>
+          <%= bs(f,[:desc,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,3],6) %>
+          
+          <%= render 'permissions', f: f, role: new_resource %>
+          <br/>
+          <div class="form-group form-last">
+            <div class="col-sm-offset-10 col-sm-5">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
 </div>
-<div class="bts-box">
-<%= f.submit %>
-<%= link_to 'Back', roles_path, {:class => "btns"} %>
-<% end %>
+
+
   
 

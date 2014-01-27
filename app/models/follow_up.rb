@@ -9,7 +9,7 @@ class FollowUp < ActiveRecord::Base
   :ends_at, :event_type_id, :remind_before, 
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
-  :registration_id,:institution_id,:ref_no  
+  :registration_id,:institution_id,:ref_no
 
   
   scope :between, lambda {|start_time, end_time|  
@@ -37,4 +37,13 @@ class FollowUp < ActiveRecord::Base
   def tit
     self.title rescue "Title Unknown"
   end
+  
+  def ref_no=(r)
+    self.registration_id = Registration.find_by_ref_no(r) rescue Registration.first.id
+  end
+  
+  def ref_no
+    Registration.find(registration_id).ref_no rescue Registration.first.id
+  end
+  
 end

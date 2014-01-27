@@ -1,10 +1,24 @@
-<%= simple_form_for(@smtp) do |f| %>
-  <%= f.error_notification %>
+<!-- edit only branches -->
+<div class="row">
+      <div class="<%= div %>">
+        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+          <% if h == "New" %>
+              <h4 class="form-heading"><%= h %> <%= resource_disp1 %></h4>
+              <br/>
+          <% end %>
+          <%= bs(f,"address","text_field",[nil,3],6) %>
+          <%= bs(f,"port","text_field",[nil,3],6) %>
+          <%= bs(f,"domain","text_field",[nil,3],6) %>
+          <%= bs(f,"user_name","text_field",[nil,3],6) %>
+          <%= bs(f,"password","password_field",[nil,3],6) %>
+          <%= bs(f,"authentication","text_field",[nil,3],6) %>
+          <%= bs(f,"enable_starttls_auto","text_field",[nil,3],6) %>
 
-  <div class="form-inputs">
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+          <div class="form-group form-last">
+            <div class="col-sm-offset-3 col-sm-5">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+</div>

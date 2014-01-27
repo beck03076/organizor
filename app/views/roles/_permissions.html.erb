@@ -1,26 +1,18 @@
 <!-- permissions used twice - Users, Roles but different in create roles-->
-<br/>
 
-<%= form_for(role) do |f| %>
-    <div class="actions" id="perm_save_1" style="margin-bottom:10px;display:none;">
-     <%= f.submit "Save",{:class => "btnp fr"} %>
-    </div>
-    <br/>
-    <br/>
-    <br/>
     <% perms = (Permission.all.group_by &:subject_class) %>
-     <table  class="tables3" border="0" cellpadding="0" cellspacing="0" width="100%">
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
      <% r = perms.keys %>
-     <% defs = ["Enquiry","Registration"] %>
+     <% defs = ["Enquiry","Registration","Institution","Person"] %>
      <% r = r - ["All","Country","City"] %>
 
      <% defs.each do |model| %>
     
           <tr colspan="5">
           <td>
-          <h4 class="htab">
+          <h6>
           <%= model %>
-          </h4>
+          </h6>
           </td>
           
           
@@ -37,7 +29,7 @@
     <% end %>
     <tr>
     <td colspan="6">
-    <span class="toggler" onclick="$('.more_permissions').slideToggle(); $('#perm_save_1').slideToggle();"> more </span>
+    <a class="toggler" onclick="$('.more_permissions').slideToggle(); $('#perm_save_1').slideToggle();"> more </a>
     </td>
     </tr>
      </table>
@@ -57,10 +49,10 @@
                </tr>
                <% (r - (defs + ["User"])).each do |model| %>
                 
-                      <tr colspan="5"  align="center" class="htab">
+                      <tr>
                       <td>
-                      <h4 >
-                      <%= model %>
+                      <h6>
+                     
                       <span class="fl padr10">
                       <%= check_box_tag "permissions_row",
                                          nil,
@@ -70,30 +62,16 @@
                                          onclick: "toggleAllCheckRow(this);"} %>
                       
                       </span>
-                      &nbsp;
-                      &nbsp;
-                      </h4>
+                       <%= model %>
+                      </h6>
                       </td>
-                      
                       <% perms[model].each do |p| %>
-                        <td align="center">
+                        <td align="left">
                                 <%= check_box_tag "#{f.object_name}[permission_ids][]",
                                                    p.id, 
                                                    role.permissions.include?(p),{class: "permissions"} %>
                         </td>
                       <% end %>
-
                      </tr>
-               
                 <% end %>
-
     </table>
-    <br/>
-    <div class="actions" style="margin-bottom:10px;">
-     <%= f.submit "Save",{:class => "btnp fr"} %>
-    </div>
-    <div class="cl"></div>
-    
-<% end %>
-<br/>
-<br/>

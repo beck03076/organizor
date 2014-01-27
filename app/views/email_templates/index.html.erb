@@ -1,50 +1,67 @@
-<!-- EmailTemplate -->
-<!-- Tabs---------------------------->
-<div class="tab-container">
+<!-- rendering the left menu -->
+<%= render 'resources/menu' %>
 
-<%= render "menus" %>
-    <div class="tab-content" id="email_template" style="display:block">
-    <div class="boxp box-theme-ch">
-        <h4 class="htab">
-        All Email Templates
-        </h4>
-        <br/>
-        <br/>
-        <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <th>Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
+<!-- branches more information -->
 
-        <% @email_templates.each do |email_template| %>
-          <tr>
-            <td><%= email_template.name %></td>
-            <td><%= link_to 'Edit', edit_email_template_path(email_template) %></td>
-            <td><%= link_to 'Delete', email_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </table>
+<% resource_disp1 = "Email Template" %>
+<% resource_disp2 = "Email Templates" %>
+<% resource = @email_templates %>
+<% new_resource = EmailTemplate.new %>
 
-        <br />
-        <br/>
-        <br/>
-        <%= link_to 'New Email template', new_email_template_path,{class: "btnp"} %>
-        <br/>
-        <br/>
-     </div>
-     </div>
+<div class="col-md-9">
+  <div class="config-content">
+        <div class="row row-top">
+          <h3><%= resource_disp2 %></h3>
+        </div>
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th colspan=2>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% resource.each do |r| %>
+                <tr>
+                  <td><%= link_to r.name,
+                          email_template_path(r),
+                                  {remote: true,
+                                   onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %></td>
+                  <td><%= truncate(r.desc,length: 20) %></td>
+                  <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
+                  <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
+                  <td>
+
+                    <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                                edit_email_template_path(r) %>
+                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
+                                r, 
+                                method: :delete, 
+                                data: { confirm: 'Are you sure?' }  %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+  <%= render "form", {new_resource: new_resource,
+                      resource_disp1: resource_disp1,
+                      div: "well",
+                      h: "New"} %>
+                      
+  <div id="edit-resource-container"></div>
 </div>
-<script>
-$(function(){
-  setColorsFromSession();
-  $("ul.tab-menus1 li.email_templates").trigger('click');
-  activeMM("emailMM");
- });
+</div>
+<script type="text/javascript">
+ actmm("configuration");
+ actsm("email_template");
+
 </script>
- 
+
+
+

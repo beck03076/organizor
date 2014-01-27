@@ -1,21 +1,19 @@
 class RolesController < ApplicationController
-authorize_resource
+ authorize_resource
+ 
  def show_permissions
    role = Role.find(params[:role_id])
    render partial: 'permissions',locals: {role: role }
  end
 
  def index
-
     @roles = Role.includes(:permissions).all.reject {|i| i.name == "agency_administrator"}
+    permissions
     
     respond_to do |format|
       format.html { }#render layout: "users" }
       format.json { render json: @roles }
     end
-    
-    
-    
   end
 
   # GET /roles/1
@@ -37,7 +35,7 @@ authorize_resource
 
   # GET /roles/1/edit
   def edit
-    permissions
+    @role = Role.find(params[:id])
   end
 
  def create

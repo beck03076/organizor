@@ -62,7 +62,27 @@
                   Enquiries
                   <% end %>
               </li>
-              <li><%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registration<% end %></li>
+              <li>
+              <%= link_to registrations_path do %>
+              <span class="glyphicon glyphicon-pencil"></span>
+              Registrations
+              <% end %>
+              </li>
+              
+              <li>
+              <a>
+              <span class="glyphicon glyphicon-home"></span>
+              Institutions
+              </a>
+              </li>
+              
+              <li>
+              <a>
+              <span class="glyphicon glyphicon-folder-open"></span>
+              People
+              </a>
+              </li>
+
               <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
               <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
               <li><%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %></li>

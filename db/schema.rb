@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140122120329) do
+ActiveRecord::Schema.define(:version => 20140127071810) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -714,6 +714,7 @@ ActiveRecord::Schema.define(:version => 20140122120329) do
     t.integer  "updated_by"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.text     "desc"
   end
 
   create_table "status_diagrams", :force => true do |t|

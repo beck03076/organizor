@@ -1,14 +1,10 @@
  
-  <% ctnt = (render 'form', {new_resource: @branch,
-                             resource_disp1: "Branch",
-                             div: "",
-                             h: "Edit"}) %>
-                             
+  <% ctnt = (render 'show', {a: @smtp}) %>
  
   $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
                                            :locals =>   {id: 'resource-edit', 
                                                          content: ctnt.html_safe,
-                                                         header: 'Edit',
+                                                         header: 'Show',
                                                          button: nil}) %>");
   
   $('#resource-edit').modal('show');

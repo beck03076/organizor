@@ -31,6 +31,7 @@ class EmailTemplatesController < ApplicationController
     @email_template = EmailTemplate.find(params[:id])
 
     respond_to do |format|
+      format.js
       format.html # show.html.erb
       format.json { render json: @email_template }
     end

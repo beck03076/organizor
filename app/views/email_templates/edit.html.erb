@@ -1,9 +1,15 @@
+<!-- edit page for an email template -->
+<div class="well">
+             <div class="row row-top">
+              <div class="col-md-10">
+                <h3>Edit Email Template</h3>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group form-last pull-right">
+                  <%= link_to "Back",email_templates_path %>
+                </div>
+              </div>
+            </div>
 
-<%= render 'form' %>
-
-<script>
-$(function(){
-  setColorsFromSession();
-  activeMM("emailMM");
- });
-</script>
+<%= render 'form', new_resource: @email_template, div: nil, h: nil %>
+</div>

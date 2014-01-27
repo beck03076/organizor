@@ -1,48 +1,34 @@
-<!-- Tabs---------------------------->
-<div class="tab-container">
- <%= render "menus" %>
-    <div class="tab-content" id="email_template" style="display:block">
-    <!-- Actual Form Starts---------------------------->
-    <%= form_for(@email_template) do |f| %>
-
-         <div class="boxp box-theme-ch">
-            <%= link_to 'New', new_email_template_path,{class: "btnp fr"} %>
-            <%= link_to 'All', email_templates_path,{class: "btnp fr"} %>
-            <div class="cols">
-              <div class="col6">
-                <div class="fbox">
-                <%= f.label :name %>
-                <%= f.text_field :name,{size: "100"} %>
-                </div>
-                
-                <div class="fbox">
-                  <%= f.label :subject %>
-                  <%= f.text_area :subject,{style: 'width:350px;height:20px;'}  %>   
-                </div>
-
-              </div>
+<!-- edit only email_templates -->
+<div class="row">
+      <div class="<%= div %>">
+        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+          <% if h == "New" %>
+              <h4 class="form-heading"><%= h %> <%= resource_disp1 %></h4>
+              <br/>
+          <% end %>
+          <%= bs(f,"name","text_field",[nil,1],12) %>
+          <%= bs(f,"subject","text_field",[nil,1],12) %>
+          <%= bs(f,[:body,
+                   {class: 'form-control tinymce',
+                    cols: nil, 
+                    rows: nil, 
+                    style: 'width:500px;height:700px;'}],"text_area",[nil,1],12) %>
+          <%= bs(f,[:signature,
+                   {class: 'form-control tinymce',
+                    cols: nil, 
+                    rows: nil, 
+                    style: 'width:350px;height:200px;'}],"text_area",[nil,1],12) %>
+          <%= bs(f,[:desc,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,1],12) %>
+          
+          <div class="form-group form-last">
+            <div class="col-sm-offset-10 col-sm-10">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
             </div>
-            <br/>
-            <div class="cl"></div> 
-                <%= label_tag :body %>
-                <br/>
-                <br/>
-                <%= f.text_area :body,{:class=>"tinymce",:style => 'width:500px;height:700px;'} %>
-                <br/>
-                <br/>
-                <%= f.label :signature %>
-                <%= f.text_area :signature,{:class=>"tinymce",style: 'width:350px;height:200px;'} %>    
-                <br/>
-                <br/>
-                <div class="cl"></div> 
-                <%= f.submit "Create",{class: 'btnp fr'} %>
-<div class="cl"></div> 
-<br/>
-                <br/>
           </div>
-    <% end %>
-    </div>
+        <% end %>
+      </div>
 </div>
+
 <!-- Actual Form Ends ---------------------------->
 
 <!-- Script, hidden forms and other things for uploading an image into the server and displaying it in the RTF Starts---------------------------->  
@@ -56,11 +42,6 @@
   
   
 <script>
-$(function(){
-  setColorsFromSession();
-  $("ul.tab-menus li.email_template").trigger('click');
- });
-
 
 $("#image_path").on("change",function(){
    $("#new_image").submit();
@@ -137,7 +118,5 @@ tinymce.init({
      autosave_ask_before_unload: false,
      
 });
-setColorsFromSession();
-activeMM("emailMM");
-$("ul.tab-menus1 li.new_email_template").trigger('click');
+
 </script>

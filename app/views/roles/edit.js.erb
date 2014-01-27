@@ -1,2 +1,15 @@
-$("#edit-module-content").html("<%= escape_javascript(render('form')) %>");
-$('#edit-module-popup').bPopup();
+ 
+  <% ctnt = (render 'form', {new_resource: @role,
+                             resource_disp1: "Role",
+                             div: "",
+                             h: "Edit"}) %>
+ 
+  $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource-edit', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Edit',
+                                                         button: nil}) %>");
+  
+  $('#resource-edit').modal('show');
+  
+  $('.temp').remove();

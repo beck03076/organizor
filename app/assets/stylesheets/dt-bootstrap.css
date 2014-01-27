@@ -229,9 +229,9 @@ div.DTFC_LeftFootWrapper table {
     border-top: none;
 }
 
-.sorting { background: url('../images/sort_both.png') no-repeat right 60%; }
-.sorting_asc { background: url('../images/sort_asc.png') no-repeat right 90%; }
-.sorting_desc { background: url('../images/sort_desc.png') no-repeat right 50%; }
+.sorting { background: url('images/icons/sort_both.png') no-repeat right 60%; }
+.sorting_asc { background: url('images/icons/sort_asc.png') no-repeat right 90%; }
+.sorting_desc { background: url('images/icons/sort_desc.png') no-repeat right 50%; }
 
-.sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat right 90%; }
-.sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat right 50%; }
+.sorting_asc_disabled { background: url('/images/icons/sort_asc_disabled.png') no-repeat right 90%; }
+.sorting_desc_disabled { background: url('/images/icons/sort_desc_disabled.png') no-repeat right 50%; }
