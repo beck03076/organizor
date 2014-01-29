@@ -29,20 +29,31 @@ private
     institutions.map do |ins|
        temp = []
        
-       temp << check_box_tag(:tr,ins.id,false,{data: {launch: "/institutions/#{ins.id}"}}) 
+       # setting the class so that the row be red for todays follow up
+       fu_now_temp = ins.f_ups.map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       # setting the class so that the row be red for this weeks follow up
+       fu_week_temp = ins.f_ups.map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
        
-       temp<<  link_to(image_tag("/images/icons/edi.png"),edit_institution_path(ins.id)) + spc +
-               link_to(image_tag("/images/icons/del.png"),
-                       "/institutions/#{ins.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
-
-        @cols.map{|i|
+       v_fu_now = (fu_now_temp ? "fu_now" : "")
+       v_fu_week = (fu_week_temp ? "fu_week" : "")
+       
+       temp << check_box_tag(:tr,ins.id,false,{data: {launch: "/institutions/#{ins.id}",
+                                                      fu_now: v_fu_now,
+                                                      fu_week: v_fu_week}}) 
+       
+       @cols.map{|i|
           if i.is_a?(Array)
             temp << ins.send(i[1].to_s).try(i[2].to_s)
           else
             temp << ins.send(i.to_s).to_s
           end
         }
+        
+        temp<<  link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        edit_institution_path(ins.id)) + spc +
+                link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                       "/institutions/#{ins.id}",
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
        
        final << temp
      end
@@ -102,7 +113,7 @@ private
   end
 
   def sort_column
-    columns = [:id,:id] + (@cols - ["statuses"])
+    columns = [:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 

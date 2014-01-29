@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140127071810) do
+ActiveRecord::Schema.define(:version => 20140129162649) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -274,6 +274,13 @@ ActiveRecord::Schema.define(:version => 20140127071810) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "emails_people", :force => true do |t|
+    t.integer  "email_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "emails_registrations", :force => true do |t|
     t.integer  "registration_id"
     t.integer  "email_id"
@@ -389,6 +396,7 @@ ActiveRecord::Schema.define(:version => 20140127071810) do
     t.integer  "assigned_by"
     t.integer  "registration_id"
     t.integer  "institution_id"
+    t.integer  "person_id"
   end
 
   create_table "images", :force => true do |t|
@@ -815,6 +823,7 @@ ActiveRecord::Schema.define(:version => 20140127071810) do
     t.datetime "done_at"
     t.string   "title"
     t.text     "api_id"
+    t.integer  "person_id"
   end
 
   create_table "user_configs", :force => true do |t|

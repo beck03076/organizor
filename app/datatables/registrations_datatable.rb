@@ -29,9 +29,9 @@ private
        temp = []
        
        # setting the class so that the row be red for todays follow up
-       fu_now_temp = reg.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       fu_now_temp = reg.f_ups.map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
        # setting the class so that the row be red for this weeks follow up
-       fu_week_temp = reg.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
+       fu_week_temp = reg.f_ups.map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
        
        v_fu_now = (fu_now_temp ? "fu_now" : "")
        v_fu_week = (fu_week_temp ? "fu_week" : "")
@@ -40,18 +40,19 @@ private
                                                       fu_now: v_fu_now,
                                                       fu_week: v_fu_week}}) 
        
-       temp<<  link_to(image_tag("/images/icons/edi.png"),edit_registration_path(reg.id)) + spc +
-               link_to(image_tag("/images/icons/del.png"),
-                       "/registrations/#{reg.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
-
-        @cols.map{|i|
+       @cols.map{|i|
           if i.is_a?(Array)
             temp << reg.send(i[1].to_s).try(i[2].to_s)
           else
             temp << reg.send(i.to_s).to_s
           end
         }
+        
+        temp<<  link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        edit_registration_path(reg.id)) + spc +
+                link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                       "/registrations/#{reg.id}",
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
        
        final << temp
      end
@@ -111,8 +112,7 @@ private
   end
 
   def sort_column
-    columns = [:id,:id] + (@cols - ["statuses"])
-    p  columns[params[:iSortCol_0].to_i]
+    columns = [:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
     
   end

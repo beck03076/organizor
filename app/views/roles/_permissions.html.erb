@@ -18,7 +18,7 @@
           
           <% perms[model].each do |p| %>
             <td>
-                    <%= check_box_tag "#{f.object_name}[permission_ids][]",
+                    <%= check_box_tag "#{f}[permission_ids][]",
                                                                       p.id, 
                                                                       role.permissions.include?(p) %>
                     <%= label_tag(:permissions, p.action.titleize)%>
@@ -67,7 +67,7 @@
                       </td>
                       <% perms[model].each do |p| %>
                         <td align="left">
-                                <%= check_box_tag "#{f.object_name}[permission_ids][]",
+                                <%= check_box_tag "#{f}[permission_ids][]",
                                                    p.id, 
                                                    role.permissions.include?(p),{class: "permissions"} %>
                         </td>

@@ -12,7 +12,7 @@ gem "mysql2"
 gem 'execjs'
 #gem 'therubyracer'
 
-
+gem 'pry', '0.9.12.4'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -79,6 +79,7 @@ gem 'json' #important, was not set as a dependency, so I add it manually
 gem 'google_currency'
 #gem "omnicontacts"
 
+
 group :development do
 #  gem "rails-dev-tweaks"
 end
@@ -87,6 +88,13 @@ end
 #gem 'turbolinks'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 
-
+gem "rspec-rails", :group => [:test, :development]
+gem 'database_cleaner', :group => [:test, :development]
+group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+  gem 'email_spec'
+end
 
 

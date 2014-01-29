@@ -62,9 +62,13 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
   def bulk_email 
   
      set_url_params
-     mail_to_use = current_user.conf.def_enq_email.to_sym
+     
+     # the following 2 lines sets the email as email1 or 2 based on settings and if nothing is set, it rescues with email
+     default = "def_" + @model[0..2].downcase + "_email"
+     mail_to_use = current_user.conf.send(default).to_sym rescue "email"
+     
      @subject = @model.camelize.constantize.where(id: @model_ids.split(","))
-     @email_ids = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
+     @email_ids = ((@subject.map &:email) - ["",nil]).join(", ")
      @subject_ids = (@subject.map &:id).join(",")
      @model_s = @model.downcase
 

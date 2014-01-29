@@ -1,4 +1,7 @@
 class Person < ActiveRecord::Base
+
+  include CoreExtension
+  
   validates :first_name, 
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another person, please check!" }
@@ -31,8 +34,12 @@ class Person < ActiveRecord::Base
   
   belongs_to :institution
   
+  has_and_belongs_to_many :emails 
+  has_many :follow_ups
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Person"'
+  has_many :todos
   
+ 
   accepts_nested_attributes_for :notes
   
   

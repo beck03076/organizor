@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  audited
+ # audited
   mount_uploader :image, HumanImageUploader
   before_save :default_values
   

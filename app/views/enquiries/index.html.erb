@@ -1,26 +1,7 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.seperator > li > a.all").trigger('click');
-});
 
-</script>
+<%= render 'shared/core_index', model: "Enquiry",
+                         new: "new_enquiry_path",
+                         tab: "EnquiryStatus" %>
 
-            <div class="row row-top">
-              <div class="col-md-10">
-                <h3>Enquiries</h3>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group form-last pull-right">
-                  <%= link_to "New Enquiry",new_enquiry_path, {class: "btn btn-primary"} %>
-                </div>
-              </div>
-            </div>
-            
-
-  <%= render 'enquiries/tabs', :stat => "EnquiryStatus",:model => "enquiry" %>  
-  
-
-
- <script src="/dt-bootstrap.js"></script>
 
 
