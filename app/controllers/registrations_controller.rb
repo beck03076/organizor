@@ -1,9 +1,26 @@
 class RegistrationsController < ApplicationController
+  include CoreMethods
+  
+  def tab
+    set_url_params
+    
+      # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.reg_cols
+      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
+      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
 
-
-  def basic_select(model,cond = true)
-    model.where(cond).order(:name).map{|i| [i.name,i.id]}
+    render partial: @partial
+  end  
+    
+  def action_partial
+    set_url_params
+    #called from CoreMethods
+    h_action_partial("registration",
+                     params[:registration_id],
+                     ["application","document","finance"])
+     
   end
+  
   # GET /registrations
   # GET /registrations.json
   def index
@@ -15,83 +32,13 @@ class RegistrationsController < ApplicationController
     end
   end
 
-   def tab
-    set_url_params
-    
-    if @status == "new_registration"
-      self.h_new
-    elsif @status == "launch"
-      @registration = Registration.find(@registration_id)
-      @timelines = Timeline.where(m_name: "Registration", m_id: params[:registration_id]).order("created_at DESC")
-    elsif @status == "edit"
-      @registration = Registration.find(params[:registration_id])
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
-    elsif @status == "clone"
-      self.set_ref_no
-      orig = Registration.find(params[:registration_id])
-      @registration = orig.dup :include => [:programmes, :exams]
-      @registration.ref_no = @ref_no
-      authorize! :create, @registration
-      
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
-    else
-      # a is the cols chosen stored in the database and b are the right order of cols
-      a = current_user.conf.reg_cols
-      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
-    end
-    
-    render partial: @partial
-
-  end
-  
-    
-  def action_partial
-    set_url_params
-    @registration = Registration.find(@registration_id)
-    
-    if @partial_name == "follow_up"
-          @d_f_u_days = current_user.conf.def_follow_up_days
-          @follow_up = FollowUp.new(title: "First Follow Up", 
-                                    desc: "This enquiry does not have an update, yet!.
-                                           Should call this enquiry in 2 days.")
-
-    elsif @partial_name == "note"
-          @d_note = current_user.conf.def_note
-          @note = Note.new(content: @d_note)
-          
-    elsif @partial_name == "todo"
-          @todo = Todo.new
-    end
-    
-    if @partial_name == "email"
-      mail_to_use = current_user.conf.def_reg_email.to_sym
-      
-      @subject = Registration.where(id: @registration_id)
-      @subject_ids = (@subject.map &:id).join(",")
-      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
-      render :partial => 'enquiries/email', :locals => {:e => Email.new(to: @email_to), 
-                                                     :id => params[:e_id],
-                                                     :obj => @subject,
-                                                     :obj_ids => "registration_ids",
-                                                     :obj_name => "registration" }
-    else
-     render :partial => "enquiries/" + @partial_name.to_s ,:locals => {:e => Email.new,
-                                                                      :id => @registration_id,
-                                                                      :obj => @registration,
-                                                                      :obj_id => :registration_id,
-                                                                      :obj_name => "registration"}
-    end
-     
-  end
-
   # GET /registrations/1
   # GET /registrations/1.json
   def show
     @registration = Registration.find(params[:id])
     authorize! :read, @registration
+    # showing basic by default
+    @partial = "basic"
     
     respond_to do |format|
       format.html # show.html.erb
@@ -102,8 +49,9 @@ class RegistrationsController < ApplicationController
   # GET /registrations/new
   # GET /registrations/new.json
   def new
-    #self.h_new
-    
+    # special because when it is registered from enquiry the new form has to carry over enquiry values
+    self.h_new
+        
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @registration }
@@ -240,8 +188,8 @@ class RegistrationsController < ApplicationController
                   authorize! :create, @registration
       end
       
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
+      @countries = basic_select(Country)
+      @p_types = InstitutionType.where(educational: true)
   end
   
   def set_ref_no

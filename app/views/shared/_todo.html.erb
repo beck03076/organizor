@@ -1,9 +1,4 @@
-<script>
-$(function(){
-    imagePreview("todo");
-});
-</script>
-
+<!-- todos for core models -->
 <% if @list.to_i == 1 && obj.todos.size > 0 %>
 <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
      <thead>
@@ -80,3 +75,5 @@ $(function(){
     <div class="cl"></div>
 <% end %>
 </div>
+
+<script> acttab('todo'); </script>

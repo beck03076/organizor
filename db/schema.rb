@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140129162649) do
+ActiveRecord::Schema.define(:version => 20140131142327) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -467,6 +467,7 @@ ActiveRecord::Schema.define(:version => 20140129162649) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "currency"
+    t.float    "scholarship"
   end
 
   create_table "people", :force => true do |t|

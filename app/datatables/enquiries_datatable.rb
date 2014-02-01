@@ -22,6 +22,7 @@ class EnquiriesDatatable < DeviseController
 private
 
   def data  
+  
     spc = "&nbsp;".html_safe
     dspc = "&nbsp; &nbsp;".html_safe
     
@@ -91,7 +92,7 @@ private
         enqs = Enquiry.inactive
       else
         fet_stat = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries)
-        enqs = fet_stat.nil? ? Enquiry.myactive(current_user) : fet_stat.myactive(current_user)
+        enqs = fet_stat.nil? ? Enquiry.myactive(current_user) : fet_stat.myactive(current_user)        
       end
     end
 

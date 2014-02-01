@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara/rspec'
+require "selenium/client"
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -26,8 +27,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
   
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips]}
+   config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources todo_topics]}
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources todo_topics]}
   end
 
   config.before(:each) do
@@ -36,7 +45,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
-  end
+  end  
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -56,10 +65,7 @@ RSpec.configure do |config|
   config.include(MailerMacros)
   config.before(:each) { reset_email }
   
-  config.include(EmailSpec::Helpers)
-  config.include(EmailSpec::Matchers)
-  
-  
-  
+  config.include(RequestHelpers)
+  config.include Rails.application.routes.url_helpers
   
 end

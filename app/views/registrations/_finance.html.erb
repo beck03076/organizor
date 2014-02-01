@@ -2,7 +2,7 @@
 <div id="all_payments">
 <br/>
 <br/>
-<% @registration.programmes.each do |i| %>
+<% @obj.programmes.each do |i| %>
   <% app_name = (i.institution.name rescue "Unknown") %>
   <% app_status = (i.application_status.name rescue "Unknown") %>
   <% eval_status = (app_status.downcase == "joined") %>

@@ -42,7 +42,7 @@ class Person < ActiveRecord::Base
  
   accepts_nested_attributes_for :notes
   
-  
+ 
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
   end

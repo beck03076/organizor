@@ -8,11 +8,7 @@ class AuditorObserver < ActiveRecord::Observer
   :todo_topic,:institution_type,:institution_group,
   :contract,:contract_doc_category,:person_type,
   :person,:commission_status,:branch,
-  :smtp,:email_template
-  
-  # not observing during seeding for test database, the following models
-  #:role,:allow_ip
-  
+  :smtp,:email_template,:role,:allow_ip
 
    def before_create(record)
      record.created_by = User.current.id

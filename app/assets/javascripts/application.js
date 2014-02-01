@@ -294,7 +294,6 @@ function action_partial(model,action,id)
   $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
 
       var $container = $("#action_div").html(partial);
-      setColorsFromSession();
       var $dTF = $('.dateTimeField', $container);
       if ($dTF.length > 0) {
         $dTF.datetimepicker({
@@ -834,6 +833,11 @@ function actmm(what){
 function actsm(what){
     $('ul.sub-menu li').removeClass("active");
     $('ul.sub-menu li#' + what).addClass("active");
+}
+
+function acttab(what){
+    $('ul.seperator li').removeClass("active");
+    $('ul.seperator li#' + what).addClass("active");
 }
 
 function colsClick(model){

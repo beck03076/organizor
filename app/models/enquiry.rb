@@ -51,8 +51,7 @@ class Enquiry < ActiveRecord::Base
   else
     includes(:status,
              :follow_ups,
-             :country_of_origin,
-             :user).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+             :country_of_origin).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
   end
   }
 

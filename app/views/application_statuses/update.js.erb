@@ -1,3 +1,18 @@
+<!-- js the executes after application_status is changed -->
 $("#reg_status_<%= @programme.id %>").html("<span id='reg_status_<%= @programme.id %>>' class='ref_no'> <h4>[ <%= @programme.application_status.name %> ]</h4> </span>");
 
 $("#status_select_<%= @programme.id %>").slideToggle();
+
+<!-- If the application_status is joined then ask to update fees by the followin modal -->
+<% if (@programme.application_status.name.downcase == "joined") %>
+
+    <% ctnt = (render 'payments/create_fee', {a: @programme}) %>     
+    $('#update-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'update-fee', 
+                                                       content: ctnt.html_safe,
+                                                       header: 'Update Fees & Scholarship From Offer Letter',
+                                                       button: nil}) %>");
+                                                       
+    $('#update-fee').modal('show');
+
+<% end %>
