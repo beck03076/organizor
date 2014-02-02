@@ -22,6 +22,7 @@ class EnquiriesDatatable < DeviseController
 private
 
   def data  
+  
     spc = "&nbsp;".html_safe
     dspc = "&nbsp; &nbsp;".html_safe
     
@@ -34,9 +35,9 @@ private
        # setting the class so that the row be green for registered enqs
        reg = (enq.registered ? "enq_reg" : "")
        # setting the class so that the row be red for todays follow up
-       fu_now_temp = enq.follow_up_date.split(",").map{|i|  (i.to_date == Date.today rescue nil) }.include?(true) rescue nil
+       fu_now_temp = enq.f_ups.map{|i|  (i.to_date == Date.today rescue nil) }.include?(true) rescue nil
        # setting the class so that the row be red for this weeks follow up
-       fu_week_temp = enq.follow_up_date.split(",").map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true) rescue nil
+       fu_week_temp = enq.f_ups.map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true) rescue nil
        
        v_fu_now = (fu_now_temp ? "fu_now" : "")
        v_fu_week = (fu_week_temp ? "fu_week" : "")
@@ -91,7 +92,7 @@ private
         enqs = Enquiry.inactive
       else
         fet_stat = EnquiryStatus.find_by_name(@sFilter.titleize).try(:enquiries)
-        enqs = fet_stat.nil? ? Enquiry.myactive(current_user) : fet_stat.myactive(current_user)
+        enqs = fet_stat.nil? ? Enquiry.myactive(current_user) : fet_stat.myactive(current_user)        
       end
     end
 

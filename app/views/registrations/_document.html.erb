@@ -1,13 +1,10 @@
 <!-- Documents for regs -->
-<% a = @registration %>
+<% a = @obj %>
 
-
-    <br/>
     <h4 class="htab"> 
     Documents Received
-    </h6>
-    <br/>
-    <br/>
+    </h4>
+
     <% if a.documents.size == 0  %>
     
       <i>No documents uploaded</i>
@@ -28,7 +25,7 @@
 
                         </ul>
                 <% end %>
-            <br/>
+
 
             <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btnp",data: { confirm: 'Are you sure?' }} %>
             <%= submit_tag "Download Selected",{name: "doc_download", class: "btnp"} %>
@@ -38,60 +35,26 @@
         <% end %>
     
     <% end %>
-    <br/>
-    <br/>
 
-        <h4 class="htab"> 
+
+        <h4> 
         New Upload
-        </h6>
-        <br/>
-            <br/>
-    <br/>
-        <!-- Commenting out this block for nested documents form -->
-        <% if false %>
-                <%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
-                       
-                       <%= f.hidden_field :registration_id,value: @registration.id %>
-                       <%= go_create(f,"doc_category","category_id","name",1,"fbox") %> 
-                       <%= fbox(f,"name","text_field",nil,nil) %>
-                       <div class="fbox">
-                         <label>File</label>
-                         <%= f.file_field :path %>
-                       </div>
-                       <div class="fbox">
-                       
-                       <%= f.submit "Upload", class: "btnp" %>
-                       </div>
-                <% end %>
-        <% end %>
-        
-        
-        <%=  nested_form_for(a) do |reg| %>
-        <%= reg.fields_for :documents,a.documents.build do |d| %>
-               <div class=" cols boxstheme">
-                 <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
-                 <div class="col6" >
-                   <%= fs(d,"path","file_field",nil) %>
-                 </div>
-                 <div class="col4" >
-                     <%= fs(d,"name","text_field",nil) %>
-                 </div>
-                 <div class="col6" >
-                     <%= go_create(d,"doc_category","category_id","name",1) %> 
-                 </div>
-              </div>
-                    <%= d.hidden_field :registration_id %>
-              <br/>
-              <div class="cl"></div>
+        </h4>
 
-         <% end %>
+        <%=  nested_form_for(a) do |reg| %>
+            <%= reg.fields_for :documents,a.documents.build do |d| %>
+
+                     <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
+
+                     <%= fs(d,"path","file_field",nil) %>
+
+                     <%= fs(d,"name","text_field",nil) %>
+                     <%= go_create(d,"doc_category","category_id","name",1) %> 
+
+                     <%= d.hidden_field :registration_id %>
+             <% end %>
 
         <%= reg.link_to_add "Attach more document", :documents ,{:class => "btns fl"} %>
-        <div class="cl"></div>
-        <br/>
-        <br/>
         <%= reg.submit "Upload",{:class => "btnp"} %>
         <% end %> 
-        
-        
 

@@ -29,12 +29,17 @@ private
     people.map do |per|
        temp = []
        
-       temp << check_box_tag(:tr,per.id,false,{data: {launch: "/people/#{per.id}"}}) 
+       # setting the class so that the row be red for todays follow up
+       fu_now_temp = per.f_ups.map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
+       # setting the class so that the row be red for this weeks follow up
+       fu_week_temp = per.f_ups.map{|i|((Date.today.at_beginning_of_week..Date.today.at_end_of_week).cover?(i.to_date) rescue nil) }.include?(true)
        
-       temp<<  link_to(image_tag("/images/icons/edi.png"),edit_person_path(per.id)) + spc +
-               link_to(image_tag("/images/icons/del.png"),
-                       "/people/#{per.id}",
-                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
+       v_fu_now = (fu_now_temp ? "fu_now" : "")
+       v_fu_week = (fu_week_temp ? "fu_week" : "")
+       
+       temp << check_box_tag(:tr,per.id,false,{data: {launch: "/people/#{per.id}",
+                                                      fu_now: v_fu_now,
+                                                      fu_week: v_fu_week}})        
 
         @cols.map{|i|
           if i.is_a?(Array)
@@ -43,6 +48,12 @@ private
             temp << per.send(i.to_s).to_s
           end
         }
+        
+        temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        edit_person_path(per.id)) + spc +
+               link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                       "/people/#{per.id}",
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
        
        final << temp
      end
@@ -102,7 +113,7 @@ private
   end
 
   def sort_column
-    columns = [:id,:id] + (@cols - ["statuses"])
+    columns = [:id] + (@cols - ["statuses"])
     columns[params[:iSortCol_0].to_i]
   end
 

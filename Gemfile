@@ -79,6 +79,7 @@ gem 'json' #important, was not set as a dependency, so I add it manually
 gem 'google_currency'
 #gem "omnicontacts"
 
+
 group :development do
   gem "rails-dev-tweaks"
 end
@@ -87,6 +88,16 @@ end
 #gem 'turbolinks'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 
-
+gem "rspec-rails", :group => [:test, :development]
+gem 'database_cleaner', :group => [:test, :development]
+gem 'selenium-webdriver','~> 2.35.1', :group => [:test, :development]
+group :test do
+  gem "factory_girl_rails"
+  gem 'capybara','~> 2.1.0'
+  gem "guard-rspec"
+  gem 'email_spec'
+  gem 'rspec-console'
+  gem 'pry', '0.9.12.4'
+end
 
 

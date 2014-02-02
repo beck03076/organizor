@@ -23,12 +23,13 @@
                           <div class="col-sm-8">
                             <%= g.text_field :ref_no,{class: "form-control"} %>
                           </div>
+                          
                       </div>
                     <!-- Event hidden fields -------------->
                         <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
                         <%= g.hidden_field :model, :value => "enquiry" %>
-                        <%= g.hidden_field :starts_at, :value => g.object.starts_at %>
-                        <%= g.hidden_field :ends_at, :value => g.object.ends_at %>
+                        <%= g.hidden_field :starts_at, :value => g.object.starts_at.to_date.to_s(:db) %>
+                        <%= g.hidden_field :ends_at, :value => g.object.ends_at.to_date.to_s(:db)  %>
                     <!-- Event Description-------------->
                         <h5 class="col-md-12">
                         Description

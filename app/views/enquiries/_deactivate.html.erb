@@ -4,7 +4,7 @@
 <br/>
 <div clas="cols">
 <div class="col6">
-<%= form_for(@enquiry) do |f| %>
+<%= form_for(@obj) do |f| %>
   <div id="deactivate-action" class="action-box">
             
             <%= fbox(f,[:audit_comment,size: "10x3",style: 'width:400px;'],"text_area",nil,"Comments") %>
@@ -16,3 +16,5 @@
 <% end %>
 </div></div>
 <div class="cl"></div>
+
+<script> acttab('deactivate'); </script>

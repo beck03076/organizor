@@ -294,7 +294,6 @@ function action_partial(model,action,id)
   $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
 
       var $container = $("#action_div").html(partial);
-      setColorsFromSession();
       var $dTF = $('.dateTimeField', $container);
       if ($dTF.length > 0) {
         $dTF.datetimepicker({
@@ -336,6 +335,62 @@ function sel_act(sel){
             });
 }
 
+function dataTableStart(table,filterValue,cols,cols_size)
+{
+
+
+  tableId = "#" + table;
+  var hide_follow_up_sort = parseInt(cols_size);
+
+  var oTable = $(tableId).dataTable({
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $(tableId).data('source'),
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { "name": "sFilter", "value": filterValue },
+                   { "name": "sCols", "value": cols });
+    },
+    "aoColumnDefs": [
+      { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1) ] }
+    ],
+    "iDisplayLength": 10,
+     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+          var reg = $(aData[0]).data('registered');
+          var fu_now = $(aData[0]).data('fu-now');
+          var fu_week = $(aData[0]).data('fu-week');
+          $(nRow).addClass(reg);
+          $(nRow).addClass(fu_week);
+          $(nRow).addClass(fu_now);
+
+        }
+  });
+
+   $('select#mySelect').on('change',function(){
+        var selectedValue = $(this).val();
+        oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
+    });
+
+    $('select#followUpSelect').on('change',function(){
+        var selectedValue = $(this).val();
+        oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
+    });
+    
+    $('input#id_search').on('keyup',function(){
+        var key =$(this).val();
+        oTable.fnFilter(key);
+    });
+
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child)', function () {
+       var subId = $(this).parent().find("td > input").data('launch');
+       window.open(subId,'_self',false);
+   });
+
+   return oTable;
+
+}
+
+
 function activateTab(id,lang){
   var all_li = $('ul.seperator > li');
   /* HIDE ALL TABS*/
@@ -347,6 +402,7 @@ function activateTab(id,lang){
   /* SHOW THE CORESPONDING TAB CONTENT*/
   $("#"+lang).show();
 }
+
 
 // enquiries tabs switching
 function enquiryTabSwitch(obj){
@@ -422,66 +478,6 @@ function enquiryTabSwitch(obj){
 
 }
 
-
-
-
-function dataTableStart(table,filterValue,cols,cols_size)
-{
-
-
-  tableId = "#" + table;
-  var hide_follow_up_sort = parseInt(cols_size);
-
-  var oTable = $(tableId).dataTable({
-    "bJQueryUI": true,
-    "bProcessing": true,
-    "bServerSide": true,
-    "sAjaxSource": $(tableId).data('source'),
-    "fnServerParams": function ( aoData ) {
-      aoData.push( { "name": "sFilter", "value": filterValue },
-                   { "name": "sCols", "value": cols });
-    },
-    "aoColumnDefs": [
-      { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1) ] }
-    ],
-    "iDisplayLength": 10,
-     "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          var reg = $(aData[0]).data('registered');
-          var fu_now = $(aData[0]).data('fu-now');
-          var fu_week = $(aData[0]).data('fu-week');
-          $(nRow).addClass(reg);
-          $(nRow).addClass(fu_week);
-          $(nRow).addClass(fu_now);
-
-        }
-  });
-
-   $('select#mySelect').on('change',function(){
-        var selectedValue = $(this).val();
-        oTable.fnFilter(selectedValue, 0, true); //Exact value, column, reg
-    });
-
-    $('select#followUpSelect').on('change',function(){
-        var selectedValue = $(this).val();
-        oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
-    });
-    
-    $('input#id_search').on('keyup',function(){
-        var key =$(this).val();
-        oTable.fnFilter(key);
-    });
-
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child)', function () {
-       var subId = $(this).parent().find("td > input").data('launch');
-       window.open(subId,'_self',false);
-   });
-
-   return oTable;
-
-}
-
-
-
 // registrations tabs switching
 function registrationTabSwitch(obj){
 
@@ -491,6 +487,8 @@ function registrationTabSwitch(obj){
     var enquiry_id = $(obj).data("enquiry_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
+    
+    activateTab(cond,lang); //to make the clicked tab active
 
     url = '/registrations/tab/' + cond + '/' + partial + '/'
 
@@ -538,6 +536,8 @@ function TabSwitch(obj,model,model_pl){
     var institution_id = $(obj).data(model + "_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
+    
+    activateTab(cond,lang); //to make the clicked tab active
 
     // (eg) model_pl = institutions
     url = '/' + model_pl + '/tab/' + cond + '/' + partial + '/'
@@ -833,6 +833,11 @@ function actmm(what){
 function actsm(what){
     $('ul.sub-menu li').removeClass("active");
     $('ul.sub-menu li#' + what).addClass("active");
+}
+
+function acttab(what){
+    $('ul.seperator li').removeClass("active");
+    $('ul.seperator li#' + what).addClass("active");
 }
 
 function colsClick(model){

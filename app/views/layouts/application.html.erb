@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+    <link rel="shortcut icon" href="/images/icons/reportm.png">
 
     <title>Organizor</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-9">
               <small><%= u.first_name.titleize rescue "Mr. Unknown" %></small>
-              <small class="block">Logout</small>
+              
             </div>
           </div>
       </div>
@@ -47,44 +47,64 @@
 
       <!-- Begin page content -->
       <div class="container main">
+        
         <div class="row">
           <div class="col-md-2 left-nav">
             <ul class="nav nav-pills nav-stacked main-menu">
+              <h6>Home</h6>
               <li class="disabled">
                   <a href="#">
                   <span class="glyphicon glyphicon-th"></span>
                   Dashboard
                   </a>
               </li>
+              
+              <li class="disabled">
+              <a href="#">
+              <span class="glyphicon glyphicon-stats"></span>
+              Reports
+              </a>
+              </li>
+              
+              <hr>
+              <h6>Core</h6>
               <li id="enquiries">
                   <%= link_to enquiries_path  do %>
                   <span class="glyphicon glyphicon-earphone"></span>
                   Enquiries
                   <% end %>
               </li>
-              <li>
+              <li id="registrations">
               <%= link_to registrations_path do %>
               <span class="glyphicon glyphicon-pencil"></span>
               Registrations
               <% end %>
               </li>
               
-              <li>
-              <a>
+              <li id="institutions">
+              <%= link_to institutions_path do %>
               <span class="glyphicon glyphicon-home"></span>
               Institutions
-              </a>
+              <% end %>
               </li>
               
-              <li>
-              <a>
+              <li id="people">
+              <%= link_to people_path do %>
               <span class="glyphicon glyphicon-folder-open"></span>
               People
-              </a>
+              <% end %>
               </li>
-
+              
+              <hr>
+              
+              <!-- not displaying accounts and contracts -->
+              <% if false %>
               <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
               <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
+              <% end %>
+              
+              <h6>Utilities</h6>
+              
               <li id="emails">
                   <%= link_to  emails_path do %>
                     <span class="glyphicon glyphicon-envelope"></span>
@@ -97,9 +117,7 @@
                 <span class="glyphicon glyphicon-calendar"></span>
                 Calendar
               <% end %>
-              </li>
-              
-              <li><a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a></li>
+              </li>              
               
               <li id="todos">
               <%= link_to todos_path do %>
@@ -107,6 +125,10 @@
               Todos
               <% end %>
               </li>
+              
+              <hr>
+              
+              <h6>Manage</h6>
               
               <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
               <li id="users">
@@ -125,6 +147,9 @@
                   <span class="glyphicon glyphicon-list"></span>
                   Configuration
                   <% end %>
+              </li>
+              <li>
+               <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
               </li>
             </ul>
           </div>

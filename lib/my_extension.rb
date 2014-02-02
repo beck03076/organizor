@@ -73,14 +73,10 @@ module MyExtension
      "Unknown"
     end
   end
-  
-  
-  
-  
-  module ClassMethods
-  # nothing yet
-    def bar
-    end
+
+  # methods to be included 
+  module ClassMethods   
+      
   end
 end
 

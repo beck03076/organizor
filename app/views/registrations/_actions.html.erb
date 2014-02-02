@@ -2,20 +2,24 @@
                       follow_up: ["FollowUp",:create],
                       note:      ["Note",:create],
                       todo:      ["Todo",:create],
-                      assign_to: ["Registration",:update]} %>
+                      assign_to: ["Registration",:update],
+                      timeline: ["Registration",:read],
+                      application:     ["Programme",:read],
+                      document:     ["Document",:read], 
+                      finance: ["Payment",:read]} %>
 
         <% actions.keys.each do |elem| %>
           <% if can? actions[elem][1],actions[elem][0].constantize %>
               <!--  Shortening variable names -->
               <% e = elem.to_s.titleize %>
-              <%= radio_button_tag 'action',
-                                   e,
-                                   false,
-                                   onclick: "action_partial('registrations',
-                                                            '#{e.downcase.tr(" ", "_")}',
-                                                            '#{@registration.id}');" %>
-              <%= label_tag elem.to_s.titleize %>
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              <li id=<%= "#{elem}" %> >
+                <%= link_to elem.to_s.titleize,
+                    "#",
+                     {onclick: "action_partial('registrations',
+                                               '#{e.downcase.tr(" ", "_")}',
+                                               '#{@registration.id}');"} %>
+              
+              </li>
           <% end %>
         <% end %>
 <br/>

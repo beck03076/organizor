@@ -1,10 +1,7 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.all").trigger('click');
-    activeMM("institutionsMM");
-});
 
-</script>
-<div class="tab-container tab-content-theme">
-    <%= render 'enquiries/tabs', :stat => "InstitutionType",:model => "institution" %>  
-</div>
+<%= render 'shared/core_index', model: "Institution",
+                         new: "new_institution_path",
+                         tab: "InstitutionType" %>
+
+
+

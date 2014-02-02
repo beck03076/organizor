@@ -4,11 +4,9 @@
 <ul class="nav nav-pills seperator">
 
   <!-- [tab_name,display,class,partial]  -->
-  <% tabs =  [["Launch","none","launch","show"], 
-              ["All","","all","listing"]] %>
+  <% tabs =  [["All","","all","listing"]] %>
   <% statuses = stat.constantize.all.map{|i| [i.name.capitalize,"","","listing"]} %>
   <% tabs += statuses %>
-  <% tabs += [["New " + model.capitalize,"","fr new","form"]] %>
 
   <% tabs = (!current_user.adm? ? tabs.reject{|j| j[0].downcase == "deactivated" } : tabs ) %>
               

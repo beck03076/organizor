@@ -7,15 +7,8 @@
 <% a = @enquiry %>
 <div class="col-md-2">
                 <div class="form-group">
-                  <select class="form-control">
-                    <option>-Actions-</option>
-                    <option>Clone</option>
-                    <option>Edit</option>
-                    <option>Assign</option>
-                    <option>Register</option>
-                    <option>Deactivate</option>
-                  </select>
-                </div>
+                  <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %> 
+                  <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>
               </div>
 </div>
 
@@ -24,7 +17,7 @@
   <div class="col-md-12">
       <ul class="nav nav-pills seperator">
         <li id="basic" class="active">
-          <%= link_to "Basic","/enquiries/#{a.id}/basic" %>
+          <%= link_to "Basic","/enquiries/#{a.id}" %>
         </li>
         <%= render "actions" %>
       </ul>

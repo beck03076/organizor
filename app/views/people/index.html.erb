@@ -1,10 +1,7 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.all").trigger('click');
-    activeMM("peopleMM");
-});
 
-</script>
-<div class="tab-container tab-content-theme">
-    <%= render 'enquiries/tabs', :stat => "PersonType",:model => "person" %>  
-</div>
+<%= render 'shared/core_index', model: "Person",
+                         new: "new_person_path",
+                         tab: "PersonType" %>
+
+
+

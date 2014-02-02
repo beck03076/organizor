@@ -39,7 +39,7 @@ class FollowUp < ActiveRecord::Base
   end
   
   def ref_no=(r)
-    self.registration_id = Registration.find_by_ref_no(r) rescue Registration.first.id
+    self.registration_id = Registration.find_by_ref_no(r).id rescue Registration.first.id
   end
   
   def ref_no

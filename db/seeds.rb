@@ -12,6 +12,7 @@
 end
 =end
 
+
 ["agency_administrator","branch_user",
 "branch_manager","regional_manager",
 "student","sub_agent","school"].each do |i|
@@ -45,3 +46,71 @@ models.each do |m|
     end                    
    end
 end
+
+if (UserConfig.all.size == 0)
+
+    p "Creating User Config.."
+
+    UserConfig.create!(def_follow_up_days: 2, 
+                       user_id: nil, 
+                       def_note: "This is a configurable note", 
+                       reg_cols: [[:assigned_to, :_ass_to, :first_name], :branch_id, [:country_id, :country_of_origin, :name], :first_name, :ref_no], 
+                       enq_cols: [[:country_id, :country_of_origin, :name], :email2, :first_name],
+                       def_enq_email: "email1",
+                       def_reg_email: "email1",
+                       def_create_enquiry_email: "Welcome Enquiry",
+                       def_from_email: "Senthil Gmail",
+                       def_f_u_name: "First Follow Up",
+                       def_f_u_desc: "This is the first follow up",
+                       def_f_u_type: 1,
+                       auto_cr_f_u: true,
+                       auto_email_enq: true,
+                       def_f_u_ass_to: 1,
+                       def_enq_search_col: "date_of_birth",
+                       def_reg_search_col: "first_name",
+                       def_ins_search_col: "name",
+                       ins_cols: [:email, :name],
+                       def_per_search_col: "first_name",
+                       per_cols: [[:city_id, :city, :name], [:country_id, :country, :name], :created_by, :first_name, :gender, [:institution_id, :institution, :name], :surname, [:type_id, :type, :name]])
+                       
+    p "Created User config with nil as user id, use it!"
+end
+
+if (AllowIp.all.size == 0)
+    p "Creating allow ip range for localhost 127.0.0.1 .."
+    AllowIp.create!(from: "127.0.0.1", to: "127.0.0.1", desc: "localhost")
+end
+
+[{application_status: %w(Sent Conditional_offer Unconditional_offer 
+                         Pending Joined Rejected Defer Sent_to_documentation)},
+ {commission_status: %w(Pending Partially_paid fully_paid)},
+ {contact_type: %w(Walk-in Telephone Email Online Event Sub_Agent)},
+ {course_level: %w(Foundation A-level Diploma Bachelor Pre-master PgDiploma Master PhD)},
+ {doc_category: %w(English Foundation Bachelor Masters Phd)},
+ {english_level: %w(Beginner Elementary Pre-intermediate Intermediate Advanced)},
+ {enquiry_status: %w(Pending Following Deactivated)},
+ {event_type: %w(Call Email Sms Meet)},
+ {exam_type: %w(IELTS TOEFL FCE Pearson)},
+ {institution_group: %w(ABC DEF PQR XYZ)},
+ {institution_type: %w(University Language_School Business_Partner 
+                       Education_Provider Official_Sub_Agent Private_Provider)},
+ {person_type: %w(contact unofficial_sub_agent personal)},
+ {qualification: %w(School_certificate Foundation A-level
+                    Diploma Bachelor Pre-master 
+                    PgDiploma Master PhD)},
+ {student_source: %w(Forum Google_Search Google_Advert 
+                     Website Education_Event Friend)},
+ {todo_topic: %w(Default Documents Administrative
+                 Enquiry Registration Institution 
+                 Person)}].each do |i|
+    model = i.keys[0].to_s.camelize.constantize
+    values = i.values[0]
+    values.each do |v|
+      if model.where(name: v).blank?
+        p "Creating a value .. #{v} in the resource #{model}"
+        model.create!(name: v, desc: "This is a default value.")
+      end
+    end
+end
+
+

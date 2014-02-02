@@ -1,16 +1,17 @@
-<script>
-</script>
+<!-- applications by registration -->
 <h4 class="htab">
   Applications In Progress
 </h4>
 <br/>
+<div id="update-fee-container"></div>
 <ul class="vlsdet">
-   <% @registration.programmes.each do |i| %>
+   <% @obj.programmes.each do |i| %>
+    <hr>
     <!-- @programme is used in 2 partials, change status and add note -->
     <% @programme = i %>
     <% items = i.status_diagrams.order(:created_at).includes(:user,:programme,:application_status) %>
     <% if !items.blank? %>
-    <div id="status_log" class="fr">      
+    <div id="status_log" class="col-md-3 well">      
       <h3> Status Log </h3>
           <br/>
           <% items.limit(2).each do |sd| %>
@@ -34,7 +35,7 @@
     <br/>
     <br/>
     <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
-    <div id="status_group_<%= i.id %>">
+    <div id="status_group_<%= i.id %>" class="col-md-5 ">
     
     
     <li><label>Status</label>: <span id="reg_status_<%= i.id %>" class='ref_no'>
@@ -45,6 +46,7 @@
     <span id="status_select_<%= i.id %>" style="display:none;">
       <%= render 'application_statuses/change_status' %>
     </span>
+    
     </div>
     <li><label>Reference Number</label>: <%= i.ins_ref_no rescue "Unassigned" %></li>
     <li><label>Type</label>: <%= j %></li>
@@ -102,6 +104,12 @@
     <div class="brg01"> </div>
     <br/>
     <br/>
+    
   <% end %>
 
 </ul>
+
+<script> 
+  acttab('application'); 
+
+</script>

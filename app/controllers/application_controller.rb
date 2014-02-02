@@ -17,7 +17,7 @@ require "ipaddr"
       format.js { redirect_to '/handle/cancan' }
 #      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
-  end
+  end  
   
   def token_search
     set_url_params
@@ -178,10 +178,6 @@ require "ipaddr"
     else
       "application"
     end  
-  end
-  
-  def basic_select(model,cond = true)
-    model.where(cond).order(:name).map{|i| [i.name,i.id]}
   end
   
   def set_url_params(params_list = 0)  

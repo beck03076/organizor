@@ -1,4 +1,6 @@
 class Institution < ActiveRecord::Base
+  include CoreExtension
+
   validates_uniqueness_of :name, message: " already exists as another institution, please check!" 
             
   audited

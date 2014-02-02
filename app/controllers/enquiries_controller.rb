@@ -1,99 +1,21 @@
 class EnquiriesController < ApplicationController
-
-  def error
-    render 'shared/error'
-  end
-  
-  def programme
-    @co = params[:co]
-    @ci = params[:ci]
-    p_type = ProgrammeType.where(:name => params[:type]).map &:id
-    self.pre(p_type,params[:co],params[:ci])
-    render :partial => params[:type], :locals => { :p => Programme.new }
-  end
-  # h_new stands for help_new
-  def h_new
-    @enquiry = Enquiry.new(assigned_to: current_user.id,
-                           date_of_birth: (Date.today - 21.years),
-                           gender: "m",
-                           score: 5)
-    authorize! :create, @enquiry
-      
-    @countries = self.basic_select(Country)
-    @p_types = ProgrammeType.all
-  end
+  include CoreMethods
   
   def tab
     set_url_params
     
-    if @status == "new_enquiry"
-      self.h_new
-    elsif @status == "launch"
-      @enquiry = Enquiry.find(params[:enquiry_id])
-      if @enquiry.active == false
-        authorize! :manage, :all
-      end
-      @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:enquiry_id]).order("created_at DESC")
-    elsif @status == "edit"
-      @enquiry = Enquiry.find(params[:enquiry_id])
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
-    elsif @status == "clone"
-      orig = Enquiry.find(params[:enquiry_id])
-      @enquiry = orig.dup :include => [:programmes, :countries]
-      authorize! :create, @enquiry
-      
-      @countries = self.basic_select(Country)
-      @p_types = ProgrammeType.all
-    else
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.enq_cols
       b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
       @cols = ((b & a) + (a - b)) + [:follow_up_date] 
-    end
-    
-    render :partial => @partial
+      
+      render partial: @partial
   end
   
   def action_partial
     set_url_params
-
-    if @partial_name == "follow_up"
-          
-          #@d_f_u_days = current_user.conf.def_follow_up_days
-          con = current_user.conf
-          @follow_up = FollowUp.new(title: con.def_f_u_name, 
-                                    desc: con.def_f_u_desc)
-
-    elsif @partial_name == "note"
-          @d_note = current_user.conf.def_note
-          @note = Note.new(content: @d_note)
-          
-    elsif @partial_name == "todo"
-          @todo = Todo.new
-    end
-    # next if block becase of separate renders
-    if @partial_name == "email"
-      mail_to_use = current_user.conf.def_enq_email.to_sym
-      
-      @subject = Enquiry.where(id: @enquiry_id)
-      @subject_ids = (@subject.map &:id).join(",")
-      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
-      render :partial => 'enquiries/email', :locals => {:e => Email.new(to: @email_to), 
-                                                     :id => params[:e_id],
-                                                     :obj => @subject,
-                                                     :obj_ids => "enquiry_ids",
-                                                     :obj_name => "enquiry" }
-
-    else
-      @enquiry = Enquiry.find(@enquiry_id)
-      render :partial => @partial_name, :locals => {:e => Email.new,
-                                                  :id => @enquiry_id,
-                                                  :obj => @enquiry,
-                                                  :obj_id => "enquiry_id",
-                                                  :obj_name => "enquiry"}
-    end
-     
+    #called from CoreMethods, 3rd param is the native partials to enquiries
+    h_action_partial("enquiry",params[:enquiry_id],["register","deactivate"])
   end
   
   # GET /enquiries
@@ -112,45 +34,9 @@ class EnquiriesController < ApplicationController
   def show
     @enquiry = Enquiry.find(params[:id])
     authorize! :read, @enquiry
-    
-    @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")
-    
-    t = params[:partial]
-    @partial = (t.nil? ? "basic" : t) 
-    @list = 1
-    @enquiry_id = @enquiry.id
-    
-    if @partial == "follow_up"
-          
-          #@d_f_u_days = current_user.conf.def_follow_up_days
-          con = current_user.conf
-          @follow_up = FollowUp.new(title: con.def_f_u_name, 
-                                    desc: con.def_f_u_desc)
-
-    elsif @partial == "note"
-          @d_note = current_user.conf.def_note
-          @note = Note.new(content: @d_note)
-          
-    elsif @partial == "todo"
-          @todo = Todo.new
-    end
-    # next if block becase of separate renders
-    if @partial == "email"
-      mail_to_use = current_user.conf.def_enq_email.to_sym
-      
-      @subject = Enquiry.where(id: @enquiry.id)
-      @subject_ids = (@subject.map &:id).join(",")
-      @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
-      @locals =   {:e => Email.new(to: @email_to), 
-                   :id => @enquiry.id,
-                   :obj => @subject,
-                   :obj_ids => "enquiry_ids",
-                   :obj_name => "enquiry",
-                   :a => @enquiry }
-
-    else
-      @enquiry = Enquiry.find(@enquiry_id)
-    end
+        
+    # showing basic by default
+    @partial = "basic"
 
     respond_to do |format|
       format.html # show.html.erb
@@ -167,7 +53,7 @@ class EnquiriesController < ApplicationController
                            score: 5)
     authorize! :create, @enquiry
       
-    @countries = self.basic_select(Country)
+    @countries = basic_select(Country)
     @p_types = InstitutionType.where(educational: true)
   end
   
@@ -317,10 +203,6 @@ class EnquiriesController < ApplicationController
       format.html { redirect_to enquiries_path, notice: 'Enquiry was successfully deactivated.' }
       format.json { head :no_content }
     end
-  end
-  
-  def basic_select(model,cond = true)
-    model.where(cond).order(:name).map{|i| [i.name,i.id]}
   end
   
 end

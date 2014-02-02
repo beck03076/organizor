@@ -1,23 +1,36 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.launch").show();
-  $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.launch").addClass("active-tab");
-  $("ul.tab-menus li.launch").text('<%= @registration.first_name.titleize %>');
-  $("ul.tab-menus li.launch").attr('data-registration_id', '<%= @registration.id %>');
-  $("ul.tab-menus li.launch").trigger("click");
-});
+<!-- Enquiry show page -->
+<div class="row">
+<div class="col-md-10">
+  <h4><strong><%= @registration.name %></strong></h4>
+</div>
+
+<% a = @registration %>
+<div class="col-md-2">
+                <div class="form-group">
+                     <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %> 
+                     <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>
+                </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+      <ul class="nav nav-pills seperator">
+        <li id="basic" class="active">
+          <%= link_to "Basic","/registrations/#{a.id}" %>
+        </li>
+        <%= render "actions" %>
+      </ul>
+      <div id="action_div">
+        <%= render @partial, @locals %>
+      </div>
+  </div>
+</div>
+
+
+
+<script>
+
+ actmm('registrations'); 
 
 </script>
-
-<!-- INQUIRY DETAILS - STARTS 
--- disp0, disp1, disp2 is defined in enquiries_helper.rb
--- a will represent @enquiry in this whole file for convenience
--->
-
-<div class="tab-container">
- <%= render 'enquiries/tabs', :stat => "ApplicationStatus",:model => "registration" %> 
-    <div class="tab-content" id="launch_id">
-
-    </div>
-</div>

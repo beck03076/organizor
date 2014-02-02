@@ -4,11 +4,11 @@ class AuditorObserver < ActiveRecord::Observer
   :registration,:email,:application_status,
   :contact_type,:course_level,:course_subject,:doc_category,
   :english_level,:enquiry_status,:event_type,:exam_type,
-  :qualification,:student_source,:role,
+  :qualification,:student_source,
   :todo_topic,:institution_type,:institution_group,
   :contract,:contract_doc_category,:person_type,
-  :person,:commission_status,:branch,:allow_ip,
-  :smtp,:email_template
+  :person,:commission_status,:branch,
+  :smtp,:email_template,:role,:allow_ip
 
    def before_create(record)
      record.created_by = User.current.id

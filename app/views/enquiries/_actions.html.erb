@@ -4,8 +4,9 @@
                 note:      ["Note",:create],
                 todo:      ["Todo",:create],
                 assign_to: ["Enquiry",:update],
-                register: ["Enquiry",:update],
-                deactivate: ["Enquiry",:update] }  %>
+                register:  ["Enquiry",:update],
+                deactivate: ["Enquiry",:update],
+                timeline:   ["Enquiry",:read] }  %>
                 
   <% @enquiry.registered ? actions.delete(:register) : nil %>
   <% @enquiry.active ? nil : actions.delete(:deactivate) %>
