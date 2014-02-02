@@ -80,7 +80,7 @@ gem 'google_currency'
 #gem "omnicontacts"
 
 group :development do
-#  gem "rails-dev-tweaks"
+  gem "rails-dev-tweaks"
 end
 
 
