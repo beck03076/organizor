@@ -61,7 +61,17 @@ private
   end
 
   def registrations
-    @registrations ||= fetch_registrations
+    if params[:sSearch_2] == "undefined"
+      @registrations ||= fetch_registrations
+    else
+    
+      json = params[:sSearch_2]
+      parsed = JSON.parse(json) if json && json.length >= 2
+      
+      @search = Registration.search(parsed)
+      regs = @search.result
+      @registrations = regs.page(page).per_page(per_page)
+    end
   end
   
   def fetch_registrations

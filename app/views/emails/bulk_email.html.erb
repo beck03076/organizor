@@ -8,7 +8,7 @@
 <div id="main-body">
     <!-- BODY CONTENT - STARTS -->   
             <div id="body-content">
-                      <%= render :partial => "enquiries/email", 
+                      <%= render :partial => "shared/email", 
                                  :locals => {:e => Email.new(to: @email_ids),
                                              :id => @subject_ids,
                                              :obj => @subject,

@@ -27,6 +27,8 @@
 
 $(function(){
 
+
+
 dataConfirmModal.setDefaults({
   title: 'Confirm your action',
   commit: 'Continue',
@@ -310,7 +312,7 @@ function action_partial(model,action,id)
 
 
 //list is 0, no list table will be returned
-function sel_act(sel){
+function chooseEmailTemplate(sel){
     var eTempId = sel.options[sel.selectedIndex].value;
     var enqId = $('#enquiry_id_div');
     var regId = $('#registration_id_div');
@@ -331,11 +333,10 @@ function sel_act(sel){
                                     list: 0,
                                     email_to: emailTo }, function (partial) {
             $('#email-action').html(partial);
-            setColorsFromSession();
             });
 }
 
-function dataTableStart(table,filterValue,cols,cols_size)
+function dataTableStart(table,filterValue,cols,cols_size,ransack)
 {
 
 
@@ -343,6 +344,7 @@ function dataTableStart(table,filterValue,cols,cols_size)
   var hide_follow_up_sort = parseInt(cols_size);
 
   var oTable = $(tableId).dataTable({
+    "bDestroy": true,
     "bJQueryUI": true,
     "bProcessing": true,
     "bServerSide": true,
@@ -376,6 +378,9 @@ function dataTableStart(table,filterValue,cols,cols_size)
         oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
     });
     
+    
+    oTable.fnFilter(ransack, 2, true);
+    
     $('input#id_search').on('keyup',function(){
         var key =$(this).val();
         oTable.fnFilter(key);
@@ -385,11 +390,23 @@ function dataTableStart(table,filterValue,cols,cols_size)
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
+  
+   /* this is the ransack add/remove fields initialization */
+   $('form').on('click', '.remove_fields', function (event) {
+    $(this).closest('.field').remove();
+    event.preventDefault();
+});
 
+    $('form').on('click', '.add_fields', function (event) {
+        time = new Date().getTime();
+        regexp = new RegExp($(this).data('id'), 'g');
+        $(this).before($(this).data('fields').replace(regexp, time));
+        event.preventDefault();
+    });
+    
    return oTable;
 
 }
-
 
 function activateTab(id,lang){
   var all_li = $('ul.seperator > li');
@@ -777,6 +794,22 @@ function changeInsType(obj,dest){
 
 /* Payments  Start */
 
+function calcComm(obj){
+  form = $(obj).parents('form');
+  
+  fee = parseFloat(form.find('input#fee_tuition_fee').val());
+  sch = parseFloat(form.find('input#fee_scholarship').val());
+  per = parseFloat(form.find('input#fee_commission_percentage').val());
+  
+  result = ((fee - sch) / 100) * per
+  
+  if (!isNaN(result)){
+   form.find('input#fee_commission_amount').val(result);
+  }else{
+   form.find('input#fee_commission_amount').val('');
+  }
+}
+/*
 function calcComm(obj,comm,amt){
 
   var fee = parseFloat(obj.value);
@@ -794,7 +827,7 @@ function calcComm(obj,comm,amt){
   }
 
 }
-
+*/
 function calcRemaining(obj,amt,rem){
 
   var paid = parseFloat(obj.value);
@@ -838,6 +871,10 @@ function actsm(what){
 function acttab(what){
     $('ul.seperator li').removeClass("active");
     $('ul.seperator li#' + what).addClass("active");
+}
+
+function actdd(){
+    $('ul.seperator li.dropdown').addClass("active");
 }
 
 function colsClick(model){
@@ -953,6 +990,8 @@ $('#filter_container').html('');
       });
   });
 }
+
+
 
 
 

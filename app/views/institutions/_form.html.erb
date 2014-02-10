@@ -157,8 +157,7 @@
 <% end %>
 
 <script type="text/javascript">
- $(function(){
-  // Nested form load
+
   $(document).on('nested:fieldAdded', function(event){
       
       var field = event.field; 
@@ -170,8 +169,7 @@
         dateFormat: "yy-mm-dd",
         yearRange: '1980:2050' 
       });
-      setColorsFromSession();
-      // multi select token field
+
       var id1 = field.find('.token_coun_pro').attr("id");
       var id2 = field.find('.token_coun_per').attr("id");
       var id3 = field.find('.token_reg_pro').attr("id");
@@ -182,9 +180,6 @@
       tokens('#' + id3,"/srch_regions.json");
       tokens('#' + id4,"/srch_regions.json");
    });
-   // General DOM load, setting colors from session
-   setColorsFromSession();
- 
-});
+
 </script>
 

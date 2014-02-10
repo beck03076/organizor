@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Tuition fee cents:</b>
+  <%= @fee.tuition_fee_cents %>
+</p>
+
+<p>
+  <b>Commission percentage:</b>
+  <%= @fee.commission_percentage %>
+</p>
+
+<p>
+  <b>Commission amount cents:</b>
+  <%= @fee.commission_amount_cents %>
+</p>
+
+<p>
+  <b>Programme:</b>
+  <%= @fee.programme_id %>
+</p>
+
+<p>
+  <b>Currency:</b>
+  <%= @fee.currency %>
+</p>
+
+<p>
+  <b>Scholarship cents:</b>
+  <%= @fee.scholarship_cents %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @fee.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @fee.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_fee_path(@fee) %> |
+<%= link_to 'Back', fees_path %>

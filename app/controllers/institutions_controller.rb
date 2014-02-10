@@ -1,74 +1,29 @@
 class InstitutionsController < ApplicationController
+  include CoreMethods
   
   def tab
     set_url_params
     
-    if @status == "new_institution"
-      self.h_new
-    elsif @status == "launch"
-      @institution = Institution.find(@institution_id)
-      @timelines = Timeline.where(m_name: "Institution", 
-                                  m_id: params[:institution_id]).order("created_at DESC")
-    elsif @status == "edit"
-      @institution = Institution.find(params[:institution_id])
-    elsif @status == "clone"
-      orig = Institution.find(params[:institution_id])
-      @institution = orig.dup
-      authorize! :create, @institution
-    else
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.ins_cols
       b = [:id,:name,:email,:phone]
       @cols = ((b & a) + (a - b)) + [:follow_up_date] 
-    end
-    
+      
     render partial: @partial
-
   end
   
   def action_partial
     set_url_params
-
-    if @partial_name == "follow_up"
-          
-          #@d_f_u_days = current_user.conf.def_follow_up_days
-          con = current_user.conf
-          @follow_up = FollowUp.new(title: con.def_f_u_name, 
-                                    desc: con.def_f_u_desc)
-
-    elsif @partial_name == "note"
-          @d_note = current_user.conf.def_note
-          @note = Note.new(content: @d_note)
-          
-    elsif @partial_name == "todo"
-          @todo = Todo.new
-    end
-    # next if block becase of separate renders
-    if @partial_name == "email"
-      @subject = Institution.where(id: @institution_id)
-      @subject_ids = (@subject.map &:id).join(",")
-      @email_to = ((@subject.map &:email) - ["",nil]).join(", ")
-      render :partial => 'enquiries/email', :locals => {:e => Email.new(to: @email_to), 
-                                                     :id => params[:e_id],
-                                                     :obj => @subject,
-                                                     :obj_ids => "institution_ids",
-                                                     :obj_name => "institution" }
-
-    else
-      @institution = Institution.find(@institution_id)
-      render :partial => "enquiries/" + @partial_name.to_s, :locals => {:e => Email.new,
-                                                  :id => @institution_id,
-                                                  :obj => @institution,
-                                                  :obj_id => "institution_id",
-                                                  :obj_name => "institution"}
-    end
+    #called from CoreMethods
+    h_action_partial("institution",
+                     params[:institution_id],
+                     ["contract","people","finance"])
      
   end
   
   # h_new stands for help_new
   def h_new
-    @institution = Institution.new(type_id: InstitutionType.first.id)
-    authorize! :create, @institution
+    
   end
   
   
@@ -76,9 +31,6 @@ class InstitutionsController < ApplicationController
   # GET /institutions.json
   def index
     set_url_params
-    
-     p "***********************"
-    p @sCols
 
     respond_to do |format|
       format.html # index.html.erb
@@ -91,7 +43,9 @@ class InstitutionsController < ApplicationController
   # GET /institutions/1.json
   def show
     @institution = Institution.find(params[:id])
-
+    authorize! :read, @institution
+    # showing basic by default
+    @partial = "basic"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @institution }
@@ -101,7 +55,8 @@ class InstitutionsController < ApplicationController
   # GET /institutions/new
   # GET /institutions/new.json
   def new
-    
+    @institution = Institution.new(type_id: InstitutionType.first.id)
+    authorize! :create, @institution    
   end
   
   def clone

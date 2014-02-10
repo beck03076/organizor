@@ -68,7 +68,7 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
      mail_to_use = current_user.conf.send(default).to_sym rescue "email"
      
      @subject = @model.camelize.constantize.where(id: @model_ids.split(","))
-     @email_ids = ((@subject.map &:email) - ["",nil]).join(", ")
+     @email_ids = ((@subject.map &mail_to_use.to_sym) - ["",nil]).join(", ")
      @subject_ids = (@subject.map &:id).join(",")
      @model_s = @model.downcase
 
@@ -76,9 +76,8 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
      
   end
   
-  def show_hover 
+  def show 
     @email = Email.find(params[:id])
-    render partial: "emails/show_hover" 
   end
   
 end

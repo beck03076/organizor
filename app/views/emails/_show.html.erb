@@ -1,0 +1,20 @@
+<!-- show branch -->
+<% a = @email %>
+<div class="row">
+              <div class="row row-top ">
+                <div class="col-md-6">
+                  <div class="col-md-4 text-right light">To</div>
+                  <div class="col-md-8"><%= a.to %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Subject</div>
+                  <div class="col-md-8"><%= a.subject %></div> 
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Body</div>
+                  <div class="col-md-8"><%= a.body.html_safe %></div> 
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Signature</div>
+                  <div class="col-md-8"><%= a.signature.html_safe %></div>
+                  <div style="clear:both;"></div>
+                </div>
+               </div>
+</div>

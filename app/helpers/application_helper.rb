@@ -190,5 +190,39 @@ module ApplicationHelper
   def da_ty(a)
     a.strftime("%d-%m-%Y %H:%M") rescue "Unknown"
   end
+  
+  def iterate_tabs(hsh,model,opts = {})
+  
+    html = ""
+    
+    hsh.keys.each do |elem|
+      if can? hsh[elem][1],hsh[elem][0].constantize
+        #Shortening variable names
+        e = elem.to_s.titleize
+        html += "<li id='#{elem}'>"
+        obj_id = instance_eval("@" + model).id
+        
+        options = {onclick: "action_partial('#{model.pluralize}',
+                                               '#{e.downcase.tr(" ", "_")}',
+                                               '#{obj_id}');",
+                      data: {toggle: "tab"}}
+        
+        html += link_to(elem.to_s.titleize,"#",options.merge(opts))
+        
+        html += '</li>'
+      end
+    end
+    
+    html.html_safe
+  end
+  
+  def link_to_add_fields(name, f, type)
+    new_object = f.object.send "build_#{type}"
+    id = "new_#{type}"
+      fields = f.send("#{type}_fields", new_object, child_index: id) do |builder|
+      render("shared/" + type.to_s + "_fields", f: builder)
+    end
+    link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+  end
 
 end

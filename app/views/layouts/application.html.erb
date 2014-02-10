@@ -20,6 +20,7 @@
   </head>
 
   <body>
+  
   <!-- Shortening variable -->
   <% u = current_user %>
     <div id="header">
@@ -51,7 +52,7 @@
         <div class="row">
           <div class="col-md-2 left-nav">
             <ul class="nav nav-pills nav-stacked main-menu">
-              <h6>Home</h6>
+
               <li class="disabled">
                   <a href="#">
                   <span class="glyphicon glyphicon-th"></span>
@@ -67,7 +68,7 @@
               </li>
               
               <hr>
-              <h6>Core</h6>
+
               <li id="enquiries">
                   <%= link_to enquiries_path  do %>
                   <span class="glyphicon glyphicon-earphone"></span>
@@ -103,8 +104,6 @@
               <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
               <% end %>
               
-              <h6>Utilities</h6>
-              
               <li id="emails">
                   <%= link_to  emails_path do %>
                     <span class="glyphicon glyphicon-envelope"></span>
@@ -128,7 +127,6 @@
               
               <hr>
               
-              <h6>Manage</h6>
               
               <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
               <li id="users">
@@ -144,17 +142,12 @@
               </li>
               <li id="configuration" class="active">
                   <%= link_to "/configuration" do %>
-                  <span class="glyphicon glyphicon-list"></span>
-                  Configuration
+                  <span class="glyphicon glyphicon-list"></span>Configuration
                   <% end %>
-              </li>
-              <li>
-               <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
               </li>
             </ul>
           </div>
           <div class="col-md-10 col-md-offset-2 main-content">
-
             <%= yield %>
           </div>
         </div>

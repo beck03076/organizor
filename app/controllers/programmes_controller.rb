@@ -58,7 +58,14 @@ authorize_resource
   # PUT /programmes/1
   # PUT /programmes/1.json
   def update
-    @programme = Programme.find(params[:id])    
+    @programme = Programme.find(params[:id])
+    
+    # the following block decimals up the entered tuition_fee and scholarship
+    if params[:programme][:fee_attributes].present?
+        %w(tuition_fee scholarship).each do |s|
+          self.set_fee_params(s)
+        end
+    end
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
@@ -69,7 +76,7 @@ authorize_resource
             
         end
       
-        format.html { redirect_to @programme, notice: 'Programme was successfully updated.' }
+        format.html { redirect_to @programme.registration, notice: 'Programme was successfully updated.' }
         format.json { head :no_content }
         
         if params[:change_status].nil?
@@ -106,6 +113,12 @@ authorize_resource
       format.html { redirect_to @programme.registration }
       format.json { head :no_content }
     end
+  end
+  
+  def set_fee_params(s)
+    ss = s.to_sym
+    params[:programme][:fee_attributes][(s + '_cents').to_sym] = params[:programme][:fee_attributes][ss].tr(',','').to_f * 100
+    params[:programme][:fee_attributes].delete(ss)
   end
 
 end

@@ -81,11 +81,13 @@ gem 'google_currency'
 
 
 group :development do
-#  gem "rails-dev-tweaks"
+  gem "rails-dev-tweaks"
 end
 
 
 #gem 'turbolinks'
+#gem 'jquery-turbolinks'
+
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 
 gem "rspec-rails", :group => [:test, :development]
@@ -100,4 +102,5 @@ group :test do
   gem 'pry', '0.9.12.4'
 end
 
+gem 'ransack'
 

@@ -1,29 +1,44 @@
 <!-- assign_to for core models -->
-<div class="htab">
-<h6><b>Assign To</b></h6>
-</div>
-<br/>
-<%= form_for(obj) do |f| %>
-<div id="assignto-action" class="action-box">
-    <div class="cols">
-        <div class="col6">
-           <% n_user = User.order(:first_name).reject{|i| i.id == f.object.assigned_to }  %>
-           <%= fbox(f,[:assigned_to, 
-                     n_user, 
-                     :id, 
-                     :first_name,
-                     {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-           <%= fbox(f,[:audit_comment,size: "10x3",style: 'width:400px;'],"text_area",nil,"Comments") %>
-            <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
-            
-            <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
-            <br/><br/><br/>
-            <%= f.submit "Assign",{:class => "btnp" } %>
-        </div>
-    </div>
-    
-</div>
-<% end %>
 
-<script> acttab('assign_to'); </script>
+<div class="col-md-12">
+  <div class="config-content">
+    <div class="row"></div>
+    <div class="well">
+        <div class="row">
+          <h4>Assign To</h4>
+        </div>
+
+            <%= form_for(obj) do |f| %>
+            
+               <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
+               <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
+               <% n_user = User.order(:first_name).reject{|i| i.id == f.object.assigned_to }  %>
+
+                      <%= bs(f,[:assigned_to, 
+                                 n_user, 
+                                 :id, 
+                                 :first_name,
+                                 {:prompt => "--User--"},
+                               {}],
+                               "collection_select",
+                               [nil,2],5,12,"row") %>
+                       
+                       <%= bs(f,[:audit_comment,
+                                 :size => "2x2"],"text_area",["Comments",2],5,12,"row") %>
+                       
+                       <div class="form-group form-last">
+                                <div class="col-sm-offset-10 col-sm-10">
+                                  <%= f.submit "Save", {class: "btn btn-primary"} %>
+                                </div>
+                        </div>
+            <% end %>
+
+     </div>
+  </div>
+</div>
+
+<script> 
+acttab('assign_to'); 
+actdd();
+</script>
 

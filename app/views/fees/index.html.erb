@@ -1,0 +1,37 @@
+<h1>Listing fees</h1>
+
+<table>
+  <tr>
+    <th>Tuition fee cents</th>
+    <th>Commission percentage</th>
+    <th>Commission amount cents</th>
+    <th>Programme</th>
+    <th>Currency</th>
+    <th>Scholarship cents</th>
+    <th>Created by</th>
+    <th>Updated by</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fees.each do |fee| %>
+  <tr>
+    <td><%= fee.tuition_fee_cents %></td>
+    <td><%= fee.commission_percentage %></td>
+    <td><%= fee.commission_amount_cents %></td>
+    <td><%= fee.programme_id %></td>
+    <td><%= fee.currency %></td>
+    <td><%= fee.scholarship_cents %></td>
+    <td><%= fee.created_by %></td>
+    <td><%= fee.updated_by %></td>
+    <td><%= link_to 'Show', fee %></td>
+    <td><%= link_to 'Edit', edit_fee_path(fee) %></td>
+    <td><%= link_to 'Destroy', fee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fee', new_fee_path %>

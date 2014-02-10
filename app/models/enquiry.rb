@@ -9,28 +9,20 @@ class Enquiry < ActiveRecord::Base
   mount_uploader :image, HumanImageUploader
   
   belongs_to :branch
-  
-  has_many :preferred_countries
-  has_many :countries, :through => :preferred_countries
-  
-  has_many :programmes
   belongs_to :country_of_origin,
              :class_name => "Country",
              :foreign_key => "country_id"
-             
   belongs_to :status, class_name: "EnquiryStatus",foreign_key: "status_id"
-  belongs_to :contact_type
-  
+  belongs_to :contact_type  
   belongs_to :student_source,:foreign_key => "source_id"
+  belongs_to :users, class_name: "User"  
   
+  has_many :preferred_countries
+  has_many :countries, :through => :preferred_countries  
+  has_many :programmes
   has_and_belongs_to_many :emails
-  
   has_many :follow_ups
-  
   has_many :todos
-  
-  belongs_to :users, class_name: "User"
-  
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'
   
   scope :inactive,includes(:status,

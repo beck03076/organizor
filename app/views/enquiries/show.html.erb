@@ -21,6 +21,9 @@
         </li>
         <%= render "actions" %>
       </ul>
+      <!-- some html5 data to be sent to the back end -->
+      <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>' data-model_sing='enquiry' data-model_plu='enquiries' > </div>
+      
       <div id="action_div">
         <%= render @partial, @locals %>
       </div>

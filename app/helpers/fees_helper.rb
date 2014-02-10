@@ -1,4 +1,4 @@
-module PaymentsHelper
+module FeesHelper
    def all_currencies(hash)
     hash.inject([]) do |array, (id, attributes)|
       array ||= []

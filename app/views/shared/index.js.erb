@@ -1,0 +1,29 @@
+<!-- js that comes for filtering -->
+
+<% _model = eval(@model) %>
+<% model_pl = @model.downcase.pluralize %>
+<% _id =  @status + "_" + model_pl %>
+
+
+<% div_id = "group_assign_to_" + _id %>
+
+$('#<%= _id %>').html('');
+
+<!-- Main Ransack param -->
+ var q_params = '<%= @b.html_safe %>';
+ var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>',q_params);
+ 
+ $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
+                           '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
+                           '<option>10</option>' +
+                           '<option>20</option>' +
+                           '<option>30</option>' +
+                           '<option>40</option>' +
+                           '<option>50</option>' +
+                           '</select>'+
+                           '<label for="id_column" class="label-right">rows per page</label>' +
+                           '</div></form>');
+
+
+
+

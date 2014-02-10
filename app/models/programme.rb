@@ -10,7 +10,7 @@ class Programme < ActiveRecord::Base
   belongs_to :application_status,:foreign_key => 'app_status_id'
   has_many :status_diagrams
   
-  has_one :payment
+  has_one :fee
   
 
   
@@ -21,7 +21,8 @@ class Programme < ActiveRecord::Base
                   :level_id, :start_date, :subject_id, 
                   :type_id, :updated_by, :course_subject,
                   :app_status_id,:ins_ref_no,:registration_id,
-                  :course_subject_text,:notes_attributes
+                  :course_subject_text,:notes_attributes,
+                  :fee_attributes
                   
-  accepts_nested_attributes_for :notes
+  accepts_nested_attributes_for :notes,:fee
 end

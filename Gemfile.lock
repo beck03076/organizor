@@ -224,6 +224,8 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    polyamorous (0.6.4)
+      activerecord (>= 3.0)
     polyglot (0.3.3)
     prawn (0.14.0)
       pdf-reader (~> 1.2)
@@ -250,6 +252,9 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails-dev-tweaks (0.6.1)
+      actionpack (~> 3.1)
+      railties (~> 3.1)
     rails-env-switcher (0.2.4)
     rails3-jquery-autocomplete (1.0.12)
       rails (>= 3.0)
@@ -261,6 +266,10 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.1.1)
+    ransack (1.1.0)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      polyamorous (~> 0.6.0)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
@@ -394,7 +403,9 @@ DEPENDENCIES
   private_pub
   pry (= 0.9.12.4)
   rails (= 3.2.13)
+  rails-dev-tweaks
   rails3-jquery-autocomplete
+  ransack
   rmagick
   rspec-console
   rspec-rails

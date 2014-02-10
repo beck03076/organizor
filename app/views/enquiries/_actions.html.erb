@@ -1,29 +1,31 @@
         
-  <% actions = {email:     ["Email",:create],
-                follow_up: ["FollowUp",:create],
-                note:      ["Note",:create],
-                todo:      ["Todo",:create],
-                assign_to: ["Enquiry",:update],
-                register:  ["Enquiry",:update],
+  <% mains = {  register:  ["Enquiry",:update],
                 deactivate: ["Enquiry",:update],
                 timeline:   ["Enquiry",:read] }  %>
                 
-  <% @enquiry.registered ? actions.delete(:register) : nil %>
-  <% @enquiry.active ? nil : actions.delete(:deactivate) %>
+  <% actions = {      email:     ["Email",:create],
+                      follow_up: ["FollowUp",:create],
+                      note:      ["Note",:create],
+                      todo:      ["Todo",:create],
+                      assign_to: ["Registration",:update]} %>
+                
+  <% @enquiry.registered ? mains.delete(:register) : nil %>
+  <% @enquiry.active ? nil : mains.delete(:deactivate) %>
   
-        <% actions.keys.each do |elem| %>
-          <% if can? actions[elem][1],actions[elem][0].constantize %>
-            <!--  Shortening variable names -->
-            <% e = elem.to_s.titleize %>
-              <li id=<%= "#{elem}" %> >
-                <%= link_to elem.to_s.titleize,
-                    "#",
-                     {onclick: "action_partial('enquiries',
-                                                            '#{e.downcase.tr(" ", "_")}',
-                                                            '#{@enquiry.id}');"} %>
-              </li>
-          <% end %>
-        <% end %>
+
+        
+        <li class="dropdown actions">
+            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">
+                Actions
+                    <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+               <%= iterate_tabs(actions,'enquiry',{tabindex: "-1"}) %>
+            </ul>
+        </li>
+        
+       <%= iterate_tabs(mains,'enquiry') %>
+
         
 <br/>
 <br/>

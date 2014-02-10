@@ -1,0 +1,92 @@
+<!-- New email partial with bootstrap -->
+<div class="well">
+        <div class="row row-top">
+          <h4>New Email</h4>
+        </div>
+
+          <%= form_for(e) do |p| %>
+            <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
+            <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="email_template_id">
+                    Template
+                  </label>
+                  <div class="col-sm-5">
+                    <%= collection_select(:email_template,
+                                        :email_template_id,
+                                        EmailTemplate.all,
+                                        :id,
+                                        :name,
+                                        {:prompt => "--Template--"},
+                                        {:class => "form-control",
+                                         :onchange => "chooseEmailTemplate(this);"}) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%= bs(p,[:smtp_id,Smtp.order(:name), 
+                               :id, 
+                               :name,
+                               {prompt: "-send from-"},
+                               {}],
+                               "collection_select",
+                               ["Send From",2],5,12,"row") %>
+            
+            <div class="row">
+                <%= bs(p,[:to,
+                          {id: "email_to",style: "height:85px;width:330px;overflow:auto"}],
+                          "text_area",
+                          [nil,2],9,12) %>
+            </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="email_a" class="control-label col-sm-2">
+                        Add
+                      </label>
+                      <div class="col-sm-9">
+                           <a onclick="$('.cc').slideToggle();">cc</a> |
+                           <a onclick="$('.bcc').slideToggle();">bcc</a>
+                      </div>
+                    </div>
+               </div>
+            </div>
+            
+            <%= bs(p,:cc,"text_field",[nil,2],5,12,"row cc 'style=display:none;'") %>
+            
+            <%= bs(p,:bcc,"text_field",[nil,2],5,12,"row bcc 'style=display:none;'") %>
+            
+            <%= bs(p,:subject,"text_field",[nil,2],9,12,"row") %>
+            
+            <%= bs(p,[:body,
+                      {class: "tinymce",size: "20x30"}],"text_area",[nil,2],9,12,"row") %>
+                      
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="email_a" class="control-label col-sm-2">
+                        Attachment
+                        </label>
+                        <div class="col-sm-9">
+                          <span class="btn btn-file">
+                          <input type="file" name="email[attachment]" id="email_attachment">
+                          </span>
+                        </div>
+                   </div>
+                </div>
+            </div>
+                
+            <%= bs(p,[:signature,
+                      {class: "tinymce",size: "20x7"}],"text_area",[nil,2],9,12,"row") %>
+
+            <div class="form-group form-last">
+                    <div class="col-sm-offset-10 col-sm-10">
+                      <%= p.submit "Save", {class: "btn btn-primary"} %>
+                    </div>
+            </div>
+            <% end %>
+</div>

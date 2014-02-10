@@ -1,7 +1,7 @@
 <!-- Enquiry show page -->
-<div class="row">
+<div class="row row-top">
 <div class="col-md-10">
-  <h4><strong><%= @registration.name %></strong></h4>
+  <h3><%= @registration.name %></h3>
 </div>
 
 <% a = @registration %>
@@ -21,6 +21,10 @@
         </li>
         <%= render "actions" %>
       </ul>
+      <!-- some html5 data to be sent to the back end -->
+      <div id="registration_id_div" data-registration_id='<%= a.id %>' data-model_sing='registration' data-model_plu='registrations' ></div>
+
+      <div id="edit-resource-container"></div>
       <div id="action_div">
         <%= render @partial, @locals %>
       </div>

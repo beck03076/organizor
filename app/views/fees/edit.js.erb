@@ -1,0 +1,9 @@
+<% ctnt = (render 'form') %>     
+    
+    $('#resource-edit').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'edit-fee', 
+                                                       content: ctnt.html_safe,
+                                                       header: 'Edit Fees',
+                                                       button: nil}) %>");
+                                                       
+    $('#edit-fee').modal('show');

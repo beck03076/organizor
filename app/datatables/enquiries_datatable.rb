@@ -80,7 +80,20 @@ private
   end
 
   def enquiries
-    @enquiries ||= fetch_enquiries
+    if params[:sSearch_2] == "undefined"
+      p "=== NON Ransack scenario =========="      
+      @enquiries ||= fetch_enquiries
+    else
+      # ransack scenario
+      p "=== Ransack scenario =========="      
+      
+      json = params[:sSearch_2]
+      parsed = JSON.parse(json) if json && json.length >= 2
+      
+      @search = Enquiry.search(parsed)
+      enqs = @search.result
+      @enquiries = enqs.page(page).per_page(per_page)
+    end
   end
   
   def fetch_enquiries

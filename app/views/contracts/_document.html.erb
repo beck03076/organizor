@@ -68,7 +68,7 @@
         
         <%= nested_form_for(a) do |reg| %>
         
-          <%= hidden_field_tag :institution_id,@institution.id %>
+          <%= hidden_field_tag :institution_id,obj.id %>
           
         <%= reg.fields_for :documents,a.documents.build do |d| %>
                <div class=" cols boxstheme">

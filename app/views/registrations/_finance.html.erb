@@ -6,125 +6,94 @@
   <% app_name = (i.institution.name rescue "Unknown") %>
   <% app_status = (i.application_status.name rescue "Unknown") %>
   <% eval_status = (app_status.downcase == "joined") %>
-  <% pmt = i.payment %>
-  <% pmt_size = pmt.nil? ? 0 : 1 %>
-  <% comms = pmt.commissions rescue nil %>
+  <% fe = i.fee %>
+  <% fe_size = fe.nil? ? 0 : 1 %>
+  <% comms = fe.commissions rescue nil %>
   
-  <h3><%= app_name %></h3> 
-  <span class=<%= eval_status ? "joined" : "other_status" %>> <%= app_status %> </span>
-  <br/>
-  <br/>  
-  <% if eval_status %>
-  
-    <% if pmt_size > 0 %>
-      <table class="tables4" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <h4><%= app_name %> - <small> <%= app_status %> </small></h4> 
+
+
+  <% if eval_status %>  
+    <% if fe_size > 0 %>
+      <h5>Fee Information</h5>
+      <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" width="100%">
          <thead>
           <tr>
-                                <th>Tuition Fees</th>
-                                <th>Commission</th>
-                                <th>Amount</th>
-                                <th>Commission Paid</th>
-                                <th>Date Received</th>
-                                <th>Commission Pending</th>  
-                                <th>Commission Status</th>
-                                <th>Delete</th>
+                                <th>Currency</th>
+                                <th>Tuition Fee</th>
+                                <th>Scholarship</th>
+                                <th>Commission Percentage</th>
+                                <th>Commission Amount</th>
+                                <th>Invoice Date</th>
+                                <th>First Payment Date</th>
+                                <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
                 
                     <tr>
-                    
-                    
-                        <% if !comms.blank? %>
-                            <% comms.each_with_index do |c,index| %>
+                                    <td><%= fe.currency %></td>
+                                    <td><%= humanized_money_with_symbol fe.tuition_fee %></td>
+                                    <td><%= humanized_money_with_symbol fe.scholarship %></td>
+                                    <td><%= fe.commission_percentage %></td>
+                                    <td><%= humanized_money_with_symbol fe.commission_amount %></td>
+                                    <td><%= fe.invoice_date %></td>
+                                    <td><%= fe.first_payment_date %></td>
+                                    <td>
+                   <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                                                                      edit_fee_path(fe),
+                                                                      {remote: true,
+                                                                      onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+                                    </td>
+                    </tr>
+        </tbody>
+     </table>
+    <% elsif fe_size == 0 %>
+      <%= link_to("Add Fees",new_fee_path(programme_id: i.id), {remote: true}) %>
+    <% end %>
+  <% end %>
+    <% if !comms.blank? %>
+      <h5>Commission Information</h5>
+      <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" width="100%">
+         <thead>
+          <tr>
+                                <th>Commission Paid</th>
+                                <th>Commission Remaining</th>  
+                                <th>Commission Status</th>
+                                <th>&nbsp;</th>
                                 
-                                <tr>
-                                  <% if index == 0 %>
-                                    <td><%= humanized_money_with_symbol pmt.total_fee %></td>
-                                    <td><%= pmt.commission %></td>
-                                    <td class="amount_result"><%= humanized_money_with_symbol pmt.total_comm %></td>       
-                                  <% else %>
-                                    <td colspan=3></td>
-                                  <% end %>
-                                  <td class="amount"><%=  humanized_money_with_symbol c.paid_comm %></td>
-                                  <td><%= c.date_received %></td>
-                                  <td><%=  humanized_money_with_symbol c.rem_comm %></td>
-                                  
-                                  <td class=<%= c.stat_cl %>><%= c.stat %></td>
-                                  <td>
+          </tr>
+        </thead>
+        <tbody>
+                
+                    <tr> 
+                       <td><%=  c.paid %></td>
+                       <td><%= c.remaining %></td>
+                       <td><%= c.stat %></td>
+                       <td>
                                   <%= link_to image_tag("/images/icons/del.png"),
                                                                                c, 
                                                                  method: :delete, 
                                                                  data: { confirm: 'Are you sure?',
                                                                  remote: true }  %>
-                                  </td>
-                                </tr>
-                            <% end %>
-                        <% else %>
-                           <td><%= humanized_money_with_symbol pmt.total_fee %></td>
-                           <td><%= pmt.commission %></td>
-                           <td><%= humanized_money_with_symbol pmt.total_comm %></td>
-                           <td colspan=3>
-                           </td>
-                           <td class='pending'>
-                           Pending
-                           </td>
-                           <td>
-                           </td>
-                        <% end %>
-
-                   </tr>
-                   
-                   
-                   
-
-                    <tr>
-                         <td colspan=4>
-                            <div class="fl"> 
-                                  <%= link_to "Delete Fee",
-                                  pmt,
-                                  method: :delete, 
-                                  data: { confirm: 'Are you sure?',
-                                  remote: true } %> &nbsp;&nbsp;&nbsp;
-                            </div>
-                          </td>
-                          
-                         
-                          <td colspan=4>
-                            <div class="fr"> 
-                                  <%= link_to "Add Payment",
-                                  new_commission_path(payment_id: pmt.id),
-                                  {remote: true} %> &nbsp;&nbsp;&nbsp;
-                            </div>
-                          </td>
-                   </tr>
-
+                       </td>
+                    </tr>
         </tbody>
-      </table>
-    
-    <% elsif pmt_size == 0 %>
-     <%= link_to("Add Fees",new_payment_path(programme_id: i.id), {remote: true}) %>
+     </table>    
     <% end %>
-  <% end %>
-  <br/><br/>
-  
 <% end %>
 
 
-<br/>
-<br/>
+
 <div class="small">
 <i>* - You cannot create a payment if the application status is not "Joined"</i>
 
 </div>
 <!-- new payment on a create payment click-->
-<div id="new_payment" class="addNewPop" style="top: 483px; left: 455px;">
+<div id="resource-edit">
   
 </div>
 
-<div id="new_commission" class="addNewPop" style="top: 483px; left: 455px;">
-  
-</div>
 
 
 </div>

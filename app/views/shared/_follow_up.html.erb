@@ -1,77 +1,108 @@
 <!-- follow_ups for core models -->
-<% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
-<table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-     <thead>
-      <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Starts At</th>
-                            <th>Event Type</th>
-                            <th>Assigned To</th>
-                            <th>Assigned By</th>
-                            <th>View All</th>
-      </tr>
-    </thead>
-    <tbody>
-            <% obj.follow_ups.each do |fu| %>
+<div class="col-md-12">
+  <div class="config-content">
+    <% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
+    <div class="row">
+      <h4>Follow Ups</h4>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Event Type</th>
+            <th>Starts At</th>
+            <th>Assigned To</th>
+            <th>Assigned By</th>
+          </tr>
+        </thead>
+        <tbody>
+           <% obj.follow_ups.each do |fu| %>
                 <tr>
-                    <td><%= fu.title %></td>
-                    <td><%= fu.desc %></td>
-                    <td><%= fu.starts_at.strftime("%F %R %p") %></td>
+                    <td><%= link_to fu.title,follow_up_path(fu) %></td>
+                    <td><%= truncate(fu.desc,length: 50) %></td>
                     <td><%= fu.event_type.try(:name) %></td>
+                    <td><%= fu.starts_at.to_s %></td>
                     <td><%= fu.ato %></td>
                     <td><%= fu.aby %></td>
-                    <td class="preview" data-follow_up_id='<%= fu.id %>'>...</td>
                </tr>
-           <% end %>               
-                <tr>
-                    <td colspan="6" align="left"><a href="#">Back</a></td>
-               </tr>
-    </tbody>
-  </table>
-<br/>
-<br/>
-<% end %>
-<div class="htab">
-        <h6><b>New Follow up</b></h6>
-</div>
-<br/>
-<div id="followup-action" class="action-box" >
-<%= form_for(@follow_up) do |g| %>
-  <%= hidden_field_tag "#{g.object_name}[model]", obj_name %>
-  <%= g.hidden_field obj_id.to_sym, value: id %>
-                <div class="cols">
-                    <div class="col6">
-                        <%= fbox(g,"title","text_field") %>
-                        <%= go_create(g,"event_type","event_type_id","name",1,"fbox") %> 
-                        <%= fbox(g,[:starts_at,:class => "dateTimeField caltf "],"text_field",nil) %>
-                        <%= fbox(g,[:assigned_to, 
-                                 User.order(:first_name), 
-                                 :id, 
-                                 :first_name,
-                                 {:prompt => "--User--"}],"collection_select",1,"Assign To") %>
-                        <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
-                        <%= fbox(g,[:desc,:size => "2x2",:style => "height:auto"],"text_area",nil,"Description") %>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <span onclick="div_toggle(this,'#more_fields')" class="btns">more fields</span>
+           <% end %> 
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+    
+     <div class="well">
+        <div class="row row-top">
+          <h4>New Follow Up</h4>
+        </div>
 
-                        <div class="cl"></div>
-                        <br/>
+          <%= form_for(@follow_up) do |g| %>
+            <%= hidden_field_tag "#{g.object_name}[model]", obj_name %>
+            <%= g.hidden_field obj_id.to_sym, value: id %>
+            <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
-                        <div class="cols" id="more_fields" style="display:none;">
-                          <%= fbox(g,[:ends_at,:class => "dateTimeField caltf"],"text_field",nil) %>
-                          <%= fbox(g,[:api,:style => "white-space:normal"],"check_box",nil,"Add To Google?") %>
-                          <%= fbox(g,:remind_before,"text_field") %>
-                          <%= fbox(g,:venue,"text_field") %>
-                        </div>
+            <%= bs(g,:title,"text_field",[nil,2],5,12,"row") %>
+            
+            <%= bs(g,[:event_type_id,EventType.order(:name), 
+                               :id, 
+                               :name,
+                               {prompt: "-event type-"},
+                               {}],
+                               "collection_select",
+                               [nil,2],5,12,"row") %>
+            
+            <%= bs(g,[:starts_at,
+                      :class => "dateTimeField caltf "],"text_field",[nil,2],5,12,"row") %>
+                      
+            <%= bs(g,[:assigned_to,User.order(:first_name), 
+                               :id, 
+                               :first_name,
+                               {prompt: "-assign to-"},
+                               {}],
+                               "collection_select",
+                               ["Assign To",2],5,12,"row") %>
+
+            <%= bs(g,[:desc,
+                      :size => "2x2"],"text_area",["Description",2],5,12,"row") %>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="email_a" class="control-label col-sm-2">
+                        Add
+                      </label>
+                      <div class="col-sm-9">
+                        <a onclick="$('#more_fields').slideToggle();">more fields</a>
+                      </div>
                     </div>
-                </div>
-    <br/>
-    <%= g.submit "Create",{:class => "btnp fl"} %>
-    <div class="cl"></div>
-<% end %>
+               </div>
+            </div>
+            
+            <div id="more_fields" style="display: none;">
+            <%= bs(g,[:ends_at,
+                      :class => "dateTimeField caltf"],"text_field",[nil,2],5,12,"row") %>
+                      
+            <%= bs(g,[:api,
+                      :style => "white-space:normal"],"check_box",["Add TO Google?",2],5,12,"row") %>
+                      
+            <%= bs(g,:remind_before,"text_field",[nil,2],5,12,"row") %>
+            
+            <%= bs(g,:venue,"text_field",[nil,2],5,12,"row") %>
+            </div>
+
+            <div class="form-group form-last">
+                    <div class="col-sm-offset-10 col-sm-10">
+                      <%= g.submit "Save", {class: "btn btn-primary"} %>
+                    </div>
+            </div>
+            <% end %>
+      </div><!-- end well-->
+  </div>
 </div>
 
-<script> acttab('follow_up'); </script>
+<script> 
+acttab('follow_up'); 
+actdd();
+</script>

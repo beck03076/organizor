@@ -1,0 +1,22 @@
+<!-- edit only fees-->
+<div class="row">
+        <%= form_for(@fee, html: {class: 'form-horizontal'}) do |f| %>
+         
+          <%= bs(f,[:currency,
+            all_currencies(Money::Currency.table),
+            {:include_blank => 'Select a Currency'},{}],
+            "select",
+            [nil,3],6) %>
+          <%= bs(f,"tuition_fee","text_field",[nil,3],6) %>
+          <%= bs(f,"scholarship","text_field",[nil,3],6) %>
+          <%= bs(f,[:commission_percentage,
+                    {onkeyup: 'calcComm(this);'}],"text_field",[nil,3],6) %>
+          <%= bs(f,"commission_amount","text_field",[nil,3],6) %>
+          
+          <div class="form-group form-last">
+            <div class="col-sm-offset-3 col-sm-5">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        <% end %>
+</div>

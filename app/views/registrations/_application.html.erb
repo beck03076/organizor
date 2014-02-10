@@ -3,7 +3,7 @@
   Applications In Progress
 </h4>
 <br/>
-<div id="update-fee-container"></div>
+<div id="create-fee-container"></div>
 <ul class="vlsdet">
    <% @obj.programmes.each do |i| %>
     <hr>
@@ -31,7 +31,10 @@
               
     </div>
     <% end %>
-    <h3><%= i.institution.name rescue "Unknown" %></h3> <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <h3><%= i.institution.name rescue "Unknown" %></h3> 
+    <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to "Update Fees","/create_fee/#{i.id}", remote: true %>
+    
     <br/>
     <br/>
     <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
@@ -43,10 +46,11 @@
                         </span>
                         <span class="toggler" onclick="regAppStatus(this,'#status_select_<%= i.id %>');">change</span>
    </li>
+
     <span id="status_select_<%= i.id %>" style="display:none;">
       <%= render 'application_statuses/change_status' %>
     </span>
-    
+
     </div>
     <li><label>Reference Number</label>: <%= i.ins_ref_no rescue "Unassigned" %></li>
     <li><label>Type</label>: <%= j %></li>

@@ -27,16 +27,18 @@ module CoreMethods
     end
     # next if block becase of separate renders
     if @partial_name == "email"
-      mail_to_use = current_user.conf.def_enq_email.to_sym
+      def_email = 'def_' + name[0..2] + '_email'
+      mail_to_use = current_user.conf.send(def_email).to_sym rescue :email
       
       @subject = model.where(id: obj_id)
       @subject_ids = (@subject.map &:id).join(",")
       @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
-      render :partial => 'shared/email', :locals => {:e => Email.new(to: @email_to), 
-                                                     :id => params[:e_id],
-                                                     :obj => @subject,
-                                                     :obj_ids => ids,
-                                                     :obj_name => name }
+      @locals = {:e => Email.new(to: @email_to), 
+                 :id => params[:e_id],
+                 :obj => @subject,
+                 :obj_ids => ids,
+                 :obj_name => name }
+      render :partial => 'shared/email', :locals => @locals
 
     else
       # except register and deactivate other partials are shared, said are in enquiries

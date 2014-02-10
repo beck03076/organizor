@@ -12,4 +12,8 @@ class Branch < ActiveRecord::Base
   has_many :enquiries
   has_many :registrations
   
+  def self.ransackable_attributes(auth_object = nil)
+    %w( name desc ) + _ransackers.keys
+  end
+  
 end

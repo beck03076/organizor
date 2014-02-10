@@ -7,12 +7,12 @@ $("#status_select_<%= @programme.id %>").slideToggle();
 <% if (@programme.application_status.name.downcase == "joined") %>
 
     <% ctnt = (render 'payments/create_fee', {a: @programme}) %>     
-    $('#update-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
-                                         :locals =>   {id: 'update-fee', 
+    $('#create-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'create-fee', 
                                                        content: ctnt.html_safe,
                                                        header: 'Update Fees & Scholarship From Offer Letter',
                                                        button: nil}) %>");
                                                        
-    $('#update-fee').modal('show');
+    $('#create-fee').modal('show');
 
 <% end %>

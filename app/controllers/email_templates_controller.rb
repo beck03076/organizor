@@ -8,9 +8,9 @@ class EmailTemplatesController < ApplicationController
                  body: etemp.body,
                  signature: etemp.signature,
                  to: @email_to.join(", "))
-   render :partial => 'enquiries/email', :locals => {:e => e, 
+   render :partial => 'shared/email', :locals => {:e => e, 
                                                      :id => params[:e_id], 
-                                                     :etemp_name => etemp.name,
+                                                     :etemp_id => etemp.id,
                                                      :obj_ids => @model.to_s + "_ids",
                                                      :obj_name => @model }  
   end

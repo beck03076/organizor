@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140131142327) do
+ActiveRecord::Schema.define(:version => 20140205135227) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -100,16 +100,15 @@ ActiveRecord::Schema.define(:version => 20140131142327) do
   end
 
   create_table "commissions", :force => true do |t|
-    t.decimal  "paid",          :precision => 8, :scale => 2
-    t.date     "date_received"
-    t.decimal  "remaining",     :precision => 8, :scale => 2
+    t.decimal  "paid",       :precision => 8, :scale => 2
+    t.decimal  "remaining",  :precision => 8, :scale => 2
     t.integer  "status_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-    t.integer  "payment_id"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "currency"
+    t.integer  "fee_id"
   end
 
   create_table "contact_types", :force => true do |t|
@@ -378,6 +377,21 @@ ActiveRecord::Schema.define(:version => 20140131142327) do
     t.integer  "registration_id"
   end
 
+  create_table "fees", :force => true do |t|
+    t.integer  "tuition_fee_cents"
+    t.string   "commission_percentage"
+    t.integer  "commission_amount_cents"
+    t.integer  "programme_id"
+    t.string   "currency"
+    t.integer  "scholarship_cents"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.date     "first_payment_date"
+    t.date     "invoice_date"
+  end
+
   create_table "follow_ups", :force => true do |t|
     t.string   "title"
     t.text     "desc"
@@ -457,17 +471,6 @@ ActiveRecord::Schema.define(:version => 20140131142327) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
-  end
-
-  create_table "payments", :force => true do |t|
-    t.float    "tuition_fee"
-    t.string   "commission"
-    t.float    "amount"
-    t.integer  "programme_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "currency"
-    t.float    "scholarship"
   end
 
   create_table "people", :force => true do |t|

@@ -3,11 +3,7 @@ class RegistrationsController < ApplicationController
   
   def tab
     set_url_params
-    
-      # a is the cols chosen stored in the database and b are the right order of cols
-      a = current_user.conf.reg_cols
-      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
+    self.set_cols
 
     render partial: @partial
   end  
@@ -25,10 +21,23 @@ class RegistrationsController < ApplicationController
   # GET /registrations.json
   def index
    set_url_params
+   self.set_cols
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json {render :json => RegistrationsDatatable.new(view_context,eval(@sCols),@sFilter)}
+      format.json {
+        if params[:sSearch_2] == "undefined"
+          render :json => RegistrationsDatatable.new(view_context,eval(@sCols),@sFilter)
+        else
+          render :json => RegistrationsDatatable.new(view_context,@cols,nil)
+        end
+        }
+      format.js {
+        @b = params[:q].to_json
+        @status = "all"
+        @model = "Registration"
+        render 'shared/index'
+       }
     end
   end
 
@@ -198,6 +207,13 @@ class RegistrationsController < ApplicationController
         ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
         ym = Time.now.strftime("%y%m").to_s
         @ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
+  end
+  
+  def set_cols
+      # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.reg_cols
+      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]
   end
   
 end

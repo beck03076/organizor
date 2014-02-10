@@ -1,18 +1,40 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.launch").show();
-  $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.launch").addClass("active-tab");
-  $("ul.tab-menus li.launch").text('<%= @institution.name.titleize %>');
-  $("ul.tab-menus li.launch").attr('data-institution_id', '<%= @institution.id %>');
-  $("ul.tab-menus li.launch").trigger("click");
-});
+<!-- Enquiry show page -->
+<div class="row row-top">
+<div class="col-md-10">
+  <h3><%= @institution.name %></h3>
+</div>
+
+<% a = @institution %>
+<div class="col-md-2">
+                <div class="form-group">
+                     <%= link_to "Edit", edit_institution_path(a), {class: "btn btn-primary"} %> 
+                     <%= link_to "Clone", clone_institution_path(a), {class: "btn btn-primary"} %>
+                </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+      <ul class="nav nav-pills seperator">
+        <li id="basic" class="active">
+          <%= link_to "Basic","/institutions/#{a.id}" %>
+        </li>
+        <%= render "actions" %>
+      </ul>
+      <!-- some html5 data to be sent to the back end -->
+      <div id="institution_id_div" data-institution_id='<%= a.id %>' data-model_sing='institution' data-model_plu='institutions' ></div>
+
+      <div id="edit-resource-container"></div>
+      <div id="action_div">
+        <%= render @partial, @locals %>
+      </div>
+  </div>
+</div>
+
+
+
+<script>
+
+ actmm('institutions'); 
 
 </script>
-
-<div class="tab-container">
- <%= render 'enquiries/tabs', :stat => "InstitutionType",:model => "institution" %> 
-    <div class="tab-content" id="launch_id">
-
-    </div>
-</div>

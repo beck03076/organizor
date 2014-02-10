@@ -3,6 +3,7 @@
 <% model_pl = model.downcase.pluralize %>
 <% _id =  @status + "_" + model_pl %>
 <% url = [model_pl + "_url",format: "json"]%>
+<% srch_url = send("search_" + model_pl + "_path") %>
 
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
@@ -103,6 +104,23 @@
             </div>
             <!-----------------------FollowUp Filter End---------------------------->
 <br/>
+       <!-----------------------Ransack Filter End---------------------------->
+       
+       <% @search = _model.search(params[:q]) %>
+       <%= search_form_for @search, url: srch_url, method: :post, remote: true do |f| %>
+              <%= f.condition_fields do |c| %>
+                <%= render "shared/condition_fields", f: c %>
+              <% end %>
+              <p><%= link_to_add_fields "Add Conditions", f, :condition %></p>
+              <div class="field">
+                Sort:
+                <%= f.sort_fields do |s| %>
+                  <%= s.sort_select %>
+                <% end %>
+              </div>
+              <div class="actions"><%= f.submit "Search" %></div>
+       <% end %>
+       <!-----------------------Ransack Filter End---------------------------->
 
 <table id='<%= _id %>' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= send(url[0],url[1]) %>">
 <thead>
@@ -155,7 +173,7 @@
    $('#' + clicked + 'Modal').modal('show');
  });
 
- actmm('<%= model_pl %>'); 
+ actmm('<%= model_pl %>');  
 
 </script>
 

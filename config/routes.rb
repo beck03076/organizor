@@ -1,6 +1,12 @@
 Organizor::Application.routes.draw do
 
+  resources :fees
+
   resources :branches
+  
+  get 'create_fee/:programme_id' => "fees#create_fee"
+  
+  get 'emails/:id' => "emails#show"
   
   post '/emails/filter' => "emails#filter"
   
@@ -40,9 +46,6 @@ Organizor::Application.routes.draw do
  # get '/auth/:provider/callback' => 'import#contacts'
   
   get '/import_contacts/:from' => "import#start"
-
-  resources :payments
-
   resources :commission_statuses
 
   resources :commissions
@@ -68,12 +71,6 @@ Organizor::Application.routes.draw do
   resources :institution_types
 
   resources :contracts
-
-  resources :people do
-      member do
-        get :clone
-      end
-  end
 
   get "resources/index"
 
@@ -179,11 +176,7 @@ Organizor::Application.routes.draw do
 
   resources :application_statuses
 
-  resources :registrations do
-      member do
-        get :clone
-      end
-  end
+  
   
   match "/registrations.json/:status" => "registrations#index"
 
@@ -201,17 +194,27 @@ Organizor::Application.routes.draw do
    resources :qualifications
   
   resources :course_subjects
-
-
+  
+  resources :people do
+      collection { post :search, to: 'people#index' }
+      member do
+        get :clone
+      end
+  end
   resources :institutions do
+    collection { post :search, to: 'institutions#index' }
     member do
         get :clone
     end
   end
-  
-  
-  
+  resources :registrations do
+      collection { post :search, to: 'registrations#index' }
+      member do
+        get :clone
+      end
+  end
   resources :enquiries do
+      collection { post :search, to: 'enquiries#index' }
       member do
         get :clone
       end

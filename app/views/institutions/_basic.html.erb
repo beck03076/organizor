@@ -1,0 +1,137 @@
+<!-- basic information about the institution -->
+<% a = @institution %>
+
+<div class="tab-content3" id="tab-content62">
+
+        <div class="boxp">
+            <div class="htab">
+            <h5>
+                <b>Institution Type : 
+                    <span class="sp">
+                        <h6>
+                            <b><%= a.type.name rescue "Unknown" %> </b>
+                        </h6>
+                    </span>
+                </b>
+            </h5>
+
+            <%= link_to "Edit", edit_institution_path(a), {class: "btnp fr"} %>
+             <%= link_to "Clone", clone_institution_path(a), {class: "btnp fr"} %>
+            
+            <div class="cl"></div>
+        </div>
+        <br/>
+        
+        <div class="cols" style="padding-bottom:20px">
+            <div class="col8">
+                <div id="scrollboxu">
+                <h5>
+                  <b>                        
+                    <%= a.name %>
+                  </b>
+                </h5>
+                <br/>
+                <br/>
+                <div class="rel abs-plus-box">
+                      <%= image_tag((a.image? ? a.image_url : "/images/icons/grey_bkgrnd.png"),
+                                   {width: "420",height: "280",class: "tooltip",title: "Upload your photo",
+                                    class: "imgb fl"
+                                    }) %>
+                <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                </div>
+                <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                       <%= render 'shared/img_upload', a: a %>
+                </div>
+                <br/>
+                <div class="fl padl20">
+                    <br/>
+                    <h4 class="htab">Contact Information</h4>
+                    <br/>
+                     <br/>
+                        <ul class="vlsdet">
+                        <li><label>Email </label>: <%= best_in_place_if (can? :update,a), a, :email %></li>
+                        <li><label>Phone </label>: <%= best_in_place_if (can? :update,a), a, :phone %></li>
+                        <li><label>Fax </label>: <%= best_in_place_if (can? :update,a), a, :fax %></li>
+                        <li><label>Website </label>: <%= best_in_place_if (can? :update,a), a, :website %></li>
+                   <br/>
+                   <h4 class="htab">Address</h4>
+                   <br/>
+                   <br/>
+                    <li><label>line1</label>: <%= best_in_place_if (can? :update,a), a, 
+                                                           :address_line1 %></li>
+                    <li><label>line2</label>: <%= best_in_place_if (can? :update,a), a,
+                                                           :address_line2 %></li>
+                    <li><label>City</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                      :city_id,
+                                                                      :type => :select, 
+                                                                      :collection => City.order(:name).map{|i| [i.id,i.name]},:display_as => "city_name" %></li>
+                                                                      
+                    <li><label>Country</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                      :country_id,
+                                                                      :type => :select, 
+                                                                      :collection => Country.order(:name).map{|i| [i.id,i.name]},:display_as => "country_name" %></li>
+
+                    <li><label>Post Code</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_post_code %></li>
+                   <br/>
+                   <h4 class="htab">Description</h4>
+                   <br/>
+                   <br/>
+                    <li><label>About</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :desc, type: :textarea %></li>
+                    </ul>
+                   </div>
+            </div>
+            </div>
+            <div class="col4 ">
+                <div class="boxs">
+                    <ul class="infodhls">
+                        <li>Institution history</li>
+                        <li>
+                        <b>Institution Group :</b> 
+                          <%= disp1(a,'group') %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Created</b></li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.created_by).map &:first_name)[0] %>
+                        </li>
+                        <li><b>At :</b> 
+                          <%= tym(a.created_at) %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Last modified</b></li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.updated_by).map &:first_name)[0] %>
+                        </li>
+                        <li><b>At :</b> 
+                            <%= tym(a.updated_at) %>
+                        </li>
+                        <li><br><b>Currently Assigned</b></li>
+                        <li><b>To :</b>
+                            <%= a._ass_to.first_name rescue "Unknown" %>
+                        </li>
+                        <li><b>By :</b> 
+                            <%= a._ass_by.first_name rescue "Unknown" %>
+                        </li> 
+                        <li>
+                        <br>
+                        <b><%= a.people.size %></b> people
+                        </li>
+                        <li>
+                        <b><%= a.contracts.size %></b> contracts
+                        </li>
+                        <li>
+                        <b><%= a.enqs.size %></b> enquiries
+                        </li>
+                        <li>
+                        <b><%= a.regs.size %></b> registrations
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+</div>

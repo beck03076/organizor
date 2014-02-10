@@ -1,111 +1,134 @@
-<!-- emails to enquiry -->
+<!-- emails to core -->
 
-<% if @list.to_i == 1 && obj.first.emails.size > 0 %>
-    <table class="tables2" border="0" cellpadding="0" cellspacing="0" width="100%">
-         <thead>
+<div class="col-md-12">
+  <div class="config-content">
+    <% if @list.to_i == 1 && obj.first.emails.size > 0 %>
+    <div class="row">
+      <h4>Sent Emails</h4>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
           <tr>
-                                <th>Subject</th>
-                                <th>Date</th>
-                                <th>Sent By</th>
-                                <th>From</th>
-                                <th>View all</th>
+            <th>Subject</th>
+            <th>Body</th>
+            <th>Date</th>
+            <th>By</th>
+            <th>From</th>
           </tr>
         </thead>
         <tbody>
-                <% obj.first.emails.includes(:smtp).each do |email| %>
-                    <tr>
-                        <td><%= email.subject %></td>
-                        <td><%= email.created_at.strftime("%F %R %p") %></td>
-                        <td><%= email._cre_by.name rescue "" %></td>
-                        <td><%= (email.from.nil? ? email.smtp.name : email.from) rescue "unknown" %></td>
-                        <td  class="preview" data-email_id='<%= email.id %>' data-type="E">...</td>
-                   </tr>
-               <% end %>
-                    <tr>
-                        <td colspan="5" align="left"><a href="#">Back</a></td>
-                   </tr>
-
+           <% obj.first.emails.includes(:smtp).each do |e| %>
+            <tr>
+              <td> <%= link_to e.subject,
+                       "/emails/#{e.id}",
+                       {remote: true } %> </td>
+              <td> <%= truncate(strip_tags(e.body),length: 75) %> </td>
+              <td> <%= e.created_at.to_s %> </td>
+              <td> <%= e._cre_by.name rescue "" %> </td>
+              <td><%= (email.from.nil? ? email.smtp.name : email.from) rescue "unknown" %></td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
-    <br/><br/>
-<% end %>
+    </div>
+    <% end %>
+    <div id="email-action">
+    <div class="well">
+        <div class="row row-top">
+          <h4>New Email</h4>
+        </div>
 
-<div id="email-action" class="action-box">
-<div class="htab">
-        <h6><b>New Email</b></h6>
+          <%= form_for(e) do |p| %>
+            <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
+            <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="email_template_id">
+                    Template
+                  </label>
+                  <div class="col-sm-5">
+                    <%= collection_select(:email_template,
+                                        :email_template_id,
+                                        EmailTemplate.all,
+                                        :id,
+                                        :name,
+                                        {:prompt => "-template-",
+                                         :selected => (etemp_id rescue nil)},
+                                        {:class => "form-control",
+                                         :onchange => "chooseEmailTemplate(this);"}) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%= bs(p,[:smtp_id,Smtp.order(:name), 
+                               :id, 
+                               :name,
+                               {prompt: "-send from-"},
+                               {}],
+                               "collection_select",
+                               ["Send From",2],5,12,"row") %>
+            
+            <div class="row">
+                <%= bs(p,[:to,
+                          {id: "email_to",style: "height:85px;width:330px;overflow:auto"}],
+                          "text_area",
+                          [nil,2],9,12) %>
+            </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="email_a" class="control-label col-sm-2">
+                        Add
+                      </label>
+                      <div class="col-sm-9">
+                           <a onclick="$('.cc').slideToggle();">cc</a> |
+                           <a onclick="$('.bcc').slideToggle();">bcc</a>
+                      </div>
+                    </div>
+               </div>
+            </div>
+            
+            <%= bs(p,:cc,"text_field",[nil,2],5,12,"row cc 'style=display:none;'") %>
+            
+            <%= bs(p,:bcc,"text_field",[nil,2],5,12,"row bcc 'style=display:none;'") %>
+            
+            <%= bs(p,:subject,"text_field",[nil,2],9,12,"row") %>
+            
+            <%= bs(p,[:body,
+                      {class: "tinymce",size: "20x30"}],"text_area",[nil,2],9,12,"row") %>
+                      
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="email_a" class="control-label col-sm-2">
+                        Attachment
+                        </label>
+                        <div class="col-sm-9">
+                          <span class="btn btn-file">
+                          <input type="file" name="email[attachment]" id="email_attachment">
+                          </span>
+                        </div>
+                   </div>
+                </div>
+            </div>
+                
+            <%= bs(p,[:signature,
+                      {class: "tinymce",size: "20x7"}],"text_area",[nil,2],9,12,"row") %>
+
+            <div class="form-group form-last">
+                    <div class="col-sm-offset-10 col-sm-10">
+                      <%= p.submit "Send", {class: "btn btn-primary"} %>
+                    </div>
+            </div>
+            <% end %>
+      </div>
+      </div>
+  </div>
 </div>
-
-  <%= form_for(e) do |p| %>
-    <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
-    <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
-    
-
-                                              
-    <%= link_to "Create Email Template","/email_templates/new",{target: "_blank"} %>
-         <div id="email_template_create"> </div>  
-    <div class="fbox">
-         <%= p.label :email_template %>
-         
-         
-         <%= collection_select(:email_template,
-                                :email_template_id,
-                                EmailTemplate.all,
-                                :id,
-                                :name,
-                                {:prompt => "--Template--"},
-                                {:class => "email_templates_select",
-                                 :onchange => "sel_act(this);"}) %>
-                                 
-         <%= link_to "Create Email Template","/email_templates/new",{target: "_blank"} %>
-         <div id="email_template_create"> </div>      
-    </div>
-    
-    <%= bs(p,[:smtp_id,Smtp.order(:name), 
-                       :id, 
-                       :name,
-                       {prompt: "-send from-"},
-                       {:class => "countries_select"}],
-                       "collection_select",
-                       ["Send From",4],8,6,"row") %>
-                       
-    <%= bs(p,[:to,
-              {id: "email_to",style: "height:85px;width:320px;overflow:auto",wrap: "hard"}],
-              "text_area",
-              [nil,4],8,6,"row") %>
-
-    <span onclick="$('.cc').slideToggle();">add cc</span> |
-    <span onclick="$('.bcc').slideToggle();">add bcc</span>
-    
-    <%= bs(p,:cc,"text_field",[nil,4],8,6,"row cc 'style=display:none;'") %>
-    
-    <%= bs(p,:bcc,"text_field",[nil,4],8,6,"row bcc 'style=display:none;'") %>
-    
-    <%= bs(p,:subject,"text_field",[nil,4],8,6,"row") %>
-    
-
-    <div class="fbox" style="height:auto">
-        <%= p.label :body %>
-        <%= p.text_area(:body,{:class => "tinymce"}) %>
-    </div>
-    <br/>
-    <br/>
-    <div class="fbox">
-        <%= p.label :attachment %>
-        <%= p.file_field :attachment %>
-    </div>
-    <br/>    
-    <div class="fbox"  style="height:auto">
-        <%= p.label :signature %>
-        <%= p.text_area(:signature,{:class => "tinymce",size: "5x5",style: "width:400px"}) %>
-    </div>
-    <div class="fbox">
-        <label>&nbsp;</label>
-        <%= p.submit "Send",class: "btnp fl" %>
-        
-    </div>
-  <% end %>
-
-    </div>
 
 <script>
 
@@ -129,4 +152,5 @@ tinymce.init({
 });
 
   acttab('email');
+  actdd();
 </script>

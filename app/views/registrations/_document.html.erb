@@ -12,7 +12,7 @@
     <% else %>
     
         <%= form_tag('/documents/delete_or_download') do %>
-            <%= hidden_field_tag :reg_id,@registration.id %>
+            <%= hidden_field_tag :reg_id,a.id %>
                 <% a.documents.includes(:category).each do |cat| %>
                         <ul class="vlsdet">
                             <li>

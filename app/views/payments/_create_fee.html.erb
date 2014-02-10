@@ -1,8 +1,0 @@
-<!-- Asking the counselor to update fees and sclorship from offer letter -->
-<br/>
-<%= form_for(Payment.new) do |pmt| %>
-  <%= pmt.hidden_field :programme_id, value: a.id %>
-  <%= bs(pmt,:tuition_fee,"text_field",[nil,4],8,6) %>
-  <%= bs(pmt,:scholarship,"text_field",[nil,4],8,6) %>
-<% end %>
-<br/>
