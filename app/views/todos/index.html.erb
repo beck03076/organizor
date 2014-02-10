@@ -1,130 +1,113 @@
 <!-- todos index -->
 
-            <div class="row row-top">
-              <div class="col-md-10">
-                <h3>Todos</h3>
-                
-              </div>
-              <div class="col-md-2">
-                <div class="form-group form-last pull-right">
-                  <%= link_to "Sync my Todos with Google Tasks",
-                              '/todos/start_sync',
-                              {class: "btn btn-primary",
-                               data: { confirm: 'This can take a few moments, are you sure?' }} %>
-                </div>
-              </div>              
-            </div>
+<div class="row row-top row-right">
+  <div class="col-md-7">
+    <h3>Todos</h3>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group form-last pull-right">
+      <%= link_to "Sync my Todos with Google Tasks",
+                  '/todos/start_sync',
+                  {class: "btn btn-primary",
+                   data: { confirm: 'This can take a few moments, are you sure?' }} %>
+      <%= link_to "New Todo",
+                  'javascript:void(0)',
+                  {class: "btn btn-primary", id: "id_new_todo"} %>
+    </div>
+  </div>
+</div>
 
-          <div class="row">
-                  <div class="col-md-12">
-                    <div class="to-do">
-                      <div class="well well-sm" style="background-color: #f8f4b0;">
-                        <div class="row row-top" id="todo-filter" >
-                          <div class="col-md-1">
-                            <h4>Filter</h4>
-                          </div>
-                          <div class="col-md-2" >
-                            <%= select_tag :abdc,
-                                  options_for_select([["-all time-",""],
-                                                     ["Today","todays"],
-                                                     ["This Week","this_weeks"],
-                                                     ["This Month","this_months"]]),
-                                  {id: "period",class: "form-control"} %>
-                          </div>
-                          <div class="col-md-2" >
-                            <%= select_tag :topic_id,
-                                options_for_select(TodoTopic.order(:name).map{|i| [i.name,i.id]}),
-                                {prompt: "-topic-",
-                                 class: "form-control",
-                                 id: "topic"} %>
-                          </div>
-                          <div class="col-md-2" >
-                            <%= select_tag :done,
-                                options_for_select([["completed",1],["not completed",0]]),
-                                {prompt: "-status-",
-                                 class: "form-control",
-                                 id: "done"} %>
-                          </div>                         
-                          <div class="col-md-2" >
-                            <%= select_tag :assigned_by,
-                                options_for_select(User.order(:first_name).map{|i| [i.first_name,i.id]}),
-                                {prompt: "-assigned by-",
-                                 class: "form-control",
-                                 id: "assigned_by"} %>
-                          </div>
-                          <div class="col-md-2">
-                            <%= text_field_tag :duedate,nil,{placeholder: "due on",
-                                                             id: "duedate",
-                                                             class: "datepicker"} %>
-                          </div>
-                          <div class="col-md-1 text-right">
-                            <span class="glyphicon glyphicon-remove" onclick="filterTodosReset();"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-          </div>
-          
-          <%= form_for(Todo.new) do |g| %>
-          <%= g.hidden_field :assigned_by, value: current_user.id %>
-          <div class="row">
-                  <div class="col-md-12">
-                    <div class="to-do">
-                      <div class="well well-sm" style="background-color: #e1f5e0;">
-                        <div class="row row-top todo_container" >
-                          <div class="col-md-1">
-                            <h4>New</h4>
-                          </div>
-                          <div class="col-md-3">
-                            <%= g.text_field :title,{placeholder: "Add a todo"} %>
-                          </div>
-                          <div class="more-fields" style="display: none;">
-                              <div class="col-md-2">
-                                <%= g.collection_select :topic_id,
-                                              TodoTopic.order(:name), 
-                                              :id, 
-                                              :name,
-                                              {prompt: "-topic-"},
-                                              {class: "form-control"} %>
-                              </div>
-                              <div class="col-md-2">
-                                 <%= g.collection_select :assigned_to,
-                                                  User.order(:first_name), 
-                                                  :id, 
-                                                  :first_name,
-                                                  {prompt: "-assign to-"},
-                                                  {class: "form-control"} %>
-                              </div>
-                              <div class="col-md-2">
-                              <%= g.text_field :duedate,{placeholder: "due on",class: "datepicker"} %>
-                              </div>
-                          </div>
-                          <div class="col-md-1">
-                          <%= g.submit "Add" %>
-                          <span onclick="$('.more-fields').toggle();">
-                            <small>more</small>
-                          </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-          </div>
-          <% end %>
-         <div id="show-todos">
-           <%= render 'show' %>
-         </div>
+<div class="col-md-3">
+  <div class="row">
+    <div class="well well-sm filter-well">
+      <h4>Filter</h4>
+      <div class="form-group">
+        <%= select_tag :abdc,
+                    options_for_select([["-all time-",""],
+                                       ["Today","todays"],
+                                       ["This Week","this_weeks"],
+                                       ["This Month","this_months"]]),
+                    {id: "period",class: "form-control"} %>
+      </div>
+      <div class="form-group">
+        <%= select_tag :topic_id,
+                  options_for_select(TodoTopic.order(:name).map{|i| [i.name,i.id]}),
+                  {prompt: "-topic-",
+                   class: "form-control",
+                   id: "topic"} %>
+      </div>
+      <div class="form-group">
+        <%= select_tag :done,
+            options_for_select([["completed",1],["not completed",0]]),
+            {prompt: "-status-",
+             class: "form-control",
+             id: "done"} %>
+      </div>
+      <div class="form-group">
+        <%= select_tag :assigned_by,
+            options_for_select(User.order(:first_name).map{|i| [i.first_name,i.id]}),
+            {prompt: "-assigned by-",
+             class: "form-control",
+             id: "assigned_by"} %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag :duedate,nil,{placeholder: "Due on",
+                                         id: "duedate",
+                                         class: "datepicker form-control"} %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-9">
+  <div class="row row-right add-todo">
+    <%= form_for(Todo.new, html: {class: "form-inline"}) do |g| %>
+    <%= g.hidden_field :assigned_by, value: current_user.id %>
+      <div class="to-do">
+        <div class="form-group">
+          <%= g.text_field :title,{placeholder: "Add a todo", class: "form-control", size: 45} %>
+        </div>
+        <div class="form-group">
+          <%= g.collection_select :topic_id,
+                        TodoTopic.order(:name),
+                        :id,
+                        :name,
+                        {prompt: "-topic-"},
+                        {class: "form-control"} %>
+        </div>
+        <div class="form-group">
+           <%= g.collection_select :assigned_to,
+                            User.order(:first_name),
+                            :id,
+                            :first_name,
+                            {prompt: "-assign to-"},
+                            {class: "form-control"} %>
+        </div>
+        <div class="form-group">
+          <%= g.text_field :duedate,{placeholder: "due on",class: "datepicker form-control", size: "15"} %>
+        </div>
+        <div class="form-group pull-right">
+          <%= g.submit "Add", {class: "btn btn-primary"} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-          
+  <div class="row">
+    <div id="show-todos">
+     <%= render 'show' %>
+    </div>
+  </div>
+</div>
+
+
 
 <script type="text/javascript">
- 
+
  actmm("todos");
  $('#todo-filter select').change(function(){
        filterTodos();
  });
- 
+
   $('span.todo_checkbox').on("click",function(){
       if ($(this).find('span').data('state') == 'fill'){
         e = $(this).parent().parent().parent().parent();
@@ -135,9 +118,11 @@
         e.addClass("complete");
        }
   });
-  
   $(".best_in_place").best_in_place();
- 
+  $("#id_new_todo").click(function(event) {
+    $(".add-todo").toggle();
+  });
+
 </script>
 
 

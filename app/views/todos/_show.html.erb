@@ -13,19 +13,19 @@
                         <div class="row row-top row-right todo_container">
                           <div class="col-md-4">
                             <span style='font-size: 1.5em;'>
-                              <%= best_in_place_if (i.assigned_to == current_user.id), 
+                              <%= best_in_place_if (i.assigned_to == current_user.id),
                                   i,
-                                  :done, 
+                                  :done,
                                   type: :checkbox ,
-                                  collection: ["<span data-state='empty'>&#x2610;</span>".html_safe, 
+                                  collection: ["<span data-state='empty'>&#x2610;</span>".html_safe,
                                                "<span data-state='fill'>&#x2611;</span>".html_safe],
                                   classes: "todo_checkbox"  %>
                             </span>
                             <strong class="todo-text">
                               <%= best_in_place_if (edi),i,
                                   :title,
-                                  type: "textarea" %> 
-                            </strong>                            
+                                  type: "textarea" %>
+                            </strong>
                           </div>
                           <div class="col-md-4 text-center">
                             <small>By: <%= (link_to i._ass_by.name,i._ass_by) rescue "Unknown" %> </small>
@@ -33,13 +33,13 @@
                           <div class="col-md-4 text-right">
                             <small><%= best_in_place_if (edi),i,
                                        :duedate,
-                                       :type => :date, 
+                                       :type => :date,
                                        :display_as => "due" %></small>
                             <div class="col-md-4 text-right">
                             <% if edi %>
-                                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
-                                i, 
-                                method: :delete, 
+                                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                                i,
+                                method: :delete,
                                 data: { confirm: 'Are you sure?' }  %>
                             <% end %>
                             </div>
@@ -52,5 +52,5 @@
          <% end %>
 <% end %>
 <% else %>
- <h3> Nothing to display</h3>
+ <p class="lead"> No todos to display</p>
 <% end %>

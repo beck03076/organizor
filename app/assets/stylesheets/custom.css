@@ -84,26 +84,46 @@ body {
     background-color: yellow; }
   .main .main-content .badge {
     color: #000000; }
-  .main .main-content .to-do .well {
-    margin-bottom: 10px; }
-  .main .main-content .to-do .overdue .todo-date {
-    color: red; }
-  .main .main-content .to-do .overdue .well {
-    border: 1px solid red; }
-  .main .main-content .to-do .complete {
-    color: #aaaaaa; }
-    .main .main-content .to-do .complete .todo-text {
-      text-decoration: line-through; }
+  .main .main-content .add-todo {
+    display: none; }
+    .main .main-content .add-todo .to-do .well {
+      margin-bottom: 10px; }
+    .main .main-content .add-todo .to-do .overdue .todo-date {
+      color: red; }
+    .main .main-content .add-todo .to-do .overdue .well {
+      border: 1px solid red; }
+    .main .main-content .add-todo .to-do .complete {
+      color: #aaaaaa; }
+      .main .main-content .add-todo .to-do .complete .todo-text {
+        text-decoration: line-through; }
   .main .main-content .data-table .well {
-    padding-left: 0;
-    padding-top: 24px; }
+    padding-left: 0; }
   .main .main-content .data-table .form-control {
     height: 25px;
     padding: 2px;
     margin: 0 5px; }
-  .main .main-content .data-table .btn {
-    height: 25px;
-    padding: 2px 14px; }
+  .main .main-content .data-table .row {
+    margin-top: 1rem; }
+  .main .main-content .data-table .vert-center {
+    margin-top: 5px; }
+  .main .main-content .data-table .glyphicon-remove {
+    top: 3px;
+    cursor: pointer; }
+  .main .main-content .data-table .filter-center {
+    padding-left: 10%; }
+  .main .main-content .new-enq-reg .progress {
+    margin-top: 7px; }
+  .main .main-content .new-enq-reg .btn-next {
+    margin-right: 15px; }
+  .main .main-content .new-enq-reg .form-added {
+    background-color: #FFFFFF;
+    margin-left: -19px;
+    margin-right: -19px;
+    padding: 19px;
+    border-top: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8; }
+  .main .main-content .new-enq-reg .glyphicon-remove {
+    margin-right: 0; }
   .main .main-content .form-control.hor-first {
     margin: 0; }
   .main .main-content .theme-color {
@@ -135,9 +155,48 @@ body {
       background-color: #3f6d00; }
     .main .main-content .theme-color .active {
       border: 7px solid #999999; }
+  .main .main-content .filter-well {
+    background-color: #FFE9B4; }
 
 .glyphicon {
   margin-right: 1rem; }
 
 .light {
   color: #777777; }
+
+.ui-corner-all {
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+.ui-datepicker {
+  width: 15em; }
+  .ui-datepicker .ui-datepicker-month, .ui-datepicker .ui-datepicker-year {
+    width: 50% !important;
+    height: 35px;
+    padding: 6px 6px;
+    font-size: 15px;
+    line-height: 1.428571429;
+    color: #6f6f6f;
+    vertical-align: middle;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+  .ui-datepicker .ui-datepicker-month:focus, .ui-datepicker .ui-datepicker-year:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6); }
+  .ui-datepicker .ui-datepicker-title {
+    margin: 0 2em; }
+
+.ui-widget {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.9em; }
+  .ui-widget select {
+    font-family: inherit;
+    font-size: inherit; }
