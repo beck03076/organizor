@@ -1,9 +1,11 @@
 <!-- setting other variables based on model passed to this partial -->
 <% _model = eval(model) %>
 <% model_pl = model.downcase.pluralize %>
-<% _id =  @status + "_" + model_pl %>
+
+<% _id =  (@status || "all") + "_" + model_pl %>
 <% url = [model_pl + "_url",format: "json"]%>
 <% srch_url = send("search_" + model_pl + "_path") %>
+<% act = act || model_pl %>
 
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
@@ -82,7 +84,8 @@
                     <label for="id_search">containing</label>
                     <input type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
-                  <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
+                  <span class="glyphicon glyphicon-remove" onclick="resetDataTable();">
+                  
                 </form>
               </div>
              <!-----------------------Search End---------------------------->
@@ -102,24 +105,48 @@
                 </form>
               </div>
             </div>
+            <div class="row form-group pull-right">
+              <a onclick="$('.ransack').slideToggle();">Advanced <b class="caret"></b></a>
+            </div>
             <!-----------------------FollowUp Filter End---------------------------->
 <br/>
        <!-----------------------Ransack Filter End---------------------------->
        
        <% @search = _model.search(params[:q]) %>
-       <%= search_form_for @search, url: srch_url, method: :post, remote: true do |f| %>
-              <%= f.condition_fields do |c| %>
-                <%= render "shared/condition_fields", f: c %>
-              <% end %>
-              <p><%= link_to_add_fields "Add Conditions", f, :condition %></p>
-              <div class="field">
-                Sort:
-                <%= f.sort_fields do |s| %>
-                  <%= s.sort_select %>
-                <% end %>
+       <% @search.build_condition if @search.conditions.empty? %>
+       <% @search.build_sort if @search.sorts.empty? %>
+       <div class="well well-sm filter-well ransack row" style="display:none;">
+       <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
+                                                                  class: "form-inline"} do |f| %>
+                                                                  
+              <div class="row">
+                  <h5 class="col-sm-2">Filter By</h5>
+                  
+                  <%= f.condition_fields do |c| %>
+                    <%= render "shared/condition_fields", f: c %>
+                  <% end %>
+                  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus col-sm-3"></span>'.html_safe,
+                      f,
+                      :condition %>
               </div>
-              <div class="actions"><%= f.submit "Search" %></div>
+              <div class="field row">
+                 <div class="row">
+                      <h5 class="col-sm-2">Sort By</h5>
+                 </div>
+                  <div class="col-md-12">
+                   
+                        <div class="col-sm-5">
+                            <%= f.sort_fields do |s| %>
+                                <%= s.sort_select({},{class: "form-control"}) %>
+                            <% end %>
+                          <span onclick="$(this).submit();" class="glyphicon glyphicon-search" id="ransack_submit">
+                          </span>
+                        </div>
+                  </div>
+              </div>
+              
        <% end %>
+       </div>
        <!-----------------------Ransack Filter End---------------------------->
 
 <table id='<%= _id %>' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= send(url[0],url[1]) %>">
@@ -151,7 +178,7 @@
 </thead>
 
 </table>
-
+<script src="/dt-bootstrap.js"></script>
 <script>
 
  var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');

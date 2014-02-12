@@ -60,7 +60,8 @@ class Enquiry < ActiveRecord::Base
                   :todos_attributes,:contact_type_id,:registered,
                   :image,:remote_image_url,:branch_id
                   
-  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true
+  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true  
+  
   
   def dob
    self.date_of_birth.strftime("%d-%m-%Y") rescue "Not Captured"

@@ -1,13 +1,15 @@
 class ProgrammesController < ApplicationController
-authorize_resource
+  include CoreMethods
+  authorize_resource
   # GET /programmes
   # GET /programmes.json
-  def index
-    @programmes = Programme.all
+  def index    
+    set_url_params
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @programmes }
+      format.json { core_json("programme") } # in core_methods
+      format.js { core_js("programme") } # in core_methods
     end
   end
 

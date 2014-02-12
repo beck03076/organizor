@@ -57,4 +57,20 @@ module CoreMethods
     model.where(cond).order(:name).map{|i| [i.name,i.id]}
   end
   
+  def core_json(model)
+    cl = (model.pluralize.camelize + "Datatable").constantize
+    if (params[:sSearch_2] == "undefined" || params[:sSearch_2] == "")
+          render :json => cl.new(view_context,eval(@sCols),@sFilter)
+        else
+          render :json => cl.new(view_context,@cols,nil)
+    end
+  end
+  
+  def core_js(model)
+    @b = params[:q].to_json
+    @status = "all"
+    @model = model.camelize
+    render 'shared/index'
+  end
+  
 end

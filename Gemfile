@@ -81,7 +81,7 @@ gem 'google_currency'
 
 
 group :development do
-  gem "rails-dev-tweaks"
+#  gem "rails-dev-tweaks"
 end
 
 

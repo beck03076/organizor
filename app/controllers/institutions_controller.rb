@@ -3,17 +3,20 @@ class InstitutionsController < ApplicationController
   
   def tab
     set_url_params
-    
-      # a is the cols chosen stored in the database and b are the right order of cols
-      a = current_user.conf.ins_cols
-      b = [:id,:name,:email,:phone]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
-      
+    self.set_cols      
     render partial: @partial
   end
   
   def action_partial
     set_url_params
+    
+    if @partial_name == "finance"
+      # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.pro_cols
+      b = [:start_date]
+      @cols = ((b & a) + (a - b))
+    end
+    
     #called from CoreMethods
     h_action_partial("institution",
                      params[:institution_id],
@@ -34,7 +37,8 @@ class InstitutionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json {render :json => InstitutionsDatatable.new(view_context,eval(@sCols),@sFilter)}
+      format.json { core_json("institution") } # in core_methods
+      format.js { core_js("institution") } # in core_methods
     end
   end
   
@@ -131,5 +135,13 @@ class InstitutionsController < ApplicationController
       format.html { redirect_to institutions_url }
       format.json { head :no_content }
     end
+  end
+  
+  def set_cols 
+    # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.ins_cols
+      b = [:id,:name,:email,:phone]
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]
+  
   end
 end

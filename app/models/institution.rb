@@ -22,6 +22,9 @@ class Institution < ActiveRecord::Base
   has_many :contracts
   has_many :enquiries
   
+  has_many :programmes
+  has_many :registrations, through: :programmes
+  
   has_and_belongs_to_many :emails 
   has_many :follow_ups
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Institution"'

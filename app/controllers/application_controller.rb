@@ -1,6 +1,6 @@
 require "ipaddr"
 
- class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
   protect_from_forgery
   

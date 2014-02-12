@@ -1,4 +1,6 @@
 class Programme < ActiveRecord::Base
+  include CoreExtension
+  
   belongs_to :enquiry
   belongs_to :registration
   belongs_to :course_level, :foreign_key => 'level_id'

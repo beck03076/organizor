@@ -1,0 +1,39 @@
+<!-- setting other variables based on model passed to this partial -->
+<!-- setting other variables based on model passed to this partial -->
+<% _model = eval(model) %>
+<% model_pl = model.downcase.pluralize %>
+
+<% _id =  (@status || "all") + "_" + model_pl %>
+<% url = [model_pl + "_url",format: "json"]%>
+<% srch_url = send("search_" + model_pl + "_path") %>
+<% @cols = [:first_name] %>
+<% @status = "all" %>
+
+<table id='all_enquiries' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= enquiries_url(format: 'json') %>">
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Category</th>
+      <th>Release Date</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');
+ 
+ $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
+                           '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
+                           '<option>10</option>' +
+                           '<option>20</option>' +
+                           '<option>30</option>' +
+                           '<option>40</option>' +
+                           '<option>50</option>' +
+                           '</select>'+
+                           '<label for="id_column" class="label-right">rows per page</label>' +
+                           '</div></form>');
+
+</script>

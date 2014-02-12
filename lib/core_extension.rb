@@ -50,6 +50,10 @@ module CoreExtension
             self_id = (self.name.downcase + "_id").to_sym
             includes(:follow_ups).where( :follow_ups => { self_id => nil} )
        end
+       
+       def ignore(*x)
+         self
+       end
   end
   
   

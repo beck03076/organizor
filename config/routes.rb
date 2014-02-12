@@ -219,9 +219,10 @@ Organizor::Application.routes.draw do
         get :clone
       end
   end
-
-
-  resources :programmes
+  resources :programmes do
+      collection { post :search, to: 'programmes#index' }
+  end
+  
 
 
   resources :enquiry_sources

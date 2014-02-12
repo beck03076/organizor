@@ -25,19 +25,8 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json {
-        if params[:sSearch_2] == "undefined"
-          render :json => RegistrationsDatatable.new(view_context,eval(@sCols),@sFilter)
-        else
-          render :json => RegistrationsDatatable.new(view_context,@cols,nil)
-        end
-        }
-      format.js {
-        @b = params[:q].to_json
-        @status = "all"
-        @model = "Registration"
-        render 'shared/index'
-       }
+      format.json { core_json("registration") } # in core_methods
+      format.js { core_js("registration") } # in core_methods
     end
   end
 

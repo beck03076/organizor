@@ -20,7 +20,6 @@
 //= require best_in_place
 //= require private_pub
 //= require fullcalendar
-//= require dataTables/jquery.dataTables
 //= require data-confirm-modal
 
 
@@ -351,7 +350,8 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
     "sAjaxSource": $(tableId).data('source'),
     "fnServerParams": function ( aoData ) {
       aoData.push( { "name": "sFilter", "value": filterValue },
-                   { "name": "sCols", "value": cols });
+                   { "name": "sCols", "value": cols },
+                   {"name": "sSearch_2", "value": ransack });
     },
     "aoColumnDefs": [
       { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1) ] }
@@ -378,9 +378,8 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
     });
     
-    
-    oTable.fnFilter(ransack, 2, true);
-    
+
+
     $('input#id_search').on('keyup',function(){
         var key =$(this).val();
         oTable.fnFilter(key);
@@ -395,9 +394,11 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
    $('form').on('click', '.remove_fields', function (event) {
     $(this).closest('.field').remove();
     event.preventDefault();
-});
+   });
+   
+    $('.add_fields').unbind('click');
 
-    $('form').on('click', '.add_fields', function (event) {
+    $('.add_fields').click(function (event) {
         time = new Date().getTime();
         regexp = new RegExp($(this).data('id'), 'g');
         $(this).before($(this).data('fields').replace(regexp, time));
@@ -440,57 +441,6 @@ function enquiryTabSwitch(obj){
     $.get(url,function(table){
 
       var $container = $('#'+lang).html(table);
-      var $dateField = $('.dateField', $container);
-      var $mSel = $('#multiselect',$container);
-
-
-      if ($dateField.length > 0) {
-        $dateField.datepicker({
-            inline: true,
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: "yy-mm-dd",
-            yearRange: '1980:2050' });
-        }
-
-      if ($mSel.length > 0) {
-        $mSel.multiSelect({
-          keepOrder: true,
-          size: 5
-        });
-
-           var $dSel = $('#deselect-all',$container);
-           $('#deselect-all').click(function(){
-             $mSel.multiSelect('deselect_all');
-             return false;
-           });
-
-           $(".searchKey").keyup(function(){
-
-            var searchWord=$.trim(this.value);
-            searchWord=$.trim(searchWord.charAt(0).toUpperCase() + searchWord.slice(1));
-
-            if(searchWord==''){
-                $("#ms-multiselect .ms-selectable:first-child ul li").show();
-                $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-            }
-            else{
-                $("#ms-multiselect .ms-selectable:first-child ul li").hide();
-                $("#ms-multiselect .ms-selectable:first-child ul li:contains('"+searchWord+"')").show();
-                $("#ms-multiselect .ms-selectable:first-child ul .ms-selected").css({"display":"none"});
-            }
-           });
-           $('#multiselect').multiSelect('deselect_all');
-
-           var c_ids = $('#ms-selected-countries').data('country_ids');
-           $.each(c_ids, function( index, value ){
-             $("#ms-multiselect .ms-selectable:first-child ul li[ms-value="+ value +"]").trigger("click");
-           });
-
-      }
-
-
-
     });
 
 }

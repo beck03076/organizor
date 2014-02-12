@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205135227) do
+ActiveRecord::Schema.define(:version => 20140212144451) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -855,6 +855,8 @@ ActiveRecord::Schema.define(:version => 20140205135227) do
     t.text     "ins_cols"
     t.string   "def_per_search_col"
     t.text     "per_cols"
+    t.string   "def_pro_search_col"
+    t.text     "pro_cols"
   end
 
   create_table "users", :force => true do |t|

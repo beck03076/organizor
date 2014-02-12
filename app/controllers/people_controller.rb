@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+  include CoreMethods
 
    def tab
     set_url_params
@@ -36,11 +37,11 @@ class PeopleController < ApplicationController
   # GET /people.json
   def index
     set_url_params
-    p "***********************"
-    p @sCols
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json {render :json => PeopleDatatable.new(view_context,eval(@sCols),@sFilter)}
+      format.json { core_json("person") } # in core_methods
+      format.js { core_js("person") } # in core_methods
     end
   end
 

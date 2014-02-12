@@ -2,8 +2,7 @@ class EnquiriesController < ApplicationController
   include CoreMethods
   
   def tab
-    set_url_params
-    
+    set_url_params    
       self.set_cols
       render partial: @partial
   end
@@ -22,19 +21,8 @@ class EnquiriesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json {
-        if params[:sSearch_2] == "undefined"
-          render :json => EnquiriesDatatable.new(view_context,eval(@sCols),@sFilter)
-        else
-          render :json => EnquiriesDatatable.new(view_context,@cols,nil)
-        end
-        }
-      format.js {
-        @b = params[:q].to_json
-        @status = "all"
-        @model = "Enquiry"
-        render 'shared/index'
-       }
+      format.json { core_json("enquiry") } # in core_methods
+      format.js { core_js("enquiry") } # in core_methods
     end
   end
 
