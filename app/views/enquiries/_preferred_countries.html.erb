@@ -1,13 +1,14 @@
 <!-- prefer countries -->
 <h4 class="form-heading">Preferred Countries</h4>
-<br/>  
+<br/>
+<div class="col-xs-12">
   <%= prefer_countries(f.object_name,
                        "country_ids",
                        @countries,
                        (@countries.map{|i| i[1]})) %>
-                       
+</div>
 <script>
 actMultiSelect('multiple-select');
 </script>
-  
+
 

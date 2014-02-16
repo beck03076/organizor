@@ -44,30 +44,30 @@
                           class: "form-control hor-first",
                           data: {model: model}}) +
                           '</form>' %>
-                
-                <%= render 'shared/modal',id: 'assignToModal', 
+
+                <%= render 'shared/modal',id: 'assignToModal',
                            content: ctnt.html_safe,
                            header: 'Assign To',
                            button: "<button onclick=groupAssignTo('#{_id}');>Assign</button>" %>
                 <!----------------------- Group Assign Modal End---------------------------->
                 <!----------------------- Bulk Email Start---------------------------->
                 <% ctnt = 'Are you sure you want to send email to all the selected email ids ?' %>
-                
-                <%= render 'shared/modal',id: 'bulkEmailModal', 
+
+                <%= render 'shared/modal',id: 'bulkEmailModal',
                            content: ctnt.html_safe,
                            header: 'Bulk Email',
                            button: "<button onclick=bulkEmail('#{_id}');>Yes</button>" %>
                 <!-----------------------Bulk Email Modal End---------------------------->
                 <!----------------------- Group Delete Modal Start---------------------------->
                 <% ctnt = 'Are you sure you want to deactivate the selected enquiries ?' %>
-                
-                <%= render 'shared/modal',id: 'deactivateModal', 
+
+                <%= render 'shared/modal',id: 'deactivateModal',
                            content: ctnt.html_safe,
                            header: 'Group Delete',
                            button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
                 <!-----------------------Group Delete Modal End---------------------------->
-                
-                
+
+
               </div>
               <!-----------------------Search Start---------------------------->
               <div class="col-md-7 text-center filter-center">
@@ -75,8 +75,8 @@
                   <div class="form-group">
                     <label for="id_column">Filter by</label>
                     <%= select_tag :abdc,
-                        options_for_select((@cols - [:follow_up_date]).map{|i| 
-                        i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i] 
+                        options_for_select((@cols - [:follow_up_date]).map{|i|
+                        i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i]
                         }.unshift(["-column name-",""])),
                         {id: "mySelect",class: "form-control hor-first"} %>
                   </div>
@@ -85,7 +85,7 @@
                     <input type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
                   <span class="glyphicon glyphicon-remove" onclick="resetDataTable();">
-                  
+
                 </form>
               </div>
              <!-----------------------Search End---------------------------->
@@ -105,23 +105,23 @@
                 </form>
               </div>
             </div>
-            <div class="row form-group pull-right">
-              <a onclick="$('.ransack').slideToggle();">Advanced <b class="caret"></b></a>
+            <div class="row row-right text-right">
+              <a onclick="$('.ransack').slideToggle();" class="pointer">Advanced <b class="caret"></b></a>
             </div>
             <!-----------------------FollowUp Filter End---------------------------->
 <br/>
        <!-----------------------Ransack Filter End---------------------------->
-       
+
        <% @search = _model.search(params[:q]) %>
        <% @search.build_condition if @search.conditions.empty? %>
        <% @search.build_sort if @search.sorts.empty? %>
        <div class="well well-sm filter-well ransack row" style="display:none;">
        <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
                                                                   class: "form-inline"} do |f| %>
-                                                                  
+
               <div class="row">
                   <h5 class="col-sm-2">Filter By</h5>
-                  
+
                   <%= f.condition_fields do |c| %>
                     <%= render "shared/condition_fields", f: c %>
                   <% end %>
@@ -134,7 +134,7 @@
                       <h5 class="col-sm-2">Sort By</h5>
                  </div>
                   <div class="col-md-12">
-                   
+
                         <div class="col-sm-5">
                             <%= f.sort_fields do |s| %>
                                 <%= s.sort_select({},{class: "form-control"}) %>
@@ -144,7 +144,7 @@
                         </div>
                   </div>
               </div>
-              
+
        <% end %>
        </div>
        <!-----------------------Ransack Filter End---------------------------->
@@ -155,11 +155,11 @@
       <th>
       <%= check_box_tag "master",nil,false,{id: "master_check",
                                             class:"nowrap",
-                                            checked: false, 
+                                            checked: false,
                                             onclick: "toggleAllCheck(this,'#{_id}');",
                                             autocomplete: "off"} %>
       </th>
-      
+
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
           <th><%= i[1].to_s.titleize %></th>
@@ -169,11 +169,11 @@
           </th>
         <% end %>
       <% end %>
-      
+
       <th>
       <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
       </th>
-     
+
   </tr>
 </thead>
 
@@ -182,7 +182,7 @@
 <script>
 
  var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');
- 
+
  $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
                            '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
                            '<option>10</option>' +
@@ -193,14 +193,14 @@
                            '</select>'+
                            '<label for="id_column" class="label-right">rows per page</label>' +
                            '</div></form>');
-                           
+
  $('#mass-actions').click(function(){
    var rows = getCheckedRowsAsArray('<%= _id %>');
    var clicked = $("#mass-actions").val();
    $('#' + clicked + 'Modal').modal('show');
  });
 
- actmm('<%= model_pl %>');  
+ actmm('<%= model_pl %>');
 
 </script>
 
