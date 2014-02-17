@@ -28,7 +28,15 @@
   <br/>  
   
   <%= f.fields_for :contracts do |c| %>
-   <%= c.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>       
+   <%= c.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %> 
+   
+           <%= c.fields_for :sliding_scales do |ss| %>
+             <%= fs(ss,:from,"text_field") %>
+             <%= fs(ss,:to,"text_field") %>
+             <%= ss.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>  
+           <% end %>
+           <%= c.link_to_add "Add Sliding Scale", :sliding_scales,{:class => "btns fl"} %>
+   
      <div class="cols boxstheme" style="width:97%">
      
           <br/>
@@ -81,8 +89,11 @@
            <br/>
            <br/>
            <br/>
+           
+          
        </div>
        
+      
        <div class="col6">
            <%= fs(c,[:initiate_date,:class => "dateField caltf"],"text_field",nil,"Initiate Date") %>
            <%= fs(c,[:current_contract_end_date,:class => "dateField caltf"],"text_field",nil,"Current End Date") %>

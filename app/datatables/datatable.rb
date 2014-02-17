@@ -22,8 +22,8 @@ protected
     items.map do |obj|
        temp = []
        
+       #compound means to include follow ups in the datatable
        if @compound
-       
            # setting the class so that the row be red for todays follow up
            fu_now_temp = obj.f_ups.map{|i|  (i.to_date == Date.today rescue nil) }.include?(true)
            # setting the class so that the row be red for this weeks follow up
@@ -70,7 +70,7 @@ protected
       parsed = JSON.parse(json) if json && json.length >= 2
       
       @search = @model_cl.search(parsed)
-      items = @search.result
+      items = @search.result(distinct: true)
       @items = items.page(page).per_page(per_page)
     end
   end
@@ -82,7 +82,11 @@ protected
       if @sFilter.titleize == "Deactivated"
         items = Enquiry.inactive
       else
-        fet_stat= @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
+        if @tab.nil?
+          fet_stat = nil
+        else
+          fet_stat= @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
+        end
         items = fet_stat.nil? ? @asso_model : fet_stat.send(@item_scope[0],@item_scope[1])
       end
     end

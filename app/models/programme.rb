@@ -27,4 +27,8 @@ class Programme < ActiveRecord::Base
                   :fee_attributes
                   
   accepts_nested_attributes_for :notes,:fee
+  
+  def self.joined_ins(ins_id)
+    includes(:application_status).where(institution_id: ins_id,application_statuses: {name: "joined"})
+  end 
 end

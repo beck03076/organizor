@@ -1,7 +1,7 @@
 class PeopleDatatable < Datatable
   include CoreColumns
 
-  def initialize(view,cols,sFil)
+  def initialize(view,cols,sFil,asso_id = nil)
     model = "person"
     
     @view = view

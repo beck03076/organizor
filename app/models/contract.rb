@@ -8,13 +8,16 @@ class Contract < ActiveRecord::Base
   :all_permitted_country_ids,:all_permitted_region_ids,
   :prohibited_countries,:prohibited_regions,
   :permitted_countries,:permitted_regions,
-  :commission_specified,:territory_specified
+  :commission_specified,:territory_specified,
+  :sliding_scales_attributes
   
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Contract"'
   
   has_many :documents, dependent: :destroy
    
   belongs_to :institution
+  
+  has_many :sliding_scales
   
   attr_reader :prohibited_countries,:prohibited_regions,
   :permitted_countries,:permitted_regions
@@ -29,7 +32,7 @@ class Contract < ActiveRecord::Base
   has_and_belongs_to_many :all_permitted_regions, 
                            class_name: "Region", join_table: :permitted_regions
   
-  accepts_nested_attributes_for :notes,:documents
+  accepts_nested_attributes_for :notes,:documents, :sliding_scales
   
   
   def prohibited_countries=(ids)

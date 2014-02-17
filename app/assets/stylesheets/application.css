@@ -14,6 +14,7 @@
 *= require fullcalendar
 *= require token-input-bootstrappy
 *= require jquery-ui-datepicker
+*= require slider
 *= require custom
 
 */

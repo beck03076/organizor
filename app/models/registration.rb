@@ -11,6 +11,10 @@ class Registration < ActiveRecord::Base
 
 
   has_many :programmes, dependent: :destroy
+  has_many :institutions, through: :programmes
+  has_many :application_status, through: :programmes
+  has_many :fee, through: :programmes
+  
   has_many :exams
   has_many :proficiency_exams,class_name: "Exam", dependent: :destroy
   belongs_to :sub_agent
@@ -33,7 +37,7 @@ class Registration < ActiveRecord::Base
   has_many :todos
   
   belongs_to :branch
-  
+    
   attr_accessor :_destroy
 
   attr_accessible :address_city, :address_country_id, :address_line1, 

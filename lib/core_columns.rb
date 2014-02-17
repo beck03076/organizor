@@ -24,7 +24,8 @@ module CoreColumns
                          :assigned_by => [:_ass_by,:first_name],
                          :created_by => [:_cre_by,:first_name],
                          :updated_by => [:_upd_by,:first_name],
-                         :prof_eng_level_id => [:english_level,:name]}
+                         :prof_eng_level_id => [:english_level,:name],
+                         :institution_id => [:institutions,:name]}
      
      elsif model == 'institution'
        @def_ins_cols = {type_id: [:type,:name],

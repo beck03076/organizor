@@ -8,9 +8,13 @@ class ProgrammesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { core_json("programme") } # in core_methods
+      format.json { core_json("programme",params[:institution_id]) } # in core_methods
       format.js { core_js("programme") } # in core_methods
     end
+  end
+  
+  def from_institution
+    set_url_params
   end
 
   # GET /programmes/1

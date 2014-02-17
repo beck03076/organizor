@@ -4,6 +4,8 @@ Organizor::Application.routes.draw do
 
   resources :branches
   
+  match '/institution_programmes/:institution_id.json' => "programmes#index"
+  
   get 'create_fee/:programme_id' => "fees#create_fee"
   
   get 'emails/:id' => "emails#show"

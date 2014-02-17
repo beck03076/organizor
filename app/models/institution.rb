@@ -70,4 +70,6 @@ class Institution < ActiveRecord::Base
     self.name rescue "Title Unknown"
   end
   
+  
+  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212144451) do
+ActiveRecord::Schema.define(:version => 20140213143926) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -711,6 +711,16 @@ ActiveRecord::Schema.define(:version => 20140212144451) do
     t.text     "desc"
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "sliding_scales", :force => true do |t|
+    t.integer  "course_level_id"
+    t.integer  "from"
+    t.integer  "to"
+    t.string   "commission_percentage"
+    t.integer  "contract_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "smtps", :force => true do |t|
