@@ -1,26 +1,26 @@
 <!-------------------------NOTE for Enq and Reg-------------------------------------->
 
 <div class="brg0"></div>
-     <div id="enquiry_note_<%= obj.id %>" style="background:#fff;padding-left:10px;" >
+     <div id="enquiry_note_<%= obj.id %>" >
           <%= render 'notes/note', sub: obj %>
      </div>
-<br/>
-<br/>
 
 
+<!--------------------------------------------------------------->
 
-
-<!--------------------------------------------------------------->    
-
-<h5 class="htab"> Notes For This Application<h5>
+<h4> Notes For This Application<h4>
      <%= nested_form_for(obj,remote: true) do |r| %>
       <%= r.fields_for :notes,obj.notes.build do |n| %>
         <%= n.hidden_field :sub_class, value: obj_name.capitalize %>
-        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
-      <% end %> 
-      <br/>
-      <br/>
-      <%= r.submit "Write",{class: "btnp"} %>
+        <div class="form-group">
+          <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note form-control"} %>
+        </div>
+      <% end %>
+      <div class="form-group">
+        <div class="col-xs-2 first">
+          <%= r.submit "Write",{class: "btn btn-primary"} %>
+        </div>
+      </div>
       <% end %>
      <br/>
 
@@ -30,9 +30,9 @@
 <!--------------------------------------------------------------->
 
 
-<script> 
+<script>
 
-acttab('note'); 
+acttab('note');
 actdd();
 </script>
 

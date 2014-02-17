@@ -1,20 +1,22 @@
 <!-- Enquiry show page -->
+<div class="row row-top">
+  <div class="row row-top">
+    <div class="col-xs-8">
+      <h4><strong><%= @enquiry.name %></strong></h4>
+    </div>
+
+    <% a = @enquiry %>
+    <div class="col-xs-4 text-right">
+                    <div class="form-group">
+                      <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %>
+                      <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>
+                  </div>
+    </div>
+  </div>
+
+
 <div class="row">
-<div class="col-md-10">
-  <h4><strong><%= @enquiry.name %></strong></h4>
-</div>
-
-<% a = @enquiry %>
-<div class="col-md-2">
-                <div class="form-group">
-                  <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %> 
-                  <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>
-              </div>
-</div>
-
-
-<div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-12">
       <ul class="nav nav-pills seperator">
         <li id="basic" class="active">
           <%= link_to "Basic","/enquiries/#{a.id}" %>
@@ -23,7 +25,7 @@
       </ul>
       <!-- some html5 data to be sent to the back end -->
       <div id="enquiry_id_div" data-enquiry_id='<%= a.id %>' data-model_sing='enquiry' data-model_plu='enquiries' > </div>
-      
+
       <div id="action_div">
         <%= render @partial, @locals %>
       </div>
@@ -34,6 +36,6 @@
 
 <script>
 
- actmm('enquiries'); 
+ actmm('enquiries');
 
 </script>

@@ -67,7 +67,7 @@ $('.datepicker').datepicker();
             timeFormat: 'hh:mm:ss'});
 
 
-   
+
 
     $('#calendar').fullCalendar({
     editable: true,
@@ -168,9 +168,9 @@ $('.datepicker').datepicker();
     dropdownUser('select#assigned_by_todo','/todo_assigned_by/');
     dropdownUser('select#sent_by_email','/email_sent_by/');
     //dropdownUser('select#calendar_user','/calendar_user/');
-    
-    
-    
+
+
+
 });
 
 function dropdownUser(elem,url){
@@ -377,7 +377,7 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         var selectedValue = $(this).val();
         oTable.fnFilter(selectedValue, 1, true); //Exact value, column, reg
     });
-    
+
 
 
     $('input#id_search').on('keyup',function(){
@@ -389,13 +389,13 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
-  
+
    /* this is the ransack add/remove fields initialization */
    $('form').on('click', '.remove_fields', function (event) {
     $(this).closest('.field').remove();
     event.preventDefault();
    });
-   
+
     $('.add_fields').unbind('click');
 
     $('.add_fields').click(function (event) {
@@ -404,7 +404,7 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         $(this).before($(this).data('fields').replace(regexp, time));
         event.preventDefault();
     });
-    
+
    return oTable;
 
 }
@@ -413,7 +413,7 @@ function activateTab(id,lang){
   var all_li = $('ul.seperator > li');
   /* HIDE ALL TABS*/
   all_li.removeClass("active");
-  /* SHOW THE CORESPONDING TAB */  
+  /* SHOW THE CORESPONDING TAB */
   $('ul.seperator > li#'+id).addClass('active');
   /* HIDE ALL TABS CONTENT*/
   $(".tab-content").hide();
@@ -429,9 +429,9 @@ function enquiryTabSwitch(obj){
     var partial = $(obj).data("partial");
     var enquiry_id = $(obj).data("enquiry_id");
     var lang = $(obj).attr("lang");
-    
+
     activateTab(cond,lang); //to make the clicked tab active
-    
+
     url = '/enquiries/tab/' + cond + '/' + partial + '/'
 
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
@@ -454,7 +454,7 @@ function registrationTabSwitch(obj){
     var enquiry_id = $(obj).data("enquiry_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
-    
+
     activateTab(cond,lang); //to make the clicked tab active
 
     url = '/registrations/tab/' + cond + '/' + partial + '/'
@@ -503,7 +503,7 @@ function TabSwitch(obj,model,model_pl){
     var institution_id = $(obj).data(model + "_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
-    
+
     activateTab(cond,lang); //to make the clicked tab active
 
     // (eg) model_pl = institutions
@@ -574,7 +574,7 @@ function groupAssignTo(tableId){
 
        $.get(url,function(table){
          $("#group_assign_to_" + tableId).css("display","none");
-         // redrawing the datatable 
+         // redrawing the datatable
          $('#' + tableId).dataTable().fnDraw();
          // closing the modal window
          $('#assignToModal').modal('toggle');
@@ -746,13 +746,13 @@ function changeInsType(obj,dest){
 
 function calcComm(obj){
   form = $(obj).parents('form');
-  
+
   fee = parseFloat(form.find('input#fee_tuition_fee').val());
   sch = parseFloat(form.find('input#fee_scholarship').val());
   per = parseFloat(form.find('input#fee_commission_percentage').val());
-  
+
   result = ((fee - sch) / 100) * per
-  
+
   if (!isNaN(result)){
    form.find('input#fee_commission_amount').val(result);
   }else{
@@ -842,26 +842,26 @@ function colsClick(model){
         bootbox.alert("You can select only 10 columns to display!");
         $("#ms-user_config_" + model + "_ .ms-selection ul.ms-list > li.ms-selected").last().trigger("click");
       }
-      
+
     });
 
 }
 
 function filterUsers(obj,model){
   $('.users > h3').append("<img class=temp src=/images/icons/sload.gif >");
-  $.getScript("/filter_users/" + model +"/" + obj.value); 
+  $.getScript("/filter_users/" + model +"/" + obj.value);
 }
 
 function filterTodos(){
   $('h3').append("<img class=temp src=/images/icons/sload.gif >");
   var e = ['period', 'done', 'assigned_by','topic'];
-  
+
   $.each(e, function(key, value) {
     window[value] = $('#todo-filter #' + value).val();
   });
 
   var duedate = $('#todo-filter #duedate').val();
-  
+
   $.post('/filter_todos.js', { filter: true,
                      period: period,
                      done: done,
@@ -873,7 +873,7 @@ function filterTodos(){
 function filterTodosReset(){
   $('input#duedate').val('');
   var e = ['period', 'done', 'assigned_by','topic'];
-  
+
   $.each(e, function(key, value) {
     $('#' + value).val($('#' + value + ' option:first').val());
     // triggering change on select to reset the whole table.
@@ -927,7 +927,7 @@ function token(model,filter){
 $('#filter_container').html('');
   $.get('/get_column_names/' + model + '/' + filter,function(out){
       $.each(out, function(i,col){
-         $('#filter_container').append('<input class="col-md-3" id="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
+         $('#filter_container').append('<input id="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
          $("#" + col).tokenInput("/search/" + model + '/' +  col +"/token.json", {
            placeHolderText: col,
            propertyToSearch: col,

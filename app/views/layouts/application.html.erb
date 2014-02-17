@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="/images/icons/reportm.png">
@@ -20,138 +19,102 @@
   </head>
 
   <body>
-  
+
   <!-- Shortening variable -->
   <% u = current_user %>
     <div id="header">
       <div class="container">
-          <div class="col-md-9">
+          <div class="col-xs-9">
             <h1 class="text-left">Organizor</h1>
           </div>
-          <div class="col-md-3 profile">
-            <div class="col-md-3">
+          <div class="col-xs-3 profile">
+            <div class="col-xs-3">
               <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                          {width: "50",
                                           height: "50",
                                           class: "img-rounded"}) %>
             </div>
-            <div class="col-md-9">
+            <div class="col-xs-9">
               <small><%= u.first_name.titleize rescue "Mr. Unknown" %></small>
-              
+
             </div>
           </div>
       </div>
     </div>
 
-    <!-- Wrap all page content here -->
-    <div id="wrap" class="container">
+    <!-- Begin page content -->
+    <div class="container main">
 
-      <!-- Begin page content -->
-      <div class="container main">
-        
-        <div class="row">
-          <div class="col-md-2 left-nav">
-            <ul class="nav nav-pills nav-stacked main-menu">
+      <div class="row">
+        <div class="col-xs-2 left-nav">
+          <ul class="nav nav-pills nav-stacked main-menu">
 
-              <li class="disabled">
-                  <a href="#">
-                  <span class="glyphicon glyphicon-th"></span>
-                  Dashboard
-                  </a>
-              </li>
-              
-              <li class="disabled">
-              <a href="#">
-              <span class="glyphicon glyphicon-stats"></span>
-              Reports
-              </a>
-              </li>
-              
-              <hr>
+            <li class="disabled">
+              <a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a>
+            </li>
 
-              <li id="enquiries">
-                  <%= link_to enquiries_path  do %>
-                  <span class="glyphicon glyphicon-earphone"></span>
-                  Enquiries
-                  <% end %>
-              </li>
-              <li id="registrations">
-              <%= link_to registrations_path do %>
-              <span class="glyphicon glyphicon-pencil"></span>
-              Registrations
+            <li class="disabled">
+              <a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a>
+            </li>
+
+            <hr>
+
+            <li id="enquiries">
+              <%= link_to enquiries_path  do %><span class="glyphicon glyphicon-earphone"></span>Enquiries<% end %>
+            </li>
+            <li id="registrations">
+              <%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registrations<% end %>
+            </li>
+
+            <li id="institutions">
+              <%= link_to institutions_path do %><span class="glyphicon glyphicon-home"></span>Institutions<% end %>
+            </li>
+
+            <li id="people">
+              <%= link_to people_path do %><span class="glyphicon glyphicon-folder-open"></span>People<% end %>
+            </li>
+
+            <hr>
+
+            <!-- not displaying accounts and contracts -->
+            <% if false %>
+            <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
+            <% end %>
+
+            <li id="emails">
+                <%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %>
+            </li>
+
+            <li id="follow_ups">
+              <%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calendar<% end %>
+            </li>
+
+            <li id="todos">
+              <%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %>
+            </li>
+
+            <hr>
+
+            <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
+            <li id="users">
+              <% if u.role?(:agency_administrator) %>
+                  <%= link_to "/users" do %><span class="glyphicon glyphicon-user"></span>Users<% end %>
+              <% else %>
+                <%= link_to "/users/#{current_user.id}" do %><span class="glyphicon glyphicon-user"></span>My account<% end %>
               <% end %>
-              </li>
-              
-              <li id="institutions">
-              <%= link_to institutions_path do %>
-              <span class="glyphicon glyphicon-home"></span>
-              Institutions
-              <% end %>
-              </li>
-              
-              <li id="people">
-              <%= link_to people_path do %>
-              <span class="glyphicon glyphicon-folder-open"></span>
-              People
-              <% end %>
-              </li>
-              
-              <hr>
-              
-              <!-- not displaying accounts and contracts -->
-              <% if false %>
-              <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
-              <% end %>
-              
-              <li id="emails">
-                  <%= link_to  emails_path do %>
-                    <span class="glyphicon glyphicon-envelope"></span>
-                    Emails
-                  <% end %>
-              </li>
-               
-              <li id="follow_ups">
-              <%= link_to "/follow_ups" do %>
-                <span class="glyphicon glyphicon-calendar"></span>
-                Calendar
-              <% end %>
-              </li>              
-              
-              <li id="todos">
-              <%= link_to todos_path do %>
-              <span class="glyphicon glyphicon-check"></span>
-              Todos
-              <% end %>
-              </li>
-              
-              <hr>
-              
-              
-              <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
-              <li id="users">
-                <% if u.role?(:agency_administrator) %>
-                    <%= link_to "/users" do %>
-                      <span class="glyphicon glyphicon-user"></span>Users
-                    <% end %>
-                <% else %>
-                  <%= link_to "/users/#{current_user.id}" do %>
-                      <span class="glyphicon glyphicon-user"></span>My account
-                  <% end %>
-                <% end %>
-              </li>
-              <li id="configuration" class="active">
-                  <%= link_to "/configuration" do %>
-                  <span class="glyphicon glyphicon-list"></span>Configuration
-                  <% end %>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-10 col-md-offset-2 main-content">
-            <%= yield %>
-          </div>
+            </li>
+            <li id="configuration" class="active">
+                <%= link_to "/configuration" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-10 main-content">
+          <%= yield %>
         </div>
       </div>
+    </div>
+
     </div>
 
     <div id="footer">

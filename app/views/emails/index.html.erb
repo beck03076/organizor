@@ -2,10 +2,10 @@
 
 
 <div class="row row-top">
-    <div class="col-md-10 emails">
+    <div class="col-xs-10 emails">
       <h3>Emails</h3>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <div class="form-group form-last pull-right">
         <%= link_to "New Email", new_user_invitation_path,{class: "btn btn-primary"} %>
       </div>
@@ -14,32 +14,38 @@
 
 
 <div class="row">
-<div class="col-md-12 data-table">
-<div class="well well-sm" style="background-color: #f8f4b0;">
+<div class="col-xs-12 data-table">
+<div class="well well-sm filter-well">
                         <div class="row row-top" id="todo-filter" >
-                          <div class="col-md-1">
+                          <div class="col-xs-1">
                             <h4>Filter</h4>
                           </div>
-                          <%= form_tag "/emails/filter",{method: "post", remote: true} do %>
-                          <div class="col-md-2" >
-                            <%= select_tag :abdc,
-                                  options_for_select([["sent to","to"],
-                                                     ["sent by","by"]]),
-                                  {prompt: "-sent-",
-                                   id: "sent",
-                                   class: "form-control",
-                                   onchange: "$('#to,#by').hide();
-                                              $('#' + this.value).show();
-                                              $('select#sent_to,select#sent_by').val('');"} %>
-                          </div>
-                          <div class="col-md-2" id="by" style="display:none;">
+                          <div class="col-xs-11">
+                          <%= form_tag "/emails/filter",{method: "post", remote: true, class: 'form-inline'} do %>
+                            <div class="form-group">
+                            <div class="col-xs-2" >
+                                <%= select_tag :abdc,
+                                      options_for_select([["sent to","to"],
+                                                         ["sent by","by"]]),
+                                      {prompt: "-sent-",
+                                       id: "sent",
+                                       class: "form-control",
+                                       onchange: "$('#to,#by').hide();
+                                                  $('#' + this.value).show();
+                                                  $('select#sent_to,select#sent_by').val('');"} %>
+                              </div>
+                            </div>
+                          <div class="form-group">
+                            <div id="by" style="display:none;">
                                 <%= select_tag :sent_by,
                                     options_for_select([["User","user"]]),
                                     {prompt: "-who-",
                                     class: "form-control",
                                     onchange: "token(this.value,'email');"} %>
+                            </div>
                           </div>
-                          <div class="col-md-2" id="to" style="display:none;">
+                          <div class="form-group">
+                            <div id="to" style="display:none;">
                                 <%= select_tag :sent_to,
                                     options_for_select([["Enquiry","enquiry"],
                                                          ["Registration","registration"],
@@ -48,19 +54,26 @@
                                     {prompt: "-who-",
                                      class: "form-control",
                                      onchange: "token(this.value,'email');"} %>
+                            </div>
                           </div>
                           <%= link_to "date","#",{onclick: "$('#id_from_date,#id_to_date').toggle();"}  %>
-                          <div class="col-md-2" id="id_from_date" style="display:none;">
-                              <%= text_field_tag :from_date,nil,{class: "datepicker",placeholder: "from date" }%>
+                          <div class="form-group">
+                            <div id="id_from_date" style="display:none;">
+                                <%= text_field_tag :from_date,nil,{class: "datepicker form-control",placeholder: "from date" }%>
+                            </div>
                           </div>
-                          <div class="col-md-2" id="id_to_date" style="display:none;">
-                              <%= text_field_tag :to_date,nil,{class: "datepicker",placeholder: "to date" }%>
+                          <div class="form-group">
+                            <div id="id_to_date" style="display:none;">
+                                <%= text_field_tag :to_date,nil,{class: "datepicker form-control",placeholder: "to date" }%>
+                            </div>
                           </div>
-                          
-                          <div id="filter_container" class="col-md-3" ></div>
-                          
-<%= submit_tag "Search",{onclick: "$('.emails > h3').append('<img class=temp src=/images/icons/sload.gif >');"} %>
+
+                          <%#  <div id="filter_container" class="col-xs-3" ></div> %>
+                          <div class="form-group">
+                            <%= submit_tag "Search",{class: 'btn btn-primary', onclick: "$('.emails > h3').append('<img class=temp src=/images/icons/sload.gif >');"} %>
+                          </div>
                           <% end %>
+                          </div>
                         </div>
                       </div>
 
@@ -72,7 +85,7 @@
 </div>
 
 <script>
-actmm("emails"); 
+actmm("emails");
 </script>
 
 

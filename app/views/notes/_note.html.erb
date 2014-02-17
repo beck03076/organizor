@@ -2,32 +2,34 @@
 <% sub.notes.each do |note| %>
 <% u = note._cre_by %>
 <% if !u.nil? %>
-           <br/>
-           
-               
-               <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
-                                   {width: "40",
-                                    class: "imgb fl",
-                                    style: "margin-right:10px;"}) %>
-               <% if (current_user.id == u.id) %>
-                 <%= link_to "X",note_path(note,sub: sub.class.name,sub_id: sub.id),
-                                 method: :delete,
-                                 class: "fr",
-                                 remote: true,
-                                 data: { confirm: 'Are you sure?' } %>
-               <% end %>
-               <span style="color:#999;padding-top:10px;">
-                <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea" %>
-               </span>
-               <br/>
-               <br/>
+           <div class="well well-sm mt-15">
 
-              <%= link_to u.first_name,u %> 
-              &nbsp;&nbsp; 
-              <%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %>
-          
-<br/>
-<br/>
+              <div class="row row-top row-right">
+                 <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                     {width: "40",
+                                      class: "mr-10"
+                                      }) %>
+                 <% if (current_user.id == u.id) %>
+                   <%= link_to "X",note_path(note,sub: sub.class.name,sub_id: sub.id),
+                                   method: :delete,
+                                   class: "pull-right",
+                                   remote: true,
+                                   data: { confirm: 'Are you sure?' } %>
+                 <% end %>
+                 <span>
+                  <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea" %>
+                 </span>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 first">
+                  <small>By: <%= link_to u.first_name,u %></small>
+                </div>
+                <div class="col-xs-6 text-right">
+                  <small><%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %></small>
+                </div>
+              </div>
+           </div>
+
 <div class="brg0"></div>
 
 <% end %>
