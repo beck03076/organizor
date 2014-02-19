@@ -20,6 +20,15 @@ $(function(){
     <div id="object_name" data-obj='<%= parent %>'>
     </div>
 
+
+      <div class="row row-top">
+        <div class="col-xs-offset-11 text-center">
+          <%= p.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
+        </div>
+      </div>
+      <div class="row"></div>
+
+
      <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
        <% if parent == "enquiry" %>
          <% sty = ['','none','none','display:none;'] %>
@@ -134,5 +143,5 @@ $(function(){
                          [nil,4],7,"6 application_status_div 'style=display:#{sty[2]};") %>
 
               <%= bs(p,:ins_ref_no,"text_field",[nil,4],7,"6 ins_ref_no 'style=#{sty[3]};") %>
-
 </div>
+

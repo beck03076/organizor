@@ -26,7 +26,7 @@
 
 $(function(){
 
-
+  
 
 dataConfirmModal.setDefaults({
   title: 'Confirm your action',
@@ -411,10 +411,6 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
 
 function activateTab(id,lang){
   var all_li = $('ul.seperator > li');
-  /* HIDE ALL TABS*/
-  all_li.removeClass("active");
-  /* SHOW THE CORESPONDING TAB */
-  $('ul.seperator > li#'+id).addClass('active');
   /* HIDE ALL TABS CONTENT*/
   $(".tab-content").hide();
   /* SHOW THE CORESPONDING TAB CONTENT*/
@@ -939,6 +935,19 @@ $('#filter_container').html('');
          });
       });
   });
+}
+
+function slidingScale(){
+  $( ".slider-range" ).slider({
+          range: true,
+          min: 1,
+          max: 50,
+          values: [ 1, 10 ],
+          slide: function( event, ui ) {
+            $(this).siblings().find( "#from" ).val( ui.values[ 0 ]);
+            $(this).siblings().find( "#to" ).val( ui.values[ 1 ]);
+          }
+        });
 }
 
 

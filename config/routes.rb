@@ -1,5 +1,7 @@
 Organizor::Application.routes.draw do
 
+  post '/sliding_scales/collective' => 'sliding_scales#collective'
+  
   resources :fees
 
   resources :branches

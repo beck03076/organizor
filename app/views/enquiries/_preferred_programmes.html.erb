@@ -1,9 +1,7 @@
 <!-- prefer programmes -->
 <h4 class="form-heading">Preferred Programmes</h4>
   <%= f.fields_for :programmes do |p| %>
-        <div class="text-right">
-          <%= p.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
-        </div>
+        
         <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
 
   <% end %>

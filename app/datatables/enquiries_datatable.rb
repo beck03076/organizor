@@ -16,7 +16,7 @@ class EnquiriesDatatable < Datatable
     @def_cols = @def_enq_cols    
     @def_srch = current_user.conf.def_enq_search_col
     
-    @asso_model = Enquiry.myactive(current_user)    
+    @asso_model = Enquiry.myactive(current_user)
     @item_scope = ["myactive",current_user]
     
     @compound = true

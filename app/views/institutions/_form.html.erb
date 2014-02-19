@@ -1,196 +1,185 @@
 <!-- New institution form -->
-<%= nested_form_for(@institution, :html => {:onsubmit => "return validateAll(this);"}) do |f| %>
-  <% if @institution.errors.any? %>
-   <div id="error_explanation">
-   <h2><%= pluralize(@institution.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
-   <ul>
-     <% @institution.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-     <% end %>
-   </ul>
-   </div>
-  <% end %>
+<%= nested_form_for(@institution, 
+                    html: {onsubmit: "return validateAll(this);",
+                    class: "form-horizontal"}) do |f| %>
+                                         
+                          <% if @institution.errors.any? %>
+                           <div id="error_explanation">
+                           <h2>
+                           <%= pluralize(@institution.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+                           <ul>
+                             <% @institution.errors.full_messages.each do |msg| %>
+                              <li><%= msg %></li>
+                             <% end %>
+                           </ul>
+                           </div>
+                          <% end %>
+                          
+   <div class="row row-top">
+    <div class="col-xs-7">
+      <h3><%= what %> institution</h3>
+    </div>
+    <div class="col-xs-5 text-right">
+      <div class="form-group form-last">
+        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+        <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
+      </div>
+    </div>
+  </div>
 
-  <%= render 'institution_information', :f => f %>
+  <% parts = %w(start institution_information contract_details recruitment_territories 
+                sliding_scale people) %>
+  <div class="new-enq-reg">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <p class="lead">Step <span id="id_no">1</span> of <%= parts.size %></p>
+                  </div>
+                  <div class="col-xs-10">
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 16%;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-top">
+                  <div class="col-xs-12">
+                    <% parts.each_with_index do |elem,i| %>
+                        <% set = "" %>
+                        <% if i == 0 %>
+                          <% set = "active-link" %>
+                        <% elsif i == (parts.length - 1) %>
+                          <% set = "last-link" %>
+                        <% end %>
+                        <div class="col-xs-2 text-center top-link <%= set %>">
+                          <a href="#" part="<%= i + 1 %>"><%= elem.titleize %></a>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="well">
+                     
+                          
+                        <% parts.each_with_index do |elem,i| %>
+                            <% set = "display-hide" %>
+                            <% if i == 0 %>
+                              <% set = "" %>
+                            <% end %>
+                            <div id="id_part_<%= i + 1 %>" class="<%= set %>">
+                              <h4 class="form-heading" id="<%= elem %>"><%= elem.titleize %></h4>
+                              <div class="row"></div>
+                                <%= render 'form_' + elem, f: f %>
+                            </div>
+                        <% end %>
+                        <div class="row"></div>
+                        
+                        <div class="row row-right">
+                          <div class="col-xs-1 text-left">
+                            <div class="form-group form-last">
+                              <a go="previous" id="id_previous" class="btn btn-primary btn-next display-hide">Previous</a>
+                            </div>
+                          </div>                          
+                          <div class="col-xs-1 col-xs-offset-10 text-right">
+                            <div class="form-group form-last">
+                              <a  go="next" id="id_next" class="btn btn-primary btn-next">Next</a>
+                            </div>
+                          </div>                          
+                        </div>                     
+                    </div>
+                  </div>
+                </div>
     
-  <div class="cl"></div>
-  <br/>
-  <br/>
-  
-  <!-- CONTRACT - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Contracts
-          </b>
-      </h5>
-  </div>
-  <br/>  
-  
-  <%= f.fields_for :contracts do |c| %>
-   <%= c.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %> 
-   
-           <%= c.fields_for :sliding_scales do |ss| %>
-             <%= fs(ss,:from,"text_field") %>
-             <%= fs(ss,:to,"text_field") %>
-             <%= ss.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>  
-           <% end %>
-           <%= c.link_to_add "Add Sliding Scale", :sliding_scales,{:class => "btns fl"} %>
-   
-     <div class="cols boxstheme" style="width:97%">
-     
-          <br/>
-          <h3>
-            Contract Details
-          </h3>
-          <br/>
-          <br/>
-       <div class="col6">
-           <!-- setting a default contract name -->
-           <% c_name = [Organizor::Application::ORG_NAME,@institution.name].join("_").tr(" ","_") %>
-           <%= fs(c,[:name,value: c_name],"text_field") %>
-           <%= fs(c,[:current_contract_start_date,:class => "dateField caltf"],"text_field",nil,"Current Start Date") %>
-           <%= fs(c,[:renewal_reminder_date,:class => "dateField caltf"],"text_field",nil,"Remind Renew on") %>
-           
-           <%= fs(c,"invoicing_deadline","text_field") %>
-           <%= fs(c,"internal_target","text_field") %>
-           <%= fs(c,"territory_specified","check_box") %>
-           <!-- Recruitment Territories - STARTS-->
-     
-          <br/>
-           <h3>
-                Recruitment Territories
-          </h3>
-          <br/>
-          <br/>
-           <% out = prep_pre(c) %>
-
-           <%= fs(c,[:prohibited_countries, class: "token_coun_pro",
-                     data: { pre: out[:all_prohibited_countries] }],"text_field") %>
-           <%= fs(c,[:permitted_countries,class: "token_coun_per",
-                     data: { pre: out[:all_permitted_countries] }],"text_field") %>
-           <%= fs(c,[:prohibited_regions,class: "token_reg_pro",
-                     data: { pre: out[:all_prohibited_regions] }],"text_field") %>
-           <%= fs(c,[:permitted_regions,class: "token_reg_per",
-                     data: { pre: out[:all_permitted_regions] }],"text_field") %>
-           
-           <!-- Recruitment Territories - ENDS-->
-          <br/>
-          <h3>
-             Contract Description
-          </h3>
-          <br/>
-          <br/>
-           <div class="frbox">
-                          <%= c.label "Description" %>
-                          <%= c.text_area :desc,{size: "2x3"} %>
-           </div>
-           <div class="cl"> </div>
-           <br/>
-           <br/>
-           <br/>
-           
-          
-       </div>
-       
-      
-       <div class="col6">
-           <%= fs(c,[:initiate_date,:class => "dateField caltf"],"text_field",nil,"Initiate Date") %>
-           <%= fs(c,[:current_contract_end_date,:class => "dateField caltf"],"text_field",nil,"Current End Date") %>
-           <%= fs(c,"commission_rate","text_field",1,"Commission Rate") %>
-           <%= fs(c,"partners_target","text_field") %>           
-           <%= fs(c,"commission_specified","check_box") %>
-       </div>
-     </div>
-     <div class="cl"></div>
-    <br/>
-
-<% end %>
-<!-- Contract Nested Form ENds -->
+</div>
  
-  <%= f.link_to_add "Add more", :contracts,{:class => "btns fl"} %>
-  <div class="cl"> </div>
-  <br/>
-  <br/>
-  <!-- Contracts - ENDS -->
-  
-  
-  
-  <!-- People - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            People 
-          </b>
-      </h5>
-  </div>
-  <br/>  
-  
-  <%= f.fields_for :people do |p| %>
-   <%= p.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>       
-     <div class="cols boxstheme" style="width:97%">
-      
-       <div class="col6">
-           <%= fs(p,"first_name","text_field",1) %>
-           <%= fs(p,"mobile","text_field",1) %>
-           <div class="frbox">
-                          <%= p.label "Description" %>
-                          <%= p.text_area :desc,{size: "2x3"} %>
-           </div>
-           <div class="cl"> </div>
-           <br/>
-           <br/>
-           <br/>
-       </div>
-       
-       <div class="col6">
-           <%= fs(p,"surname","text_field",1) %>
-           <%= fs(p,"email","text_field",1) %>
-       </div>
-     </div>
-     <div class="cl"></div>
-    <br/>
-  <% end %>
- 
-  <%= f.link_to_add "Quick Add", :people,{:class => "btns fl"} %>
-  <%= link_to "Add(with all details)","#" %>
-  
-  <div class="cl"> </div>
-  <br/>
-  <br/>
-  <!-- People - ENDS -->
-  <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
-  <div class="actions" style="margin-bottom:10px;">
-   <%= f.submit "Save",{:class => "btnp fr"} %>
-   <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
-  </div>
-  <div class="cl"></div>
+<div id="resource-container"></div>
+<div class="row"> </div>
+
+
 <% end %>
 
 <script type="text/javascript">
+        $('.top-link').children('a').click(function(event) {
+          $('.top-link').each(function(index, el) {
+            $(this).removeClass('active-link');
+          });
+          $(this).parent().addClass('active-link');
+          var part = $(this).attr('part');
+          $('#id_no').text(part);
+          $('.progress-bar').css({width: part * 16.6 + '%'});
+          $("[id^='id_part_']").hide('fast');
+          $('#id_part_' + part).show('fast');
+          if (part === '1') {
+            $('#id_previous').hide();
+          } else {
+            $('#id_previous').show();
+          }
+          if (part === $("div[id^='id_part_']").length.toString()) {
+            $('#id_next').hide();
+          } else {
+            $('#id_next').show();
+          }
+        });
 
-  $(document).on('nested:fieldAdded', function(event){
+        $('#id_previous, #id_next').click(function(event) {
+          var part = parseInt($('.active-link').children('a').attr('part'), 10);
+          if ($(this).attr('go') === 'previous') {
+            part = "" + (part - 1);
+          } else {
+            part = "" + (part + 1);
+          }
+          ss = {}
+          if ($("div#id_part_5").is(':visible') && $("div#id_part_4").is(':hidden')){
+
+                $('div#id_part_5 select').each(function(index){
+                                 if( $(this).attr('id').match(/_course_level_id$/) ) {
+
+                                    ss[index] = [$("option:selected",$(this)).text()]
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#from').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#to').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#commission_percentage').val());
+                                }
+                          });
+
+               $.post('/sliding_scales/collective.js',{ 'ss': ss });
+               $('[part=' + part + ']').click();
+          }
+          else{
+               $('[part=' + part + ']').click();
+          }
+        });
+        
+         $(document).on('nested:fieldAdded', function(event){
       
-      var field = event.field; 
-      var dateField = field.find('.dateField');
-      dateField.datepicker({
-        inline: true,
-        changeMonth: true, 
-        changeYear: true, 
-        dateFormat: "yy-mm-dd",
-        yearRange: '1980:2050' 
-      });
+              var field = event.field; 
+              var dateField = field.find('.dateField');
+              dateField.datepicker({
+                inline: true,
+                changeMonth: true, 
+                changeYear: true, 
+                dateFormat: "yy-mm-dd",
+                yearRange: '1980:2050' 
+              });
 
-      var id1 = field.find('.token_coun_pro').attr("id");
-      var id2 = field.find('.token_coun_per').attr("id");
-      var id3 = field.find('.token_reg_pro').attr("id");
-      var id4 = field.find('.token_reg_per').attr("id");
+              var id1 = field.find('.token_coun_pro').attr("id");
+              var id2 = field.find('.token_coun_per').attr("id");
+              var id3 = field.find('.token_reg_pro').attr("id");
+              var id4 = field.find('.token_reg_per').attr("id");
 
-      tokens('#' + id1,"/srch_countries.json");
-      tokens('#' + id2,"/srch_countries.json");
-      tokens('#' + id3,"/srch_regions.json");
-      tokens('#' + id4,"/srch_regions.json");
-   });
+              tokens('#' + id1,"/srch_countries.json");
+              tokens('#' + id2,"/srch_countries.json");
+              tokens('#' + id3,"/srch_regions.json");
+              tokens('#' + id4,"/srch_regions.json");
+              
+              slidingScale();
+           });
+           
+           slidingScale();
+           
+           actmm("institutions");
+           
+           
 
-</script>
+    </script>
 

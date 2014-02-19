@@ -1,0 +1,21 @@
+<h1>Listing sliding_scales</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sliding_scales.each do |sliding_scale| %>
+  <tr>
+    <td><%= link_to 'Show', sliding_scale %></td>
+    <td><%= link_to 'Edit', edit_sliding_scale_path(sliding_scale) %></td>
+    <td><%= link_to 'Destroy', sliding_scale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sliding scale', new_sliding_scale_path %>

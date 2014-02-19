@@ -1,0 +1,46 @@
+<!-- sliding scale fields -->
+
+<%= f.fields_for :contracts do |c| %>
+  <%= c.fields_for :sliding_scales do |ss| %>  
+  <div class="row row-top new-program text-center">
+  <hr>
+              <div class="row row-top">
+                <div class="col-xs-offset-4 text-center">
+                  <%= ss.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
+                </div>
+              </div>
+           
+             <%= bs(ss,[:course_level_id,CourseLevel.order(:name),
+                                              :id,
+                                              :name,
+                                              {prompt: "-course level-"},{}],
+                                              "collection_select",
+                                              [nil,2],5,"12 row text-center") %>
+            <div class="col-xs-12 row text-center">
+            <div class="form-group">
+                <label class="control-label col-xs-2">Student Range</label>
+                 <div class="col-xs-1">
+                  <%= ss.text_field :from, {class: "form-control", 
+                                            id: "from", 
+                                            style: "color:#008cba;font-size:15px;"} %>
+                  </div>
+                  <div class="col-xs-3 slider-range"></div>
+                  <div class="col-xs-1">
+                 <%= ss.text_field :to, {class: "form-control", 
+                                            id: "to", 
+                                            style: "color:#008cba;font-size:15px;"} %>
+                  </div>
+                  
+                 <div class="col-xs-2">
+                  <span class="btn btn-primary" href="#" onclick="$(this).parent().siblings().find('#from, #to').val('');">No range </span>
+                </div>        
+            </div>
+            </div>
+            
+            <%= bs(ss,[:commission_percentage,{id: "commission_percentage"}],"text_field",[nil,2],5,"12 row text-center") %>
+
+  </div>  
+  <% end %>
+  <hr>
+  <%= c.link_to_add "Add Sliding Scale", :sliding_scales,{:class => "btns fl"} %>
+<% end %>

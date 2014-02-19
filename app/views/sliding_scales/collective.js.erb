@@ -1,0 +1,12 @@
+ 
+  <% ctnt = (render 'collective', ss: @ss) %>
+ 
+  $('#resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Review Sliding Scale',
+                                                         button: nil}) %>");
+  
+  $('#resource').modal('show');
+  
+  $('.temp').remove();

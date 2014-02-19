@@ -13,9 +13,8 @@
 *= require multi-select
 *= require fullcalendar
 *= require token-input-bootstrappy
-*= require jquery-ui-datepicker
-*= require slider
 *= require custom
+*= require jquery-ui-1.10.0.custom
 
 */
 

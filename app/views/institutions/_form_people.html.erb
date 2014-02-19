@@ -1,0 +1,29 @@
+
+ <%= f.fields_for :people do |p| %>
+   <%= p.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>       
+     <div class="cols boxstheme" style="width:97%">
+      
+       <div class="col6">
+           <%= fs(p,"first_name","text_field",1) %>
+           <%= fs(p,"mobile","text_field",1) %>
+           <div class="frbox">
+                          <%= p.label "Description" %>
+                          <%= p.text_area :desc,{size: "2x3"} %>
+           </div>
+           <div class="cl"> </div>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+       
+       <div class="col6">
+           <%= fs(p,"surname","text_field",1) %>
+           <%= fs(p,"email","text_field",1) %>
+       </div>
+     </div>
+     <div class="cl"></div>
+    <br/>
+  <% end %>
+ 
+  <%= f.link_to_add "Quick Add", :people,{:class => "btns fl"} %>
+  <%= link_to "Add(with all details)","#" %>

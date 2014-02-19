@@ -10,14 +10,14 @@
                                       class: "mr-10"
                                       }) %>
                  <% if (current_user.id == u.id) %>
-                   <%= link_to "X",note_path(note,sub: sub.class.name,sub_id: sub.id),
+                   <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,note_path(note,sub: sub.class.name,sub_id: sub.id),
                                    method: :delete,
                                    class: "pull-right",
                                    remote: true,
                                    data: { confirm: 'Are you sure?' } %>
                  <% end %>
                  <span>
-                  <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea" %>
+                  <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea", display_as: "safe_content" %>
                  </span>
               </div>
               <div class="row">

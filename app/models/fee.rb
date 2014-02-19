@@ -6,7 +6,7 @@ class Fee < ActiveRecord::Base
   belongs_to :programme
   has_many :commissions
 
-  #monetize :tuition_fee_cents
+  monetize :tuition_fee_cents
   monetize :scholarship_cents
   monetize :commission_amount_cents, :allow_nil => true
   

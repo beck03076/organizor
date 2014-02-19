@@ -1,17 +1,17 @@
 <!-- Enquiry show page -->
 <div class="row row-top">
-<div class="col-md-10">
+<div class="col-md-9">
   <h3><%= @institution.name %></h3>
 </div>
 
 <% a = @institution %>
-<div class="col-md-2">
+<div class="col-md-3 text-right">
                 <div class="form-group">
                      <%= link_to "Edit", edit_institution_path(a), {class: "btn btn-primary"} %> 
                      <%= link_to "Clone", clone_institution_path(a), {class: "btn btn-primary"} %>
                 </div>
 </div>
-
+</div>
 
 <div class="row">
   <div class="col-md-12">

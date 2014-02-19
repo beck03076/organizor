@@ -175,9 +175,8 @@
         <% end %>
       <% end %>
 
-      <th>
-      <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-      </th>
+      <th></th>
+      <th></th>
 
   </tr>
 </thead>
@@ -205,7 +204,11 @@
    $('#' + clicked + 'Modal').modal('show');
  });
 
- actmm('<%= model_pl %>');
+ actmm('<%= act %>');
+ acttab('<%= @status || @partial_name %>');
 
+ if ($('li#<%= @status %>').parent().hasClass('dropdown-menu')) {
+    actdd();
+ }
 </script>
 

@@ -59,8 +59,9 @@ class InstitutionsController < ApplicationController
   # GET /institutions/new
   # GET /institutions/new.json
   def new
-    @institution = Institution.new(type_id: InstitutionType.first.id)
-    authorize! :create, @institution    
+    @institution = Institution.new(type_id: InstitutionType.first.id,assigned_to: current_user.id,assigned_by: current_user.id)
+    authorize! :create, @institution
+    @institution.contracts.build
   end
   
   def clone

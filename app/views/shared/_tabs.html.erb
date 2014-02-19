@@ -10,7 +10,7 @@
 
   <% tabs = (!current_user.adm? ? tabs.reject{|j| j[0].downcase == "deactivated" } : tabs ) %>
               
-  <% tabs.each do |i| %>
+  <% tabs[0..4].each do |i| %>
 
            <% i1 = i[0].tr(" ","_").downcase %>
            
@@ -24,20 +24,38 @@
                                              title: i[0] } %>
              
            </li>
+   <% end %>
+   <% if tabs.size > 4 %>
+           <li class="dropdown actions">
+                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" onclick="actdd();">
+                    More
+                        <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                 <% tabs[5..20].each do |i| %>
+                   <% i1 = i[0].tr(" ","_").downcase %>
+                   <li id="<%= i1 %>">
            
+                     <%= link_to truncate(i[0]),"#",{onclick: model+"TabSwitch(this);",
+                                                     data: {cond: i1 , partial: i[3] },
+                                                     lang: i1 + "_id",
+                                                     class: i1,
+                                                     style: "display: #{i[1]}",
+                                                     title: i[0] } %>
+                     
+                   </li>
+                 <% end %>
+                </ul>
+           </li>
+   <% end %>
            
-  <% end %>
+ 
 </ul>
 </div>
 </div>
-
     <div class="tab-content" id="all_id"> </div>
-
+    
     <% statuses.each do |i| %>
       <div class="tab-content" id="<%= i[0].tr(' ','_').downcase + '_id' %>"> </div>
     <% end %>
-    
-    <div class="tab-content" id="<%= "new_" + model + "_id" %>"> </div>
-    
-   
 

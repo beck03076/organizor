@@ -52,7 +52,7 @@ module CoreExtension
        end
        
        def ignore(*x)
-         self
+         scoped
        end
   end
   

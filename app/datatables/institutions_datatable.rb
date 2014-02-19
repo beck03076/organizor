@@ -3,8 +3,6 @@ class InstitutionsDatatable < Datatable
 
   def initialize(view,cols,sFil,asso_id = nil)
     model = "institution"
-    
-    
     @view = view
     @cols = cols
     @sFilter = sFil

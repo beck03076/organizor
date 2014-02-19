@@ -7,7 +7,7 @@ class Datatable < DeviseController
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: @asso_model.count,
-      iTotalDisplayRecords: items.total_entries,
+      iTotalDisplayRecords: (items.total_entries rescue 0),
       aaData: data
     }
   end
@@ -19,6 +19,7 @@ protected
     dspc = "&nbsp; &nbsp;".html_safe
     
     final = []
+
     items.map do |obj|
        temp = []
        
@@ -50,9 +51,9 @@ protected
           end
         }
 
-        temp<<  link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
-                        "/#{@model_pl}/#{obj.id}/edit") + spc +
-                link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+        temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        "/#{@model_pl}/#{obj.id}/edit")
+        temp << link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
                        "/#{@model_pl}/#{obj.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
        
@@ -78,30 +79,37 @@ protected
   def fetch_items
     sc = sort_column
 
-    if !@sFilter.nil?      
-      if @sFilter.titleize == "Deactivated"
+    if !@sFilter.nil?
+      sFilTit = @sFilter.titleize
+      if sFilTit == "Deactivated"
         items = Enquiry.inactive
+      elsif sFilTit == "All" || "Finance"
+        items = @asso_model        
       else
         if @tab.nil?
           fet_stat = nil
         else
           fet_stat= @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
         end
-        items = fet_stat.nil? ? @asso_model : fet_stat.send(@item_scope[0],@item_scope[1])
+        
+        items = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])
       end
     end
-
-    if sc.is_a?(Array)
-      scs = set_asso(sc[1])
-      join = "LEFT OUTER JOIN #{scs} asso ON asso.id = #{@model_pl}.#{sc[0]}"
-      items = items.joins(join).order("asso.#{sc[2]} #{sort_direction}")
-    elsif !sc.nil?
-      items = items.order("#{@model_pl}.#{sc} #{sort_direction}")
-    else
-      items = @asso_model
+    if !items.blank?
+        if sc.is_a?(Array)
+          scs = set_asso(sc[1])
+          join = "LEFT OUTER JOIN #{scs} asso ON asso.id = #{@model_pl}.#{sc[0]}"
+          items = items.joins(join).order("asso.#{sc[2]} #{sort_direction}")
+        elsif !sc.nil?
+          items = items.order("#{@model_pl}.#{sc} #{sort_direction}")
+        else
+          items = @asso_model
+        end
+        
+        items = items.page(page).per_page(per_page)
     end
-   
-    items = items.page(page).per_page(per_page)
+    
+    
 
     if params[:sSearch].present?
       res = @def_cols[params[:sSearch_0].to_sym] 

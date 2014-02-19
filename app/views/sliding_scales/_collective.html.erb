@@ -1,0 +1,47 @@
+<!-- show branch -->
+<div class="row row-top ">
+                  <div class="col-md-4">
+                  <h4> 
+                    Course Level
+                  </h4>
+                  </div>
+                  <div class="col-md-4">
+                  <h4>
+                    Student Range
+                  </h4>
+                  </div> 
+                  <div class="col-md-4">
+                  <h4>
+                    Commission Percentage
+                  </h4>
+                  </div>
+                  <div style="clear:both;"></div>
+              </div>
+<% ss.values.each do |a| %>
+<div class="row">
+              <div class="row row-top ">
+                  <div class="col-md-4">
+                  <h5> 
+                  <%= a[0].blank? ? "---" : a[0] %>
+                  </h5>
+                  </div>
+                  <div class="col-md-4">
+                  <h5>
+                  <% if a[1].blank? && a[2].blank? %>
+                      --- 
+                  <% elsif a[1].blank? %>
+                      <%= a[2] %>+ students
+                  <% else %>
+                     <%= a[1] %> - <%= a[2] %> students
+                  <% end %>
+                  </h5>
+                  </div> 
+                  <div class="col-md-4">
+                  <h5>
+                  <%= a[3] %>%
+                  </h5>
+                  </div>
+                  <div style="clear:both;"></div>
+              </div>
+</div>
+<% end %>
