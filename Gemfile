@@ -60,7 +60,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'fullcalendar-rails' 
 
-gem "nested_form"
+gem 'nested_form', github: 'ryanb/nested_form'
 
 gem 'attr_encrypted'
 gem 'sidekiq'

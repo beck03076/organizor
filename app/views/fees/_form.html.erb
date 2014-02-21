@@ -9,8 +9,20 @@
             [nil,3],6) %>
           <%= bs(f,"tuition_fee","text_field",[nil,3],6) %>
           <%= bs(f,"scholarship","text_field",[nil,3],6) %>
-          <%= bs(f,[:commission_percentage,
-                    {onkeyup: 'calcComm(this);'}],"text_field",[nil,3],6) %>
+          
+          <div class="form-group">
+            <label class="control-label col-xs-3">
+              Commission Percentage
+            </label>
+            <div class="col-xs-2">
+              <input class="form-control" id="fee_commission_percentage" name="fee[commission_percentage]" onkeyup="calcComm(this);" size="30" type="text">
+            </div>
+            <div class="col-xs-5">
+              <% ans = f.object.programme.id rescue "disabled" %>
+              <span onclick="fetchContract(<%= ans %>)" class="btn btn-primary <%= ans %>">Fetch From Contract</span>
+            </div>
+          </div>
+
           <%= bs(f,"commission_amount","text_field",[nil,3],6) %>
           
           <div class="form-group form-last">
@@ -20,3 +32,7 @@
           </div>
         <% end %>
 </div>
+
+<script>
+
+</script>

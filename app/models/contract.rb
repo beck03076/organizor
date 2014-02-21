@@ -32,7 +32,7 @@ class Contract < ActiveRecord::Base
   has_and_belongs_to_many :all_permitted_regions, 
                            class_name: "Region", join_table: :permitted_regions
   
-  accepts_nested_attributes_for :notes,:documents, :sliding_scales
+  accepts_nested_attributes_for :notes,:documents, :sliding_scales,:allow_destroy => true
   
   
   def prohibited_countries=(ids)

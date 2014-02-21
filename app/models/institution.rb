@@ -38,7 +38,7 @@ class Institution < ActiveRecord::Base
   :desc, :phone, :fax, 
   :address_line2,:notes_attributes,
   :assigned_to,:assigned_by,:prohibited_country_ids,:prohibited_region_ids,:permitted_country_ids,
-  :permitted_region_ids
+  :permitted_region_ids,:group_id
   
   accepts_nested_attributes_for :contracts,:people,:notes,:allow_destroy => true
   

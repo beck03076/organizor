@@ -1,11 +1,11 @@
 <!-- Enquiry show page -->
 <div class="row row-top">
-<div class="col-md-10">
+<div class="col-md-8">
   <h3><%= @registration.name %></h3>
 </div>
 
 <% a = @registration %>
-<div class="col-md-2">
+<div class="col-md-4 text-right">
                 <div class="form-group">
                      <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %> 
                      <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>

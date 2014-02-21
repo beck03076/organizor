@@ -17,7 +17,7 @@
                           
    <div class="row row-top">
     <div class="col-xs-7">
-      <h3><%= what %> institution</h3>
+      <h3><%= what %> institution <small>- <%= @institution.name %> </small></h3>
     </div>
     <div class="col-xs-5 text-right">
       <div class="form-group form-last">
@@ -26,13 +26,16 @@
       </div>
     </div>
   </div>
-
-  <% parts = %w(start institution_information contract_details recruitment_territories 
-                sliding_scale people) %>
+  <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scale]} %>
+  <% parts = [:start, 
+              :institution_information,
+              hsh,
+              :people] %>
+  <% parts_values = parts.map{|i| i.kind_of?(Hash) ? i.values : i }.flatten %>
   <div class="new-enq-reg">
                 <div class="row">
                   <div class="col-xs-2">
-                    <p class="lead">Step <span id="id_no">1</span> of <%= parts.size %></p>
+                    <p class="lead">Step <span id="id_no">1</span> of <%= parts_values.size %></p>
                   </div>
                   <div class="col-xs-10">
                     <div class="progress">
@@ -43,7 +46,8 @@
                 </div>
                 <div class="row row-top">
                   <div class="col-xs-12">
-                    <% parts.each_with_index do |elem,i| %>
+                    
+                    <% parts_values.each_with_index do |elem,i| %>
                         <% set = "" %>
                         <% if i == 0 %>
                           <% set = "active-link" %>
@@ -51,7 +55,7 @@
                           <% set = "last-link" %>
                         <% end %>
                         <div class="col-xs-2 text-center top-link <%= set %>">
-                          <a href="#" part="<%= i + 1 %>"><%= elem.titleize %></a>
+                          <a href="#" part="<%= i + 1 %>"><%= elem.to_s.titleize %></a>
                         </div>
                     <% end %>
                   </div>
@@ -61,17 +65,27 @@
                   <div class="col-xs-12">
                     <div class="well">
                      
-                          
+                        
                         <% parts.each_with_index do |elem,i| %>
+                            
                             <% set = "display-hide" %>
                             <% if i == 0 %>
                               <% set = "" %>
                             <% end %>
-                            <div id="id_part_<%= i + 1 %>" class="<%= set %>">
-                              <h4 class="form-heading" id="<%= elem %>"><%= elem.titleize %></h4>
-                              <div class="row"></div>
-                                <%= render 'form_' + elem, f: f %>
-                            </div>
+                            <% if elem.kind_of?(Hash) %>
+                              <%= render 'form_' + elem.keys.first.to_s, index: i,
+                                                                    set: set, 
+                                                                    arr: elem.values.flatten,
+                                                                    f: f %>
+                              <% @after_hsh = 1 %>
+                            <% else %>
+                <% index = (@after_hsh == 1) ? (i + hsh.values.flatten.size) : i + 1  %>
+                                <div id="id_part_<%= index %>" class="<%= set %>">
+                                  <h4 class="form-heading" id="<%= elem %>"><%= elem.to_s.titleize %></h4>
+                                  <div class="row"></div>
+                                    <%= render 'form_' + elem.to_s, f: f %>
+                                </div>
+                            <% end %>
                         <% end %>
                         <div class="row"></div>
                         
@@ -173,13 +187,18 @@
               tokens('#' + id4,"/srch_regions.json");
               
               slidingScale();
+              
+              var course_id = field.find('.course_ids').attr("id");
+              tokens('#' + course_id,"/search/course_level/name/token.json");
            });
            
            slidingScale();
+           $( 'input.course_ids' ).each(function(){
+             var course_id = $(this).attr("id");
+             tokens('#' + course_id,"/search/course_level/name/token.json");
+           });
            
            actmm("institutions");
-           
-           
 
     </script>
 

@@ -7,7 +7,7 @@ class CourseLevelsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @course_levels }
+      format.json { render :json => @course_levels.map(&:attributes) }
     end
   end
 

@@ -125,6 +125,8 @@ class ProgrammesController < ApplicationController
     ss = s.to_sym
     params[:programme][:fee_attributes][(s + '_cents').to_sym] = params[:programme][:fee_attributes][ss].tr(',','').to_f * 100
     params[:programme][:fee_attributes].delete(ss)
-  end
+  end  
+  
+  
 
 end

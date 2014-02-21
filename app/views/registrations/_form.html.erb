@@ -268,11 +268,12 @@
           <div id="reg_direct">
             <%= go_create(f,"student_source","reg_source_id","name",1) %>  
           </div>
-          
+          <% if false %>
           <div id="reg_indirect" style="display:none;">
               <%= fs(f,"reg_came_through","text_field",nil,"Came Through") %>
               <%= go_create(f,"sub_agent","sub_agent_id","name",1) %> 
           </div>
+          <% end %>
         </div>
   </div>    
   <!--  Student Source - ENDS -->

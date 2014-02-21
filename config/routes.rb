@@ -2,6 +2,8 @@ Organizor::Application.routes.draw do
 
   post '/sliding_scales/collective' => 'sliding_scales#collective'
   
+  post '/fetch_contract' => "commissions#fetch_contract"
+  
   resources :fees
 
   resources :branches

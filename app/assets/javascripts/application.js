@@ -686,6 +686,7 @@ function tokens(textFieldId,url){
 //    tokenLimit:3,
     hintText: "Start searching..."
   });
+
 }
 
 function dom_tokens(cl,url){
@@ -704,7 +705,9 @@ function validateRecruit(obj){
 }
 
 function selectUpdate(itemId,urlTo,destSel){
+  
   if (itemId.length != 0){
+
     $(destSel).fadeOut(1000);
                 $.ajax({
                     url: urlTo,
@@ -713,7 +716,7 @@ function selectUpdate(itemId,urlTo,destSel){
                     success: function( json ) {
                         if (json == "") {  alert("No institutions configured"); }
                         $(destSel).empty();
-                        $(destSel).append('<option value= selected="selected">--Choose--</option>');
+                        $(destSel).append('<option value= selected="selected">-choose-</option>');
                         $.each(json, function(i,value) {
                           $(destSel).append($('<option>').text(value.name).attr('value', value.id));
                         });
@@ -920,11 +923,11 @@ function actMultiSelect(cl){
 
 
 function token(model,filter){
-$('#filter_container').html('');
+$('.filter_container').html('');
   $.get('/get_column_names/' + model + '/' + filter,function(out){
       $.each(out, function(i,col){
-         $('#filter_container').append('<input id="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
-         $("#" + col).tokenInput("/search/" + model + '/' +  col +"/token.json", {
+         $('.filter_container').append('<input class="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
+         $("." + col).tokenInput("/search/" + model + '/' +  col +"/token.json", {
            placeHolderText: col,
            propertyToSearch: col,
            crossDomain: false,
@@ -948,6 +951,21 @@ function slidingScale(){
             $(this).siblings().find( "#to" ).val( ui.values[ 1 ]);
           }
         });
+}
+
+
+
+function fetchContract(progId){
+  
+  var posting = $.post('/fetch_contract',{'prog_id': progId });
+  
+   // Put the results in a div
+  posting.done(function( data ) {
+    $('input#fee_commission_percentage').val(data);
+    $('input#fee_commission_percentage').keyup();
+  });
+
+ 
 }
 
 

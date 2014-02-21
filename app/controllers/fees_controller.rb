@@ -33,6 +33,7 @@ class FeesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @fee }
+      format.js
     end
   end
 
@@ -61,6 +62,10 @@ class FeesController < ApplicationController
   # PUT /fees/1.json
   def update
     @fee = Fee.find(params[:id])
+    
+    %w(tuition_fee scholarship commission_amount).each do |s|
+       self.set_fee_params(s)
+    end
 
     respond_to do |format|
       if @fee.update_attributes(params[:fee])
@@ -84,4 +89,11 @@ class FeesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def set_fee_params(s)
+    ss = s.to_sym
+    params[:fee][(s + '_cents').to_sym] = params[:fee][ss].tr(',','').to_f * 100
+    params[:fee].delete(ss)
+  end
+  
 end

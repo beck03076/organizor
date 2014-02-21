@@ -1,19 +1,19 @@
 <!-- Asking the counselor to update fees and sclorship from offer letter -->
 
 <%= form_for(@programme,html: {class: "form-horizontal"}) do |f| %>
-  <% @programme.build_payment unless @programme.payment %>
+  <% @programme.build_fee unless @programme.fee %>
   <% cur = @programme.institution.country.currency.code %>
   
-  <%= f.fields_for :payment do |pmt| %>
-    <%= pmt.hidden_field :programme_id, value: a.id %>
-    <%= bs(pmt,[:currency,
+  <%= f.fields_for :fee do |fee| %>
+    <%= fee.hidden_field :programme_id, value: a.id %>
+    <%= bs(fee,[:currency,
             all_currencies(Money::Currency.table),
             {:include_blank => 'Select a Currency',
              :selected => cur},{}],
             "select",
             [nil,3],5,12) %>
-    <%= bs(pmt,:fee,"text_field",[nil,3],3,12) %>
-    <%= bs(pmt,:scholarship,"text_field",[nil,3],3,12) %>
+    <%= bs(fee,:tuition_fee,"text_field",[nil,3],3,12) %>
+    <%= bs(fee,:scholarship,"text_field",[nil,3],3,12) %>
   <% end %>
   
 

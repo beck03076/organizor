@@ -30,5 +30,9 @@ class Programme < ActiveRecord::Base
   
   def self.joined_ins(ins_id)
     includes(:application_status).where(institution_id: ins_id,application_statuses: {name: "joined"})
+  end
+  
+  def course_level_name
+    self.course_level.name rescue nil
   end 
 end

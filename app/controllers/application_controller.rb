@@ -17,8 +17,9 @@ class ApplicationController < ActionController::Base
       format.js { redirect_to '/handle/cancan' }
 #      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
-  end  
+  end
   
+    
   def token_search
     set_url_params
     @result = @model.camelize.constantize.where("#{@col} like ?", "%#{params[:q]}%")
@@ -26,7 +27,6 @@ class ApplicationController < ActionController::Base
         format.html
         format.json { render :json => @result.map(&:attributes) }
       end
-  
   end
   
   def get_column_names

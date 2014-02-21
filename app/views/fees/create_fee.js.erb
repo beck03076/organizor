@@ -1,4 +1,4 @@
-<% ctnt = (render 'payments/create_fee', {a: @programme}) %>     
+<% ctnt = (render 'create_fee', {a: @programme}) %>     
     
     $('#create-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
                                          :locals =>   {id: 'create-fee', 

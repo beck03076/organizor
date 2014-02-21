@@ -1,6 +1,5 @@
 <!-- sliding scale fields -->
 
-<%= f.fields_for :contracts do |c| %>
   <%= c.fields_for :sliding_scales do |ss| %>  
   <div class="row row-top new-program text-center">
   <hr>
@@ -9,13 +8,17 @@
                   <%= ss.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
                 </div>
               </div>
-           
-             <%= bs(ss,[:course_level_id,CourseLevel.order(:name),
-                                              :id,
-                                              :name,
-                                              {prompt: "-course level-"},{}],
-                                              "collection_select",
-                                              [nil,2],5,"12 row text-center") %>
+            <div class="col-xs-12 row text-center">
+            <div class="form-group">
+                <label class="control-label col-xs-2">Course Levels</label>
+                 <div class="col-xs-5">
+            <%= ss.text_field :course_level_tokens,
+                              {class: "form-control course_ids",
+                               data: {pre: ss.object.course_levels.map(&:attributes).to_json} } %>
+                 </div>
+            </div>
+            </div>
+
             <div class="col-xs-12 row text-center">
             <div class="form-group">
                 <label class="control-label col-xs-2">Student Range</label>
@@ -42,5 +45,5 @@
   </div>  
   <% end %>
   <hr>
-  <%= c.link_to_add "Add Sliding Scale", :sliding_scales,{:class => "btns fl"} %>
-<% end %>
+  <%= c.link_to_add "Add Sliding Scale", :sliding_scales %>  
+
