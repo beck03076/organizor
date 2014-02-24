@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220101807) do
+ActiveRecord::Schema.define(:version => 20140224102110) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -88,6 +88,15 @@ ActiveRecord::Schema.define(:version => 20140220101807) do
     t.datetime "updated_at",   :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "commission_claim_statuses", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "commission_statuses", :force => true do |t|
@@ -605,6 +614,7 @@ ActiveRecord::Schema.define(:version => 20140220101807) do
     t.integer  "ins_ref_no"
     t.integer  "registration_id"
     t.string   "course_subject_text"
+    t.integer  "claim_status_id"
   end
 
   create_table "prohibited_countries", :force => true do |t|

@@ -45,6 +45,7 @@ module CoreColumns
                      country_id: [:country, :name],
                      city_id: [:city,:name],
                      registration_id: [:registration,:first_name],
+                     claim_status_id: [:claim_status,:name],
                      }
      
      end

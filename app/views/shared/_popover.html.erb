@@ -1,7 +1,19 @@
 <!-- popover container -->
-<div id="popover-head" class="hide">
-  <%= header %>
+<div class="popover-markup" id=<%= id %>>  
+    <div class="head hide light">
+      <%= header %>
+    </div>
+    <div class="content hide">
+        <%= content %>
+    </div>
+    <div class="footer hide">test</div>
 </div>
-<div id="popover-content" class="hide">
-  <%= content %>
-</div>
+<script>
+  $(document).mouseup(function (e) {
+    if ($('.popover').has(e.target).length === 0) {
+        $('.popover').toggleClass('in').remove();
+        return;
+    }
+  });
+</script>
+

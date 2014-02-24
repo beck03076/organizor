@@ -1,11 +1,18 @@
 class UserConfigsController < ApplicationController
   include CoreColumns
-  before_filter :set_cols
+  before_filter :set_all_cols
 
   # GET /user_configs
   # GET /user_configs.json
   def index
 
+
+  end
+  
+  def set_all_cols
+    %w(enquiry registration institution person).each do |i|
+      set_cols(i)
+    end
   end
   
   def manage

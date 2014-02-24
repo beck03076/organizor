@@ -10,6 +10,8 @@ class Programme < ActiveRecord::Base
   belongs_to :institution_type, :foreign_key => 'type_id'
   belongs_to :course_subject, :foreign_key => 'subject_id'
   belongs_to :application_status,:foreign_key => 'app_status_id'
+  belongs_to :claim_status,:foreign_key => 'claim_status_id', class_name: "CommissionClaimStatus"
+  
   has_many :status_diagrams
   
   has_one :fee

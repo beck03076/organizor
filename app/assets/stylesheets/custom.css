@@ -88,14 +88,24 @@ body {
     background-color: yellow; }
   .main .main-content .badge {
     color: #000000; }
+  .main .main-content .pb-15 {
+    padding-bottom: 15px; }
   .main .main-content .mt-15 {
     margin-top: 15px; }
   .main .main-content .mr-10 {
     margin-right: 10px; }
+  .main .main-content .ml-10 {
+    margin-left: 10px; }
+  .main .main-content .pl-0 {
+    padding-left: 0; }
+  .main .main-content .pr-0 {
+    padding-right: 0; }
   .main .main-content .pointer {
     cursor: pointer; }
   .main .main-content .filter-well {
     background-color: #FFE9B4; }
+  .main .main-content .border-b {
+    border-bottom: 1px solid #dddddd; }
   .main .main-content .to-do .well {
     margin-bottom: 10px; }
   .main .main-content .to-do .todo-head {
@@ -119,7 +129,7 @@ body {
     margin-top: 1rem; }
   .main .main-content .data-table .vert-center {
     margin-top: 5px; }
-  .main .main-content .data-table .glyphicon-remove {
+  .main .main-content .data-table .glyphicon-remove,.glyphicon-search {
     top: 3px;
     cursor: pointer; }
   .main .main-content .data-table .filter-center {
@@ -140,7 +150,7 @@ body {
   .main .main-content .new-enq-reg .new-program {
     margin-left: -19px;
     margin-right: -19px;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     padding-top: 15px; }
   .main .main-content .new-enq-reg .lead {
     margin-bottom: 0;
@@ -154,6 +164,13 @@ body {
     border-right: 1px solid #dddddd; }
   .main .main-content .new-enq-reg .active-link a {
     font-weight: bold; }
+  .main .main-content .basic .no-ul, .main .main-content .application .no-ul,.no-ul {
+    list-style-type: none;
+    padding-left: 0; }
+  .main .main-content .basic .col-xs-4, .main .main-content .basic .col-xs-8, .main .main-content .application .col-xs-4, .main .main-content .application .col-xs-8 {
+    margin-bottom: 5px; }
+  .main .main-content .application .collapse .filter-well p.indent {
+    margin-bottom: 5px; }
   .main .main-content .form-control.hor-first {
     margin: 0; }
   .main .main-content .theme-color {
@@ -191,3 +208,10 @@ body {
 
 .light {
   color: #777777; }
+  
+  
+  .popover {
+background-color: #ffffff;
+  
+}
+  

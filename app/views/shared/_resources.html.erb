@@ -14,7 +14,8 @@
             <th>Description</th>
             <th>Created</th>
             <th>Last Modified</th>
-            <th>&nbsp;</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +39,8 @@
                             "/edit_resource/#{r_name}/#{r.id}",
                             {remote: true,
                             onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+              </td>
+              <td>
                 <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
                             r, 
                             method: :delete, 

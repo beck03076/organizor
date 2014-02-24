@@ -1,5 +1,10 @@
 Organizor::Application.routes.draw do
 
+  resources :commission_claim_statuses
+  
+  post '/update_comm_claim/programmes' => 'programmes#update_comm_claim'
+
+
   post '/sliding_scales/collective' => 'sliding_scales#collective'
   
   post '/fetch_contract' => "commissions#fetch_contract"
@@ -227,6 +232,9 @@ Organizor::Application.routes.draw do
   end
   resources :programmes do
       collection { post :search, to: 'programmes#index' }
+      member do
+        get :more
+      end
   end
   
 

@@ -8,7 +8,8 @@ class AuditorObserver < ActiveRecord::Observer
   :todo_topic,:institution_type,:institution_group,
   :contract,:contract_doc_category,:person_type,
   :person,:commission_status,:branch,
-  :smtp,:email_template,:role,:allow_ip
+  :smtp,:email_template,:role,:allow_ip,
+  :commission_claim_status
 
    def before_create(record)
      record.created_by = User.current.id

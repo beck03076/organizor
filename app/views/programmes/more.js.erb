@@ -1,0 +1,21 @@
+    <% ctnt = (render 'more') %>     
+    
+    $('#more-info').html("<%= escape_javascript(render :partial => 'shared/popover',
+                                         :locals =>   {id: 'more', 
+                                                       content: ctnt.html_safe,
+                                                       header: @registration.name,
+                                                       button: nil}) %>");
+                                                       
+    $('#more_<%= @programme.id %>').popover({
+        html: true,
+        placement: "left",
+        title: function () {
+            return $('#more-info').find('.head').html();
+        },
+        content: function () {
+            return $('#more-info').find('.content').html();
+        }
+   });
+   $('#more_<%= @programme.id %>').popover('show');
+   
+   

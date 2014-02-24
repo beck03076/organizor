@@ -80,6 +80,9 @@ if (AllowIp.all.size == 0)
     p "Creating allow ip range for localhost 127.0.0.1 .."
     AllowIp.create!(from: "127.0.0.1", to: "127.0.0.1", desc: "localhost")
 end
+# setting this to update created_by  - admin user as first user
+p "setting this to update created_by  - admin user as first user.."
+User.current = User.first
 
 [{application_status: %w(Sent Conditional_offer Unconditional_offer 
                          Pending Joined Rejected Defer Sent_to_documentation)},
@@ -102,13 +105,14 @@ end
                      Website Education_Event Friend)},
  {todo_topic: %w(Default Documents Administrative
                  Enquiry Registration Institution 
-                 Person)}].each do |i|
+                 Person)},
+ {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)}].each do |i|
     model = i.keys[0].to_s.camelize.constantize
     values = i.values[0]
     values.each do |v|
-      if model.where(name: v).blank?
+      if model.where(name: v.titleize).blank?
         p "Creating a value .. #{v} in the resource #{model}"
-        model.create!(name: v, desc: "This is a default value.")
+        model.create!(name: v.titleize, desc: "This is a default value.")
       end
     end
 end

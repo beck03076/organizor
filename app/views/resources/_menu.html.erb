@@ -7,7 +7,7 @@
             :exam_type,:qualification,:student_source,
             :todo_topic,:institution_type,:institution_group,
             :contract_doc_category,:person_type,:commission_status,
-            :allow_ip,:branch,:role,:smtp,:email_template].sort.each do |r| %>
+            :allow_ip,:branch,:role,:smtp,:email_template, :commission_claim_status].sort.each do |r| %>
       <% if can? :read, r.to_s.camelize.constantize %>
       <li id='<%= r.to_s %>' >
          <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>

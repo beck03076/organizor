@@ -207,6 +207,8 @@ class EnquiriesController < ApplicationController
       a = current_user.conf.enq_cols
       b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
       @cols = ((b & a) + (a - b)) + [:follow_up_date]   
+      p "************"
+      p  @cols
   end
   
 end

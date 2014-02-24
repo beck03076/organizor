@@ -1,0 +1,45 @@
+<ul class="vlsdet">
+<li>
+  <label><small class="light">Date Of Birth</small></label>
+  <span><small><%= @registration.date_of_birth %></small></span>
+</li>
+<li>
+  <label><small class="light">Nationality</small></label>
+  <span><small><%= @registration.country_of_origin_name %></small></span>
+</li>
+<li>
+  <label><small class="light">Course Level</small></label>
+  <small><%= @programme.course_level_name %></small>
+</li>
+<li>
+  <label><small class="light"> Course Subject </small></label>
+  <small><%= @programme.course_subject_text %></small>
+</li>
+<li>
+  <label><small class="light"> Start Date </small></label>
+  <small><%= @programme.start_date %></small>
+</li>
+<li>
+  <label><small class="light"> End Date </small></label>
+  <small><%= @programme.end_date %></small>
+</li>
+<li>
+  <label><small class="light"> Tuition Fee </small></label>
+  <small><%= humanized_money_with_symbol @fee.tuition_fee rescue "Unknown" %></small>
+</li>
+<li>
+  <label><small class="light"> Scholarship </small></label>
+  <small><%= humanized_money_with_symbol @fee.scholarship  rescue "Unknown" %></small>
+</li>
+<li>
+  <label><small class="light"> Commission Percentage </small></label>
+  <small><%= @fee.commission_percentage  rescue "Unknown" %> %</small>
+</li>
+<li>
+  <label><small class="light"> Commission Amount </small></label>
+  <small><%= humanized_money_with_symbol @fee.commission_amount  rescue "Unknown" %></small>
+</li>
+</ul>
+
+
+

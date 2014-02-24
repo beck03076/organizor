@@ -2,15 +2,9 @@
 <% _model = eval(model) %>
 <% model_pl = model.downcase.pluralize %>
 
-<% _id =  (@status || "all") + "_" + model_pl %>
-<% if model == "Programme" %>
-  <% url = "/institution_programmes/#{@institution_id}.json" %>
-<% else %>
-  <% url = send(model_pl + "_url",format: "json") %>
-<% end %>
+<% _id = "all" + "_" + model_pl %>
+<% url = "/institution_programmes/#{@institution_id}.json" %>
 <% srch_url = send("search_" + model_pl + "_path") %>
-<% act = act || model_pl %>
-
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
               <div class="col-md-12 data-table">
@@ -21,10 +15,9 @@
               <div class="col-md-2">
                 <select id="mass-actions" style="width:130px" class="form-control hor-first">
                     <option>-Mass Actions-</option>
-                    <!----------------------- Group Assign Start---------------------------->
-                    <% if can? :update, _model %>
-                      <option value="assignTo">Assign to</option>
-                      <% js = 'groupAssignTo' %>
+                    <!----------------------- Comm Claim Update Start---------------------------->
+                    <% if can? :update, CommissionClaimStatus %>
+                      <option value="commClaimStatus">Update Status</option>
                     <% end %>
                     <!----------------------- Group Assign End---------------------------->
                     <!----------------------- Bulk Email Start---------------------------->
@@ -39,20 +32,24 @@
                     <% end %>
                     <!----------------------- Group Delete End--------------------------->
                 </select>
-                <!----------------------- Group Assign Modal Start---------------------------->
-                <% ctnt = '<form class="form-inline" role="form">' +
-                          label_tag(:user,"User") +
-                          select_tag("group_assign_user_#{_id}",
-                          options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
-                          {prompt: "-user-",
-                          class: "form-control hor-first",
-                          data: {model: model}}) +
-                          '</form>' %>
+                <!----------------------- Comm Claim Update Modal Start---------------------------->
+                <% ctnt = '<div class="row">
+                           <div class="col-md-10">
+                           <div class="col-md-offset-3">
+                              <form class="form-inline" role="form">' +
+                              label_tag(:user,"Status",{class: "col-md-3"}) +
+                              select_tag("comm_claim_status_#{_id}",
+                              options_for_select(CommissionClaimStatus.order(:name).map{|i| [i.name.titleize,i.id]}),
+                              {prompt: "-status-",
+                              class: "form-control hor-first col-md-4",
+                              data: {model: model,
+                              user_id: current_user.id}}) +
+                              '</form> </div></div></div>' %>
 
-                <%= render 'shared/modal',id: 'assignToModal',
+                <%= render 'shared/modal',id: 'commClaimStatusModal',
                            content: ctnt.html_safe,
-                           header: 'Assign To',
-                           button: "<button onclick=groupAssignTo('#{_id}');>Assign</button>" %>
+                           header: 'Update Status',
+                           button: "<button onclick=updateCommClaim('#{_id}');>Change</button>" %>
                 <!----------------------- Group Assign Modal End---------------------------->
                 <!----------------------- Bulk Email Start---------------------------->
                 <% ctnt = 'Are you sure you want to send email to all the selected email ids ?' %>
@@ -175,11 +172,15 @@
 
       <th></th>
       <th></th>
+      <th></th>
 
   </tr>
 </thead>
 
 </table>
+
+<div id="more-info"></div>
+
 <script src="/dt-bootstrap.js"></script>
 <script>
 
@@ -196,7 +197,7 @@
                            '<label for="id_column" class="label-right">rows per page</label>' +
                            '</div></form>');
 
- $('#mass-actions').click(function(){
+ $('#mass-actions').change(function(){
    var rows = getCheckedRowsAsArray('<%= _id %>');
    var clicked = $("#mass-actions").val();
    $('#' + clicked + 'Modal').modal('show');
@@ -204,9 +205,9 @@
 
  actmm('<%= act %>');
  acttab('<%= @status || @partial_name %>');
+ 
 
- if ($('li#<%= @status %>').parent().hasClass('dropdown-menu')) {
-    actdd();
- }
+
+ 
 </script>
 

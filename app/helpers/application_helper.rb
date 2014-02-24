@@ -224,5 +224,21 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
-
+  
+  def li(label,value,grid_col_no,ul_class,label_no,value_no,label_align = "right",value_align = "left")
+   html = ""
+   html += "<div class=row><div class='col-xs-#{grid_col_no} text-left'><ul class=#{ul_class}><li>
+            <div class='col-xs-#{label_no} text-#{label_align}'>
+                <span class=light>
+                  <small>#{label}</small>
+                </span>
+            </div>
+            <div class='col-xs-#{value_no} text-#{value_align}'><small> #{value}</small></div>
+                    </li>
+                  </ul>
+              </div>
+            </div>"
+            
+   html.html_safe
+  end
 end

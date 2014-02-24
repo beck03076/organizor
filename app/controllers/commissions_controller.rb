@@ -1,35 +1,9 @@
 class CommissionsController < ApplicationController
+  include FetchFromContract
 
   def fetch_contract
-    # p for programme, i for institution and r_ids for registration_ids
-    p = Programme.find(params[:prog_id])
-    i = p.institution
-    # how manieth registration is this for this institution is r_order
-    r_id = [p.registration.id]
-    r_ids = i.registrations.map &:id
-    r_arr = (r_ids - r_id)
-    r_order = (r_arr).blank? ? 1 : (r_arr.size + 1)
-    
-        # ss stands for sliding scales, assuming only one contract per institution    
-        ss = i.contracts.first.sliding_scales
-        # case where there is not sliding scale at all
-        if ss.nil?
-          @out = "No Sliding Scale Configured!"
-        elsif !ss.nil? 
-          # case where there is sliding scale but without course_levels
-          if (ss.map &:course_level_name).flatten.blank?          
-            range_array = ss.map{|i| [i.from,i.to,i.commission_percentage] }
-            # this prepares from nil situations(50+) and checks if the r_order is in between a range and sets the right percentage
-            self.check_range(range_array,r_order)
-          # case where there is sliding scale but with course_levels
-          else
-            ss_cls = ss.map {|i| [i.id,i.course_level_name,[i.from,i.to,i.commission_percentage]]}    
-            range_array = ss_cls.map {|i| i[1].include?(p.course_level_name) ? i[2] : nil  }.compact    
-            self.check_range(range_array,r_order)
-          end
-        end
-
-    render text: @out
+    comm_percentage = fetch_from_contract(params[:prog_id])
+    render text: comm_percentage
   end
   
   def check_range(range_arr,order)

@@ -14,7 +14,7 @@
 *= require fullcalendar
 *= require token-input-bootstrappy
 *= require custom
-*= require jquery-ui-1.10.0.custom
+
 
 */
 
@@ -39,6 +39,12 @@ strong.uncheckit{text-decoration:none;}
 
 .cal_todo{background: #004156;}
 .cal_follow_up{background: #267ab3;}
+
+.vlsdet{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet li{padding:5px 0 0 0;}
+.vlsdet li  label{text-align:left;width:130px;white-space:nowrap;display:inline-block}
+ 
+
 
 
 

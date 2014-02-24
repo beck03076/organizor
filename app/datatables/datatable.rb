@@ -45,11 +45,20 @@ protected
        
        @cols.map{|i|
           if i.is_a?(Array)
+            p "****************"
+            p i
             temp << obj.send(i[1].to_s).try(i[2].to_s)
           else
             temp << obj.send(i.to_s).to_s
           end
         }
+        
+        # display more option to click and view the extra information
+        if @more
+          temp << link_to('<span class="glyphicon glyphicon-th-large"></span>'.html_safe,
+                          "/#{@model_pl}/#{obj.id}/more", {remote: true,
+                                                           id: "more_#{obj.id}" } )
+        end
 
         temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
                         "/#{@model_pl}/#{obj.id}/edit")

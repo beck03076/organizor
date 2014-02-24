@@ -385,7 +385,7 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         oTable.fnFilter(key);
     });
 
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child)', function () {
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child,:nth-last-child(3))', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
@@ -560,6 +560,28 @@ function getCheckedRowsAsArray(tableId){
        }
 }
 
+
+function updateCommClaim(tableId){
+  
+  var rows = getCheckedRowsAsArray(tableId);
+  sel = "select#comm_claim_status_" + tableId
+  var status_id = $(sel).val();
+  var user_id = $("#comm_claim_status_" + tableId).data("user_id");
+ 
+  var posting = $.post('/update_comm_claim/programmes',
+                      {'prog_ids': rows,
+                       'user_id': user_id,
+                       'status_id': status_id });
+  
+   // Put the results in a div
+  posting.done(function( data ) {
+    afterDatatableMass(tableId,'commClaimStatusModal');
+    resetDataTable();
+    bootbox.alert(data);
+    
+  });
+}
+
 function groupAssignTo(tableId){
        var rows = getCheckedRowsAsArray(tableId);
        sel = "select#group_assign_user_" + tableId
@@ -614,6 +636,15 @@ function deselectAllCheck(divId){
     $(divId).find(':checkbox').each(function () {
         $(this).prop('checked',false);
      });
+}
+
+function afterDatatableMass(tableId,action){
+  // redrawing the datatable
+  $('#' + tableId).dataTable().fnDraw();
+  // closing the modal window
+  $('#' + action).modal('toggle');
+  // unchecking the master check box
+  $('input#master_check').prop('checked', false);
 }
 
 function manageRole(){
@@ -967,6 +998,7 @@ function fetchContract(progId){
 
  
 }
+
 
 
 

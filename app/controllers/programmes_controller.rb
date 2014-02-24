@@ -1,10 +1,52 @@
 class ProgrammesController < ApplicationController
   include CoreMethods
+  include FetchFromContract
   authorize_resource
   # GET /programmes
   # GET /programmes.json
+  
+  def update_comm_claim
+    set_url_params
+    authorize! :update, Programme
+    
+    ids = params[:prog_ids].split(",")
+    
+    to_update = Programme.where(id: ids)
+    to_update.update_all(claim_status_id: params[:status_id],
+                         updated_by: params[:user_id])
+                         
+    status = CommissionClaimStatus.find(params[:status_id]).name.titleize
+    
+    @text = "Status Successfully Changed."
+    
+    if status == "Invoiced"
+      iterate_fee(to_update,:invoice_date)
+      @text += " To #{status}. Invoice Date Successfully Set."
+    elsif (status == "Full Payment Received" || status == "Partial Payment Received")
+      iterate_fee(to_update,:first_payment_date)
+      @text += " To #{status}. First Payment Date Successfully Set."
+    else
+      @text += " To #{status}."
+    end
+                         
+    render text: @text
+  end
+  
+  def iterate_fee(objs,col)
+    objs.each do |p|
+        if p.fee
+          if col == :first_payment_date && !p.fee.invoice_date.nil?
+            p.fee.update_attribute(col,Date.today)
+          else
+            @text = " You cannot set Paid without Invoicing."
+          end
+        end
+    end
+  end
+  
   def index    
     set_url_params
+    self.set_cols
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +57,15 @@ class ProgrammesController < ApplicationController
   
   def from_institution
     set_url_params
+  end
+  
+  def more
+   @programme = Programme.find(params[:id])
+   @registration = @programme.registration
+   @fee = @programme.fee
+   respond_to do |format|
+      format.js 
+    end
   end
 
   # GET /programmes/1
@@ -71,6 +122,11 @@ class ProgrammesController < ApplicationController
         %w(tuition_fee scholarship).each do |s|
           self.set_fee_params(s)
         end
+        comm_percentage = fetch_from_contract(params[:id])
+        fee = params[:programme][:fee_attributes]
+        comm_amount = ((fee[:tuition_fee_cents] - fee[:scholarship_cents]) * (comm_percentage.to_f/100)).to_f
+        params[:programme][:fee_attributes][:commission_amount_cents] = comm_amount
+        params[:programme][:fee_attributes][:commission_percentage] = comm_percentage
     end
 
     respond_to do |format|
@@ -126,6 +182,15 @@ class ProgrammesController < ApplicationController
     params[:programme][:fee_attributes][(s + '_cents').to_sym] = params[:programme][:fee_attributes][ss].tr(',','').to_f * 100
     params[:programme][:fee_attributes].delete(ss)
   end  
+  
+  def set_cols
+     # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.pro_cols
+      b = [:surname,:first_name]
+      @cols = ((b & a) + (a - b))
+      p "*****************88"
+      p @cols
+  end
   
   
 

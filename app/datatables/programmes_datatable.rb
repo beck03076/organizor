@@ -20,6 +20,7 @@ class ProgrammesDatatable < Datatable
     @item_scope = ["joined_ins",asso_id]
     
     @compound = false
+    @more = true
   end
    
 end
