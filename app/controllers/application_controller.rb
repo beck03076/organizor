@@ -35,6 +35,26 @@ class ApplicationController < ActionController::Base
     render json: out
   end
   
+  def bulk_asso_update
+    set_url_params
+    
+    @model = @main.camelize.constantize
+    authorize! :update, @model
+    
+    ids = @main_ids.split(",")
+    to_update = @model.where(id: ids)
+    
+    @status = @asso.camelize.constantize.find(@asso_id).name
+    
+    to_update.update_all(@asso_col.to_sym => @asso_id,
+                         updated_by: @user_id)
+                         
+    text = "#{@status} set."
+    
+    render text: text
+  end
+  
+  
   def determine_redirect
    p "==== determining redirect====="
    #What data comes back from OmniAuth?     
@@ -207,8 +227,5 @@ class ApplicationController < ActionController::Base
                     receiver_id: r_id)
                     
   end
-  
-  
-  
-  
+
 end

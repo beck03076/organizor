@@ -2,7 +2,13 @@ Organizor::Application.routes.draw do
 
   resources :commission_claim_statuses
   
+  get '/programmes/abc' => "programmes#abc"
+  
+  get '/programmes/ins_id/:ins_id/prog_ids/:prog_ids/export' => "programmes#index"
+  
   post '/update_comm_claim/programmes' => 'programmes#update_comm_claim'
+  
+  post 'bulk_asso_update' => 'application#bulk_asso_update'
 
 
   post '/sliding_scales/collective' => 'sliding_scales#collective'

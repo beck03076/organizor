@@ -3,7 +3,7 @@
     $('#more-info').html("<%= escape_javascript(render :partial => 'shared/popover',
                                          :locals =>   {id: 'more', 
                                                        content: ctnt.html_safe,
-                                                       header: @registration.name,
+                                                       header: (@registration.name rescue "Unknown"),
                                                        button: nil}) %>");
                                                        
     $('#more_<%= @programme.id %>').popover({

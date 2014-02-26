@@ -19,7 +19,7 @@ group :assets do
   gem 'sass-rails','~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-datatables-rails'
+  gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
   gem 'jquery-ui-rails'
 end
 
@@ -103,4 +103,6 @@ group :test do
 end
 
 gem 'ransack'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 

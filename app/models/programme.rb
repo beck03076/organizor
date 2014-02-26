@@ -26,7 +26,7 @@ class Programme < ActiveRecord::Base
                   :type_id, :updated_by, :course_subject,
                   :app_status_id,:ins_ref_no,:registration_id,
                   :course_subject_text,:notes_attributes,
-                  :fee_attributes
+                  :fee_attributes,:claim_status_id
                   
   accepts_nested_attributes_for :notes,:fee
   
@@ -37,4 +37,6 @@ class Programme < ActiveRecord::Base
   def course_level_name
     self.course_level.name rescue nil
   end 
+
+  
 end

@@ -24,6 +24,7 @@
 
 
 
+
 $(function(){
 
   
@@ -547,12 +548,13 @@ function toggleAllCheckCol(obj){
         });
 }
 
-function getCheckedRowsAsArray(tableId){
+function getCheckedRowsAsArray(tableId,stop){
+       stop = stop || 1;
        var idVal = '#' + tableId + ' #tr'
        var rowIds = $(idVal + ':checked').map(function(){
                                                   return $(this).val();
                                                 }).get();
-       if (rowIds.length == 0){
+       if (rowIds.length == 0 && stop == 1){
          bootbox.alert("Mark at least one record. (Use checkboxes)");
          throw "stop execution";
        }else{
@@ -562,24 +564,13 @@ function getCheckedRowsAsArray(tableId){
 
 
 function updateCommClaim(tableId){
-  
-  var rows = getCheckedRowsAsArray(tableId);
-  sel = "select#comm_claim_status_" + tableId
-  var status_id = $(sel).val();
-  var user_id = $("#comm_claim_status_" + tableId).data("user_id");
- 
-  var posting = $.post('/update_comm_claim/programmes',
-                      {'prog_ids': rows,
-                       'user_id': user_id,
-                       'status_id': status_id });
-  
-   // Put the results in a div
-  posting.done(function( data ) {
-    afterDatatableMass(tableId,'commClaimStatusModal');
-    resetDataTable();
-    bootbox.alert(data);
-    
-  });
+  bulkAssoUpdate(tableId,"select","comm_claim_status_",'/update_comm_claim/programmes',
+                 'commClaimStatusModal');
+}
+
+function updateAppStatus(tableId){
+  bulkAssoUpdate(tableId,"select","app_status_",'/bulk_asso_update',
+                 'appStatusModal','programme','application_status','app_status_id');
 }
 
 function groupAssignTo(tableId){
@@ -628,6 +619,36 @@ function bulkEmail(tableId){
        window.open(url,
                    '_blank',
                    'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+
+}
+
+function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col){
+  var main = main || 0;
+  var asso = asso || 0;
+  var asso_col = asso_col || 0;
+   
+  var rows = getCheckedRowsAsArray(tableId);
+  sel = elem + "#" + what_ + tableId
+  var status_id = $(sel).val();
+  var user_id = $("#" + what_ + tableId).data("user_id");
+  
+  var data = {};
+  data['main_ids'] = rows;
+  data['asso_id'] = status_id;
+  data['user_id'] = user_id;
+  data['main'] = main;
+  data['asso'] = asso;  
+  data['asso_col'] = asso_col;
+  
+  var posting = $.post(url,data);
+  
+   // Put the results in a div
+  posting.done(function( data ) {
+    afterDatatableMass(tableId,modal);
+    resetDataTable();
+    bootbox.alert(data);
+    
+  });
 
 }
 

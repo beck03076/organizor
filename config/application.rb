@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+# for downloading in xls format
+require 'csv'
 
 
 if defined?(Bundler)

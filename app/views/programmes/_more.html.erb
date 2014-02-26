@@ -1,11 +1,12 @@
+<h4> <%= @programme.application_status.name rescue "Unknown" %> </h4>
 <ul class="vlsdet">
 <li>
   <label><small class="light">Date Of Birth</small></label>
-  <span><small><%= @registration.date_of_birth %></small></span>
+  <span><small><%= @registration.date_of_birth rescue "Unknown" %></small></span>
 </li>
 <li>
   <label><small class="light">Nationality</small></label>
-  <span><small><%= @registration.country_of_origin_name %></small></span>
+  <span><small><%= @registration.country_of_origin_name rescue "Unknown" %></small></span>
 </li>
 <li>
   <label><small class="light">Course Level</small></label>

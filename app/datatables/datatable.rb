@@ -45,8 +45,6 @@ protected
        
        @cols.map{|i|
           if i.is_a?(Array)
-            p "****************"
-            p i
             temp << obj.send(i[1].to_s).try(i[2].to_s)
           else
             temp << obj.send(i.to_s).to_s
@@ -79,7 +77,7 @@ protected
       json = params[:sSearch_2]
       parsed = JSON.parse(json) if json && json.length >= 2
       
-      @search = @model_cl.search(parsed)
+      @search = @asso_model.search(parsed)
       items = @search.result(distinct: true)
       @items = items.page(page).per_page(per_page)
     end

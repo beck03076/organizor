@@ -241,4 +241,30 @@ module ApplicationHelper
             
    html.html_safe
   end
+  
+  def bulk_asso_update(label,select,obj,prompt,model,current_user_id,modal,modal_head,onclick,_id)
+    html = ""
+    
+    ctnt = '<div class="row">
+             <div class="col-md-10">
+             <div class="col-md-offset-3">
+             <form class="form-inline" role="form">' +
+             label_tag(:user,label,{class: "col-md-3"}) +
+               select_tag("#{select}#{_id}",
+                          options_for_select(obj.constantize.order(:name).map{|i| [i.name.titleize,i.id]}),
+               {prompt: prompt,
+                class: "form-control hor-first col-md-4",
+                        data: {model: model,
+                        user_id: current_user_id}}) +
+            '</form> </div></div></div>'
+
+    render 'shared/modal',id: modal,
+                         content: ctnt.html_safe,
+                         header: modal_head,
+                         button: "<button onclick=#{onclick}('#{_id}');>Change</button>"
+                         
+  end
+                         
+  
+  
 end

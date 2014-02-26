@@ -72,5 +72,5 @@ module CoreMethods
     @model = model.camelize
     render 'shared/index'
   end
-  
+    
 end

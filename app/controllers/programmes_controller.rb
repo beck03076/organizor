@@ -9,37 +9,39 @@ class ProgrammesController < ApplicationController
     set_url_params
     authorize! :update, Programme
     
-    ids = params[:prog_ids].split(",")
+    #@main_ids has programme_ids and asso_id has commission_claim_Status_id
     
+    ids = @main_ids.split(",")
     to_update = Programme.where(id: ids)
-    to_update.update_all(claim_status_id: params[:status_id],
-                         updated_by: params[:user_id])
-                         
-    status = CommissionClaimStatus.find(params[:status_id]).name.titleize
-    
-    @text = "Status Successfully Changed."
-    
-    if status == "Invoiced"
+    @status = CommissionClaimStatus.find(@asso_id).name.titleize
+
+    if @status == "Invoiced"
       iterate_fee(to_update,:invoice_date)
-      @text += " To #{status}. Invoice Date Successfully Set."
-    elsif (status == "Full Payment Received" || status == "Partial Payment Received")
+    elsif (@status == "Full Payment Received" || @status == "Partial Payment Received")
       iterate_fee(to_update,:first_payment_date)
-      @text += " To #{status}. First Payment Date Successfully Set."
     else
-      @text += " To #{status}."
+      to_update.update_all(claim_status_id: params[:status_id],
+                         updated_by: params[:user_id])
+      @text = "#{@status} set."
     end
-                         
+    
     render text: @text
+
   end
   
   def iterate_fee(objs,col)
     objs.each do |p|
         if p.fee
-          if col == :first_payment_date && !p.fee.invoice_date.nil?
+          if (col == :first_payment_date) && (p.fee.invoice_date.nil?)
+            @text = "You cannot set Paid without Invoicing." 
+          else 
             p.fee.update_attribute(col,Date.today)
-          else
-            @text = " You cannot set Paid without Invoicing."
+            p.update_attributes(claim_status_id: @asso_id,
+                         updated_by: @user_id)
+            @text = "#{@status} set. #{col.to_s.titleize} Successfully Set."
           end
+        else
+          @text = "Tuition Fees not updated."
         end
     end
   end
@@ -52,9 +54,26 @@ class ProgrammesController < ApplicationController
       format.html # index.html.erb
       format.json { core_json("programme",params[:institution_id]) } # in core_methods
       format.js { core_js("programme") } # in core_methods
+      format.xls {
+        if @prog_ids == "0"
+          @programmes = Programme.joined_ins(@ins_id)
+        else
+          @programmes = Programme.where(id: @prog_ids.split(","))
+        end
+        @institution = Institution.find(@ins_id)
+      }#download xls
+      
+      format.pdf{
+      @programmes = Programme.all
+      render   :pdf => 'index',
+               :layout => 'application',
+               :handlers => :erb,
+               :disable_external_links => true,
+               :print_media_type => true
+      }
     end
   end
-  
+
   def from_institution
     set_url_params
   end

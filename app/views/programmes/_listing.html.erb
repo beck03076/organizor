@@ -16,16 +16,15 @@
                 <select id="mass-actions" style="width:130px" class="form-control hor-first">
                     <option>-Mass Actions-</option>
                     <!----------------------- Comm Claim Update Start---------------------------->
-                    <% if can? :update, CommissionClaimStatus %>
-                      <option value="commClaimStatus">Update Status</option>
+                    <% if can? :update, Programme %>
+                      <option value="commClaimStatus">Claim Status</option>
                     <% end %>
                     <!----------------------- Group Assign End---------------------------->
-                    <!----------------------- Bulk Email Start---------------------------->
-                    <% if can? :create, Email %>
-                      <option value="bulkEmail">Bulk email</option>
-                      <% js = 'bulkEmail' %>
+                    <!----------------------- App Status Start---------------------------->
+                    <% if can?  :update, Programme %>
+                      <option value="appStatus">Application Status</option>
                     <% end %>
-                    <!----------------------- Bulk Email End---------------------------->
+                    <!----------------------- App Status End---------------------------->
                     <!----------------------- Group Delete Start--------------------------->
                     <% if can? :destroy, _model %>
                       <option value="deactivate">Deactivate</option>
@@ -33,32 +32,36 @@
                     <!----------------------- Group Delete End--------------------------->
                 </select>
                 <!----------------------- Comm Claim Update Modal Start---------------------------->
+                    <%= bulk_asso_update("Claim Status",
+                                        "comm_claim_status_",
+                                        'CommissionClaimStatus',
+                                        '-status-',
+                                        model,
+                                        current_user.id,
+                                        'commClaimStatusModal',
+                                        'Update Status',
+                                        'updateCommClaim',
+                                         _id) %>
+                <!----------------------- Comm Claim Update Modal End---------------------------->
+                <!----------------------- App Status Modal Start---------------------------->
                 <% ctnt = '<div class="row">
                            <div class="col-md-10">
                            <div class="col-md-offset-3">
                               <form class="form-inline" role="form">' +
-                              label_tag(:user,"Status",{class: "col-md-3"}) +
-                              select_tag("comm_claim_status_#{_id}",
-                              options_for_select(CommissionClaimStatus.order(:name).map{|i| [i.name.titleize,i.id]}),
+                              label_tag(:user,"Application Status",{class: "col-md-3"}) +
+                              select_tag("app_status_#{_id}",
+                              options_for_select(ApplicationStatus.order(:name).map{|i| [i.name.titleize,i.id]}),
                               {prompt: "-status-",
                               class: "form-control hor-first col-md-4",
                               data: {model: model,
                               user_id: current_user.id}}) +
                               '</form> </div></div></div>' %>
 
-                <%= render 'shared/modal',id: 'commClaimStatusModal',
+                <%= render 'shared/modal',id: 'appStatusModal',
                            content: ctnt.html_safe,
                            header: 'Update Status',
-                           button: "<button onclick=updateCommClaim('#{_id}');>Change</button>" %>
-                <!----------------------- Group Assign Modal End---------------------------->
-                <!----------------------- Bulk Email Start---------------------------->
-                <% ctnt = 'Are you sure you want to send email to all the selected email ids ?' %>
-
-                <%= render 'shared/modal',id: 'bulkEmailModal',
-                           content: ctnt.html_safe,
-                           header: 'Bulk Email',
-                           button: "<button onclick=bulkEmail('#{_id}');>Yes</button>" %>
-                <!-----------------------Bulk Email Modal End---------------------------->
+                           button: "<button onclick=updateAppStatus('#{_id}');>Change</button>" %>
+                <!-----------------------App Status Modal End---------------------------->
                 <!----------------------- Group Delete Modal Start---------------------------->
                 <% ctnt = 'Are you sure you want to deactivate the selected enquiries ?' %>
 
@@ -95,14 +98,11 @@
               <div class="col-md-2">
                 <form class="form-inline" role="form">
                   <div class="form-group pull-right">
-                    <%= select_tag :abdc,
-                      options_for_select([["Follow Up - All",""],
-                                         ["Today","todays"],
-                                         ["This Week","this_weeks"],
-                                         ["This Month","this_months"],
-                                         ["No FollowUp","no_followups"]]),
-                      {id: "followUpSelect",class: "form-control hor-first",
-                       style: "width:130px"} %>
+                    <span class="glyphicon mar0 glyphicon-list-alt"></span>
+                    <%= link_to "xls",programmes_path,{id: "xls", 
+                                                       data: {ins_id: @institution_id}} %> |
+                    <span class="glyphicon mar0 glyphicon-book"></span>
+                    <%= link_to "pdf",programmes_path(format: "pdf") %>
                   </div>
                 </form>
               </div>
@@ -120,14 +120,8 @@
 
               <div class="row">
                   <h5 class="col-sm-2">Filter By</h5>
-
-                  <%= f.condition_fields do |c| %>
-                    
-                    <%= render "shared/condition_fields", f: c %>
-                  <% end %>
-                  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus col-sm-3"></span>'.html_safe,
-                      f,
-                      :condition %>
+                    <%= f.label :institution_id_eq, "Institution" %>
+                    <%= f.text_field :course_level_name_cont %>
               </div>
               <div class="field row">
                  <div class="row">
@@ -205,6 +199,25 @@
 
  actmm('<%= act %>');
  acttab('<%= @status || @partial_name %>');
+
+ 
+ $('#xls').on("click",function(){
+   var ins_id = $(this).data("ins-id");
+   var rows = getCheckedRowsAsArray('<%= _id %>',"dont_stop");
+   
+   if(rows.length == 0){ rows = 0 };
+   url = '/programmes/ins_id/' + ins_id  + '/prog_ids/' + rows + '/export.xls'
+   
+   var $idown;
+   if ($idown) {
+        $idown.attr('src',url);
+      } else {
+        $idown = $('<iframe>', { id:'idown', src:url }).hide().appendTo('body');
+   }
+   return false;
+   
+ });
+ 
  
 
 

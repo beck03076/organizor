@@ -15,7 +15,6 @@
 *= require token-input-bootstrappy
 *= require custom
 
-
 */
 
 
@@ -43,6 +42,9 @@ strong.uncheckit{text-decoration:none;}
 .vlsdet{list-style:none;padding:10px 0 10px 0;margin:0}
 .vlsdet li{padding:5px 0 0 0;}
 .vlsdet li  label{text-align:left;width:130px;white-space:nowrap;display:inline-block}
+
+.mar0 {
+  margin-right: 0rem; }
  
 
 
