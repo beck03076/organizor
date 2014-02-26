@@ -100,9 +100,12 @@
                   <div class="form-group pull-right">
                     <span class="glyphicon mar0 glyphicon-list-alt"></span>
                     <%= link_to "xls",programmes_path,{id: "xls", 
-                                                       data: {ins_id: @institution_id}} %> |
+                                                       data: {ins_id: @institution_id,
+                                                              format: 'xls'}} %> |
                     <span class="glyphicon mar0 glyphicon-book"></span>
-                    <%= link_to "pdf",programmes_path(format: "pdf") %>
+                    <%= link_to "pdf",programmes_path,{id: "pdf", 
+                                                       data: {ins_id: @institution_id,
+                                                              format: 'pdf'}} %>
                   </div>
                 </form>
               </div>
@@ -201,12 +204,14 @@
  acttab('<%= @status || @partial_name %>');
 
  
- $('#xls').on("click",function(){
+ $('#xls, #pdf').on("click",function(){
    var ins_id = $(this).data("ins-id");
+   var f = $(this).data("format");
+   
    var rows = getCheckedRowsAsArray('<%= _id %>',"dont_stop");
    
    if(rows.length == 0){ rows = 0 };
-   url = '/programmes/ins_id/' + ins_id  + '/prog_ids/' + rows + '/export.xls'
+   url = '/programmes/ins_id/' + ins_id  + '/prog_ids/' + rows + '/export.' + f
    
    var $idown;
    if ($idown) {

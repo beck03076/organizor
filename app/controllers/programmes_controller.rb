@@ -54,24 +54,25 @@ class ProgrammesController < ApplicationController
       format.html # index.html.erb
       format.json { core_json("programme",params[:institution_id]) } # in core_methods
       format.js { core_js("programme") } # in core_methods
-      format.xls {
-        if @prog_ids == "0"
-          @programmes = Programme.joined_ins(@ins_id)
-        else
-          @programmes = Programme.where(id: @prog_ids.split(","))
-        end
-        @institution = Institution.find(@ins_id)
-      }#download xls
-      
-      format.pdf{
-      @programmes = Programme.all
+      format.xls { xls_pdf }
+      format.pdf{ xls_pdf
       render   :pdf => 'index',
                :layout => 'application',
                :handlers => :erb,
                :disable_external_links => true,
-               :print_media_type => true
+               :print_media_type => true,
+               :grayscale => true
       }
     end
+  end
+  
+  def xls_pdf 
+    if @prog_ids == "0"
+          @programmes = Programme.joined_ins(@ins_id)
+    else
+          @programmes = Programme.where(id: @prog_ids.split(","))
+    end
+    @institution = Institution.find(@ins_id)    
   end
 
   def from_institution
