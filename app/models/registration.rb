@@ -37,6 +37,8 @@ class Registration < ActiveRecord::Base
   has_many :todos
   
   belongs_to :branch
+  
+  belongs_to :progression_status
     
   attr_accessor :_destroy
 
@@ -57,7 +59,8 @@ class Registration < ActiveRecord::Base
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
   :note,:documents_attributes,:_destroy,:enquiry_id,
-  :notes_attributes,:image,:remote_image_url
+  :notes_attributes,:image,:remote_image_url,
+  :progression_status_id
   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,
   :notes,:todos,:proficiency_exams, 

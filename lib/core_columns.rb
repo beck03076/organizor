@@ -44,8 +44,10 @@ module CoreColumns
                      institution_id: [:institution,:name],
                      country_id: [:country, :name],
                      city_id: [:city,:name],
-                     registration_id: [:registration,:first_name],
-                     claim_status_id: [:claim_status,:name],
+                     ref_no: [:registration,:ref_no],
+                     first_name: [:registration,:first_name],
+                     surname: [:registration,:surname],
+                     status: [:claim_status,:name],
                      }
      
      end

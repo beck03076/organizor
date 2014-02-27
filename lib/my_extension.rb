@@ -73,10 +73,13 @@ module MyExtension
      "Unknown"
     end
   end
+  
 
   # methods to be included 
   module ClassMethods   
-      
+    def csel
+      order(:name).map{|i| [i.name,i.id]}
+    end
   end
 end
 

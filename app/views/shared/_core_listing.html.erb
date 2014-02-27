@@ -37,6 +37,11 @@
                     <% if can? :destroy, _model %>
                       <option value="deactivate">Deactivate</option>
                     <% end %>
+
+                    <% if (_model == Registration) && (can? :update, _model) %>
+                      <option value="progStatus">Progression Status</option>
+                    <% end %>
+                    
                     <!----------------------- Group Delete End--------------------------->
                 </select>
                 <!----------------------- Group Assign Modal Start---------------------------->
@@ -70,7 +75,18 @@
                            header: 'Group Delete',
                            button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
                 <!-----------------------Group Delete Modal End---------------------------->
-
+                <% if (_model == Registration) %>
+                <%= bulk_asso_update("Progression Status",
+                                     "prog_status_",
+                                     'ProgressionStatus',
+                                     '-status-',
+                                     model,
+                                     current_user.id,
+                                     'progStatusModal',
+                                     'Update Status',
+                                     'updateProgStatus',
+                                     _id) %>
+                <% end %>
 
               </div>
               <!-----------------------Search Start---------------------------->

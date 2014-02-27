@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224102110) do
+ActiveRecord::Schema.define(:version => 20140226135939) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -617,6 +617,15 @@ ActiveRecord::Schema.define(:version => 20140224102110) do
     t.integer  "claim_status_id"
   end
 
+  create_table "progression_statuses", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "prohibited_countries", :force => true do |t|
     t.integer  "country_id"
     t.integer  "contract_id"
@@ -711,14 +720,15 @@ ActiveRecord::Schema.define(:version => 20140224102110) do
     t.integer  "assigned_by"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "prof_eng_level_id"
     t.integer  "prof_exam_id"
     t.text     "note"
     t.integer  "enquiry_id"
     t.string   "image"
     t.integer  "branch_id"
+    t.integer  "progression_status_id"
   end
 
   create_table "roles", :force => true do |t|

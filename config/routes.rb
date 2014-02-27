@@ -1,5 +1,8 @@
 Organizor::Application.routes.draw do
 
+  resources :progression_statuses
+
+
   resources :commission_claim_statuses
   
   get '/programmes/abc' => "programmes#abc"

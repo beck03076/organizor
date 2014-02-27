@@ -17,4 +17,12 @@ class Fee < ActiveRecord::Base
     #self.amount = self.amount * 100
   end
   
+  
+  ransacker :tuition_fee do |parent|
+      Arel::Nodes::Division.new(parent.table[:tuition_fee_cents], 100 )
+  end
+  
+  ransacker :commission_amount do |parent|
+      Arel::Nodes::Division.new(parent.table[:commission_amount_cents], 100 )
+  end
 end

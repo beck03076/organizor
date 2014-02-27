@@ -106,7 +106,8 @@ User.current = User.first
  {todo_topic: %w(Default Documents Administrative
                  Enquiry Registration Institution 
                  Person)},
- {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)}].each do |i|
+ {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
+ {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )}].each do |i|
     model = i.keys[0].to_s.camelize.constantize
     values = i.values[0]
     values.each do |v|

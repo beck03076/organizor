@@ -1,0 +1,130 @@
+<!-- Ranscak filters for programmes -->            
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="col-md-4">
+                    <h5>Course</h5>
+                  </div>
+                  <div class="col-md-5 text-right pull-right">        
+                   <span onclick="$('.ransack').slideToggle();" class="pointer glyphicon glyphicon-arrow-up"></span>
+                    </div>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12 ">
+                  <div class="col-md-3">
+                       <%= f.collection_select :course_level_id_eq,
+                                               CourseLevel.order(:name),
+                                               :id,
+                                               :name,
+                                               {prompt: '-course level-'},
+                                               {class: "form-control"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :course_subject_text_cont,
+                                        {class: "form-control",
+                                         placeholder: "Course Subject"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :start_date_gteq,
+                                        {class: "form-control datepicker",
+                                         placeholder: "Start Date From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :start_date_lteq,
+                                        {class: "form-control datepicker",
+                                         placeholder: "Start Date To"} %>
+                  </div>
+                  </div>
+              </div>
+              
+              <div class="row">
+               <div class="col-md-12">
+                  <div class="col-md-4">
+                    <h5>Registration</h5>
+                  </div>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12">
+                  <div class="col-md-3">
+                       <%= f.text_field :registration_date_of_birth_gteq,
+                                        {class: "form-control",
+                                         placeholder: "DOB From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :registration_date_of_birth_lteq,
+                                        {class: "form-control",
+                                         placeholder: "DOB To"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.collection_select :registration_country_id_eq,
+                                               Country.order(:name),
+                                               :id,
+                                               :name,
+                                               {prompt: '-nationality-'},
+                                               {class: "form-control"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.collection_select :registration_assigned_to_eq,
+                                               User.order(:first_name),
+                                               :id,
+                                               :name,
+                                               {prompt: '-assigned to-'},
+                                               {class: "form-control"} %>
+                  </div>
+                  </div>
+              </div>
+              
+              <div class="row">
+               <div class="col-md-12">
+                  <div class="col-md-4">
+                    <h5>Fee</h5>
+                  </div>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12">
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_tuition_fee_gteq,
+                                               {class: "form-control",
+                                                placeholder: "Tuition Fee From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_tuition_fee_lteq,
+                                               {class: "form-control",
+                                                placeholder: "Tuition Fee To"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_commission_amount_gteq,
+                                               {class: "form-control",
+                                                placeholder: "Commission From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_commission_amount_lteq,
+                                               {class: "form-control",
+                                                placeholder: "Commission To"} %>
+                  </div>
+                  </div>
+              </div>
+              <div class="row">
+               <div class="col-md-12">
+                  <div class="col-md-4">
+                    <h5>Sort By</h5>
+                  </div>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12 form-inline">
+                    <div class="col-md-5">
+                            <%= f.sort_fields do |s| %>
+                                <%= s.sort_select({},{class: "form-control"}) %>
+                            <% end %>
+                    </div>
+                    <div class="col-md-2 form-group">        
+                   <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">
+                     Go
+                   </span>
+                    </div>
+                    
+                  </div>
+              </div>

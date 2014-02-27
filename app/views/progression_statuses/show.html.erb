@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @progression_status.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @progression_status.desc %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @progression_status.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @progression_status.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_progression_status_path(@progression_status) %> |
+<%= link_to 'Back', progression_statuses_path %>

@@ -7,7 +7,7 @@
 <% srch_url = send("search_" + model_pl + "_path") %>
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
-              <div class="col-md-12 data-table">
+            <div class="col-md-12 data-table">
             <div class="well">
             <% div_id = "group_assign_to_" + _id %>
             <div id="<%= div_id %>" data-model=<%= model %>></div>
@@ -25,11 +25,6 @@
                       <option value="appStatus">Application Status</option>
                     <% end %>
                     <!----------------------- App Status End---------------------------->
-                    <!----------------------- Group Delete Start--------------------------->
-                    <% if can? :destroy, _model %>
-                      <option value="deactivate">Deactivate</option>
-                    <% end %>
-                    <!----------------------- Group Delete End--------------------------->
                 </select>
                 <!----------------------- Comm Claim Update Modal Start---------------------------->
                     <%= bulk_asso_update("Claim Status",
@@ -44,33 +39,17 @@
                                          _id) %>
                 <!----------------------- Comm Claim Update Modal End---------------------------->
                 <!----------------------- App Status Modal Start---------------------------->
-                <% ctnt = '<div class="row">
-                           <div class="col-md-10">
-                           <div class="col-md-offset-3">
-                              <form class="form-inline" role="form">' +
-                              label_tag(:user,"Application Status",{class: "col-md-3"}) +
-                              select_tag("app_status_#{_id}",
-                              options_for_select(ApplicationStatus.order(:name).map{|i| [i.name.titleize,i.id]}),
-                              {prompt: "-status-",
-                              class: "form-control hor-first col-md-4",
-                              data: {model: model,
-                              user_id: current_user.id}}) +
-                              '</form> </div></div></div>' %>
-
-                <%= render 'shared/modal',id: 'appStatusModal',
-                           content: ctnt.html_safe,
-                           header: 'Update Status',
-                           button: "<button onclick=updateAppStatus('#{_id}');>Change</button>" %>
+                     <%= bulk_asso_update("Application Status",
+                                        "app_status_",
+                                        'ApplicationStatus',
+                                        '-status-',
+                                        model,
+                                        current_user.id,
+                                        'appStatusModal',
+                                        'Update Status',
+                                        'updateAppStatus',
+                                         _id) %>
                 <!-----------------------App Status Modal End---------------------------->
-                <!----------------------- Group Delete Modal Start---------------------------->
-                <% ctnt = 'Are you sure you want to deactivate the selected enquiries ?' %>
-
-                <%= render 'shared/modal',id: 'deactivateModal',
-                           content: ctnt.html_safe,
-                           header: 'Group Delete',
-                           button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
-                <!-----------------------Group Delete Modal End---------------------------->
-
 
               </div>
               <!-----------------------Search Start---------------------------->
@@ -80,7 +59,7 @@
                     <label for="id_column">Filter by</label>
                     <%= select_tag :abdc,
                         options_for_select((@cols - [:follow_up_date]).map{|i|
-                        i.is_a?(Array) ? [i[0].to_s.titleize,i[0]]  : [i.to_s.titleize,i]
+                           i.is_a?(Array) ? [i[3].to_s.titleize,i[3]]  : [i.to_s.titleize,i]
                         }.unshift(["-column name-",""])),
                         {id: "mySelect",class: "form-control hor-first"} %>
                   </div>
@@ -89,7 +68,7 @@
                     <input style="width:130px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
                   <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
-                  <span class="glyphicon glyphicon-search" onclick="$('.ransack').slideToggle();"></span>
+                  <span class="glyphicon glyphicon-filter" onclick="$('.ransack').slideToggle();"></span>
 
                 </form>
               </div>
@@ -117,33 +96,17 @@
        <% @search = _model.search(params[:q]) %>
        <% @search.build_condition if @search.conditions.empty? %>
        <% @search.build_sort if @search.sorts.empty? %>
-       <div class="well well-sm filter-well ransack row" style="display:none;">
+       
+       <div class="row">
+         
+       <div class="well green-well  ransack" style="display:none;">       
        <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
-                                                                  class: "form-inline"} do |f| %>
-
-              <div class="row">
-                  <h5 class="col-sm-2">Filter By</h5>
-                    <%= f.label :institution_id_eq, "Institution" %>
-                    <%= f.text_field :course_level_name_cont %>
-              </div>
-              <div class="field row">
-                 <div class="row">
-                      <h5 class="col-sm-2">Sort By</h5>
-                 </div>
-                  <div class="col-md-12">
-
-                        <div class="col-sm-5">
-                            <%= f.sort_fields do |s| %>
-                                <%= s.sort_select({},{class: "form-control"}) %>
-                            <% end %>
-                          <span onclick="$(this).submit();" class="glyphicon glyphicon-search" id="ransack_submit">
-                          </span>
-                        </div>
-                  </div>
-              </div>
-
+                                                                  class: "form-horizontal"} do |f| %>
+              <%= render 'programmes/ransack_filter', f: f %>
+              
        <% end %>
-       </div>
+          </div>
+      </div>
        <!-----------------------Ransack Filter End---------------------------->
 
 <table id='<%= _id %>' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= url %>">

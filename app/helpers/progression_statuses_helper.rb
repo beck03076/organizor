@@ -1,0 +1,2 @@
+module ProgressionStatusesHelper
+end

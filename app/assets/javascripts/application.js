@@ -573,6 +573,11 @@ function updateAppStatus(tableId){
                  'appStatusModal','programme','application_status','app_status_id');
 }
 
+function updateProgStatus(tableId){
+  bulkAssoUpdate(tableId,"select","prog_status_",'/bulk_asso_update',
+                 'progStatusModal','registration','progression_status','progression_status_id');
+}
+
 function groupAssignTo(tableId){
        var rows = getCheckedRowsAsArray(tableId);
        sel = "select#group_assign_user_" + tableId

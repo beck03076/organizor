@@ -104,6 +104,8 @@ body {
     cursor: pointer; }
   .main .main-content .filter-well {
     background-color: #FFE9B4; }
+  .main .main-content .green-well {
+    background-color: #e1f5e0; }
   .main .main-content .border-b {
     border-bottom: 1px solid #dddddd; }
   .main .main-content .to-do .well {
@@ -129,7 +131,7 @@ body {
     margin-top: 1rem; }
   .main .main-content .data-table .vert-center {
     margin-top: 5px; }
-  .main .main-content .data-table .glyphicon-remove,.glyphicon-search {
+  .main .main-content .data-table .glyphicon-remove,.glyphicon-filter {
     top: 3px;
     cursor: pointer; }
   .main .main-content .data-table .filter-center {
@@ -170,6 +172,8 @@ body {
   .main .main-content .basic .col-xs-4, .main .main-content .basic .col-xs-8, .main .main-content .application .col-xs-4, .main .main-content .application .col-xs-8 {
     margin-bottom: 5px; }
   .main .main-content .application .collapse .filter-well p.indent {
+    margin-bottom: 5px; }
+    .main .main-content .application .collapse .green-well p.indent {
     margin-bottom: 5px; }
   .main .main-content .form-control.hor-first {
     margin: 0; }
