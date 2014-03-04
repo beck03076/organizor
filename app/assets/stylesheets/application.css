@@ -44,9 +44,17 @@ strong.uncheckit{text-decoration:none;}
 .vlsdet li{padding:5px 0 0 0;}
 .vlsdet li  label{text-align:left;width:130px;white-space:nowrap;display:inline-block}
 
+.vlsdet-s{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet-s li{padding:5px 0 0 0;}
+.vlsdet-s li  label{text-align:left;width:75px;white-space:nowrap;display:inline-block}
+.vlsdet-s li li{padding:5px 0 0 0;text-align:right;}
+
 .mar0 {
   margin-right: 0rem; }
 
+.padded{
+ padding:0 5px 0 5px;
+}
 .red-wrong{
   color: #555753;
   background-color:#f7d0d0;

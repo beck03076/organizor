@@ -1,6 +1,13 @@
 class UserConfigsController < ApplicationController
   include CoreColumns
   before_filter :set_all_cols
+  
+  def edit_prog_fu_ass_to
+    @user_config = current_user.conf
+    respond_to do |format|
+      format.js
+    end
+  end
 
   # GET /user_configs
   # GET /user_configs.json
@@ -84,26 +91,32 @@ class UserConfigsController < ApplicationController
   def update
     @user_config = UserConfig.find(params[:id])
     
-    %w(reg enq ins per).each do |i|
-      var = i + "_cols"
-      inst = eval("@def_" + i + "_cols")
-      par = params[:user_config][var.to_sym]
+    if params[:user_config][:progress_fu].present?
+      params[:user_config].delete(:progress_fu)
       
-      if !par.nil?
-          sym_cols = par.map &:to_sym
-          params[:user_config][var.to_sym] = self.prepare_cols(sym_cols,inst)
-      end
+    else
+        %w(reg enq ins per).each do |i|
+          var = i + "_cols"
+          inst = eval("@def_" + i + "_cols")
+          par = params[:user_config][var.to_sym]
+          
+          if !par.nil?
+              sym_cols = par.map &:to_sym
+              params[:user_config][var.to_sym] = self.prepare_cols(sym_cols,inst)
+          end
+        end
     end
-
-    respond_to do |format|
-      if @user_config.update_attributes(params[:user_config])
-        format.html { redirect_to root_path, notice: 'User config was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user_config.errors, status: :unprocessable_entity }
-      end
-    end
+        respond_to do |format|
+          if @user_config.update_attributes(params[:user_config])
+            format.html { redirect_to root_path, notice: 'User config was successfully updated.' }
+            format.json { head :no_content }
+            format.js{ render 'progress_fu'}
+          else
+            format.html { render action: "edit" }
+            format.json { render json: @user_config.errors, status: :unprocessable_entity }
+          end
+        end
+    
 
   end
 

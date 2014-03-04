@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140303172547) do
+ActiveRecord::Schema.define(:version => 20140304081021) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -885,8 +885,8 @@ ActiveRecord::Schema.define(:version => 20140303172547) do
   create_table "user_configs", :force => true do |t|
     t.integer  "def_follow_up_days"
     t.integer  "user_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.text     "def_note"
     t.text     "reg_cols"
     t.text     "enq_cols"
@@ -909,6 +909,7 @@ ActiveRecord::Schema.define(:version => 20140303172547) do
     t.text     "per_cols"
     t.string   "def_pro_search_col"
     t.text     "pro_cols"
+    t.integer  "def_progression_fu_ass_to"
   end
 
   create_table "users", :force => true do |t|

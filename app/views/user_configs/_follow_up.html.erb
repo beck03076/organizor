@@ -20,5 +20,11 @@
                                               "collection_select",
                                               ["Default Assign To",3],5) %>
                                               
+                    <%= bs(f,[:def_progression_fu_ass_to,User.order(:first_name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-assign to-"},{}],
+                                              "collection_select",
+                                              ["Default Progression Assign To",3],5) %>                                              
                     <%= bs(f,:auto_cr_f_u,"check_box",["Auto Create",3],5) %>    
 

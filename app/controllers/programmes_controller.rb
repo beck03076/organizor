@@ -191,12 +191,12 @@ class ProgrammesController < ApplicationController
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
         # first pending commmission is created here
-        if (params[:programme][:fee_attributes] && @programme.commissions.blank?)
+        @commissions = @programme.fee.commissions
+        if (params[:programme][:fee_attributes] && @commissions.blank?)
           s_id = CommissionStatus.find_by_name("pending".titleize).id
           Commission.create!(status_id: s_id,
                              paid_cents: 0,
-                             fee_id: params[:programme][:fee_attributes][:id],
-                             created_by: current_user.id,
+                             fee_id: @programme.fee.id,
                              remaining_cents: params[:programme][:fee_attributes][:commission_amount_cents],
                              currency: params[:programme][:fee_attributes][:currency])
         end
@@ -210,8 +210,9 @@ class ProgrammesController < ApplicationController
       
         format.html { redirect_to @programme.registration, notice: 'Programme was successfully updated.' }
         format.json { head :no_content }
-        
-        if params[:change_status].nil?
+        if params[:programme][:fee_attributes].present?
+          format.js { render "programmes/fee_update" }
+        elsif params[:change_status].nil?
           format.js { render "programmes/update" }
         else
         

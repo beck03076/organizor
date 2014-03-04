@@ -1,5 +1,8 @@
 class RegistrationsController < ApplicationController
   include CoreMethods
+  include FetchFromContract
+  include ActionsMethods
+  helper_method :r_order,:meta
   
   def tab
     set_url_params

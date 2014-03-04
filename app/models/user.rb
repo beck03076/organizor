@@ -72,5 +72,9 @@ class User < ActiveRecord::Base
   def default_values
     self.permissions << Permission.where(subject_class: "User", action: ["update","read"])
   end
+  
+  def prog_fu_ass_to
+    User.find(self.conf.def_progression_fu_ass_to).name
+  end
 
 end

@@ -9,13 +9,11 @@
   <% fe_size = fe.nil? ? 0 : 1 %>
   <% comms = fe.commissions rescue nil %>
   
-     <!-- how manieth registration is this for this institution is r_order -->
-    <% r_id = [i.registration.id] %>
-    <% r_ids = i.institution.registrations.map &:id %>
-    <% r_arr = (r_ids - r_id) %>
-    <% r_order = (r_arr).blank? ? 1 : (r_arr.size + 1) %>
+     
   
   <% if eval_status %>  
+    <!-- how manieth registration is this for this institution is r_order -->
+    <% r_order = r_order(i.registration.id,i.institution.id) %>
     <div class="row well">
     <div class="col-md-12">
       <h4> <%= app_name %> - <%= app_status %> -  [<b><%= r_order.ordinalize %></b> registration]</h4>

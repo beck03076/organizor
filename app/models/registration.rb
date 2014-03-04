@@ -82,9 +82,8 @@ class Registration < ActiveRecord::Base
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
   end
   
-  
   def statuses
-    self.programmes.map{|i| i.application_status.try(:name)} rescue ""
+    self.programmes.includes(:application_status,:institution).map{|i| [i.institution.try(:name),i.application_status.try(:name)]} rescue ""
   end
 
   def address
@@ -119,8 +118,25 @@ class Registration < ActiveRecord::Base
     "Registrations"
   end
   
-  def set_fu(title,desc,st,en)
-  
+  def a_city
+   self.address_city.name rescue "unknown"  
   end
   
+  def a_country
+   self.address_country.name rescue "unknown"  
+  end
+  
+  def nationality
+    self.country_of_origin.name rescue "Unknown"
+  end
+  
+  def source
+    self.student_source.name rescue "Unknown"
+  end
+  
+  def quick_st
+    total = self.programmes.size
+    j = self.programmes.includes(:application_status).where(application_statuses: {name: "joined"}).size
+    [total,j,"joined"]
+  end
 end

@@ -1,7 +1,7 @@
 <!-- institution edit page -->
   
 
-  <%= render 'form', what: "Edit" %>
+  <%= render 'form', what: "Edit",link: (link_to(@institution.name,institution_path(@institution))) %>
   
   
 

@@ -1,0 +1,40 @@
+<!-- Change prog follow up-->
+<div class="row">
+    <div class="col-md-12">
+                <ul class="vlsdet">
+                   
+                   <%= form_for(@user_config, html: {class: "form-horizontal"},remote: true) do |f| %>
+                    <%= f.hidden_field :user_id,value: current_user.id %>
+                    <%= hidden_field_tag "user_config[progress_fu]",true %>
+                       <!-- Contains the content of the form, same form since all just edits the user_configs table -->
+                       <li>
+                       <label>Assign To</label>
+                       <small>
+                       <%= f.collection_select(:def_progression_fu_ass_to,User.order(:first_name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-assign to-"},{class: 'form-control padR40'}) %> 
+                       </small>
+                       </li>
+                       <li>
+                       <label></label>
+                       <button type="submit" class="btn-xs btn-primary">Change</button>
+                       </li>
+                  <% end %>
+                  
+                </ul>
+    </div>            
+</div>
+
+<script>
+$('form').submit(function() {  
+    var valuesToSubmit = $(this).serialize();
+    $.ajax({
+        url: $(this).attr('action') + ".js", //sumbits it to the given url of the form
+        data: valuesToSubmit,
+        type: "PUT", // you want a difference between normal and ajax-calls, and json is standard
+    });
+    return false; // prevents normal behaviour
+});
+
+</script>

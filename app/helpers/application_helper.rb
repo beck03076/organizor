@@ -1,4 +1,32 @@
 module ApplicationHelper
+  #basic li ul listing with vlsdet
+  def li1(label,val,sizel,sizev,a = nil)
+    html = ""    
+    if val.kind_of?(Array)
+      value = val[0]
+      if val[1].to_i == 0
+        cl = "yellow-ok"
+      else 
+        cl = "green-right"
+      end
+      disp1 = "<small>#{val[1]} #{val[2]}</small>"
+    else
+      value = val
+      cl ="padded"
+    end
+    if a.nil?
+      disp = value
+    else
+      disp = best_in_place_if (can? :update,a),a,val.to_sym
+    end  
+    html += "<li>
+             <div class=#{cl}>
+             <label><#{sizel} class='light'>#{label.titleize}</#{sizel}></label>
+             <#{sizev}  class=#{cl} >#{disp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{disp1}</#{sizev}> 
+             </div>
+             </li>"
+    html.html_safe
+  end
 
   def prefer_countries(main,sub,values,data_values)
 

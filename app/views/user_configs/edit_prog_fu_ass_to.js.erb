@@ -1,0 +1,21 @@
+    <% ctnt = (render 'edit_prog_fu_ass_to') %>     
+    
+    $('#resource-container').html("<%= escape_javascript(render :partial => 'shared/popover',
+                                         :locals =>   {id: 'resource', 
+                                                       content: ctnt.html_safe,
+                                                       header: "Progression FollowUp",
+                                                       button: nil}) %>");
+                                                       
+    $('#resource').popover({
+        html: true,
+        placement: "right",
+        title: function () {
+            return $('#resource-container').find('.head').html();
+        },
+        content: function () {
+            return $('#resource-container').find('.content').html();
+        }
+   });
+   $('#resource').popover('show');
+   
+   

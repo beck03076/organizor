@@ -8,11 +8,7 @@ module FetchFromContract
     i = p.institution
     r = p.registration
     # how manieth registration is this for this institution is r_order
-    r_id = [r.id]
-    r_ids = i.registrations.map &:id
-    r_arr = (r_ids - r_id)
-    r_order = 169#(r_arr).blank? ? 1 : (r_arr.size + 1)
-    
+    r_order = self.r_order(r.id,i.id)
         # ss stands for sliding scales, assuming only one contract per institution    
         ss = i.contracts.first.sliding_scales
         # case where there is no sliding scale at all
@@ -24,6 +20,8 @@ module FetchFromContract
             range_array = ss.sliding_ranges.map{|i| [i.from,i.to,i.commission_percentage] }
             # this prepares from nil situations(50+) and checks if the r_order is in between a range and sets the right percentage
             self.check_range(range_array,r_order)
+            #set follow_up for progression
+            self.set_reg_fu(ss,p,r,i)
           # case where there is sliding scale but with course_levels
           else
             # creating an array with ss object and course_level arrays like [obj1,["ug,"pg"],obj2,["phd"]]
@@ -36,11 +34,46 @@ module FetchFromContract
                 # fetching the sliding_ranges for the selected sliding_scale
                 range_array = final_ss.sliding_ranges.map{|i| [i.from,i.to,i.commission_percentage] }  
                 self.check_range(range_array,r_order)
+                 #set follow_up for progression
+                self.set_reg_fu(final_ss,p,r,i)
             end
           end
         end
-
     @out
+  end
+  
+  def r_order(r_id,i_id)
+    # ordering based on the sequence of the ref_no
+    r_arr = Programme.joined_ins(i_id).order(:ins_ref_no).map &:registration_id
+    p "#######" 
+    p r_arr
+    p r_id
+    (r_arr.index(r_id) + 1)
+  end
+  
+  def set_reg_fu(ss,p,r,i)    
+
+    [["second_year",1],["third_year",2]].each do |y|
+       tit = "#{r.ref_no} #{y[0].titleize} FollowUp"
+       comm = ss.send(y[0])
+       ass_to = current_user.conf.def_progression_fu_ass_to
+      if comm && FollowUp.where(title: tit,assigned_to: ass_to).blank?
+       tit = "#{r.ref_no} #{y[0].titleize} FollowUp"
+       s_at = (p.start_date + y[1].year)
+       r_bef = s_at - 5.days
+       e_at = s_at + 15.days
+       de = "#{r.name}[#{r.ref_no}] is about to progress, #{i.name} has agreed to pay #{comm}% commission for #{y[0].titleize}. Please follow this up."
+    
+        FollowUp.create!(title: tit,
+                         desc: de,
+                         starts_at: s_at,
+                         remind_before: r_bef,
+                         ends_at: e_at,
+                         assigned_to: ass_to,
+                         assigned_by: current_user.id,
+                         registration_id: r.id)
+      end
+    end
   end
 
   def check_range(range_arr,order)

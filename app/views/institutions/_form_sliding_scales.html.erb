@@ -32,7 +32,8 @@
             </div>
             </div>
             <div class="clear"></div>
-            <div id="progression" class="col-xs-12 row text-center" style="display:none;">
+            
+            <div id="progression" class="col-xs-12 row text-center" style="display:<%= ss.object.second_year.nil? ? "none" : "block" %>;">
             <div class="form-group">
                 <label class="control-label col-xs-2">2nd Year</label>
                  <div class="col-xs-2">

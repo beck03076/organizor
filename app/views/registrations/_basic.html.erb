@@ -1,5 +1,152 @@
 <!-- basic information about the registration -->
-<% a = @registration %>
+<% a = @registration %>                               
+<div class="row border-b">
+  <div class="col-xs-3">
+                <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
+                           {width: "170"}) %>
+                        <span onclick = "showPopUp('upload_image');" class="abs-plus" style="display:none;">+</span>
+
+                        <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                        <%= render 'shared/img_upload', a: a %>
+                        </div>
+    <ul class="vlsdet-s">
+        <h5 class="border-b">Quick Info</h5>
+           <%= li1('source',a.source,'span','small')%>
+
+           <%= li1('applications',a.quick_st,'span','small')%>
+           <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
+           <% %w(emails follow_ups todos notes).each do |act| %>
+             <% out = meta(current_user.id,"registration",act,a.id,hsh[act.to_sym]) %>
+             <%= li1(act,out,'span','small')%>
+           <% end %>
+           
+
+           
+    </ul>
+                        
+  </div>
+  <div class="col-xs-5 row-top">
+    <ul class="vlsdet">
+        <h5 class="border-b">Personal</h5>
+        <% %w(first_name surname date_of_birth gender nationality).each do |v| %>
+        <%= li1(v,v,'span','small',a)%>
+        <% end %>
+        <h5 class="border-b">Contact</h5>
+        <% %w(mobile1 mobile2 email1 email2 home_phone work_phone).each do |v| %>
+        <%= li1(v,v,'span','small',a)%>
+        <% end %>    
+    </ul>
+  </div>
+  <div class="col-xs-4">    
+    <div class="well well-sm form-last">
+        <ul class="vlsdet-s">
+        <h5 class="border-b">History</h5>
+           <%= li1('registered_at',a.created_at.to_date,'span','small')%>
+           <%= li1('registered_by',a.cby,'span','small')%>
+           <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
+           <%= li1('Modified By',a.uby,'span','small')%>
+           <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.to %>
+           <%= li1('assigned to',out,'span','small')%>
+           <%= li1('assigned by',a.aby,'span','small')%>
+          
+    </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.best_in_place').best_in_place();  
+</script>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                    <h5>Address</h5>
+                                                <% [['address_line1','line1'],
+                                                    ['address_line2','line2'],
+                                                    ['address_city','city'],
+                                                    ['address_country','country']].each do |v| %>
+                                                <%= li1(v[1],a.send(v[0]),'span','small')%>
+                                                <% end %>
+                                        
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h4><strong>Home Address</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Line 1</strong></span></div><div class="col-xs-8 first">f4, Mahalakshmi apts</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Line 2</strong></span></div><div class="col-xs-8 first">Vijayaganagar 8th main road</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>City</strong></span></div><div class="col-xs-8 first">Chennai</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Country</strong></span></div><div class="col-xs-8 first">Venezuela</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Post Code</strong></span></div><div class="col-xs-8 first">600042</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row border-b pb-15">
+                                    <div class="col-xs-6">
+                                        <h4><strong>Passport & Visa</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Passport No.</strong></span></div><div class="col-xs-8 first">349857345</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Passport Till</strong></span></div><div class="col-xs-8 first">24-10-2013</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Visa Type</strong></span></div><div class="col-xs-8 first">United</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Visa Valid Till</strong></span></div><div class="col-xs-8 first">30-10-2013</div></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h4><strong>Emergency Contact</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Full Name</strong></span></div><div class="col-xs-8 first">Senthil</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Relationship</strong></span></div><div class="col-xs-8 first">Brother</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Mobile No.</strong></span></div><div class="col-xs-8 first">23453543</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Email</strong></span></div><div class="col-xs-8 first">sdfasdfg</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row border-b pb-15">
+                                    <div class="col-xs-6">
+                                        <h4><strong>Education Background</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Qualification</strong></span></div><div class="col-xs-8 first">BSC</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Subject</strong></span></div><div class="col-xs-8 first">sdaf</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Institution</strong></span></div><div class="col-xs-8 first">sadf</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Grade</strong></span></div><div class="col-xs-8 first">gfdg</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Exam</strong></span></div><div class="col-xs-8 first">sadf</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Source</strong></span></div><div class="col-xs-8 first">sadf</div></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h4><strong>English Language Proficiency</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Level</strong></span></div><div class="col-xs-8 first">Tomato</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Exam Type</strong></span></div><div class="col-xs-8 first">TOEFL</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Exam Score</strong></span></div><div class="col-xs-8 first">231</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Exam Type</strong></span></div><div class="col-xs-8 first">11-10-2013</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row border-b pb-15">
+                                    <div class="col-xs-6">
+                                        <h4><strong>Flight Details</strong></h4>
+                                        <ul class="no-ul">
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Flight Number</strong></span></div><div class="col-xs-8 first">23143241</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Arrival Date</strong></span></div><div class="col-xs-8 first">some</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Arrival Time</strong></span></div><div class="col-xs-8 first">time</div></li>
+                                            <li><div class="col-xs-4 text-right first"><span class="light"><strong>Airport</strong></span></div><div class="col-xs-8 first">sadgadrg</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <script>
+                    actmm('registrations');
+                    </script>
+
+                </div>
+            </div>
+      </div>
+    </div>
 
 
         <div class="boxp">

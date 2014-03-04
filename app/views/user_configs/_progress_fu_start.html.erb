@@ -1,0 +1,9 @@
+<!-- to update the follow up assignment of the progression -->
+<div id='resource-container'></div>
+  <h6 class="small">For progression(2nd year/3rd year) the follow up will be assigned to
+  <span id="prog-ass-to">
+  <%= link_to current_user.prog_fu_ass_to,'#' %>
+  </span>
+  <%= link_to 'change','/user_configs/edit_prog_fu_ass_to',
+                       {class: 'clickable',id: 'progress-fu', remote: true} %>
+  </h6>

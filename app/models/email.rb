@@ -4,6 +4,7 @@ class Email < ActiveRecord::Base
   has_and_belongs_to_many :registrations
   has_and_belongs_to_many :institutions
   
+  belongs_to :by,class_name: "User",foreign_key: "created_by"  
 
   
   belongs_to :_from, class_name: "Smtp",foreign_key: "smtp_id"

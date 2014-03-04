@@ -15,7 +15,7 @@
             <% last_comm = p.fee.commissions.order(:created_at).last %>
             <%= text_field_tag p.fee.id,nil,{placeholder: "Partial Fee",
                                              class: "form-control partial_fee",
-                                             data: {remaining: last_comm.remaining_cents,
+                                             data: {remaining: (last_comm.remaining_cents rescue "Unknown"),
                                                     name: name }} %>
             <label class="form-group light">Remaining</label>
             
