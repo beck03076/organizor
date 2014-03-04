@@ -22,3 +22,28 @@
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+            
+<script>
+<% if id == "commClaimStatusModal" %>           
+  $('select#comm_claim_status_all_programmes').change(function(){
+    var stat = $('select#comm_claim_status_all_programmes option:selected').text();
+    var cont = "#partial-fee";
+    var tableId = 'all_programmes';
+    if(stat === "Partial Payment Received"){
+            $('div.modal-footer button').hide();
+            var progIds = getCheckedRowsAsArray(tableId,"dont_stop");
+            var posting = $.post('/partial_fee.js',{prog_ids: progIds,
+                                   sel_id: '#comm_claim_status_all_programmes',
+                                   cont: cont,
+                                   table_id: tableId});
+    }   
+    else{
+      $(cont).empty();
+      $('div.modal-footer button').show();
+    }
+    
+  });
+  
+
+<% end %>
+</script>

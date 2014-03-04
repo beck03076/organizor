@@ -17,7 +17,7 @@
                           
    <div class="row row-top">
     <div class="col-xs-7">
-      <h3><%= what %> institution <small>- <%= @institution.name %> </small></h3>
+      <h3><%= what %> institution <span class="light">- <%= link_to @institution.name,institution_path(@institution) %> </span></h3>
     </div>
     <div class="col-xs-5 text-right">
       <div class="form-group form-last">
@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scale]} %>
+  <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scales]} %>
   <% parts = [:start, 
               :institution_information,
               hsh,
@@ -39,7 +39,7 @@
                   </div>
                   <div class="col-xs-10">
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" style="width: 16%;">
+                      <div class="progress-striped progress-bar " role="progressbar" style="width: 16%;">
                       </div>
                     </div>
                   </div>
@@ -51,8 +51,6 @@
                         <% set = "" %>
                         <% if i == 0 %>
                           <% set = "active-link" %>
-                        <% elsif i == (parts.length - 1) %>
-                          <% set = "last-link" %>
                         <% end %>
                         <div class="col-xs-2 text-center top-link <%= set %>">
                           <a href="#" part="<%= i + 1 %>"><%= elem.to_s.titleize %></a>
@@ -186,7 +184,7 @@
               tokens('#' + id3,"/srch_regions.json");
               tokens('#' + id4,"/srch_regions.json");
               
-              slidingScale();
+              slidingScale(field);
               
               var course_id = field.find('.course_ids').attr("id");
               tokens('#' + course_id,"/search/course_level/name/token.json");

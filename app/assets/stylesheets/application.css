@@ -13,6 +13,7 @@
 *= require multi-select
 *= require fullcalendar
 *= require token-input-bootstrappy
+*= require jquery-ui-1.10.4.custom
 *= require custom
 
 */
@@ -45,7 +46,39 @@ strong.uncheckit{text-decoration:none;}
 
 .mar0 {
   margin-right: 0rem; }
+
+.red-wrong{
+  color: #555753;
+  background-color:#f7d0d0;
+  padding:0 5px 0 5px;
+}
  
+.green-right{
+  color: #555753;
+  background-color:#e1f5e0;
+  padding:0 5px 0 5px;
+}
+
+.yellow-ok{
+  color: #555753;
+  background-color:#f8f4b0;
+  padding:0 5px 0 5px;
+}
+
+.clear {
+  clear: both;
+}
+
+.padR30{padding-right: 30px;}
+.padR40{padding-right: 40px;}
+.padL10{padding-left: 20px;}
+
+.clickable{
+  cursor: pointer;
+  color: #777777;
+  text-decoration: underline;
+}
+
 
 
 

@@ -1,0 +1,22 @@
+<!-- partial fee scenario multi -->
+    <% ctnt = (render 'partial_fee') %>
+
+    $('<%= @cont %>').html("<%= escape_javascript(render :partial => 'shared/popover',
+                                         :locals =>   {id: 'partial', 
+                                                       content: ctnt.html_safe,
+                                                       header: "Commission Received",
+                                                       button: nil}) %>");
+                                                       
+    $('<%= @sel_id %>').popover({
+        html: true,
+        placement: "bottom",
+        title: function () {
+            return $('<%= @cont %>').find('.head').html();
+        },
+        content: function () {
+            return $('<%= @cont %>').find('.content').html();
+        }
+   });
+   $('<%= @sel_id %>').popover('show');
+   
+   

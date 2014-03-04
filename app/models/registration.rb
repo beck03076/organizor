@@ -119,4 +119,8 @@ class Registration < ActiveRecord::Base
     "Registrations"
   end
   
+  def set_fu(title,desc,st,en)
+  
+  end
+  
 end

@@ -106,6 +106,22 @@ body {
     background-color: #FFE9B4; }
   .main .main-content .green-well {
     background-color: #e1f5e0; }
+  .main .main-content .orange-well {
+    background-color: #f9f3ec; }
+    .main .main-content .pink-well {
+    background-color: #f9f0f6; }
+    .main .main-content .blue-well {
+    background-color: #ecf4fa; 
+    margin-left: 19px;
+    margin-right: 25px;
+    padding-top: 15px;
+    border: 1px solid #d3d7cf;}
+    .main .main-content .white-well {
+    background-color: #e2effc;
+    margin-left: 19px;
+    margin-right: 25px;
+    padding-top: 15px;
+    border: 1px solid #d3d7cf;}
   .main .main-content .border-b {
     border-bottom: 1px solid #dddddd; }
   .main .main-content .to-do .well {

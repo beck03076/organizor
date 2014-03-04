@@ -1,6 +1,14 @@
 class CommissionsController < ApplicationController
   include FetchFromContract
-
+  
+  def partial_fee
+    set_url_params
+    @programmes = Programme.where(id: @prog_ids)
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   def fetch_contract
     comm_percentage = fetch_from_contract(params[:prog_id])
     render text: comm_percentage
@@ -73,14 +81,7 @@ class CommissionsController < ApplicationController
   # DELETE /commissions/1.json
   def destroy
     @commission = Commission.find(params[:id])
-    @payment = @commission.payment
-    
-    last_commission_id = @payment.commissions.order("created_at desc").first.id
-    
-    if last_commission_id == @commission.id
-      @registration = @payment.programme.registration
-      @commission.destroy
-    end
+    @commission.destroy
     
     respond_to do |format|
       format.html

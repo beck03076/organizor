@@ -6610,7 +6610,7 @@ button.close {
   font-size: 15px;
   font-weight: normal;
   line-height: 18px;
-  background-color: #FFE9B4;
+  background-color: #c6edf5;
   border-bottom: 1px solid #888a85;
   border-radius: 5px 5px 0 0;
 
@@ -6618,7 +6618,7 @@ button.close {
 
 .popover-content {
   padding: 9px 14px;
-  background-color: #FFE9B4;
+  background-color: #eaf4f6;
 }
 
 .popover .arrow,

@@ -21,6 +21,8 @@ class ProgrammesDatatable < Datatable
     
     @compound = false
     @more = true
+    @links = "programme"
+    
   end
    
 end

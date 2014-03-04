@@ -5,6 +5,8 @@ Organizor::Application.routes.draw do
 
   resources :commission_claim_statuses
   
+  post '/partial_fee' => "commissions#partial_fee"
+  
   get '/programmes/abc' => "programmes#abc"
   
   get '/programmes/ins_id/:ins_id/prog_ids/:prog_ids/export' => "programmes#index"

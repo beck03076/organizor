@@ -1,0 +1,57 @@
+<!-- capture bulk partial fee - NOT PARTIAL FEE ITS PARTIAL COMMISSION-->
+<h4>Enter Partial Commission</h4>
+    <div class="row">
+    <div class="col-md-12">
+    <ul class="vlsdet form-group">
+        <% @programmes.each do |p| %>
+          <% name = p.registration.name %>
+          <li class="col-md-10">
+            <h5>
+            <%= name %>
+            </h5>
+          <% if p.fee.nil? %>
+            <i>-no fees-</i>
+          <% else %>
+            <% last_comm = p.fee.commissions.order(:created_at).last %>
+            <%= text_field_tag p.fee.id,nil,{placeholder: "Partial Fee",
+                                             class: "form-control partial_fee",
+                                             data: {remaining: last_comm.remaining_cents,
+                                                    name: name }} %>
+            <label class="form-group light">Remaining</label>
+            
+            <small class="light" id=<%= p.fee.id %>>
+            <%= humanized_money_with_symbol last_comm.remaining rescue '<i>-no commissions-</i>'.html_safe %>
+            </small>
+
+          <% end %>
+          </li>
+        <% end %>
+    </ul>
+    
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-center">
+                <a id="partial-fee-submit" class="btn btn-primary form-control">
+                    Change
+                </a>
+        </div>
+    </div>
+    
+    <script>
+      $('#partial-fee-submit').on('click',function(){
+        var stat = $('select#comm_claim_status_all_programmes option:selected').text();
+        idPartialFee = {};
+        if(stat === "Partial Payment Received"){
+              
+              $('input.partial_fee').each(function () {
+                var fee = $(this).val();
+                if (fee.length != 0){
+                 checkRemaining(fee,$(this).data('remaining'),$(this).data('name'));
+                 idPartialFee[$(this).attr('name')] = fee;
+                }
+              });
+        }
+       updateCommClaim('<%= @table_id %>',idPartialFee);
+      });
+    </script>

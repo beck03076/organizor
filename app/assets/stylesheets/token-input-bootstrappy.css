@@ -3,7 +3,7 @@ ul.token-input-list-facebook {
     overflow: hidden; 
     height: auto !important; 
     height: 1%;
-    width: 200px;
+    width: auto;
     border: 1px solid #BBB;
     cursor: text;
     font-size: 12px;
@@ -28,7 +28,7 @@ ul.token-input-list-facebook.token-input-focused-facebook {
 
 ul.token-input-list-facebook li input {
     border: 0;
-    width: 100px;
+    width: auto;
     padding: 3px 8px;
     background-color: white;
     margin: 2px 0;

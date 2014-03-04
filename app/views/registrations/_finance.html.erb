@@ -15,95 +15,122 @@
     <% r_arr = (r_ids - r_id) %>
     <% r_order = (r_arr).blank? ? 1 : (r_arr.size + 1) %>
   
-  <h4><%= app_name %> - <small> <%= app_status %> -  [<b><%= r_order.ordinalize %></b> registration]  </small> </h4>
-  
-
-
-
   <% if eval_status %>  
+    <div class="row well">
+    <div class="col-md-12">
+      <h4> <%= app_name %> - <%= app_status %> -  [<b><%= r_order.ordinalize %></b> registration]</h4>
     <% if fe_size > 0 %>
+            <div class="col-md-5 ">
+            <ul class="vlsdet">
+            <li>
+              <label><small class="light">Currency</small></label>
+              <span><small><%= fe.currency %></small></span>
+            </li>
+            <li>
+              <label><small class="light">Tuition Fee</small></label>
+              <span><small><%= humanized_money_with_symbol fe.tuition_fee %></small></span>
+            </li>
+            <li>
+              <label><small class="light">Scholarship</small></label>
+              <small><%= humanized_money_with_symbol fe.scholarship %></small>
+            </li>
+            <li>
+              <label><small class="light">Commission Percentage</small></label>
+              <small><%= fe.commission_percentage %> %</small>
+            </li>
+            <li>
+              <label><small class="light">Commission Amount </small></label>
+              
+              <b><%= humanized_money_with_symbol fe.commission_amount %></b>
+            </li>
+            <li>
+              <label><small class="light">Invoice Date </small></label>
+              <small>
+              <%= fe.invoice_date %>
+              <%= (fe.invoice_date.nil? ? '<span class="red-wrong">Not Invoiced</span>' : '<span class="green-right">Invoiced</span>').html_safe %></small>
+            </li>
+            <li>
+              <label><small class="light">First Payment Date</small></label>
+              <small>
+              <%= fe.first_payment_date %>
+              <%= (fe.first_payment_date.nil? ? '<span class="red-wrong">No Payment</span>' : '<span class="green-right">Paid</span>').html_safe %>
+              </small>
+            </li>
+            <li></li>
+            <li>
 
-      <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" width="100%">
-         <thead>
-          <tr>
-                                <th>Currency</th>
-                                <th>Tuition Fee</th>
-                                <th>Scholarship</th>
-                                <th>Commission Percentage</th>
-                                <th>Commission Amount</th>
-                                <th>Invoice Date</th>
-                                <th>First Payment Date</th>
-                                <th></th>
-                                <th></th>
-          </tr>
-        </thead>
-        <tbody>
-                
-                    <tr>
-                                    <td><%= fe.currency %></td>
-                                    <td><%= humanized_money_with_symbol fe.tuition_fee %></td>
-                                    <td><%= humanized_money_with_symbol fe.scholarship %></td>
-                                    <td><%= fe.commission_percentage %></td>
-                                    <td><%= humanized_money_with_symbol fe.commission_amount %></td>
-                                    <td><%= fe.invoice_date %></td>
-                                    <td><%= fe.first_payment_date %></td>
-                                    <td>
-                   <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
-                                                                      edit_fee_path(fe),
-                                                                      {remote: true,
-                                                                      onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
-                                    </td>
-                                    <td>
-                  <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
+            <small>
+
+            <span class="mar0 glyphicon glyphicon-edit"></span>
+            <%= link_to 'Edit', 
+                         edit_fee_path(fe),
+                         {remote: true,
+                          onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %> |
+            <span class="mar0 glyphicon glyphicon-trash"></span>
+                  <%= link_to 'Delete', 
                                 fe, 
                                 method: :delete, 
                                 data: { confirm: 'Are you sure?' }  %>
-                                    </td>
-                    </tr>
-        </tbody>
-     </table>
+            </small>
+            </li>
+            </ul>
+            </div>
     <% elsif fe_size == 0 %>
       <h5>Fees not updated</h5>
     <% end %>
+    
   <% end %>
     <% if !comms.blank? %>
-      <h5>Commission Information</h5>
-      <table class="table table-striped" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <div class="col-md-7 orange-well">
+      <h5>Commission Details</h5>
+      <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="100%">
          <thead>
           <tr>
-                                <th>Commission Paid</th>
-                                <th>Commission Remaining</th>  
-                                <th>Commission Status</th>
+                                <th>Currency</th>
+                                <th>Paid</th>
+                                <th>Remaining</th>  
+                                <th>Status</th>
                                 <th>&nbsp;</th>
                                 
           </tr>
         </thead>
         <tbody>
-                
+          <% comms.each do |c| %>
                     <tr> 
-                       <td><%=  c.paid %></td>
-                       <td><%= c.remaining %></td>
-                       <td><%= c.stat %></td>
+                       <td><%= c.currency %></td>
+                       <td><%= humanized_money_with_symbol c.paid %></td>
+                       <td><%= humanized_money_with_symbol c.remaining %></td>
+                           <% if c.stat == "Partially Paid" %>
+                            <% cl = "yellow-ok" %>
+                           <% elsif c.stat == "Fully Paid" %>
+                            <% cl = "green-right" %>
+                           <% elsif c.stat == "Pending" %>
+                            <% cl = "red-wrong" %>
+                           <% end %>
+                       <td class="<%= cl %>"><%= c.stat %></td>
                        <td>
-                                  <%= link_to image_tag("/images/icons/del.png"),
-                                                                               c, 
-                                                                 method: :delete, 
-                                                                 data: { confirm: 'Are you sure?',
-                                                                 remote: true }  %>
+                           <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                               c, 
+                               method: :delete, 
+                               data: { confirm: 'Are you sure?',
+                               remote: true }  %>
                        </td>
                     </tr>
+          <% end %>
         </tbody>
      </table>    
+     </div>
     <% end %>
-<hr>
+   </div>
+</div>
 <% end %>
 
 
 
 <div class="small">
 <i>* - You cannot create a payment if the application status is not "Joined"</i>
-
 </div>
+<br/>
 <!-- new payment on a create payment click-->
 <div id="resource-edit">
   

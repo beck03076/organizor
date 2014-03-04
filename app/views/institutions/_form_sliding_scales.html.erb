@@ -1,0 +1,114 @@
+<!-- sliding scale fields -->
+  <%= c.fields_for :sliding_scales do |ss| %>  
+  <div class="row blue-well">
+              <div class="row row-top">
+                  <div class="col-xs-12 text-right padR30">
+                    <%= ss.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
+                  </div>
+                </div>
+            
+            <div class="col-xs-12 text-center">
+            <div class="form-group">
+                <div id="course_level">
+                    <label class="control-label col-xs-2">Course Levels</label>
+                     <div class="col-xs-5">
+                        <%= ss.text_field :course_level_tokens,
+                                          {class: "form-control course_ids",
+                                           data: {pre: ss.object.course_levels.map(&:attributes).to_json} } %>
+                     </div>
+                 </div>
+                 
+                 <div class="col-xs-4 text-left">
+                    <small class="clickable" onclick="fRHideSs(this,'cl');"> 
+                      course level</small> |
+
+                    <small class="clickable" onclick="fRHideSs(this,'pr');"> 
+                      progression
+                    </small>
+                 </div>
+                 
+                 
+                 
+            </div>
+            </div>
+            <div class="clear"></div>
+            <div id="progression" class="col-xs-12 row text-center" style="display:none;">
+            <div class="form-group">
+                <label class="control-label col-xs-2">2nd Year</label>
+                 <div class="col-xs-2">
+                    <%= ss.text_field :second_year,
+                                      {class: "form-control", 
+                                       style: "color:#008cba;font-size:15px;",
+                                       placeholder: "%"} %>
+                 </div>
+                 <label class="control-label col-xs-2">3rd Year</label>
+                 <div class="col-xs-2">
+                    <%= ss.text_field :third_year,
+                                      {class: "form-control", 
+                                       style: "color:#008cba;font-size:15px;",
+                                       placeholder: "%"} %>
+                 </div>
+            </div>
+            </div>
+            <div class="clear"></div>
+            <%= ss.fields_for :sliding_ranges do |sr| %> 
+            
+                <div class="row white-well">
+                  <div class="col-xs-6 text-left">
+                     <h5>Sliding Range</h5>
+                  </div>
+                  <div class="col-xs-6 text-right padR30">
+                    <%= sr.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
+                  </div>
+                    <div class="hidable">
+                        <div class="col-xs-12 row text-center">
+                            <div class="form-group">
+                                <label class="control-label col-xs-2">Student Range</label>      
+                                     <div class="col-xs-2">
+                                      <%= sr.text_field :from, {class: "form-control", 
+                                                                id: "from", 
+                                                                style: "color:#008cba;font-size:15px;"} %>
+                                      </div>
+                                      <div id="slider" class="col-xs-4 slider-range"></div>
+                                      <div class="col-xs-2">
+                                     <%= sr.text_field :to, {class: "form-control", 
+                                                                id: "to", 
+                                                                style: "color:#008cba;font-size:15px;"} %>
+                                      </div>
+                                     <div class="col-xs-2 text-left">
+                                      <small class="clickable" href="#" onclick="fRHideSr(this,'#from, #to','#slider','.hidable');" >no range</small>
+                                      </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 row text-center">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">Commission Percentage</label>      
+                              <div class="col-xs-2">
+                              <%= sr.text_field :commission_percentage, {class: "form-control", 
+                                                          id: "commission_percentage", 
+                                                          style: "color:#008cba;font-size:15px;",
+                                                          placeholder: "%"} %>
+                              </div>
+                    </div>
+                    </div>
+                 </div>
+                 <br/>
+            <% end %>
+            <br/>
+            <div class="row text-right padR40">
+              
+              <%= ss.link_to_add "Add Sliding Range", :sliding_ranges,{class: "btn-sm btn-default"} %>
+            </div>
+   <div class="clear"></div>
+   <br/>
+  </div>  
+  <br/>
+  <% end %>
+  <div class="row">
+    <div class="text-left">
+      <%= c.link_to_add "Add Course Levels", :sliding_scales,{class: 'btn-sm btn-default'} %>
+    </div>
+  </div>
+
+

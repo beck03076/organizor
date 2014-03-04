@@ -16,6 +16,8 @@ class Programme < ActiveRecord::Base
   
   has_one :fee
   
+  has_many :commissions, through: :fee
+  
 
   
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Programme"'

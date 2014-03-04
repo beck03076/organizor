@@ -57,12 +57,25 @@ protected
                           "/#{@model_pl}/#{obj.id}/more", {remote: true,
                                                            id: "more_#{obj.id}" } )
         end
-
-        temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+        # different edit link for programmes_datatable
+        if @links == "programme"
+             # sometimes the programme wont have fees
+             if obj.fee.nil? 
+               temp << '<span title="No fees updated!" class="pointer glyphicon glyphicon-info-sign"></span>'
+             else
+               temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                              "/fees/#{obj.fee.id}/edit",
+                             {remote: true,
+                              onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'})
+             end
+        else
+          temp << link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
                         "/#{@model_pl}/#{obj.id}/edit")
-        temp << link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+          temp << link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
                        "/#{@model_pl}/#{obj.id}",
                        {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) 
+        end
+        
        
        final << temp
      end

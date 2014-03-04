@@ -18,6 +18,8 @@ class ProgrammesController < ApplicationController
     if @status == "Invoiced"
       iterate_fee(to_update,:invoice_date)
     elsif (@status == "Full Payment Received" || @status == "Partial Payment Received")
+      @fp_s_id = CommissionStatus.find_by_name("fully_paid".titleize).id
+      @pp_s_id = CommissionStatus.find_by_name("partially_paid".titleize).id
       iterate_fee(to_update,:first_payment_date)
     else
       to_update.update_all(claim_status_id: params[:status_id],
@@ -38,12 +40,48 @@ class ProgrammesController < ApplicationController
             p.fee.update_attribute(col,Date.today)
             p.update_attributes(claim_status_id: @asso_id,
                          updated_by: @user_id)
+            if (@status == "Full Payment Received")              
+              create_comm(p)
+            elsif (@status == "Partial Payment Received")              
+              calc_create_comm(p)
+            end
             @text = "#{@status} set. #{col.to_s.titleize} Successfully Set."
           end
         else
           @text = "Tuition Fees not updated."
         end
     end
+  end
+  
+  def calc_create_comm(p)
+        if p.fee
+          if @id_partial_fee[p.fee.id.to_s].present?
+              curr_pay = @id_partial_fee[p.fee.id.to_s].to_f * 100
+              prev_remain = p.fee.commissions.order(:created_at).last.remaining_cents
+              if curr_pay < prev_remain
+               s_id = @pp_s_id
+              elsif curr_pay == prev_remain
+               s_id = @fp_s_id
+              end
+              
+              curr_remain = prev_remain - curr_pay
+              Commission.create!(paid_cents: curr_pay, 
+                                 remaining_cents: curr_remain,
+                                 status_id: s_id,
+                                 currency: p.fee.currency,
+                                 fee_id: p.fee.id)
+          end
+        end
+  end
+  
+  def create_comm(p)
+        if p.fee
+          Commission.create!(paid_cents: p.fee.commission_amount_cents, 
+                             remaining_cents: 0,
+                             status_id: @fp_s_id,
+                             currency: p.fee.currency,
+                             fee_id: p.fee.id)
+        end
   end
   
   def index    
@@ -137,7 +175,7 @@ class ProgrammesController < ApplicationController
   def update
     @programme = Programme.find(params[:id])
     
-    # the following block decimals up the entered tuition_fee and scholarship
+    # the following block decimals up the entered tuition_fee and scholarship and creates a fee for a program 
     if params[:programme][:fee_attributes].present?
         %w(tuition_fee scholarship).each do |s|
           self.set_fee_params(s)
@@ -147,10 +185,22 @@ class ProgrammesController < ApplicationController
         comm_amount = ((fee[:tuition_fee_cents] - fee[:scholarship_cents]) * (comm_percentage.to_f/100)).to_f
         params[:programme][:fee_attributes][:commission_amount_cents] = comm_amount
         params[:programme][:fee_attributes][:commission_percentage] = comm_percentage
+        
     end
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
+        # first pending commmission is created here
+        if (params[:programme][:fee_attributes] && @programme.commissions.blank?)
+          s_id = CommissionStatus.find_by_name("pending".titleize).id
+          Commission.create!(status_id: s_id,
+                             paid_cents: 0,
+                             fee_id: params[:programme][:fee_attributes][:id],
+                             created_by: current_user.id,
+                             remaining_cents: params[:programme][:fee_attributes][:commission_amount_cents],
+                             currency: params[:programme][:fee_attributes][:currency])
+        end
+        
         if (params[:programme][:notes_attributes])
           
           tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
@@ -199,7 +249,7 @@ class ProgrammesController < ApplicationController
   
   def set_fee_params(s)
     ss = s.to_sym
-    params[:programme][:fee_attributes][(s + '_cents').to_sym] = params[:programme][:fee_attributes][ss].tr(',','').to_f * 100
+    params[:programme][:fee_attributes][(s + '_cents').to_sym] = parse_amt(params[:programme][:fee_attributes][ss])
     params[:programme][:fee_attributes].delete(ss)
   end  
   
@@ -208,8 +258,10 @@ class ProgrammesController < ApplicationController
       a = current_user.conf.pro_cols
       b = [:surname,:first_name]
       @cols = ((b & a) + (a - b))
-      p "*****************88"
-      p @cols
+  end
+  
+  def parse_amt(i)
+   i.tr(',','').to_f * 100
   end
   
   

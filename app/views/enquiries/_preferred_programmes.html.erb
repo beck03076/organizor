@@ -3,10 +3,13 @@
   <%= f.fields_for :programmes do |p| %>
         
         <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
-
+        <br/>
   <% end %>
-
-  <%= f.link_to_add "Add programme", :programmes %>
+  <div class="row">
+    <div class="text-left">
+      <%= f.link_to_add "Add Another", :programmes,{class: 'btn-sm btn-default'} %>
+    </div>
+  </div>
 
 
 

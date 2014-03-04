@@ -386,7 +386,7 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         oTable.fnFilter(key);
     });
 
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child,:nth-last-child(3))', function () {
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child,:nth-last-child(3),:nth-last-child(2))', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
@@ -562,10 +562,10 @@ function getCheckedRowsAsArray(tableId,stop){
        }
 }
 
-
-function updateCommClaim(tableId){
+function updateCommClaim(tableId,idPartialFee){
+  var idPartialFee = idPartialFee || 0;  
   bulkAssoUpdate(tableId,"select","comm_claim_status_",'/update_comm_claim/programmes',
-                 'commClaimStatusModal');
+                'commClaimStatusModal',0,0,0,idPartialFee);
 }
 
 function updateAppStatus(tableId){
@@ -627,10 +627,11 @@ function bulkEmail(tableId){
 
 }
 
-function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col){
+function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col,id_partial_fee){
   var main = main || 0;
   var asso = asso || 0;
   var asso_col = asso_col || 0;
+  var id_partial_fee = id_partial_fee || 0;
    
   var rows = getCheckedRowsAsArray(tableId);
   sel = elem + "#" + what_ + tableId
@@ -644,6 +645,7 @@ function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col){
   data['main'] = main;
   data['asso'] = asso;  
   data['asso_col'] = asso_col;
+  data['id_partial_fee'] = id_partial_fee;
   
   var posting = $.post(url,data);
   
@@ -803,11 +805,12 @@ function changeInsType(obj,dest){
 function calcComm(obj){
   form = $(obj).parents('form');
 
-  fee = parseFloat(form.find('input#fee_tuition_fee').val());
-  sch = parseFloat(form.find('input#fee_scholarship').val());
-  per = parseFloat(form.find('input#fee_commission_percentage').val());
-
-  result = ((fee - sch) / 100) * per
+  fee = parseFloat(form.find('input#fee_tuition_fee').val().replace(",",''));
+  sch = parseFloat(form.find('input#fee_scholarship').val().replace(",",''));
+  per = parseFloat(form.find('input#fee_commission_percentage').val().replace(",",''));
+  
+  
+  result = (((fee - sch) / 100) * per).toFixed(2);
 
   if (!isNaN(result)){
    form.find('input#fee_commission_amount').val(result);
@@ -815,42 +818,15 @@ function calcComm(obj){
    form.find('input#fee_commission_amount').val('');
   }
 }
-/*
-function calcComm(obj,comm,amt){
 
-  var fee = parseFloat(obj.value);
+function checkRemaining(val,rem,name){
 
-  var this_comm = $(obj).parent().parent().find(comm);
-  var this_amt = $(obj).parent().parent().find(amt);
-
-  var commission = parseFloat($(this_comm).val());
-  var result = (fee / 100) * commission;
-
-  if (!isNaN(result)){
-   $(this_amt).val(result);
-  }else{
-   $(this_amt).val('');
-  }
-
-}
-*/
-function calcRemaining(obj,amt,rem){
-
-  var paid = parseFloat(obj.value);
-
-  var this_amt = $(obj).parent().parent().find(amt);
-  var this_rem = $(obj).parent().parent().find(rem);
-
-  var amount = parseFloat($(this_amt).val());
-  var result = amount - paid;
-
-  if (!isNaN(result)){
-  $(this_rem).val(result);
-  }else{
-   $(this_rem).val('');
+  if ((val * 100) > rem){
+     bootbox.alert(name + "'s entered commission is higher than the remaining commission!");
+     throw "stop execution";
   }
 }
-/* Payments  End */
+
 
 function tabLength(oTable,obj){
  var selectedValue = obj.options[obj.selectedIndex].text;
@@ -997,17 +973,18 @@ $('.filter_container').html('');
   });
 }
 
-function slidingScale(){
-  $( ".slider-range" ).slider({
+function slidingScale(field){
+  field = field || $(document);
+  field.find( ".slider-range" ).slider({
           range: true,
           min: 1,
-          max: 50,
-          values: [ 1, 10 ],
+          max: 100,
+          values: [ 1, 50 ],
           slide: function( event, ui ) {
             $(this).siblings().find( "#from" ).val( ui.values[ 0 ]);
             $(this).siblings().find( "#to" ).val( ui.values[ 1 ]);
           }
-        });
+  });
 }
 
 
@@ -1024,6 +1001,32 @@ function fetchContract(progId){
 
  
 }
+//stands for find reset and hide, specific function, removes slider and range
+//Sr - Sliding Range
+function fRHideSr(obj,ids,s,whole_div){
+  var elems = $(obj).parent().siblings().find(ids);
+  var slider_obj = $(obj).closest(s);
+  var elems1 = $(obj).closest(whole_div);
+  elems.remove();  
+  elems1.remove();  
+  $(slider_obj).slider("destroy");
+}
+
+//stands for find reset and hide, specific function
+//Sr - Sliding Scale
+// pr - progression, cl =course level
+function fRHideSs(obj,type){
+  if (type=="pr"){
+    var elem = $(obj).parents(3).siblings('#progression');
+  }else if(type=="cl"){
+    var elem = $(obj).parents(2).find('#course_level');
+  }
+  elem.val('');
+  elem.toggle('fast');
+  
+}
+
+
 
 
 
