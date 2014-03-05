@@ -63,4 +63,9 @@ class Person < ActiveRecord::Base
     self.institution.name rescue "Unknown"
   end
   
+  def self.sub_agent
+    type = PersonType.find_by_name("official_sub_agent").id
+    where(type_id: type).order(:first_name)
+  end
+  
 end

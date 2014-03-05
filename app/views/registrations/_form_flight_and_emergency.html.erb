@@ -1,0 +1,15 @@
+<!-- Flight -->
+<div class="row">
+  <h4>Flight</h4>
+  <br/>
+  <% %w(no arrival_date arrival_time airport).each do |el| %>
+    <%= bs(f,'flight_' + el,"text_field",[el,4],7,6) %>
+  <% end %>  
+  
+  <h4>Emergency</h4>
+  <br/>
+  <% %w(full_name relationship mobile email).each do |el| %>
+    <%= bs(f,'emer_' + el,"text_field",[el,4],7,6) %>
+  <% end %>  
+  
+</div>

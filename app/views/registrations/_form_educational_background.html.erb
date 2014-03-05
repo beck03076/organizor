@@ -1,0 +1,52 @@
+<!-- educational information  - STARTS -->
+<h5>Qualification</h5>
+<div class="row">
+ <%= bs(f,[:qua_id,Qualification.order(:name),
+              :id,
+              :name,
+              {prompt: "-qualification-"},{}],
+              "collection_select",
+              ['Qualification',4],7,6) %> 
+ <% %w(subject institution grade exam score).each do |el| %>
+   <%= bs(f,'qua_' + el,"text_field",[el,4],7,6) %>
+ <% end %>
+</div>
+
+  <h5>English Language Proficiency</h5>
+  <%= f.fields_for :proficiency_exams do |prof| %>
+  <div class="row blue-well">
+    <div class="row row-top">
+      <div class="col-xs-12 text-right padR30">
+        <%= prof.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
+      </div>
+    </div>
+
+      <%= bs(prof,[:eng_level_id,EnglishLevel.order(:name),
+                                                  :id,
+                                                  :name,
+                                                  {prompt: "-student source-"},{}],
+                                                  "collection_select",
+                                                  [nil,4],7,6) %>
+      <%= bs(prof,[:exam_type_id,ExamType.order(:name),
+                                                  :id,
+                                                  :name,
+                                                  {prompt: "-student source-"},{}],
+                                                  "collection_select",
+                                                  [nil,4],7,6) %>
+      <% %w(exam_date exam_score).each do |el| %>
+        <%= bs(prof,el,"text_field",[nil,4],7,6) %>
+      <% end %> 
+  </div>
+  <div class="clear"></div>
+  <br/>
+  <% end %> 
+
+<div class="row">
+<div class="col-xs-12 form-group">
+  <%= f.link_to_add "Add Exam", :proficiency_exams,{class: 'btn btn-default'} %>
+</div>
+</div>
+
+
+
+

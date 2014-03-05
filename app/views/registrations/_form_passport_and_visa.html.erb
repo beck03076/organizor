@@ -1,0 +1,6 @@
+<!-- Institution information  - STARTS -->
+<div class="row">
+  <% %w(passport_number passport_valid_till visa_type visa_valid_till).each do |el| %>
+    <%= bs(f,el,"text_field",[nil,4],7,6) %>
+  <% end %> 
+</div>

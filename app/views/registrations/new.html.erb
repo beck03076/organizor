@@ -1,21 +1,2 @@
-<script type="text/javascript">
-$(function(){
-  $("ul.tab-menus li.new_registration").show();
-  $(".tab-menus li").removeClass("active-tab");
-  $("ul.tab-menus li.new_registration").addClass("active-tab");
-  $("ul.tab-menus li.new_registration").attr('data-enquiry_id', '<%= params[:enquiry_id] %>');
-   $("ul.tab-menus li.new_registration").attr('data-note', '<%= params[:note] %>');
-  $("ul.tab-menus li.new_registration").trigger("click");
-  setColorsFromSession();
-  activeMM("registrationsMM");
-});
-</script>
-
-<% flash[:notice] = @registration.errors.full_messages.join(" ,")  rescue nil %>
-<div class="tab-container">
- <%= render 'enquiries/tabs', :stat => "ApplicationStatus",:model => "registration" %> 
-    <div class="tab-content" id="new_registration_id">
-
-    </div>
-</div>
+<%= render 'form', what: "New",link: "" %>
 

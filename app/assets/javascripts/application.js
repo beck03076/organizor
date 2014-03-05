@@ -187,10 +187,9 @@ function div_toggle(obj,div){
     return false;
 }
 
-function sel_toggle(obj,div1,div2){
-    i = $(obj).parent()
-    i.find(div1).slideToggle();
-    i.find(div2).slideToggle();
+function sel_toggle(div1,div2){
+    $(div1).slideToggle();
+    $(div2).slideToggle();
     return false;
 }
 
@@ -1024,6 +1023,10 @@ function fRHideSs(obj,type){
   elem.val('');
   elem.toggle('fast');
   
+}
+
+function show_sel(id){
+  $()
 }
 
 

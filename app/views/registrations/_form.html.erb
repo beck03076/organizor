@@ -1,401 +1,186 @@
-<!--- Complete registration form except applications are in separate partials -->
-<%= nested_form_for(@registration,:html=>{:multipart => true ,:onsubmit => "return validateAll(this);"})  do |f| %>
-
-  <%= f.hidden_field :ref_no, value: (@registration.ref_no.nil? ? @ref_no : @registration.ref_no) %>
-  <%= f.hidden_field :enquiry_id, value: @enquiry_id %>
-  
-  <% if @registration.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this registration from being saved:</h2>
-
-      <ul>
-      <% @registration.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<!-- New registration form -->
+<%= nested_form_for(@registration, 
+                    html: {onsubmit: "return validateAll(this);",
+                    multipart: true,
+                    class: "form-horizontal"}) do |f| %>
+                                         
+                          <% if @registration.errors.any? %>
+                           <div id="error_explanation">
+                           <h2>
+                           <%= pluralize(@registration.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+                           <ul>
+                             <% @registration.errors.full_messages.each do |msg| %>
+                              <li><%= msg %></li>
+                             <% end %>
+                           </ul>
+                           </div>
+                          <% end %>
+                          
+   <div class="row row-top">
+    <div class="col-xs-9">
+      <h3><%= what %> registration <span class="light"> <%= link %> </span></h3>
     </div>
-  <% end %>
-  
-<!-- NEW REGISTRATION - STARTS -->
-<div class="tab-content1" id="tab-content71">
-  <div class="boxp box-theme-ch">
-  <!-- PERSONAL INFORMATION - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Personal Information
-          </b>
-      </h5>
-      <%= f.submit "Save",{:class => "btnp fr"} %>
-      <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
-      <div class="cl"></div>
+    <div class="col-xs-3 text-right">
+      <div class="form-group form-last">
+        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+        <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
+      </div>
+    </div>
   </div>
-  <br/>  
-      <div class="cols">
-        <div class="col6">
-          <%= fs(f,[:first_name,
-                    tabindex: "1",
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                              :onblur => "validate(this.id,'AS');"],"text_field",1) %>
-          <%= fs(f,[:date_of_birth,
-                    tabindex: "3",
-                    :class => "dateField"],
-                    "text_field",1) %>
-          <%= fs(f,[:email1,
-                   tabindex: "5",
-                   :data => {:maxlength => "",
-                             :minlength => "",
-                             :label => "",
-                             :req => "Y"},
-                   :onblur => "validate(this.id,'E');"],"text_field",1) %>
-          <%= fs(f,[:mobile1,
-                    tabindex: "7",
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                    :onblur => "validate(this.id,'ANS');"],"text_field",1) %>
-          <%= fs(f,[:home_phone,
-                    tabindex: "9"],"text_field") %>
-          <%= fs(f,[:address_line1,
-                    tabindex: "11",
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                    :onblur => "validate(this.id,'');"],"text_field",1) %>
-          <%= fs(f,[:address_line2,
-                    tabindex: "13"],"text_field") %>
-          <%= fs(f,[:address_country_id, 
-                            Country.order(:name), 
-                            :id, 
-                            :name,{},
-                            {:class => "countries_select1",
-                             tabindex: "15",
-                             :onchange => "prepareSelect(this,
-                                           \'enquiry_programmes_attributes_index_city_id\',
-                                           \'/get_cities/\');"}],"collection_select",1,"country") %>
-         <%= fs(f,[:assigned_to, 
-                     User.order(:first_name), 
-                     :id, 
-                     :first_name,
-                     {:prompt => "--User--"},{tabindex: "17"}],"collection_select",1,"Assign To") %>
+  
+  <% parts = [:registration_information,
+              :course_of_interest,
+              :educational_background,
+              :passport_and_visa,
+              :flight_and_emergency,
+              :documents] %>
+  <% parts_values = parts %>
+  <div class="new-enq-reg">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <p class="lead">Step <span id="id_no">1</span> of <%= parts_values.size %></p>
+                  </div>
+                  <div class="col-xs-10">
+                    <div class="progress">
+                      <div class="progress-striped progress-bar " role="progressbar" style="width: 16%;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-top">
+                  <div class="col-xs-12">
+                    
+                    <% parts_values.each_with_index do |elem,i| %>
+                        <% set = "" %>
+                        <% if i == 0 %>
+                          <% set = "active-link" %>
+                        <% end %>
+                        <div class="col-xs-2 text-center top-link <%= set %>">
+                          <a href="#" part="<%= i + 1 %>"><%= elem.to_s.titleize %></a>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="well">
                      
-         <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %> 
-        </div>
-        <div class="col6">
-          <%= fs(f,[:surname,
-                    tabindex: "2",
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                              :onblur => "validate(this.id,'AS');"],"text_field",1) %>
-          <div class="frbox">
-          <%= f.label :gender %>
-          <% {male: 'm', female: 'f'}.each do |i| %>
-            <%= f.radio_button :gender, i[1],{tabindex: "4"} %>
-            <%= f.label i[0].to_s.strip %>
-          <% end %>
-          </div>
-          <%= fs(f,[:country_id, 
-                            Country.order(:name), 
-                            :id, 
-                            :name,{},
-                            {:class => "countries_select",tabindex: "6"}],
-                            "collection_select",1,"Nationality") %>
-          <%= fs(f,[:email2,
-                    tabindex: "8"],"text_field") %>
-          <%= fs(f,[:mobile2,
-                    tabindex: "10"],"text_field") %>
-          <%= fs(f,[:work_phone,
-                    tabindex: "12"],"text_field") %>
-          <%= fs(f,[:address_city,
-                    tabindex: "14"],"text_field",nil,"city") %>
-          <%= fs(f,[:address_post_code,
-                    tabindex: "16"],"text_field",nil,"post_code") %>
-        </div>
-  </div>
-  <br/>
-  <br/>
-  <!-- PERSONAL INFORMATION - ENDS -->
-  
-  <!-- PASSPORT & VISA - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Passport & Visa
-          </b>
-      </h5>
-  </div>
-  <br/>  
-      <div class="cols">
-        <div class="col6">
-          <%= fs(f,[:passport_number,
-                    tabindex: "18",
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                    :onblur => "validate(this.id,'ANS');"],"text_field",1) %>
-          <%= fs(f,[:passport_valid_till,
-                    :class => "dateField"],"text_field") %>
-        </div>
-        <div class="col6">
-          <%= fs(f,"visa_type","text_field") %>
-          <%= fs(f,[:visa_valid_till,
-                    :class => "dateField"],"text_field") %>
-        </div>
-  </div>
-  <br/>
-  <br/>
-  <!-- PASSPORT & VISA - ENDS -->
-  
-  <!-- ENGLISH LANGUAGE PROFICIENCY - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            English Language Proficiency
-          </b>
-      </h5>
-  </div>
-  <br/>  
-  
-  <div class="cols">
-    <%= go_create(f,"english_level","prof_eng_level_id","name",1) %> 
-  </div>
-  <%= f.fields_for :proficiency_exams do |prof| %>
-     <div class="cols boxstheme" style="width:97%">
-       
-       <div class="col6">
-           
-           <%= go_create(prof,"exam_type","exam_type_id","name",1) %> 
-           
-           <%= fs(prof,[:exam_date,:class => "dateField"],"text_field",nil,"Exam Date") %>
-           <%= fs(prof,"exam_score","text_field") %>
-       </div>
-       <%= f.link_to_remove (image_tag "/images/icons/quit.png", width: "30",class: "fr") %>
-       
-
-     </div>
-     <div class="cl">
-    </div>
-    <br/>
-  <% end %>
+                        
+                        <% parts.each_with_index do |elem,i| %>
+                            
+                            <% set = "display-hide" %>
+                            <% if i == 0 %>
+                              <% set = "" %>
+                            <% end %>
+                            <% if elem.kind_of?(Hash) %>
+                              <%= render 'form_' + elem.keys.first.to_s, index: i,
+                                                                    set: set, 
+                                                                    arr: elem.values.flatten,
+                                                                    f: f %>
+                              <% @after_hsh = 1 %>
+                            <% else %>
+                <% index = (@after_hsh == 1) ? (i + hsh.values.flatten.size) : i + 1  %>
+                                <div id="id_part_<%= index %>" class="<%= set %>">
+                                  <h4 class="form-heading" id="<%= elem %>"><%= elem.to_s.titleize %></h4>
+                                  <div class="row"></div>
+                                    <%= render 'form_' + elem.to_s, f: f %>
+                                </div>
+                            <% end %>
+                        <% end %>
+                        <div class="row"></div>
+                        
+                        <div class="row row-right">
+                          <div class="col-xs-1 text-left">
+                            <div class="form-group form-last">
+                              <a go="previous" id="id_previous" class="btn btn-primary btn-next display-hide">Previous</a>
+                            </div>
+                          </div>                          
+                          <div class="col-xs-1 col-xs-offset-10 text-right">
+                            <div class="form-group form-last">
+                              <a  go="next" id="id_next" class="btn btn-primary btn-next">Next</a>
+                            </div>
+                          </div>                          
+                        </div>                     
+                    </div>
+                  </div>
+                </div>
+    
+</div>
  
-  <%= f.link_to_add "Add more", :proficiency_exams,{:class => "btns fl"} %>
-  <div class="cl"> </div>
-  <br/>
-  <br/>
-  <!-- ENGLISH LANGUAGE PROFICIENCY - ENDS -->
-  
-  <!-- Student education background- STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Student Education Background
-          </b>
-      </h5>
-  </div>
-  <br/>  
-  <div class="cols">
-        <div class="col6">
-        <%= go_create(f,"qualification","qua_id","name",1) %>
-        
+<div id="resource-container"></div>
+<div class="row"> </div>
 
-                  
-        <%= fs(f,"qua_subject","text_field",nil,"subject") %>
-        <%= fs(f,"qua_institution","text_field",nil,"institution") %>
-        <%= fs(f,"qua_grade","text_field",nil,"grade") %>
-        
-        </div>
-        <div class="col6">
-            <%= fs(f,"qua_exam","text_field") %>
-            <%= fs(f,"qua_score","text_field") %>
-         </div>
-     
-         
-
-  </div>
-  <br/>
-  <br/>
-  <!-- Student education background - ENDS -->
-  
-   <!-- Course of Interest - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Course of Interest
-          </b>
-      </h5>
-  </div>
-  <br/>  
-
-     <%= render 'enquiries/preferred_programmes',:f => f %>
-
-  <br/>
-   <br/>
-    <br/>
-  <div class="cl"></div>
-  <!-- Course of Interest - ENDS -->
-  
-  <!-- Student Source - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Student Source
-          </b>
-      </h5>
-  </div>
-  <br/>
-  <div class="cols">
-        <div class="col6">
-          
-          <% {direct: true, indirect: false}.each do |i| %>
-            <%= f.radio_button :reg_direct,
-                               i[1],{:onclick => "sel_toggle(this,
-                                                             'div#reg_direct',
-                                                             'div#reg_indirect');",
-                                     :autocomplete => "off"} %>
-            &nbsp;<%= f.label i[0] %>&nbsp;&nbsp;&nbsp;&nbsp;
-          <% end %>
-          <br/>
-          <br/>
-          <br/>
-          <div id="reg_direct">
-            <%= go_create(f,"student_source","reg_source_id","name",1) %>  
-          </div>
-          <% if false %>
-          <div id="reg_indirect" style="display:none;">
-              <%= fs(f,"reg_came_through","text_field",nil,"Came Through") %>
-              <%= go_create(f,"sub_agent","sub_agent_id","name",1) %> 
-          </div>
-          <% end %>
-        </div>
-  </div>    
-  <!--  Student Source - ENDS -->
-  
-  <!-- Emergency Contact - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Emergency Contact
-          </b>
-      </h5>
-  </div>
-  <br/>
-  <div class="cols">
-        <div class="col6">
-          
-          <%= fs(f,[:emer_full_name,
-                    :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                    :onblur => "validate(this.id,'ANS');"],"text_field",1,"Full Name") %>
-          <div class="frbox">
-            <%= f.label nil,"Relationship" %> 
-            <%= f.select(:emer_relationship,%w(Father Mother Husband Wife Brother Sister Cousin Uncle Friend Other))%>
-        </div>
-         
-          <%= fs(f,[:emer_mobile,
-                   :data => {:maxlength => "",
-                              :minlength => "",
-                              :label => "",
-                              :req => "Y"},
-                    :onblur => "validate(this.id,'ANS');"],"text_field",1,"Mobile") %>
-          <%= fs(f,"emer_email","text_field",nil,"Email") %>
-          
-        </div>
-  </div>    
-  <!-- Emergency Contact - ENDS -->
-  
-   <!-- Flight Details - STARTS -->
-  <div class="htab">
-      <h5>
-          <b>
-            Flight Details
-          </b>
-      </h5>
-  </div>
-  <br/>
-  <div class="cols">
-        <div class="col6">
-          <%= fs(f,"flight_no","text_field",nil,"Flight Number") %>
-          <%= fs(f,[:flight_arrival_date,
-                    :class => "dateField"],"text_field") %>
-        </div>
-          
-        <div class="col6">
-          <%= fs(f,"flight_arrival_time","text_field",nil) %>
-          <%= fs(f,"flight_airport","text_field",nil,"Airport of Arrival") %>        
-        </div>
-  </div>    
-   <!-- Flight Details - ENDS -->
-   
-  <!-- Documents Starts -->
-  <div class="htab">
-      <h5>
-          <b>
-            Documents
-          </b>
-      </h5>
-  </div>
-  <br/>
- 
-
-         <%= f.fields_for :documents do |d| %>
-               <div class=" cols boxstheme">
-                 <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
-                 <div class="col6 " >
-                     <%= go_create(d,"doc_category","category_id","name",1) %> 
-                     <%= fs(d,"name","text_field",nil) %>
-                     <%= fs(d,"path","file_field",nil) %>
-                     <%= d.hidden_field :registration_id %>
-                     <br/>
-                     <br/>
-                 </div>
-            
-              </div>
-              <div class="cl"></div>
-         <br/>
-         <% end %>
-         <br/>
-        <div class="cl"></div>
-         <%= f.link_to_add "Attach document", :documents ,{:class => "btns fl"} %>
-  
-  <!-- Documents - ENDS -->
-        <br/><br/>
-        <br/><br/>
-        <div class="htab">
-      <h5>
-          <b>
-            Note
-          </b>
-      </h5>
-  </div>
-
-  <div class="cols">
-  <div class="col6">
-        <%= fs(f,[:note, 
-                    {:size => "5x3", :style => "width:165px;height:auto"}],"text_area",nil,"Note") %>
-        
-        </div></div>
-        <br/><br/><br/>
-        <%= f.submit "Save",{:class => "btnp fr"} %>
-        <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
-        <div class="cl"></div>
-        
-        </div>
-        </div>
 
 <% end %>
+
 <script type="text/javascript">
- $(function(){
-  setColorsFromSession();
- });
-</script>
+        $('.top-link').children('a').click(function(event) {
+          $('.top-link').each(function(index, el) {
+            $(this).removeClass('active-link');
+          });
+          $(this).parent().addClass('active-link');
+          var part = $(this).attr('part');
+          $('#id_no').text(part);
+          $('.progress-bar').css({width: part * 16.6 + '%'});
+          $("[id^='id_part_']").hide('fast');
+          $('#id_part_' + part).show('fast');
+          if (part === '1') {
+            $('#id_previous').hide();
+          } else {
+            $('#id_previous').show();
+          }
+          if (part === $("div[id^='id_part_']").length.toString()) {
+            $('#id_next').hide();
+          } else {
+            $('#id_next').show();
+          }
+        });
+
+        $('#id_previous, #id_next').click(function(event) {
+          var part = parseInt($('.active-link').children('a').attr('part'), 10);
+          if ($(this).attr('go') === 'previous') {
+            part = "" + (part - 1);
+          } else {
+            part = "" + (part + 1);
+          }
+          ss = {}
+          if ($("div#id_part_5").is(':visible') && $("div#id_part_4").is(':hidden')){
+
+                $('div#id_part_5 select').each(function(index){
+                                 if( $(this).attr('id').match(/_course_level_id$/) ) {
+
+                                    ss[index] = [$("option:selected",$(this)).text()]
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#from').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#to').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#commission_percentage').val());
+                                }
+                          });
+
+               $.post('/sliding_scales/collective.js',{ 'ss': ss });
+               $('[part=' + part + ']').click();
+          }
+          else{
+               $('[part=' + part + ']').click();
+          }
+        });
+        
+         $(document).on('nested:fieldAdded', function(event){
+      
+              var field = event.field; 
+              var dateField = field.find('.dateField');
+              dateField.datepicker({
+                inline: true,
+                changeMonth: true, 
+                changeYear: true, 
+                dateFormat: "yy-mm-dd",
+                yearRange: '1980:2050' 
+              });
+           });
+          
+           actmm("registrations");
+
+    </script>
+ 
+
 

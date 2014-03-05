@@ -1,0 +1,92 @@
+<!-- Institution information  - STARTS -->
+<div class="row">
+  <% %w(first_name surname mobile1 mobile2 email1 email2).each do |el| %>
+    <%= bs(f,el,"text_field",[nil,4],7,6) %>
+  <% end %>  
+  
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label class="control-label col-xs-4">Gender</label>
+        <div class="col-xs-7">
+          <% {male: 'm', female: 'f'}.each do |i| %>
+            <%= f.radio_button :gender, i[1] %>
+            <%= f.label i[0].to_s.strip %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%= bs(f,["date_of_birth",{class: "datepicker"}],"text_field",[nil,4],7,6) %>
+    <h4> Address</h4>
+    <br/>
+    <% %w(line1 line2 city).each do |el| %>
+      <%= bs(f,'address_' + el,"text_field",[el,4],7,6) %>
+    <% end %> 
+    
+    <%= bs(f,[:country_id,Country.order(:name),
+              :id,
+              :name,
+              {prompt: "-nationality-"},{}],
+              "collection_select",
+              ['Nationality',4],7,6) %> 
+            
+    <%= bs(f,"address_post_code","text_field",['post_code',4],7,6) %>
+    <div class="clear"></div>
+    <h4>About</h4>
+    <br/>
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label class="control-label col-xs-4">Source</label>
+      <% %w(direct indirect).each do |i| %>
+        <%= f.radio_button :reg_direct,
+                           i,{:onclick => "$('.source').css('display','none');$('##{i}').show();",
+                              :autocomplete => "off"} %>
+        &nbsp;<%= f.label i %>&nbsp;&nbsp;&nbsp;&nbsp;
+      <% end %>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label class="control-label col-xs-4">Came Through</label>
+    <div class="col-xs-7">
+    <%= f.collection_select(:reg_source_id,StudentSource.order(:name),
+                                           :id,
+                                           :name,
+                                           {prompt: "-student source-"},
+                                           {id: "indirect",
+                                           style: "display:none;",
+                                           class: "form-control source"}) %>
+    </div>
+    <div class="col-xs-7">
+    <%= f.collection_select(:sub_agent_id,Person.sub_agent,
+                                           :id,
+                                           :first_name,
+                                           {prompt: "-sub agent-"},
+                                           {id: "direct",
+                                           class: "form-control source"}) %>
+    </div>
+      </div>
+    </div>
+
+   
+   <%= bs(f,[:branch_id,Branch.order(:name),
+                      :id,
+                      :name,
+                      {prompt: "-branch-"},{}],
+                      "collection_select",
+                      ["Branch",4],7,6) %>
+  
+   <%= bs(f,[:assigned_to,User.order(:first_name),
+            :id,
+            :first_name,
+            {prompt: "-assign to-"},{}],
+            "collection_select",
+            ["Assign To",4],7,6) %> 
+   <%= bs(f,[:note,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,4],7,6) %>
+
+</div>
+  
+
+
+
+

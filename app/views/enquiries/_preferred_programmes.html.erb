@@ -1,5 +1,7 @@
 <!-- prefer programmes -->
+<% if obj == "enquiry" %>
 <h4 class="form-heading">Preferred Programmes</h4>
+<% end %>
   <%= f.fields_for :programmes do |p| %>
         
         <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>

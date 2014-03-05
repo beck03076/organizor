@@ -1,0 +1,38 @@
+<!-- documents -->
+  <%= f.fields_for :documents do |d| %>
+  <div class="row blue-well">
+    <div class="row row-top">
+      <div class="col-xs-12 text-right padR30">
+        <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
+      </div>
+    </div>
+
+      <%= bs(d,[:category_id,DocCategory.order(:name),
+                                                  :id,
+                                                  :name,
+                                                  {prompt: "-doc category-"},{}],
+                                                  "collection_select",
+                                                  [nil,4],7,6) %>
+      <%= bs(d,"name","text_field",[nil,4],7,6) %>
+      
+      <div class="col-xs-6">
+              <div class="form-group">
+              <label class="control-label col-xs-4">Choose File</label>
+                  <div class="col-xs-7">
+                    <%= d.file_field :path,{class: 'btn btn-file'} %>
+                  </div>
+          </div>
+      </div>
+
+      <%= d.hidden_field :registration_id %>
+      
+  </div>
+  <div class="clear"></div>
+  <br/>
+  <% end %> 
+
+<div class="row">
+<div class="col-xs-12 form-group">
+  <%= f.link_to_add "Add Document", :documents,{class: 'btn btn-default'} %>
+</div>
+</div>
