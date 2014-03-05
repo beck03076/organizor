@@ -110,6 +110,17 @@ body {
     background-color: #f9f3ec; }
     .main .main-content .pink-well {
     background-color: #f9f0f6; }
+    .main .main-content .blue-box {
+    background-color: #f5f8fb; }
+    .main .main-content .tag-like {
+    color: #fff;
+    padding: 5px 5px 5px 5px;
+    font-size: 10px;
+    font-weight: bold;}
+    .main .main-content .blue {
+    background-color: #729fcf; }
+     .main .main-content .green {
+    background-color: #728c7d }
     .main .main-content .blue-well {
     background-color: #ecf4fa; 
     margin-left: 19px;

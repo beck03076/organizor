@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140304081021) do
+ActiveRecord::Schema.define(:version => 20140304190036) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -391,6 +391,7 @@ ActiveRecord::Schema.define(:version => 20140304081021) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "registration_id"
+    t.integer  "eng_level_id"
   end
 
   create_table "fees", :force => true do |t|

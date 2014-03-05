@@ -1,5 +1,5 @@
 <!-- js the executes after application_status is changed -->
-$("#reg_status_<%= @programme.id %>").html("<span id='reg_status_<%= @programme.id %>>' class='ref_no'> <h4>[ <%= @programme.application_status.name %> ]</h4> </span>");
+$("#reg_status_<%= @programme.id %>, #tag_reg_status_<%= @programme.id %> ").html("<%= @programme.application_status.name %>");
 
 $("#status_select_<%= @programme.id %>").slideToggle();
 

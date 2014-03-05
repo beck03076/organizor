@@ -1,38 +1,50 @@
-
+<!-- everywhere notes -->
 <% sub.notes.each do |note| %>
 <% u = note._cre_by %>
 <% if !u.nil? %>
-           <div class="well well-sm mt-15">
+           <div class="blue-box note-box">
 
-              <div class="row row-top row-right">
+              <div class="row padT10">
+                 <div class="col-md-2 pull-left">
                  <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                      {width: "40",
                                       class: "mr-10"
                                       }) %>
+                 </div>
+                 <div class="col-md-9">
+                  <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea", display_as: "safe_content" %>
+                 </div>
+                 <div class="col-md-1">
                  <% if (current_user.id == u.id) %>
                    <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,note_path(note,sub: sub.class.name,sub_id: sub.id),
                                    method: :delete,
-                                   class: "pull-right",
+                                   class: "pull-right remove-note",
                                    remote: true,
-                                   data: { confirm: 'Are you sure?' } %>
+                                   data: { confirm: 'Are you sure?' },
+                                   style: "display:none;" %>
                  <% end %>
-                 <span>
-                  <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea", display_as: "safe_content" %>
-                 </span>
+                 </div>
+                 
               </div>
               <div class="row">
-                <div class="col-xs-6 first">
-                  <small>By: <%= link_to u.first_name,u %></small>
-                </div>
-                <div class="col-xs-6 text-right">
-                  <small><%= note.created_at.strftime("%A, %F %R %p") rescue "Unknown" %></small>
-                </div>
+                <div class="col-md-5 text-left">
+                  <small class="light"> 
+                  <small>
+                  <%= link_to u.first_name,u %>
+                  <%= note.created_at %>
+                  </small>
+                  </small>
+                </div>                 
               </div>
            </div>
 
-<div class="brg0"></div>
-
 <% end %>
 
 <% end %>
-
+<script>
+  $('.note-box').hover(function(){
+    $(this).find('.remove-note').css('display','');
+  },function(){
+    $(this).find('.remove-note').css('display','none');
+  });
+</script>

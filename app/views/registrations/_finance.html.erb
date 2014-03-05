@@ -7,11 +7,12 @@
   <% eval_status = (app_status.downcase == "joined") %>
   <% fe = i.fee %>
   <% fe_size = fe.nil? ? 0 : 1 %>
-  <% comms = fe.commissions rescue nil %>
+  
   
      
   
   <% if eval_status %>  
+    <% comms = fe.commissions rescue nil %>
     <!-- how manieth registration is this for this institution is r_order -->
     <% r_order = r_order(i.registration.id,i.institution.id) %>
     <div class="row well">
@@ -125,8 +126,8 @@
 
 
 
-<div class="small">
-<i>* - You cannot create a payment if the application status is not "Joined"</i>
+<div class="row small">
+<i>* - If the application status is not "Joined", you cannot update the fees</i>
 </div>
 <br/>
 <!-- new payment on a create payment click-->

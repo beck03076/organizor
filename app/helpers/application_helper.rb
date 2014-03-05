@@ -4,12 +4,21 @@ module ApplicationHelper
     html = ""    
     if val.kind_of?(Array)
       value = val[0]
-      if val[1].to_i == 0
+      if (val[1].to_i == 0 || val[1].to_i == 97)
+        cl = "red-wrong "
+      elsif val[1].to_i == 98
         cl = "yellow-ok"
-      else 
+      elsif val[1].to_i == 99 
         cl = "green-right"
+      else
+        cl = "green-right" 
       end
-      disp1 = "<small>#{val[1]} #{val[2]}</small>"
+      if (val[1] == 99 ||  val[1] ==  98 || val[1].to_i == 97)
+        disp1 = "<small>#{val[2]}</small>"
+      else
+        disp1 = "<small>#{val[1]} #{val[2]}</small>"
+      end
+      
     else
       value = val
       cl ="padded"
@@ -17,7 +26,7 @@ module ApplicationHelper
     if a.nil?
       disp = value
     else
-      disp = best_in_place_if (can? :update,a),a,val.to_sym
+      disp = best_in_place_if (can? :update,a),a,value.to_sym
     end  
     html += "<li>
              <div class=#{cl}>
@@ -291,6 +300,10 @@ module ApplicationHelper
                          header: modal_head,
                          button: "<button onclick=#{onclick}('#{_id}');>Change</button>"
                          
+  end
+  
+  def markdown(text)
+    
   end
                          
   

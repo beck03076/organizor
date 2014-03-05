@@ -1,119 +1,137 @@
 <!-- applications by registration -->
-<h4 class="htab">
-  Applications In Progress
+<div id="create-fee-container"> </div>
+<% progs = @obj.programmes.includes(:institution).group_by{|i| i.institution.country_id } %>
+<% progs.keys.each do |prog| %>
+<div class="row row-right">
+
+<h4 class="border-b">
+   <%= link_to Country.find(prog).name,"#",{class: "collapse_all"} %>
 </h4>
-<br/>
-<div id="create-fee-container"></div>
-<ul class="vlsdet">
-   <% @obj.programmes.each do |i| %>
-    <hr>
+  <% progs[prog].each do |i| %>
     <!-- @programme is used in 2 partials, change status and add note -->
     <% @programme = i %>
     <% items = i.status_diagrams.order(:created_at).includes(:user,:programme,:application_status) %>
-    <% if !items.blank? %>
-    <div id="status_log" class="col-md-3 well">
-      <h3> Status Log </h3>
-          <br/>
-          <% items.limit(2).each do |sd| %>
-            <%= render 'status_diagrams',sd: sd %>
-          <% end %>
-          <% if items.size > 2 %>
-          <br/>
-          <%= image_tag("/images/icons/more.png",{class: "imgmore",
-                                                  onclick: "$(this).parent().find('#status_log_tail').slideToggle();"}) %>
-          <br/>
-          <% end %>
-              <div id="status_log_tail" style="display:none;">
-                  <% items.offset(3).each do |sd| %>
-                    <%= render 'status_diagrams', sd: sd %>
-                  <% end %>
-              </div>
 
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
+         <%= i.institution.name %> 
+        </a>
+        <small>
+           <span id="tag_reg_status_<%= i.id %>" class='tag-like green'> <%= i.application_status.name %> </span>&nbsp;
+           <span class='tag-like blue'> <%= i.institution.type.name %> </span>&nbsp;
+           <span class='tag-like blue'> <%= i.institution.group.name rescue "No" %> Group </span>&nbsp;
+           <small>
+           <a class="toggler" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
+           Change Status</a> |
+           <%= link_to "Delete Programme",i, method: :delete, data: { confirm: 'Are you sure?' } %> |
+           <%= link_to "Update Fees","/create_fee/#{i.id}", remote: true %>
+           <div class="row" id="status_select_<%= i.id %>" style="display:none;">
+             <%= render 'application_statuses/change_status' %>
+           </div>
+           </small>
+        </small>
+      </h4>
+      
     </div>
-    <% end %>
-    <h3><%= i.institution.name rescue "Unknown" %></h3>
-    <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <%= link_to "Update Fees","/create_fee/#{i.id}", remote: true %>
-
-    <br/>
-    <br/>
-    <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
-    <div id="status_group_<%= i.id %>" class="col-md-5 ">
-
-
-    <li><label>Status</label>: <span id="reg_status_<%= i.id %>" class='ref_no'>
-                          <h4>[ <%= i.application_status.name rescue "Unknown" %> ]</h4>
-                        </span>
-                        <span class="toggler" onclick="regAppStatus(this,'#status_select_<%= i.id %>');">change</span>
-   </li>
-
-    <span id="status_select_<%= i.id %>" style="display:none;">
-      <%= render 'application_statuses/change_status' %>
-    </span>
-
+    <div id="collapse<%= i.id %>" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row row-top row-right">
+            <div class="col-xs-8 pl-0">
+                <div class="row row-top">
+                    <h5>
+                    <span class="light mr-10">
+                    Status
+                    </span>
+                    <span id="reg_status_<%= i.id %>">
+                    <%= i.application_status.name %> 
+                    </span>
+                    <small class="toggler clickable" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
+           Change </small>
+                    
+                    </h5>
+                </div>
+                <div class="border-b">
+                    <ul class="vlsdet">
+                      <h4 class="border-b">Application Details</h4>
+                   <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
+                   <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course in progress']) %>
+                        <% [[['ins_ref_no',99,'alloted by institution'],'reference_no'],
+                            ['course_level_name','course_level'],
+                            ['course_subject_text','course_subject'],
+                            [s,'start_date'],
+                            [e,'end_date']].each do |v| %>
+                          <%= li1(v[1],v[0],'span','small',i)%>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="border-b">
+                    <ul class="vlsdet">
+                        <li>
+                        <label class="light">Created</label>
+                        <small><%= link_to i.cby,i._cby %></small>
+                        <small><%= i.created_at %></small>
+                        </li>
+                        
+                        <li>
+                        <label  class="light">Last Modified</label>
+                        <small><%= link_to i.uby, i._uby %></small>
+                        <small><%= i.updated_at %></small>
+                        </li>
+                    </ul>
+                </div>
+                <h4 class="border-b">Notes <small><small>(Click to edit if it's your note)</small></small></h4>
+                <div id="programme_note_<%= i.id %>" >
+                      <%= render 'notes/note', sub: @programme %>
+                 </div>
+            </div>
+            <div class="col-xs-4 row-right pr-0">
+                <div class="well well-sm">
+                     <h4>Status Log</h4>
+                     <ul class="vlsdet-s">                      
+                        <% items.take(4).each do |s| %>
+                          <h5 class="border-b"><%= s.status_name %></h5>
+                          <li>
+                          <label class="light">Set By</label>
+                          <small><%= link_to s.user_name,s.user %></small>
+                          </li>
+                          <li>
+                          <label  class="light">Set At</label>
+                          <small><%= s.created_at %></small>
+                          </li>
+                        <% end %>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+              <h5>New Note</h5>
+             <%= nested_form_for(i,remote: true) do |r| %>
+              <%= r.fields_for :notes,i.notes.build do |n| %>
+                <%= n.hidden_field :sub_class, value: "Programme" %>
+                <%= n.text_area :content,{:size => '10x4', 
+                                          :style => 'width:480px;',
+                                          class: "app_note",
+                                          data: {provide: "markdown"}} %>
+              <% end %>
+              <br/>
+              <%= r.submit "Write",{class: "btn-sm btn-primary"} %>
+              <% end %>
+     
+      </div>
     </div>
-    <li><label>Reference Number</label>: <%= i.ins_ref_no rescue "Unassigned" %></li>
-    <li><label>Type</label>: <%= j %></li>
-
-    <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
-    <li><label>City</label>: <%= i.city.try(:name) %></li>
-    <li><label>Country</label>: <%= i.country.try(:name) %></li>
-
-    <% if j == "University" %>
-      <li><label>Course Level</label>: <%= i.course_level.try(:name)  %></li>
-    <% end %>
-
-    <li><label>Course Subject</label>: <%= i.course_subject_text %> </li>
-
-    <% if j == "Language School" %>
-      <li><label>Start Date</label>: <%= i.start_date %></li>
-      <li><label>End Date</label>: <%= i.end_date %></li>
-    <% else %>
-      <li><label>Intake Year</label>: <%= i.start_date.strftime("%Y") rescue "Unknown" %></li>
-      <li><label>Intake Month</label>: <%= i.start_date.strftime("%B") rescue "Unknown" %></li>
-    <% end %>
-
-
-
-    <div class="cl"></div>
-    <br/>
-
-    <li><label>Created</label>:
-      <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
-
-
-    <li><label>Last Modified</label>:
-      <%= link_to i._upd_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= i.created_at.strftime("%A, %F %R %p") %></li>
-     <br/>
-     <br/>
-     <div class="brg0"></div>
-     <div id="programme_note_<%= i.id %>" >
-          <%= render 'notes/note', sub: @programme %>
-     </div>
-     <br/>
-     <br/>
-
-
-     <h5 class="htab"> Notes For This Application<h5>
-     <%= nested_form_for(i,remote: true) do |r| %>
-      <%= r.fields_for :notes,i.notes.build do |n| %>
-        <%= n.hidden_field :sub_class, value: "Programme" %>
-        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
-      <% end %>
-      <br/>
-      <%= r.submit "Write",{class: "btnp"} %>
-      <% end %>
-     <br/>
-
-    <div class="brg01"> </div>
-    <br/>
-    <br/>
-
+  </div>
+</div>
+<br/>
   <% end %>
-
-</ul>
+</div>
+<% end %>
 
 <script>
-  acttab('application');
-
+  $(".app_note").markdown({width: 500})
+  $('.collapse_all').click(function(){
+    $('.collapse').removeClass('in');
+  });
+  
 </script>

@@ -5,6 +5,8 @@ Organizor::Application.routes.draw do
 
   resources :commission_claim_statuses
   
+  resources :exams
+  
   get '/user_configs/edit_prog_fu_ass_to' => 'user_configs#edit_prog_fu_ass_to'
   
   post '/partial_fee' => "commissions#partial_fee"
