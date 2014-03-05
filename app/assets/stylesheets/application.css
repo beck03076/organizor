@@ -50,6 +50,11 @@ strong.uncheckit{text-decoration:none;}
 .vlsdet-s li  label{text-align:left;width:75px;white-space:nowrap;display:inline-block}
 .vlsdet-s li li{padding:5px 0 0 0;text-align:right;}
 
+.vlsdet-l{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet-l li{padding:5px 0 0 0;}
+.vlsdet-l li label{text-align:left;width:160px;white-space:nowrap;display:inline-block}
+
+
 .mar0 {
   margin-right: 0rem; }
 
