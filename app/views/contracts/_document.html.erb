@@ -7,7 +7,7 @@
 
     <%= form_tag('/documents/delete_or_download') do %>
         <%= hidden_field_tag :contract_id,contract.id %>
-        <div class="row">
+        <div class="row row-top">
         <div class="col-xs-6">
         <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tbody>
@@ -33,7 +33,7 @@
         <div class="col-xs-12 form-group">
         <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} %>
         <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn-primary"} %>
-        
+
         <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
         </div>
         </div>

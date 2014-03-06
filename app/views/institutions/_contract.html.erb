@@ -7,35 +7,35 @@
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapsedet">
          Details
-        </a>        
-      </h4>      
+        </a>
+      </h4>
     </div>
     <div id="collapsedet" class="panel-collapse collapse">
       <div class="panel-body">
           <div class="border-b">
-            <ul class="vlsdet-xl">
+            <ul class="vlsdet-xl pt-0">
                     <% i = li_dt('initiate_date','contract initiated','yet to initiate',a) %>
                     <% s = li_dt('current_contract_start_date','contract started','yet to start',a) %>
                     <% e = li_dt('current_contract_end_date','contract ended','is not ended',a) %>
                     <% r = li_dt('renewal_reminder_date','reminded','not yet',a) %>
-                        
+
                     <% %w(name invoicing_deadline partners_target internal_target).each do |v| %>
                       <%= li1(v,v,'span','small',a) %>
                     <% end %>
-                    
+
                      <% [i,s,e,r].each do |v| %>
                           <%= li1(v[1],v[0],'span','small',a)%>
                       <% end %>
             </ul>
           </div>
-          <div class="border-b">
+          <div>
                     <ul class="vlsdet">
                         <li>
                         <label class="light">Created</label>
                         <small><%= link_to a.cby,a._cby %></small>
                         <small><%= a.created_at %></small>
                         </li>
-                        
+
                         <li>
                         <label  class="light">Last Modified</label>
                         <small><%= link_to a.uby, a._uby %></small>
@@ -54,14 +54,14 @@
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapserec">
          Recruitment Territories
-        </a>        
-      </h4>      
+        </a>
+      </h4>
     </div>
     <div id="collapserec" class="panel-collapse collapse">
       <div class="panel-body">
           <div class="col-xs-8">
-            <ul class="vlsdet-xl">
-                    <% %w(all_prohibited_countries all_permitted_countries 
+            <ul class="vlsdet-xl pt-0">
+                    <% %w(all_prohibited_countries all_permitted_countries
                            all_prohibited_regions all_permitted_regions).each do |elem| %>
                         <%= recruit_ter(a,elem) %>
                     <% end %>
@@ -78,17 +78,17 @@
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapsesli">
          Sliding Scale
-        </a>        
-      </h4>      
+        </a>
+      </h4>
     </div>
     <div id="collapsesli" class="panel-collapse collapse">
       <div class="panel-body">
           <div class="col-xs-8">
-            
+
             <% a.sliding_scales.each do |ss| %>
-              <ul class="vlsdet-xl">
+              <ul class="vlsdet-xl pt-0">
               <% clev =  ss.course_level_name.join(", ") %>
-              <h5 class="border-b"> <%= clev.blank? ? "All Course Levels" : clev %> </h5>
+              <h5><%= clev.blank? ? "All Course Levels" : clev %></h5>
 
               <li>
               <label class=light>Progression</label>
@@ -103,7 +103,7 @@
                 </small>
               </li>
               </ul>
-                <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <table class="table table-bordered border-b" border="0" cellpadding="0" cellspacing="0" width="100%">
 
                 <tbody>
                   <tr class="green-right">
@@ -131,7 +131,6 @@
                   <% end %>
                 </tbody>
                 </table>
-            <br/>
             <% end %>
           </div>
       </div>
@@ -145,8 +144,8 @@
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapsedoc">
          Documents
-        </a>        
-      </h4>      
+        </a>
+      </h4>
     </div>
     <div id="collapsedoc" class="panel-collapse collapse">
       <div class="panel-body">
@@ -155,7 +154,7 @@
             <%= render 'contracts/document',contract: a %>
 
             <!-- documents -->
-          <%= nested_form_for(a, 
+          <%= nested_form_for(a,
             html: {onsubmit: "return validateAll(this);",
             multipart: true,
             class: "form-horizontal"}) do |f| %>
@@ -174,7 +173,7 @@
                                                                   "collection_select",
                                                                   [nil,4],7,6) %>
                       <%= bs(d,"name","text_field",[nil,4],7,6) %>
-                      
+
                       <div class="col-xs-6">
                               <div class="form-group">
                               <label class="control-label col-xs-4">Choose File</label>
@@ -185,20 +184,19 @@
                       </div>
 
                       <%= d.hidden_field :registration_id %>
-                      
+
                   </div>
                   <div class="clear"></div>
-                  <br/>
-                  <% end %> 
+                  <% end %>
 
-                <div class="row">
+                <div class="row row-top">
                 <div class="col-xs-12 form-group">
                   <%= f.link_to_add "Add Document", :documents,{class: 'btn btn-default'} %>
                 </div>
                 </div>
-                <div class="row">
-                <div class="col-xs-12 form-group text-right">
-                  <%= f.submit "Save",{class: "btn btn-primary"} %> 
+                <div class="row row-top">
+                <div class="col-xs-12 form-group">
+                  <%= f.submit "Save",{class: "btn btn-primary"} %>
                 </div>
             <% end %>
           </div>
@@ -213,29 +211,29 @@
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapsenot">
          Notes
-        </a>        
-      </h4>      
+        </a>
+      </h4>
     </div>
     <div id="collapsenot" class="panel-collapse collapse">
       <div class="panel-body">
           <div class="col-xs-8">
-            <ul class="vlsdet-xl">
+            <ul class="vlsdet-xl pt-0">
               <div id="contract_note_<%= a.id %>" >
                 <%= render 'notes/note', sub: a %>
               </div>
-                    
+
              <h5>New Note</h5>
              <%= nested_form_for(a,remote: true) do |cns| %>
               <%= cns.fields_for :notes,a.notes.build do |cns1| %>
                 <%= cns1.hidden_field :sub_class, value: "Contract" %>
-                <%= cns1.text_area :content,{:size => '10x4', 
+                <%= cns1.text_area :content,{:size => '10x4',
                                           :style => 'width:480px;',
                                           class: "app_note",
                                           data: {provide: "markdown"}} %>
               <% end %>
               <br/>
               <div class="form-group">
-              <%= cns.submit "Write",{class: "btn-sm btn-primary"} %>
+              <%= cns.submit "Write",{class: "btn btn-primary"} %>
               </div>
               <% end %>
             </ul>
@@ -247,6 +245,6 @@
 <% end %>
 <br/>
 <script>
-  $('.best_in_place').best_in_place();  
+  $('.best_in_place').best_in_place();
   $(".app_note").markdown({width: 500});
 </script>
