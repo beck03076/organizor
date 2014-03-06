@@ -5,16 +5,16 @@
            <div class="blue-box note-box">
 
               <div class="row padT10">
-                 <div class="col-md-2 pull-left">
+                 <div class="col-xs-2">
                  <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                      {width: "40",
                                       class: "mr-10"
                                       }) %>
                  </div>
-                 <div class="col-md-9">
+                 <div class="col-xs-9 pl-0 note-content">
                   <%= best_in_place_if (current_user.id == u.id), note, :content, type: "textarea", display_as: "safe_content" %>
                  </div>
-                 <div class="col-md-1">
+                 <div class="col-xs-1">
                  <% if (current_user.id == u.id) %>
                    <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,note_path(note,sub: sub.class.name,sub_id: sub.id),
                                    method: :delete,
@@ -24,17 +24,17 @@
                                    style: "display:none;" %>
                  <% end %>
                  </div>
-                 
+
               </div>
               <div class="row">
-                <div class="col-md-5 text-left">
-                  <small class="light"> 
+                <div class="col-xs-5 text-left">
+                  <small class="light">
                   <small>
                   <%= link_to u.first_name,u %>
                   <%= note.created_at %>
                   </small>
                   </small>
-                </div>                 
+                </div>
               </div>
            </div>
 

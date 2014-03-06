@@ -19,6 +19,53 @@ body {
 .first {
   padding-left: 0; }
 
+.mt-15 {
+  margin-top: 15px; }
+
+.mr-10 {
+  margin-right: 10px; }
+
+.ml-10 {
+  margin-left: 10px; }
+
+.pt-10 {
+  padding-top: 10px; }
+
+.pb-10 {
+  padding-bottom: 10px; }
+
+.pl-0 {
+  padding-left: 0; }
+
+.pr-0 {
+  padding-right: 0; }
+
+.pb-15 {
+  padding-bottom: 15px; }
+
+.pt-0 {
+  padding-top: 0 !important; }
+
+.pointer {
+  cursor: pointer; }
+
+.no-link, .no-link:hover {
+  color: #FFFFFF;
+  text-decoration: none; }
+
+.seperator {
+  border-bottom: 1px solid #DDDDDD; }
+
+.popover {
+  background-color: #FFFFFF;
+  color: #222222;
+  border: 1px solid #BBBBBB;
+  max-width: 350px;
+  max-height: 500px;
+  overflow: auto; }
+  .popover .notification-content p {
+    margin-bottom: 0; }
+
 /* Set the fixed height of the footer here */
 #footer {
   position: absolute;
@@ -39,6 +86,17 @@ body {
     margin: 1.3rem 0; }
   #header .profile {
     padding-top: 1rem; }
+  #header .notification-icon {
+    font-size: 1.5em;
+    padding-top: 20px; }
+  #header .badge {
+    margin-bottom: 15px;
+    vertical-align: middle;
+    padding: 3px 5px;
+    background-color: #F17F6A;
+    color: #000000; }
+  #header .glyphicon-bell {
+    margin-right: .5rem; }
 
 .container {
   width: 970px;
@@ -78,8 +136,6 @@ body {
     margin-left: 1rem; }
   .main .main-content .row-first {
     margin-top: 4rem; }
-  .main .main-content .seperator {
-    border-bottom: 1px solid #DDDDDD; }
   .main .main-content .badge-green {
     background-color: lightgreen; }
   .main .main-content .badge-red {
@@ -88,53 +144,15 @@ body {
     background-color: yellow; }
   .main .main-content .badge {
     color: #000000; }
-  .main .main-content .pb-15 {
-    padding-bottom: 15px; }
-  .main .main-content .mt-15 {
-    margin-top: 15px; }
-  .main .main-content .mr-10 {
-    margin-right: 10px; }
-  .main .main-content .ml-10 {
-    margin-left: 10px; }
-  .main .main-content .pl-0 {
-    padding-left: 0; }
-  .main .main-content .pr-0 {
-    padding-right: 0; }
-  .main .main-content .pointer {
-    cursor: pointer; }
   .main .main-content .filter-well {
     background-color: #FFE9B4; }
-  .main .main-content .green-well {
-    background-color: #e1f5e0; }
-  .main .main-content .orange-well {
-    background-color: #f9f3ec; }
-    .main .main-content .pink-well {
-    background-color: #f9f0f6; }
-    .main .main-content .blue-box {
-    background-color: #f5f8fb; }
-    .main .main-content .tag-like {
-    color: #fff;
-    padding: 5px 5px 5px 5px;
-    font-size: 10px;
-    font-weight: bold;}
-    .main .main-content .blue {
-    background-color: #729fcf; }
-     .main .main-content .green {
-    background-color: #728c7d }
-    .main .main-content .blue-well {
-    background-color: #ecf4fa; 
-    margin-left: 19px;
-    margin-right: 25px;
-    padding-top: 15px;
-    border: 1px solid #d3d7cf;}
-    .main .main-content .white-well {
-    background-color: #fff;
-    margin-left: 19px;
-    margin-right: 25px;
-    padding-top: 15px;
-    border: 1px solid #d3d7cf;}
   .main .main-content .border-b {
     border-bottom: 1px solid #dddddd; }
+  .main .main-content .bold-subhead {
+    font-size: 16px;
+    font-weight: bold; }
+  .main .main-content .note-box .note-content {
+    margin-left: -10px; }
   .main .main-content .to-do .well {
     margin-bottom: 10px; }
   .main .main-content .to-do .todo-head {
@@ -158,7 +176,7 @@ body {
     margin-top: 1rem; }
   .main .main-content .data-table .vert-center {
     margin-top: 5px; }
-  .main .main-content .data-table .glyphicon-remove,.glyphicon-filter {
+  .main .main-content .data-table .glyphicon-remove {
     top: 3px;
     cursor: pointer; }
   .main .main-content .data-table .filter-center {
@@ -193,14 +211,12 @@ body {
     border-right: 1px solid #dddddd; }
   .main .main-content .new-enq-reg .active-link a {
     font-weight: bold; }
-  .main .main-content .basic .no-ul, .main .main-content .application .no-ul,.no-ul {
+  .main .main-content .basic .no-ul, .main .main-content .application .no-ul {
     list-style-type: none;
     padding-left: 0; }
   .main .main-content .basic .col-xs-4, .main .main-content .basic .col-xs-8, .main .main-content .application .col-xs-4, .main .main-content .application .col-xs-8 {
     margin-bottom: 5px; }
   .main .main-content .application .collapse .filter-well p.indent {
-    margin-bottom: 5px; }
-    .main .main-content .application .collapse .green-well p.indent {
     margin-bottom: 5px; }
   .main .main-content .form-control.hor-first {
     margin: 0; }
@@ -239,10 +255,3 @@ body {
 
 .light {
   color: #777777; }
-  
-  
-  .popover {
-background-color: #ffffff;
-  
-}
-  
