@@ -191,7 +191,7 @@ class ProgrammesController < ApplicationController
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
         # first pending commmission is created here
-        @commissions = @programme.fee.commissions
+        @commissions = @programme.fee.commissions rescue ""
         if (params[:programme][:fee_attributes] && @commissions.blank?)
           s_id = CommissionStatus.find_by_name("pending".titleize).id
           Commission.create!(status_id: s_id,

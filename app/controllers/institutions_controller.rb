@@ -1,5 +1,7 @@
 class InstitutionsController < ApplicationController
   include CoreMethods
+  include ActionsMethods
+  helper_method :meta
   
   def tab
     set_url_params

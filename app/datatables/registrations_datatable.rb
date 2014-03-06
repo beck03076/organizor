@@ -17,7 +17,7 @@ class RegistrationsDatatable < Datatable
     @def_cols = @def_reg_cols    
     @def_srch = current_user.conf.def_reg_search_col
     
-    @asso_model = Registration.mine(current_user)    
+    @asso_model = Registration.mine(current_user)
     @item_scope = ["mine",current_user]
     
     @compound = true

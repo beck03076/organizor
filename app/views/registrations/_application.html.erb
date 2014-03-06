@@ -17,12 +17,14 @@
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
-         <%= truncate(i.institution.name,length: 30) %> 
+         <%= i.institution.name %> 
         </a>
         <small>
-           <span id="tag_reg_status_<%= i.id %>" class='tag-like green'> <%= i.application_status.name %> </span>&nbsp;
+           <span id="tag_reg_status_<%= i.id %>" class='tag-like green'> <%= i.application_status.name rescue "Unknown" %> </span>&nbsp;
            <span class='tag-like blue'> <%= i.institution.type.name %> </span>&nbsp;
            <span class='tag-like blue'> <%= i.institution.group.name rescue "No" %> Group </span>&nbsp;
+           <br/>
+           <br/>
            <small>
            <span class="glyphicon glyphicon-share-alt mar0"></span>
            <a class="toggler" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
@@ -49,7 +51,7 @@
                     Status
                     </span>
                     <span id="reg_status_<%= i.id %>">
-                    <%= i.application_status.name %> 
+                    <%= i.application_status.name rescue "Unknown" %> 
                     </span>
                     <small class="toggler clickable" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
            Change </small>
@@ -60,7 +62,7 @@
                     <ul class="vlsdet">
                       <h4 class="border-b">Application Details</h4>
                    <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
-                   <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course in progress']) %>
+                   <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course yet to end']) %>
                         <% [['institution_name','institution_name'],
                             [['ins_ref_no',99,'alloted by institution'],'reference_no'],
                             ['course_level_name','course_level'],
@@ -133,7 +135,7 @@
 <% end %>
 
 <script>
-  $(".app_note").markdown({width: 500})
+  $(".app_note").markdown({width: 500});
   $('.collapse_all').click(function(){
     $('.collapse').removeClass('in');
   });

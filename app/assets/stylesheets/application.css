@@ -54,6 +54,9 @@ strong.uncheckit{text-decoration:none;}
 .vlsdet-l li{padding:5px 0 0 0;}
 .vlsdet-l li label{text-align:left;width:160px;white-space:nowrap;display:inline-block}
 
+.vlsdet-xl{list-style:none;padding:10px 0 10px 0;margin:0}
+.vlsdet-xl li{padding:5px 0 0 0;}
+.vlsdet-xl li label{text-align:left;width:200px;white-space:nowrap;display:inline-block}
 
 .mar0 {
   margin-right: 0rem; }
@@ -85,7 +88,8 @@ strong.uncheckit{text-decoration:none;}
 
 .padR30{padding-right: 30px;}
 .padR40{padding-right: 40px;}
-.padL10{padding-left: 20px;}
+.padL20{padding-left: 20px;}
+.padL10{padding-left: 10px;}
 .padT10{padding-top: 10px;}
 
 .clickable{

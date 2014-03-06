@@ -20,8 +20,10 @@
         </a>
         <span class='tag-like green'> <%= app_status %> </span>&nbsp;
         <span class='tag-like blue'><%= r_order.ordinalize %> student </span>&nbsp;
+        <% if eval_status %>  
         <small>
         <small>
+        
         <span class="mar0 glyphicon glyphicon-edit"></span>
                     <%= link_to 'Edit', 
                                  edit_fee_path(fe),
@@ -34,6 +36,7 @@
                                         data: { confirm: 'Are you sure?' }  %>
         </small>
         </small>
+        <% end %>
       </h4>
     </div>
   <% if eval_status %>  

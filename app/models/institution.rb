@@ -20,10 +20,12 @@ class Institution < ActiveRecord::Base
              
   has_many :people
   has_many :contracts
-  has_many :enquiries
+  
+  
   
   has_many :programmes
   has_many :registrations, through: :programmes
+  has_many :enquiries, through: :programmes
   
   has_and_belongs_to_many :emails 
   has_many :follow_ups
@@ -58,16 +60,20 @@ class Institution < ActiveRecord::Base
     self.person.first_name rescue "Unknown"
   end
   
-  def enqs
-    Programme.where("institution_id = ? and enquiry_id IS NOT ?",self.id,nil)
-  end
-  
-  def regs
-    Programme.where("institution_id = ? and registration_id IS NOT ?",self.id,nil)
-  end
-  
   def tit
     self.name rescue "Title Unknown"
+  end
+  
+  def my_enqs(user_id)
+    self.enquiries.where(assigned_to: user_id)
+  end
+  
+  def my_regs(user_id)
+    self.registrations.where(assigned_to: user_id)
+  end
+  
+  def my_peos(user_id)
+    self.people.where(assigned_to: user_id)
   end
   
   

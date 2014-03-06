@@ -1,100 +1,44 @@
 <!-- Documents for regs -->
-<% a = @contract %>
+<% if contract.documents.size == 0  %>
 
+  <i>No documents uploaded</i>
 
-    <br/>
-    <h4 class="htab"> 
-    Documents Received
-    </h6>
-    <br/>
-    <br/>
-    <% if a.documents.size == 0  %>
-    
-      <i>No documents uploaded</i>
-    
-    <% else %>
-    
-        <%= form_tag('/documents/delete_or_download') do %>
-            <%= hidden_field_tag :contract_id,a.id %>
-                <% a.documents.includes(:contract_category).each do |cat| %>
-                        <ul class="vlsdet">
-                            <li>
-                                <%= check_box_tag "doc_id[]",cat.id %>
-                                <h4><%= cat.name rescue "Unknown" %></h4>
-                                <label>[<%= cat.contract_category.name rescue "Unknown" %>]</label>
-                                <br/> 
-                                <%= link_to "Download",cat %> 
-                            </li>
+<% else %>
 
-                        </ul>
-                <% end %>
-            <br/>
-
-            <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btnp",data: { confirm: 'Are you sure?' }} %>
-            <%= submit_tag "Download Selected",{name: "doc_download", class: "btnp"} %>
-            
-            <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btnp", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
-
-        <% end %>
-    
+    <%= form_tag('/documents/delete_or_download') do %>
+        <%= hidden_field_tag :contract_id,contract.id %>
+        <div class="row">
+        <div class="col-xs-6">
+        <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                  <tr class="green-right">
+                    <td>&nbsp;</td>
+                    <td>Name</td>
+                    <td>Doc Category</td>
+                    <td></td>
+                  </tr>
+            <% contract.documents.includes(:contract_category).each do |cat| %>
+                  <tr>
+                    <td><%= check_box_tag "doc_id[]",cat.id %></td>
+                    <td><%= cat.name rescue "Unknown" %></td>
+                    <td><%= cat.contract_category.name rescue "Unknown" %></td>
+                    <td><%= link_to 'download'.html_safe,cat %> </td>
+                  </tr>
+            <% end %>
+                 </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-xs-12 form-group">
+        <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} %>
+        <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn-primary"} %>
+        
+        <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
+        </div>
+        </div>
     <% end %>
-    <br/>
-    <br/>
 
-        <h4 class="htab"> 
-        New Upload
-        </h6>
-        <br/>
-            <br/>
-    <br/>
-        <!-- Commenting out this block for nested documents form -->
-        <% if false %>
-                <%= form_for(Document.new,:html=>{:multipart => true })  do |f| %>
-                       
-                       <%= f.hidden_field :registration_id,value: @registration.id %>
-                       <%= go_create(f,"doc_category","category_id","name",1,"fbox") %> 
-                       <%= fbox(f,"name","text_field",nil,nil) %>
-                       <div class="fbox">
-                         <label>File</label>
-                         <%= f.file_field :path %>
-                       </div>
-                       <div class="fbox">
-                       
-                       <%= f.submit "Upload", class: "btnp" %>
-                       </div>
-                <% end %>
-        <% end %>
-        
-        
-        <%= nested_form_for(a) do |reg| %>
-        
-          <%= hidden_field_tag :institution_id,obj.id %>
-          
-        <%= reg.fields_for :documents,a.documents.build do |d| %>
-               <div class=" cols boxstheme">
-                 <%= d.link_to_remove (image_tag "/images/icons/quit.png", size: "30x30") ,class: "fr" %>
-                 <div class="col6" >
-                      <%= fs(d,"path","file_field",nil) %>
-                 </div>
-                 <div class="col4" >
-                     <%= fs(d,"name","text_field",nil) %>
-                 </div>
-                 <div class="col6" >
-                    <%= go_create(d,"contract_doc_category","contract_category_id","name",1) %> 
-                 </div>
-              </div>
-                    <%= d.hidden_field :contract_id %>
-              <br/>
-              <div class="cl"></div>
+<% end %>
 
-         <% end %>
-
-        <%= reg.link_to_add "Attach more document", :documents ,{:class => "btns fl"} %>
-        <div class="cl"></div>
-        <br/>
-        <br/>
-        <%= reg.submit "Upload",{:class => "btnp"} %>
-        <% end %> 
-        
-        
 

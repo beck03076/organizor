@@ -1,12 +1,13 @@
 <!-- Ranscak filters for programmes -->            
             <div class="row">
                <div class="col-md-12">
-                  <div class="col-md-4">
-                    <h5><strong>Course</strong></h5>
-                  </div>
-                  <div class="col-md-5 text-right pull-right">        
-                   <span onclick="$('.ransack').slideToggle();" class="pointer glyphicon glyphicon-arrow-up"></span>
-                    </div>
+                <div class="col-md-5 text-right pull-right">        
+                   <span onclick="$('.ransack').slideToggle();" class="pointer glyphicon glyphicon-arrow-up">
+                   </span>
+                </div>
+                    <h4 class="border-b">Course</h4>
+
+                  
                </div>
               </div> 
               <div class="row">
@@ -39,9 +40,7 @@
               
               <div class="row">
                <div class="col-md-12">
-                  <div class="col-md-4">
-                    <h5><strong>Registration</strong></h5>
-                  </div>
+                    <h4 class="border-b">Registration</h4>
                </div>
               </div> 
               <div class="row">
@@ -77,9 +76,7 @@
               
               <div class="row">
                <div class="col-md-12">
-                  <div class="col-md-4">
-                    <h5><strong>Fee</strong></h5>
-                  </div>
+                    <h4 class="border-b">Fee</h4>
                </div>
               </div> 
               <div class="row">
@@ -108,9 +105,7 @@
               </div>
               <div class="row">
                <div class="col-md-12">
-                  <div class="col-md-4">
-                    <h5><strong>Sort By</strong></h5>
-                  </div>
+                    <h4 class="border-b">Sort By</h4>
                </div>
               </div> 
               <div class="row">
@@ -120,11 +115,14 @@
                                 <%= s.sort_select({},{class: "form-control"}) %>
                             <% end %>
                     </div>
-                    <div class="col-md-2 form-group">        
-                   <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">
-                     Go
-                   </span>
-                    </div>
                     
+                    <div class="col-md-3 form-group">        
+                       <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">
+                         Filter
+                       </span>
+                       <a onclick="$('#ransack_form')[0].reset();" >
+                         Reset
+                       </a>
+                    </div>                  
                   </div>
               </div>

@@ -16,7 +16,7 @@ module ApplicationHelper
       if (val[1] == 99 ||  val[1] ==  98 || val[1].to_i == 97)
         disp1 = "<small>#{val[2]}</small>"
       else
-        disp1 = "<small>#{val[1]} #{val[2]}</small>"
+        disp1 = "<small>&nbsp;&nbsp;&nbsp; #{val[1]} #{val[2]}</small>"
       end
       
     else
@@ -31,10 +31,14 @@ module ApplicationHelper
     html += "<li>
              <div class=#{cl}>
              <label><#{sizel} class='light'>#{label.titleize}</#{sizel}></label>
-             <#{sizev}  class=#{cl} >#{disp} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{disp1}</#{sizev}> 
+             <#{sizev}  class=#{cl} >#{disp}  #{disp1}</#{sizev}> 
              </div>
              </li>"
     html.html_safe
+  end
+  
+  def li_dt(col,ymsg,gmsg,obj)
+   [((Date.today <= obj.send(col).to_date rescue col) ? [col,98,gmsg] : [col,99,ymsg]),col]
   end
 
   def prefer_countries(main,sub,values,data_values)

@@ -114,6 +114,8 @@ protected
         
         items = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])
       end
+      p "*************8"
+      p items
     end
     if !items.blank?
         if sc.is_a?(Array)

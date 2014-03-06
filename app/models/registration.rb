@@ -60,7 +60,7 @@ class Registration < ActiveRecord::Base
   :programmes_attributes,:proficiency_exams_attributes,
   :note,:documents_attributes,:_destroy,:enquiry_id,
   :notes_attributes,:image,:remote_image_url,
-  :progression_status_id
+  :progression_status_id,:branch_id
   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,
   :notes,:todos,:proficiency_exams, 

@@ -100,9 +100,10 @@
        
        <div class="row">
          
-       <div class="well green-well  ransack" style="display:none;">       
+       <div class="well blue-well ransack" style="display:none;">       
        <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
-                                                                  class: "form-horizontal"} do |f| %>
+                                                                  class: "form-horizontal",
+                                                                  id: "ransack_form"} do |f| %>
               <%= render 'programmes/ransack_filter', f: f %>
               
        <% end %>

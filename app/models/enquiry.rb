@@ -25,6 +25,8 @@ class Enquiry < ActiveRecord::Base
   has_many :todos
   has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'
   
+  has_and_belongs_to_many :institutions
+  
   scope :inactive,includes(:status,
                            :follow_ups,
                            :country_of_origin).where("enquiry_statuses.name = 'deactivated'")

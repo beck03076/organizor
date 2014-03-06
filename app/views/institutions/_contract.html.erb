@@ -1,80 +1,252 @@
+<!-- all contract details -->
+<% obj.contracts.each do |a| %>
+<br/>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapsedet">
+         Details
+        </a>        
+      </h4>      
+    </div>
+    <div id="collapsedet" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="border-b">
+            <ul class="vlsdet-xl">
+                    <% i = li_dt('initiate_date','contract initiated','yet to initiate',a) %>
+                    <% s = li_dt('current_contract_start_date','contract started','yet to start',a) %>
+                    <% e = li_dt('current_contract_end_date','contract ended','is not ended',a) %>
+                    <% r = li_dt('renewal_reminder_date','reminded','not yet',a) %>
+                        
+                    <% %w(name invoicing_deadline partners_target internal_target).each do |v| %>
+                      <%= li1(v,v,'span','small',a) %>
+                    <% end %>
+                    
+                     <% [i,s,e,r].each do |v| %>
+                          <%= li1(v[1],v[0],'span','small',a)%>
+                      <% end %>
+            </ul>
+          </div>
+          <div class="border-b">
+                    <ul class="vlsdet">
+                        <li>
+                        <label class="light">Created</label>
+                        <small><%= link_to a.cby,a._cby %></small>
+                        <small><%= a.created_at %></small>
+                        </li>
+                        
+                        <li>
+                        <label  class="light">Last Modified</label>
+                        <small><%= link_to a.uby, a._uby %></small>
+                        <small><%= a.updated_at %></small>
+                        </li>
+                    </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapserec">
+         Recruitment Territories
+        </a>        
+      </h4>      
+    </div>
+    <div id="collapserec" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="col-xs-8">
+            <ul class="vlsdet-xl">
+                    <% %w(all_prohibited_countries all_permitted_countries 
+                           all_prohibited_regions all_permitted_regions).each do |elem| %>
+                        <%= recruit_ter(a,elem) %>
+                    <% end %>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapsesli">
+         Sliding Scale
+        </a>        
+      </h4>      
+    </div>
+    <div id="collapsesli" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="col-xs-8">
+            
+            <% a.sliding_scales.each do |ss| %>
+              <ul class="vlsdet-xl">
+              <% clev =  ss.course_level_name.join(", ") %>
+              <h5 class="border-b"> <%= clev.blank? ? "All Course Levels" : clev %> </h5>
+
+              <li>
+              <label class=light>Progression</label>
+                <small class="tag-like blue">
+                2nd Year&nbsp;&nbsp;
+                <%= ss.second_year.blank? ? 0 : ss.second_year %>%
+                </small>
+                &nbsp;&nbsp;
+                <small class="tag-like blue">
+                3rd Year&nbsp;&nbsp;
+                <%= ss.third_year.blank? ? 0 : ss.third_year %>%
+                </small>
+              </li>
+              </ul>
+                <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                <tbody>
+                  <tr class="green-right">
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Commission</td>
+                  </tr>
+                  <% ss.sliding_ranges.each do |sr| %>
+                      <% if (sr.from.nil? && sr.to.nil?) %>
+                        <% text = "to all students" %>
+                      <% elsif (sr.from.nil? && !sr.to.nil?) %>
+                        <% text = "#{sr.to}+ students" %>
+                      <% else %>
+                        <% text = nil %>
+                      <% end %>
+                  <tr>
+                    <td><%= sr.from %></td>
+                    <td><%= sr.to %></td>
+                    <td><%= sr.commission_percentage %> %&nbsp;&nbsp;
+                    <span class="tag-like green">
+                    <%= text %>
+                    </span>
+                    </td>
+                  </tr>
+                  <% end %>
+                </tbody>
+                </table>
+            <br/>
+            <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapsedoc">
+         Documents
+        </a>        
+      </h4>      
+    </div>
+    <div id="collapsedoc" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="col-xs-12">
+
+            <%= render 'contracts/document',contract: a %>
+
+            <!-- documents -->
+          <%= nested_form_for(a, 
+            html: {onsubmit: "return validateAll(this);",
+            multipart: true,
+            class: "form-horizontal"}) do |f| %>
+                  <%= f.fields_for :documents,a.documents.build do |d| %>
+                  <div class="row blue-well">
+                    <div class="row row-top">
+                      <div class="col-xs-12 text-right padR30">
+                        <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
+                      </div>
+                    </div>
+
+                      <%= bs(d,[:category_id,DocCategory.order(:name),
+                                                                  :id,
+                                                                  :name,
+                                                                  {prompt: "-doc category-"},{}],
+                                                                  "collection_select",
+                                                                  [nil,4],7,6) %>
+                      <%= bs(d,"name","text_field",[nil,4],7,6) %>
+                      
+                      <div class="col-xs-6">
+                              <div class="form-group">
+                              <label class="control-label col-xs-4">Choose File</label>
+                                  <div class="col-xs-7">
+                                    <%= d.file_field :path,{class: 'btn btn-file'} %>
+                                  </div>
+                          </div>
+                      </div>
+
+                      <%= d.hidden_field :registration_id %>
+                      
+                  </div>
+                  <div class="clear"></div>
+                  <br/>
+                  <% end %> 
+
+                <div class="row">
+                <div class="col-xs-12 form-group">
+                  <%= f.link_to_add "Add Document", :documents,{class: 'btn btn-default'} %>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-xs-12 form-group text-right">
+                  <%= f.submit "Save",{class: "btn btn-primary"} %> 
+                </div>
+            <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapsenot">
+         Notes
+        </a>        
+      </h4>      
+    </div>
+    <div id="collapsenot" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="col-xs-8">
+            <ul class="vlsdet-xl">
+              <div id="contract_note_<%= a.id %>" >
+                <%= render 'notes/note', sub: a %>
+              </div>
+                    
+             <h5>New Note</h5>
+             <%= nested_form_for(a,remote: true) do |cns| %>
+              <%= cns.fields_for :notes,a.notes.build do |cns1| %>
+                <%= cns1.hidden_field :sub_class, value: "Contract" %>
+                <%= cns1.text_area :content,{:size => '10x4', 
+                                          :style => 'width:480px;',
+                                          class: "app_note",
+                                          data: {provide: "markdown"}} %>
+              <% end %>
+              <br/>
+              <div class="form-group">
+              <%= cns.submit "Write",{class: "btn-sm btn-primary"} %>
+              </div>
+              <% end %>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<br/>
 <script>
+  $('.best_in_place').best_in_place();  
+  $(".app_note").markdown({width: 500});
 </script>
-<h4 class="htab">
-  Contract Information
-</h4>
-<br/>
-<br/>
-
-<ul class="vlsdet">
-   <% obj.contracts.each do |i| %>
-    <!-- @programme is used in 2 partials, change status and add note -->
-    <% @contract = i %>
-   
-    <h3><%= i.name rescue "Unknown" %></h3> <%= link_to "Delete",i, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <br/>
-    <br/>
-
-    <li><label>Initiate Date</label>: <%= i.initiate_date rescue "Uninitiated" %></li>
-    <li><label>Start Date</label>: <%= i.current_contract_start_date %></li>
-    <li><label>End Date</label>: <%= i.current_contract_end_date %></li>
-    <li><label>Remind Renew On</label>: <%= i.renewal_reminder_date %></li>
-    
-
-    <li><label>Invoicing Deadline</label>: <%= i.invoicing_deadline %></li>
-    <li><label>Partners Target</label>: <%= i.partners_target %></li>
-    <li><label>Internal Target</label>: <%= i.internal_target %></li>
-    <li><label>Commission Specified</label>: <%= i.commission_specified %></li>
-    <li><label>Territory Specified</label>: <%= i.territory_specified %></li>
-    <li><label>Recruitment Territories</label>: <%= i.recruitment_territories %></li>
-    <li><label>Desc</label>: <%= i.desc %></li>
-    
-    <% %w(all_prohibited_countries all_permitted_countries 
-       all_prohibited_regions all_permitted_regions).each do |elem| %>
-    
-       <%= recruit_ter(i,elem) %>
-    
-    <% end %>
-    
-   
-    
-    <div class="cl"></div>
-    <br/>
-
-    <li><label>Created</label>:
-      <%= link_to i._cre_by.first_name,"#" %> &nbsp;&nbsp; <%= tym(i.created_at) %></li>
-
-
-    <li><label>Last Modified</label>:
-      <%= link_to i._upd_by.try(:first_name),"#" %> &nbsp;&nbsp; <%= tym(i.created_at) %></li>
-     <br/>
-     <br/>
-     <%= render 'contracts/document',obj: obj %>
-     <br/>
-     <br/>
-
-     <h5 class="htab"> Notes For This Contract<h5>
-     <div id="contract_note_<%= i.id %>" >
-          <%= render 'notes/note', sub: @contract %>
-     </div>
-     <br/>
-     <br/>
-     
-     
-     
-     <%= nested_form_for(i,remote: true) do |r| %>
-      <%= r.fields_for :notes,i.notes.build do |n| %>
-        <%= n.hidden_field :sub_class, value: "Contract" %>
-        <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note"} %>
-      <% end %> 
-      <br/>
-      <%= r.submit "Write",{class: "btnp"} %>
-      <% end %>
-     <br/>
-
-    <div class="brg01"> </div>
-    <br/>
-    <br/>
-  <% end %>
-
-</ul>

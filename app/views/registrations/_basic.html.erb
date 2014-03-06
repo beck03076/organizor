@@ -46,7 +46,7 @@
            <%= li1('registered_by',a.cby,'span','small')%>
            <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
            <%= li1('Modified By',a.uby,'span','small')%>
-           <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.to %>
+           <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.ato %>
            <%= li1('assigned to',out,'span','small')%>
            <%= li1('assigned by',a.aby,'span','small')%>
           
