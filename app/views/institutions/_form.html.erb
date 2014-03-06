@@ -1,8 +1,9 @@
 <!-- New institution form -->
-<%= nested_form_for(@institution, 
+<link rel="stylesheet" href="/assets/jqueryui-datepicker.css">
+<%= nested_form_for(@institution,
                     html: {onsubmit: "return validateAll(this);",
                     class: "form-horizontal"}) do |f| %>
-                                         
+
                           <% if @institution.errors.any? %>
                            <div id="error_explanation">
                            <h2>
@@ -14,7 +15,7 @@
                            </ul>
                            </div>
                           <% end %>
-                          
+
    <div class="row row-top">
     <div class="col-xs-7">
       <h3><%= what %> institution <span class="light"> <%= link %> </span></h3>
@@ -27,7 +28,7 @@
     </div>
   </div>
   <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scales]} %>
-  <% parts = [:start, 
+  <% parts = [:start,
               :institution_information,
               hsh,
               :people] %>
@@ -46,7 +47,7 @@
                 </div>
                 <div class="row row-top">
                   <div class="col-xs-12">
-                    
+
                     <% parts_values.each_with_index do |elem,i| %>
                         <% set = "" %>
                         <% if i == 0 %>
@@ -58,21 +59,21 @@
                     <% end %>
                   </div>
                 </div>
-                
+
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="well">
-                     
-                        
+
+
                         <% parts.each_with_index do |elem,i| %>
-                            
+
                             <% set = "display-hide" %>
                             <% if i == 0 %>
                               <% set = "" %>
                             <% end %>
                             <% if elem.kind_of?(Hash) %>
                               <%= render 'form_' + elem.keys.first.to_s, index: i,
-                                                                    set: set, 
+                                                                    set: set,
                                                                     arr: elem.values.flatten,
                                                                     f: f %>
                               <% @after_hsh = 1 %>
@@ -86,25 +87,25 @@
                             <% end %>
                         <% end %>
                         <div class="row"></div>
-                        
+
                         <div class="row row-right">
                           <div class="col-xs-1 text-left">
                             <div class="form-group form-last">
                               <a go="previous" id="id_previous" class="btn btn-primary btn-next display-hide">Previous</a>
                             </div>
-                          </div>                          
+                          </div>
                           <div class="col-xs-1 col-xs-offset-10 text-right">
                             <div class="form-group form-last">
                               <a  go="next" id="id_next" class="btn btn-primary btn-next">Next</a>
                             </div>
-                          </div>                          
-                        </div>                     
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
-    
+
 </div>
- 
+
 <div id="resource-container"></div>
 <div class="row"> </div>
 
@@ -161,17 +162,17 @@
                $('[part=' + part + ']').click();
           }
         });
-        
+
          $(document).on('nested:fieldAdded', function(event){
-      
-              var field = event.field; 
+
+              var field = event.field;
               var dateField = field.find('.dateField');
               dateField.datepicker({
                 inline: true,
-                changeMonth: true, 
-                changeYear: true, 
+                changeMonth: true,
+                changeYear: true,
                 dateFormat: "yy-mm-dd",
-                yearRange: '1980:2050' 
+                yearRange: '1980:2050'
               });
 
               var id1 = field.find('.token_coun_pro').attr("id");
@@ -183,19 +184,19 @@
               tokens('#' + id2,"/srch_countries.json");
               tokens('#' + id3,"/srch_regions.json");
               tokens('#' + id4,"/srch_regions.json");
-              
+
               slidingScale(field);
-              
+
               var course_id = field.find('.course_ids').attr("id");
               tokens('#' + course_id,"/search/course_level/name/token.json");
            });
-           
+
            slidingScale();
            $( 'input.course_ids' ).each(function(){
              var course_id = $(this).attr("id");
              tokens('#' + course_id,"/search/course_level/name/token.json");
            });
-           
+
            actmm("institutions");
 
     </script>
