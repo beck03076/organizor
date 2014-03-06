@@ -181,7 +181,7 @@
 
       <% @cols.each do |i| %>
         <% if i.is_a?(Array) %>
-          <th><%= (i[3] || i[1]).to_s.titleize %></th>
+          <th><%= (i[3] || i[0]).to_s.titleize %></th>
         <% else %>
           <th <%= (i.to_s == 'statuses' ? 'class=statuses' : '') %>>
           <%= i.to_s.titleize %>

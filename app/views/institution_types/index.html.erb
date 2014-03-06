@@ -22,7 +22,8 @@
                 <th>Description</th>
                 <th>Created</th>
                 <th>Last Modified</th>
-                <th colspan=2>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +43,8 @@
                                 edit_institution_type_path(r),
                                 {remote: true,
                                 onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+                  </td>
+                  <td>
                     <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
                                 r, 
                                 method: :delete, 

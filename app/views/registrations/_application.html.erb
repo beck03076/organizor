@@ -1,6 +1,13 @@
 <!-- applications by registration -->
 <div id="create-fee-container"> </div>
-<% progs = @obj.programmes.includes(:institution).group_by{|i| i.institution.country_id } %>
+<% progs = @obj.programmes.includes(:institution).group_by{|i| i.institution.country_id } rescue {} %>
+<% if progs.blank? %>
+    <div class="row">
+      <div class="col-md-5">
+        <i>No applications created</i>
+      </div>
+    </div>
+<% else %>
 <% progs.keys.each do |prog| %>
 <div class="row row-right">
 
@@ -133,7 +140,7 @@
   <% end %>
 </div>
 <% end %>
-
+<% end %>
 <script>
   $(".app_note").markdown({width: 500});
   $('.collapse_all').click(function(){

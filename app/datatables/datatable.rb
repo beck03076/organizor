@@ -98,25 +98,22 @@ protected
   
   def fetch_items
     sc = sort_column
-
-    if !@sFilter.nil?
+    if !@sFilter.nil?     
       sFilTit = @sFilter.titleize
       if sFilTit == "Deactivated"
-        items = Enquiry.inactive
-      elsif sFilTit == "All" || "Finance"
+        items = Enquiry.inactive        
+      elsif (sFilTit == "All" || sFilTit == "Finance")        
         items = @asso_model        
-      else
-        if @tab.nil?
+      else        
+        if @tab.nil?          
           fet_stat = nil
-        else
+        else          
           fet_stat= @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
         end
-        
         items = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])
-      end
-      p "*************8"
-      p items
-    end
+      end      
+   end
+    
     if !items.blank?
         if sc.is_a?(Array)
           scs = set_asso(sc[1])

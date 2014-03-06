@@ -13,19 +13,14 @@
 *= require multi-select
 *= require fullcalendar
 *= require token-input-bootstrappy
-*= require jquery-ui-1.10.4.custom
 *= require bootstrap-markdown.min
 *= require custom
-
+*= require datepicker
 */
-
 
 .well tr.enq_reg td {background: #e1f5e0 !important; }
 .well tr.fu_week td {background: #f8f4b0 !important; }
 .well tr.fu_now td {background: #f7d0d0 !important; }
-
-
-
 
 .tooltip-c {
   position: absolute;
@@ -97,9 +92,5 @@ strong.uncheckit{text-decoration:none;}
   color: #777777;
   text-decoration: underline;
 }
-
-
-
-
 
 

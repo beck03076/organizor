@@ -148,7 +148,7 @@
 <script src="/dt-bootstrap.js"></script>
 <script>
 
- var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');
+ var tab = dataTableStart("<%= _id %>","finance","<%= @cols %>",'<%= @cols.size %>');
 
  $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
                            '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
@@ -189,10 +189,6 @@
    return false;
    
  });
- 
- 
 
-
- 
 </script>
 
