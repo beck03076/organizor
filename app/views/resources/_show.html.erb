@@ -1,15 +1,25 @@
-<!-- show branch -->
-<div class="row">
+<!-- show resource -->
               <div class="row row-top ">
-                <div class="col-md-6">
-                  <div class="col-md-4 text-right light">Name</div>
-                  <div class="col-md-8"><%= a.name %></div>
-                  <div style="clear:both;"></div>
-                  <br/>
-                  <div class="col-md-4 text-right light">Description</div>
-                  <div class="col-md-8"><%= a.desc %></div> 
-                  <div style="clear:both;"></div>
-
-                </div>
+                <h4 class="bold-subhead"><%= a.name %></h4>
+                <ul class="vlsdet">
+                  <%= li1('Name',a.name,'span','small')%>
+                  <%= li1('Description',a.desc,'span','small')%>
+                  <li>
+                    <div class="padded">
+                        <label class="light">Created</label>
+                        <small class="padded">
+                        <%= link_to a.cby,a._cby %>&nbsp;<%= a.created_at %>
+                        </small>
+                    </div>    
+                  </li>
+                  <li>
+                    <div class="padded">
+                        <label  class="light">Last Modified</label>
+                        <small class="padded">
+                        <%= link_to a.uby, a.uby %>&nbsp;<%= a.updated_at %>
+                        </small>
+                    </div>    
+                  </li>
+                </ul>                
                </div>
-</div>
+

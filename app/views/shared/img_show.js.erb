@@ -1,0 +1,11 @@
+    <% ctnt = (render 'shared/img_show') %>     
+    
+    $('#upload-image').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'image-upload', 
+                                                       content: ctnt.html_safe,
+                                                       header: 'Show Image',
+                                                       button: nil}) %>");
+                                                       
+    $('#image-upload').modal('show');
+
+   

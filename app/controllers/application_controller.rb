@@ -3,6 +3,7 @@ require "ipaddr"
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
   protect_from_forgery
+  autocomplete :city_and_country_search, {:city => [:name], :region => [:name]}
   
   layout :layout
 

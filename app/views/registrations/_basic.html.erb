@@ -1,15 +1,13 @@
 <!-- basic information about the registration -->
 <% a = @registration %>
-<div class="row border-b">
-  <div class="col-xs-3">
-                <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
-                           {width: "170"}) %>
-                        <span onclick = "showPopUp('upload_image');" class="abs-plus" style="display:none;">+</span>
 
-                        <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;">
-                        <%= render 'shared/img_upload', a: a %>
-                        </div>
-    <ul class="vlsdet-s">
+<div class="row border-b">
+  
+  <div class="col-xs-3">
+    <%= render 'images/disp', core: "registration", a: a %>
+
+
+    <ul class="vlsdet-s" >
         <h4 class="bold-subhead">Quick Info</h4>
            <%= li1('ref_no','ref_no','span','small',a)%>
            <%= li1('source',a.source,'span','small')%>

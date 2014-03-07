@@ -38,12 +38,16 @@ class JsonController < ApplicationController
 
   def institutions
     set_url_params
-    if @geo == "city"
-      city = City.find(@c_id)
-      @institutions = city.institutions.where(type_id: @ins_type_id)
-    elsif @geo == "country"
-      country = Country.find(@c_id)
-      @institutions = country.institutions.where(type_id: @ins_type_id)
+    if @country_id.to_i != 0
+      @institutions = Country.find(@country_id).institutions
+    end
+    if @city_id.to_i != 0
+      @institutions = @institutions.blank?  || Institution
+      @institutions = @institutions.where(city_id: @city_id)
+    end
+    if @ins_type_id.to_i != 0
+      @institutions = @institutions || Institution
+      @institutions = @institutions.where(type_id: @ins_type_id)
     end
     
     respond_to do |format|

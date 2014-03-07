@@ -17,7 +17,7 @@
     </div>
 
     <%= bs(f,["date_of_birth",{class: "datepicker"}],"text_field",[nil,4],7,6) %>
-    <h4> Address</h4>
+    <h4 class="bold-subhead"> Address</h4>
     <br/>
     <% %w(line1 line2 city).each do |el| %>
       <%= bs(f,'address_' + el,"text_field",[el,4],7,6) %>
@@ -32,7 +32,7 @@
             
     <%= bs(f,"address_post_code","text_field",['post_code',4],7,6) %>
     <div class="clear"></div>
-    <h4>About</h4>
+    <h4 class="bold-subhead">About</h4>
     <br/>
     <div class="col-xs-6">
       <div class="form-group">

@@ -1,18 +1,18 @@
-<%= form_for(a) do |f| %>
-                    <div class="fbox">
-                      <%= f.label :local_image %>
-                      <%= f.file_field :image %>   
-                    </div>
-                    <div align="center">
-                    <div style="font-size:11px">
-      <b>              -- OR --</b>
-</div>
-                    </div>
-                    <div class="fbox">
-                      <%= f.label :remote_image_url %>
-                      <%= f.text_field :remote_image_url %>   
-                    </div>
-                    <input type="button" value="Close" name="commit" class="btns fr bClose"/>
-                    <%= f.submit "Upload", {class: "btnp fr"} %>
-                    <div class="cl"></div>
+<!-- all image upload -->
+<div class="row">
+<%= form_for(@model,html: {class: "form-horizontal"}) do |f| %>
+
+     <%= bs(f,'image',"file_field",['local_image',4],7,8) %>
+     <div class="col-xs-8 text-center">
+     --Or--
+     </div>
+     <div class="row">
+     </div>
+     <br/>
+     <%= bs(f,'remote_image_url',"text_field",[nil,4],7,8) %>
+
+     <div class="form-group form-last">
+        <%= f.submit "Upload",{class: "btn btn-primary btn-next"} %>
+     </div>
 <% end %>
+</div>

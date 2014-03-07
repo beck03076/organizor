@@ -12,8 +12,6 @@
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Created</th>
-            <th>Last Modified</th>
             <th></th>
             <th></th>
           </tr>
@@ -29,10 +27,8 @@
                              onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'}) %>
               </td>
               <td>
-                <%= truncate(r.desc,length: 20) %>
+                <%= truncate(r.desc,length: 40) %>
               </td>
-              <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
-              <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
               <td>
                
                 <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 

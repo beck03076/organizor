@@ -1,0 +1,21 @@
+<!-- display core images -->
+<div id="upload-image"></div>
+<div class="rel abs-plus-box">
+        <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),{width: "170"}) %>
+        <small class="text-center">
+        <small><%= link_to 'change',
+                         edit_image_path({obj_id: a.id,model: core}),
+                         {remote: true,
+                         class: "abs-plus"} %>
+        <small class="abs-plus"> |</small>
+        
+        <%= link_to 'view'.html_safe,
+                         image_path({obj_id: a.id,model: core}),
+                         {remote: true,
+                         class: "abs-plus"} %>
+         </small>
+         </small>
+
+        
+        
+    </div>

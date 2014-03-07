@@ -6579,8 +6579,6 @@ button.close {
   padding: 1px;
   text-align: left;
   white-space: normal;
-  background-color: #333333;
-  border: 1px solid #333333;
   border: 1px solid transparent;
   border-radius: 0;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -6652,7 +6650,7 @@ button.close {
 .popover.top .arrow:after {
   bottom: 1px;
   margin-left: -10px;
-  border-top-color: #333333;
+  border-top-color: #f5f8fb;
   border-bottom-width: 0;
   content: " ";
 }
@@ -6686,7 +6684,7 @@ button.close {
 .popover.bottom .arrow:after {
   top: 1px;
   margin-left: -10px;
-  border-bottom-color: #333333;
+  border-bottom-color: #fff;
   border-top-width: 0;
   content: " ";
 }

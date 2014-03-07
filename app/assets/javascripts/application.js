@@ -292,8 +292,9 @@ function prepareSelect(sourObj,destVar,hit)
 //list is 1 so the previous actions table for the enquirie will be returned in this partial
 function action_partial(model,action,id)
 {
+  $("#action_div").html("<img class=temp src=/images/icons/sload.gif >");
   $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
-
+      
       var $container = $("#action_div").html(partial);
       var $dTF = $('.dateTimeField', $container);
       if ($dTF.length > 0) {
@@ -306,6 +307,7 @@ function action_partial(model,action,id)
             dateFormat: 'yy-mm-dd',
             timeFormat: 'hh:mm:ss'});
       }
+      
   });
 }
 
@@ -789,10 +791,15 @@ function setInsTypeData(obj,dest){
   $(dest).data('city_id',itemId);
 }
 
-function changeInsType(obj,dest){
+function changeInsType(obj,dest,type){
   var cityId = $(obj).data('city_id');
   var itemId = obj.options[obj.selectedIndex].value;
-  var url = '/get_institutions/city/' + cityId + '/' + itemId
+  if (type == "country"){
+    var url = '/get_institutions/' + itemId}
+  else if (type == "city"){
+    var url = '/get_institutions/0/' + itemId}
+  else if (type == "ins_type"){
+    var url = '/get_institutions/0/0/' + itemId}
   var index = obj.id.split("_")[3];
   var obj = $('div#object_name').data("obj");
   var destDiv = '#' + obj + dest.replace("index", index);
@@ -1018,7 +1025,7 @@ function fRHideSs(obj,type){
   if (type=="pr"){
     var elem = $(obj).parents(3).siblings('#progression');
   }else if(type=="cl"){
-    var elem = $(obj).parents(2).find('#course_level');
+    var elem = $(obj).parents(2).children('#course_level');
   }
   elem.val('');
   elem.toggle('fast');

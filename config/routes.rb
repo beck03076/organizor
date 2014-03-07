@@ -260,7 +260,7 @@ Organizor::Application.routes.draw do
   
   match '/get_cities/:co_id(/:type)' => 'json#cities'
   
-  match '/get_institutions/:geo/:c_id(/:ins_type_id)' => 'json#institutions'  
+  match '/get_institutions/:country_id(/:city_id(/:ins_type_id))' => 'json#institutions'  
  
   match '/not_found' => 'enquiries#error'
 

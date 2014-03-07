@@ -37,7 +37,7 @@ class Programme < ActiveRecord::Base
   end
   
   def course_level_name
-    self.course_level.name rescue nil
+    self.course_level.name rescue "No Course"
   end 
   
   def institution_name

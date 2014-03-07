@@ -13,11 +13,9 @@ class ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
-    @image = Image.find(params[:id])
-
+    @model = params[:model].camelize.constantize.find(params[:obj_id])
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @image }
+      format.js { render 'shared/img_show' }
     end
   end
 
@@ -34,7 +32,10 @@ class ImagesController < ApplicationController
 
   # GET /images/1/edit
   def edit
-    @image = Image.find(params[:id])
+    @model = params[:model].camelize.constantize.find(params[:obj_id])
+    respond_to do |format|
+      format.js { render 'shared/img_upload' }
+    end
   end
 
   # POST /images

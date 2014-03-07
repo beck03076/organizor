@@ -2,13 +2,7 @@
 <% a = @institution %>
 <div class="row border-b">
   <div class="col-xs-3">
-                <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
-                           {width: "170"}) %>
-                        <span onclick = "showPopUp('upload_image');" class="abs-plus" style="display:none;">+</span>
-
-                        <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;">
-                        <%= render 'shared/img_upload', a: a %>
-                        </div>
+     <%= render 'images/disp', core: "institution", a: a %>
     <ul class="vlsdet-s">
         <h4 class="bold-subhead">Quick Info</h4>
 
@@ -24,7 +18,7 @@
 
            <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
            <% %w(emails follow_ups todos notes).each do |act| %>
-             <% out = meta(current_user.id,"person",act,a.id,hsh[act.to_sym]) %>
+             <% out = meta(current_user.id,"institution",act,a.id,hsh[act.to_sym]) %>
              <%= li1(act,out,'span','small')%>
            <% end %>
 
@@ -36,7 +30,14 @@
   <div class="col-xs-5 row-top">
     <ul class="vlsdet pt-0 border-b">
         <h4 class="pt-0 bold-subhead">About</h4>
-        <%= li1('type',(a.type.name rescue "Unknown"),'span','small')%>
+        <li>
+         <div class="padded">
+         <label><span class="light">Type</span></label>
+         <small class="padded tag-like purple">
+           <%= a.type.name rescue "Unknown" %>
+         </small> 
+         </div>
+        </li>
         <%= li1('group',(a.group.name rescue "Unknown"),'span','small')%>
     </ul>
     <ul class="vlsdet border-b">

@@ -7,7 +7,7 @@
         [:prohibited_regions,"token_reg_pro","#aa2222"],
         [:permitted_regions,"token_reg_per","#4e9a06"]].each do |el| %>
       <%= bs(c,[el[0],class: el[1],
-                data: { pre: out[("all_" + el[0].to_s).to_sym] } ],"text_field",[nil,4],7,6) %> 
+                data: { pre: out[("all_" + el[0].to_s).to_sym] } ],"text_field",[nil,3],5,12) %> 
     <% end %>  
 
 

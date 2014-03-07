@@ -43,7 +43,10 @@ $(function(){
                                               {class: "countries_select",
                                                onchange: "prepareSelect(this,
                                                        '_programmes_attributes_index_city_id',
-                                                       '/get_cities/');"}],
+                                                       '/get_cities/');
+                                                       changeInsType(this,
+                                                    '_programmes_attributes_index_institution_id',
+                                                    'country');"}],
                                               "collection_select",
                                               [nil,4],7,6) %>
             <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
@@ -58,7 +61,10 @@ $(function(){
                           {class: "cities_select",
                           onchange: "setInsTypeData(this,'.institution_type_select');
                                      $('.institution_type_select').fadeOut(1000);
-                                     $('.institution_type_select').fadeIn(1000);"}],
+                                     $('.institution_type_select').fadeIn(1000);
+                                     changeInsType(this,
+                                                    '_programmes_attributes_index_institution_id',
+                                                    'city');"}],
                            "collection_select",
                            [nil,4],7,6) %>
 
@@ -70,7 +76,8 @@ $(function(){
                           {class: "institution_type_select",
                                          onchange: "ins_type_change(this);
                                                     changeInsType(this,
-                                                    '_programmes_attributes_index_institution_id');" }],
+                                                    '_programmes_attributes_index_institution_id',
+                                                    'ins_type');" }],
                            "collection_select",
                            [nil,4],7,6) %>
 

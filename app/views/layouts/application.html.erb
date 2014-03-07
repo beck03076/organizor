@@ -19,28 +19,59 @@
   </head>
 
   <body>
+  <div class="popover-markup" id="create_new_ctnt">
+                <div class="head hide light">
+                   <h5>Create New</h5>
+                </div>
+                <div class="content hide">
+                    <ul class="vlsdet">
+                      <% %w(enquiry registration institution person).each do |n| %>
+                      <li>
+                      <small><%= link_to n.titleize, send('new_' + n + '_path'),{class: "clickable"} %></small>
+                      </li>
+                      <% end %>
+                    </ul>
+                </div>
+  </div>
 
   <!-- Shortening variable -->
   <% u = current_user %>
     <div id="header">
       <div class="container">
-          <div class="col-xs-9">
-            <h1 class="text-left">Organizor</h1>
+        <div class="col-xs-2">
+          <h1 class="text-left">Organizor</h1>
+        </div>
+        <div class="col-xs-3">
+          <br/>
+          <div class="row">
+            <input type=text class="form-control" placeholder="Search with name..."/>
           </div>
-          <div class="col-xs-3 profile">
-            <div class="col-xs-3">
-              <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+        </div>
+        <div class="col-xs-5 text-right">
+          <a href="#">
+            <span id="create_new" class="glyphicon glyphicon-plus-sign notification-icon no-link">
+            </span>
+          </a> 
+          
+          <a href="#" id="id_notification_dropdown" data-container="body" data-toggle="popover" data-placement="bottom">
+          <span class="glyphicon glyphicon-bell notification-icon no-link"></span>
+          <span class="badge">20</span></a>
+        </div>
+        <div class="col-xs-2 profile text-right">
+          <a href="#" id="id_user_dropdown">
+          <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                          {width: "50",
                                           height: "50",
                                           class: "img-rounded"}) %>
-            </div>
-            <div class="col-xs-9">
-              <small><%= u.first_name.titleize rescue "Mr. Unknown" %></small>
+          <span class="ml-10 no-link">
+            <b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
+          </span>
 
-            </div>
-          </div>
+          </a>
+        </div>        
       </div>
     </div>
+
 
     <!-- Begin page content -->
     <div class="container main">
@@ -119,6 +150,27 @@
 
     <div id="footer">
     </div>
-
+    <script>
+      $('#create_new').click(function(){
+        $('#create_new').popover({
+            html: true,
+            placement: "bottom",
+            title: function () {
+                return $('#create_new_ctnt').find('.head').html();
+            },
+            content: function () {
+                return $('#create_new_ctnt').find('.content').html();
+            }
+        });
+        $('#create_new').popover('show');
+      });
+      
+      $(document).mouseup(function (e) {
+        if ($('.popover').has(e.target).length === 0) {
+            $('.popover').toggleClass('in').remove();
+            return;
+        }
+      });
+    </script>
   </body>
 </html>
