@@ -49,7 +49,6 @@ gem 'rmagick'
 
 gem 'devise'
 gem 'cancan'
-gem 'omniauth'
 
 gem 'rails3-jquery-autocomplete'
 
@@ -58,7 +57,6 @@ gem "audited-activerecord"
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'fullcalendar-rails' 
 
 gem 'nested_form', github: 'ryanb/nested_form'
 
@@ -106,4 +104,5 @@ gem 'ransack'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'redcarpet'
+gem 'see_more'
 

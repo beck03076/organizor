@@ -1,4 +1,5 @@
 <!-- follow_ups for core models -->
+
 <div class="col-md-12">
   <div class="config-content">
     <% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
@@ -15,17 +16,22 @@
             <th>Starts At</th>
             <th>Assigned To</th>
             <th>Assigned By</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
            <% obj.follow_ups.each do |fu| %>
                 <tr>
-                    <td><%= link_to fu.title,follow_up_path(fu) %></td>
+                    <td><%= link_to fu.title,follow_up_path(fu),{remote: true} %></td>
                     <td><%= truncate(fu.desc,length: 50) %></td>
                     <td><%= fu.event_type.try(:name) %></td>
                     <td><%= fu.starts_at.to_s %></td>
                     <td><%= fu.ato %></td>
                     <td><%= fu.aby %></td>
+                    <td><%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                            fu, 
+                            method: :delete, 
+                            data: { confirm: 'Are you sure?' }  %>
                </tr>
            <% end %> 
         </tbody>
@@ -101,7 +107,7 @@
       </div><!-- end well-->
   </div>
 </div>
-
+<div id="container"></div>
 <script> 
 acttab('follow_up'); 
 actdd();

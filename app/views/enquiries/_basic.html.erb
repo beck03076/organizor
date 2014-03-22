@@ -1,13 +1,6 @@
 <!-- basic info for enquiry show page -->
 <% a = @enquiry %>
-                      <%= image_tag((a.image? ? a.image_url : "/images/icons/user.png"),
-                                   {width: "100",class: "tooltip",title: "Upload your photo",
-                                    class: "imgb fl"
-                                    }) %>
-                      <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
-             <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
-                 <%= render 'shared/img_upload', a: a %>
-             </div>
+               <%= render 'images/disp', core: "enquiry", a: a %>
              
               <h4 class="htab">
                     Personal information

@@ -1,7 +1,7 @@
 class Registration < ActiveRecord::Base
   include CoreExtension
   
-  validates :first_name, 
+  validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another registration, please check!" }
   
@@ -12,7 +12,8 @@ class Registration < ActiveRecord::Base
 
   has_many :programmes, dependent: :destroy
   has_many :institutions, through: :programmes
-  has_many :application_status, through: :programmes
+  has_many :application_statuses, through: :programmes,:foreign_key => 'app_status_id'
+  has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes
   
   has_many :exams
@@ -30,6 +31,9 @@ class Registration < ActiveRecord::Base
              :foreign_key => "address_country_id"
              
   belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
+  
+  belongs_to :branch
+  belongs_to :progression_status
   
   has_and_belongs_to_many :emails 
   has_many :follow_ups
@@ -70,7 +74,10 @@ class Registration < ActiveRecord::Base
   scope :mine, lambda{|user|
   if user.adm?
    includes(:follow_ups,
-            :country_of_origin).scoped
+            :country_of_origin,
+            :branch,
+            :progression_status,
+            :_ass_to).scoped
   else
    includes(:follow_ups,
             :country_of_origin).where("registrations.assigned_to = #{user.id}")

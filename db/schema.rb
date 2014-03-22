@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140304190036) do
+ActiveRecord::Schema.define(:version => 20140313105057) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -580,6 +580,24 @@ ActiveRecord::Schema.define(:version => 20140304190036) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "processing_fee_statuses", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "processing_fee_types", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "proficiencies", :force => true do |t|
     t.integer  "prof_eng_level_id"
     t.integer  "prof_exam_id"
@@ -616,6 +634,11 @@ ActiveRecord::Schema.define(:version => 20140304190036) do
     t.integer  "registration_id"
     t.string   "course_subject_text"
     t.integer  "claim_status_id"
+    t.integer  "p_fee_id"
+    t.integer  "p_fee_cents"
+    t.string   "currency"
+    t.integer  "p_fee_status_id"
+    t.text     "p_fee_bank_details"
   end
 
   create_table "progression_statuses", :force => true do |t|

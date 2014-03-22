@@ -1,0 +1,2 @@
+module ProcessingFeeStatusesHelper
+end

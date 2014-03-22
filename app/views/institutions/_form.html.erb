@@ -85,7 +85,7 @@
                             <% else %>
                 <% index = (@after_hsh == 1) ? (i + hsh.values.flatten.size) : i + 1  %>
                                 <div id="id_part_<%= index %>" class="<%= set %>">
-                                  <h4 class="form-heading" id="<%= elem %>"><%= elem.to_s.titleize %></h4>
+                                  <h4 class="bold-subhead" id="<%= elem %>"><%= elem.to_s.titleize %></h4>
                                   <div class="row"></div>
                                     <%= render 'form_' + elem.to_s, f: f %>
                                 </div>

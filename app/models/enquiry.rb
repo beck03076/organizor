@@ -33,6 +33,8 @@ class Enquiry < ActiveRecord::Base
   scope :active, includes(:status,
                           :follow_ups,
                           :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
+                          
+  belongs_to :branch
   
   #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   

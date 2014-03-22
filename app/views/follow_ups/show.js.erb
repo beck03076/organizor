@@ -1,0 +1,12 @@
+ 
+  <% ctnt = (render 'show', {a: @follow_up}) %>
+ 
+  $('#container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'show-action', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Show',
+                                                         button: nil}) %>");
+  
+  $('#show-action').modal('show');
+  
+  $('.temp').remove();

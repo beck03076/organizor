@@ -20,6 +20,7 @@ class EnquiriesDatatable < Datatable
     @item_scope = ["myactive",current_user]
     
     @compound = true
+    @goto = ["/enquiries/","id"]
   end
    
 end

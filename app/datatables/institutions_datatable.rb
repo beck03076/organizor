@@ -19,6 +19,7 @@ class InstitutionsDatatable < Datatable
     @item_scope = [:ignore,nil]
     
     @compound = true
+    @goto = ["/institutions/","id"]
   end
     
 end

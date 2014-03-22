@@ -1,0 +1,9 @@
+<% ctnt = (render 'create_p_fee', {a: @programme}) %>     
+    
+    $('#create-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'create-fee', 
+                                                       content: ctnt.html_safe,
+                                                       header: 'Update Processing Fee',
+                                                       button: nil}) %>");
+                                                       
+    $('#create-fee').modal('show');

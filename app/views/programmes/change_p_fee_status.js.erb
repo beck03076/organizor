@@ -1,0 +1,18 @@
+<!-- js the executes after application_status is changed -->
+$("#p_fee_status_<%= @programme.id %>").html("<%= @programme.p_fee_status_name %>");
+
+$("#p_fee_status_select_<%= @programme.id %>").slideToggle();
+
+<!-- If the application_status is joined then ask to update fees by the followin modal -->
+<% if (@programme.p_fee_status_name.downcase == "refunded") %>
+
+    <% ctnt = (render 'programmes/update_bank', {a: @programme}) %>     
+    $('#create-fee-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                         :locals =>   {id: 'create-fee', 
+                                                       content: ctnt.html_safe,
+                                                       header: 'Update Registration Bank Details',
+                                                       button: nil}) %>");
+                                                       
+    $('#create-fee').modal('show');
+
+<% end %>

@@ -2,12 +2,12 @@
 
     <% out = prep_pre(c) %>
 
-    <% [[:prohibited_countries,"token_coun_pro","#aa2222"], 
-        [:permitted_countries,"token_coun_per","#4e9a06"],
-        [:prohibited_regions,"token_reg_pro","#aa2222"],
-        [:permitted_regions,"token_reg_per","#4e9a06"]].each do |el| %>
+    <% [[:prohibited_countries,"token_coun_pro","prohibited_countries","red-wrong"], 
+        [:permitted_countries,"token_coun_per","allowed_countries","green-right"],
+        [:prohibited_regions,"token_reg_pro","prohibited_regions","red-wrong"],
+        [:permitted_regions,"token_reg_per","allowed_regions","green-right"]].each do |el| %>
       <%= bs(c,[el[0],class: el[1],
-                data: { pre: out[("all_" + el[0].to_s).to_sym] } ],"text_field",[nil,3],5,12) %> 
+                data: { pre: out[("all_" + el[0].to_s).to_sym] } ],"text_field",[el[2],"3 #{el[3]}"],5,12) %> 
     <% end %>  
 
 

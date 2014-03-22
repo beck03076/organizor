@@ -1,23 +1,27 @@
 <!-- applications by registration -->
 <div id="create-fee-container"> </div>
-<% progs = @obj.programmes.includes(:institution).group_by{|i| i.institution.country_id } rescue {} %>
+<% progs = @obj.programmes.includes(:institution).group_by{|i| i.institution.country_id rescue nil}  %>
 <% if progs.blank? %>
     <div class="row">
       <div class="col-md-5">
         <i>No applications created</i>
+       
       </div>
     </div>
+     <br/>
 <% else %>
-<% progs.keys.each do |prog| %>
+<% progs.keys.compact.each do |prog| %>
 <div class="row row-right">
 
-<h4>
+<h4 class="text-center">
   <strong> <%= link_to Country.find(prog).name,"#",{class: "collapse_all"} %></strong>
 </h4>
+
   <% progs[prog].each do |i| %>
     <!-- @programme is used in 2 partials, change status and add note -->
     <% @programme = i %>
     <% items = i.status_diagrams.order(:created_at).includes(:user,:programme,:application_status) %>
+    <% stat_name = i.application_status.name rescue "Unknown" %>
 
 <div class="panel-group" id="accordion">
   <div class="panel panel-default">
@@ -26,7 +30,7 @@
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
         <strong><%= i.institution.name %></strong></a>
         <small>
-           <span id="tag_reg_status_<%= i.id %>" class="ml-10 tag-like green"><%= i.application_status.name rescue "Unknown" %></span>
+           <span id="tag_reg_status_<%= i.id %>" class="ml-10 tag-like green"><%= stat_name %></span>
            <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
            <span class="ml-10 tag-like blue"><%= i.institution.type.name %></span>
            <span class="ml-10 tag-like blue"'><%= i.institution.group.name rescue "No" %> Group</span>
@@ -37,9 +41,16 @@
            <a class="toggler" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
            Change Status</a> |
            <span class="glyphicon glyphicon-remove mar0"></span>
-           <%= link_to "Delete Programme",i, method: :delete, data: { confirm: 'Are you sure?' } %> |
+           <%= link_to "Delete Programme",i, method: :delete, data: { confirm: 'Are you sure?' } %> 
+           <% if stat_name.downcase == "joined" %>
+           |
            <span class="glyphicon glyphicon-edit mar0"></span>
-           <%= link_to "Update Fees","/create_fee/#{i.id}", remote: true %>
+           <%= link_to "Update Tuition Fee","/create_fee/#{i.id}", remote: true %>
+           <% end %>
+           |
+           <span class="glyphicon glyphicon-edit mar0"></span>
+           <%= link_to "Update Processing Fee","/create_p_fee/#{i.id}", remote: true %>
+
            <div class="row" id="status_select_<%= i.id %>" style="display:none;">
              <%= render 'application_statuses/change_status' %>
            </div>
@@ -52,22 +63,27 @@
       <div class="panel-body">
         <div class="row row-top row-right">
             <div class="col-xs-8 pl-0">
-                <div class="row row-top">
-                    <h5>
-                    <span class="light mr-10">
-                    Status
-                    </span>
-                    <span id="reg_status_<%= i.id %>">
-                    <%= i.application_status.name rescue "Unknown" %>
-                    </span>
-                    <small class="toggler clickable" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
-           Change </small>
-
-                    </h5>
-                </div>
+               
                 <div class="border-b">
                     <ul class="vlsdet pt-0">
                       <h4 class="bold-subhead">Application Details</h4>
+                      
+                      <div class="row row-top">
+                        <li>
+                         <div class="padded">
+                         <label><span class="light">Status</span></label> 
+                            <small id="reg_status_<%= i.id %>" class="tag-like green padded">
+                                <%= i.application_status.name rescue "Unknown" %>
+                            </small>
+                            &nbsp;
+                            <small class="toggler clickable" onclick="regAppStatus(this,'#status_select_<%= i.id %>');" href="#">
+                   <span class="glyphicon glyphicon-share-alt mar0"></span>
+                   change </small>
+
+                         </div>
+                         </li>
+                     </div>
+                
                    <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
                    <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course yet to end']) %>
                         <% [['institution_name','institution_name'],
@@ -78,6 +94,70 @@
                             [e,'end_date']].each do |v| %>
                           <%= li1(v[1],v[0],'span','small',i)%>
                         <% end %>
+                        
+                        <h4 class="bold-subhead">Processing Fee Details</h4>
+                        <li>
+                         <div class="padded">
+                         <label><span class="light">Status</span></label>                         
+                         <small id="p_fee_status_<%= i.id %>" class="tag-like orange padded">
+                         <%= i.p_fee_status_name %>   
+                         </small>
+                         &nbsp;
+                         <small class="clickable" onclick="$('#p_fee_status_select_<%= i.id %>').slideToggle();" href="#">
+                         <span class="glyphicon glyphicon-share-alt mar0"></span>
+                          change
+                          </small> 
+                         
+                           <div class="row" id="p_fee_status_select_<%= i.id %>" style="display:none;">
+                             <%= render 'programmes/change_p_fee_status' %>
+                           </div>
+                         
+                         </small> 
+                         </div>
+                         </li>
+                        
+                        <% [['p_fee_type_name','type']].each do |v| %>
+                          <%= li1(v[1],v[0],'span','small',i)%>
+                        <% end %>
+                        
+                        <li>
+                             <div class="padded">
+                             <label>
+                             <span class="light">Amount</span>
+                             </label>
+                             
+                             <small class="padded">
+                             <%= humanized_money_with_symbol i.p_fee || "no fee" %>
+                             </small> 
+                             </div>
+                        </li>
+                        
+                        <li>
+                             <div class="padded">
+                             <label>
+                             <span class="light">Bank Details</span>
+                             </label>
+                             <% if false %><!-- Commenting this as using see_more gem-->
+                                 <small id="p_fee_bank_details_<%= i.id %>" class="padded">
+                                   <%= truncate(i.p_fee_bank_details,length: 30) %>
+                                 </small> 
+                                 <% if !i.p_fee_bank_details.blank? %>
+                                 <small>
+                                 <%= link_to "see more",
+                                             "/show/more/programme/p_fee_bank_details/#{i.id}",
+                                             {class: "clickable",
+                                              remote: true,
+                                              id: "p_fee_bank_details_#{i.id}"} %>
+                                 </small>
+                                 <% end %>
+                             <% end %>
+                             <!-- Javascript included below -->
+                             <small class="padded">
+                               <%= see_more(i,:p_fee_bank_details,{db: true,
+                                                                   link_classes: "clickable"}) %>
+                             </small>
+                             </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="border-b">
@@ -105,12 +185,16 @@
                      <h4 class="bold-subhead">Status Log</h4>
                      <ul class="vlsdet-s pt-0">
                         <% items.take(4).each do |s| %>
-                          <h5 class="border-b"><%= s.status_name %></h5>
+                          <h5 class="border-b tag-like green">
+                          
+                          <%= s.status_name %>
+                          
+                          </h5>
                           <li>
                           <label class="light">Set By</label>
                           <small><%= link_to s.user_name,s.user %></small>
                           </li>
-                          <li>
+                          <li >
                           <label  class="light">Set At</label>
                           <small><%= s.created_at %></small>
                           </li>
@@ -143,10 +227,81 @@
 </div>
 <% end %>
 <% end %>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading green-well">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseNew">
+        <strong>
+        <span class="glyphicon glyphicon-plus-sign mar10"></span>New Application</strong></a>
+      </h4>
+
+    </div>
+    <div id="collapseNew" class="panel-collapse collapse">
+      <div class="panel-body">
+        <% if false %>
+            <%= nested_form_for(@obj,html: {class: "form-horizontal"}) do |f| %>
+              <%= f.fields_for :programmes,Programme.new do |p| %>        
+                    <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
+                    <br/>
+              <% end %>
+              <div class="row">
+                <div class="text-left">
+                  <%= f.link_to_add "Add Another", :programmes,{class: 'btn-sm btn-default'} %>
+                </div>
+              </div>
+              <div class="row row-top mt-15">
+                <div class="col-xs-12">
+                  <div class="form-group form-last">
+                    <div class="col-xs-12 text-right">
+                    <%= f.submit "Save",{class: "btn btn-primary"} %>
+                   </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+        <% end %>
+        <small> Start Adding New Applications to this Registration </small>
+        <%= nested_form_for(@obj,html: {class: "form-horizontal"}) do |f| %>
+              <%= render 'enquiries/preferred_programmes',f: f,obj: "registration",build: Programme.new %>
+              <div class="row row-top mt-15">
+                <div class="col-xs-12">
+                  <div class="form-group form-last">
+                    <div class="col-xs-12 text-right">
+                    <%= f.submit "Save",{class: "btn btn-primary"} %>
+                   </div>
+                  </div>
+                </div>
+              </div>
+        <% end %>
+        
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  
+</div>
+<br/>
 <script>
   $(".app_note").markdown({width: 500});
   $('.collapse_all').click(function(){
     $('.collapse').removeClass('in');
   });
-
+  $('.datepicker').datepicker();
+  $(document).on('nested:fieldAdded', function(event){
+      var field = event.field;
+      var dateField = field.find('.dateField');
+      dateField.datepicker({
+        inline: true,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        yearRange: '1980:2050' });      
+    });
+  $('.best_in_place').best_in_place();
+   
 </script>
+
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">
+
+

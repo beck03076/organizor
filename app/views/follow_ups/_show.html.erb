@@ -1,0 +1,38 @@
+<!-- Follow up shop -->
+<% asso =  a.asso_with %>
+
+<h5 class="padL20">
+This followup is associated with the 
+<strong><%= asso[3] %>  
+<%= link_to asso[1],send(asso[2],asso[0]) %>
+</strong>
+</h5>
+
+<ul class="vlsdet-s padL20">
+<div class="row">
+  
+  <div class="col-xs-5 green-well padT10 padB10">
+
+      <h4 class="bold-subhead"><%= a.title %></h4>
+      
+      <small class="padL20  padded">
+      <%= a.desc %>
+      </small>
+
+  </div>
+  <div class="col-xs-7">
+                       <% [['starts_at','starts_at'],
+                           ['ends_at','ends_at'],
+                           ['ato','assigned_to'],
+                           ['aby','assigned_by'],
+                           ['venue','venue'],
+                           ['remind_before','remind_before']].each do |v| %>
+                          <%= li1(v[1],v[0],'span','small',a)%>
+                        <% end %>
+  </div>
+</div>
+</ul>
+
+
+
+

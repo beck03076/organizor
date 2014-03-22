@@ -1,0 +1,124 @@
+<!-- Ranscak filters for programmes -->            
+            <div class="row">
+               <div class="col-md-12">
+                <div class="col-md-5 text-right pull-right">        
+                   <span onclick="$('.ransack').slideToggle();" class="pointer glyphicon glyphicon-remove">
+                   </span>
+                </div>
+                    <h4 class="border-b bold-subhead">Course</h4>
+
+                  
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12 ">
+                  <div class="col-md-3">
+                       <%= f.collection_select :course_levels_id_eq,
+                                               CourseLevel.order(:name),
+                                               :id,
+                                               :name,
+                                               {prompt: '-course level-'},
+                                               {class: "form-control"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :programmes_course_subject_text_cont,
+                                        {class: "form-control",
+                                         placeholder: "Course Subject"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :programmes_start_date_gteq,
+                                        {class: "form-control datepicker",
+                                         placeholder: "Start Date From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :programmes_start_date_lteq,
+                                        {class: "form-control datepicker",
+                                         placeholder: "Start Date To"} %>
+                  </div>
+                  </div>
+              </div>
+              <div class="row">
+               <div class="col-md-12">
+                    <h4 class="border-b bold-subhead">Institution</h4>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12">
+                  <div class="col-md-3">
+                       <%= f.text_field :institutions_name_cont,
+                                        {class: "form-control",
+                                         placeholder: "Name"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.collection_select :application_statuses_id_eq,
+                                               ApplicationStatus.order(:name),
+                                               :id,
+                                               :name,
+                                               {prompt: '-status-'},
+                                               {class: "form-control"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :institutions_country_name_cont,
+                                        {class: "form-control",
+                                         placeholder: "Country Name"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :institutions_city_name_cont,
+                                        {class: "form-control",
+                                         placeholder: "City Name"} %>
+                  </div>
+                  </div>
+              </div>
+              <div class="row">
+               <div class="col-md-12">
+                    <h4 class="border-b bold-subhead">Fee</h4>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12">
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_tuition_fee_gteq,
+                                               {class: "form-control",
+                                                placeholder: "Tuition Fee From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_tuition_fee_lteq,
+                                               {class: "form-control",
+                                                placeholder: "Tuition Fee To"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_commission_amount_gteq,
+                                               {class: "form-control",
+                                                placeholder: "Commission From"} %>
+                  </div>
+                  <div class="col-md-3">
+                       <%= f.text_field :fee_commission_amount_lteq,
+                                               {class: "form-control",
+                                                placeholder: "Commission To"} %>
+                  </div>
+                  </div>
+              </div>
+              
+              <div class="row">
+               <div class="col-md-12">
+                    <h4 class="border-b bold-subhead">Sort By</h4>
+               </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-12 form-inline">
+                    <div class="col-md-5">
+                            <%= f.sort_fields do |s| %>
+                                <%= s.sort_select({},{class: "form-control"}) %>
+                            <% end %>
+                    </div>
+                    <%= hidden_field_tag :status, (@status || "all")  %>
+                    <div class="col-md-3 form-group">        
+                       <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">
+                         Filter
+                       </span>
+                       <a class="pointer" onclick="$('#ransack_form')[0].reset();" >
+                         Reset
+                       </a>
+                    </div>                  
+                  </div>
+              </div>

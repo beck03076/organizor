@@ -49,7 +49,7 @@ class FeesController < ApplicationController
 
     respond_to do |format|
       if @fee.save
-        format.html { redirect_to @fee, notice: 'Fee was successfully created.' }
+        format.html { redirect_to @fee.registration, notice: 'Fee was successfully created.' }
         format.json { render json: @fee, status: :created, location: @fee }
       else
         format.html { render action: "new" }
@@ -69,7 +69,17 @@ class FeesController < ApplicationController
 
     respond_to do |format|
       if @fee.update_attributes(params[:fee])
-        format.html { redirect_to @fee, notice: 'Fee was successfully updated.' }
+        @commissions = @fee.commissions
+        if (!@commissions.blank?)
+          @commissions.delete_all
+          s_id = CommissionStatus.find_by_name("pending".titleize).id
+          Commission.create!(status_id: s_id,
+                             paid_cents: 0,
+                             fee_id: @fee.id,
+                             remaining_cents: params[:fee][:commission_amount_cents],
+                             currency: params[:fee][:currency])
+        end
+        format.html { redirect_to @fee.registration, notice: 'Fee was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -82,10 +92,13 @@ class FeesController < ApplicationController
   # DELETE /fees/1.json
   def destroy
     @fee = Fee.find(params[:id])
+    @reg = @fee.registration
+    @programme = @fee.programme
+    @programme.update_attribute(:claim_status_id,nil)
     @fee.destroy
 
     respond_to do |format|
-      format.html { redirect_to fees_url }
+      format.html { redirect_to @reg }
       format.json { head :no_content }
     end
   end

@@ -2,9 +2,13 @@
 <% if obj == "enquiry" %>
 <h4 class="form-heading">Preferred Programmes</h4>
 <% end %>
-  <%= f.fields_for :programmes do |p| %>
+  <%= f.fields_for :programmes, (build rescue nil) do |p| %>
+        <% parent = f.object_name.to_s %>
+        <div id="object_name" data-obj='<%= parent %>'></div>
+        <div id="enquiry_id" data-id='<%= p.object.enquiry_id || f.object.id %>'></div>
+        <div id="registration_id" data-id='<%= p.object.registration_id || f.object.id %>'></div>
         
-        <%= render 'enquiries/programme_details', :p => p, :parent => f.object_name.to_s %>
+        <%= render 'enquiries/programme_details', :p => p, parent: parent %>        
         <br/>
   <% end %>
   <div class="row">

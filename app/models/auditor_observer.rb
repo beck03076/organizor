@@ -9,7 +9,8 @@ class AuditorObserver < ActiveRecord::Observer
   :contract,:contract_doc_category,:person_type,
   :person,:commission_status,:branch,
   :smtp,:email_template,:role,:allow_ip,
-  :commission_claim_status,:progression_status
+  :commission_claim_status,:progression_status,
+  :processing_fee_type,:processing_fee_status
 
    def before_create(record)
      record.created_by = User.current.id

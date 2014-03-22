@@ -46,4 +46,17 @@ class FollowUp < ActiveRecord::Base
     Registration.find(registration_id).ref_no rescue "No Registration"
   end
   
+  def asso_with
+    %w(enquiry registration institution person).each do |i|
+      id = self.send(i + "_id")
+      if !id.nil?
+        @id = id
+        @model = i.camelize.constantize
+        @model_name = i
+      end
+    end
+    obj = @model.find(@id)
+    [obj,obj.name,@model_name + "_path",@model_name]
+  end
+  
 end

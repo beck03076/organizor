@@ -1,4 +1,15 @@
 class JsonController < ApplicationController
+  
+  def currency
+    set_url_params
+    if @country_id.to_i != 0
+      @currency = [Country.find(@country_id).currency]
+    end
+    respond_to do |format|
+      format.html 
+      format.json { render json: @currency }
+    end
+  end
 
   def srch_countries
     @countries = Country.where("name like ?", "%#{params[:q]}%")
@@ -42,17 +53,17 @@ class JsonController < ApplicationController
       @institutions = Country.find(@country_id).institutions
     end
     if @city_id.to_i != 0
-      @institutions = @institutions.blank?  || Institution
+      @institutions = @institutions.blank? ? Institution : @institutions
       @institutions = @institutions.where(city_id: @city_id)
     end
-    if @ins_type_id.to_i != 0
-      @institutions = @institutions || Institution
+    if @ins_type_id.to_i != 0 && (@country_id.to_i != 0 || @city_id.to_i != 0)
+      @institutions = @institutions.blank? ? Institution : @institutions
       @institutions = @institutions.where(type_id: @ins_type_id)
     end
-    
+
     respond_to do |format|
       format.html 
-      format.json { render json: @institutions }
+      format.json { render json: @institutions.order(:name) }
     end
   end
   

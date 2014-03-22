@@ -1,21 +1,21 @@
 <!-- cols to display -->
 
-<h4 class="form-heading">Enquiries</h4>
+<h4 class="bold-subhead">Enquiries</h4>
   <% enq_cols_gr = @enq_cols.group_by{|i| i[0]} %>
   <% user_enq_cols = @user_config.enq_cols.map {|i| i.is_a?(Array) ? i[0].to_s : i.to_s} %>   
   <%= cols_to_display("enq_cols",@enq_cols.map {|i| [i.titleize,i]},user_enq_cols) %>
   
-<h4 class="form-heading">Registrations</h4>
+<h4 class="bold-subhead">Registrations</h4>
   <% reg_cols_gr = @reg_cols.group_by{|i| i[0]} %>
   <% user_reg_cols = @user_config.reg_cols.map {|i| i.is_a?(Array) ? i[0].to_s : i.to_s} %>   
   <%= cols_to_display("reg_cols",@reg_cols.map {|i| [i.titleize,i]},user_reg_cols) %>
   
-<h4 class="form-heading">Institutions</h4>
+<h4 class="bold-subhead">Institutions</h4>
   <% ins_cols_gr = @ins_cols.group_by{|i| i[0]} %>
   <% user_ins_cols = @user_config.ins_cols.map {|i| i.is_a?(Array) ? i[0].to_s : i.to_s} %>   
   <%= cols_to_display("ins_cols",@ins_cols.map {|i| [i.titleize,i]},user_ins_cols) %>
   
-<h4 class="form-heading">People</h4>
+<h4 class="bold-subhead">People</h4>
   <% per_cols_gr = @per_cols.group_by{|i| i[0]} %>
   <% user_per_cols = @user_config.per_cols.map {|i| i.is_a?(Array) ? i[0].to_s : i.to_s} %>   
   <%= cols_to_display("per_cols",@per_cols.map {|i| [i.titleize,i]},user_per_cols) %>

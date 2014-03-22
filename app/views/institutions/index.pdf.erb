@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= wicked_pdf_stylesheet_link_tag "bootstrap" %>
+    <%= wicked_pdf_stylesheet_link_tag "custom" %>
+  </head>
+  <body>
+   <div id="header">
+      <div class="container">
+          <div class="col-xs-9">
+            <h1 class="text-left">Organizor</h1>
+          </div>
+      </div>
+    </div>
+    <!-- Begin page content -->
+    <div class="container main">
+    <div class="col-xs-10 main-content">
+          <!-- Enquiry show page -->
+    <div class="row row-top">
+    <div class="col-md-9">
+      <h3><%= @institution.name %></h3>
+    </div>
+   </div>
+        <div class="row">
+          <div class="col-md-12">
+              <div class="row">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Name</th>
+                        <th>Ins Ref. No.</th>
+                        <th>DOB</th>
+                        <th>Course Level</th>
+                        <th>Course Subject</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Tuition Fee</th>
+                        <th>Scholarship</th>
+                        <th>Commission %</th>
+                        <th>Commission Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @programmes.each_with_index do |p,i| %>
+                        <tr>
+                          <td><%= i + 1 %></td>
+                <td><%= p.registration.name rescue nil %></td>
+                <td><%= p.ins_ref_no  %></td>
+                <td><%= p.registration.date_of_birth rescue nil %></td>
+                <td><%= p.course_level_name  %></td>
+                <td><%= p.course_subject_text  %></td>
+                <td><%= p.start_date  %></td>
+                <td><%= p.end_date  %></td>
+                <td><%= humanized_money_with_symbol p.fee.tuition_fee rescue nil %></td>
+                <td><%= humanized_money_with_symbol p.fee.scholarship rescue nil %></td>
+                <td><%= p.fee.commission_percentage rescue nil %></td>
+                <td><%= humanized_money_with_symbol p.fee.commission_amount rescue nil  %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

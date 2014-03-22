@@ -8,7 +8,8 @@
             :todo_topic,:institution_type,:institution_group,
             :contract_doc_category,:person_type,:commission_status,
             :allow_ip,:branch,:role,:smtp,:email_template,
-            :commission_claim_status,:progression_status].sort.each do |r| %>
+            :commission_claim_status,:progression_status,:processing_fee_type,
+            :processing_fee_status].sort.each do |r| %>
       <% if can? :read, r.to_s.camelize.constantize %>
       <li id='<%= r.to_s %>' >
          <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>

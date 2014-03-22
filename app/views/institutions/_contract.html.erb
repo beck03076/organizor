@@ -65,8 +65,10 @@
       <div class="panel-body">
           <div class="col-xs-12">
             <ul class="vlsdet-xl pt-0">
-                    <% %w(all_prohibited_countries all_permitted_countries
-                           all_prohibited_regions all_permitted_regions).each do |elem| %>
+                    <% [[:all_prohibited_countries,"countries_prohibited","red-wrong"],
+                        [:all_permitted_countries,"countries_allowed","green-right"],
+                        [:all_prohibited_regions,"regions_prohibited","red-wrong"],
+                        [:all_permitted_regions,"regions_allowed","green-right"]].each do |elem| %>
                         <%= recruit_ter(a,elem) %>
                     <% end %>
             </ul>
@@ -198,7 +200,7 @@
                   </div>
                   <div class="clear"></div>
                   <% end %>
-
+                <br/>
                 <div class="row row-top">
                 <div class="col-xs-12 form-group">
                   <%= f.link_to_add "Add Document", :documents,{class: 'btn btn-default'} %>
@@ -254,7 +256,11 @@
     </div>
   </div>
 </div>
+<h5 class="text-right">
+<%= link_to "Click here",a,method: :delete,data: { confirm: 'Are you sure?' }  %> to delete this contract!
+</h5>
 <% end %>
+
 <br/>
 <script>
   $('.best_in_place').best_in_place();

@@ -91,7 +91,7 @@
               </div>
             </div>
             <!-----------------------FollowUp Filter End---------------------------->
-<br/>
+
        <!-----------------------Ransack Filter End---------------------------->
 
        <% @search = _model.search(params[:q]) %>
@@ -172,6 +172,7 @@
 
  
  $('#xls, #pdf').on("click",function(){
+
    var ins_id = $(this).data("ins-id");
    var f = $(this).data("format");
    
@@ -186,6 +187,7 @@
       } else {
         $idown = $('<iframe>', { id:'idown', src:url }).hide().appendTo('body');
    }
+
    return false;
    
  });

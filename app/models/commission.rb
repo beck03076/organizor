@@ -3,7 +3,6 @@ class Commission < ActiveRecord::Base
   :remaining_cents, :status_id, :updated_by, 
   :payment_id,:currency,:fee_id
   
-  belongs_to :payment
   belongs_to :commission_status,:foreign_key => 'status_id'
   
   monetize :paid_cents, :allow_nil => true

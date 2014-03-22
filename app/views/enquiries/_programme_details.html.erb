@@ -10,22 +10,20 @@ $(function(){
         changeYear: true,
         dateFormat: "yy-mm-dd",
         yearRange: '1980:2050' });
-      setColorsFromSession();
     })
 
 });
 </script>
 
 <div class="row blue-well">
-    <div id="object_name" data-obj='<%= parent %>'>
-    </div>
+    
     <div class="row row-top">
       <div class="col-xs-12 text-right padR30">
         <%= p.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
       </div>
     </div>
-    <br/>
 
+<p class="padL20"><strong>Institution</strong></p>
      <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
        <% if parent == "enquiry" %>
          <% sty = ['','none','none','display:none;'] %>
@@ -46,7 +44,9 @@ $(function(){
                                                        '/get_cities/');
                                                        changeInsType(this,
                                                     '_programmes_attributes_index_institution_id',
-                                                    'country');"}],
+                                                    'country');
+                                                    setCurrency(this,
+                                                    '_programmes_attributes_index_currency');"}],
                                               "collection_select",
                                               [nil,4],7,6) %>
             <!-- Setting the default selected city as the programmes city if chosen in the enquiry -->
@@ -74,15 +74,14 @@ $(function(){
                           :name,
                           {prompt: "-institution type-"},
                           {class: "institution_type_select",
-                                         onchange: "ins_type_change(this);
-                                                    changeInsType(this,
+                                         onchange: "changeInsType(this,
                                                     '_programmes_attributes_index_institution_id',
                                                     'ins_type');" }],
                            "collection_select",
                            [nil,4],7,6) %>
 
                 <% four = p.object.institution_id %>
-                <% five = four.blank? ? [] : Institution.where(id: four) %>
+                <% five = four.blank? ? [] : Institution.where(id: four).order(:name) %>
 
                 <%= bs(p,[:institution_id,
                           five,
@@ -90,9 +89,11 @@ $(function(){
                           :name,
                           {prompt: "-institution-"},
                           {class: "institutions_select",
-                           onchange: "validateRecruit(this);"}],
+                           onchange: "validateRecruit(this);",
+                           data: {model: parent }}],
                            "collection_select",
                            [nil,4],7,6) %>
+<p class="padL20"><strong>Course</strong</p>
 
                 <div class="col-xs-6">
                     <div class="form-group">
@@ -104,31 +105,20 @@ $(function(){
                 </div>
 
                 <div class="col-xs-6">
-                    <div class="form-group end_date_div">
+                    <div class="form-group">
                       <%= label_tag :end_date,nil,{class: 'control-label col-xs-4'} %>
                       <div class="col-xs-7">
                         <%= p.text_field :end_date,{class: 'form-control datepicker'} %>
                       </div>
                     </div>
                 </div>
-
-
-               <div class="col-xs-6">
-                    <div class="form-group course_subject_text_div">
-                      <%= label_tag :course_subject,nil,{class: 'control-label col-xs-4'} %>
-                      <div class="col-xs-7">
-                        <%= p.text_field :course_subject_text,{class: 'form-control datepicker'} %>
-                      </div>
-                    </div>
-               </div>
-
-               <%= bs(p,[:level_id,
+                <%= bs(p,[:level_id,
                           CourseLevel.order(:name),
                           :id,
                           :name,
                           {prompt: "-course level-"},{}],
                            "collection_select",
-                           [nil,4],7,"6 course_level_div 'style=#{p_type_show}'") %>
+                           [nil,4],7,6) %>
 
               <%= bs(p,[:subject_id,
                         CourseSubject.order(:name),
@@ -136,7 +126,18 @@ $(function(){
                         :name,
                         {prompt: "-course subject-"},{}],
                          "collection_select",
-                         [nil,4],7,"6 course_subject_div 'style=display:#{sty[1]};") %>
+                         [nil,4],7,6) %>
+
+               <div class="col-xs-6">
+                    <div class="form-group">
+                      <%= label_tag :course_subject,nil,{class: 'control-label col-xs-4'} %>
+                      <div class="col-xs-7">
+                        <%= p.text_field :course_subject_text,{class: 'form-control'} %>
+                      </div>
+                    </div>
+               </div>
+
+               
 
               <%= bs(p,[:app_status_id,
                         ApplicationStatus.order(:name),
@@ -148,6 +149,36 @@ $(function(){
 
               <%= bs(p,:ins_ref_no,"text_field",[nil,4],7,"6 ins_ref_no 'style=#{sty[3]};") %>
 <div class="clear"></div>
+
+<p class="padL20"><strong>Processing Fee</strong></p>
+<%= bs(p,[:p_fee_id,
+            ProcessingFeeType.order(:name),
+            :id,
+            :name,
+            {prompt: "-fee type-"},{}],
+             "collection_select",
+             ["Type",4],7,6) %>
+
+<%= bs(p,[:currency,
+            all_currencies(Money::Currency.table),
+            {:include_blank => 'Select a Currency'},{}],
+            "select",
+            [nil,4],7,6) %>
+            
+<%= bs(p,:p_fee,"text_field",["amount",4],7,6) %>
+
+<%= bs(p,[:p_fee_status_id,
+            ProcessingFeeStatus.order(:name),
+            :id,
+            :name,
+            {prompt: "-fee status-"},{}],
+             "collection_select",
+             ["status",4],7,6) %>
+
+<div class="clear"></div>
 <br/>
 </div>
+
+
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">
 

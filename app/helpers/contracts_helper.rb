@@ -1,10 +1,10 @@
 module ContractsHelper
 
   def recruit_ter(obj,i)
-    out = (obj.send(i).map &:name).join(', ') rescue nil
-    "<div class=padded><li>
-    <label class='light'>#{i.titleize}</label> <small class=padded>#{ out }</small></li>
-    </div>".html_safe
+    out = (obj.send(i[0]).map &:name).join(', ') rescue nil
+    "<li><div class='padded #{i[2]}'>
+    <label class='light'>#{i[1].titleize}</label> <small class=padded>#{ out }</small>
+    </div></li>".html_safe
   end
   
   def prep_pre(obj)

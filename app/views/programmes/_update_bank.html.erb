@@ -1,0 +1,7 @@
+<%= form_for(@programme,html: {class: "form-inline"}) do |bank| %>
+      <label> Bank Account Details </label>
+      <%= bank.text_area :p_fee_bank_details,{class: "form-control"} %>
+      <div class="row form-group">
+      <%= bank.submit "Update", {class: "btn btn-primary"} %>
+      </div>
+<% end %>

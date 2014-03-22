@@ -165,18 +165,6 @@
           }
         });
         
-         $(document).on('nested:fieldAdded', function(event){
-      
-              var field = event.field; 
-              var dateField = field.find('.dateField');
-              dateField.datepicker({
-                inline: true,
-                changeMonth: true, 
-                changeYear: true, 
-                dateFormat: "yy-mm-dd",
-                yearRange: '1980:2050' 
-              });
-           });
           
            actmm("registrations");
 

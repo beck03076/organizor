@@ -26,13 +26,8 @@
                       progression
                     </small>
                  </div>
-                 
-                 
-                 
             </div>
             </div>
-            <div class="clear"></div>
-            
             <div id="progression" class="col-xs-12 row text-center" style="display:<%= ss.object.second_year.nil? ? "none" : "block" %>;">
             <div class="form-group">
                 <label class="control-label col-xs-2">2nd Year</label>
@@ -56,7 +51,7 @@
             
                 <div class="row white-well">
                   <div class="col-xs-6 text-left">
-                     <h5>Sliding Range</h5>
+                     <p><strong>Sliding Range</p></strong>
                   </div>
                   <div class="col-xs-6 text-right padR30">
                     <%= sr.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe) %>
@@ -96,7 +91,6 @@
                  </div>
                  <br/>
             <% end %>
-            <br/>
             <div class="row text-right padR40">
               
               <%= ss.link_to_add "Add Sliding Range", :sliding_ranges,{class: "btn-sm btn-default"} %>

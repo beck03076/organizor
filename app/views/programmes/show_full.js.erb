@@ -1,0 +1,10 @@
+ var this_id = "#" + "<%= @col %>_" + "<%= @id %>";
+ $("small" + this_id).html("<%= escape_javascript(@ctnt) %>");
+ $("a" + this_id).html("<%= escape_javascript(link_to "see #{@to_volume}" ,
+                                         "/show/#{@to_volume}/programme/p_fee_bank_details/#{@id}",
+                                         {class: "clickable",
+                                          remote: true,
+                                          id: "p_fee_bank_details_#{@id}"}) %>");
+ 
+
+

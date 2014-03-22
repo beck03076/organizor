@@ -30,6 +30,12 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
   # GET /follow_ups/1.json
   def show
     @follow_up = FollowUp.find(params[:id])    
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js
+      format.json { render json: @follow_ups }
+    end
   end
 
   # GET /follow_ups/new

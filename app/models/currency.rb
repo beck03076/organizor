@@ -4,4 +4,21 @@ class Currency < ActiveRecord::Base
   :name, :symbol
   
   belongs_to :country
+  
+  def id
+    self.code
+  end
+  
+  def _name
+    self.country_name + " " + self.name
+  end
+  
+
+  def as_json(options={})
+    {
+      name: _name,
+      id: iso_numeric
+    }
+  end
+  
 end

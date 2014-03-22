@@ -21,6 +21,7 @@ class RegistrationsDatatable < Datatable
     @item_scope = ["mine",current_user]
     
     @compound = true
+    @goto = ["/registrations/","id"]
   end
    
 end

@@ -1,11 +1,22 @@
 Organizor::Application.routes.draw do
 
-  resources :progression_statuses
+  resources :processing_fee_statuses
 
+  resources :processing_fee_types
+
+  resources :progression_statuses
 
   resources :commission_claim_statuses
   
   resources :exams
+  
+  get '/export_details/:model/:ids.:format' => 'application#export_details'
+  
+  get "/show/:volume/:model/:col/:id" => "programmes#show_full"
+  
+  get 'create_p_fee/:programme_id' => "programmes#create_p_fee"
+  
+  get '/get_currency/:country_id' => "json#currency"
   
   get '/user_configs/edit_prog_fu_ass_to' => 'user_configs#edit_prog_fu_ass_to'
   
@@ -18,7 +29,6 @@ Organizor::Application.routes.draw do
   post '/update_comm_claim/programmes' => 'programmes#update_comm_claim'
   
   post 'bulk_asso_update' => 'application#bulk_asso_update'
-
 
   post '/sliding_scales/collective' => 'sliding_scales#collective'
   
@@ -76,7 +86,7 @@ Organizor::Application.routes.draw do
 
   resources :commissions
 
-  match '/validate_recruit/:co_id/:ins_id' => 'application#validate_recruit'
+  match '/validate_recruit/:ins_id/:form_country_id(/:model/:item_id)' => 'application#validate_recruit'
   
   match '/srch_countries.json' => 'json#srch_countries'
   

@@ -3,7 +3,7 @@ require "ipaddr"
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
   protect_from_forgery
-  autocomplete :city_and_country_search, {:city => [:name], :region => [:name]}
+  
   
   layout :layout
 
@@ -47,8 +47,10 @@ class ApplicationController < ActionController::Base
     
     @status = @asso.camelize.constantize.find(@asso_id).name
     
-    to_update.update_all(@asso_col.to_sym => @asso_id,
-                         updated_by: @user_id)
+    to_update.each do |u|
+      u.update_attributes(@asso_col.to_sym => @asso_id,
+                          updated_by: @user_id)
+    end
                          
     text = "#{@status} set."
     
@@ -68,34 +70,46 @@ class ApplicationController < ActionController::Base
   
   def validate_recruit
     set_url_params
-    
-    contract = Institution.find(@ins_id).contracts.where(territory_specified: true).first
-    
-    pro_coun = contract.all_prohibited_countries.map &:id
-    pro_reg = contract.all_prohibited_regions.map &:id
-    pro_regions_coun = Country.includes(:region).where(region_id: pro_reg).map &:id
-    
-    pro = pro_coun + pro_regions_coun
-    
-    per_coun = contract.all_permitted_countries.map &:id
-    per_reg = contract.all_permitted_regions.map &:id
-    per_regions_coun = Country.includes(:region).where(region_id: per_reg).map &:id
-    
-    per = per_coun + per_regions_coun
-    
-    if pro.include?(@co_id.to_i)
-      out = "This students country of origin is a prohibited territory as per this institutions contract"
-    else    
-      out = "Not a prohibited territory!"
-    end
-    
-    if !per.empty? && per.include?(@co_id.to_i)
-      out = "Permitted territory!"
+ 
+    contract = Institution.find(@ins_id).contracts.first
+    if @form_country_id.to_i == 0
+      @co_id = @model.camelize.constantize.find(@item_id).country_id
     else
-      out = "This students country of origin is not a permitted territory as per this institutions contract"
+      @co_id = @form_country_id.to_i
     end
     
-    render text: out
+    if contract.nil? 
+      @out = "No contract created for this institution, skipping recruitment territory validation!"
+    elsif !@co_id.nil?
+        pro_coun = contract.all_prohibited_countries.map &:id
+        pro_reg = contract.all_prohibited_regions.map &:id
+        per_coun = contract.all_permitted_countries.map &:id
+        per_reg = contract.all_permitted_regions.map &:id
+        
+        if pro_coun.blank? && pro_reg.blank? && per_coun.blank? && per_reg.blank?
+          @out = "No regions/countries are prohibited/permitted in the contract, skipping recruitment territory validation!"
+        else
+            pro_regions_coun = Country.includes(:region).where(region_id: pro_reg).map &:id
+            pro = pro_coun + pro_regions_coun
+            
+            per_regions_coun = Country.includes(:region).where(region_id: per_reg).map &:id
+            per = per_coun + per_regions_coun
+            
+            if pro.include?(@co_id.to_i)
+              @out = "This students country of origin is a prohibited territory as per this institutions contract"
+            else    
+              @out = "Not a prohibited territory!"
+            end
+            
+            if !per.empty? && per.include?(@co_id.to_i)
+              @out = "Permitted territory!"
+            else
+              @out = "This students country of origin is not a permitted territory as per this institutions contract"
+            end
+        end
+    end
+
+    render text: @out
   
   end
   
@@ -128,19 +142,38 @@ class ApplicationController < ActionController::Base
     set_url_params
     model = @model.camelize.constantize
     authorize! :destroy, model
-    
-    to_delete = model.where(id: params[:model_ids].split(","))
-    deact = EnquiryStatus.find_by_name("deactivated").id
-    to_delete.update_all(active: false,
-                         status_id: deact)
-     to_delete.each do |e|
-     #create a timeline item
-     tl("Enquiry",e.id,
-        'This enquiry has been deactivated as a group','Deactivated',
-         "Deactivate",e.assigned_to)
-     end
+    if (@model == "Enquiry")
+      to_delete = model.where(id: params[:model_ids].split(","))
+      deact = EnquiryStatus.find_by_name("deactivated").id
+      to_delete.update_all(active: false,
+                           status_id: deact)
+         to_delete.each do |e|
+         #create a timeline item
+         tl("Enquiry",e.id,
+            'This enquiry has been deactivated as a group','Deactivated',
+             "Deactivate",e.assigned_to)
+         end
+    else
+      to_delete = model.where(id: params[:model_ids].split(","))
+      to_delete.delete_all
+    end
     
     render text: "Successfully deactivated!"  
+  end
+  
+  def export_details
+    set_url_params
+    
+    respond_to do |format|
+        format.xls {xls_pdf
+        render "#{@model.to_s.downcase.pluralize}/index.xls.erb"}
+    end
+  end
+  
+  def xls_pdf 
+    @records = @model.camelize.constantize.where(id: @ids.split(","))
+    @filename = "#{Time.now.to_i}_#{@records.size}_#{@model.to_s.downcase.pluralize}.#{@format}"
+    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\"" 
   end
   
   def notify

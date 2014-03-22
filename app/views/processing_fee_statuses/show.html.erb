@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @processing_fee_status.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @processing_fee_status.desc %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @processing_fee_status.created_by %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @processing_fee_status.updated_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_processing_fee_status_path(@processing_fee_status) %> |
+<%= link_to 'Back', processing_fee_statuses_path %>

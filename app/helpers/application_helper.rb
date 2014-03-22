@@ -306,10 +306,4 @@ module ApplicationHelper
                          
   end
   
-  def markdown(text)
-    
-  end
-                         
-  
-  
 end

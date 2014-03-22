@@ -3,8 +3,7 @@
 <%= f.fields_for :contracts do |c| %>
     <% arr.each_with_index do |element,i| %>
       <div id="id_part_<%= i + index + 1 %>" class="<%= set %>">
-        <h4 class="form-heading" id="<%= element.to_s %>"><%= element.to_s.titleize %></h4>
-          <div class="row"></div>
+        <h4 class="bold-subhead" id="<%= element.to_s %>"><%= element.to_s.titleize %></h4>
 
             <%= render 'form_' + element.to_s, c: c %>
 

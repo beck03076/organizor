@@ -61,14 +61,14 @@ module CoreMethods
     cl = (model.pluralize.camelize + "Datatable").constantize
     if (params[:sSearch_2] == "undefined" || params[:sSearch_2] == "")
           render :json => cl.new(view_context,eval(@sCols),@sFilter,asso_id)
-        else
-          render :json => cl.new(view_context,@cols,nil,asso_id)
+    else
+          render :json => cl.new(view_context,@cols,@sFilter,asso_id)
     end
   end
   
   def core_js(model)
     @b = params[:q].to_json
-    @status = "all"
+    @status = (params[:status] || "all").to_s
     @model = model.camelize
     render 'shared/index'
   end

@@ -35,29 +35,43 @@
                     <!----------------------- Bulk Email End---------------------------->
                     <!----------------------- Group Delete Start--------------------------->
                     <% if can? :destroy, _model %>
-                      <option value="deactivate">Deactivate</option>
+                      <option value="groupDelete">Group Delete</option>
                     <% end %>
 
                     <% if (_model == Registration) && (can? :update, _model) %>
                       <option value="progStatus">Progression Status</option>
+                      <option value="changeBranch">Change Branch</option>
+                    <% end %>
+                    
+                    <% if (_model == Institution) && (can? :update, _model) %>
+                      <option value="exportDetails">Export Details</option>
                     <% end %>
                     
                     <!----------------------- Group Delete End--------------------------->
                 </select>
                 <!----------------------- Group Assign Modal Start---------------------------->
-                <% ctnt = '<form class="form-inline" role="form">' +
+                <% ctnt = '<form class="form-horizontal" role="form">' +
+                          '<div class="row">' + 
+                          '<div class="col-md-4 text-right" >' + 
                           label_tag(:user,"User") +
+                          '</div>' +
+                          '<div class="col-md-3">' + 
                           select_tag("group_assign_user_#{_id}",
                           options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
                           {prompt: "-user-",
                           class: "form-control hor-first",
                           data: {model: model}}) +
-                          '</form>' %>
+                          '</div>' +
+                          '</div></form>' %>
 
                 <%= render 'shared/modal',id: 'assignToModal',
                            content: ctnt.html_safe,
-                           header: 'Assign To',
-                           button: "<button onclick=groupAssignTo('#{_id}');>Assign</button>" %>
+                           header: 'Group Assign To',
+                           button: "<span class='form-group'>
+                           <button class='btn btn-primary' onclick=groupAssignTo('#{_id}');>
+                           Assign
+                           </button>
+                           </span>" %>
                 <!----------------------- Group Assign Modal End---------------------------->
                 <!----------------------- Bulk Email Start---------------------------->
                 <% ctnt = 'Are you sure you want to send email to all the selected email ids ?' %>
@@ -68,13 +82,14 @@
                            button: "<button onclick=bulkEmail('#{_id}');>Yes</button>" %>
                 <!-----------------------Bulk Email Modal End---------------------------->
                 <!----------------------- Group Delete Modal Start---------------------------->
-                <% ctnt = 'Are you sure you want to deactivate the selected enquiries ?' %>
+                <% ctnt = 'Are you sure you want to delete the selected items ?' %>
 
-                <%= render 'shared/modal',id: 'deactivateModal',
+                <%= render 'shared/modal',id: 'groupDeleteModal',
                            content: ctnt.html_safe,
                            header: 'Group Delete',
                            button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
                 <!-----------------------Group Delete Modal End---------------------------->
+                <!----------------------- ProgressionStatus Modal Start---------------------------->
                 <% if (_model == Registration) %>
                 <%= bulk_asso_update("Progression Status",
                                      "prog_status_",
@@ -86,8 +101,44 @@
                                      'Update Status',
                                      'updateProgStatus',
                                      _id) %>
+                                     
+               <%= bulk_asso_update("Change Branch",
+                                     "change_branch_",
+                                     'Branch',
+                                     '-branch-',
+                                     model,
+                                     current_user.id,
+                                     'changeBranchModal',
+                                     'Change Branch',
+                                     'changeBranch',
+                                     _id) %>
                 <% end %>
+                <!----------------------- ProgressionStatus Modal End---------------------------->
+                <!----------------------- Export Details Modal Start---------------------------->
+               
+                <% ctnt = '<form class="form-horizontal" role="form">' +
+                          '<div class="row">' + 
+                          '<div class="col-md-4 text-right" >' + 
+                          label_tag(:user,"Format") +
+                          '</div>' +
+                          '<div class="col-md-3">' + 
+                          select_tag("export_details_format_#{_id}",
+                          options_for_select([["Xls","xls"],["Pdf","pdf"]]),
+                          {prompt: "-format-",
+                          class: "form-control hor-first",
+                          data: {model: model}}) +
+                          '</div>' +
+                          '</div></form>' %>
 
+                <%= render 'shared/modal',id: 'exportDetailsModal',
+                           content: ctnt.html_safe,
+                           header: 'Export Details To',
+                           button: "<span class='form-group'>
+                           <button class='btn btn-primary'  onclick=exportDetails('#{_id}');>
+                           Export
+                           </button>
+                           </span>" %>
+                <!-----------------------Export Details Modal End---------------------------->
               </div>
               <!-----------------------Search Start---------------------------->
               <div class="col-md-8 text-center filter-center">
@@ -105,7 +156,7 @@
                     <input style="width:130px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
                   <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
-                  <span class="glyphicon glyphicon-search" onclick="$('.ransack').slideToggle();"></span>
+                  <span class="glyphicon glyphicon-filter" onclick="$('.ransack').slideToggle('fast');"></span>
 
                 </form>
               </div>
@@ -129,43 +180,23 @@
             <!-----------------------FollowUp Filter End---------------------------->
 
        <!-----------------------Ransack Filter End---------------------------->
-
-       <% @search = _model.search(params[:q]) %>
-       <% @search.build_condition if @search.conditions.empty? %>
-       <% @search.build_sort if @search.sorts.empty? %>
-       <div class="well well-sm filter-well ransack row" style="display:none;">
-       <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
-                                                                  class: "form-inline"} do |f| %>
-
-              <div class="row">
-                  <h5 class="col-sm-2">Filter By</h5>
-
-                  <%= f.condition_fields do |c| %>
-                    
-                    <%= render "shared/condition_fields", f: c %>
-                  <% end %>
-                  <%= link_to_add_fields '<span class="glyphicon glyphicon-plus col-sm-3"></span>'.html_safe,
-                      f,
-                      :condition %>
-              </div>
-              <div class="field row">
-                 <div class="row">
-                      <h5 class="col-sm-2">Sort By</h5>
-                 </div>
-                  <div class="col-md-12">
-
-                        <div class="col-sm-5">
-                            <%= f.sort_fields do |s| %>
-                                <%= s.sort_select({},{class: "form-control"}) %>
-                            <% end %>
-                          <span onclick="$(this).submit();" class="glyphicon glyphicon-search" id="ransack_submit">
-                          </span>
-                        </div>
-                  </div>
-              </div>
-
-       <% end %>
-       </div>
+      <% if (_model == Registration) %>
+          <% @search = _model.search(params[:q]) %>
+           <% @search.build_condition if @search.conditions.empty? %>
+           <% @search.build_sort if @search.sorts.empty? %>
+           
+           <div class="row">
+             
+           <div class="well blue-well ransack" style="display:none;">       
+               <%= search_form_for @search, url: srch_url, method: :post, html: {remote: true,
+                                                                          class: "form-horizontal",
+                                                                          id: "ransack_form"} do |f| %>
+                      <%= render 'registrations/ransack_filter', f: f %>
+                      
+               <% end %>
+           </div>
+          </div>
+      <% end %>
        <!-----------------------Ransack Filter End---------------------------->
 
 <table id='<%= _id %>' cellpadding="0" cellspacing="0" border="0" class="table table-hover" data-source="<%= url %>">

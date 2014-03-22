@@ -43,13 +43,18 @@ protected
                                                       
        
        
-       @cols.map{|i|
-          if i.is_a?(Array)
-            temp << obj.send(i[1].to_s).try(i[2].to_s)
-          else
-            temp << obj.send(i.to_s).to_s
-          end
-        }
+       @cols.each_with_index do |i,index|
+         if i.is_a?(Array)
+              disp = obj.send(i[1].to_s).try(i[2].to_s)
+         else
+              disp = obj.send(i.to_s).to_s
+         end
+         if (index == 0)
+           temp << link_to(disp,@goto[0] + obj.send(@goto[1]).to_s,{target: "_blank"})
+         else
+           temp << disp
+         end
+       end
         
         # display more option to click and view the extra information
         if @more
@@ -89,30 +94,35 @@ protected
     else    
       json = params[:sSearch_2]
       parsed = JSON.parse(json) if json && json.length >= 2
-      
-      @search = @asso_model.search(parsed)
+      i = filter_status
+      @search = i.search(parsed)
       items = @search.result(distinct: true)
       @items = items.page(page).per_page(per_page)
     end
   end
+  # this filters the records based on status
+  def filter_status
+     if !@sFilter.nil?     
+          sFilTit = @sFilter.titleize
+          if sFilTit == "Deactivated"
+            i = Enquiry.inactive        
+          elsif (sFilTit == "All" || sFilTit == "Finance")        
+            i = @asso_model
+          else        
+            if @tab.nil?          
+              fet_stat = nil
+            else          
+              fet_stat = @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
+            end
+            i = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])
+          end
+      end
+      i
+  end
   
   def fetch_items
     sc = sort_column
-    if !@sFilter.nil?     
-      sFilTit = @sFilter.titleize
-      if sFilTit == "Deactivated"
-        items = Enquiry.inactive        
-      elsif (sFilTit == "All" || sFilTit == "Finance")        
-        items = @asso_model        
-      else        
-        if @tab.nil?          
-          fet_stat = nil
-        else          
-          fet_stat= @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
-        end
-        items = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])
-      end      
-   end
+    items = filter_status
     
     if !items.blank?
         if sc.is_a?(Array)

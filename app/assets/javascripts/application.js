@@ -21,11 +21,25 @@
 //= require private_pub
 //= require fullcalendar
 //= require data-confirm-modal
+//= require see_more
 
 
 
 
 $(function(){
+
+ $(document).on('nested:fieldAdded', function(event){
+              var field = event.field;
+              var dateField = field.find('.datepicker');
+              dateField.datepicker({
+                inline: true,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd",
+                yearRange: '1980:2050'
+              });
+ });
+
 
   
 
@@ -386,12 +400,12 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
         var key =$(this).val();
         oTable.fnFilter(key);
     });
-
-   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:last-child,:nth-last-child(3),:nth-last-child(2))', function () {
+/* deactivating on click of datatable row
+   $('body').on('click', tableId + ' tbody tr td:not(:first-child,:second-child,:last-child,:nth-last-child(3),:nth-last-child(2))', function () {
        var subId = $(this).parent().find("td > input").data('launch');
        window.open(subId,'_self',false);
    });
-
+*/
    /* this is the ransack add/remove fields initialization */
    $('form').on('click', '.remove_fields', function (event) {
     $(this).closest('.field').remove();
@@ -527,154 +541,6 @@ function TabSwitch(obj,model,model_pl){
     });
 }
 
-function toggleAllCheck(obj,tableId){
-    var checkedStatus = obj.checked;
-    $("#" + tableId +' tbody tr').find('td:first :checkbox').each(function () {
-        $(this).prop('checked', checkedStatus);
-     });
-}
-
-function toggleAllCheckRow(obj){
-    var checkedStatus = obj.checked;
-    $(obj).parent().parent().parent().parent().find('td :checkbox').each(function () {
-        $(this).prop('checked', checkedStatus);
-     });
-}
-
-function toggleAllCheckCol(obj){
-     var checkedStatus = obj.checked;
-     var index = $(obj).parent().index();
-        $(obj).closest('table').find('tr').each(function () {
-          $(this).find("td:eq("+index+") :checkbox").prop('checked', checkedStatus);
-        });
-}
-
-function getCheckedRowsAsArray(tableId,stop){
-       stop = stop || 1;
-       var idVal = '#' + tableId + ' #tr'
-       var rowIds = $(idVal + ':checked').map(function(){
-                                                  return $(this).val();
-                                                }).get();
-       if (rowIds.length == 0 && stop == 1){
-         bootbox.alert("Mark at least one record. (Use checkboxes)");
-         throw "stop execution";
-       }else{
-         return rowIds;
-       }
-}
-
-function updateCommClaim(tableId,idPartialFee){
-  var idPartialFee = idPartialFee || 0;  
-  bulkAssoUpdate(tableId,"select","comm_claim_status_",'/update_comm_claim/programmes',
-                'commClaimStatusModal',0,0,0,idPartialFee);
-}
-
-function updateAppStatus(tableId){
-  bulkAssoUpdate(tableId,"select","app_status_",'/bulk_asso_update',
-                 'appStatusModal','programme','application_status','app_status_id');
-}
-
-function updateProgStatus(tableId){
-  bulkAssoUpdate(tableId,"select","prog_status_",'/bulk_asso_update',
-                 'progStatusModal','registration','progression_status','progression_status_id');
-}
-
-function groupAssignTo(tableId){
-       var rows = getCheckedRowsAsArray(tableId);
-       sel = "select#group_assign_user_" + tableId
-       var user_id = $(sel).val();
-        var model = $("#group_assign_to_" + tableId).data("model");
-
-       url = '/group_assign/' + model + '/' + rows + '/user/' + user_id;
-
-       $.get(url,function(table){
-         $("#group_assign_to_" + tableId).css("display","none");
-         // redrawing the datatable
-         $('#' + tableId).dataTable().fnDraw();
-         // closing the modal window
-         $('#assignToModal').modal('toggle');
-         // unchecking the master check box
-         $('input#master_check').prop('checked', false);
-         // restting the search filters
-         resetDataTable();
-       });
-}
-
-
-function groupDelete(tableId){
-       var rows = getCheckedRowsAsArray(tableId);
-       var model = $("#group_assign_to_" + tableId).data("model");
-
-       url = '/group_delete/' + model + '/' + rows ;
-
-       $.get(url,function(table){
-         $('#' + tableId).dataTable().fnDraw();
-         // closing the modal window
-         $('#assignToModal').modal('toggle');
-         // unchecking the master check box
-         $('input#master_check').prop('checked', false);
-       });
-}
-
-function bulkEmail(tableId){
-       var rows = getCheckedRowsAsArray(tableId);
-       var model = $("#group_assign_to_" + tableId).data("model");
-       url = '/bulk_email/' + model + '/' + rows ;
-       // closing the modal window
-       $('#bulkEmailModal').modal('toggle');
-       window.open(url,
-                   '_blank',
-                   'location=yes,height=570,width=520,scrollbars=yes,status=yes');
-
-}
-
-function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col,id_partial_fee){
-  var main = main || 0;
-  var asso = asso || 0;
-  var asso_col = asso_col || 0;
-  var id_partial_fee = id_partial_fee || 0;
-   
-  var rows = getCheckedRowsAsArray(tableId);
-  sel = elem + "#" + what_ + tableId
-  var status_id = $(sel).val();
-  var user_id = $("#" + what_ + tableId).data("user_id");
-  
-  var data = {};
-  data['main_ids'] = rows;
-  data['asso_id'] = status_id;
-  data['user_id'] = user_id;
-  data['main'] = main;
-  data['asso'] = asso;  
-  data['asso_col'] = asso_col;
-  data['id_partial_fee'] = id_partial_fee;
-  
-  var posting = $.post(url,data);
-  
-   // Put the results in a div
-  posting.done(function( data ) {
-    afterDatatableMass(tableId,modal);
-    resetDataTable();
-    bootbox.alert(data);
-    
-  });
-
-}
-
-
-function deselectAllCheck(divId){
-    $(divId).find(':checkbox').each(function () {
-        $(this).prop('checked',false);
-     });
-}
-
-function afterDatatableMass(tableId,action){
-  // redrawing the datatable
-  $('#' + tableId).dataTable().fnDraw();
-  // closing the modal window
-  $('#' + action).modal('toggle');
-  // unchecking the master check box
-  $('input#master_check').prop('checked', false);
-}
 
 function manageRole(){
    var role_id = $("#role_select").val();
@@ -756,16 +622,36 @@ function dom_tokens(cl,url){
 }
 
 function validateRecruit(obj){
-  var country_id = $('#enquiry_country_id').val();
   var institution_id = obj.options[obj.selectedIndex].value;
-  url= '/validate_recruit/' + country_id + '/' + institution_id
+  var model = $(obj).data('model');
+  if (model == "enquiry"){
+    item_id = $('#enquiry_id').data('id');
+  }else if (model == "registration"){
+    item_id = $('#registration_id').data('id');
+  }
+  // new or edit scenario
+  if ($('#' + model + '_country_id').length != 0){
+    // nationality(country_id) from _form
+    form_country_id = $('#' + model + '_country_id').val();
+    // no nationality selected in _form scenario
+    if (form_country_id.length == 0){ 
+      bootbox.alert("Select a Nationality for this student in order to validate recruitment territory!"); 
+      // Stop everything
+      throw "stop execution";
+    }
+    // yes nationality selected in _form scenario
+    else { url= '/validate_recruit/' + institution_id + '/' + form_country_id; }
+  }
+  // show scenario
+  else{ url= '/validate_recruit/' + institution_id + '/0/' + model + '/' + item_id; }
+
   $.get(url,function(out){
-    alert(out);
+    bootbox.alert(out);
   });
 }
 
-function selectUpdate(itemId,urlTo,destSel){
-  
+function selectUpdate(itemId,urlTo,destSel,query){
+  query = query || "name";
   if (itemId.length != 0){
 
     $(destSel).fadeOut(1000);
@@ -778,7 +664,7 @@ function selectUpdate(itemId,urlTo,destSel){
                         $(destSel).empty();
                         $(destSel).append('<option value= selected="selected">-choose-</option>');
                         $.each(json, function(i,value) {
-                          $(destSel).append($('<option>').text(value.name).attr('value', value.id));
+                          $(destSel).append($('<option>').text(eval("value." + query)).attr('value', value.id));
                         });
                     }
                 });
@@ -799,7 +685,9 @@ function changeInsType(obj,dest,type){
   else if (type == "city"){
     var url = '/get_institutions/0/' + itemId}
   else if (type == "ins_type"){
-    var url = '/get_institutions/0/0/' + itemId}
+    var city_id = $(obj).parent().parent().parent().siblings().find('.cities_select').val();
+    var country_id = $(obj).parent().parent().parent().siblings().find('.countries_select').val();
+    var url = '/get_institutions/' + country_id + '/' + city_id + '/' + itemId }
   var index = obj.id.split("_")[3];
   var obj = $('div#object_name').data("obj");
   var destDiv = '#' + obj + dest.replace("index", index);
@@ -1001,6 +889,7 @@ function fetchContract(progId){
   
    // Put the results in a div
   posting.done(function( data ) {
+    bootbox.alert(data);
     $('input#fee_commission_percentage').val(data);
     $('input#fee_commission_percentage').keyup();
   });
@@ -1032,9 +921,17 @@ function fRHideSs(obj,type){
   
 }
 
-function show_sel(id){
-  $()
+function setCurrency(obj,dest)
+{
+  var itemId = obj.options[obj.selectedIndex].value;
+  var url = "/get_currency/" + itemId;
+  var index = obj.id.split("_")[3];
+  var obj = $('div#object_name').data("obj");
+  var destDiv = '#' + obj + dest.replace("index", index);
+  selectUpdate(itemId,url,destDiv);
 }
+
+
 
 
 

@@ -13,7 +13,8 @@ module CoreColumns
                          :assigned_by => [:_ass_by,:first_name],
                          :created_by => [:_cre_by,:first_name],
                          :updated_by => [:_upd_by,:first_name],
-                         :status_id => [:status,:name]}
+                         :status_id => [:status,:name],
+                         :branch_id => [:branch,:name]}
      
      elsif model == 'registration'
        @def_reg_cols = {:country_id => [:country_of_origin,:name],
@@ -25,19 +26,29 @@ module CoreColumns
                          :created_by => [:_cre_by,:first_name],
                          :updated_by => [:_upd_by,:first_name],
                          :prof_eng_level_id => [:english_level,:name],
-                         :institution_id => [:institutions,:name]}
+                         :institution_id => [:institutions,:name],
+                         :branch_id => [:branch,:name],
+                         :progression_status_id => [:progression_status,:name]}
      
      elsif model == 'institution'
        @def_ins_cols = {type_id: [:type,:name],
                      group_id: [:group,:name],
                      country_id: [:country, :name],
-                     city_id: [:city,:name]}
+                     city_id: [:city,:name],
+                     assigned_to: [:_ass_to,:first_name],
+                     assigned_by: [:_ass_by,:first_name],
+                     created_by: [:_cre_by,:first_name],
+                     updated_by: [:_upd_by,:first_name]}
    
      elsif model == 'person'
        @def_per_cols =  {type_id: [:type,:name],
                      institution_id: [:institution,:name],
                      country_id: [:country, :name],
-                     city_id: [:city,:name]}
+                     city_id: [:city,:name],
+                     assigned_to: [:_ass_to,:first_name],
+                     assigned_by: [:_ass_by,:first_name],
+                     created_by: [:_cre_by,:first_name],
+                     updated_by: [:_upd_by,:first_name]}
      
      elsif model == 'programme'
        @def_pro_cols =  {level_id: [:course_level,:name],

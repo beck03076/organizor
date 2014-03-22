@@ -22,8 +22,7 @@ class ProgrammesController < ApplicationController
       @pp_s_id = CommissionStatus.find_by_name("partially_paid".titleize).id
       iterate_fee(to_update,:first_payment_date)
     else
-      to_update.update_all(claim_status_id: params[:status_id],
-                         updated_by: params[:user_id])
+      to_update.update_all(claim_status_id: @asso_id)
       @text = "#{@status} set."
     end
     
@@ -40,7 +39,9 @@ class ProgrammesController < ApplicationController
             p.fee.update_attribute(col,Date.today)
             p.update_attributes(claim_status_id: @asso_id,
                          updated_by: @user_id)
-            if (@status == "Full Payment Received")              
+            if (@status == "Full Payment Received")
+              stat_id = CommissionStatus.find_by_name("partially paid").id
+              p.fee.commissions.where(status_id: stat_id).delete_all
               create_comm(p)
             elsif (@status == "Partial Payment Received")              
               calc_create_comm(p)
@@ -62,6 +63,8 @@ class ProgrammesController < ApplicationController
                s_id = @pp_s_id
               elsif curr_pay == prev_remain
                s_id = @fp_s_id
+               c_c_s_id = CommissionClaimStatus.find_by_name("full payment received").id
+               p.update_attribute(:claim_status_id,c_c_s_id)
               end
               
               curr_remain = prev_remain - curr_pay
@@ -87,14 +90,16 @@ class ProgrammesController < ApplicationController
   def index    
     set_url_params
     self.set_cols
+    
 
     respond_to do |format|
+
       format.html # index.html.erb
       format.json { core_json("programme",params[:institution_id]) } # in core_methods
       format.js { core_js("programme") } # in core_methods
-      format.xls { xls_pdf }
-      format.pdf{ xls_pdf
-      render   :pdf => 'index',
+      format.xls { self.xls_pdf("xls")}
+      format.pdf{ self.xls_pdf
+      render   :pdf => @filename,
                :layout => 'application',
                :handlers => :erb,
                :disable_external_links => true,
@@ -104,13 +109,18 @@ class ProgrammesController < ApplicationController
     end
   end
   
-  def xls_pdf 
+  def xls_pdf(ext = nil) 
+    
     if @prog_ids == "0"
           @programmes = Programme.joined_ins(@ins_id)
     else
           @programmes = Programme.where(id: @prog_ids.split(","))
     end
-    @institution = Institution.find(@ins_id)    
+    @institution = Institution.find(@ins_id)
+    
+    @filename = @institution.name.tr(" ","_") + "_iecabroad"
+    
+    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}#{ext.nil? ? nil : ".xls"}\"" 
   end
 
   def from_institution
@@ -122,6 +132,30 @@ class ProgrammesController < ApplicationController
    @registration = @programme.registration
    @fee = @programme.fee
    respond_to do |format|
+      format.js 
+    end
+  end
+  
+  def create_p_fee
+    @programme = Programme.find(params[:programme_id])
+  end
+  
+  def change_p_fee_status
+    @programme = Programme.find(params[:programme_id])
+  end
+  
+  def show_full
+    set_url_params
+    out = @model.camelize.constantize.find(@id).send(@col)
+    if @volume == "more"
+      @to_volume = "less"
+      @ctnt = out
+    elsif @volume == "less"
+      @to_volume = "more"
+      @ctnt = out[0..30]
+    end
+
+    respond_to do |format|
       format.js 
     end
   end
@@ -157,6 +191,7 @@ class ProgrammesController < ApplicationController
   # POST /programmes
   # POST /programmes.json
   def create
+
     @programme = Programme.new(params[:programme])
 
     respond_to do |format|
@@ -192,7 +227,8 @@ class ProgrammesController < ApplicationController
       if @programme.update_attributes(params[:programme])
         # first pending commmission is created here
         @commissions = @programme.fee.commissions rescue ""
-        if (params[:programme][:fee_attributes] && @commissions.blank?)
+        if (params[:programme][:fee_attributes])
+          @commissions.delete_all
           s_id = CommissionStatus.find_by_name("pending".titleize).id
           Commission.create!(status_id: s_id,
                              paid_cents: 0,
@@ -212,13 +248,11 @@ class ProgrammesController < ApplicationController
         format.json { head :no_content }
         if params[:programme][:fee_attributes].present?
           format.js { render "programmes/fee_update" }
+        elsif !params[:change_p_fee_status].nil?
+          format.js { render "programmes/change_p_fee_status" }
         elsif params[:change_status].nil?
           format.js { render "programmes/update" }
         else
-        
-          StatusDiagram.create!(user_id: current_user.id,
-                                status_id: params[:programme][:app_status_id],
-                                programme_id: params[:id])
           tl("Registration",
              @programme.registration.id,
              'Status of an application has been changed for this registration',

@@ -22,6 +22,7 @@ class ProgrammesDatatable < Datatable
     @compound = false
     @more = true
     @links = "programme"
+    @goto = ["/registrations/","registration_id"]
     
   end
    

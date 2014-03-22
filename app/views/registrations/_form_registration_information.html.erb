@@ -17,18 +17,26 @@
     </div>
 
     <%= bs(f,["date_of_birth",{class: "datepicker"}],"text_field",[nil,4],7,6) %>
+    
+    <%= bs(f,[:country_id,Country.order(:name),
+              :id,
+              :name,
+              {prompt: "-nationality-"},{id: "registration_country_id"}],
+              "collection_select",
+              ['Nationality',4],7,6) %> 
+    <div class="clear"></div>
     <h4 class="bold-subhead"> Address</h4>
     <br/>
     <% %w(line1 line2 city).each do |el| %>
       <%= bs(f,'address_' + el,"text_field",[el,4],7,6) %>
     <% end %> 
     
-    <%= bs(f,[:country_id,Country.order(:name),
+    <%= bs(f,[:address_country_id,Country.order(:name),
               :id,
               :name,
-              {prompt: "-nationality-"},{}],
+              {prompt: "-country-"},{}],
               "collection_select",
-              ['Nationality',4],7,6) %> 
+              ['Country',4],7,6) %> 
             
     <%= bs(f,"address_post_code","text_field",['post_code',4],7,6) %>
     <div class="clear"></div>
@@ -83,6 +91,8 @@
             "collection_select",
             ["Assign To",4],7,6) %> 
    <%= bs(f,[:note,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,4],7,6) %>
+   
+   <%= f.hidden_field :ref_no, value: @ref_no %>
 
 </div>
   

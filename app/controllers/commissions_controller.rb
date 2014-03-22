@@ -14,31 +14,6 @@ class CommissionsController < ApplicationController
     render text: comm_percentage
   end
   
-  def check_range(range_arr,order)
-    clean_range_arr = self.from_plus(range_arr)
-    clean_range_arr.each do |i|
-      if order.between?((i[0] - 1),i[1])
-       @out = i[2]
-       break
-      end
-    end
-    @out = @out.blank? ? "Not in(Over/Below) Student Range" : @out
-  end
-  
-  def from_plus(arr)
-    final = []
-    arr.each do |i|
-      if !i[1].nil?
-        if i[0].nil?
-          final << [i[1],1000000,i[2]]
-        else
-          final << i
-        end  
-      end
-    end
-    final
-  end
-  
   def new
     @payment = Payment.find(params[:payment_id])
     stat = CommissionStatus.find_by_name("partially paid").id

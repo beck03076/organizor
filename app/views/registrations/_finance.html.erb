@@ -9,7 +9,7 @@
   <% fe_size = fe.nil? ? 0 : 1 %>
   <!-- how manieth registration is this for this institution is r_order -->
     <% r_order = r_order(i.registration.id,i.institution.id) rescue 1 %>
-
+<% if eval_status %>
 <div class="row row-right">
 <div class="panel-group" id="accordion">
   <div class="panel panel-default">
@@ -20,31 +20,30 @@
         </a>
         <small class="ml-10 tag-like green"><%= app_status %></small>
         <small class="ml-10 tag-like blue"><%= r_order.ordinalize %> student</small>
-        <% if eval_status %>
         <small class="ml-10">
         <small>
-
-        <span class="mar0 glyphicon glyphicon-edit"></span>
-                    <%= link_to 'Edit',
-                                 edit_fee_path(fe),
-                                 {remote: true,
-                                  onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %> |
-                    <span class="mar0 glyphicon glyphicon-trash"></span>
-                          <%= link_to 'Delete',
-                                        fe,
-                                        method: :delete,
-                                        data: { confirm: 'Are you sure?' }  %>
-        </small>
-        </small>
+        <% if fe_size > 0 %>
+            <span class="mar0 glyphicon glyphicon-edit"></span>
+                        <%= link_to 'Edit',
+                                     edit_fee_path(fe),
+                                     {remote: true,
+                                      onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %> |
+                        <span class="mar0 glyphicon glyphicon-trash"></span>
+                              <%= link_to 'Delete',
+                                            fe,
+                                            method: :delete,
+                                            data: { confirm: 'Are you sure?' }  %>
         <% end %>
+        </small>
+        </small>
       </h4>
     </div>
-  <% if eval_status %>
+  
     <% comms = fe.commissions rescue nil %>
 
 
     <% if fe_size > 0 %>
-      <div id="collapse<%= i.id %>" class="panel-collapse collapse in">
+      <div id="collapse<%= i.id %>" class="panel-collapse collapse">
       <div class="panel-body">
         <div class="row row-top row-right">
                 <div class="row row-top">
@@ -64,8 +63,8 @@
                       <small><%= humanized_money_with_symbol fe.scholarship %></small>
                     </li>
                     <li>
-                      <label class="light">Commission Percentage</label>
-                      <small><%= fe.commission_percentage %> %</small>
+                      <label class="light">Commission Percentage(%)</label>
+                      <small class="green-right"><%= fe.commission_percentage %></small>
                     </li>
                     <li>
                       <label class="light">Commission Amount</label>
