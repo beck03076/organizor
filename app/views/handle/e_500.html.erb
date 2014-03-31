@@ -1,5 +1,180 @@
-<div class="row text-center">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/images/icons/reportm.png">
 
-<img src="/images/error.jpg" />
+    <title>Organizor</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-</div>
+  <body>
+  <div class="popover-markup" id="create_new_ctnt">
+                <div class="head hide light">
+                   <h5>Create New</h5>
+                </div>
+                <div class="content hide">
+                    <ul class="vlsdet">
+                      <% %w(enquiry registration institution person).each do |n| %>
+                      <li>
+                      <small><%= link_to n.titleize, send('new_' + n + '_path'),{class: "clickable"} %></small>
+                      </li>
+                      <% end %>
+                    </ul>
+                </div>
+  </div>
+
+  <!-- Shortening variable -->
+  <% u = current_user %>
+    <div id="header">
+      <div class="container">
+        <div class="col-xs-2">
+          <h1 class="text-left">Organizor</h1>
+        </div>
+        <div class="col-xs-3">
+          <br/>
+          <div class="row">
+            <input type=text class="form-control" placeholder="Search with name..."/>
+          </div>
+        </div>
+        <div class="col-xs-5 text-right">
+          <a href="#">
+            <span id="create_new" class="glyphicon glyphicon-plus-sign notification-icon no-link">
+            </span>
+          </a> 
+          
+          <a href="#" id="id_notification_dropdown" data-container="body" data-toggle="popover" data-placement="bottom">
+          <span class="glyphicon glyphicon-bell notification-icon no-link"></span>
+          <span class="badge">20</span></a>
+        </div>
+        <div class="col-xs-2 profile text-right">
+          <a href="#" id="id_user_dropdown">
+          <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                         {width: "50",
+                                          height: "50",
+                                          class: "img-rounded"}) %>
+          <span class="ml-10 no-link">
+            <b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
+          </span>
+
+          </a>
+        </div>        
+      </div>
+    </div>
+
+
+    <!-- Begin page content -->
+    <div class="container main">
+
+      <div class="row">
+        <div class="col-xs-2 left-nav">
+          <ul class="nav nav-pills nav-stacked main-menu">
+
+            <li class="disabled">
+              <a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a>
+            </li>
+
+            <li class="disabled">
+              <a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a>
+            </li>
+
+            <hr>
+
+            <li id="enquiries">
+              <%= link_to enquiries_path  do %><span class="glyphicon glyphicon-earphone"></span>Enquiries<% end %>
+            </li>
+            <li id="registrations">
+              <%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registrations<% end %>
+            </li>
+
+            <li id="institutions">
+              <%= link_to institutions_path do %><span class="glyphicon glyphicon-home"></span>Institutions<% end %>
+            </li>
+
+            <li id="people">
+              <%= link_to people_path do %><span class="glyphicon glyphicon-folder-open"></span>People<% end %>
+            </li>
+
+            <hr>
+
+            <!-- not displaying accounts and contracts -->
+            <% if false %>
+            <li><a href="#"><span class="glyphicon glyphicon-book"></span>Accounts</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-euro"></span>Contracts</a></li>
+            <% end %>
+
+            <li id="emails">
+                <%= link_to  emails_path do %><span class="glyphicon glyphicon-envelope"></span>Emails<% end %>
+            </li>
+
+            <li id="follow_ups">
+              <%= link_to "/follow_ups" do %><span class="glyphicon glyphicon-calendar"></span>Calendar<% end %>
+            </li>
+
+            <li id="todos">
+              <%= link_to todos_path do %><span class="glyphicon glyphicon-check"></span>Todos<% end %>
+            </li>
+
+            <hr>
+
+            <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
+            <li id="users">
+              <% if u.role?(:agency_administrator) %>
+                  <%= link_to "/users" do %><span class="glyphicon glyphicon-user"></span>Users<% end %>
+              <% else %>
+                <%= link_to "/users/#{current_user.id}" do %><span class="glyphicon glyphicon-user"></span>My account<% end %>
+              <% end %>
+            </li>
+            <li id="configuration">
+                <%= link_to "/configuration" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-10 main-content">
+          <div class="row text-center"> 
+            <img src="/images/error.jpg" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <div id="footer">
+    </div>
+    <script>
+      $('#create_new').click(function(){
+        $('#create_new').popover({
+            html: true,
+            placement: "bottom",
+            title: function () {
+                return $('#create_new_ctnt').find('.head').html();
+            },
+            content: function () {
+                return $('#create_new_ctnt').find('.content').html();
+            }
+        });
+        $('#create_new').popover('show');
+      });
+      
+      $(document).mouseup(function (e) {
+        if ($('.popover').has(e.target).length === 0) {
+            $('.popover').toggleClass('in').remove();
+            return;
+        }
+      });
+    </script>
+  </body>
+</html>
+
+
