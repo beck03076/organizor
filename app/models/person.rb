@@ -64,7 +64,7 @@ class Person < ActiveRecord::Base
   end
   
   def self.sub_agent
-    type = PersonType.find_by_name("official_sub_agent").id
+    type = PersonType.find_by_name("unofficial_sub_agent").id
     where(type_id: type).order(:first_name)
   end
   
