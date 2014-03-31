@@ -1,5 +1,7 @@
 Organizor::Application.routes.draw do
 
+  match '/500' => 'handle#e_500'
+
   resources :processing_fee_statuses
 
   resources :processing_fee_types

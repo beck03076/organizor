@@ -64,6 +64,8 @@ module Organizor
     config.assets.version = '1.0'
     config.active_record.observers = :auditor_observer, :notification_observer
     
+    config.exceptions_app = self.routes
+    
     
     
     

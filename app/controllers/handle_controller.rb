@@ -6,4 +6,7 @@ class HandleController < ApplicationController
 
   def cancan
   end
+  
+  def e_500
+  end
 end
