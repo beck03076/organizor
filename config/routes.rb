@@ -1,6 +1,8 @@
 Organizor::Application.routes.draw do
 
   match '/500' => 'handle#e_500'
+  match '/404' => 'handle#e_500'
+  match '/422' => 'handle#e_500'
 
   resources :processing_fee_statuses
 
