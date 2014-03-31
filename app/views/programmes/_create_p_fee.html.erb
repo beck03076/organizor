@@ -1,7 +1,7 @@
 <!-- Asking the counselor to update fees and sclorship from offer letter -->
 
 <%= form_for(@programme,html: {class: "form-horizontal"}) do |p| %>
-  <% cur = p.object.fee.currency || @programme.institution.country.currency.code %>
+  <% cur = (p.object.currency || @programme.institution.country.currency.code) %>
   <%= bs(p,[:p_fee_id,
             ProcessingFeeType.order(:name),
             :id,

@@ -75,14 +75,17 @@ if (UserConfig.all.size == 0)
                        
     p "Created User config with nil as user id, use it!"
 end
+# =====
+# setting this to update created_by  - admin user as first user
+p "setting this to update created_by  - admin user as first user.."
+User.current = User.first
+# =====
 
 if (AllowIp.all.size == 0)
     p "Creating allow ip range for localhost 127.0.0.1 .."
     AllowIp.create!(from: "127.0.0.1", to: "127.0.0.1", desc: "localhost")
 end
-# setting this to update created_by  - admin user as first user
-p "setting this to update created_by  - admin user as first user.."
-User.current = User.first
+
 
 [{application_status: %w(Sent Conditional_offer Unconditional_offer 
                          Pending Joined Rejected Defer Sent_to_documentation)},
