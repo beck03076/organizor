@@ -154,10 +154,17 @@ strong.sm{font-size:12px;}
     font-size: 10px;
     font-weight: bold;
     border-radius:10px;
-   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     cursor: pointer;          
     background-color: #729fcf;}
+    
+   .main .main-content .pilled:hover {
+    color: #fff;
+    padding: 5px 5px 5px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius:10px;
+    cursor: pointer;          
+    background-color: #008cba;}
     
     .main .main-content .blue {
     background-color: #729fcf; }
