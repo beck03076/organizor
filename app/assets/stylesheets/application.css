@@ -187,4 +187,42 @@ strong.sm{font-size:12px;}
     padding-top: 15px;
     border: 1px solid #d3d7cf;}
 
+h1.carousel{
+font-size: 35px;
+font-weight: normal; 
+padding-top:45px;
+padding-bottom:45px;
+}
 
+.blue{
+background-color:#def1fb;
+}
+
+.green{
+background-color:#c3f0ea;
+}
+
+.yellow{
+background-color:#fce8d2;
+}
+
+.red{
+background-color:#f1c1c1;
+}
+
+.carousel-indicators li.green {
+  background-color: #2ba7a3;
+  border: 0px;  
+}
+.carousel-indicators li.blue {
+  background-color: #ad7fa8;
+  border: 0px;
+}
+.carousel-indicators li.red {
+  background-color: #f1c1c1;
+  border: 0px;
+}
+.carousel-indicators li.yellow {
+  background-color: #fce8d2;
+  border: 0px;
+}
