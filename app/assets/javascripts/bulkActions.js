@@ -5,6 +5,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 
+
+
+$(function(){
+
+ $('dataTables_wrapper #master_check, #tr').change(function(){
+   alert(123);
+   });
+ });
+
 function toggleAllCheck(obj,tableId){
     var checkedStatus = obj.checked;
     $("#" + tableId +' tbody tr').find('td:first :checkbox').each(function () {

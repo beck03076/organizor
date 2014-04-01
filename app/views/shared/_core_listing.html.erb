@@ -145,7 +145,7 @@
               </div>
               <% end %>
               <!-----------------------Search Start---------------------------->
-              <div class="col-md-8 text-left filter-center">
+              <div class="col-md-9 text-center filter-center">
                 <form class="form-inline" role="form">
                   <div class="form-group">
                     <label for="id_column">Filter by</label>
@@ -157,7 +157,7 @@
                   </div>
                   <div class="form-group">
                     <label for="id_search">containing</label>
-                    <input style="width:130px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
+                    <input style="width:200px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
                   <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
                   <span class="glyphicon glyphicon-filter" onclick="$('.ransack').slideToggle('fast');"></span>
@@ -166,7 +166,7 @@
               </div>
              <!-----------------------Search End---------------------------->
              <!-----------------------FollowUp Filter Start---------------------------->
-              <div class="col-md-4 text-right">
+              <div class="col-md-3 text-right">
                 <form class="form-inline" role="form">
                   <div class="form-group pull-right">
                     <%= select_tag :abdc,
@@ -259,5 +259,15 @@
  if ($('li#<%= @status %>').parent().hasClass('dropdown-menu')) {
     actdd();
  }
+ 
+ 
+  $('#master_check').change(function(){
+    if( $(this).is(':checked') ){
+    $('.header').find('.pill-less').removeClass('pill-less').addClass('pilled'); 
+    }else{
+    $('.header').find('.pilled').removeClass('pilled').addClass('pill-less');
+    }
+    
+  });
 </script>
 
