@@ -149,22 +149,22 @@ strong.sm{font-size:12px;}
     background-color: #eeeeec;          }
     
     .main .main-content .pilled {
-    color: #fff;
+    color: #222222;
     padding: 5px 5px 5px 5px;
     font-size: 10px;
-    font-weight: bold;
+    font-weight: normal;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #729fcf;}
+    background-color: #c3f0ea;}
     
    .main .main-content .pilled:hover {
-    color: #fff;
+    color: #000000;
     padding: 5px 5px 5px 5px;
     font-size: 10px;
     font-weight: bold;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #008cba;}
+    background-color: #c3f0ea;}
     
     .main .main-content .blue {
     background-color: #729fcf; }

@@ -10,9 +10,30 @@
 <% end %>
 <% srch_url = send("search_" + model_pl + "_path") %>
 <% act = act || model_pl %>
+<div id="mass-actions-pills" class="row hide">
+             <div class="col-md-10">
+              <span class="pilled">
+                <span class="glyphicon glyphicon-share mar0"></span>&nbsp;<span>Assign To</span>
+              </span>
+              &nbsp;&nbsp;
+              <span class="pilled">
+              <span class="glyphicon glyphicon-envelope mar0"></span>&nbsp;<span>Email</span>
+              </span>
+              &nbsp;&nbsp;              
+              <span class="pilled">
+              <span class="glyphicon glyphicon-remove mar0"></span>&nbsp;<span>Delete</span>
+              </span>
+              &nbsp;&nbsp;
 
-
-          
+              <span class="pilled">
+                <span class="glyphicon glyphicon-play mar0"></span>&nbsp;<span>Progression</span>
+              </span>
+              &nbsp;&nbsp;
+              <span class="pilled">
+              <span class="glyphicon glyphicon-home mar0"></span>&nbsp;<span>Branch</span>
+              </span>
+              </div>
+</div>
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
               <div class="col-md-12 data-table">
@@ -261,12 +282,10 @@
  
  
   $('#master_check').change(function(){
-    if( $(this).is(':checked') ){
-    $('.header').find('.pill-less').removeClass('pill-less').addClass('pilled'); 
-    $('#mass-actions').removeClass('pill-less').addClass('pilled'); 
+    if( $(this).is(':checked') ){    
+    $('#mass-actions-pills').removeClass('hide'); 
     }else{
-    $('.header').find('.pilled').removeClass('pilled').addClass('pill-less');
-    $('#mass-actions').removeClass('pilled').addClass('pill-less');
+    $('#mass-actions-pills').addClass('hide');
     }
     
   });
