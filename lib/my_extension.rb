@@ -78,7 +78,11 @@ module MyExtension
   # methods to be included 
   module ClassMethods   
     def csel
-      order(:name).map{|i| [i.name,i.id]}
+      order(:name).map{|i| [i.name.titleize,i.id]}
+    end
+    
+    def bip
+      order(:name).map{|i| [i.id,i.name.titleize]}
     end
   end
 end

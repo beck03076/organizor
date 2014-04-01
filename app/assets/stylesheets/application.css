@@ -33,6 +33,8 @@
 strong.checkit{text-decoration:line-through;}
 strong.uncheckit{text-decoration:none;}
 
+strong.sm{font-size:11px;}
+
 .cal_todo{background: #004156;}
 .cal_follow_up{background: #267ab3;}
 
@@ -59,6 +61,7 @@ strong.uncheckit{text-decoration:none;}
 .padded{
  padding:0 5px 0 5px;
 }
+
 .red-wrong{
   color: #555753;
   background-color:#f7d0d0;
@@ -74,6 +77,30 @@ strong.uncheckit{text-decoration:none;}
 .yellow-ok{
   color: #555753;
   background-color:#f8f4b0;
+  padding:0 5px 0 5px;
+}
+
+.blue-main{
+  color: #555753;
+  background-color:#def1fb;
+  padding:0 5px 0 5px;
+}
+
+.purple-bonus{
+  color: #fff;
+  background-color:#ad7fa8;
+  padding:0 5px 0 5px;
+}
+
+.orange-planned{
+  color: #555753;
+  background-color:#fce8d2;
+  padding:0 5px 0 5px;
+}
+
+.white-plain{
+  color: #555753;
+  background-color:#fafafa;
   padding:0 5px 0 5px;
 }
 

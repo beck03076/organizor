@@ -1,18 +1,16 @@
 <!-- Enquiry show page -->
-<div class="row row-top">
-  <div class="row row-top">
-    <div class="col-xs-8">
-      <h4><strong><%= @enquiry.name %></strong></h4>
-    </div>
+<div class="col-md-8">
+  <h3><%= @enquiry.name %></h3>
+</div>
 
-    <% a = @enquiry %>
-    <div class="col-xs-4 text-right">
-                    <div class="form-group">
-                      <%= link_to "Edit", edit_registration_path(a), {class: "btn btn-primary"} %>
-                      <%= link_to "Clone", clone_registration_path(a), {class: "btn btn-primary"} %>
-                  </div>
-    </div>
-  </div>
+<% a = @enquiry %>
+<div class="col-xs-4 text-right">
+                <div class="form-group">
+                  <%= link_to "Edit", edit_enquiry_path(a), {class: "btn btn-primary"} %>
+                  <%= link_to "Clone", clone_enquiry_path(a), {class: "btn btn-primary"} %>
+              </div>
+</div>
+
 
 
 <div class="row">

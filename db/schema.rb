@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140313105057) do
+ActiveRecord::Schema.define(:version => 20140331153959) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20140313105057) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.string   "cl"
   end
 
   create_table "contract_doc_categories", :force => true do |t|
@@ -355,6 +356,7 @@ ActiveRecord::Schema.define(:version => 20140313105057) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.string   "cl"
   end
 
   create_table "event_types", :force => true do |t|
@@ -828,6 +830,7 @@ ActiveRecord::Schema.define(:version => 20140313105057) do
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "cl"
   end
 
   create_table "students", :force => true do |t|

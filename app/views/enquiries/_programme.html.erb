@@ -1,0 +1,57 @@
+<!-- represents one programme -->
+<div class="panel-group" id="accordion">
+   <div class="panel panel-default">
+       <div class="panel-heading">
+          <h5>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
+            <strong><%= i.institution.name %></strong></a>
+            <br/>
+            <br/>
+            <small>
+               <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
+               <span class="ml-10 tag-like blue"><%= i.institution.type.name %></span>
+               <span class="ml-10 tag-like blue"'><%= i.institution.group.name rescue "No" %> Group</span>
+            </small>
+          </h5>
+        </div>
+        <div id="collapse<%= i.id %>" class="panel-collapse collapse">
+          <div class="panel-body">
+            <div class="row row-top row-right">
+                <div class="col-xs-12 pl-0">
+                    <div class="border-b">
+                        <ul class="vlsdet pt-0">
+                          <h4 class="bold-subhead">Application Details</h4>
+                    
+                       <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
+                       <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course yet to end']) %>
+                            <% [['institution_name','institution_name'],
+                                [['ins_ref_no',99,'alloted by institution'],'reference_no'],
+                                ['course_level_name','course_level'],
+                                ['course_subject_text','course_subject'],
+                                [s,'start_date'],
+                                [e,'end_date']].each do |v| %>
+                              <%= li1(v[1],v[0],'span','small',i)%>
+                            <% end %>
+                    </div>
+                    <div class="border-b">
+                        <ul class="vlsdet-s">
+                            <li>
+                            <label class="light">Created</label>
+                            <small><%= link_to i.cby,i._cby %></small>
+                            <small><%= i.created_at %></small>
+                            </li>
+
+                            <li>
+                            <label  class="light">Last Modified</label>
+                            <small><%= link_to i.uby, i._uby %></small>
+                            <small><%= i.updated_at %></small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+ </div>
+<br/>

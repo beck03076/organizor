@@ -1,5 +1,7 @@
 class EnquiriesController < ApplicationController
   include CoreMethods
+  include ActionsMethods
+  helper_method :meta
   
   def tab
     set_url_params    
@@ -65,6 +67,9 @@ class EnquiriesController < ApplicationController
   def edit
     @enquiry = Enquiry.find(params[:id])
     authorize! :update, @enquiry
+    
+    @countries = basic_select(Country)
+    @p_types = InstitutionType.where(educational: true)
   end
 
   # POST /enquiries

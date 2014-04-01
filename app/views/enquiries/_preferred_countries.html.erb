@@ -5,7 +5,7 @@
   <%= prefer_countries(f.object_name,
                        "country_ids",
                        @countries,
-                       (@countries.map{|i| i[1]})) %>
+                       (f.object.preferred_countries.map{|i| i.id})) %>
 </div>
 <script>
 actMultiSelect('multiple-select');

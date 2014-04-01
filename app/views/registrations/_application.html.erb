@@ -263,7 +263,7 @@
         <% end %>
         <small> Start Adding New Applications to this Registration </small>
         <%= nested_form_for(@obj,html: {class: "form-horizontal"}) do |f| %>
-              <%= render 'enquiries/preferred_programmes',f: f,obj: "registration",build: Programme.new %>
+              <%= render 'enquiries/preferred_programmes',f: f,flag: "registration",build: Programme.new %>
               <div class="row row-top mt-15">
                 <div class="col-xs-12">
                   <div class="form-group form-last">

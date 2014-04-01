@@ -1,7 +1,7 @@
 class Enquiry < ActiveRecord::Base
   include CoreExtension
   
-  validates :first_name, 
+  validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another enquiry, please check!" }
   
@@ -35,6 +35,7 @@ class Enquiry < ActiveRecord::Base
                           :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
                           
   belongs_to :branch
+  belongs_to :student_source, foreign_key: 'source_id'
   
   #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   
@@ -83,6 +84,10 @@ class Enquiry < ActiveRecord::Base
     self.status.name rescue "Unknown"
   end
   
+  def cur_cl
+    @current_cl
+  end
+  
   def country_of_origin_name
     self.country_of_origin.name rescue "Unknown"
   end
@@ -93,6 +98,14 @@ class Enquiry < ActiveRecord::Base
   
   def self.tit
     "Enquiries"
+  end
+  
+  def source_name
+    self.student_source.name rescue "Unknown"
+  end
+  
+  def nationality
+    self.country_of_origin.name rescue "Unknown"
   end
   
 end

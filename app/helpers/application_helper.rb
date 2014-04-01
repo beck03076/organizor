@@ -37,6 +37,40 @@ module ApplicationHelper
     html.html_safe
   end
   
+  #basic li ul listing with vlsdet
+  def li2(label,val,a = nil,text = nil,sizel = "small",sizev = "small")
+    html = ""    
+    if val.kind_of?(Array)
+     disp = best_in_place_if (can? :update,a),
+                              a,
+                              val[0],
+                              type: val[1],
+                              collection: val[2].bip,
+                              display_as: val[3],
+                              inner_class: "form-control"
+     cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+    elsif val.kind_of?(String) 
+      disp = val
+      cl ="padded"
+    elsif val.kind_of?(Symbol) 
+      disp = best_in_place_if (can? :update,a),a,val
+      cl = val.cl
+    end  
+    if !text.nil?
+      text = "<small>&nbsp;&nbsp; #{text}</small>"
+    else
+      text = ''
+    end
+    html += "<li>
+             <div class=#{cl}>
+             <label><#{sizel}>#{label.titleize}</#{sizel}></label>
+             <#{sizev}  class='#{cl} sm'>#{disp}</#{sizev}> 
+             #{text}
+             </div>
+             </li>"
+    html.html_safe
+  end  
+  
   def li_dt(col,ymsg,gmsg,obj)
    [((Date.today <= obj.send(col).to_date rescue col) ? [col,98,gmsg] : [col,99,ymsg]),col]
   end
