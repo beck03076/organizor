@@ -155,7 +155,7 @@ strong.sm{font-size:12px;}
     font-weight: normal;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #c3f0ea;}
+    background-color: #eeeeec;}
     
    .main .main-content .pilled:hover {
     color: #000000;
@@ -164,7 +164,7 @@ strong.sm{font-size:12px;}
     font-weight: bold;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #c3f0ea;}
+    background-color: #eeeeec;}
     
     .main .main-content .blue {
     background-color: #729fcf; }
