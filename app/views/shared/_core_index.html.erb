@@ -5,17 +5,14 @@ $(function(){
 
 </script>
 
-            <div class="row row-top">
               <div class="col-md-10">
                 <h3><%= model.pluralize %></h3>
               </div>
               <div class="col-md-2">
-                <div class="form-group form-last pull-right">
+                <div class="form-group">
                   <%= link_to "New #{model}",eval(new), {class: "btn btn-primary"} %>
                 </div>
               </div>
-            </div>
-            
 
   <%= render 'shared/tabs', stat: tab, model: model.downcase %>  
 
