@@ -20,30 +20,29 @@
             <% div_id = "group_assign_to_" + _id %>
             <div id="<%= div_id %>" data-model=<%= model %>></div>
             <div class="row row-top">
-              <% if false %>
               <div class="col-md-2">
                 <select id="mass-actions" style="width:130px" class="form-control hor-first">
-                    <option>-Mass Actions-</option>
+                    <option>-more actions-</option>
                     <!----------------------- Group Assign Start---------------------------->
                     <% if can? :update, _model %>
-                      <option value="assignTo">Assign to</option>
+                      <option value="assignTo">Follow Up</option>
                       <% js = 'groupAssignTo' %>
                     <% end %>
                     <!----------------------- Group Assign End---------------------------->
                     <!----------------------- Bulk Email Start---------------------------->
                     <% if can? :create, Email %>
-                      <option value="bulkEmail">Bulk email</option>
+                      <option value="bulkEmail">Todo</option>
                       <% js = 'bulkEmail' %>
                     <% end %>
                     <!----------------------- Bulk Email End---------------------------->
                     <!----------------------- Group Delete Start--------------------------->
                     <% if can? :destroy, _model %>
-                      <option value="groupDelete">Group Delete</option>
+                      <option value="groupDelete">Update</option>
                     <% end %>
 
                     <% if (_model == Registration) && (can? :update, _model) %>
-                      <option value="progStatus">Progression Status</option>
-                      <option value="changeBranch">Change Branch</option>
+                      <option value="progStatus">Another</option>
+                      <option value="changeBranch">Another</option>
                     <% end %>
                     
                     <% if (_model == Institution) && (can? :update, _model) %>
@@ -115,7 +114,6 @@
                                      'Change Branch',
                                      'changeBranch',
                                      _id) %>
-                <% end %>
                 <!----------------------- ProgressionStatus Modal End---------------------------->
                 <!----------------------- Export Details Modal Start---------------------------->
                
@@ -145,7 +143,7 @@
               </div>
               <% end %>
               <!-----------------------Search Start---------------------------->
-              <div class="col-md-9 text-center filter-center">
+              <div class="col-md-8 text-center filter-center">
                 <form class="form-inline" role="form">
                   <div class="form-group">
                     <label for="id_column">Filter by</label>
@@ -157,7 +155,7 @@
                   </div>
                   <div class="form-group">
                     <label for="id_search">containing</label>
-                    <input style="width:200px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
+                    <input style="width:130px" type="text" class="form-control inline-control" id="id_search" placeholder="search term">
                   </div>
                   <span class="glyphicon glyphicon-remove" onclick="resetDataTable();"></span>
                   <span class="glyphicon glyphicon-filter" onclick="$('.ransack').slideToggle('fast');"></span>
@@ -166,7 +164,7 @@
               </div>
              <!-----------------------Search End---------------------------->
              <!-----------------------FollowUp Filter Start---------------------------->
-              <div class="col-md-3 text-right">
+              <div class="col-md-2 text-right">
                 <form class="form-inline" role="form">
                   <div class="form-group pull-right">
                     <%= select_tag :abdc,
@@ -264,8 +262,10 @@
   $('#master_check').change(function(){
     if( $(this).is(':checked') ){
     $('.header').find('.pill-less').removeClass('pill-less').addClass('pilled'); 
+    $('#mass-actions').removeClass('pill-less').addClass('pilled'); 
     }else{
     $('.header').find('.pilled').removeClass('pilled').addClass('pill-less');
+    $('#mass-actions').removeClass('pilled').addClass('pill-less');
     }
     
   });
