@@ -1,0 +1,85 @@
+<!-- users basic page -->
+<% a = @user %>
+<% adm = current_user.adm? %>
+<div class="row border-b">  
+      <div class="col-xs-3">
+        <%= render 'images/disp', core: "user", a: a %>
+
+
+        <ul class="vlsdet-s" >
+            <h4 class="bold-subhead">Quick Info</h4>
+               <% stat = a.active_for_authentication? ? "Active" : "Inactive" %>
+               <%= li2('status',stat,a,nil,"span","strong")%>           
+               <% if adm %>
+                 <%= li2('role',[:role_id,:select,Role,:role_name],a,nil,"span","strong")%>
+               <% else %>
+                 <%= li2('role',a.role_name,a,nil,"span","strong")%>
+               <% end %>
+               <% hsh = {emails: "by",follow_ups: "to",todos: "to"} %>
+               <% %w(emails follow_ups todos).each do |act| %>
+                 <% out = meta(current_user.id,"user",act,a.id,hsh[act.to_sym]) %>
+                 <%= li1(act,out,'span','small')%>
+               <% end %>
+        </ul>
+
+      </div>
+      <div class="col-xs-4 row-top">
+        <ul class="vlsdet pt-0 border-b">
+            <h4 class="row-top bold-subhead">Personal</h4>
+            <% %w(first_name surname date_of_birth gender nationality).each do |v| %>
+            <%= li1(v,v,'span','small',a)%>
+            <% end %>
+        </ul>
+        <ul class="vlsdet">
+            <h4 class="bold-subhead">Social Info</h4>
+            <% %w(skype facebook linkedin twitter gplus blogger website).each do |v| %>
+              <%= li1(v,v,'span','small',a)%>
+            <% end %>
+        </ul>
+      </div>
+      <% if adm %>
+          <div class="col-xs-5">
+            <div class="well well-sm form-last">
+                <h4 class="bold-subhead">User History</h4>
+                <ul class="vlsdet pt-0">
+                   <%= li1('invitation_sent_at',a.invitation_sent_at,'span','small')%>
+                   <%= li1('invitation_accepted_at',a.invitation_accepted_at,'span','small')%>
+                   <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
+                   <%= li1('Modified By',a.uby,'span','small')%>
+                   <%= li1('Last Sign In At',a.last_sign_in_at,'span','small')%>
+                   <%= li1('Last Sign In IP',a.last_sign_in_ip,'span','small')%>
+                   <%= li1('Sign In Count',a.sign_in_count,'span','small')%>
+
+                </ul>
+            </div>
+            <ul class="vlsdet-s">
+                <h4 class="bold-subhead">Contact</h4>
+                <% %w(mobile email address).each do |v| %>
+                <%= li1(v,v,'span','small',a)%>
+                <% end %>
+            </ul>
+         </div>
+     <% end %>
+</div>
+<% if !a.adm? %>
+<div class="row border-b">  
+    <div class="col-xs-12">
+      <h4 class="bold-subhead">Manage Permissions</h4>
+       <%= render 'roles/permissions', role: a, f: "user" %>
+        <br/>
+    </div>
+</div>
+<% else %>
+<div class="row">  
+    <div class="col-xs-12">
+      <h5>This user is an <b>agency administrater</b>. Has all the permissions.</h5>
+    </div>
+</div>
+<% end %>
+<div class="clear"></div>
+<br/>
+
+<script>
+  actmm('users');
+  $('.best_in_place').best_in_place();
+</script>

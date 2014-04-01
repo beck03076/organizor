@@ -1,4 +1,12 @@
 class UsersController < ApplicationController
+  include ActionsMethods
+  helper_method :meta
+  
+  def log
+    @user = User.find(params[:id])
+    @audits = Audit.where(user_id: params[:id]).order("created_at desc")
+    @log = true
+  end
 
   # authorize_resource
   # GET /users
@@ -27,7 +35,7 @@ class UsersController < ApplicationController
         @user = User.includes(:permissions).find(params[:id])
     end    
    # authorize! :read, @user, id: current_user.id
-
+    @show = true
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

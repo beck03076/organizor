@@ -1,0 +1,32 @@
+<!-- this is the audit log of users -->
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-striped"">
+            <thead>
+              <tr>
+                                    <th>Action</th>
+                                    <th>Model</th>
+                                    <th>Ip address</th>
+                                    <th>About</th>
+                                    <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @audits.each do |i| %>
+                <tr>
+                 <td><%= i.action.capitalize %></td>
+                 <td><%= link_to i.auditable_type,
+                                 "/#{i.auditable_type.downcase.pluralize}/#{i.auditable_id}" %></td>
+                 <td><%= i.remote_address %></td> 
+                 <td><%= time_ago_in_words(i.created_at) %> ago</td>
+                 <td><%= i.created_at.to_s %></td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+        <% if @audits.blank? %>
+          <h5> No activity by <b> <%= @user.name %></b>, yet! </h5>
+        <% end %>
+    </div>
+</div>
+

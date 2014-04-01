@@ -35,8 +35,13 @@ class User < ActiveRecord::Base
   
   has_many :todos, class_name: "Todo",foreign_key: "assigned_to"
   has_many :emails, class_name: "Email",foreign_key: "created_by"
+  has_many :follow_ups, class_name: "FollowUp",foreign_key: "assigned_to"
   
   belongs_to :branch
+  
+  belongs_to :nationality,
+             :class_name => "Country",
+             :foreign_key => "country_id"
   
   accepts_nested_attributes_for :permissions
   
@@ -75,6 +80,10 @@ class User < ActiveRecord::Base
   
   def prog_fu_ass_to
     User.find(self.conf.def_progression_fu_ass_to).name
+  end
+  
+  def role_name
+    self.role.name rescue "Unassigned"
   end
 
 end

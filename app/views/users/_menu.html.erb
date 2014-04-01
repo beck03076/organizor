@@ -1,24 +1,44 @@
-<!-- User page menu -->
-<ul class="nav nav-pills seperator">
-     <% if current_user.adm? %>
-        <li class="all_users active"> 
-          <%= link_to "All Users", users_path,{size: 12} %>
+<!-- User show page -->
+<div class="col-md-6">
+  <h3><%= @user.name %></h3>
+</div>
+
+
+<% a = @user %>
+<% adm = current_user.adm? %>
+<div class="col-xs-6 text-right">
+  <div class="form-group">
+      <% if adm %>
+        <%= form_for(a) do |d| %>
+          <% if a.is_active %>
+            <% b = "Deactivate" %>
+            <% val = false %>
+          <% else %>
+            <% b = "Activate" %>
+            <% val = true %>
+          <% end %>
+          <%= d.hidden_field :is_active, value: val %>
+          <%= d.submit b,{class: "btn btn-primary"} %>
+        <% end %>
+      <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+      <ul class="nav nav-pills seperator">
+        <li id="basic" class=<%= @show ? "active" : "" %>>
+          <%= link_to "Basic","/users/#{a.id}" %>
         </li>
-        <li class = "invite_users">
-        <%= link_to "Invite Users", new_user_invitation_path %>
+        <li id="log" class=<%= @log ? "active" : "" %>>
+          <%= link_to "Log","/users/#{a.id}/log" %>
         </li>
-     <% end %>
-     
-     <% if can? :read,Role %>
-     
-        <li class = "roles_path">
-        <%= link_to "Roles",roles_path %>
-        </li>
-     <% end %>
-        
-     <% if can? :create,Role %>
-        <li class="new_role">
-        <%= link_to "Add Role",new_role_path %>
-        </li>
-     <% end %>
-</ul>
+      </ul>
+  </div>
+</div>
+
+
+
+
+
+

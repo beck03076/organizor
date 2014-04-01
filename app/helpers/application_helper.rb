@@ -51,10 +51,10 @@ module ApplicationHelper
      cl = val[2].find(a.send(val[0])).cl rescue "green-right"
     elsif val.kind_of?(String) 
       disp = val
-      cl ="padded"
+      cl ="green-right"
     elsif val.kind_of?(Symbol) 
       disp = best_in_place_if (can? :update,a),a,val
-      cl = val.cl
+      cl = val.cl rescue "green-right"
     end  
     if !text.nil?
       text = "<small>&nbsp;&nbsp; #{text}</small>"
