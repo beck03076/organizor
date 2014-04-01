@@ -33,7 +33,7 @@
 strong.checkit{text-decoration:line-through;}
 strong.uncheckit{text-decoration:none;}
 
-strong.sm{font-size:11px;}
+strong.sm{font-size:12px;}
 
 .cal_todo{background: #004156;}
 .cal_follow_up{background: #267ab3;}
@@ -140,6 +140,15 @@ strong.sm{font-size:11px;}
     padding: 5px 5px 5px 5px;
     font-size: 10px;
     font-weight: bold;}
+   .main .main-content .pill-like {
+    color: #fff;
+    padding: 5px 5px 5px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius:10px;
+   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;          }
     .main .main-content .blue {
     background-color: #729fcf; }
      .main .main-content .green {
@@ -149,7 +158,7 @@ strong.sm{font-size:11px;}
     .main .main-content .orange {
     background-color: #e9b96e }
     .main .main-content .red1 {
-    background-color: #a40000 }
+    background-color: #9d4141 }
     .main .main-content .green1 {
     background-color: #4e9a06 }
     

@@ -3,6 +3,7 @@ html {
   position: relative;
   min-height: 100%; }
 
+
 body {
   min-width: 970px;
   margin-bottom: 50px; }
@@ -56,20 +57,20 @@ body {
 .seperator {
   border-bottom: 1px solid #DDDDDD; }
 
-.popover1 {
+h1 {
+  font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  margin: 1.3rem 0; }
+
+.popover {
   background-color: #FFFFFF;
   color: #222222;
   border: 1px solid #BBBBBB;
-  max-width: 500px;
+  max-width: 350px;
   max-height: 500px;
   overflow: auto; }
-  .popover1 .notification-content p {
+  .popover .notification-content p {
     margin-bottom: 0; }
-    
-.popover {
-  max-width: 800px;
-  width: auto;
-}
 
 /* Set the fixed height of the footer here */
 #footer {
@@ -85,10 +86,6 @@ body {
   height: 70px;
   background-color: #004156;
   color: #FFFFFF; }
-  #header h1 {
-    font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    margin: 1.3rem 0; }
   #header .profile {
     padding-top: 1rem; }
   #header .notification-icon {
@@ -99,9 +96,17 @@ body {
     vertical-align: middle;
     padding: 3px 5px;
     background-color: #F17F6A;
-    color: #000000;     }
+    color: #000000; }
   #header .glyphicon-bell {
     margin-right: .5rem; }
+  #header .header-links a {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 25px 15px; }
+    #header .header-links a:hover, #header .header-links a:focus {
+      background-color: #ffe9b4;
+      color: #004156; }
 
 .container {
   width: 970px;
@@ -110,6 +115,25 @@ body {
   padding-left: 0;
   padding-right: 0;
   height: 100%; }
+
+.login-container {
+  padding-top: 60px; }
+  .login-container h1 {
+    color: #004156;
+    margin-bottom: 60px; }
+  .login-container h4 {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 20px; }
+  .login-container .sidequote {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    color: #004156; }
+  .login-container .no-p {
+    position: static; }
+  .login-container .login-well {
+    border: 1px solid #BBBBBB; }
 
 .main .left-nav {
   padding-top: 1rem;
@@ -150,7 +174,7 @@ body {
   .main .main-content .badge {
     color: #000000; }
   .main .main-content .filter-well {
-    background-color: #FFE9B4; }
+    background-color: #ffe9b4; }
   .main .main-content .border-b {
     border-bottom: 1px solid #dddddd; }
   .main .main-content .bold-subhead {
@@ -260,3 +284,15 @@ body {
 
 .light {
   color: #777777; }
+  
+  
+.padR30{padding-right: 30px;}
+.padR40{padding-right: 40px;}
+.padL20{padding-left: 20px;}
+.padL10{padding-left: 10px;}
+.padT10{padding-top: 10px;}
+.padB10{padding-bottom: 10px;}
+
+
+
+

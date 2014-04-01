@@ -65,7 +65,9 @@
                                           class: "img-rounded"}) %>
           <span class="ml-10 no-link">
             <b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
+            
           </span>
+          
 
           </a>
         </div>        
@@ -137,6 +139,14 @@
             </li>
             <li id="configuration">
                 <%= link_to "/configuration" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %>
+            </li>
+            
+            <hr>
+            
+            <li>
+              <%= link_to  destroy_user_session_path, :method => :delete do %>
+                <span class="glyphicon glyphicon-off"></span>Sign Out
+              <% end %>
             </li>
           </ul>
         </div>
