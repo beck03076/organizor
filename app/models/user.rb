@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
  # audited
   mount_uploader :image, HumanImageUploader
-  before_save :default_values
+  after_save :role_changed
   
   
   
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
   
   def role?(role_sym)
-    role.name == role_sym.to_s
+    role.name == role_sym.to_s rescue false
   end 
   
   def active_for_authentication?
@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
   
   def adm?
-    self.role.name == "agency_administrator"
+    self.role.name == "agency_administrator" rescue false
   end
   
    def update_conf
@@ -73,11 +73,7 @@ class User < ActiveRecord::Base
   def tit
     self.first_name rescue "Title Unknown"
   end
-  
-  def default_values
-    self.permissions << Permission.where(subject_class: "User", action: ["update","read"])
-  end
-  
+    
   def prog_fu_ass_to
     User.find(self.conf.def_progression_fu_ass_to).name
   end
@@ -85,5 +81,18 @@ class User < ActiveRecord::Base
   def role_name
     self.role.name rescue "Unassigned"
   end
-
+  
+  def role_changed
+    if self.role_id_changed?
+      self.permissions << Permission.where(subject_class: "User", action: ["update","read"])
+      self.permissions << self.role.permissions
+    end
+  end
+  
+  def change_role(role)
+    role_name =  role.gsub(/ /,'%')
+    r = Role.where("name like '#{role_name}'").first
+    self.role = r
+    self.save
+  end  
 end

@@ -37,9 +37,10 @@ protected
            v_fu_now = ("")
            v_fu_week = ("")
        end
-       temp << check_box_tag(:row_check,obj.id,false,{data: {launch: "/#{@model_pl}/#{obj.id}",
+       temp << check_box_tag(:tr,obj.id,false,{data: {launch: "/#{@model_pl}/#{obj.id}",
                                                       fu_now: v_fu_now,
-                                                      fu_week: v_fu_week}}) 
+                                                      fu_week: v_fu_week},
+                                               class: "row_check"       }) 
                                                       
        
        

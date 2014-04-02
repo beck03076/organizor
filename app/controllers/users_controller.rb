@@ -83,6 +83,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     authorize! :update, @user, id: current_user.id
+=begin
     # on actually updating an users role, you also have to update the users permissions, because roles are just templates of permissions
     if !params[:user].nil?
       if params[:user][:role_id]
@@ -92,7 +93,7 @@ class UsersController < ApplicationController
     else
       params[:user] = {:permission_ids => []}
     end
-
+=end
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }

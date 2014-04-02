@@ -10,28 +10,58 @@
 <% end %>
 <% srch_url = send("search_" + model_pl + "_path") %>
 <% act = act || model_pl %>
-<div id="mass-actions-pills" class="row hide">
-             <div class="col-md-10">
-              <span class="pilled">
-                <span class="glyphicon glyphicon-share mar0"></span>&nbsp;<span>Assign To</span>
-              </span>
-              &nbsp;&nbsp;
-              <span class="pilled">
-              <span class="glyphicon glyphicon-envelope mar0"></span>&nbsp;<span>Email</span>
-              </span>
-              &nbsp;&nbsp;              
-              <span class="pilled">
-              <span class="glyphicon glyphicon-remove mar0"></span>&nbsp;<span>Delete</span>
-              </span>
-              &nbsp;&nbsp;
+<div id="mass-actions-pills" class="row" style="display: none;">
+           <div class="col-md-10">
+                    <!----------------------- Group Assign Start---------------------------->
+                    <% if can? :update, _model %>
+                      <span data-value="assignTo" class="pilled">
+                        <span class="glyphicon glyphicon-share mar0"></span>
+                        <span>Assign To</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
+                    <!----------------------- Group Assign End---------------------------->
+                    <!----------------------- Bulk Email Start---------------------------->
+                    <% if can? :create, Email %>
+                      <span data-value="bulkEmail" class="pilled">
+                      <span class="glyphicon glyphicon-envelope mar0"></span>
+                      <span>Email</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
+                    <!----------------------- Bulk Email End---------------------------->
+                    <!----------------------- Group Delete Start--------------------------->
+                    <% if can? :destroy, _model %>
+                      <span data-value="groupDelete" class="pilled">
+                      <span class="glyphicon glyphicon-remove mar0"></span>
+                      <span>Delete</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
 
-              <span class="pilled">
-                <span class="glyphicon glyphicon-play mar0"></span>&nbsp;<span>Progression</span>
-              </span>
-              &nbsp;&nbsp;
-              <span class="pilled">
-              <span class="glyphicon glyphicon-home mar0"></span>&nbsp;<span>Branch</span>
-              </span>
+                    <% if (_model == Registration) && (can? :update, _model) %>
+                      <span data-value="progStatus" class="pilled">
+                      <span class="glyphicon glyphicon-play mar0"></span>
+                      <span>Progression</span>
+                      </span>
+                      &nbsp;&nbsp;
+                      <span data-value="changeBranch" class="pilled">
+                      <span class="glyphicon glyphicon-home mar0"></span>
+                      <span>Branch</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
+                    
+                    <% if (_model == Institution) && (can? :update, _model) %>
+                      <span data-value="exportDetails" class="pilled">
+                      <span class="glyphicon glyphicon-save mar0"></span>
+                      <span>Export</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
+                &nbsp;&nbsp;
+                <a href="#" class="clickable" onclick="$('#mass-actions-pills').slideToggle();">
+                cancel</a>
               </div>
 </div>
 <!-- Displaying data in the jquery datatable -->
@@ -44,31 +74,7 @@
               <div class="col-md-2">
                 <select id="mass-actions" style="width:130px" class="form-control hor-first">
                     <option>-more actions-</option>
-                    <!----------------------- Group Assign Start---------------------------->
-                    <% if can? :update, _model %>
-                      <option value="assignTo">Follow Up</option>
-                      <% js = 'groupAssignTo' %>
-                    <% end %>
-                    <!----------------------- Group Assign End---------------------------->
-                    <!----------------------- Bulk Email Start---------------------------->
-                    <% if can? :create, Email %>
-                      <option value="bulkEmail">Todo</option>
-                      <% js = 'bulkEmail' %>
-                    <% end %>
-                    <!----------------------- Bulk Email End---------------------------->
-                    <!----------------------- Group Delete Start--------------------------->
-                    <% if can? :destroy, _model %>
-                      <option value="groupDelete">Update</option>
-                    <% end %>
 
-                    <% if (_model == Registration) && (can? :update, _model) %>
-                      <option value="progStatus">Another</option>
-                      <option value="changeBranch">Another</option>
-                    <% end %>
-                    
-                    <% if (_model == Institution) && (can? :update, _model) %>
-                      <option value="exportDetails">Export Details</option>
-                    <% end %>
                     
                     <!----------------------- Group Delete End--------------------------->
                 </select>
@@ -267,9 +273,9 @@
                            '<label for="id_column" class="label-right">rows per page</label>' +
                            '</div></form>');
 
- $('#mass-actions').click(function(){
+ $('#mass-actions-pills .pilled').click(function(){
    var rows = getCheckedRowsAsArray('<%= _id %>');
-   var clicked = $("#mass-actions").val();
+   var clicked = $(this).data('value');
    $('#' + clicked + 'Modal').modal('show');
  });
 
@@ -279,15 +285,6 @@
  if ($('li#<%= @status %>').parent().hasClass('dropdown-menu')) {
     actdd();
  }
- 
- 
-  $('#master_check').change(function(){
-    if( $(this).is(':checked') ){    
-    $('#mass-actions-pills').removeClass('hide'); 
-    }else{
-    $('#mass-actions-pills').addClass('hide');
-    }
-    
-  });
+
 </script>
 

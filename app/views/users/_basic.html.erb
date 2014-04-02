@@ -61,20 +61,25 @@
          </div>
      <% end %>
 </div>
-<% if !a.adm? %>
-<div class="row border-b">  
-    <div class="col-xs-12">
-      <h4 class="bold-subhead">Manage Permissions</h4>
-       <%= render 'roles/permissions', role: a, f: "user" %>
-        <br/>
+<!-- only if the current user is an admin, he can manage permissions -->
+<% if current_user.adm? %>
+    <!-- only if the seeing user is not an admin, you can manage permissions -->
+    <% if !a.adm? %>
+    <div class="row border-b">  
+        <div class="col-xs-12">
+          <h4 class="bold-subhead">Manage Permissions</h4>
+          
+           <%= render 'roles/permissions', role: a, f: "user" %>
+            <br/>
+        </div>
     </div>
-</div>
-<% else %>
-<div class="row">  
-    <div class="col-xs-12">
-      <h5>This user is an <b>agency administrater</b>. Has all the permissions.</h5>
+    <% else %>
+    <div class="row">  
+        <div class="col-xs-12">
+          <h5>This user is an <b>agency administrater</b>. Has all the permissions.</h5>
+        </div>
     </div>
-</div>
+    <% end %>
 <% end %>
 <div class="clear"></div>
 <br/>

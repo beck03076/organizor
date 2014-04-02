@@ -7,18 +7,14 @@
 
 
 
-$(function(){
-
- $('dataTables_wrapper #master_check, #tr').change(function(){
-   alert(123);
-   });
- });
-
 function toggleAllCheck(obj,tableId){
     var checkedStatus = obj.checked;
     $("#" + tableId +' tbody tr').find('td:first :checkbox').each(function () {
         $(this).prop('checked', checkedStatus);
-     });
+    });
+    if (checkedStatus == false){ 
+      $('#mass-actions-pills').slideUp(); 
+    }     
 }
 
 function toggleAllCheckRow(obj){

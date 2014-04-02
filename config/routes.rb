@@ -136,7 +136,7 @@ Organizor::Application.routes.draw do
   
   resources :smtps
   
-  resources :roles
+  resources :roles 
   
   resources :doc_categories
   
