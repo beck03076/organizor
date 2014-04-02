@@ -25,13 +25,13 @@
 
       </div>
       <div class="col-xs-4 row-top">
-        <ul class="vlsdet pt-0 border-b">
+        <ul class="vlsdet-s pt-0 border-b">
             <h4 class="row-top bold-subhead">Personal</h4>
             <% %w(first_name surname date_of_birth gender nationality).each do |v| %>
             <%= li1(v,v,'span','small',a)%>
             <% end %>
         </ul>
-        <ul class="vlsdet">
+        <ul class="vlsdet-s">
             <h4 class="bold-subhead">Social Info</h4>
             <% %w(skype facebook linkedin twitter gplus blogger website).each do |v| %>
               <%= li1(v,v,'span','small',a)%>
