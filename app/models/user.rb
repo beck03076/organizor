@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
     self.role.name rescue "Unassigned"
   end
   
+  def branch_name
+    self.branch.name rescue "Unassigned"
+  end
+  
   def role_changed
     if self.role_id_changed?
       self.permissions << Permission.where(subject_class: "User", action: ["update","read"])

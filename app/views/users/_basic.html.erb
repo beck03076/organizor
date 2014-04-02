@@ -9,7 +9,8 @@
         <ul class="vlsdet-s" >
             <h4 class="bold-subhead">Quick Info</h4>
                <% stat = a.active_for_authentication? ? "Active" : "Inactive" %>
-               <%= li2('status',stat,a,nil,"span","strong")%>           
+               <%= li2('status',stat,a,nil,"span","strong")%>
+               <%= li2('branch',[:branch_id,:select,Branch,:branch_name],a,nil,"span","strong")%>
                <% if adm %>
                  <%= li2('role',[:role_id,:select,Role,:role_name],a,nil,"span","strong")%>
                <% else %>
