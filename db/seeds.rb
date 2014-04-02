@@ -111,7 +111,8 @@ end
                  Person)},
  {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
  {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},
- {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)}].each do |i|
+ {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)},
+ {processing_fee_status: %w(Paid Unpaid Partially_paid Refunded)}].each do |i|
     model = i.keys[0].to_s.camelize.constantize
     values = i.values[0]
     values.each do |v|
