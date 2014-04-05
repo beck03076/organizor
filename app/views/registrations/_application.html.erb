@@ -207,7 +207,7 @@
              <%= nested_form_for(i,remote: true) do |r| %>
               <%= r.fields_for :notes,i.notes.build do |n| %>
                 <%= n.hidden_field :sub_class, value: "Programme" %>
-                <%= n.text_area :content,{:size => '10x4',
+                <%= n.text_field :content,{:size => '10x4',
                                           :style => 'width:480px;',
                                           class: "app_note",
                                           data: {provide: "markdown"}} %>
