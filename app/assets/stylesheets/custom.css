@@ -55,7 +55,8 @@ body {
   text-decoration: none; }
 
 .seperator {
-  border-bottom: 1px solid #DDDDDD; }
+  border-bottom: 1px solid #DDDDDD;
+   }
 
 h1 {
   font-family: "Yanone Kaffeesatz", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -66,11 +67,13 @@ h1 {
   background-color: #FFFFFF;
   color: #222222;
   border: 1px solid #BBBBBB;
-  max-width: 350px;
+  max-width: 400px;
   max-height: 500px;
-  overflow: auto; }
+  }
   .popover .notification-content p {
     margin-bottom: 0; }
+  .popover .notification-content {
+    width: 350px; }   
 
 /* Set the fixed height of the footer here */
 #footer {
@@ -92,11 +95,11 @@ h1 {
     font-size: 1.5em;
     padding-top: 20px; }
   #header .badge {
-    margin-bottom: 15px;
-    vertical-align: middle;
-    padding: 3px 5px;
+    margin-bottom: 25px;
+    vertical-align: middle;    
     background-color: #F17F6A;
-    color: #000000; }
+    color: #000000;    
+    font-size: 15px; }
   #header .glyphicon-bell {
     margin-right: .5rem; }
   #header .header-links a {
@@ -108,7 +111,7 @@ h1 {
       background-color: #ffe9b4;
       color: #004156; }
 
-.container {
+.container {  
   width: 970px;
   position: relative;
   max-width: none !important;
@@ -172,7 +175,7 @@ h1 {
   .main .main-content .badge-yellow {
     background-color: yellow; }
   .main .main-content .badge {
-    color: #000000; }
+    color: #000000;}
   .main .main-content .filter-well {
     background-color: #ffe9b4; }
   .main .main-content .border-b {

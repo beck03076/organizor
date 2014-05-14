@@ -85,12 +85,13 @@ class EnquiriesController < ApplicationController
       
       if @enquiry.save
       
-        tl('Enquiry',@enquiry.id,
-            "A new enquiry has been created",
-            @enquiry.first_name,'Create Enquiry',@enquiry.assigned_to)
+       # tl('Enquiry',@enquiry.id,
+       #     "A new enquiry has been created",
+       #     @enquiry.first_name,'Create Enquiry',@enquiry.assigned_to)
         # after creating enquiry, checking conf for email and f_u
+=begin
         c = current_user.conf
-        
+
         if c.auto_email_enq
           temp = c.def_create_enquiry_email
           to = c.def_enq_email
@@ -120,7 +121,7 @@ class EnquiriesController < ApplicationController
               "A follow up has been created for this enquiry",
               c.def_f_u_name.to_s + ' at ' + s.to_s + ' | assigned(follow up) to: ' + c.def_f_u_ass_to.to_s,'follow_up',c.def_f_u_ass_to)
         end
-
+=end
         if params[:save_new] 
           format.html { redirect_to new_enquiry_path, notice: 'Enquiry was successfully created.' }
         else

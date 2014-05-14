@@ -1,5 +1,4 @@
 class Todo < ActiveRecord::Base
-  audited
   belongs_to :enquiry
   belongs_to :registration
   belongs_to :institution

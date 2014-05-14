@@ -1,6 +1,7 @@
 <!-- enquiry tabs -->
 <div class="row">
-<div class="col-md-12">
+<div class="col-xs-12">
+
 <ul class="nav nav-pills seperator">
 
   <!-- [tab_name,display,class,partial]  -->
@@ -53,7 +54,7 @@
 </ul>
 </div>
 </div>
-    <div class="tab-content" id="all_id"> </div>
+<div class="tab-content" id="all_id"> </div>
     
     <% statuses.each do |i| %>
       <div class="tab-content" id="<%= i[0].tr(' ','_').downcase + '_id' %>"> </div>

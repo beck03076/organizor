@@ -1,5 +1,5 @@
 class Role < ActiveRecord::Base
-  audited
+  
   before_save :set_old_permissions
   after_save :permissions_check
   

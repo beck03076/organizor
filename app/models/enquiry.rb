@@ -4,8 +4,13 @@ class Enquiry < ActiveRecord::Base
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another enquiry, please check!" }
-  
-  audited
+
+  notifiably_audited alert_for: [[[:mobile1,:email1,:surname],"Contact Details","Primary mobile/email is changed for this enquiry"],
+                                 [[:assigned_to],"Re-assigned","This Enquiry has been reassigned to you"]],
+                                 title: :first_name,
+                                 create_comment: "New <<here>> has been created", 
+                                 update_comment: "Custom: Values of <<here>> has been updated" 
+
   mount_uploader :image, HumanImageUploader
   
   belongs_to :branch
@@ -107,5 +112,22 @@ class Enquiry < ActiveRecord::Base
   def nationality
     self.country_of_origin.name rescue "Unknown"
   end
+
+  def channel
+    self.contact_type.name rescue "Unknown"
+  end
+
+  def source
+    self.student_source.name rescue "Unknown"
+  end
+
+  def owner
+    self._ato.first_name rescue "Unknown"
+  end
+
+  def status_name
+    self.status.name rescue "Unknown"
+  end
+
   
 end

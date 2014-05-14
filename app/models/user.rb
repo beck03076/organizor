@@ -50,7 +50,11 @@ class User < ActiveRecord::Base
   end
 
   def name
-    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip rescue "Unknown"
+  end
+
+  def fname
+    (self.first_name).titleize.strip rescue "Unknown"
   end
   
   def role?(role_sym)
@@ -79,11 +83,11 @@ class User < ActiveRecord::Base
   end
   
   def role_name
-    self.role.name rescue "Unassigned"
+    self.role.name.titleize rescue "Unassigned"
   end
   
   def branch_name
-    self.branch.name rescue "Unassigned"
+    self.branch.name.titleize rescue "Unassigned"
   end
   
   def role_changed

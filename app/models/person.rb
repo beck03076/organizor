@@ -6,8 +6,6 @@ class Person < ActiveRecord::Base
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another person, please check!" }
   
-  audited
-  
   attr_accessible :address_line1, :address_line2, :address_post_code, 
   :blogger, :city_id, :country_id, 
   :date_of_birth, :desc, :email, 

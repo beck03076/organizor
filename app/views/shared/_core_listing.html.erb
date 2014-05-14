@@ -30,11 +30,27 @@
                       &nbsp;&nbsp;
                     <% end %>
                     <!----------------------- Bulk Email End---------------------------->
-                    <!----------------------- Group Delete Start--------------------------->
+                    <!----------------------- Group Delete Start -------------------------->
                     <% if can? :destroy, _model %>
                       <span data-value="groupDelete" class="pilled">
                       <span class="glyphicon glyphicon-remove mar0"></span>
                       <span>Delete</span>
+                      </span>
+                      &nbsp;&nbsp;
+                    <% end %>
+
+                    <!----------------------- Group DELETE End---------------------------->
+                    <!----------------------- Student Source Start---------------------------->
+                    <% if can? :update, _model %>
+                      <span data-value="studSource" class="pilled">
+                      <span class="glyphicon glyphicon-transfer mar0"></span>
+                      <span>Student Source</span>
+                      </span>
+                      &nbsp;&nbsp;
+
+                      <span data-value="changeBranch" class="pilled">
+                      <span class="glyphicon glyphicon-home mar0"></span>
+                      <span>Branch</span>
                       </span>
                       &nbsp;&nbsp;
                     <% end %>
@@ -45,11 +61,7 @@
                       <span>Progression</span>
                       </span>
                       &nbsp;&nbsp;
-                      <span data-value="changeBranch" class="pilled">
-                      <span class="glyphicon glyphicon-home mar0"></span>
-                      <span>Branch</span>
-                      </span>
-                      &nbsp;&nbsp;
+                      
                     <% end %>
                     
                     <% if (_model == Institution) && (can? :update, _model) %>
@@ -119,6 +131,30 @@
                            button: "<button onclick=groupDelete('#{_id}');>Yes</button>" %>
                 <!-----------------------Group Delete Modal End---------------------------->
                 <!----------------------- ProgressionStatus Modal Start---------------------------->
+
+                <%= bulk_asso_update("Student Source",
+                                     "stud_source_",
+                                     'StudentSource',
+                                     '-source-',
+                                     model,
+                                     current_user.id,
+                                     'studSourceModal',
+                                     'Update Source',
+                                     'updateStudSource',
+                                     _id) %>
+
+              <%= bulk_asso_update("Change Branch",
+                                     "change_branch_",
+                                     'Branch',
+                                     '-branch-',
+                                     model,
+                                     current_user.id,
+                                     'changeBranchModal',
+                                     'Change Branch',
+                                     'changeBranch',
+                                     _id) %>
+
+
                 <% if (_model == Registration) %>
                 <%= bulk_asso_update("Progression Status",
                                      "prog_status_",
@@ -131,16 +167,7 @@
                                      'updateProgStatus',
                                      _id) %>
                                      
-               <%= bulk_asso_update("Change Branch",
-                                     "change_branch_",
-                                     'Branch',
-                                     '-branch-',
-                                     model,
-                                     current_user.id,
-                                     'changeBranchModal',
-                                     'Change Branch',
-                                     'changeBranch',
-                                     _id) %>
+               
                 <% end %>
                 <!----------------------- ProgressionStatus Modal End---------------------------->
                 <!----------------------- Export Details Modal Start---------------------------->

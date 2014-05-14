@@ -1,0 +1,13 @@
+
+
+<small class="text-center ">
+        <small><%= link_to 'change',
+                           "/images/#{a.id}/edit?obj_id=#{a.id}&model=#{core}",                         
+                           {remote: true } %>
+        <small class="grey-sm">|</small>
+        
+        <%= link_to 'view',
+                    "/images/#{a.id}?obj_id=#{a.id}&model=#{core}",
+                    {remote: true} %>
+         </small>
+         </small>

@@ -1,0 +1,47 @@
+<!-- Ranscak filters for reports -->            
+              <div class="row">
+               <div class="col-md-12">
+                  <h4 class="border-b"><%= @module.titleize %> - Filter By </h4>
+               </div>
+              </div> 
+              <%= @cols.each_slice(4).each do |el| %>
+                <div class="row">
+                  <div class="col-md-12 ">
+                    <% el.each do |i| %>                    
+                      <div class="col-md-3">                                             
+                        <%= figure_filter(i,f) %>                       
+                      </div>                                     
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>  
+
+              <div class="row">
+               <div class="col-md-12">
+                  <h4 class="border-b">Sort By</h4>
+               </div>
+              </div> 
+              <div class="row text-left">
+                  <div class="col-md-12 form-inline">
+                            <%= f.sort_fields do |s| %>
+                                <%= s.sort_select({},{class: "form-control marL30"}) %>
+                            <% end %>
+                            <div class="form-group">        
+                              <%= f.submit "Run", class: "btn btn-primary marL30" %>
+                            </div>  
+                            <a class="marL30 pointer" onclick="$('#ransack_form')[0].reset();" >
+                              Reset
+                            </a>              
+                  </div>
+              </div>
+
+
+
+
+              </div> 
+
+
+
+      
+
+

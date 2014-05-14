@@ -1,4 +1,40 @@
 module ApplicationHelper
+
+  def figure_filter(i,f)
+    html = ""
+    if i[1] == 0 || i[1] == "datepicker"
+      ransack_field = (i[0].to_s + "_cont").to_sym
+      ransack_html = "text_field"
+      html += h_fig_fil(f,ransack_field,ransack_html,i[0],i[1])
+    elsif i[1].kind_of?(Array)
+      ransack_html = i[1][0]
+      tail = [{prompt: i[0].to_s.titleize},
+                         {:class => "form-control"}]
+      if ransack_html == "select"
+        ransack_field = (i[1][2].to_s + "_cont").to_sym
+        html += f.select ransack_field, i[1][1],*tail
+      elsif ransack_html == "collection_select"
+        ord = (i[1][2].nil? ? :name : i[1][2])
+        ransack_field = (i[1][3].to_s + "_eq").to_sym
+        html += f.collection_select ransack_field,
+                            i[1][1].camelize.constantize.order(ord),
+                            :id,
+                            ord,
+                            *tail
+      end      
+    end
+    html.html_safe
+  end
+
+  def h_fig_fil(f,field,h,p,date = nil)
+    f.text_field field,
+              {class: "form-control #{date}",
+               placeholder: p.to_s.titleize}
+  end
+
+  def despace(i)
+    i. downcase.tr(' ','_')
+  end
   #basic li ul listing with vlsdet
   def li1(label,val,sizel,sizev,a = nil)
     html = ""    

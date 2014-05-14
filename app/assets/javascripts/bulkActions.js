@@ -62,6 +62,11 @@ function updateProgStatus(tableId){
                  'progStatusModal','registration','progression_status','progression_status_id');
 }
 
+function updateStudSource(tableId){
+  bulkAssoUpdate(tableId,"select","stud_source_",'/bulk_asso_update',
+                 'studSourceModal','enquiry','student_source','source_id');
+}
+
 function changeBranch(tableId){
   bulkAssoUpdate(tableId,"select","change_branch_",'/bulk_asso_update',
                  'changeBranchModal','registration','branch','branch_id');
@@ -141,7 +146,7 @@ function exportDetails(tableId){
 }
 
 function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col,id_partial_fee){
-  var main = main || 0;
+  //var main = main || 0;
   var asso = asso || 0;
   var asso_col = asso_col || 0;
   var id_partial_fee = id_partial_fee || 0;
@@ -149,7 +154,8 @@ function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col,id_parti
   var rows = getCheckedRowsAsArray(tableId);
   sel = elem + "#" + what_ + tableId
   var status_id = $(sel).val();
-  var user_id = $("#" + what_ + tableId).data("user_id");
+  var user_id = $("#" + what_ + tableId).data("user-id");
+  var main = $("#" + what_ + tableId).data("model");
   
   var data = {};
   data['main_ids'] = rows;

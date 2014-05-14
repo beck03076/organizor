@@ -3,9 +3,8 @@ class Registration < ActiveRecord::Base
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
-                         message: " Surname and Date of Birth already exists as another registration, please check!" }
+                         message: " Surname and Date of Birth already exists as another registration, please check!" }  
   
-  audited
   mount_uploader :image, HumanImageUploader
   belongs_to :qualification, foreign_key: 'qua_id'
 

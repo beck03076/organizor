@@ -18,24 +18,12 @@
     <![endif]-->
   </head>
 
-  <body>
-  <div class="popover-markup" id="create_new_ctnt">
-                <div class="head hide light">
-                   <h5>Create New</h5>
-                </div>
-                <div class="content hide">
-                    <ul class="vlsdet">
-                      <% %w(enquiry registration institution person).each do |n| %>
-                      <li>
-                      <small><%= link_to n.titleize, send('new_' + n + '_path'),{class: "clickable"} %></small>
-                      </li>
-                      <% end %>
-                    </ul>
-                </div>
-  </div>
+  
+  <%= notifiably_audited('notify();').html_safe %>
 
+  <body>
   <!-- Shortening variable -->
-  <% u = current_user %>
+  <% u = current_user %>  
     <div id="header">
       <div class="container">
         <div class="col-xs-2">
@@ -47,30 +35,76 @@
             <input type=text class="form-control" placeholder="Search with name..."/>
           </div>
         </div>
-        <div class="col-xs-5 text-right">
-          <a href="#">
+        <div class="col-xs-4 text-right">
+          <a href="#" id="create_new_cont" data-container="body" data-toggle="popover" data-placement="bottom">
             <span id="create_new" class="glyphicon glyphicon-plus-sign notification-icon no-link">
+              <div id="create_new_content" class="hide">
+                <ul class="vlsdet">
+                      <% %w(enquiry registration institution person).each do |n| %>
+                      <li>
+                      <small><%= link_to n.titleize, send('new_' + n + '_path') %></small>
+                      </li>
+                      <% end %>
+                </ul>
+              </div>
+
             </span>
           </a> 
-          
-          <a href="#" id="id_notification_dropdown" data-container="body" data-toggle="popover" data-placement="bottom">
-          <span class="glyphicon glyphicon-bell notification-icon no-link"></span>
-          <span class="badge">20</span></a>
+          <span data-ajaxload="/five_notifications.js" id="bell" class="pointer glyphicon glyphicon-bell notification-icon no-link"></span>
+          <%  badge =  Audit.notys_badge(current_user.id) %>
+          <span class="badge <%= badge[1] %>"><%= badge[0] %></span>
+
         </div>
-        <div class="col-xs-2 profile text-right">
-          <a href="#" id="id_user_dropdown">
+        <div class="col-xs-3 profile">
+          <a href="#" id="usr_dd" data-container="body" data-toggle="popover" data-placement="bottom">
           <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                          {width: "50",
                                           height: "50",
-                                          class: "img-rounded"}) %>
-          <span class="ml-10 no-link">
-            <b><%= u.first_name.titleize rescue "Mr. Unknown" %></b>
-            
-          </span>
-          
-
+                                          class: "img-rounded",
+                                          id: "usr_img" }) %>
+          <span class="ml-10 no-link f-10">
+            <%= truncate(u.fname,length: 20) %>             
+          </span> 
           </a>
         </div>        
+      </div>
+    </div>
+    <!-- display core images -->
+          <div id="upload-image"></div> 
+    <div id="usr_dd_cont" class="hide">      
+      <div class="row row-top">
+        <div class="col-xs-5">
+          <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
+                                         {width: "105",
+                                          class: "img-rounded" }) %>
+                                            
+          <span>
+            <%= render 'images/buttons', a: u, core: "user",hide: false %>     
+          </span>
+                                       
+        </div>
+        <div class="col-xs-7">
+          <div class="row">
+            <p>
+              <%= link_to truncate(u.name,length: 20), u %>
+              <span class="grey-sm"><%= u.email %></span><br/>
+              <span class="grey-sm">Role</span>
+              <small class="green-right sm"><%= u.role_name %></small><br/>
+              <span class="grey-sm">Branch</span>
+              <small class="yellow-ok sm"><%= u.branch_name %></small><br/>
+              
+            </p>
+          </div>
+          <div class="row">
+            <div class="form-group">              
+              <%= link_to "Logout",destroy_user_session_path,
+                                   {:method => :delete,class: "btn btn-primary"} %>
+
+              <%= link_to "Settings",user_configs_path,
+                                   {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -86,8 +120,8 @@
               <a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a>
             </li>
 
-            <li class="disabled">
-              <a href="#"><span class="glyphicon glyphicon-stats"></span>Reports</a>
+            <li id="reports">
+              <%= link_to reports_path  do %><span class="glyphicon glyphicon-stats"></span>Reports<% end %>
             </li>
 
             <hr>
@@ -129,7 +163,7 @@
 
             <hr>
 
-            <li id="settings"><%= link_to user_configs_path do %><span class="glyphicon glyphicon-wrench"></span>Settings<% end %></li>
+            
             <li id="users">
               <% if u.role?(:agency_administrator) %>
                   <%= link_to "/users" do %><span class="glyphicon glyphicon-user"></span>Users<% end %>
@@ -139,15 +173,8 @@
             </li>
             <li id="configuration">
                 <%= link_to "/configuration" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %>
-            </li>
-            
-            <hr>
-            
-            <li>
-              <%= link_to  destroy_user_session_path, :method => :delete do %>
-                <span class="glyphicon glyphicon-off"></span>Sign Out
-              <% end %>
-            </li>
+            </li>        
+
           </ul>
         </div>
         <div class="col-xs-10 main-content">
@@ -161,20 +188,58 @@
     <div id="footer">
     </div>
     <script>
-      $('#create_new').click(function(){
-        $('#create_new').popover({
-            html: true,
-            placement: "bottom",
-            title: function () {
-                return $('#create_new_ctnt').find('.head').html();
+
+    // only notifications popover 
+    $(document).popover({
+      selector: 'span#bell',
+      placement: "bottom",
+      content: get_popover_content,
+      html: true,
+      trigger: 'click',
+      title: "Notifications"
+    });
+    // only notifications popover content
+    function get_popover_content(){
+        // hiding noty badge
+        $('.badge').addClass('hide'); 
+
+        var e=$(this);
+
+        var ctnt = $.ajax({
+            url: e.data('ajaxload'),
+            type: "GET",
+            dataType: "html",
+            async: false,
+            success: function() {
+                // just get the response
             },
-            content: function () {
-                return $('#create_new_ctnt').find('.content').html();
+            error: function() {
+                // nothing
             }
-        });
-        $('#create_new').popover('show');
-      });
-      
+        }).responseText;
+
+        return ctnt;
+    }
+    // only create new popover 
+    $('#create_new').popover({
+          html: true,          
+          title: "Create New",
+          placement: "bottom",          
+          content: function() {
+            return $('#create_new_content').html();
+          }
+    });
+
+    // only user drop down popover
+    $('#usr_img').popover({
+          html: true,          
+          title: '<%= current_user.name %>',
+          placement: "bottom",          
+          content: function() {
+            return $('#usr_dd_cont').html();
+          }
+    });
+      // close popover on clicking outside
       $(document).mouseup(function (e) {
         if ($('.popover').has(e.target).length === 0) {
             $('.popover').toggleClass('in').remove();

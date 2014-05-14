@@ -23,7 +23,15 @@
 //= require data-confirm-modal
 //= require see_more
 
-
+function notify(){
+  $.get('/unchecked_notys.js',function(d){
+    if (d != 0){
+    $('span.badge').removeClass('hide'); 
+    $('span.badge').text(d);
+    $('span.badge').effect("bounce", { times:5 }, 300);
+  }
+  });
+}
 
 
 $(function(){

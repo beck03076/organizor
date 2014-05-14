@@ -53,7 +53,8 @@ gem 'cancan'
 gem 'rails3-jquery-autocomplete'
 
 gem 'carrierwave'
-gem "audited-activerecord"
+#gem "audited-activerecord"
+gem 'notifiably_audited-activerecord'
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'

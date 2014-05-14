@@ -1,38 +1,23 @@
-<% begin %>
-<% model = tl.m_name.camelize.constantize %>
-<% item =  tl.m_id == 0 ? model : model.find(tl.m_id) %>
+<div class="notification-content">
+  <% @notys.includes(:creator).each do |n| %>
 
-<li class="<%= tl.checked ? 'checked' : 'unchecked' %>">
-                <table cellpadding="5" cellspacing="5" width="95%">
-                <tr>
-                    <td align="center" valign="top" width="40">
-                      
-                      <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
-                                    {class: "imgb",width: 30}) %>                
-                    <td align="left" valign="top">
-                    <div>
-                    <b>
-                    <%= tl.action.titleize %>
-                    </b>
-                    <br/>
-                    <small>
-                    <span class="bblue"><%= link_to (item.tit.titleize),item rescue "" %> </span> -
-                    <%= strip_tags(tl.desc) %>
-                    </small>
-                    </div>
-                    <span class="sblue">
-                    <%= link_to (tl.user_name),u %>, <%= time_ago_in_words(tl.created_at) %> ago
-                    </span>
-                    </td>
-                </tr>
-                </table>
-              </li>
-              
-<% if count %>
-<div id="notify_count_container" data-count="<%= count %>" data-pig="senthil" >
+    <div class="row padT10 seperator <%= n.checked ? '' : 'noty_unchecked' %>">
+        <div class="col-xs-12">
+          <span class="noty-img"><img src='/a.jpg'/></span> 
+          <div class="noty-title"><%= n.title %></div>
+          <div class="noty-stuff"><%= n.comment %></div>
+          <div class="noty-who"><%= link_to n.creator.first_name,n.creator %> <%= n.created_at %></div>
+        </div>                             
+    </div>
 
-</div>
-<% end %>
-<% rescue %>
-<% nil %>
-<% end %>
+    <% n.update_attribute(:checked, true) %>
+
+  <% end %>   
+  
+  <div class="text-center">                
+      <small><a href="#">view all</a></small>
+  </div> 
+</div>  
+
+
+

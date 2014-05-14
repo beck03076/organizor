@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140331153959) do
+ActiveRecord::Schema.define(:version => 20140429203213) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -21,13 +21,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
-  end
-
-  create_table "allowed_ips", :force => true do |t|
-    t.string   "from"
-    t.string   "to"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "application_statuses", :force => true do |t|
@@ -53,6 +46,10 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "comment"
     t.string   "remote_address"
     t.datetime "created_at"
+    t.boolean  "checked"
+    t.integer  "receiver_id"
+    t.text     "meta"
+    t.string   "title"
   end
 
   add_index "audits", ["associated_id", "associated_type"], :name => "associated_index"
@@ -123,10 +120,10 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
   create_table "contact_types", :force => true do |t|
     t.string   "name"
     t.string   "desc"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "cl"
   end
 
@@ -164,27 +161,16 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "name"
     t.text     "desc"
     t.string   "code"
-    t.string   "continent"
+    t.string   "continent",       :limit => 13, :default => "Asia"
     t.string   "region"
     t.string   "government_form"
     t.string   "local_name"
     t.integer  "capital_city_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
     t.integer  "region_id"
-  end
-
-  create_table "countries_currencies", :primary_key => "id_countries", :force => true do |t|
-    t.string  "name",             :limit => 200
-    t.string  "iso_alpha2",       :limit => 2
-    t.string  "iso_alpha3",       :limit => 3
-    t.integer "iso_numeric"
-    t.string  "currency_code",    :limit => 3
-    t.string  "currency_name",    :limit => 32
-    t.string  "currrency_symbol", :limit => 3
-    t.string  "flag",             :limit => 6
   end
 
   create_table "course_levels", :force => true do |t|
@@ -333,20 +319,11 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.integer  "country_id"
     t.integer  "status_id"
     t.text     "address"
+    t.boolean  "active",          :default => true
     t.integer  "contact_type_id"
     t.boolean  "registered",      :default => false
-    t.boolean  "active",          :default => true
     t.string   "image"
     t.integer  "branch_id"
-  end
-
-  create_table "enquiry_sources", :force => true do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "enquiry_statuses", :force => true do |t|
@@ -366,15 +343,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
-  end
-
-  create_table "exam_scores", :force => true do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "exam_types", :force => true do |t|
@@ -460,9 +428,9 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
 
   create_table "institutions", :force => true do |t|
     t.string   "name"
-    t.integer  "type_id"
     t.integer  "city_id"
     t.integer  "country_id"
+    t.integer  "type_id"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at",        :null => false
@@ -605,15 +573,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.integer  "prof_exam_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-  end
-
-  create_table "programme_types", :force => true do |t|
-    t.string   "name"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.text     "desc"
   end
 
   create_table "programmes", :force => true do |t|
@@ -833,24 +792,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "cl"
   end
 
-  create_table "students", :force => true do |t|
-    t.string   "name"
-    t.integer  "creator"
-    t.integer  "updator"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "sub_agents", :force => true do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.integer  "contact_id"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "timelines", :force => true do |t|
     t.integer  "user_id"
     t.string   "user_name"
@@ -863,17 +804,8 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "action"
     t.integer  "m_id"
     t.string   "m_name"
-    t.integer  "receiver_id"
     t.boolean  "checked",     :default => false
-  end
-
-  create_table "todo_statuses", :force => true do |t|
-    t.string   "name"
-    t.text     "desc"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "created_by"
-    t.integer  "updated_by"
+    t.integer  "receiver_id"
   end
 
   create_table "todo_topics", :force => true do |t|
@@ -929,7 +861,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.integer  "def_f_u_ass_to"
     t.string   "def_enq_search_col"
     t.string   "def_reg_search_col"
-    t.string   "reg_view"
     t.string   "def_ins_search_col"
     t.text     "ins_cols"
     t.string   "def_per_search_col"
@@ -942,11 +873,16 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
   create_table "users", :force => true do |t|
     t.integer  "branch_id"
     t.integer  "role_id"
+    t.string   "image"
     t.text     "email_signature"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => ""
     t.string   "reset_password_token"
@@ -959,10 +895,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "last_sign_in_ip"
     t.string   "first_name"
     t.string   "surname"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -974,7 +906,6 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
     t.string   "gender"
     t.date     "date_of_birth"
     t.text     "address"
-    t.string   "image"
     t.string   "skype"
     t.string   "facebook"
     t.string   "linkedin"
@@ -990,11 +921,5 @@ ActiveRecord::Schema.define(:version => 20140331153959) do
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "yolks", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
 end

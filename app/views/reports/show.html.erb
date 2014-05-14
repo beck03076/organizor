@@ -1,0 +1,102 @@
+<!-- header -->
+<%= render 'reports/header' %>
+<!-- filter -->
+<div class="row">
+	<div class="well blue-well ransack">       
+	  <%= search_form_for @search,url: filter_reports_path, method: :post, html: {class: "form-horizontal", 
+	  	                                                 id: "ransack_form"} do |f| %>
+	    <%= render 'reports/ransack_filter', f: f %>
+
+	    <%= hidden_field_tag :module,@module %>
+	    <%= hidden_field_tag :heading,@heading %>
+
+	  <% end %>  
+	</div>   
+</div>
+
+<!-- display -->
+<div class="row bb">  
+  <div class="col-xs-12">
+     <h3> Displaying <%= @module.titleize %>
+     (<span class="bblue"> <%= @results.size %> </span>)
+     </h3>
+  </div>
+</div>
+<br/>
+
+<div class="row">
+
+      <div class="well scrollable">
+        <table class="table table-hover dataTable t3000">
+          <thead>
+            <tr>
+              <th><%= check_box_tag :tr %> </th>
+              <% @cols.each do |c| %>
+                <th><%= c[0].to_s.titleize %></th>              
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @results.each do |i| %>                             
+              <tr>
+                <td><%= check_box_tag :tr %></td>                
+                <% @cols.each do |col| %>
+                  <td> <%= i.send(col[0]) %> </td>                                   
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>      
+      </div>    
+</div>
+
+<!-- Charts -->
+<div class="row">  
+  <div class="col-md-12 bb">
+     <div class="col-md-2">
+       <h3> Charts </h3>
+     </div>
+     <div class="col-md-4">                                
+                <br/>
+                <%= select_tag :pie_value,options_for_select(@pie_value),
+                {:prompt => "-pie-",
+                class: "form-control"} %>  
+     </div>
+     <div class="col-md-4">                                
+                <br/>
+                <%= select_tag :pie_value,options_for_select(@pie_value),
+                {:prompt => "-bar-",
+                class: "form-control"} %>  
+     </div>
+  </div>
+</div>
+<br/>
+
+<div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          
+          <div id="pie" data-model="<%= @module %>"></div>
+
+          <div class="row">  
+            
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div id="bar"></div>
+        </div>
+      </div>
+</div>
+<br/>
+<script>
+
+$(function () {
+   init_chart("pie",<%= @pie.to_json.html_safe %>);
+   init_chart("bar",0);
+});
+
+
+</script>
+
+

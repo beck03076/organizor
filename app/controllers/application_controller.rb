@@ -19,7 +19,17 @@ class ApplicationController < ActionController::Base
 #      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
   end
-  
+
+  def five_notifications
+     @notys = Audit.notys(current_user.id)
+     #Audit.set_all_checked(current_user.id)
+     render partial: 'shared/notifications'
+  end
+
+  def unchecked_notys
+    cnt = Audit.unchecked(current_user.id).size
+    render text: cnt
+  end 
     
   def token_search
     set_url_params

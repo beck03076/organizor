@@ -1,0 +1,52 @@
+<%= render 'header' %>
+
+<% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Institutions","home"],["People","open"] ]%>
+
+<%  [["Core Modules","Generate reports, filtering by anything","green-well","tower",
+	 core],
+    ["Follow Ups","Reports, based on follow ups","yellow-well","time",
+     core],
+    ["Users","Reports, that focuses on various attributes of any user","red-well","user",
+     [["Single User","user"],["Compare Users","random"],["User Performance","thumbs-up"]]],
+    ["Resources","Reports, based on all the configuration items","blue-well0","th-list",
+     [["Course Level","book"],["Application Status","star"],["Student Source","transfer"],["Branches","globe"]]]].each do |r| %>
+
+    <div class="row">	 
+		<div class="col-md-3">
+			<div class="<%= r[2] %> padAll10">			  
+		      <h4 class="bold-subhead">
+		      	<span class="glyphicon glyphicon-<%= r[3] %>"></span><%= r[0] %>
+		      </h4>	      
+		      <small class="sm">
+		      	<%= r[1] %>
+		      </small>
+		    </div>
+	    </div>    
+
+	    <div class="col-md-1"></div>
+	    
+	    	<% r[4].each do |r1| %>
+	    	<div class="col-md-2"> 
+	    	  <div class="row">	
+		    	  <%= link_to "/reports/#{despace(r[0])}/#{despace(r1[0])}" do %>	
+			    	  <span class="rounded well pointer">
+		                <span class="l glyphicon glyphicon-<%= r1[1] %>"></span>
+			    	  </span>
+			    	  <br/>
+			    	  <br/>
+			    	  <small class="text-center">
+			    	    <%= r1[0] %>  
+			    	  </small>
+		    	  <% end %>
+	    	  </div>
+	    	</div>  
+	    	<% end %>
+	    
+	</div>
+	<div class="col-md-12">
+		<hr>
+	</div>
+
+<% end %>
+
+<script> actmm('reports'); </script>

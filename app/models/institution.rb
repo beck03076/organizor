@@ -2,8 +2,7 @@ class Institution < ActiveRecord::Base
   include CoreExtension
 
   validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!" 
-            
-  audited
+         
     
   mount_uploader :image, HumanImageUploader
   

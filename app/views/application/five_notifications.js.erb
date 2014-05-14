@@ -1,0 +1,9 @@
+ <% ctnt = (render 'shared/notifications') %>     
+
+ $('#bell').popover({
+            html: true,        
+            placement: "bottom",
+            title: "Notifications",
+            content: "<%= escape_javascript(ctnt.html_safe) %>"
+ }).popover('show');
+  

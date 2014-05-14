@@ -1,5 +1,6 @@
 <!-- prefer countries -->
 <h4 class="form-heading">Preferred Countries</h4>
+<% if false %>
 <br/>
 <div class="col-xs-12">
   <%= prefer_countries(f.object_name,
@@ -10,5 +11,8 @@
 <script>
 actMultiSelect('multiple-select');
 </script>
+<% else %>
+  <h5> No countries in countries table!</h5>
+<% end %>
 
 
