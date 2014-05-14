@@ -1,12 +1,12 @@
 class Report 
   include ReportsHelper
-  attr_accessor :asso
+  attr_accessor :asso, :module, :mod
 
   def initialize(mod, heading = nil, asso = nil)
   	@mod = mod
   	@module = mod[0..2]
   	@heading = heading  	
-  	@asso = nil
+  	@asso = asso
   end
 
   def get_fil_hash
@@ -14,9 +14,9 @@ class Report
   end	
 
   def get_current_pie(asso = "student_source")
-  	@asso = @asso || asso
+  	@asso = @asso || asso  	  	
   	@meta = "#{@mod.titleize} based on #{asso.titleize}"
-    temp = self.model(asso).includes(:enquiries).all.map {|i| 
+    temp = self.model(@asso).includes(:enquiries).all.map {|i| 
              s = i.send(@mod).size
              if s != 0
               [i.name,s] 
@@ -33,7 +33,7 @@ class Report
   end
 
   def model(i)
-    i.singularize.camelize.constantize
+    i.camelize.constantize
   end
 
 end

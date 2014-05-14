@@ -1,14 +1,10 @@
-function init_chart(type,series_data) {
-      
-   Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
-        return {
-            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
+function change_chart(type,obj,model){
+    $.post('/partial_' + type + '.js',{asso: $(obj).val(), model: model });
+}
+
+
+
+function init_chart(type,series_data,meta) {
 
    if (type == "pie"){
     
@@ -20,10 +16,10 @@ function init_chart(type,series_data) {
                 plotShadow: false
             },
             title: {
-                text: '<%= @pie_meta %>'
+                text: meta
             },
             tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+              pointFormat: '{series.name}: <b>{point.y}</b>'
             },
             plotOptions: {
                 pie: {
@@ -41,14 +37,14 @@ function init_chart(type,series_data) {
             },
             series: [{
                 type: 'pie',
-                name: 'Enquiries Percentage',
+                name: 'Total Number',
                 data: series_data
             }]
         });
 
     }
-    else if(type == "bar"){
-
+    else if(type == "bar"){        
+        
         $('#bar').highcharts({
             chart: {
                 type: 'bar'

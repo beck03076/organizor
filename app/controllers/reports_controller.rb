@@ -15,11 +15,16 @@ class ReportsController < ApplicationController
   def set_pie(obj)
     @pie = obj.get_current_pie
     @pie_value = obj.get_pie_sel
-    @pie_meta = "#{@module.titleize} based on #{obj.asso.titleize}"
+    @pie_meta = "#{obj.mod.titleize} based on #{obj.asso.titleize}"
   end
 
   def model
     @module.singularize.camelize.constantize
+  end
+
+  def partial_pie
+    r = Report.new(params[:model],nil,params[:asso])    
+    set_pie(r)
   end
 
   def enquiries

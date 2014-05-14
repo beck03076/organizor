@@ -3,8 +3,9 @@
 <!-- filter -->
 <div class="row">
 	<div class="well blue-well ransack">       
-	  <%= search_form_for @search,url: filter_reports_path, method: :post, html: {class: "form-horizontal", 
-	  	                                                 id: "ransack_form"} do |f| %>
+	  <%= search_form_for @search,url: filter_reports_path, method: :post, 
+                                                            html: {class: "form-horizontal", 
+	  	                                                    id: "ransack_form" } do |f| %>
 	    <%= render 'reports/ransack_filter', f: f %>
 
 	    <%= hidden_field_tag :module,@module %>
@@ -25,7 +26,6 @@
 <br/>
 
 <div class="row">
-
       <div class="well scrollable">
         <table class="table table-hover dataTable t3000">
           <thead>
@@ -56,13 +56,14 @@
      <div class="col-md-2">
        <h3> Charts </h3>
      </div>
-     <div class="col-md-4">                                
+     <div class="col-md-2">                                
                 <br/>
                 <%= select_tag :pie_value,options_for_select(@pie_value),
                 {:prompt => "-pie-",
-                class: "form-control"} %>  
+                class: "form-control",
+                onchange: "change_chart('pie',this,'#{@module}');"} %>  
      </div>
-     <div class="col-md-4">                                
+     <div class="col-md-2">                                
                 <br/>
                 <%= select_tag :pie_value,options_for_select(@pie_value),
                 {:prompt => "-bar-",
@@ -74,15 +75,9 @@
 
 <div class="row">
       <div class="col-md-12">
-        <div class="col-md-6">
-          
-          <div id="pie" data-model="<%= @module %>"></div>
-
-          <div class="row">  
-            
-          </div>
+        <div class="col-md-6">          
+          <div id="pie"></div>
         </div>
-
         <div class="col-md-6">
           <div id="bar"></div>
         </div>
@@ -92,7 +87,19 @@
 <script>
 
 $(function () {
-   init_chart("pie",<%= @pie.to_json.html_safe %>);
+   //lines to show charts in a gradient style 
+   Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+        return {
+            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+   
+
+   init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>');
    init_chart("bar",0);
 });
 

@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
   belongs_to :nationality,
              :class_name => "Country",
              :foreign_key => "country_id"
+
+  has_many :enquiries, foreign_key: "assigned_to"
   
   accepts_nested_attributes_for :permissions
   
