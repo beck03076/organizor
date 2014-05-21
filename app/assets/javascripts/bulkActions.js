@@ -85,7 +85,7 @@ function groupAssignTo(tableId){
          // redrawing the datatable
          $('#' + tableId).dataTable().fnDraw();
          // closing the modal window
-         $('#assignToModal').modal('toggle');
+         $('.assignToModal').modal('toggle');
          // unchecking the master check box
          $('input#master_check').prop('checked', false);
          // restting the search filters
@@ -103,7 +103,7 @@ function groupDelete(tableId){
        $.get(url,function(table){
          $('#' + tableId).dataTable().fnDraw();
          // closing the modal window
-         $('#groupDeleteModal').modal('toggle');
+         $('.groupDeleteModal').modal('toggle');
          // unchecking the master check box
          $('input#master_check').prop('checked', false);
        });
@@ -114,7 +114,7 @@ function bulkEmail(tableId){
        var model = $("#group_assign_to_" + tableId).data("model");
        url = '/bulk_email/' + model + '/' + rows ;
        // closing the modal window
-       $('#bulkEmailModal').modal('toggle');
+       $('.bulkEmailModal').modal('toggle');
        window.open(url,
                    '_blank',
                    'location=yes,height=570,width=520,scrollbars=yes,status=yes');
@@ -138,7 +138,7 @@ function exportDetails(tableId){
        }
        
          // closing the modal window
-         $('#exportDetailsModal').modal('toggle');
+         $('.exportDetailsModal').modal('toggle');
          // unchecking the master check box
          $('input#master_check').prop('checked', false);
 
