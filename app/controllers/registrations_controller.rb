@@ -78,12 +78,6 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       if @registration.save
-        if @registration.enquiry_id
-          Enquiry.find(@registration.enquiry_id).update_attribute(:registered, true)
-          tl("Registration",@registration.id,
-             'An enquiry has been registered',"Registered",
-             "registration",@registration.assigned_to)
-        end
         if params[:save_new] 
           format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
         else
@@ -164,10 +158,6 @@ class RegistrationsController < ApplicationController
                   e_obj.update_attributes(active: false,
                                           audit_comment: params[:note].to_s,
                                           status_id: deact)
-                  #create a timeline item
-                  tl("Enquiry",params[:enquiry_id],
-                     'This enquiry has been deactivated in order to register',(params[:note] || "Deactivated"),
-                     "Deactivated",e_obj.assigned_to)
                                    
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",
@@ -175,6 +165,7 @@ class RegistrationsController < ApplicationController
                                               "active","contact_type_id",
                                               "registered")
                   e[:note] = params[:note]
+                  e[:enquiry_id] = params[:enquiry_id] 
                   @enquiry_id = params[:enquiry_id]
                   @registration = Registration.new(e)
                   authorize! :create, @registration

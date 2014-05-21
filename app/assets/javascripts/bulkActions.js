@@ -13,7 +13,7 @@ function toggleAllCheck(obj,tableId){
         $(this).prop('checked', checkedStatus);
     });
     if (checkedStatus == false){ 
-      $('#mass-actions-pills').slideUp(); 
+      $('.mass-actions-pills').slideUp(); 
     }     
 }
 
@@ -172,6 +172,7 @@ function bulkAssoUpdate(tableId,elem,what_,url,modal,main,asso,asso_col,id_parti
   posting.done(function( data ) {
     afterDatatableMass(tableId,modal);
     resetDataTable();
+    $('.modal').modal('hide');
     bootbox.alert(data);
     
   });

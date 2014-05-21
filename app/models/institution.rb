@@ -47,7 +47,7 @@ class Institution < ActiveRecord::Base
     self.country.name rescue "Unknown"
   end
      
-  def city_name
+  def city_name21
     self.city.name rescue "Unknown"
   end
   

@@ -1,74 +1,73 @@
 <!-- header -->
 <%= render 'reports/header' %>
-<!-- filter -->
-<div class="row">
-	<div class="well blue-well ransack">       
-	  <%= search_form_for @search,url: filter_reports_path, method: :post, 
+
+<%= search_form_for @search,url: filter_reports_path, method: :post, 
                                                             html: {class: "form-horizontal", 
 	  	                                                    id: "ransack_form" } do |f| %>
+      <!-- filter -->
+      <div class="row">
+        <div class="well blue-well ransack">                                                           
 	    <%= render 'reports/ransack_filter', f: f %>
 
 	    <%= hidden_field_tag :module,@module %>
 	    <%= hidden_field_tag :heading,@heading %>
-
-	  <% end %>  
-	</div>   
-</div>
-
+        </div>   
+      </div>
+      
+              <div class="row"></div>
+              <div class="row"></div>
+              <div class="row"></div>
+              
 <!-- display -->
 <div class="row bb">  
-  <div class="col-xs-12">
+  <div class="col-xs-5">
      <h3> Displaying <%= @module.titleize %>
-     (<span class="bblue"> <%= @results.size %> </span>)
+     (<span class="bblue"> <%= @results.total_entries %> </span>)
      </h3>
+  </div>  
+  <div class="col-xs-7">   
+    <h3> 
+      <small>Filtered by</small>
+      <%= filtered_by(@q) %>
+    </h3>
   </div>
 </div>
 <br/>
 
-<div class="row">
-      <div class="well scrollable">
-        <table class="table table-hover dataTable t3000">
-          <thead>
-            <tr>
-              <th><%= check_box_tag :tr %> </th>
-              <% @cols.each do |c| %>
-                <th><%= c[0].to_s.titleize %></th>              
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% @results.each do |i| %>                             
-              <tr>
-                <td><%= check_box_tag :tr %></td>                
-                <% @cols.each do |col| %>
-                  <td> <%= i.send(col[0]) %> </td>                                   
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>      
-      </div>    
+<div id="reports-table">
+  <%= render 'table', cols: @cols.except(:associations), results: @results,f: f %>
 </div>
 
+<% end %>  
 <!-- Charts -->
 <div class="row">  
   <div class="col-md-12 bb">
      <div class="col-md-2">
-       <h3> Charts </h3>
+       <h3> Charts </h3>     
      </div>
-     <div class="col-md-2">                                
-                <br/>
-                <%= select_tag :pie_value,options_for_select(@pie_value),
+     <div class="col-md-2"> 
+                 <br/>
+                <%= select_tag :main_value,options_for_select(@main_sel),
                 {:prompt => "-pie-",
-                class: "form-control",
+                class: "form-control greendd",
                 onchange: "change_chart('pie',this,'#{@module}');"} %>  
      </div>
      <div class="col-md-2">                                
                 <br/>
-                <%= select_tag :pie_value,options_for_select(@pie_value),
+                <%= select_tag :main_sel,options_for_select(@main_sel),
                 {:prompt => "-bar-",
-                class: "form-control"} %>  
+                class: "form-control reddd bar_chart",
+                onchange: "change_chart('bar',this,'#{@module}');"} %>  
      </div>
+
+     <div class="col-md-2">                                
+                <br/>
+                <%= select_tag :bar_split,options_for_select(@bar_split),
+                {:prompt => "-bar split-",
+                class: "form-control reddd",
+                onchange: "change_split('bar',this,'#{@module}');"} %>  
+     </div>
+
   </div>
 </div>
 <br/>
@@ -86,7 +85,7 @@
 <br/>
 <script>
 
-$(function () {
+
    //lines to show charts in a gradient style 
    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
         return {
@@ -97,11 +96,18 @@ $(function () {
             ]
         };
     });
-   
 
-   init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>');
-   init_chart("bar",0);
-});
+   init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>',"ASdf");
+   init_chart("bar",<%= @bar[0].to_s.html_safe %>,'<%= @bar_meta %>',<%= @bar[1].to_json.html_safe %>);
+
+   actmm("reports");
+
+   $('input:text, select').each(function(){
+    if ($(this).val().length > 0){
+      $(this).css({'background-color' : '#f8f4b0', 'color' : '#555753'});
+    }
+   });
+    
 
 
 </script>

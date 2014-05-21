@@ -54,6 +54,7 @@ gem 'rails3-jquery-autocomplete'
 
 gem 'carrierwave'
 #gem "audited-activerecord"
+gem 'private_pub'
 gem 'notifiably_audited-activerecord'
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
@@ -68,7 +69,6 @@ gem 'simple_form'
 gem 'best_in_place'
 gem 'deep_cloneable', '~> 1.5.5'
 gem 'devise_invitable'
-gem 'private_pub'
 gem 'fullcalendar-rails' 
 gem 'rubyzip'
 gem 'prawn'
@@ -106,4 +106,5 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'redcarpet'
 gem 'see_more'
+
 

@@ -3,6 +3,7 @@ Organizor::Application.routes.draw do
   get "reports/index"
 
   post '/partial_pie' => "reports#partial_pie"
+  post '/partial_bar' => "reports#partial_bar"
 
   match '/reports/:heading/:module' => "reports#show"
 

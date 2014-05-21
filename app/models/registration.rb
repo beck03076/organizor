@@ -1,5 +1,6 @@
 class Registration < ActiveRecord::Base
   include CoreExtension
+  after_save :set_registered_true
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
@@ -82,6 +83,15 @@ class Registration < ActiveRecord::Base
             :country_of_origin).where("registrations.assigned_to = #{user.id}")
   end
   }
+
+  def set_registered_true
+    if !self.enquiry_id.nil?
+      Enquiry.find(enquiry_id).update_attribute(:registered, true)
+    end
+  end
+
+  def self.sco(i)
+  end
    
   
   def name
@@ -145,4 +155,13 @@ class Registration < ActiveRecord::Base
     j = self.programmes.includes(:application_status).where(application_statuses: {name: "joined"}).size
     [total,j,"joined"]
   end
+
+  def branch_name
+    self.branch.name rescue "Unknown"
+  end
+
+  def owner
+    self._ato.first_name rescue "Unknown"
+  end
+
 end

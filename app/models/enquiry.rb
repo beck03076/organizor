@@ -28,9 +28,10 @@ class Enquiry < ActiveRecord::Base
   has_and_belongs_to_many :emails
   has_many :follow_ups
   has_many :todos
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'
+  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'  
   
-  has_and_belongs_to_many :institutions
+  has_many :institutions, through: :programmes
+  has_many :institution_city, through: :institutions, foreign_key: "city_id"
   
   scope :inactive,includes(:status,
                            :follow_ups,
@@ -125,9 +126,16 @@ class Enquiry < ActiveRecord::Base
     self._ato.first_name rescue "Unknown"
   end
 
-  def status_name
-    self.status.name rescue "Unknown"
+  def branch_name
+    self.branch.name rescue "Unknown"
   end
 
+  def self.reg(i)
+    where(registered: i).size
+  end
   
+  def self.sco(i)
+    where(score: i[0] - 1..i[1] + 1).size
+  end
+
 end

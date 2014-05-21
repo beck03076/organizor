@@ -30,13 +30,14 @@
 	    	  <div class="row">	
 		    	  <%= link_to "/reports/#{despace(r[0])}/#{despace(r1[0])}" do %>	
 			    	  <span class="rounded well pointer">
-		                <span class="l glyphicon glyphicon-<%= r1[1] %>"></span>
+		                <span class="l glyphicon glyphicon-<%= r1[1] %>">
+		                </span>
 			    	  </span>
-			    	  <br/>
-			    	  <br/>
-			    	  <small class="text-center">
-			    	    <%= r1[0] %>  
-			    	  </small>
+			    	  
+			    	  <div class="row">
+			    	    <small class="text-center"><%= r1[0] %></small>
+			    	  </div>
+
 		    	  <% end %>
 	    	  </div>
 	    	</div>  

@@ -1,0 +1,28 @@
+<div class="row text-center">
+  <%= will_paginate @results, params: {module: @module, heading: @heading, q: @q} %>
+</div>
+<div class="row">
+      <div class="well scrollable">
+        <table class="table table-hover dataTable t3000">
+          <thead>
+            <tr>
+              <th><%= check_box_tag :tr %> </th>
+              <% cols.each do |c| %>
+                <% name = (c[1].size == 4 ? c[1][1].underscore + "_name" : c[0]).to_sym %>             
+                <th><%= f.sort_link name,name.to_s.titleize,{page: 1},{remote: true} %></th>              
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% results.each do |i| %>                             
+              <tr>
+                <td><%= check_box_tag :tr %></td>                
+                <% cols.each do |col| %>
+                  <td> <%= i.send(col[0]) %> </td>                                   
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>      
+      </div>    
+</div>

@@ -1,0 +1,6 @@
+<%= search_form_for @search,url: filter_reports_path, method: :post, 
+                                                            html: {class: "form-horizontal", 
+                                                          id: "ransack_form" } do |f| %>
+
+  <%= render 'table', cols: cols, results: results,f: f %> 
+<% end %>

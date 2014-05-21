@@ -49,7 +49,7 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
     });
 
    $('body').on('click', tableId + ' #master_check, .row_check', function () {
-     $('#mass-actions-pills').show(); 
+     $('.mass-actions-pills').show(); 
     });
 
    /* this is the ransack add/remove fields initialization */

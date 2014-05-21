@@ -10,7 +10,7 @@
 <% end %>
 <% srch_url = send("search_" + model_pl + "_path") %>
 <% act = act || model_pl %>
-<div id="mass-actions-pills" class="row" style="display: none;">
+<div class="row mass-actions-pills" style="display: none;">
            <div class="col-md-10">
                     <!----------------------- Group Assign Start---------------------------->
                     <% if can? :update, _model %>
@@ -72,7 +72,7 @@
                       &nbsp;&nbsp;
                     <% end %>
                 &nbsp;&nbsp;
-                <a href="#" class="clickable" onclick="$('#mass-actions-pills').slideToggle();">
+                <a href="#" class="clickable" onclick="$('.mass-actions-pills').slideToggle();">
                 cancel</a>
               </div>
 </div>
@@ -300,10 +300,10 @@
                            '<label for="id_column" class="label-right">rows per page</label>' +
                            '</div></form>');
 
- $('#mass-actions-pills .pilled').click(function(){
+ $('.mass-actions-pills .pilled').click(function(){
    var rows = getCheckedRowsAsArray('<%= _id %>');
-   var clicked = $(this).data('value');
-   $('#' + clicked + 'Modal').modal('show');
+   var clicked = $(this).data('value');   
+   $('.' + clicked + 'Modal').modal('show');
  });
 
  actmm('<%= act %>');

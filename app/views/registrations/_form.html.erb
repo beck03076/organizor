@@ -15,6 +15,9 @@
                            </ul>
                            </div>
                           <% end %>
+
+  <!--This line is mandatory to set the value registered in the enquiries table  -->
+  <%= f.hidden_field :enquiry_id, value: @enquiry_id %>                       
                           
    <div class="row row-top">
     <div class="col-xs-9">

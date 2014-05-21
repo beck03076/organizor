@@ -1,10 +1,20 @@
-function change_chart(type,obj,model){
+function change_chart(type,obj,model){    
     $.post('/partial_' + type + '.js',{asso: $(obj).val(), model: model });
+}
+
+function change_split(type,obj,model){    
+    var asso = $('.bar_chart').val();   
+    if (asso.length == 0){
+        bootbox.alert("Select a -bar- value first.")
+    }   
+    else{
+      $.post('/partial_' + type + '.js',{split: $(obj).val(), model: model, asso: asso });
+    }
 }
 
 
 
-function init_chart(type,series_data,meta) {
+function init_chart(type,series_data1,meta,series_data2) {
 
    if (type == "pie"){
     
@@ -38,7 +48,7 @@ function init_chart(type,series_data,meta) {
             series: [{
                 type: 'pie',
                 name: 'Total Number',
-                data: series_data
+                data: series_data1
             }]
         });
 
@@ -50,13 +60,13 @@ function init_chart(type,series_data,meta) {
                 type: 'bar'
             },
             title: {
-                text: 'Historic World Population by Region'
+                text: meta
             },
             subtitle: {
-                text: 'Source: Wikipedia.org'
+                text: 'Bar chart that shows enquiries'
             },
             xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania','Australia','New'],
+                categories: series_data1,
                 title: {
                     text: null
                 }
@@ -72,7 +82,7 @@ function init_chart(type,series_data,meta) {
                 }
             },
             tooltip: {
-                valueSuffix: ' millions'
+                valueSuffix: ' items'
             },
             plotOptions: {
                 bar: {
@@ -95,16 +105,7 @@ function init_chart(type,series_data,meta) {
             credits: {
                 enabled: false
             },
-            series: [{
-                name: 'Year 1800',
-                data: [107, 31, 635, 203, 2,34,34]
-            }, {
-                name: 'Year 1900',
-                data: [133, 156, 947, 408, 6,23,23]
-            }, {
-                name: 'Year 2008',
-                data: [973, 914, 4054, 732, 34,23,23]
-            }]
+            series: series_data2
         });
         }    
     }

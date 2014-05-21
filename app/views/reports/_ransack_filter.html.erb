@@ -1,31 +1,48 @@
 <!-- Ranscak filters for reports -->            
               <div class="row">
                <div class="col-md-12">
-                  <h4 class="border-b"><%= @module.titleize %> - Filter By </h4>
+                <div class="col-md-12">
+                  <h4 class="bold-subhead"><%= @module.titleize %> Fields </h4>                  
+                </div>  
                </div>
-              </div> 
+              </div>               
               <%= @cols.each_slice(4).each do |el| %>
                 <div class="row">
                   <div class="col-md-12 ">
-                    <% el.each do |i| %>                    
-                      <div class="col-md-3">                                             
-                        <%= figure_filter(i,f) %>                       
-                      </div>                                     
+                    <% el.each do |i| %>                                            
+                        <% if i[0] == :associations %>
+                          <% out = figure_asso(i,f) %>            
+                               <div class="col-md-3">  
+                         
+                               <div class="clear"></div>
+                               <h4 class='bold-subhead'> More </h4>                             
+                               <% out[1].each do |l| %>
+                                <div class="row">
+                                 <div class="col-md-12"> 
+                                 <%= l %> 
+                                 </div>
+                                </div>
+                               <% end %>
+                              </div>
+
+                              <div class="col-md-12">
+                                <br/>
+                                <div class="col-md-8">
+                                  <%= out[0] %>
+                                </div>  
+                              </div>  
+                        <% else %> 
+                              <div class="col-md-3"> 
+                               <%= figure_filter(i,f) %> 
+                              </div>                       
+                        <% end %>                                                         
                     <% end %>
                   </div>
                 </div>
               <% end %>  
 
-              <div class="row">
-               <div class="col-md-12">
-                  <h4 class="border-b">Sort By</h4>
-               </div>
-              </div> 
-              <div class="row text-left">
+              <div class="row text-right">
                   <div class="col-md-12 form-inline">
-                            <%= f.sort_fields do |s| %>
-                                <%= s.sort_select({},{class: "form-control marL30"}) %>
-                            <% end %>
                             <div class="form-group">        
                               <%= f.submit "Run", class: "btn btn-primary marL30" %>
                             </div>  
@@ -34,10 +51,6 @@
                             </a>              
                   </div>
               </div>
-
-
-
-
               </div> 
 
 

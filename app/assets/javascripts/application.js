@@ -18,7 +18,7 @@
 //= require tinymce-jquery
 //= require jquery.purr
 //= require best_in_place
-//= require private_pub
+
 //= require fullcalendar
 //= require data-confirm-modal
 //= require see_more
@@ -46,16 +46,13 @@ $(function(){
                 dateFormat: "yy-mm-dd",
                 yearRange: '1980:2050'
               });
- });
+ });  
 
-
-  
-
-dataConfirmModal.setDefaults({
-  title: 'Confirm your action',
-  commit: 'Continue',
-  cancel: 'Cancel'
-});
+  dataConfirmModal.setDefaults({
+    title: 'Confirm your action',
+    commit: 'Continue',
+    cancel: 'Cancel'
+  });
 
 $('.datepicker').datepicker();
 
@@ -363,7 +360,7 @@ function chooseEmailTemplate(sel){
 function activateTab(id,lang){
   var all_li = $('ul.seperator > li');
   /* HIDE ALL TABS CONTENT*/
-  $(".tab-content").hide();
+  $(".tab-content").empty();
   /* SHOW THE CORESPONDING TAB CONTENT*/
   $("#"+lang).show();
 }
