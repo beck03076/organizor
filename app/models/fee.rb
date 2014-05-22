@@ -28,4 +28,8 @@ class Fee < ActiveRecord::Base
   ransacker :commission_amount do |parent|
       Arel::Nodes::Division.new(parent.table[:commission_amount_cents], 100 )
   end
+
+  ransacker :scholarship do |parent|
+      Arel::Nodes::Division.new(parent.table[:scholarship_cents], 100 )
+  end
 end

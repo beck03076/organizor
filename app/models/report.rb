@@ -1,5 +1,5 @@
 class Report 
-  include ReportsHelper
+  include ReportsData
   attr_accessor :asso, :module, :mod
 
   def initialize(mod, heading = nil, asso = nil,split_param = nil)

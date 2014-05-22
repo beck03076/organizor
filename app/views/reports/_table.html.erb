@@ -7,7 +7,7 @@
           <thead>
             <tr>
               <th><%= check_box_tag :tr %> </th>
-              <% cols.each do |c| %>
+              <% cols.except(:associations).each do |c| %>
                 <% name = (c[1].size == 4 ? c[1][1].underscore + "_name" : c[0]).to_sym %>             
                 <th><%= f.sort_link name,name.to_s.titleize,{page: 1},{remote: true} %></th>              
               <% end %>
@@ -17,9 +17,9 @@
             <% results.each do |i| %>                             
               <tr>
                 <td><%= check_box_tag :tr %></td>                
-                <% cols.each do |col| %>
+                <% cols.except(:associations).each do |col| %>
                   <td> <%= i.send(col[0]) %> </td>                                   
-                <% end %>
+                <% end %> 
               </tr>
             <% end %>
           </tbody>

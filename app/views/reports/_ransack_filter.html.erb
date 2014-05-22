@@ -8,32 +8,33 @@
               </div>               
               <%= @cols.each_slice(4).each do |el| %>
                 <div class="row">
-                  <div class="col-md-12 ">
+                  <div class="col-md-12">
                     <% el.each do |i| %>                                            
                         <% if i[0] == :associations %>
-                          <% out = figure_asso(i,f) %>            
+                          <% out = figure_asso(i,f,@q) %>            
+                            <% out[1].each_slice(3).each do |o| %>
                                <div class="col-md-3">  
-                         
-                               <div class="clear"></div>
-                               <h4 class='bold-subhead'> More </h4>                             
-                               <% out[1].each do |l| %>
-                                <div class="row">
-                                 <div class="col-md-12"> 
-                                 <%= l %> 
-                                 </div>
-                                </div>
-                               <% end %>
-                              </div>
+                                 <div class="clear"></div>
+                                   <h4 class='bold-subhead'> More </h4>                             
+                                     <% o.each do |l| %>
+                                        <div class="row">
+                                           <div class="col-md-12"> 
+                                              <%= l %> 
+                                           </div>
+                                        </div>
+                                     <% end %>
+                               </div>
+                             <% end %>  
 
-                              <div class="col-md-12">
-                                <br/>
-                                <div class="col-md-8">
-                                  <%= out[0] %>
-                                </div>  
-                              </div>  
+                               <div class="col-md-12">
+                                 <br/>
+                                 <div class="col-md-7">
+                                     <%= out[0] %>
+                                 </div>  
+                               </div>  
                         <% else %> 
                               <div class="col-md-3"> 
-                               <%= figure_filter(i,f) %> 
+                                <%= figure_filter(i,f) %> 
                               </div>                       
                         <% end %>                                                         
                     <% end %>

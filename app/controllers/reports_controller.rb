@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
     r = Report.new(@module,@heading)
   	@cols = r.get_fil_hash
   	@search = self.model.search(params[:q])
-  	@results = @search.result.paginate(page: @page, per_page: 5)    
+  	@results = @search.result.paginate(page: @page, per_page: 25)    
     @search.build_sort if @search.sorts.empty?
     @main_sel = r.get_main_sel
     self.set_pie(r)

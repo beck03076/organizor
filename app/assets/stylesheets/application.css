@@ -375,5 +375,13 @@ background-color:#f1c1c1;
 vertical-align: top;
 }
 
+.w20{
+  width: 100px;
+  background-color: #fff;
+  font-size: 12px;
+  padding: 5px 5px 5px 5px;
+  color: #333;
+  border: 1px solid #cccccc;
+}
 
 

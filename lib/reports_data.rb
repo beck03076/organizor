@@ -1,4 +1,4 @@
-module ReportsHelper
+module ReportsData
 	#=== Enquiries =====================================
     # default filters for enquiries module
 	def def_enq_fil
@@ -69,16 +69,16 @@ module ReportsHelper
 		 qualification: ["collection_select","Qualification",nil,:qua_id],
 		 qua_subject: 0, qua_institution: 0, qua_grade: 0, qua_exam: 0,qua_score: 0,
 		 # ph stands for placeholder
-		 passport_valid_till: { date_col: "passport_valid_till",
+		 passport_valid_till: { range_col: "passport_valid_till",
 		 	         			cols: %w(passport_number),
 		 	         			title: "Passport",
-		 	         			type: "daterange",
+		 	         			cl: "datepicker",
 		 	         			ph: "Passport Valid"
 		 	       			  },
-		 visa_valid_till: {     date_col: "visa_valid_till",
+		 visa_valid_till: {     range_col: "visa_valid_till",
 		 	         			cols: %w(visa_type),
 		 	         			title: "Visa",
-		 	         			type: "daterange",
+		 	         			cl: "datepicker",
 		 	         			ph: "Visa Valid"
 		 	         	  }, 
 		 # associations
@@ -90,8 +90,8 @@ module ReportsHelper
 		 	             	    course_subject_text: 0,
 		 	             	    start_date: {  
 		 	             	    	           cols: [],
-		 	             	    	           date_col: "programmes_start_date",
-		 	             	    	           type: "daterange",
+		 	             	    	           range_col: "programmes_start_date",
+		 	             	    	           cl: "datepicker",
 								 	           ph: "Course Start Date"
 								 	       	},
 								updated_at: "datepicker<",
@@ -110,6 +110,44 @@ module ReportsHelper
 		 	             cols: {
 		 	             	    english_level: ["collection_select","EnglishLevel",nil,:exams_eng_level_id],	
 		 	             	    exam_type: ["collection_select","ExamType",nil,:exams_exam_type_id],	             	  
+							   }
+						 },	
+						 {title: "Fees",
+		 	             table: "fee", 
+		 	             cols: {
+		 	             	    tuition_fee: {  
+		 	             	    	           cols: [],
+		 	             	    	           range_col: "fee_tuition_fee",
+		 	             	    	           type: "range",
+								 	           ph: "Tuition Fee",
+								 	           cl: "",
+								 	       	}, 
+								scholarship: {  
+		 	             	    	           cols: [],
+		 	             	    	           range_col: "fee_scholarship",
+		 	             	    	           type: "range",
+								 	           ph: "Scholarship",
+								 	           cl: "",
+								 	       	},  
+								invoice_date: {  
+		 	             	    	           cols: [],
+		 	             	    	           range_col: "fee_invoice_date",
+		 	             	    	           type: "range",
+								 	           ph: "Invoice Date",
+								 	           cl: "datepicker",
+								 	       	},  	       	
+								}
+						 },
+						 {title: "Commission",
+		 	             table: "fee", 
+		 	             cols: {	 	       		       	  
+								commission_amount: {  
+		 	             	    	           cols: %w(fee_commission_percentage),
+		 	             	    	           range_col: "fee_commission_amount",
+		 	             	    	           type: "range",
+								 	           ph: "Commission Amount",
+								 	           cl: "",
+								 	       	}, 	       	     	  
 							   }
 						 },			
 		               ],		 		 
