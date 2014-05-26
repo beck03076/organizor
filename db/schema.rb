@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140429203213) do
+ActiveRecord::Schema.define(:version => 20140523112843) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -723,6 +723,17 @@ ActiveRecord::Schema.define(:version => 20140429203213) do
     t.text     "desc"
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "saved_reports", :force => true do |t|
+    t.string   "name"
+    t.text     "q"
+    t.integer  "created_by"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "heading"
+    t.string   "module"
   end
 
   create_table "sliding_ranges", :force => true do |t|

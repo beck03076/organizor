@@ -6,13 +6,13 @@ class ReportsController < ApplicationController
   	set_url_params
     r = Report.new(@module,@heading)
   	@cols = r.get_fil_hash
-  	@search = self.model.search(params[:q])
-  	@results = @search.result.paginate(page: @page, per_page: 25)    
+  	@search = self.model.search(@q)
+  	@results = @search.result.paginate(page: @page, per_page: 3)    
     @search.build_sort if @search.sorts.empty?
     @main_sel = r.get_main_sel
     self.set_pie(r)
-    self.set_bar(r) 
-    @q = params[:q]   
+    self.set_bar(r)   
+    @saved_report = params[:saved_report] || SavedReport.new
   end 
 
   def set_pie(obj)
@@ -38,6 +38,10 @@ class ReportsController < ApplicationController
   def partial_bar
     r = Report.new(params[:model],nil,params[:asso],params[:split])    
     set_bar(r)    
+  end
+
+  def save_report    
+    @saved_report = SavedReport.find_or_initialize_by_q_and_created_by_and_heading_and_module(params[:q].to_s,current_user.id,params[:heading],params[:module])  
   end
 
 

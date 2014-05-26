@@ -1,5 +1,6 @@
 <!-- header -->
 <%= render 'reports/header' %>
+<div id="save_report"> </div>
 
 <%= search_form_for @search,url: filter_reports_path, method: :post, 
                                                             html: {class: "form-horizontal", 
@@ -21,15 +22,12 @@
 <!-- display -->
 <div class="row bb">  
   <div class="col-xs-5">
-     <h3> Displaying <%= @module.titleize %>
+     <h3> Total <%= @module.titleize %>
      (<span class="bblue"> <%= @results.total_entries %> </span>)
      </h3>
   </div>  
   <div class="col-xs-7">   
-    <h3> 
-      <small>Filtered by</small>
-      <%= filtered_by(@q) %>
-    </h3>
+    
   </div>
 </div>
 <br/>

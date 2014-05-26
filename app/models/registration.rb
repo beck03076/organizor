@@ -33,6 +33,7 @@ class Registration < ActiveRecord::Base
   belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
   
   belongs_to :branch
+  belongs_to :user, foreign_key: "assigned_to"
   belongs_to :progression_status
   
   has_and_belongs_to_many :emails 
@@ -41,8 +42,6 @@ class Registration < ActiveRecord::Base
   has_many :todos
   
   belongs_to :branch
-  
-  belongs_to :progression_status
     
   attr_accessor :_destroy
 
@@ -163,5 +162,31 @@ class Registration < ActiveRecord::Base
   def owner
     self._ato.first_name rescue "Unknown"
   end
+
+  def self.sta(i)
+    self.h_chart(:application_statuses,i)    
+  end
+
+  def self.cou(i)
+    self.h_chart(:course_levels,i)    
+  end
+
+  def self.h_chart(i,j)
+    includes(i).where({i =>  {name: j}}).size 
+  end
+
+  def self.bar_chart(asso,asso_name,sub_asso,cat1,cat2)
+    out = []
+    h = {}
+    c1 = cat1.to_s.pluralize
+    cats = cat1.to_s.camelize.constantize.all.map &cat2
+    includes(asso,
+             sub_asso).where(c1.to_sym => 
+                             {cat2 => cats}).group(["#{asso.to_s.pluralize}.#{asso_name}","#{c1}.name"]).count
+    #out                                        
+
+
+  end
+  
 
 end

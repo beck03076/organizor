@@ -1,5 +1,9 @@
 Organizor::Application.routes.draw do
 
+  post '/save_report' => 'reports#save_report' 
+  
+  resources :saved_reports
+
   get "reports/index"
 
   post '/partial_pie' => "reports#partial_pie"

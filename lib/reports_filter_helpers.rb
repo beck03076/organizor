@@ -1,7 +1,9 @@
 module ReportsFilterHelpers
+      #=== deals with regular fields/self fields =============
+      def figure_filter(i,f,q)
 
-    def figure_filter(i,f)
         html = ""
+        l = []
 
         if i[1] == 0 || i[1] == "datepicker"
 
@@ -12,12 +14,72 @@ module ReportsFilterHelpers
           html += h_fig_array(i[0],i[1],f)      
 
         elsif i[1].kind_of?(Hash)
-
+          # reusing c / shortening
+          c = i[1] 
+          html += hidable_div(c,q)
           html += figure_range(i,f)
+          html += "</div>" # weird to have only closing div, but true
+          l << show_link(c)
 
         end
-        html.html_safe
+        [html.html_safe,l]
       end  
+      #===============================================================
+      #=== deals with associated, all fields==========================
+      def figure_asso(i,f,q)
+        html = ""
+        l = []
+        i[1].each do |c|
+
+          html += "<div class='clear'></div>" 
+          html += hidable_div(c,q)
+          html += "<div class='clear'></div>"    
+          html += "<h5 class='bold-subhead'> #{c[:title]} <span onclick=$('.#{c[:title]}').toggle(); class='cgreen pointer padL10 glyphicon mar0 glyphicon-remove'></span></h5>"          
+
+            c[:cols].each do |j|
+
+              if j[1] == 0 || j[1] == "datepicker"
+
+                html += "<div class='row'>"
+                html += h_text_date(("#{c[:table]}_" + j[0].to_s).to_sym,j[0],j[1],f)
+                html += "</div>"
+
+              elsif j[1] == "datepicker>" ||  j[1] == "datepicker<" 
+
+                html += h_range(f,j[0],j[1][-1],j[0])          
+
+              elsif j[1] == "from<" ||  j[1] == "to>"
+
+                html += h_range(f,j[0],j[1][-1],j[0],"")          
+
+              elsif j[1].kind_of?(Array)
+                
+                html += "<div class='row'>"
+                html += h_fig_array(("#{c[:table]}_" + j[0].to_s).to_sym,j[1],f)        
+                html += "</div>"
+
+              elsif j[1].kind_of?(Hash)
+
+                html += figure_range(j,f)    
+
+              end
+            end
+          html += '</div>'  
+          l << show_link(c)
+        end
+        [html.html_safe,l]
+      end
+      #===============================================================
+      #=== deals with opening div that hides =========================
+      def hidable_div(c,q)
+        "<div class='#{c[:title]}' style='display: #{compare_q_cols(q,c[:cols],c[:table])};'>" 
+      end
+      #===============================================================
+      #=== deals with creating links that toggles the hiding divs ====
+      def show_link(c)
+        ("<div onclick=$('.#{c[:title]}').slideToggle(); class='padTL10'> <div class='pilled'> <span class='glyphicon glyphicon-#{c[:logo]} mar0'></span>" + "<span > #{c[:title]} </span>" + "</div></div>").html_safe
+      end
+      #===============================================================
       #=== deals with text fields and date picker fields =============
       def h_text_date(title,ph,what,f)
           html = ""
@@ -58,51 +120,7 @@ module ReportsFilterHelpers
           end
       end    
       #===============================================================
-      #=== deals with associated, all fields==========================
-      def figure_asso(i,f,q)
-        html = ""
-        l = []
-        i[1].each do |c|
-
-          html += "<div class='clear'></div>" 
-          html += "<div class='#{c[:title]}' style='display: #{compare_q_cols(q,c[:cols],c[:table])};'>" 
-          html += "<div class='clear'></div>"    
-          html += "<h5 class='bold-subhead'> #{c[:title]}</h5>"
-
-            c[:cols].each do |j|
-
-              if j[1] == 0 || j[1] == "datepicker"
-
-                html += "<div class='row'>"
-                html += h_text_date(("#{c[:table]}_" + j[0].to_s).to_sym,j[0],j[1],f)
-                html += "</div>"
-
-              elsif j[1] == "datepicker>" ||  j[1] == "datepicker<" 
-
-                html += h_range(f,j[0],j[1][-1],j[0])          
-
-              elsif j[1] == "from<" ||  j[1] == "to>"
-
-                html += h_range(f,j[0],j[1][-1],j[0],"")          
-
-              elsif j[1].kind_of?(Array)
-                
-                html += "<div class='row'>"
-                html += h_fig_array(("#{c[:table]}_" + j[0].to_s).to_sym,j[1],f)        
-                html += "</div>"
-
-              elsif j[1].kind_of?(Hash)
-
-                html += figure_range(j,f)    
-
-              end
-            end
-          html += '</div>'  
-          l << ("<div class='w20'>" + link_to(c[:title],"#",{class: "", onclick: "$('.#{c[:title]}').slideToggle();"}) + "</div>").html_safe
-        end
-        [html.html_safe,l]
-      end
-      #===============================================================
+      
       #=== Given input as one element of association hash, returns cols name ===
       def compare_q_cols(q,h,t)
         if !q.nil?

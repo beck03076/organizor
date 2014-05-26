@@ -197,7 +197,7 @@ strong.sm{font-size:12px;}
     font-weight: normal;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #eeeeec;}
+    background-color: #86CF9D;}
     
    .main .main-content .pilled:hover {
     color: #000000;
@@ -206,7 +206,7 @@ strong.sm{font-size:12px;}
     font-weight: bold;
     border-radius:10px;
     cursor: pointer;          
-    background-color: #eeeeec;}
+    background-color: #CBEED6;}
     
     .main .main-content .blue {
     background-color: #729fcf; }
@@ -375,7 +375,7 @@ background-color:#f1c1c1;
 vertical-align: top;
 }
 
-.w20{
+.filter_more{
   width: 100px;
   background-color: #fff;
   font-size: 12px;
@@ -384,4 +384,16 @@ vertical-align: top;
   border: 1px solid #cccccc;
 }
 
+.bor{
+  border:  1px solid #dddddd;
+}
+.padL5{
+  padding-left: 5px;
+}
+.padTL10{
+   padding: 10px 10px 0px 0px;
+}
+.cgreen{
+  color: #316842;
+}
 

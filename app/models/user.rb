@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
              :foreign_key => "country_id"
 
   has_many :enquiries, foreign_key: "assigned_to"
+  has_many :registrations, foreign_key: "assigned_to"
   
   accepts_nested_attributes_for :permissions
   
@@ -105,4 +106,8 @@ class User < ActiveRecord::Base
     self.role = r
     self.save
   end  
+
+  def self.find_by_name(i)
+    where(first_name: i).first
+  end
 end

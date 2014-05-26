@@ -4,4 +4,6 @@ class ApplicationStatus < ActiveRecord::Base
   has_many :registrations, through: :programmes
   
   attr_accessible :desc, :name
+
+ 
 end

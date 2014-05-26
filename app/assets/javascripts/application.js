@@ -33,8 +33,10 @@ function notify(){
   });
 }
 
-
 $(function(){
+
+
+
 
  $(document).on('nested:fieldAdded', function(event){
               var field = event.field;

@@ -1,0 +1,9 @@
+<%= form_for(@saved_report,html: {id: "saved_report"}) do |f| %>
+  <%= f.hidden_field :q %> 
+  <%= f.hidden_field :created_by %>
+  <%= f.hidden_field :heading %>
+  <%= f.hidden_field :module %>
+  <%= f.text_field :name,{placeholder: "Name your filter"}  %> <br/>
+  <%= f.text_area :desc,{placeholder: "Describe your filter",size: "50X25"}  %><br/>
+  <%= f.submit %>
+<% end %>

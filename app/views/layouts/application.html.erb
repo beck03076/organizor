@@ -70,14 +70,16 @@
       </div>
     </div>
     <!-- display core images -->
-          <div id="upload-image"></div> 
+    <div id="upload-image"></div> 
+    <!-- user dropdown content -->
     <div id="usr_dd_cont" class="hide">      
       <div class="row row-top">
         <div class="col-xs-5">
+          <%= link_to u do %>
           <%= image_tag((u.image? ? u.image_url : "/images/icons/user.png"),
                                          {width: "105",
                                           class: "img-rounded" }) %>
-                                            
+          <% end %>                       
           <span>
             <%= render 'images/buttons', a: u, core: "user",hide: false %>     
           </span>
@@ -96,12 +98,13 @@
             </p>
           </div>
           <div class="row">
-            <div class="form-group">              
-              <%= link_to "Logout",destroy_user_session_path,
-                                   {:method => :delete,class: "btn btn-primary"} %>
+            <div class="form-group">                 
 
               <%= link_to "Settings",user_configs_path,
                                    {class: "btn btn-primary"} %>
+
+              <%= link_to "Logout",destroy_user_session_path,
+                                   {:method => :delete,class: "btn btn-primary"} %>
             </div>
           </div>
         </div>

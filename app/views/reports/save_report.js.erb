@@ -1,0 +1,17 @@
+  <% if params[:q] %>
+
+	  <% ctnt = (render 'save_report') %>
+	 
+	  $('#save_report').html("<%= escape_javascript(render :partial => 'shared/modal',
+	                                           :locals =>   {id: 'save_report_modal', 
+	                                                         content: ctnt.html_safe,
+	                                                         header: 'Save Filter',
+	                                                         button: nil}) %>");
+	  
+	  $('#save_report_modal').modal('show');
+	  
+	  $('.temp').remove();
+ 
+  <% else %>
+     bootbox.alert("No filter!")
+  <% end %>

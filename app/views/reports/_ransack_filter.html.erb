@@ -1,40 +1,33 @@
 <!-- Ranscak filters for reports -->            
               <div class="row">
-               <div class="col-md-12">
-                <div class="col-md-12">
+
                   <h4 class="bold-subhead"><%= @module.titleize %> Fields </h4>                  
-                </div>  
-               </div>
+
               </div>               
               <%= @cols.each_slice(4).each do |el| %>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md">
                     <% el.each do |i| %>                                            
                         <% if i[0] == :associations %>
-                          <% out = figure_asso(i,f,@q) %>            
-                            <% out[1].each_slice(3).each do |o| %>
-                               <div class="col-md-3">  
-                                 <div class="clear"></div>
-                                   <h4 class='bold-subhead'> More </h4>                             
-                                     <% o.each do |l| %>
-                                        <div class="row">
-                                           <div class="col-md-12"> 
-                                              <%= l %> 
-                                           </div>
-                                        </div>
-                                     <% end %>
-                               </div>
-                             <% end %>  
-
+                          <% asso = figure_asso(i,f,@q) %>                                  
+                            <% asso[1].each_slice(3).each do |o| %>
+                              <% o.each do |l| %>
+                                <div class="col-md-3">                           
+                                  <%= l %> 
+                                </div>                                        
+                              <% end %>
+                          <% end %>  
                                <div class="col-md-12">
                                  <br/>
                                  <div class="col-md-7">
-                                     <%= out[0] %>
+                                     <%= asso[0] %>
                                  </div>  
                                </div>  
                         <% else %> 
+                          <% same = figure_filter(i,f,@q) %>     
                               <div class="col-md-3"> 
-                                <%= figure_filter(i,f) %> 
+                                <%= same[0] %> 
+                                <%= same[1][0] %> 
                               </div>                       
                         <% end %>                                                         
                     <% end %>
@@ -42,14 +35,20 @@
                 </div>
               <% end %>  
 
-              <div class="row text-right">
+              <div class="row text-center">
                   <div class="col-md-12 form-inline">
                             <div class="form-group">        
                               <%= f.submit "Run", class: "btn btn-primary marL30" %>
                             </div>  
-                            <a class="marL30 pointer" onclick="$('#ransack_form')[0].reset();" >
-                              Reset
-                            </a>              
+                            <div class="form-group">        
+                              
+                              <span class="btn btn-primary marL30" data-q="<%= @q %>" onclick="save_report(this);" data-q="<%= @q %>"> 
+                                Save
+                              </span>
+                            </div> 
+                            <div class="form-group">        
+                              <%= link_to "Restart","/reports/#{@heading}/#{@module}",class: "btn btn-primary marL30" %>
+                            </div>                             
                   </div>
               </div>
               </div> 

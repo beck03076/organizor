@@ -35,7 +35,7 @@ module ReportsData
 
 	def enq_bar_split(val = "sco")
 		case val 
-		when "sco"
+		when "sco", "def"
 			["sco",[['Low',[1,3]],
 			        ['Medium',[4,6]],
 			        ['High',[7,10]]
@@ -49,6 +49,28 @@ module ReportsData
 		end
 	end
     #=== Registrations =====================================
+    def reg_pie_val
+		%w(branch user country qualification)
+	end
+
+	def reg_bar_split_val
+		[["Statuses","sta"],["CourseLevels","cou"],["ExamTypes","exa"],["EnglishLevels","eng"]]
+	end
+
+	def reg_bar_split(val)
+		case val 
+		when "sta", "def"
+			[{programmes: [:application_status]},:application_status,:name]       
+		when "cou"
+			[{programmes: [:course_level]},:course_level,:name]        
+		when "exa"
+			[{proficiency_exams: [:exam_type]},:exam_type,:name]        	
+		when "eng"
+			[{proficiency_exams: [:english_level]},:english_level,:name]        		
+		end
+	end
+
+
 	# default filters for registrations module
 	def def_reg_fil
 		[:ref_no,:first_name,:surname,:mobile1,:email1,:gender,
@@ -73,16 +95,18 @@ module ReportsData
 		 	         			cols: %w(passport_number),
 		 	         			title: "Passport",
 		 	         			cl: "datepicker",
-		 	         			ph: "Passport Valid"
+		 	         			ph: "Passport Valid",
+		 	         			logo: "book"
 		 	       			  },
 		 visa_valid_till: {     range_col: "visa_valid_till",
 		 	         			cols: %w(visa_type),
 		 	         			title: "Visa",
 		 	         			cl: "datepicker",
-		 	         			ph: "Visa Valid"
+		 	         			ph: "Visa Valid",
+		 	         			logo: "plane"
 		 	         	  }, 
 		 # associations
-		 associations: [{title: "Programmes",
+		 associations: [{title: "Course",
 		 	             table: "programmes", 
 		 	             cols: {status: ["collection_select","ApplicationStatus",nil,:programmes_app_status_id],		 	             	    
 		 	             	    created_by: ["collection_select","User",:first_name,:programmes_created_by],
@@ -95,7 +119,13 @@ module ReportsData
 								 	           ph: "Course Start Date"
 								 	       	},
 								updated_at: "datepicker<",
-								ins_ref_no: 0 }
+								ins_ref_no: 0 },
+						 logo: "certificate"		
+						 },
+						 {title: "FollowUps",
+		 	             table: "follow_ups", 
+		 	             cols: {title: 0},
+		 	             logo: "calendar"
 						 },
 						 {title: "Institutions",
 		 	             table: "institutions", 
@@ -103,14 +133,17 @@ module ReportsData
 		 	             	    city: ["collection_select","City",nil,:institutions_city_id],
 		 	             	    country: ["collection_select","Country",nil,:institutions_country_id],
 		 	             	    type: ["collection_select","InstitutionType",nil,:institutions_type_id],
-								updated_at: "datepicker<" }
+								updated_at: "datepicker<",
+								 },
+				         logo: "home"				 
 						 },	
 						 {title: "Exams",
 		 	             table: "proficiency_exams", 
 		 	             cols: {
 		 	             	    english_level: ["collection_select","EnglishLevel",nil,:exams_eng_level_id],	
 		 	             	    exam_type: ["collection_select","ExamType",nil,:exams_exam_type_id],	             	  
-							   }
+							   },
+					     logo: "font"		   
 						 },	
 						 {title: "Fees",
 		 	             table: "fee", 
@@ -136,7 +169,8 @@ module ReportsData
 								 	           ph: "Invoice Date",
 								 	           cl: "datepicker",
 								 	       	},  	       	
-								}
+								},
+					     logo: "euro"			
 						 },
 						 {title: "Commission",
 		 	             table: "fee", 
@@ -148,7 +182,8 @@ module ReportsData
 								 	           ph: "Commission Amount",
 								 	           cl: "",
 								 	       	}, 	       	     	  
-							   }
+							   },
+						 logo: "gbp"	   
 						 },			
 		               ],		 		 
 		 # history
@@ -158,29 +193,7 @@ module ReportsData
 		}
 	end
 
-	def reg_pie_val
-		%w(contact_type branch user)
-	end
-
-	def reg_bar_split_val
-		[["Registered","reg"],["Score","sco"]]
-	end
-
-	def reg_bar_split(val = "sco")
-		case val 
-		when "sco"
-			["sco",[['Low',[1,3]],
-			        ['Medium',[4,6]],
-			        ['High',[7,10]]
-			       ]
-			]       
-		when "reg"
-			["reg",[['Registered',true],
-			        ['Unregistered',false]
-			       ]
-			]  
-		end
-	end
+	
 
 
 end

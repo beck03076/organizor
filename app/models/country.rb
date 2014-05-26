@@ -1,4 +1,5 @@
 class Country < ActiveRecord::Base
+   attr_accessible :name
   
   has_many :preferred_countries
   has_many :enquiries, :through => :preferred_countries
@@ -6,8 +7,8 @@ class Country < ActiveRecord::Base
   has_many :cities
   has_many :institutions
   
-  has_one :enquiry
-  has_one :registration
+  has_many :programmes
+  has_many :registrations, through: :programmes
   
   accepts_nested_attributes_for :preferred_countries
   

@@ -138,4 +138,8 @@ class Enquiry < ActiveRecord::Base
     where(score: i[0] - 1..i[1] + 1).size
   end
 
+  def self.chart_self_asso(asso,sub_asso_inc,sub_asso_qua)    
+    includes(sub_asso_inc).group_by(&asso.to_sym).map {|k,v| [k,v.size] if !k.nil?}.compact       
+  end 
+
 end

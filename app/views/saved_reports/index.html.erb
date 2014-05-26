@@ -1,0 +1,46 @@
+<!-- header -->
+<%= render 'reports/header' %>
+<div class="row">
+  <div class="col-xs-12">
+    <h4> My saved Reports </h4>
+    <br/>
+  <table class="table table-striped">
+       <tr>
+        <th>Name</th>       
+        <th>Heading</th>
+        <th>Module</th> 
+        <th>Description</th>
+        <th>Actions</th>  
+        
+       </tr>
+    <% @saved_reports.each do |sr| %>
+      <tr>
+        <td><%= link_to sr.name.titleize, filter_reports_path(q: eval(sr.q),heading: sr.heading, module: sr.module), method: :post %></td> 
+        <td><%= sr.heading.to_s.titleize %></td> 
+        <td>
+          <span class="tag-like green">
+            <%= sr.module.to_s.titleize %>
+          </span>  
+        </td>        
+        <td><%= truncate(sr.desc,length: 20) %></td>
+        <td><%= link_to('<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                        edit_saved_report_path(sr)) %>
+        &nbsp;
+        <%= link_to('<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                       sr,
+                       {:method => "delete",data: { confirm: 'Are you sure this delete?' }}) %>
+        </td>                
+        
+      </tr>
+    <% end %>
+  </table>
+  <div class="form-group">
+    <%= link_to_function "Back", "history.back()", class: "btn btn-primary" %>
+  </div>  
+ </div>
+</div>
+
+
+<script>
+actmm('reports');
+</script>

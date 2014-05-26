@@ -1,6 +1,17 @@
-<div class="row text-center">
-  <%= will_paginate @results, params: {module: @module, heading: @heading, q: @q} %>
+<div class="row">
+  <div class="col-xs-6 text-center bor">
+       <h4>
+      <%= page_entries_info @results %>
+    </h4>
+
+      <%= will_paginate @results, params: {module: @module, heading: @heading, q: @q} %>
+  </div>
+  <div class="col-xs-6 row-top">
+        <small>Filtered by</small>
+        <%= filtered_by(@q) %>
+  </div>    
 </div>
+<br/>
 <div class="row">
       <div class="well scrollable">
         <table class="table table-hover dataTable t3000">
@@ -26,3 +37,21 @@
         </table>      
       </div>    
 </div>
+
+<script>
+    $('.pagination a').attr('data-remote', 'true'); 
+    $('.pagination .previous_page').text('« prev');
+    $('.pagination .next_page').text('next »');
+    $('.pagination').each(function () {
+      var $bar = $(this);
+      $bar.find('a, .current, span').wrapAll('<ul class="nav nav-pills seperator">');
+      $bar.find('a, .current, span').wrap('<li>');
+
+      $bar.find('em').each(function () {
+        $(this).parent().addClass('active');
+        $(this).replaceWith('<a href="#">' + $(this).text() + '</a>');
+      });
+    });
+    
+    $('span.previous_page,span.next_page').replaceWith("");
+</script>

@@ -7,7 +7,17 @@ class Report
   	@module = mod[0..2]
   	@heading = heading  	
   	@asso = asso || "branch"
-  	@split_param = split_param || "sco" 
+    @asso_name = get_asso_name(@asso)
+  	@split_param = split_param || "def" 
+  end
+
+  def get_asso_name(i)
+    if @asso == "user"
+      "first_name"
+    else
+      "name"
+    end
+
   end
 
   def get_fil_hash
@@ -27,26 +37,55 @@ class Report
     sorted
   end
 
-  def get_current_bar(asso = "contact_type", split_param = 'sco')
+  def get_current_bar(asso = "branch", split_param = 'def')
   	@asso = @asso || asso  	  	
   	@split_param = @split_param || split_param
+
     @split = send("#{@module}_bar_split",@split_param)
   	@meta = "#{@mod.titleize} based on #{asso.titleize}"
     temp = self.model(@asso).includes(@mod.to_sym).all.map {|i| 
              s = i.send(@mod).size
              if s != 0
-              [i.name,s] 
+              [i.send(@asso_name),s] 
              end 
            }.compact
     sorted = temp.sort_by{|i| i[1] }.reverse.take(10)
     category = sorted.map {|i| i [0] }
-    series = []    
+=begin
+    
+    p "********"
+    p category
     @split[1].each do |s|            
       h = {}
-      h[:name] = s[0]
-      h[:data] = category.map {|i|  self.model(@asso).find_by_name(i).send(@mod.to_sym).send(@split[0],s[1]) } 
+      h[:name] = s[0]      
+      h[:data] = category.map {|i|  self.model(@asso).send("find_by_#{@asso_name}",i).send(@mod.to_sym).send(@split[0],s[1]) } 
+      
       series << h
     end
+    :branch,{programmes: [:application_status]},:application_status,:name)
+=end
+    temp_series = self.model(@mod.singularize).bar_chart(@asso,@asso_name,@split[0],@split[1],@split[2])
+    #  category usually looks like this, ["Australia", "New Zealand"] => the 2 elements data part pertains to this categories
+    #  series usually looks like this, [{:name=>"Sent", :data=>[0, 0]}, {:name=>"Conditional Offer", :data=>[0, 0]}, 
+    #                                   {:name=>"Unconditional Offer", :data=>[0, 0]}, 
+    #                                   {:name=>"Pending", :data=>[0, 0]}, {:name=>"Joined", :data=>[1, 0]}, 
+    #                                   {:name=>"Rejected", :data=>[0, 0]}, {:name=>"Defer", :data=>[2, 1]}, 
+    #                                   {:name=>"Sent To Documentation", :data=>[1, 0]}]
+      series = []
+      temp_series.each do |i|
+        h = {}  
+        h[:data] = []
+        category.each do |j|       
+
+          if  j == i[0][0]
+            h[:name] = i[0][1] 
+            h[:data] << i[1]
+          else
+              h[:data] << 0
+          end
+        end
+        series << h
+      end
 
     [category,series]	  
   end

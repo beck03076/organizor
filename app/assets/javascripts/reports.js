@@ -1,3 +1,20 @@
+function save_report(obj){
+    var form = getFormObj('ransack_form');
+    $.post ('/save_report',form);
+    return false;
+}
+
+function getFormObj(formId) {
+    var formObj = {};
+    var inputs = $('#'+formId).serializeArray();
+    $.each(inputs, function (i, input) {        
+        if (input.value.length != 0){
+          formObj[input.name] = input.value;
+        }
+    });
+    return formObj;
+}
+
 function change_chart(type,obj,model){    
     $.post('/partial_' + type + '.js',{asso: $(obj).val(), model: model });
 }
