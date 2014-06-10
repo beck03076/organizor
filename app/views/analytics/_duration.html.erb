@@ -1,0 +1,23 @@
+<div class="row well">
+	<table class="table table-bordered">
+		<thead>			
+			<% @table_header.each do |u| %>
+     			<th><h5><strong> <%= u.titleize %> </strong></h5> </th>
+			<% end %>
+		</thead>
+		<tbody>			
+			<% @ordered_output.each do |record| %>
+			   <tr>
+			     <% @table_header.each_with_index do |col,index| %>
+			       <% if index == 0 %>
+                     <td> <%= link_to record.send(col),"/#{@core}/#{record.send(@link_id)}" %> </td>
+                   <% else %>  
+                     <td> <%= record.send(col) %> </td>
+			       <% end %>     			   
+			     <% end %> 
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>

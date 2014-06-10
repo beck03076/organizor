@@ -1,5 +1,5 @@
 class StatusDiagram < ActiveRecord::Base
-  attr_accessible :programme_id, :status_id, :user_id
+  attr_accessible :programme_id, :status_id, :user_id, :status_name
   belongs_to :programme
   belongs_to :application_status, foreign_key: "status_id"
   belongs_to :user

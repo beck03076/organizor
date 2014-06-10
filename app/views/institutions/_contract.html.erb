@@ -229,29 +229,13 @@
       </h4>
     </div>
     <div id="collapsenot" class="panel-collapse collapse">
-      <div class="panel-body">
-          <div class="col-xs-8">
-            <ul class="vlsdet-xl pt-0">
-              <div id="contract_note_<%= a.id %>" >
-                <%= render 'notes/note', sub: a %>
-              </div>
-
-             <h5>New Note</h5>
-             <%= nested_form_for(a,remote: true) do |cns| %>
-              <%= cns.fields_for :notes,a.notes.build do |cns1| %>
-                <%= cns1.hidden_field :sub_class, value: "Contract" %>
-                <%= cns1.text_area :content,{:size => '10x4',
-                                          :style => 'width:480px;',
-                                          class: "app_note",
-                                          data: {provide: "markdown"}} %>
-              <% end %>
-              <br/>
-              <div class="form-group">
-              <%= cns.submit "Write",{class: "btn btn-primary"} %>
-              </div>
-              <% end %>
-            </ul>
+      <div class="panel-body">          
+        <div class="col-xs-8">
+          <div id="shared_note_<%= a.id %>" >
+            <%= render 'notes/note', sub: a %>
           </div>
+            <%= render 'notes/form', i: a %>
+         </div>        
       </div>
     </div>
   </div>

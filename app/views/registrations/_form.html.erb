@@ -5,19 +5,19 @@
                     class: "form-horizontal"}) do |f| %>
                                          
                           <% if @registration.errors.any? %>
-                           <div id="error_explanation">
-                           <h2>
-                           <%= pluralize(@registration.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
-                           <ul>
-                             <% @registration.errors.full_messages.each do |msg| %>
-                              <li><%= msg %></li>
-                             <% end %>
-                           </ul>
-                           </div>
+                            <%  flash[:notice] = @registration.errors.full_messages.join(",") %>        
                           <% end %>
 
   <!--This line is mandatory to set the value registered in the enquiries table  -->
-  <%= f.hidden_field :enquiry_id, value: @enquiry_id %>                       
+  <%= f.hidden_field :enquiry_id, value: @enquiry_id %>  
+
+   <!--This line is mandatory to retain the ref_no during edit -->
+  <%= f.hidden_field :ref_no %>    
+
+   <!--This line is mandatory to retain the ref_no during edit -->
+  <%= f.fields_for :notes do |note| %>                   
+    <%= note.hidden_field :content %>
+  <% end %>
                           
    <div class="row row-top">
     <div class="col-xs-9">

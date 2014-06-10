@@ -1,8 +1,9 @@
 class RegistrationsController < ApplicationController
-  include CoreMethods
+  include CoreController
   include FetchFromContract
   include ActionsMethods
   helper_method :r_order,:meta
+
   
   def tab
     set_url_params
@@ -77,7 +78,7 @@ class RegistrationsController < ApplicationController
     authorize! :create, @registration
 
     respond_to do |format|
-      if @registration.save
+      if @registration.save       
         if params[:save_new] 
           format.html { redirect_to new_registration_path, notice: 'Registration was successfully created.' }
         else
@@ -97,32 +98,9 @@ class RegistrationsController < ApplicationController
     @registration = Registration.find(params[:id])
     authorize! :update, @registration
     
-    respond_to do |format|
+    respond_to do |format|      
       if @registration.update_attributes(params[:registration].except("assign"))
-      
-        if (params[:registration][:assign].to_s == "from_action")
-    
-          ass_to = User.find(params[:registration][:assigned_to]).first_name
-          ass_by = User.find(params[:registration][:assigned_by]).first_name
-          
-          tl("Registration",params[:id],'This registration has been reassigned',
-              'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:registration][:assigned_to])
-        
-        elsif params[:registration][:notes_attributes]
-          tl("Registration",params[:id],'A note has been created for this registration',
-             "Note created",'note',@registration.assigned_to)
-             
-        elsif params[:registration][:documents_attributes]
-          doc_no = params[:registration][:documents_attributes].size
-          tl("Registration",params[:id],"#{doc_no} document(s) has been uploaded to this registration",
-             "Docs Uploaded",'document',@registration.assigned_to)
-             
-        else
-        
-          tl("Registration",params[:id],'Values of this registration has been updated',
-             "Updated",'Update',@registration.assigned_to)
-        end
-              
+                    
         format.html { redirect_to @registration, notice: 'Registration was successfully updated.' }
         format.json { head :no_content }
         format.js
@@ -149,22 +127,15 @@ class RegistrationsController < ApplicationController
   
   # h_new stands for help_new
   def h_new
-      self.set_ref_no
       if params[:enquiry_id]
                   # e stands for enquiry
-                  e_obj = Enquiry.find(params[:enquiry_id])
-                  deact = EnquiryStatus.find_by_name("deactivated").id
-                  # deactivate the enquiry as it is going to be registered
-                  e_obj.update_attributes(active: false,
-                                          audit_comment: params[:note].to_s,
-                                          status_id: deact)
-                                   
+                  e_obj = Enquiry.find(params[:enquiry_id])                                
                   e = e_obj.attributes.except("id","score","source_id",
                                               "created_at","updated_at",
                                               "status_id", "address",
                                               "active","contact_type_id",
-                                              "registered")
-                  e[:note] = params[:note]
+                                              "registered","registered_at",
+                                              "registered_by","conversion_time")
                   e[:enquiry_id] = params[:enquiry_id] 
                   @enquiry_id = params[:enquiry_id]
                   @registration = Registration.new(e)
@@ -172,6 +143,9 @@ class RegistrationsController < ApplicationController
                   
                   if !e_obj.programmes.blank?
                     @registration.programmes << e_obj.programmes
+                  end
+                  if params[:note]
+                    @registration.notes << Note.new(content: params[:note])
                   end
       else
                   @registration = Registration.new(assigned_to: current_user.id,
@@ -182,14 +156,6 @@ class RegistrationsController < ApplicationController
       
       @countries = basic_select(Country)
       @p_types = InstitutionType.where(educational: true)
-  end
-  
-  def set_ref_no
-    # creating new reference number logic
-        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
-        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
-        ym = Time.now.strftime("%y%m").to_s
-        @ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
   
   def set_cols

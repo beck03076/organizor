@@ -1,4 +1,12 @@
-module CoreMethods
+module CoreController
+  
+
+  def self.included(base)
+    base.class_eval do
+      impressionist :actions=>[:show]
+    end  
+  end
+
   # ===========
   # = Methods =
   # ===========

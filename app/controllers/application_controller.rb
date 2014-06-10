@@ -20,10 +20,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def five_notifications
+  def all_notifications
      @notys = Audit.notys(current_user.id)
-     #Audit.set_all_checked(current_user.id)
+     render 'shared/all_notifications'
+  end
+
+  def limited_notifications
+     @notys = Audit.notys(current_user.id,10)
+     # uncomment the following line to remove showing the badge from first click
+     # Audit.set_all_checked(current_user.id)
      render partial: 'shared/notifications'
+  end
+
+  def set_checked_true
+    Audit.set_checked(params[:aid])
+    head :ok, :content_type => 'text/html'
+  end
+
+  def set_all_checked_true
+    Audit.set_all_checked(params[:uid])
+    head :ok, :content_type => 'text/html'
   end
 
   def unchecked_notys
@@ -86,11 +102,12 @@ class ApplicationController < ActionController::Base
       @co_id = @model.camelize.constantize.find(@item_id).country_id
     else
       @co_id = @form_country_id.to_i
-    end
-    
+    end   
+     
     if contract.nil? 
       @out = "No contract created for this institution, skipping recruitment territory validation!"
     elsif !@co_id.nil?
+
         pro_coun = contract.all_prohibited_countries.map &:id
         pro_reg = contract.all_prohibited_regions.map &:id
         per_coun = contract.all_permitted_countries.map &:id
@@ -117,6 +134,8 @@ class ApplicationController < ActionController::Base
               @out = "This students country of origin is not a permitted territory as per this institutions contract"
             end
         end
+    elsif @co_id.nil?
+      @out = "Nationality for this student is not selected, skipping recruitment territory validation!" 
     end
 
     render text: @out
@@ -132,16 +151,9 @@ class ApplicationController < ActionController::Base
     
     to_update = model.where(id: ids)
     to_update.update_all(assigned_to: params[:user_id],
-                         assigned_by: current_user.id)
-                         
-
-    ass_to = User.find(params[:user_id]).first_name
-    ass_by = User.find(current_user.id).first_name
-    
-    tl(@model.camelize,0,"#{ids.size} #{@model.camelize.pluralize} has been reassigned",
-         'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
-         'assign_to',params[:user_id])
-    
+                         assigned_by: current_user.id,
+                         assigned_at: Time.now)   
+    # this is because the update_all does not triiger updated_at to update itself                         
     model.find(ids.first).update_attribute(:updated_at,Time.now)
                           
     render text: "Successfully assigned!"
@@ -184,26 +196,8 @@ class ApplicationController < ActionController::Base
     @records = @model.camelize.constantize.where(id: @ids.split(","))
     @filename = "#{Time.now.to_i}_#{@records.size}_#{@model.to_s.downcase.pluralize}.#{@format}"
     headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\"" 
-  end
-  
-  def notify
-    @tl = Timeline.find(params[:t_id])
-    @notify_count = Timeline.where(receiver_id: params[:receiver_id],checked: false).count
-    
-    render :partial => "shared/notifications", :locals => {:tl => @tl,:count => @notify_count,u: @tl.user}
-    
-  end
-  
-  def mark_all_check
-    Timeline.where(receiver_id: params[:id]).update_all(checked: true)
-    render text: "Successfully marked!"  
-  end
-  
-  def all_notifications
-    @tls = Timeline.includes(:user).where(receiver_id: current_user.id).order("created_at desc")
-    render 'shared/all_notifications'
-  end
-  
+  end 
+
   private
   
   def set_current_user

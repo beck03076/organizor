@@ -18,7 +18,7 @@
                <% end %>
                <% hsh = {emails: "by",follow_ups: "to",todos: "to"} %>
                <% %w(emails follow_ups todos).each do |act| %>
-                 <% out = meta(current_user.id,"user",act,a.id,hsh[act.to_sym]) %>
+                 <% out = meta(current_user.id,"user",act,a,hsh[act.to_sym]) %>
                  <%= li1(act,out,'span','small')%>
                <% end %>
         </ul>
@@ -69,8 +69,13 @@
     <div class="row border-b">  
         <div class="col-xs-12">
           <h4 class="bold-subhead">Manage Permissions</h4>
+          <%= render 'roles/form', {new_resource: a,
+                             resource_disp1: "User",
+                             div: "",
+                             h: "Edit Permissions",
+                             from_role: false} %>
           
-           <%= render 'roles/permissions', role: a, f: "user" %>
+           
             <br/>
         </div>
     </div>

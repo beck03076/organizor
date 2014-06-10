@@ -7,10 +7,12 @@ class Fee < ActiveRecord::Base
   belongs_to :programme
   has_many :commissions, dependent: :destroy
   has_one :registration, through: :programme
+  has_one :institution, through: :programme
   
   monetize :tuition_fee_cents
   monetize :scholarship_cents
   monetize :commission_amount_cents, :allow_nil => true
+  monetize :commission_paid_cents, :allow_nil => true
   
   def cur_code=(r)
     self.currency = Currency.find_by_iso_numeric(r).code
@@ -27,6 +29,10 @@ class Fee < ActiveRecord::Base
   
   ransacker :commission_amount do |parent|
       Arel::Nodes::Division.new(parent.table[:commission_amount_cents], 100 )
+  end
+
+  ransacker :commission_paid do |parent|
+      Arel::Nodes::Division.new(parent.table[:commission_paid_cents], 100 )
   end
 
   ransacker :scholarship do |parent|

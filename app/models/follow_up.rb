@@ -1,20 +1,35 @@
 class FollowUp < ActiveRecord::Base
-  belongs_to :enquiry
+
+  include ActionsModel
+  
+  belongs_to :follow_upable, polymorphic: true
   belongs_to :event_type
-  belongs_to :registration
-  belongs_to :enquiries,class_name: "Enquiry",foreign_key: "enquiry_id"
-  belongs_to :institution
   
   attr_accessible :api, :created_by, :desc, 
   :ends_at, :event_type_id, :remind_before, 
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
-  :registration_id,:institution_id,:ref_no
+  :registration_id,:institution_id,:ref_no,
+  :followed,:auto
+
+  notifiably_audited alert_for: [[[:assigned_to],"FollowUp assigned","This follow up has been reassigned to you"]],
+                                 title: :title,
+                                 create_comment: "New <<here>> has been created", 
+                                 update_comment: "Some values of this <<here>> has been updated",
+                                 alert_to: :assigned_by
 
   
   scope :between, lambda {|start_time, end_time|  
    {:conditions => ["? < start < ?", FollowUp.format_date(start_time),FollowUp.format_date(end_time)] }  
   }  
+
+  after_save :set_followed_at
+
+  def set_followed_at
+    return if !followed_changed?
+   
+    update_column(:followed_at,(followed ? Time.now : nil))
+  end
   
   def self.format_date(date_time)  
    Time.at(date_time.to_i).to_formatted_s(:db)  
@@ -33,6 +48,10 @@ class FollowUp < ActiveRecord::Base
     :className => "follow_up_item",
    }  
   end 
+
+  def event_type_name
+    event_type.name rescue "Unknown"
+  end
   
   def tit
     self.title rescue "Title Unknown"
@@ -47,16 +66,7 @@ class FollowUp < ActiveRecord::Base
   end
   
   def asso_with
-    %w(enquiry registration institution person).each do |i|
-      id = self.send(i + "_id")
-      if !id.nil?
-        @id = id
-        @model = i.camelize.constantize
-        @model_name = i
-      end
-    end
-    obj = @model.find(@id)
-    [obj,obj.name,@model_name + "_path",@model_name]
+    [parent.id,parent.name,@core_name.pluralize.downcase,@core_name]
   end
   
 end

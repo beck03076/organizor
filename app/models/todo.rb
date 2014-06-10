@@ -1,12 +1,17 @@
 class Todo < ActiveRecord::Base
-  belongs_to :enquiry
-  belongs_to :registration
-  belongs_to :institution
+  include ActionsModel
+  
+  belongs_to :todoable, polymorphic: true
   belongs_to :topic, class_name: "TodoTopic", foreign_key: "topic_id"
   #belongs_to :status, class_name: "TodoStatus", foreign_key: "status_id"
   belongs_to :user, class_name: "User", foreign_key: "assigned_to"
   belongs_to :a2, class_name: "User", foreign_key: "assigned_by"
   belongs_to :_invited_by, class_name: "User",foreign_key: "invited_by_id"
+
+  notifiably_audited alert_for: [[[:assigned_to],"Todo assigned","This todo has been reassigned to you"]],
+                                 title: :title,
+                                 create_comment: "New <<here>> has been created", 
+                                 update_comment: "Some values of this <<here>> has been updated"
   
   
   attr_accessible :created_by, :desc, :duedate, 
@@ -14,7 +19,7 @@ class Todo < ActiveRecord::Base
   :updated_by,:assigned_to, :assigned_by,
   :enquiry_id,:registration_id,:done,
   :institution_id,:done_at,:api,:title,
-  :ref_no
+  :ref_no,:auto
   
   def as_json(options = {})  
    {  
@@ -30,13 +35,20 @@ class Todo < ActiveRecord::Base
     :className => "todo_item",
    }  
   end
+
+  after_save :set_done_at
   
-   scope :todays, where("date(duedate) = '#{Date.today.to_s(:db)}'")
+  scope :todays, where("date(duedate) = '#{Date.today.to_s(:db)}'")
                                
   scope :this_weeks, where("date(duedate) BETWEEN '#{Date.today.at_beginning_of_week.to_s(:db)}' AND '#{Date.today.at_end_of_week.to_s(:db)}'")
                                    
   scope :this_months, where("date(duedate) BETWEEN '#{Date.today.at_beginning_of_month.to_s(:db)}' AND '#{Date.today.at_end_of_month.to_s(:db)}'")
   
+  def set_done_at
+    return if !done_changed?
+   
+    update_column(:done_at,(done ? Time.now : nil))
+  end
 
   
   def status
@@ -61,10 +73,9 @@ class Todo < ActiveRecord::Base
   
   def uptd
     self.updated_at.strftime("%A, %F") rescue nil
-  end
+  end  
   
-  
-  def tit
+  def topic_name
     self.topic.name rescue "Title Unknown"
   end
   

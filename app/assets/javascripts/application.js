@@ -18,25 +18,30 @@
 //= require tinymce-jquery
 //= require jquery.purr
 //= require best_in_place
-
+//= require private_pub
 //= require fullcalendar
 //= require data-confirm-modal
 //= require see_more
+//= require redactor-rails
 
 function notify(){
   $.get('/unchecked_notys.js',function(d){
     if (d != 0){
     $('span.badge').removeClass('hide'); 
     $('span.badge').text(d);
-    $('span.badge').effect("bounce", { times:5 }, 300);
+    //$('span.badge').effect("bounce", { times:5 }, 300);
   }
   });
 }
 
 $(function(){
 
-
-
+  $('#compare_users').click(function(e){
+    var href = $(this).attr('href');
+    var uids = $(this).data('uids');    
+    $.post('/compare_users_modal.js',{link: href, uids: uids});   
+    e.preventDefault();
+  });
 
  $(document).on('nested:fieldAdded', function(event){
               var field = event.field;
@@ -146,8 +151,8 @@ $('.datepicker').datepicker();
 
         var sel = $('#role_select').val();
         if (sel.length == 0){
+          bootbox.alert("No Role - Assign a role to the user(s) before inviting them to Organizor");
           event.preventDefault();
-          info("No Role","Assign a role to the user(s) before inviting them to Organizor");
         }
         else{
           return true;
@@ -594,7 +599,7 @@ function selectUpdate(itemId,urlTo,destSel,query){
                     type: 'GET',
                     dataType: "JSON",
                     success: function( json ) {
-                        if (json == "") {  alert("No institutions configured"); }
+                        //if (json == "") {  alert("No institutions configured"); }
                         $(destSel).empty();
                         $(destSel).append('<option value= selected="selected">-choose-</option>');
                         $.each(json, function(i,value) {

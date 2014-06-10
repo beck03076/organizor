@@ -69,26 +69,34 @@ module FetchFromContract
   end
   
   def set_reg_fu(ss,p,r,i)    
-
     [["second_year",1],["third_year",2]].each do |y|
        tit = "#{r.ref_no} #{y[0].titleize} FollowUp"
        comm = ss.send(y[0])
        ass_to = current_user.conf.def_progression_fu_ass_to
-      if !comm.blank? && FollowUp.where(title: tit,assigned_to: ass_to, registration_id: r.id).blank?
+       # scenario where the commission percentage for 2/3 year is not blank and at the same time, no similar follow up is assigned to the same user and the same registration
+      if !comm.blank? && r.follow_ups.where(title: tit,assigned_to: ass_to).blank?
        tit = "#{r.ref_no} #{y[0].titleize} FollowUp"
-       s_at = (p.start_date + y[1].year)
-       r_bef = s_at - 5.days
-       e_at = s_at + 15.days
-       de = "#{r.name}[#{r.ref_no}] is about to progress, #{i.name} has agreed to pay #{comm}% commission for #{y[0].titleize}. Please follow this up."
-    
-        FollowUp.create!(title: tit,
-                         desc: de,
-                         starts_at: s_at,
-                         remind_before: r_bef,
-                         ends_at: e_at,
-                         assigned_to: ass_to,
-                         assigned_by: current_user.id,
-                         registration_id: r.id)
+       # scenario where the course start date is not nil
+       if !p.start_date.nil?
+         s_at = (p.start_date + y[1].year)
+         r_bef = s_at - 5.days
+         e_at = s_at + 15.days
+         de = "#{r.name}[#{r.ref_no}] is about to progress, #{i.name} has to pay some commission for #{y[0].titleize}. Please follow this up."
+         # scenario where the course start date is NIL
+       else
+         s_at = (Date.today + 2)         
+         e_at = s_at + 1.days         
+         r_bef = nil
+         de = "This registration has successfully applied for a programme in #{i.name}. However, the course start date is not set. Please set it in 2 days."
+       end   
+       # finally creating follow ups
+       r.follow_ups.create!(title: tit,
+                           desc: de,
+                           starts_at: s_at,
+                           remind_before: r_bef,
+                           ends_at: e_at,
+                           assigned_to: ass_to,
+                           assigned_by: current_user.id)
       end
     end
   end

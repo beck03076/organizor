@@ -1,34 +1,38 @@
-class Enquiry < ActiveRecord::Base
-  include CoreExtension
+class Enquiry < ActiveRecord::Base  
+  include CoreModel
+  
+  after_create :create_email,:create_follow_up
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another enquiry, please check!" }
 
   notifiably_audited alert_for: [[[:mobile1,:email1,:surname],"Contact Details","Primary mobile/email is changed for this enquiry"],
-                                 [[:assigned_to],"Re-assigned","This Enquiry has been reassigned to you"]],
+                                 [[:assigned_to],"Re-assigned","This Enquiry has been reassigned to you"],
+                                 [[:notes_count],"count","Count of notes"]],
                                  title: :first_name,
                                  create_comment: "New <<here>> has been created", 
                                  update_comment: "Custom: Values of <<here>> has been updated" 
 
   mount_uploader :image, HumanImageUploader
+
+ 
   
   belongs_to :branch
   belongs_to :country_of_origin,
              :class_name => "Country",
              :foreign_key => "country_id"
   belongs_to :status, class_name: "EnquiryStatus",foreign_key: "status_id"
+  # ========= Duplicate additions will be useful in reports ==============
+  belongs_to :enquiry_status, class_name: "EnquiryStatus",foreign_key: "status_id"
+  belongs_to :user, class_name: "User",foreign_key: "assigned_to"
+  # ======================================================================
   belongs_to :contact_type  
-  belongs_to :student_source,:foreign_key => "source_id"
-  belongs_to :users, class_name: "User"  
+  belongs_to :student_source,:foreign_key => "source_id"   
   
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries  
   has_many :programmes
-  has_and_belongs_to_many :emails
-  has_many :follow_ups
-  has_many :todos
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Enquiry"'  
   
   has_many :institutions, through: :programmes
   has_many :institution_city, through: :institutions, foreign_key: "city_id"
@@ -52,9 +56,10 @@ class Enquiry < ActiveRecord::Base
              :country_of_origin,
              :_ass_to,:_upd_by).where("enquiry_statuses.name != 'deactivated'")
   else
-    includes(:status,
+    includes(:branch,
+             :status,
              :follow_ups,
-             :country_of_origin).where("enquiry_statuses.name != 'deactivated' AND enquiries.assigned_to = #{user.id}")
+             :country_of_origin).where("enquiry_statuses.name != 'deactivated' AND enquiries.branch_id = #{user.branch_id}")
   end
   }
 
@@ -69,10 +74,49 @@ class Enquiry < ActiveRecord::Base
                   :name,:address,:status_id,:country_id,
                   :follow_ups_attributes,:active,:notes_attributes,
                   :todos_attributes,:contact_type_id,:registered,
-                  :image,:remote_image_url,:branch_id
+                  :image,:remote_image_url,:branch_id,:registered_at,
+                  :registered_by,:response_time,:assigned_at,
+                  :todos_attributes
                   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true  
+
   
+
+  def create_email
+    if !self.created_by.nil?
+      c = User.find(self.created_by).conf
+      if c.auto_email_enq
+        temp = c.def_create_enquiry_email
+          to = c.def_enq_email
+          etemp = EmailTemplate.find_by_name(temp)
+          smtp = Smtp.find(c.def_from_email)
+          self.emails.create!(subject: etemp.subject,
+                             body: etemp.body,
+                             signature: etemp.signature,
+                             to: send(to),
+                             smtp_id: smtp.id,
+                             from: smtp.name,
+                             auto: true)
+      end    
+    end
+  end
+
+  def create_follow_up
+    if !self.created_by.nil?
+      c = User.find(self.created_by).conf
+      if c.auto_cr_f_u
+          s = (Date.today + c.def_follow_up_days.to_i)
+          self.follow_ups.create!(title: c.def_f_u_name,
+                                     desc: c.def_f_u_desc,
+                                     event_type_id: c.def_f_u_type,
+                                     starts_at: s,
+                                     ends_at: s + 1,
+                                     assigned_to: c.def_f_u_ass_to,
+                                     assigned_by: self.created_by,
+                                     auto: true)
+      end
+    end
+  end  
   
   def dob
    self.date_of_birth.strftime("%d-%m-%Y") rescue "Not Captured"
@@ -138,8 +182,7 @@ class Enquiry < ActiveRecord::Base
     where(score: i[0] - 1..i[1] + 1).size
   end
 
-  def self.chart_self_asso(asso,sub_asso_inc,sub_asso_qua)    
-    includes(sub_asso_inc).group_by(&asso.to_sym).map {|k,v| [k,v.size] if !k.nil?}.compact       
-  end 
-
+  def self.bar_chart(cond,asso,asso_name,col,*dummy)
+    includes(asso).where(cond).group(["#{asso.to_s.pluralize}.#{asso_name}","enquiries.#{col}"]).count.reject{|k,v| k[0].nil? }
+  end  
 end

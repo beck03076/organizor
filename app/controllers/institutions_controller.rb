@@ -1,5 +1,5 @@
 class InstitutionsController < ApplicationController
-  include CoreMethods
+  include CoreController
   include ActionsMethods
   helper_method :meta
   
@@ -101,21 +101,6 @@ class InstitutionsController < ApplicationController
 
     respond_to do |format|
       if @institution.update_attributes(params[:institution].except("assign","_destroy"))
-        if (params[:institution][:assign].to_s == "from_action")
-    
-          ass_to = User.find(params[:institution][:assigned_to]).first_name
-          ass_by = User.find(params[:institution][:assigned_by]).first_name
-          
-          tl("Registration",params[:id],'This institution has been reassigned',
-              'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,'assign_to',params[:institution][:assigned_to])      
-              
-        elsif params[:institution][:notes_attributes]
-          tl("Institution",params[:id],'A note has been created for this institution',
-             "Note created",'note',@institution.assigned_to)
-        else
-          tl("Institution",params[:id],'Values of this institution has been updated',
-             "Updated",'Update',@institution.assigned_to)
-        end
         format.html { redirect_to @institution, notice: 'Institution was successfully updated.' }
         format.json { head :no_content }
         format.js

@@ -1,33 +1,24 @@
 <!-------------------------NOTE for Enq and Reg-------------------------------------->
+<div class="row well">
+<h4 class="bold-subhead">
+  Notes
+</h4>
 
-<div class="brg0"></div>
-     <div id="enquiry_note_<%= obj.id %>" >
-          <%= render 'notes/note', sub: obj %>
-     </div>
+  <div class="col-xs-8">
+    
+
+    <div id="shared_note_<%= obj.id %>" >
+      <%= render 'notes/note', sub: obj %>
+    </div>
+
+    <%= render 'notes/form', i: obj %>
+
+    
+  </div>
+</div>
 
 
-<!--------------------------------------------------------------->
 
-<h4> Notes For This Application<h4>
-     <%= nested_form_for(obj,remote: true) do |r| %>
-      <%= r.fields_for :notes,obj.notes.build do |n| %>
-        <%= n.hidden_field :sub_class, value: obj_name.capitalize %>
-        <div class="form-group">
-          <%= n.text_area :content,{:size => '10x3', :style => 'width:400px;',class: "app_note form-control"} %>
-        </div>
-      <% end %>
-      <div class="form-group">
-        <div class="col-xs-2 first">
-          <%= r.submit "Write",{class: "btn btn-primary"} %>
-        </div>
-      </div>
-      <% end %>
-     <br/>
-
-    <div class="brg01"> </div>
-    <br/>
-    <br/>
-<!--------------------------------------------------------------->
 
 
 <script>

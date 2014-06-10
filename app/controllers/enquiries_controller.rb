@@ -1,7 +1,7 @@
 class EnquiriesController < ApplicationController
-  include CoreMethods
+  include CoreController
   include ActionsMethods
-  helper_method :meta
+  helper_method :meta  
   
   def tab
     set_url_params    
@@ -83,45 +83,8 @@ class EnquiriesController < ApplicationController
     
     respond_to do |format|
       
-      if @enquiry.save
-      
-       # tl('Enquiry',@enquiry.id,
-       #     "A new enquiry has been created",
-       #     @enquiry.first_name,'Create Enquiry',@enquiry.assigned_to)
-        # after creating enquiry, checking conf for email and f_u
-=begin
-        c = current_user.conf
+      if @enquiry.save      
 
-        if c.auto_email_enq
-          temp = c.def_create_enquiry_email
-          to = c.def_enq_email
-          etemp = EmailTemplate.find_by_name(temp)
-
-          @enquiry.emails.create(subject: etemp.subject,
-                                 body: etemp.body,
-                                 signature: etemp.signature,
-                                 to: @enquiry.send(to),
-                                 from: c.def_from_email)
-                                 
-           tl('Enquiry',@enquiry.id,
-              "An email has been sent to this enquiry",
-              etemp.subject,'email',@enquiry.assigned_to)
-        end
-        
-        if c.auto_cr_f_u
-          s = (Date.today + c.def_follow_up_days.to_i)
-          @enquiry.follow_ups.create(title: c.def_f_u_name,
-                                     desc: c.def_f_u_desc,
-                                     event_type_id: c.def_f_u_type,
-                                     starts_at: s,
-                                     ends_at: s + 1,
-                                     assigned_to: c.def_f_u_ass_to,
-                                     assigned_by: current_user.id)
-           tl('Enquiry',@enquiry.id,
-              "A follow up has been created for this enquiry",
-              c.def_f_u_name.to_s + ' at ' + s.to_s + ' | assigned(follow up) to: ' + c.def_f_u_ass_to.to_s,'follow_up',c.def_f_u_ass_to)
-        end
-=end
         if params[:save_new] 
           format.html { redirect_to new_enquiry_path, notice: 'Enquiry was successfully created.' }
         else

@@ -1,0 +1,31 @@
+<!--Analytics -->
+<%= head(nil,"Analytics","Analytics List",analytics_path) %>
+
+<%= render 'filter' %>
+<h4 class="row">
+	<strong>
+	  <% count = "(<span class='bblue'>" + @ordered_output.length.to_s + "</span>)" %>	
+	  <%= @page_header.gsub(/<<size>>/,count).html_safe %>
+    </strong>
+</h4>
+<% if !@charts.nil? %>
+	<hr>
+	<div id="chart_container"></div>
+	<hr>
+	<h4 class="row">
+		<strong>
+		  <% count = "(<span class='bblue'>" + @ordered_output.count.to_s + "</span>)" %>	
+		  <%= @page_header.gsub(/<<size>>/,count).html_safe %>
+	    </strong>
+	</h4>
+<% end %>
+<%= render @partial %>
+
+
+
+<script type="text/javascript">
+  actmm("reports")
+  <% if !@charts.nil? %>
+  	init_negative_chart('#chart_container',<%= @charts[0].to_s.html_safe %>,<%= @charts[1].to_json.html_safe %>,'<%= @chart_text %>'); 
+  <% end %>     
+</script>

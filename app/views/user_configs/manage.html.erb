@@ -10,11 +10,17 @@
                 <div class="well">
                    <%= form_for(@user_config, html: {class: "form-horizontal"}) do |f| %>
                     <%= f.hidden_field :user_id,value: current_user.id %>
+                        <!-- save button twice -->
+                        <div class="form-group form-last">
+                          <div class="col-sm-offset-10 col-sm-5">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                          </div>
+                        </div>
                        <!-- Contains the content of the form, same form since all just edits the user_configs table -->
                        <%= render @partial, f: f %>
 
                     <br/>
-                    
+                    <!-- save button twice -->
                     <div class="form-group form-last">
                       <div class="col-sm-offset-10 col-sm-5">
                         <button type="submit" class="btn btn-primary">Save</button>

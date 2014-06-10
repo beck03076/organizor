@@ -79,5 +79,12 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
   def show 
     @email = Email.find(params[:id])
   end
+
+    # DELETE /email_templates/1
+  # DELETE /email_templates/1.json
+  def destroy
+    @email = Email.find(params[:id])
+    @email.destroy
+  end
   
 end

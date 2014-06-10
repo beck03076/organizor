@@ -1,6 +1,15 @@
 class Registration < ActiveRecord::Base
-  include CoreExtension
-  after_save :set_registered_true
+  include CoreModel
+
+  notifiably_audited alert_for: [[[:mobile1,:email1,:surname],"Contact Details","Primary mobile/email is changed for this registration"],
+                                 [[:assigned_to],"Re-assigned","This registration has been reassigned to you"]],
+                                 title: :first_name,
+                                 create_comment: "New <<here>> has been created", 
+                                 update_comment: "Custom: Values of <<here>> has been updated",
+                                 except: [:follow_ups_count,:todos_count,:notes_count,:emails_count]
+
+  before_create :set_ref_no
+  after_create :set_enquiry_fields
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
@@ -35,13 +44,7 @@ class Registration < ActiveRecord::Base
   belongs_to :branch
   belongs_to :user, foreign_key: "assigned_to"
   belongs_to :progression_status
-  
-  has_and_belongs_to_many :emails 
-  has_many :follow_ups
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Registration"'
-  has_many :todos
-  
-  belongs_to :branch
+
     
   attr_accessor :_destroy
 
@@ -63,7 +66,9 @@ class Registration < ActiveRecord::Base
   :programmes_attributes,:proficiency_exams_attributes,
   :note,:documents_attributes,:_destroy,:enquiry_id,
   :notes_attributes,:image,:remote_image_url,
-  :progression_status_id,:branch_id
+  :progression_status_id,:branch_id,:assigned_at,
+  :impressions_count, :response_time,:registered_by,
+  :nationality,:todos_attributes
   
   accepts_nested_attributes_for :programmes,:emails,:follow_ups,
   :notes,:todos,:proficiency_exams, 
@@ -79,14 +84,31 @@ class Registration < ActiveRecord::Base
             :_ass_to).scoped
   else
    includes(:follow_ups,
-            :country_of_origin).where("registrations.assigned_to = #{user.id}")
+            :country_of_origin).where("registrations.branch_id = #{user.branch_id}")
   end
   }
 
-  def set_registered_true
+  def set_enquiry_fields
     if !self.enquiry_id.nil?
-      Enquiry.find(enquiry_id).update_attribute(:registered, true)
+      enq = Enquiry.find(enquiry_id)
+      deact = EnquiryStatus.find_by_name("deactivated").id
+      conv_time = (registered_at.to_date - created_at.to_date).to_i 
+      enq.update_attributes(registered: true,
+                            active: false,
+                            status_id: deact,
+                            registered_at: Date.today,
+                            registered_by: self.created_by,
+                            conversion_time: conv_time)      
+      enq 
     end
+  end
+
+  def set_ref_no
+    # creating new reference number logic
+        ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
+        ref_temp_no = ref_temp.nil? ? "0000" : ref_temp.to_s[4..7]
+        ym = Time.now.strftime("%y%m").to_s
+        self.ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
 
   def self.sco(i)
@@ -142,7 +164,11 @@ class Registration < ActiveRecord::Base
   end
   
   def nationality
-    self.country_of_origin.name rescue "Unknown"
+    country_of_origin.name rescue "Unknown"
+  end
+
+  def nationality=(i)
+    self.country_id = i
   end
   
   def source
@@ -175,18 +201,12 @@ class Registration < ActiveRecord::Base
     includes(i).where({i =>  {name: j}}).size 
   end
 
-  def self.bar_chart(asso,asso_name,sub_asso,cat1,cat2)
-    out = []
-    h = {}
+  def self.bar_chart(cond,asso,asso_name,sub_asso,cat1,cat2)
     c1 = cat1.to_s.pluralize
     cats = cat1.to_s.camelize.constantize.all.map &cat2
     includes(asso,
-             sub_asso).where(c1.to_sym => 
-                             {cat2 => cats}).group(["#{asso.to_s.pluralize}.#{asso_name}","#{c1}.name"]).count
-    #out                                        
-
-
-  end
-  
+             sub_asso).where(cond).where(c1.to_sym => 
+                             {cat2 => cats}).group(["#{asso.to_s.pluralize}.#{asso_name}","#{c1}.name"]).count.reject{|k,v| k[0].nil? }
+  end 
 
 end

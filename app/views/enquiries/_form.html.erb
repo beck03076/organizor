@@ -23,7 +23,7 @@
                             </div>
                           <% end %>
  <!-- Assigning the current_user's id to assigned_by and passing with the form as hidden input -->
-                      <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                      <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>                      
 
                       <!-- rendering the partial enquiry_information that captures personal info of an enquiry by passing the form object f -->
                       <%= render 'enquiry_information', :f => f %>

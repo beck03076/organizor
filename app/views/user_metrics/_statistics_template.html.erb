@@ -1,0 +1,23 @@
+<div class="row <%= @style[@tab.to_sym][1] %>">
+	<table class="table table-bordered">
+		<thead>
+			<th><h4><strong> Statistics of </strong></h4></th>
+			<% @users.each do |u| %>
+     			<th><h4><strong> <%= u.first_name %> </strong></h4> </th>
+			<% end %>
+		</thead>
+		<tbody>			
+			<% @metrics[tab].keys.each do |m| %>
+			   <tr> 
+               <td><h4> <%= m.titleize %></h4></td>
+               <% @users.each do |u| %>
+     			<td><h5><strong> <%= @metrics[tab][m][u.id] %></strong></h5> </td>
+			   <% end %>
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>
+
+<div id="compare-users-container"> </div>

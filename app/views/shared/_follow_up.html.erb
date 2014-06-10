@@ -1,8 +1,7 @@
 <!-- follow_ups for core models -->
 
 <div class="col-md-12">
-  <div class="config-content">
-    <% if @list.to_i == 1 && obj.follow_ups.size > 0 %>
+    <% if @list.to_i == 1 && obj.follow_ups.count > 0 %>
     <div class="row">
       <h4>Follow Ups</h4>
     </div>
@@ -16,6 +15,7 @@
             <th>Starts At</th>
             <th>Assigned To</th>
             <th>Assigned By</th>
+            <th>Auto Generated</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -28,6 +28,7 @@
                     <td><%= fu.starts_at.to_s %></td>
                     <td><%= fu.ato %></td>
                     <td><%= fu.aby %></td>
+                    <td><%= fu.auto %></td>
                     <td><%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
                             fu, 
                             method: :delete, 
@@ -39,14 +40,14 @@
     </div>
     <% end %>
     
-     <div class="well">
+     <div class="row well">
         <div class="row row-top">
           <h4>New Follow Up</h4>
         </div>
 
-          <%= form_for(@follow_up) do |g| %>
-            <%= hidden_field_tag "#{g.object_name}[model]", obj_name %>
-            <%= g.hidden_field obj_id.to_sym, value: id %>
+          <%= form_for(obj) do |f| %>      
+            <%= f.fields_for(:follow_ups,FollowUp.new) do |g| %>
+
             <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= bs(g,:title,"text_field",[nil,2],5,12,"row") %>
@@ -73,20 +74,7 @@
             <%= bs(g,[:desc,
                       :size => "2x2"],"text_area",["Description",2],5,12,"row") %>
             
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="email_a" class="control-label col-sm-2">
-                        Add
-                      </label>
-                      <div class="col-sm-9">
-                        <a onclick="$('#more_fields').slideToggle();">more fields</a>
-                      </div>
-                    </div>
-               </div>
-            </div>
-            
-            <div id="more_fields" style="display: none;">
+
             <%= bs(g,[:ends_at,
                       :class => "dateTimeField caltf"],"text_field",[nil,2],5,12,"row") %>
                       
@@ -96,16 +84,17 @@
             <%= bs(g,:remind_before,"text_field",[nil,2],5,12,"row") %>
             
             <%= bs(g,:venue,"text_field",[nil,2],5,12,"row") %>
-            </div>
 
-            <div class="form-group form-last">
-                    <div class="col-sm-offset-10 col-sm-10">
-                      <%= g.submit "Save", {class: "btn btn-primary"} %>
-                    </div>
+            <div class="row">
+              <div class="form-group form-last">
+                      <div class="col-sm-offset-10 col-sm-10">
+                        <%= g.submit "Save", {class: "btn btn-primary"} %>
+                      </div>
+              </div>
             </div>
             <% end %>
-      </div><!-- end well-->
-  </div>
+            <% end %>
+    </div><!-- end well-->
 </div>
 <div id="container"></div>
 <script> 

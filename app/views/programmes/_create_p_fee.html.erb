@@ -1,36 +1,30 @@
 <!-- Asking the counselor to update fees and sclorship from offer letter -->
 
 <%= form_for(@programme,html: {class: "form-horizontal"}) do |p| %>
-  <% cur = (p.object.currency || @programme.institution.country.currency.code) %>
+  <% cur = (p.object.currency || @programme.institution.country.currency.code rescue nil) %>
   <%= bs(p,[:p_fee_id,
             ProcessingFeeType.order(:name),
             :id,
             :name,
             {prompt: "-fee type-"},{}],
              "collection_select",
-             ["Type",4],7,6) %>
+             ["Type",2],8,12) %>
              
     <%= bs(p,[:currency,
             all_currencies(Money::Currency.table),
             {:include_blank => 'Select a Currency',
              :selected => cur},{}],
             "select",
-            [nil,4],7,6) %>
+            [nil,2],8,12) %>
                 
-    <%= bs(p,:p_fee,"text_field",["amount",4],7,6) %>
+    <%= bs(p,:p_fee,"text_field",["amount",2],8,12) %>
     
-<% if false %>
-    <%= bs(p,[:p_fee_status_id,
-                ProcessingFeeStatus.order(:name),
-                :id,
-                :name,
-                {prompt: "-fee status-"},{}],
-                 "collection_select",
-                 ["status",4],7,6) %>
+<% if p.object.p_fee_bank_details %>
+    <%= bs(p,:p_fee_bank_details,"text_area",["Bank Details",2],8,12) %>
 <% end %>
 
     <div class="form-group form-last">
-      <div class="col-xs-5 text-right">
+      <div class="text-center">
         <%= p.submit "Save",{class: "btn btn-primary"} %>
       </div>
     </div>

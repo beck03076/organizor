@@ -67,13 +67,14 @@ h1 {
   background-color: #FFFFFF;
   color: #222222;
   border: 1px solid #BBBBBB;
-  max-width: 400px;
+  max-width: 500px;
   max-height: 500px;
   }
   .popover .notification-content p {
     margin-bottom: 0; }
   .popover .notification-content {
-    width: 350px; }   
+    width: 420px;
+     }   
 
 /* Set the fixed height of the footer here */
 #footer {

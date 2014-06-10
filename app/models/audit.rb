@@ -7,14 +7,18 @@ class Audit < ActiveRecord::Base
     User.find(self.user_id)
   end
 
-  def self.notys(uid)
-  	self.all(uid).order("created_at DESC").limit(5)    
+  def self.notys(uid,lim = nil)
+  	self.all(uid).order("created_at DESC").limit(lim)    
   end	
   
   def self.notys_badge(uid)
   	cnt = self.all(uid).where(checked: false).size
     out = cnt > 0 ? [cnt,""] : [0,"hide"]
     out   
+  end
+
+  def self.set_checked(aid)
+    find(aid).update_attribute(:checked, true)
   end	
 
   def self.set_all_checked(uid)

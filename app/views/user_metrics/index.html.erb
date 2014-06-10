@@ -1,0 +1,48 @@
+<%= render 'reports/header' %>
+
+<div class="row well padAll10">	
+	<div class="col-xs-2 bold-subhead">
+      Comparing 
+    </div>
+    <% @users.each do |u| %> 
+      <div class="col-xs-2">
+      	<%= uimg(u) %>
+        <h5>
+        <%= link_to u.first_name,u,{class: "about pointer", 
+                                    data: {content: "<small class='green-right'>#{u.role_name}</small>
+      <small class='yellow-ok'>#{u.branch_name}</small>", 
+                                           placement: "bottom",
+                                           trigger: "hover"},
+                                    rel: "popover" } %>
+        </h5>                            
+      </div>
+    <% end %>  
+    <div class="col-xs-1">
+      &nbsp;<h3 href="/reports/users/compare_users" id="compare_users" data-uids="<%= @users.map &:id %>" class="pointer glyphicon glyphicon-plus"><small> Add</small></h3>
+            
+    </div>    
+</div>
+
+
+<div class="row">
+	<% @core.each do |k| %>
+	  <div class="col-xs-2 <%= @style[k.to_sym][1] %> padAll10 has-success modal-tab">
+        <%= link_to "/reports/users/compare_users/#{@uids}/#{k}",{class: "no-link-b"} do %>
+        <h6 class="pointer"> 
+        	<span class="glyphicon glyphicon-<%= @style[k.to_sym][0] %>"></span>
+        	<%= k.titleize %>
+        </h6>        
+        <% end %>
+	  </div>
+	 
+	<% end %>
+</div>
+
+<%= render 'statistics_template', tab: @tab.to_sym %>
+
+
+<script>
+
+$('.about').popover({html : true});
+
+</script>

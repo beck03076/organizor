@@ -1,37 +1,99 @@
 <!-- Follow up shop -->
 <% asso =  a.asso_with %>
-
-<h5 class="padL20">
-This followup is associated with the 
-<strong><%= asso[3] %>  
-<%= link_to asso[1],send(asso[2],asso[0]) %>
-</strong>
-</h5>
-
-<ul class="vlsdet-s padL20">
+<div class="well">
 <div class="row">
-  
-  <div class="col-xs-5 green-well padT10 padB10">
+<ul class="vlsdet-l padL20">  
+  <div class="col-xs-5 yellow-well padT10 padB10">
 
-      <h4 class="bold-subhead"><%= a.title %></h4>
-      
+      <h4 class="bold-subhead"><%= a.title %></h4>      
       <small class="padL20  padded">
       <%= a.desc %>
-      </small>
-
+      </small>      
   </div>
-  <div class="col-xs-7">
-                       <% [['starts_at','starts_at'],
-                           ['ends_at','ends_at'],
-                           ['ato','assigned_to'],
-                           ['aby','assigned_by'],
-                           ['venue','venue'],
+  <div class="col-xs-7">      
+                       <%= li2('event_type',[:event_type_id,:select,EventType,:event_type_name],a,nil,"span","strong") %>  
+                       <% [['venue','venue'],
                            ['remind_before','remind_before']].each do |v| %>
                           <%= li1(v[1],v[0],'span','small',a)%>
                         <% end %>
   </div>
-</div>
 </ul>
+</div>
+<hr>
+  <div class="row">
+            <div class="col-xs-2">
+              <%= uimg(a._ass_by) %>
+              <h5>
+                <%= link_to a._ass_by.first_name,a._ass_by %>
+              </h5>
+            </div>
+            <div class="col-xs-3 ">
+              <h4>
+                Assigned To
+                <br/>                
+                <small>
+                  [<%= a.created_at.to_s %>]
+              </small>
+              </h4>               
+            </div>
+            <div class="col-xs-2">            
+              <%= uimg(a._ass_to) %>
+              <h5> 
+              <%= link_to a._ass_to.first_name,a._ass_to rescue "Unknown" %>
+              </h5>
+            </div>
+            <div class="col-xs-3">
+              <h4>
+                Associated With
+                <br/>                
+                <small>
+                  <%= asso[3].capitalize %>  
+                  
+                  <%= link_to asso[1],"/#{asso[2]}/#{asso[0]}" %>
+              </small>
+              </h4>               
+            </div>
+            <div class="col-xs-12">
+              
+                <div class="col-xs-5 orange-well">
+
+                  <h6>
+                    <div class="mar0 glyphicon glyphicon-time"></div>
+                    From
+                    
+                    <strong class="sm">
+                        <%= a.starts_at.to_s %>  
+                    </strong>          
+                    <br/>To 
+                    <strong class="sm">
+                        <%= a.ends_at.to_s %>
+                    </strong>
+                </h6>
+                
+              </div>
+              <div class="col-xs-7">
+              <% if a.assigned_to == current_user.id %>
+                  <h5><%= best_in_place a, :followed, 
+                                       type: :checkbox, 
+                                       collection:  ["<span class='glyphicon glyphicon-phone-alt padAll10 red-wrong'>&nbsp;Not Followed Up</span>".html_safe,
+                                                     "<span class='glyphicon glyphicon-thumbs-up padAll10 green-right'>&nbsp;Yes, Followed Up</span>".html_safe],
+                                       activator: ".follow_up_set" %>
+                  <small class="clickable follow_up_set"> change </small>
+                  <div class="padT5 sm text-center">
+                    <%= a.followed_at %>
+                  </div>
+                  </h5>
+
+              <% end %>              
+              </div>
+           </div>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+   $('.best_in_place').best_in_place();
+</script>
 
 
 

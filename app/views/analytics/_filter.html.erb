@@ -1,0 +1,41 @@
+<div class="row well">
+	<div class="row">
+		<div class="col-xs-2 bold-subhead">
+			Filter By
+		</div>
+		<%= form_tag(url: "/analytics/#{@core}/#{@core_method}") do %>
+
+	    <div class="col-xs-2">
+			<%= select_tag :size,options_for_select([10,20,30,40,50],@size),
+			                     {prompt: "-count-",
+			                      class: "form-control reddd"} %>
+		</div>
+		<div class="col-xs-2">
+			<%= select_tag :last_months,options_for_select([["Last 1 month",1],
+				                                     ["Last 3 months",3],
+				                                     ["Last 6 months",6],
+				                                     ["Last 1 year",12]],@last_months),
+			                     {prompt: "-period-",
+			                      class: "form-control reddd"} %>
+		</div>
+		<div class="col-xs-2">
+			<%= text_field_tag :from,@from,{placeholder: "-from-",class: "form-control greendd datepicker"} %>
+		</div>
+		<div class="col-xs-2">
+			<%= text_field_tag :to,@to,{placeholder: "-to-",class: "form-control greendd datepicker"} %>
+		</div>
+		
+		<div class="col-xs-2 form-group">
+		   <%= submit_tag "Run", {class: "btn btn-primary" } %>
+        </div>
+		<% end %>
+	</div>
+</div>
+
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">
+
+<script>
+  $('#from, #to').blur(function() {
+    $('#last_months').prop('selectedIndex',0);
+  });
+</script>

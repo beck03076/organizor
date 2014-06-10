@@ -1,4 +1,43 @@
 module ReportsData
+	#=== Users =====================================
+    # default filters for enquiries module
+	def def_use_fil
+		[:first_name,:surname,:mobile,:email,:gender,:date_of_birth,
+		:branch_name,:updated_at,:created_at]		
+	end
+
+	def real_use_cols
+		{# defaults
+		 first_name: 0,surname: 0,mobile: 0,
+		 email: 0,gender: ["select",["M","F"], :gender],date_of_birth: "datepicker",
+		 # associations		 	 
+		 branch_name: ["collection_select","Branch",nil,:branch_id],
+		 # history
+		 updated_at: "datepicker",
+		 created_at: "datepicker"
+		}
+	end
+
+	def use_pie_val
+		%w(branch role permission)
+	end
+
+	def use_bar_split_val
+		[["Role","rol"]]
+	end
+
+	def use_bar_split(val = "rol")
+		case val 
+		when "rol", "def"
+			[:role_id]       		
+		end
+	end
+
+	#=== Single Users =====================================
+	%w(def_use_fil real_use_cols use_pie_val use_bar_split_val use_bar_split).each do |i| 
+      alias_method i.gsub(/use/,'sin').to_sym, i.to_sym
+    end 
+    #======================================================
 	#=== Enquiries =====================================
     # default filters for enquiries module
 	def def_enq_fil
@@ -20,8 +59,21 @@ module ReportsData
 		 branch_name: ["collection_select","Branch",nil,:branch_id],
 		 # history
 		 owner: ["collection_select","User",:first_name,:assigned_to],
-		 updated_at: "datepicker",
-		 created_at: "datepicker"
+		 
+		 updated_at: { range_col: "updated_at",		 	           
+		 	           title: "Updated",
+		 	           cl: "datepicker",
+		 	           ph: "Last Modified At",
+		 	           logo: "book",
+		 	           cols: []
+		 	         },
+		 created_at: { range_col: "created_at",		 	           
+		 	           title: "Created",
+		 	           cl: "datepicker",
+		 	           ph: "Created At",
+		 	           logo: "book",
+		 	           cols: []
+		 	         },
 		}
 	end
 
@@ -36,16 +88,9 @@ module ReportsData
 	def enq_bar_split(val = "sco")
 		case val 
 		when "sco", "def"
-			["sco",[['Low',[1,3]],
-			        ['Medium',[4,6]],
-			        ['High',[7,10]]
-			       ]
-			]       
+			[:score]       
 		when "reg"
-			["reg",[['Registered',true],
-			        ['Unregistered',false]
-			       ]
-			]  
+			[:registered]  
 		end
 	end
     #=== Registrations =====================================

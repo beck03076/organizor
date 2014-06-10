@@ -1,0 +1,19 @@
+
+<div class="row well">
+	<table class="table table-bordered">
+		<thead>			
+			<% @table_header.each do |u| %>
+     			<th class="text-center"><h5><strong> <%= u %> </strong></h5> </th>
+			<% end %>
+		</thead>
+		<tbody>			
+			<% @ordered_output.each do |course_level| %>
+			   <tr> 
+               <td class="text-center"><h4> <%= course_level.name %></h4></td>
+               <td class="text-center"><h4><strong> <%= @table_data[course_level.id] %></strong></h4> </td>               
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>

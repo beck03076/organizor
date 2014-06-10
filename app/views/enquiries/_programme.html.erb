@@ -9,7 +9,7 @@
             <br/>
             <small>
                <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
-               <span class="ml-10 tag-like blue"><%= i.institution.type.name %></span>
+               <span class="ml-10 tag-like blue"><%= i.institution.type.name rescue "Unknown" %></span>
                <span class="ml-10 tag-like blue"'><%= i.institution.group.name rescue "No" %> Group</span>
             </small>
           </h5>

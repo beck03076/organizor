@@ -1,23 +1,33 @@
-<div class="notification-content">
-  <% @notys.includes(:creator).each do |n| %>
-
-    <div class="row padT10 seperator <%= n.checked ? '' : 'noty_unchecked' %>">
-        <div class="col-xs-12">
-          <span class="noty-img"><img src='/a.jpg'/></span> 
-          <div class="noty-title"><%= n.title %></div>
-          <div class="noty-stuff"><%= n.comment %></div>
-          <div class="noty-who"><%= link_to n.creator.first_name,n.creator %> <%= n.created_at %></div>
-        </div>                             
-    </div>
-
-    <% n.update_attribute(:checked, true) %>
-
-  <% end %>   
-  
+<div class="notification-content vscrollable">
   <div class="text-center">                
-      <small><a href="#">view all</a></small>
-  </div> 
+      <small>
+        <span class="glyphicon glyphicon-eye-open mar0"></span> &nbsp;
+        <a data-id=<%= current_user.id %> id="mark_all_checked" href="#">mark all read</a> 
+        &nbsp;
+        <span class="glyphicon glyphicon-th mar0"></span> &nbsp;<a href="/all_notifications">view all</a>
+      </small>
+  </div>  
+  <%= render 'shared/notys' %> 
+  
 </div>  
+
+<script>
+  $('.mark_checked').click(function(){
+    var id = $(this).data('id');
+    $.post('/set_checked_true.js',{aid: id});   
+    var noty = $('.noty-row-' + id);
+    noty.removeClass('noty_unchecked');
+    noty.find('.mark_checked').remove();
+  });
+
+  $('#mark_all_checked').click(function(){    
+    var id = $(this).data('id');
+    $.post('/set_all_checked_true.js',{uid: id});       
+    var noty =  $('.notification-content .noty_unchecked');
+    noty.removeClass('noty_unchecked');
+    noty.find('.mark_checked').remove();   
+  });
+</script>
 
 
 

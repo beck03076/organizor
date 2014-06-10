@@ -18,7 +18,7 @@
 
            <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
            <% %w(emails follow_ups todos notes).each do |act| %>
-             <% out = meta(current_user.id,"institution",act,a.id,hsh[act.to_sym]) %>
+             <% out = meta(current_user.id,"institution",act,a,hsh[act.to_sym]) %>
              <%= li1(act,out,'span','small')%>
            <% end %>
 

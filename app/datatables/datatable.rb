@@ -51,7 +51,7 @@ protected
               disp = obj.send(i.to_s).to_s
          end
          if (index == 0)
-           temp << link_to(disp,@goto[0] + obj.send(@goto[1]).to_s,{target: "_blank"})
+           temp << link_to(disp,@goto[0] + obj.send(@goto[1]).to_s)
          else
            temp << disp
          end

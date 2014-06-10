@@ -22,7 +22,7 @@ window.bootbox = window.bootbox || (function init($, undefined) {
         "<h4 class='modal-title'></h4>" +
       "</div>",
     footer:
-      "<div class='modal-footer'></div>",
+      "<div class='modal-footer form-group'></div>",
     closeButton:
       "<button type='button' class='bootbox-close-button close'>&times;</button>",
     form:

@@ -58,38 +58,11 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
   # POST /follow_ups.json
   def create
   
-    if params[:follow_up][:model]
-        m = params[:follow_up][:model]
-        m_id = (m + "_id").to_sym
-        params[:follow_up].delete(:model)
-    end
-  
-    @follow_up = FollowUp.new(params[:follow_up])
+    @follow_up = FollowUp.new(params[:follow_up])    
     
     respond_to do |format|
       if @follow_up.save
-        format.html { 
-        
-        if !m.blank? && !params[:follow_up][m_id].blank?
-        
-          tl(m.capitalize,params[:follow_up][m_id],
-        "A follow up has been created for this #{m}",
-         params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + @follow_up._ato.name,
-         'follow_up',
-         @follow_up.assigned_to)
-         
-          redirect_to "/#{m.pluralize}/" + params[:follow_up][m_id].to_s 
-        else
-        
-          tl("FollowUp",@follow_up.id,
-        "A follow up has been created",
-         params[:follow_up][:title].to_s + ' at ' + params[:follow_up][:starts_at] + ' | assigned(follow up) to: ' + @follow_up._ato.name,
-         'follow_up',
-         @follow_up.assigned_to)
-         
-          redirect_to follow_ups_path 
-        end
-          }
+        format.html { redirect_to @follow_up.parent }
         format.json { render json: @follow_up, status: :created, location: @follow_up }
       else
         format.html { render action: "new" }

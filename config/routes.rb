@@ -1,10 +1,16 @@
 Organizor::Application.routes.draw do
 
+  match '/analytics' => "analytics#index", as: "analytics"
+  match "/analytics/:core/:core_method/:core_params" => "analytics#show"
+
+  post '/compare_users_modal' => 'user_metrics#compare_users_modal'
+  post '/compare_users' => 'user_metrics#compare_users'
+
   post '/save_report' => 'reports#save_report' 
   
   resources :saved_reports
 
-  get "reports/index"
+  match "/reports/users/:module/:uids(/:tab)" => "user_metrics#index"
 
   post '/partial_pie' => "reports#partial_pie"
   post '/partial_bar' => "reports#partial_bar"
@@ -32,7 +38,10 @@ Organizor::Application.routes.draw do
   resources :exams
  
   get '/unchecked_notys' => "application#unchecked_notys"
-  get '/five_notifications' => "application#five_notifications"
+  get '/limited_notifications' => "application#limited_notifications"
+  post '/set_checked_true' => "application#set_checked_true"
+  post '/set_all_checked_true' => "application#set_all_checked_true"
+  match "/all_notifications" => "application#all_notifications"  
   
   get '/export_details/:model/:ids.:format' => 'application#export_details'
   
@@ -176,7 +185,6 @@ Organizor::Application.routes.draw do
   
   resources :emails
   
-  match "/all_notifications" => "application#all_notifications"
   
   match "/email_sent_by/:sent_by" => "emails#index"
   
@@ -192,10 +200,6 @@ Organizor::Application.routes.draw do
   
   match "/todo_hover/:id" => "todos#show_hover"
 
-  match "/notify/:receiver_id/:t_id" => "application#notify"
-  
-  match "/mark_all_check/:id" => "application#mark_all_check"
-  
   match '/permissions/role/:role_id' => "roles#show_permissions"
   
   match '/bulk_email/:model/:model_ids' => "emails#bulk_email"

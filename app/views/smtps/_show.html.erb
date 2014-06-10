@@ -1,8 +1,10 @@
 <!-- show branch -->
 <% a = @smtp %>
-<div class="row">
+
               <div class="row row-top ">
-                <div class="col-md-6">
+                <div class="col-md-12">
+                  <h4 class="text-left border-b"><%= a.name %></h4>
+                  <div style="clear:both;"></div>
                   <div class="col-md-4 text-right light">Address</div>
                   <div class="col-md-8"><%= a.address %></div>
                   <div style="clear:both;"></div>
@@ -26,4 +28,4 @@
                   <div style="clear:both;"></div>
                 </div>
                </div>
-</div>
+

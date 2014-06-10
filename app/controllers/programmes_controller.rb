@@ -1,5 +1,5 @@
 class ProgrammesController < ApplicationController
-  include CoreMethods
+  include CoreController
   include FetchFromContract
   authorize_resource
   # GET /programmes
@@ -252,16 +252,8 @@ class ProgrammesController < ApplicationController
           format.js { render "programmes/change_p_fee_status" }
         elsif params[:change_status].nil?
           format.js { render "programmes/update" }
-        else
-          tl("Registration",
-             @programme.registration.id,
-             'Status of an application has been changed for this registration',
-             "#{(@programme.institution.name rescue "Unknown")}",
-             'StatusChange',
-             @programme.registration.assigned_to)
-             
-          format.js { render "application_statuses/update" } 
-          
+        else             
+          format.js { render "application_statuses/update" }           
         end   
       else
         format.html { render action: "edit" }

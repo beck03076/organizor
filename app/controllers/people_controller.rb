@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  include CoreMethods
+  include CoreController
 
    def tab
     set_url_params

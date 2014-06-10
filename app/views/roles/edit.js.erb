@@ -2,7 +2,8 @@
   <% ctnt = (render 'form', {new_resource: @role,
                              resource_disp1: "Role",
                              div: "",
-                             h: "Edit"}) %>
+                             h: "Edit",
+                             from_role: true}) %>
  
   $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
                                            :locals =>   {id: 'resource-edit', 

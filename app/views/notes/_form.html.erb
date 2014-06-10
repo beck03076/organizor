@@ -1,10 +1,22 @@
-<%= simple_form_for(@note) do |f| %>
-  <%= f.error_notification %>
+<h4 class="bold-subhead mt-15">
+               New Note
+             </h4>
+             <%= nested_form_for(i,remote: true) do |r| %>
+              <%= r.fields_for :notes,i.notes.build do |n| %>
+                <div class="notearea"> 
+                  <%= n.text_area :content,{class: "redactor"} %>
+                </div>
+              <% end %>
+              <br/>
+              <div class="form-group">
+                <%= r.submit "Write",{class: "btn btn-primary"} %>
+              </div>
+              <% end %>
 
-  <div class="form-inputs">
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+<script>
+  $('.redactor').redactor({linebreaks: true,
+                           paragraphy: false,
+                           air: true,
+                           minHeight: 80,
+                           minWidth: 20});
+</script>

@@ -4,8 +4,9 @@ class ReportsController < ApplicationController
 
   def show
   	set_url_params
+    self.repair_module
     r = Report.new(@module,@heading)
-  	@cols = r.get_fil_hash
+  	@cols = r.get_fil_hash    
   	@search = self.model.search(@q)
   	@results = @search.result.paginate(page: @page, per_page: 3)    
     @search.build_sort if @search.sorts.empty?
@@ -14,6 +15,12 @@ class ReportsController < ApplicationController
     self.set_bar(r)   
     @saved_report = params[:saved_report] || SavedReport.new
   end 
+
+  def repair_module
+    if @module == "single_user"
+      @module = "users"
+    end
+  end
 
   def set_pie(obj)
     @pie = obj.get_current_pie    
@@ -31,12 +38,12 @@ class ReportsController < ApplicationController
   end
 
   def partial_pie
-    r = Report.new(params[:model],nil,params[:asso])    
+    r = Report.new(params[:model],nil,params[:asso],nil,params[:year],params[:month])    
     set_pie(r)
   end
 
   def partial_bar
-    r = Report.new(params[:model],nil,params[:asso],params[:split])    
+    r = Report.new(params[:model],nil,params[:asso],params[:sub_asso],params[:year],params[:month])    
     set_bar(r)    
   end
 

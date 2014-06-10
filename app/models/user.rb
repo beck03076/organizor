@@ -33,9 +33,10 @@ class User < ActiveRecord::Base
   
   belongs_to :_invited_by, class_name: "User",foreign_key: "invited_by_id"
   
-  has_many :todos, class_name: "Todo",foreign_key: "assigned_to"
-  has_many :emails, class_name: "Email",foreign_key: "created_by"
-  has_many :follow_ups, class_name: "FollowUp",foreign_key: "assigned_to"
+  has_many :todos, foreign_key: "assigned_to"
+  has_many :emails, foreign_key: "created_by"
+  has_many :follow_ups, foreign_key: "assigned_to"
+  has_many :notes,foreign_key: "created_by"
   
   belongs_to :branch
   
@@ -43,10 +44,21 @@ class User < ActiveRecord::Base
              :class_name => "Country",
              :foreign_key => "country_id"
 
-  has_many :enquiries, foreign_key: "assigned_to"
-  has_many :registrations, foreign_key: "assigned_to"
+  # has many items in every core module
+  %w(enquiries registrations institutions people).each do |i|
+    has_many i.to_sym, foreign_key: "assigned_to"
+  end
+
+  # has many items in every core module,(created)
+  %w(enquiries registrations institutions people).each do |i|
+    has_many ("created_" + i).to_sym, foreign_key: "created_by"
+  end
   
   accepts_nested_attributes_for :permissions
+
+  def self.first_adm
+    includes(:role).where(roles: {name: "agency_administrator"}).order("users.created_at DESC").first
+  end
   
   def br
     (self.branch.name) + "(#{self.branch.country.name})"  rescue "Unassigned"
@@ -110,4 +122,13 @@ class User < ActiveRecord::Base
   def self.find_by_name(i)
     where(first_name: i).first
   end
+
+  def self.bar_chart(cond,asso,asso_name,col,*dummy)
+    includes(asso).where(cond).group(["#{asso.to_s.pluralize}.#{asso_name}","users.#{col}"]).count.reject{|k,v| k[0].nil? }
+  end 
+
+  def statistics
+  end
+
+
 end

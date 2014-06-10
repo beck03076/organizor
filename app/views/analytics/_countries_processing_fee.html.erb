@@ -1,0 +1,19 @@
+
+<div class="row well">
+	<table class="table table-bordered">
+		<thead>			
+			<% @table_header.each do |u| %>
+     			<th class="text-center"><h5><strong> <%= u %> </strong></h5> </th>
+			<% end %>
+		</thead>
+		<tbody>						
+			<% @ordered_output.each do |item| %>
+			   <tr> 
+               <td class="text-center"><h4> <%= item[0].titleize %></h4></td>
+               <td class="text-center"><h4><b> <%= item[1]%> </b></h4></td>               
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>

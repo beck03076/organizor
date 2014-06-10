@@ -1,12 +1,12 @@
 <!-- Calendar -->
-<div class="tab-container">
-    <div class="tab-content" style="display: block;">
-        <div class="boxp box-theme-ch">
-          <%= render 'show_hover' %>
-          
-        </div>
-    </div>
+<%= head(@follow_up,@follow_up.title,"All Follow Ups",follow_ups_path) %>
+
+
+<div class="row">
+<%= render 'show', a: @follow_up %>
 </div>
+
+
 
 <script>
 $(function(){

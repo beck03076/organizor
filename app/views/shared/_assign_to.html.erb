@@ -11,6 +11,7 @@
             <%= form_for(obj) do |f| %>
             
                <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
+               <%= f.hidden_field :assigned_at, :value => Time.now %>
                <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
                <% n_user = User.order(:first_name).reject{|i| i.id == f.object.assigned_to }  %>
 

@@ -1,13 +1,19 @@
 class Programme < ActiveRecord::Base
-  include CoreExtension
+  include CoreModel
   
+  validates :registration_id, on: :create,
+            uniqueness: {scope: [:institution_id,:level_id], 
+                         message: "with same Institution and CourseLevel already exsits!" }  
+
+  validates_presence_of :start_date, on: :create
+
   belongs_to :enquiry
   belongs_to :registration
-  belongs_to :course_level, :foreign_key => 'level_id'
+  belongs_to :course_level, :foreign_key => 'level_id'   
+  belongs_to :institution
   belongs_to :country
   belongs_to :city
-  belongs_to :institution
-  belongs_to :institution_type, :foreign_key => 'type_id'
+  belongs_to :ins_type, class_name: "InstitutionType",:foreign_key => 'type_id'
   belongs_to :course_subject, :foreign_key => 'subject_id'
   belongs_to :application_status,:foreign_key => 'app_status_id'
   belongs_to :claim_status,:foreign_key => 'claim_status_id', class_name: "CommissionClaimStatus"
@@ -23,8 +29,7 @@ class Programme < ActiveRecord::Base
   belongs_to :p_fee_type, :foreign_key => 'p_fee_id', class_name: "ProcessingFeeType"
   belongs_to :p_fee_status, :foreign_key => 'p_fee_status_id', class_name: "ProcessingFeeStatus"
   
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Programme"'
-  
+
   attr_accessible :city_id, :country_id, :created_by, 
                   :end_date, :enquiry_id, :institution_id, 
                   :level_id, :start_date, :subject_id, 
@@ -37,35 +42,88 @@ class Programme < ActiveRecord::Base
                   
   accepts_nested_attributes_for :notes,:fee
   
-  after_save :set_status_diagram
+  after_save :set_status_diagram_conversion_time 
+  before_create :set_country_city
+
+  def set_country_city
+    self.country_id = institution.country_id
+    self.city_id = institution.city_id
+  end 
   
-  def set_status_diagram
-    if self.app_status_id_changed?
-      StatusDiagram.create!(status_id: self.app_status_id,
-                            user_id: self.created_by,
-                            programme_id: self.id)
-    end
+  def set_status_diagram_conversion_time
+    return if !app_status_id_changed?
+
+    status_name = ApplicationStatus.find(app_status_id).name
+    diagram = StatusDiagram.create!(status_id: app_status_id,
+                                    user_id: created_by,
+                                    programme_id: id,
+                                    status_name: status_name)
+    if (status_name.downcase == "joined")
+      reg = registration
+      conversion_time = ((diagram.created_at - reg.created_at) / 86400).round(3)
+      update_column(:conversion_time,conversion_time)
+      if reg.conversion_time.nil?
+        reg.update_column(:conversion_time,conversion_time)
+      end
+    end    
   end
   
   def self.joined_ins(ins_id)
     includes(:application_status).where(institution_id: ins_id,application_statuses: {name: "joined"})
   end
+
+  def self.deferred
+    includes(:application_status).where("application_statuses.name != 'joined'")
+  end
+
+  def self.joined
+    includes(:application_status).where("application_statuses.name = 'joined'")
+  end
   
   def course_level_name
-    self.course_level.name rescue "No Course"
+    course_level.name rescue "No Course"
   end 
   
   def p_fee_type_name
-    self.p_fee_type.name rescue "Unknown"
+    p_fee_type.name rescue "Unknown"
   end
   
   def p_fee_status_name
-    self.p_fee_status.name rescue "Unknown"
+    p_fee_status.name rescue "Unknown"
   end
   
   def institution_name
-    self.institution.name rescue nil
+    institution.name rescue "Unknown"
   end 
 
+  def ins_type_name
+    ins_type.name rescue "Unknown"
+  end 
   
+  def registration_name
+    registration.name rescue "Unknown"
+  end 
+
+  def owner
+    registration.owner
+  end
+
+  def name
+    course_level_name + ' ' + institution_name
+  end
+
+  def assigned_to
+    registration.assigned_to
+  end
+
+  def self.countries_processing_fee(ids,direction)
+    hsh = {}    
+    joins(:country)
+    .where(id: ids)
+    .group("country_id")
+    .select("sum(p_fee_cents) as result1,countries.name as cname")
+    .order("result1 #{direction}")
+    .map {|o| hsh[o.cname] = o.result1.to_i }
+    hsh
+  end   
 end

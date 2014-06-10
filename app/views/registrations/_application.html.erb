@@ -33,7 +33,7 @@
            <span id="tag_reg_status_<%= i.id %>" class="ml-10 tag-like green"><%= stat_name %></span>
            <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
            <span class="ml-10 tag-like blue"><%= i.institution.type.name rescue "No type" %></span>
-           <span class="ml-10 tag-like blue"'><%= i.institution.group.name rescue "No" %> Group</span>
+           <span class="ml-10 tag-like blue"><%= i.institution.group.name rescue "No" %> Group</span>
            <br/>
            <br/>
            <small>
@@ -176,7 +176,7 @@
                     </ul>
                 </div>
                 <h4 class="bold-subhead mt-15">Notes <small><small>(Click to edit if it's your note)</small></small></h4>
-                <div id="programme_note_<%= i.id %>" >
+                <div id="shared_note_<%= i.id %>" >
                       <%= render 'notes/note', sub: @programme %>
                  </div>
             </div>
@@ -203,20 +203,7 @@
                 </div>
             </div>
         </div>
-              <h5>New Note</h5>
-             <%= nested_form_for(i,remote: true) do |r| %>
-              <%= r.fields_for :notes,i.notes.build do |n| %>
-                <%= n.hidden_field :sub_class, value: "Programme" %>
-                <%= n.text_field :content,{:size => '10x4',
-                                          :style => 'width:480px;',
-                                          class: "app_note",
-                                          data: {provide: "markdown"}} %>
-              <% end %>
-              <br/>
-              <div class="form-group">
-                <%= r.submit "Write",{class: "btn btn-primary"} %>
-              </div>
-              <% end %>
+        <%= render 'notes/form', i: i %>     
 
       </div>
     </div>
@@ -283,7 +270,6 @@
 </div>
 <br/>
 <script>
-  $(".app_note").markdown({width: 500});
   $('.collapse_all').click(function(){
     $('.collapse').removeClass('in');
   });

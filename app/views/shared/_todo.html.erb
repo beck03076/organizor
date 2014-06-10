@@ -1,48 +1,45 @@
 <!-- todos for core models -->
-
-<div class="col-md-12">
-  <div class="config-content">
-    <% if @list.to_i == 1 && obj.todos.size > 0 %>
-    <div class="row">
-      <h4>Todos</h4>
-    </div>
-    <div class="row">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-                            <th>Topic</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Due Date</th>
-                            <th>Priority</th>
-                            <th>Assigned To</th>
-                            <th>Assigned By</th>
-          </tr>
-        </thead>
-        <tbody>
-           <% obj.todos.each do |t| %>
+    <% if @list.to_i == 1 && obj.todos.count > 0 %>
+          <div class="row">
+            <h4 class="bold-subhead">Todos</h4>
+          </div>
+          <div class="row">
+            <table class="table table-striped">
+              <thead>
                 <tr>
-                    <td><%= t.topic.try(:name) %></td>
-                    <td><%= t.desc %></td>
-                    <td><%= t.status %></td>
-                    <td><%= t.duedate %></td>
-                    <td><%= t.priority %></td>
-                    <td><%= t.ato %></td>
-                    <td><%= t.aby %></td>
-               </tr>
-           <% end %>  
-        </tbody>
-      </table>
-    </div>
+                                  <th>Topic</th>
+                                  <th>Description</th>
+                                  <th>Status</th>
+                                  <th>Due Date</th>
+                                  <th>Priority</th>
+                                  <th>Assigned To</th>
+                                  <th>Assigned By</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <% obj.todos.each do |t| %>
+                      <tr>
+                          <td><%= t.topic.try(:name) %></td>
+                          <td><%= t.desc %></td>
+                          <td><%= t.status %></td>
+                          <td><%= t.duedate %></td>
+                          <td><%= t.priority %></td>
+                          <td><%= t.ato %></td>
+                          <td><%= t.aby %></td>
+                     </tr>
+                 <% end %>  
+              </tbody>
+            </table>
+          </div>
     <% end %>
 
-<div class="well">
+<div class="row well">
         <div class="row row-top">
-          <h4>New Todo</h4>
+          <h4 class="bold-subhead">New Todo</h4>
         </div>
-
-          <%= form_for(@todo) do |g| %>
-            <%= g.hidden_field obj_id.to_sym, value: id %>
+        <%= form_for(obj) do |f| %>
+          <%= f.fields_for(:todos,Todo.new) do |g| %>
+      
             <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
             
             <%= bs(g,[:topic_id,TodoTopic.order(:name), 
@@ -65,25 +62,7 @@
                                
             <%= bs(g,[:duedate,
                       :class => "dateTimeField caltf"],"text_field",[nil,2],5,12,"row") %>
-
-            
-            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="email_a" class="control-label col-sm-2">
-                        Add
-                      </label>
-                      <div class="col-sm-9">
-                        <a onclick="$('#more_fields').slideToggle();">more fields</a>
-                      </div>
-                    </div>
-               </div>
-            </div>
-            
-            <div id="more_fields" style="display: none;">
-            
-                      
+       
             <%= bs(g,[:api,
                       :style => "white-space:normal"],"check_box",["Add TO Google?",2],5,12,"row") %>
                       
@@ -105,15 +84,16 @@
                     </div>
                </div>
             </div>
-            <div class="form-group form-last">
-                    <div class="col-sm-offset-10 col-sm-10">
-                      <%= g.submit "Save", {class: "btn btn-primary"} %>
-                    </div>
+            <div class="row">
+              <div class="form-group form-last">
+                      <div class="col-sm-offset-10 col-sm-10">
+                        <%= g.submit "Save", {class: "btn btn-primary"} %>
+                      </div>
+              </div>
             </div>
             <% end %>
-      </div><!-- end well-->
-  </div>
-</div>
+          <% end %>  
+</div><!-- end well-->
 
 <script> 
 acttab('todo'); 

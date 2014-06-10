@@ -1,14 +1,18 @@
 class Report 
   include ReportsData
+  include RubyUtil
+  include Generic
   attr_accessor :asso, :module, :mod
 
-  def initialize(mod, heading = nil, asso = nil,split_param = nil)
+  def initialize(mod, heading = nil, asso = nil,split_param = nil, year = nil, month = nil)
   	@mod = mod
   	@module = mod[0..2]
   	@heading = heading  	
   	@asso = asso || "branch"
     @asso_name = get_asso_name(@asso)
   	@split_param = split_param || "def" 
+    @year = year
+    @month = month
   end
 
   def get_asso_name(i)
@@ -25,17 +29,22 @@ class Report
   end	
 
   def get_current_pie  	  	  	
-  	@meta = "#{@mod.titleize} based on #{asso.titleize}"
-    temp = self.model(@asso).includes(@mod.to_sym).all.map {|i| 
+  	@meta = "#{@mod.titleize} based on #{asso.titleize}"    
+
+    temp = self.model(@asso).includes(@mod.to_sym).where(self.cond).all.map {|i| 
              s = i.send(@mod).size
              if s != 0
               [i.name,s] 
              end 
            }.compact
-    sorted = temp.sort_by{|i| i[1] }
-    sorted[0] = { name: sorted[0][0], y: sorted[0][1],sliced: true,selected: true}
-    sorted
-  end
+    if !temp.empty?
+      sorted = temp.sort_by{|i| i[1] }
+      sorted[0] = { name: sorted[0][0], y: sorted[0][1],sliced: true,selected: true}
+      sorted
+    else
+      nil 
+    end
+  end  
 
   def get_current_bar(asso = "branch", split_param = 'def')
   	@asso = @asso || asso  	  	
@@ -51,43 +60,28 @@ class Report
            }.compact
     sorted = temp.sort_by{|i| i[1] }.reverse.take(10)
     category = sorted.map {|i| i [0] }
-=begin
-    
-    p "********"
-    p category
-    @split[1].each do |s|            
-      h = {}
-      h[:name] = s[0]      
-      h[:data] = category.map {|i|  self.model(@asso).send("find_by_#{@asso_name}",i).send(@mod.to_sym).send(@split[0],s[1]) } 
-      
-      series << h
-    end
-    :branch,{programmes: [:application_status]},:application_status,:name)
-=end
-    temp_series = self.model(@mod.singularize).bar_chart(@asso,@asso_name,@split[0],@split[1],@split[2])
+
+    temp_series = self.model(@mod.singularize).bar_chart(self.cond,@asso,@asso_name,@split[0],@split[1],@split[2])
     #  category usually looks like this, ["Australia", "New Zealand"] => the 2 elements data part pertains to this categories
     #  series usually looks like this, [{:name=>"Sent", :data=>[0, 0]}, {:name=>"Conditional Offer", :data=>[0, 0]}, 
     #                                   {:name=>"Unconditional Offer", :data=>[0, 0]}, 
     #                                   {:name=>"Pending", :data=>[0, 0]}, {:name=>"Joined", :data=>[1, 0]}, 
-    #                                   {:name=>"Rejected", :data=>[0, 0]}, {:name=>"Defer", :data=>[2, 1]}, 
-    #                                   {:name=>"Sent To Documentation", :data=>[1, 0]}]
-      series = []
-      temp_series.each do |i|
-        h = {}  
-        h[:data] = []
-        category.each do |j|       
-
-          if  j == i[0][0]
-            h[:name] = i[0][1] 
-            h[:data] << i[1]
-          else
-              h[:data] << 0
-          end
-        end
-        series << h
-      end
-
-    [category,series]	  
+    #                                   {:name=>"Rejected", :data=>[0, 0]}, {:name=>"Defer", :data=>[2, 1]},     #                                   {:name=>"Sent To Documentation", :data=>[1, 0]}]
+      
+    series = form_chart_name_data(temp_series,category)
+    # series looks like following,
+    # [{:data=>[0, 0, 1, 0], :name=>"false"}, {:data=>[3, 0, 0, 0], :name=>"false"}, {:data=>[1, 0, 0, 0], :name=>"true"}, {:data=>[0, 2, 0, 0], :name=>"false"}, {:data=>[0, 0, 0, 1], :name=>"true"}]
+    final_series = uniq_name_sum_data(series)
+    # final_series looks like following,
+    # [{:data=>[3, 2, 1, 0], :name=>"false"}, {:data=>[1, 0, 0, 1], :name=>"true"}]
+    [category,final_series]	  
+  end
+  # this will be resolved for pie here, for bar, it will be sent to the bar_chart method 
+  def cond
+    cond = []
+    cond << (@year.blank? ? "" : "YEAR(#{@mod}.created_at) = #{@year}")
+    cond << (@month.blank? ? "" : "MONTH(#{@mod}.created_at) = #{@month}")
+    cond.reject(&:empty?).join(" AND ")
   end
 
   def get_main_sel
@@ -97,11 +91,7 @@ class Report
 
   def get_bar_split_sel
     arr = send("#{@module}_bar_split_val")    
-  end
-
-  def model(i)
-    i.camelize.constantize
-  end
+  end 
 
 end
 

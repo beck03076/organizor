@@ -1,0 +1,24 @@
+  <% @notys.includes(:creator).each do |n| %>
+
+    <div class="noty-row noty-row-<%= n.id %> row padT10 seperator <%= n.checked ? '' : 'noty_unchecked' %>" >
+        <div class="col-xs-10">
+          <span class="noty-img"><%= image_tag((n.creator.image? ? n.creator.image_url : "/images/icons/user.png"),
+                                         {width: "50",
+                                          height: "50",
+                                          class: "img-rounded",
+                                          id: "usr_img" }) %></span>
+
+          <% model = n.auditable_type.underscore.pluralize %>
+          <div class="noty-title"><%= link_to n.title,"/#{model}/#{n.auditable_id}" %></div>          
+          <div class="noty-stuff"><%= n.comment %></div>
+          <div class="noty-who"><%= link_to n.creator.first_name,n.creator %> <%= n.created_at %></div>
+        </div>               
+        <div class="col-xs-1">
+          <% if !n.checked %>
+            <small data-id=<%= n.id %> class="grey-sm mark_checked glyphicon glyphicon-eye-open"></small>
+          <% end %>
+        </div>              
+    </div>
+    
+
+  <% end %>  

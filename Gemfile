@@ -106,5 +106,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'redcarpet'
 gem 'see_more'
+gem 'redactor-rails'
+gem "mini_magick"
+gem 'impressionist'
 
 

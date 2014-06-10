@@ -1,0 +1,15 @@
+<div id="compare_user_ids">
+<% @users.each do |u| %>
+
+<div class="row">
+	<h4> 
+	  <%= check_box_tag u.id,u.id,(true if @uids.include?(u.id)),{class: "elem15", id: "tr"} %>	
+	  <%= uimg(u) %>
+	  <%= link_to u.name,u %>
+	  <small class="green-right sm"><%= u.role_name %></small>
+      <small class="yellow-ok sm"><%= u.branch_name %></small>
+	</h4>
+</div>
+
+<% end %>
+</div>

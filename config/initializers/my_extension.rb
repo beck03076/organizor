@@ -13,3 +13,4 @@ module MyExtension
 end
 
 ActiveRecord::Base.send(:include, MyExtension)
+

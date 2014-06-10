@@ -1,5 +1,5 @@
 class Institution < ActiveRecord::Base
-  include CoreExtension
+  include CoreModel
 
   validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!" 
          
@@ -18,18 +18,12 @@ class Institution < ActiveRecord::Base
              :foreign_key => "city_id"
              
   has_many :people
-  has_many :contracts
-  
-  
-  
+  has_many :contracts 
   has_many :programmes
   has_many :registrations, through: :programmes
-  has_many :enquiries, through: :programmes
+  has_many :enquiries, through: :programmes  
+
   
-  has_and_belongs_to_many :emails 
-  has_many :follow_ups
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Institution"'
-  has_many :todos
   
   attr_accessible :city_id, :country_id, :created_by, 
   :name, :poc, :type_id, 
@@ -37,17 +31,16 @@ class Institution < ActiveRecord::Base
   :image,:remote_image_url,:email, 
   :website, :address_line1, :address_post_code, 
   :desc, :phone, :fax, 
-  :address_line2,:notes_attributes,
-  :assigned_to,:assigned_by,:prohibited_country_ids,:prohibited_region_ids,:permitted_country_ids,
-  :permitted_region_ids,:group_id
+  :address_line2,:assigned_to,:assigned_by,:prohibited_country_ids,:prohibited_region_ids,
+  :permitted_country_ids,:permitted_region_ids,:group_id,:assigned_at
   
-  accepts_nested_attributes_for :contracts,:people,:notes,:allow_destroy => true
+  accepts_nested_attributes_for :contracts,:people,:allow_destroy => true
   
   def country_name
     self.country.name rescue "Unknown"
   end
      
-  def city_name21
+  def city_name
     self.city.name rescue "Unknown"
   end
   
@@ -74,7 +67,24 @@ class Institution < ActiveRecord::Base
   def my_peos(user_id)
     self.people.where(assigned_to: user_id)
   end
-  
-  
+
+  def self.total_fee_commission(ids,direction)
+    hsh = {}    
+    joins(programmes: [:fee])
+    .where(fees: {id: ids})
+    .group("institution_id")
+    .select("sum(fees.tuition_fee_cents) as result1,
+             sum(fees.commission_paid_cents) as result2,
+             sum(fees.commission_amount_cents - fees.commission_paid_cents) as result3,
+             institutions.name as name,
+             institutions.id as id")
+    .order("result2 #{direction}")
+    .map {|o| hsh[o.name] = [o.result1,o.result2,o.result3,o.id]}
+    hsh
+  end
+
+  def self.total_commission_paid_cents(ids)
+    where(id: ids).joins(programmes: [:fee]).group("institution_id").sum("fees.commission_paid_cents")
+  end 
   
 end

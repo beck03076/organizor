@@ -50,7 +50,7 @@
 
             </span>
           </a> 
-          <span data-ajaxload="/five_notifications.js" id="bell" class="pointer glyphicon glyphicon-bell notification-icon no-link"></span>
+          <span data-ajaxload="/limited_notifications.js" id="bell" class="pointer glyphicon glyphicon-bell notification-icon no-link"></span>
           <%  badge =  Audit.notys_badge(current_user.id) %>
           <span class="badge <%= badge[1] %>"><%= badge[0] %></span>
 
@@ -141,7 +141,7 @@
             </li>
 
             <li id="people">
-              <%= link_to people_path do %><span class="glyphicon glyphicon-folder-open"></span>People<% end %>
+              <%= link_to people_path do %><span class="glyphicon glyphicon-globe"></span>People<% end %>
             </li>
 
             <hr>
@@ -249,6 +249,10 @@
             return;
         }
       });
+
+      <% if flash[:notice] %>
+        bootbox.alert('<%= flash[:notice] %>');           
+      <% end %>
     </script>
   </body>
 </html>

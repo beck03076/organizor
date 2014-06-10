@@ -515,17 +515,13 @@ $(document).ready(function(){
         });
         
         if(totalEmptyTag==1 || totalEmptyTag==0){
-            var tag="<div class='frbox'><label>Email Address</label>";
-                tag+="&nbsp;<input type='text' placeholder='Email Address'/>&nbsp;&nbsp;";
-                tag+="<img src='/images/icons/quit.png' width=24 class='jqAddUserRemove pt' onclick='removeInviteUser(this);'/></div>";
+            next = $("#addInviteUserEmail input[type='text']").last().data('order') + 1;
+            var tag='<div class="row"><div class="col-xs-5">' ;
+                tag+='<input data-order=' + next + ' class="form-control" name="email[' + next + ']" type="text" placeholder="Email">';
+                tag+="</div></div>";
             $("#addInviteUserEmail").append(tag);
         }
     });
-    
-    $("#addInviteUserEmail .jqAddUserRemove").on("click",function(){
-        $(this).parent().remove();
-    });
-
 });
 
 function removeInviteUser(object){

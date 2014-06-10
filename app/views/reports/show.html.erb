@@ -43,44 +43,81 @@
      <div class="col-md-2">
        <h3> Charts </h3>     
      </div>
-     <div class="col-md-2"> 
-                 <br/>
-                <%= select_tag :main_value,options_for_select(@main_sel),
-                {:prompt => "-pie-",
-                class: "form-control greendd",
-                onchange: "change_chart('pie',this,'#{@module}');"} %>  
-     </div>
-     <div class="col-md-2">                                
-                <br/>
-                <%= select_tag :main_sel,options_for_select(@main_sel),
-                {:prompt => "-bar-",
-                class: "form-control reddd bar_chart",
-                onchange: "change_chart('bar',this,'#{@module}');"} %>  
-     </div>
-
-     <div class="col-md-2">                                
-                <br/>
-                <%= select_tag :bar_split,options_for_select(@bar_split),
-                {:prompt => "-bar split-",
-                class: "form-control reddd",
-                onchange: "change_split('bar',this,'#{@module}');"} %>  
-     </div>
-
   </div>
 </div>
 <br/>
 
-<div class="row">
-      <div class="col-md-12">
-        <div class="col-md-6">          
-          <div id="pie"></div>
-        </div>
-        <div class="col-md-6">
-          <div id="bar"></div>
-        </div>
+  <div id="pie_chart_filter" class="row well">
+    <div class="col-md-2">
+      <h4 class="bold-subhead">Pie Chart</h4>
+    </div>
+    <div class="col-md-2">                  
+                  <%= select_tag :asso,options_for_select(@main_sel),
+                  {:prompt => "-pie-",
+                  class: "form-control greendd",
+                  } %>  
+    </div>
+    <div class="col-md-2">                  
+                  <%= text_field_tag :year,nil,
+                  {placeholder: "-year-",class: "form-control greendd "} %>  
+    </div>
+    <div class="col-md-2">                  
+                  <%= text_field_tag :month,nil,
+                  {placeholder: "-month-(6 for june)",class: "form-control greendd "} %>  
+    </div>
+    <div class="col-md-2 form-group ">
+      <%= button_tag "Run", { onclick: "change_chart('pie','#pie_chart_filter','#{@module}');", 
+                              class: "btn btn-primary marL30 text-left" } %>
+    </div>
+  </div>
+
+  <div class="row">   
+    <div class="col-md-12">
+      <div id="pie"></div>
+    </div>   
+  </div>
+
+<div class="clear"></div>
+<hr>     
+
+
+  <div id="bar_chart_filter" class="row well">
+      <div class="col-md-2">
+        <h4 class="bold-subhead">Bar Chart</h4>
       </div>
-</div>
-<br/>
+      <div class="col-md-2">                                
+               
+                <%= select_tag :asso,options_for_select(@main_sel),
+                {:prompt => "-bar(Y axis)-",
+                class: "form-control reddd bar_chart" } %>  
+      </div>
+      <div class="col-md-2">                       
+     
+                <%= select_tag :sub_asso,options_for_select(@bar_split),
+                {:prompt => "-bar(X axis)-",
+                class: "form-control reddd" } %>  
+      </div>
+      <div class="col-md-2">                  
+                  <%= text_field_tag :year,nil,
+                  {placeholder: "-year-",class: "form-control reddd "} %>  
+      </div>
+      <div class="col-md-2">                  
+                    <%= text_field_tag :month,nil,
+                    {placeholder: "-month-(6 for june)",class: "form-control reddd "} %>  
+      </div>
+      <div class="col-md-2 form-group ">
+      <%= button_tag "Run", { onclick: "change_chart('bar','#bar_chart_filter','#{@module}');", 
+                              class: "btn btn-primary marL30 text-left" } %>
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="bar"></div>
+    </div>
+  </div>
+      
+
 <script>
 
 
@@ -98,8 +135,6 @@
    init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>',"ASdf");
    init_chart("bar",<%= @bar[0].to_s.html_safe %>,'<%= @bar_meta %>',<%= @bar[1].to_json.html_safe %>);
 
-   actmm("reports");
-
    $('input:text, select').each(function(){
     if ($(this).val().length > 0){
       $(this).css({'background-color' : '#f8f4b0', 'color' : '#555753'});
@@ -111,3 +146,4 @@
 </script>
 
 
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">

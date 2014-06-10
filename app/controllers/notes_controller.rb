@@ -87,11 +87,8 @@ class NotesController < ApplicationController
   # DELETE /notes/1.json
   def destroy
     @note = Note.find(params[:id])
-    @note.destroy
-    
-    @obj_name = params[:sub].underscore
-    @obj = params[:sub].camelize.constantize.find(params[:sub_id])
-    
+    @obj = @note.parent
+    @note.destroy   
     
     respond_to do |format|
       format.html { redirect_to notes_url }

@@ -128,23 +128,7 @@ skip_authorize_resource :only => :show_hover
   # PUT /todos/1.json
   def update
     @todo = Todo.find(params[:id])
-    
-    if params[:todo][:done]
-    
-             if params[:todo][:done].to_s == "true" 
-              res = "done"
-              params[:todo][:done_at] = Time.now
-             else 
-              res = "undone"
-              params[:todo][:done_at] = nil
-             end
-      tl("Todo",@todo.id,'This todo has been marked ' + res,
-          (@todo.topic.name rescue nil),'todo',@todo.assigned_by)
-    else
-      tl("Todo",@todo.id,'This todo has been updated',
-          (@todo.topic.name rescue nil),'todo',@todo.assigned_to)
-    end
-    
+        
     respond_to do |format|
       if @todo.update_attributes(params[:todo])
         format.html { redirect_to @todo, notice: 'Todo was successfully updated.' }

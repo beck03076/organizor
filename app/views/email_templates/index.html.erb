@@ -21,7 +21,8 @@
                 <th>Description</th>
                 <th>Created</th>
                 <th>Last Modified</th>
-                <th colspan=2>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
@@ -38,6 +39,8 @@
 
                     <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
                                 edit_email_template_path(r) %>
+                  </td>
+                  <td>              
                     <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
                                 r, 
                                 method: :delete, 

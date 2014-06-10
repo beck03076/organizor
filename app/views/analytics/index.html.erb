@@ -1,0 +1,62 @@
+<!--Analytics -->
+<%= head(nil,"Analytics","Saved Reports",saved_reports_path) %>
+<div class="row">
+<div class="col-xs-12 well">
+
+
+	<% core = "programmes" %>
+
+	<%= head_total(core) %>
+
+	<%= analytics_listing(core,[["Long","DESC"],["Less","ASC"]],"Time To Join","duration") %> 
+	<%= analytics_listing(core,[["Most","minus"],["Least","plus"]],"Preferred Course Levels","course_level_weight") %> 
+	<%= analytics_listing("course_levels",[["Most","DESC"],["Least","ASC"]],"Profitable Course Levels","fees_commission") %>
+	<%= analytics_listing(core,[["More","DESC"],["Less","ASC"]],"Processing Fee Earned Countries","countries_processing_fees") %>
+
+	<% core = "enquiries" %>
+
+	<%= head_total(core) %>
+
+	<%= analytics_listing(core,[["Long","DESC"],["Less","ASC"]],"Time To Register","duration") %> 
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
+
+	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+
+	<% core = "registrations" %>
+
+	<%= head_total(core) %>
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
+
+	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+
+
+	<% core = "institutions" %>
+
+	<%= head_total(core) %>
+
+	<%= analytics_listing(core,[["More","Joined"],["Less","Deferred"]],"Conversion Rate","applied_with") %> 
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
+
+	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+
+	<%= analytics_listing(core,[["Long","minus"],["Quick","plus"]],"Time to Make the First Payment","first_payment_duration") %>
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Profitable Institutions","fees_commission") %>
+
+	<% core = "people" %>
+
+	<%= head_total(core) %>
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
+
+	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+
+</div>
+</div>
+
+<script type="text/javascript">
+  actmm("reports")
+</script>

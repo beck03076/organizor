@@ -11,7 +11,7 @@ class Contract < ActiveRecord::Base
   :commission_specified,:territory_specified,
   :sliding_scales_attributes
   
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Contract"'
+  has_many :notes,as: :noteable
   
   has_many :documents, dependent: :destroy
    
@@ -49,6 +49,10 @@ class Contract < ActiveRecord::Base
   
   def permitted_regions=(ids)
     self.all_permitted_region_ids = ids.split(",")
+  end
+
+  def assigned_to
+    institution.assigned_to
   end
   
  

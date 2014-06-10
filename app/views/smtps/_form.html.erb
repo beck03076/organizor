@@ -6,6 +6,7 @@
               <h4 class="form-heading"><%= h %> <%= resource_disp1 %></h4>
               <br/>
           <% end %>
+          <%= bs(f,"name","text_field",[nil,3],6) %>
           <%= bs(f,"address","text_field",[nil,3],6) %>
           <%= bs(f,"port","text_field",[nil,3],6) %>
           <%= bs(f,"domain","text_field",[nil,3],6) %>

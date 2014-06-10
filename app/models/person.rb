@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
 
-  include CoreExtension
+  include CoreModel
   
   validates :first_name, 
             uniqueness: {scope: [:surname,:date_of_birth], 
@@ -16,7 +16,7 @@ class Person < ActiveRecord::Base
   :twitter, :website, :work_phone,
   :created_by,:updated_by,:assigned_by,
   :assigned_to,:type_id,:notes_attributes,
-  :job_title, :institution_id,:remote_image_url
+  :job_title, :institution_id,:remote_image_url,:assigned_at
   
   mount_uploader :image, HumanImageUploader
   
@@ -30,12 +30,7 @@ class Person < ActiveRecord::Base
   
   belongs_to :type, class_name: "PersonType",foreign_key: "type_id"
   
-  belongs_to :institution
-  
-  has_and_belongs_to_many :emails 
-  has_many :follow_ups
-  has_many :notes,foreign_key: "sub_id",:conditions => 'notes.sub_class = "Person"'
-  has_many :todos
+  belongs_to :institution 
   
  
   accepts_nested_attributes_for :notes

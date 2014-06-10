@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140523112843) do
+ActiveRecord::Schema.define(:version => 20140610155522) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -149,12 +149,13 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.string   "recruitment_territories"
     t.text     "desc"
     t.integer  "institution_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
     t.boolean  "commission_specified"
     t.boolean  "territory_specified"
+    t.integer  "notes_count",                 :default => 0, :null => false
   end
 
   create_table "countries", :force => true do |t|
@@ -260,6 +261,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.datetime "updated_at",      :null => false
     t.integer  "smtp_id"
     t.text     "signature"
+    t.boolean  "auto"
+    t.string   "core"
   end
 
   create_table "emails_enquiries", :force => true do |t|
@@ -314,16 +317,26 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "assigned_by"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "country_id"
     t.integer  "status_id"
     t.text     "address"
-    t.boolean  "active",          :default => true
+    t.boolean  "active",            :default => true
     t.integer  "contact_type_id"
-    t.boolean  "registered",      :default => false
+    t.boolean  "registered",        :default => false
     t.string   "image"
     t.integer  "branch_id"
+    t.date     "registered_at"
+    t.integer  "registered_by"
+    t.integer  "impressions_count"
+    t.string   "response_time"
+    t.datetime "assigned_at"
+    t.string   "conversion_time"
+    t.integer  "emails_count",      :default => 0,     :null => false
+    t.integer  "follow_ups_count",  :default => 0,     :null => false
+    t.integer  "todos_count",       :default => 0,     :null => false
+    t.integer  "notes_count",       :default => 0,     :null => false
   end
 
   create_table "enquiry_statuses", :force => true do |t|
@@ -377,6 +390,7 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.datetime "updated_at",              :null => false
     t.date     "first_payment_date"
     t.date     "invoice_date"
+    t.integer  "commission_paid_cents"
   end
 
   create_table "follow_ups", :force => true do |t|
@@ -390,14 +404,15 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "remind_before"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.integer  "enquiry_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "assigned_to"
     t.integer  "assigned_by"
-    t.integer  "registration_id"
-    t.integer  "institution_id"
-    t.integer  "person_id"
+    t.boolean  "followed"
+    t.boolean  "auto"
+    t.datetime "followed_at"
+    t.string   "follow_upable_type"
+    t.integer  "follow_upable_id"
   end
 
   create_table "images", :force => true do |t|
@@ -406,6 +421,31 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "impressions", :force => true do |t|
+    t.string   "impressionable_type"
+    t.integer  "impressionable_id"
+    t.integer  "user_id"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.string   "view_name"
+    t.string   "request_hash"
+    t.string   "ip_address"
+    t.string   "session_hash"
+    t.text     "message"
+    t.text     "referrer"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "impressions", ["controller_name", "action_name", "ip_address"], :name => "controlleraction_ip_index"
+  add_index "impressions", ["controller_name", "action_name", "request_hash"], :name => "controlleraction_request_index"
+  add_index "impressions", ["controller_name", "action_name", "session_hash"], :name => "controlleraction_session_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], :name => "poly_ip_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], :name => "poly_request_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
+  add_index "impressions", ["impressionable_type", "message", "impressionable_id"], :name => "impressionable_type_message_index", :length => {"impressionable_type"=>nil, "message"=>255, "impressionable_id"=>nil}
+  add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
   create_table "institution_groups", :force => true do |t|
     t.string   "name"
@@ -433,8 +473,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "type_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "email"
     t.string   "phone"
     t.string   "fax"
@@ -448,16 +488,25 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "group_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
+    t.datetime "assigned_at"
+    t.integer  "impressions_count"
+    t.string   "response_time"
+    t.integer  "notes_count",       :default => 0, :null => false
+    t.integer  "todos_count",       :default => 0, :null => false
+    t.integer  "follow_ups_count",  :default => 0, :null => false
+    t.integer  "emails_count",      :default => 0, :null => false
   end
 
   create_table "notes", :force => true do |t|
     t.text     "content"
-    t.string   "sub_class"
-    t.integer  "sub_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.boolean  "auto"
+    t.string   "noteable_type"
+    t.integer  "noteable_id"
+    t.integer  "assigned_to"
   end
 
   create_table "people", :force => true do |t|
@@ -483,8 +532,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.string   "blogger"
     t.string   "website"
     t.text     "desc"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "institution_id"
     t.integer  "type_id"
     t.integer  "assigned_to"
@@ -492,6 +541,13 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "created_by"
     t.integer  "updated_by"
     t.string   "job_title"
+    t.datetime "assigned_at"
+    t.integer  "impressions_count"
+    t.string   "response_time"
+    t.integer  "notes_count",       :default => 0, :null => false
+    t.integer  "todos_count",       :default => 0, :null => false
+    t.integer  "follow_ups_count",  :default => 0, :null => false
+    t.integer  "emails_count",      :default => 0, :null => false
   end
 
   create_table "permissions", :force => true do |t|
@@ -587,8 +643,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "enquiry_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "course_subject"
     t.integer  "app_status_id"
     t.integer  "ins_ref_no"
@@ -600,6 +656,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.string   "currency"
     t.integer  "p_fee_status_id"
     t.text     "p_fee_bank_details"
+    t.string   "conversion_time"
+    t.integer  "notes_count",         :default => 0, :null => false
   end
 
   create_table "progression_statuses", :force => true do |t|
@@ -705,8 +763,8 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "assigned_by"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "prof_eng_level_id"
     t.integer  "prof_exam_id"
     t.text     "note"
@@ -714,6 +772,14 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.string   "image"
     t.integer  "branch_id"
     t.integer  "progression_status_id"
+    t.datetime "assigned_at"
+    t.string   "response_time"
+    t.integer  "impressions_count"
+    t.string   "conversion_time"
+    t.integer  "notes_count",           :default => 0, :null => false
+    t.integer  "todos_count",           :default => 0, :null => false
+    t.integer  "follow_ups_count",      :default => 0, :null => false
+    t.integer  "emails_count",          :default => 0, :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -783,6 +849,7 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.integer  "programme_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "status_name"
   end
 
   create_table "statuses", :force => true do |t|
@@ -837,19 +904,18 @@ ActiveRecord::Schema.define(:version => 20140523112843) do
     t.string   "priority"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.integer  "enquiry_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "assigned_to"
     t.integer  "assigned_by"
-    t.integer  "registration_id"
-    t.boolean  "done",            :default => false
-    t.integer  "institution_id"
+    t.boolean  "done",          :default => false
     t.boolean  "api"
     t.datetime "done_at"
     t.string   "title"
     t.text     "api_id"
-    t.integer  "person_id"
+    t.boolean  "auto"
+    t.string   "todoable_type"
+    t.integer  "todoable_id"
   end
 
   create_table "user_configs", :force => true do |t|

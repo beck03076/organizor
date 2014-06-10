@@ -5,7 +5,14 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 
-
+function compareUsers(id,obj){
+  var link = $(obj).data('link');
+  var ids = getCheckedRowsAsArray(id);
+  if (ids.length < 5)  
+    window.open((link + '/' + ids.join("-")),'_top');  
+  else
+    bootbox.alert("You cannot compare more than 4 users!")
+}
 
 function toggleAllCheck(obj,tableId){
     var checkedStatus = obj.checked;

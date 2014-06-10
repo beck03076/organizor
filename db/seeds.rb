@@ -29,14 +29,15 @@ if Permission.where(subject_class: "All",action: "manage").blank?
                            :action => "manage")
 end
 
-@user = User.invite!(email: "senthilkumar.hce@gmail.com")
-@user.update_attribute(:invited_by_id,1)
-@user.update_attribute(:is_active, true)
-PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
+@user = User.first_adm
+if @user.nil?
+  @user = User.invite!(email: "senthilkumar.hce@gmail.com")
+  @user.update_attribute(:invited_by_id,1)
+  @user.update_attribute(:is_active, true)
+  PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
+end
 
-
-
-models = %w[users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people]
+models = %w[users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit]
 actions = %w[create read update destroy]
 models.each do |m|
   actions.each do |a|
@@ -91,7 +92,7 @@ end
 
 
 [{application_status: %w(Sent Conditional_offer Unconditional_offer 
-                         Pending Joined Rejected Defer Sent_to_documentation)},
+                         Pending Joined Rejected Deferred Sent_to_documentation)},
  {commission_status: %w(Pending Partially_paid fully_paid)},
  {contact_type: %w(Walk-in Telephone Email Online Event Sub_Agent)},
  {course_level: %w(Foundation A-level Diploma Bachelor Pre-master PgDiploma Master PhD)},

@@ -126,7 +126,7 @@
                                         <th>Currency</th>
                                         <th>Paid</th>
                                         <th>Remaining</th>
-                                        <th>Status</th>
+                                        <th>Status</th>                                        
                                         <th>&nbsp;</th>
 
                   </tr>
@@ -135,7 +135,7 @@
                   <% comms.each do |c| %>
                             <tr>
                                <td><%= c.currency %></td>
-                               <td><%= humanized_money_with_symbol c.paid %></td>
+                               <td><strong><%= humanized_money_with_symbol c.paid %></strong></td>
                                <td><%= humanized_money_with_symbol c.remaining %></td>
                                    <% if c.stat == "Partially Paid" %>
                                     <% cl = "yellow-ok" %>
@@ -145,6 +145,7 @@
                                     <% cl = "red-wrong" %>
                                    <% end %>
                                <td class="<%= cl %>"><%= c.stat %></td>
+
                                <td>
                                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
                                        c,
@@ -152,6 +153,15 @@
                                        data: { confirm: 'Are you sure?',
                                        remote: true }  %>
                                </td>
+                            </tr>
+                            <tr class="grey-sm">
+                              <td colspan=2>
+                                
+                              </td>
+                              <td class="orange-well" colspan=3>
+                                At
+                                <%= c.created_at %>
+                              </td>  
                             </tr>
                   <% end %>
                 </tbody>

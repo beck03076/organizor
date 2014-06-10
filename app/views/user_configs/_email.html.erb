@@ -21,7 +21,7 @@
                                  ["Default Create Enquiry Email",4],5) %>
 
                       <%= bs(f,["def_from_email",
-                                 (Smtp.all.map &:name),
+                                 (Smtp.all.map{|i| [i.name,i.id] }),
                                  {},
                                  {}],
                                  "select",

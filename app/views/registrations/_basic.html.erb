@@ -15,7 +15,7 @@
            <%= li1('applications',a.quick_st,'span','small')%>
            <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
            <% %w(emails follow_ups todos notes).each do |act| %>
-             <% out = meta(current_user.id,"registration",act,a.id,hsh[act.to_sym]) %>
+             <% out = meta(current_user.id,"registration",act,a,hsh[act.to_sym]) %>
              <%= li1(act,out,'span','small')%>
            <% end %>
     </ul>
