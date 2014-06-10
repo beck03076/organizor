@@ -16,7 +16,7 @@ module CoreModel
       # setting variable names to be used in the current class
       self_name = self.name
 
-      if !self_name == "Programme"
+      if self_name != "Programme"
         # recording impressions and retrieving them
         is_impressionable :counter_cache => true, :unique => :request_hash
         #setting assigned_at value
@@ -32,7 +32,7 @@ module CoreModel
 
       #core model has the followin actions so attr accesible is must for Form, fields_for
       attr_accessible :emails_attributes,:follow_ups_attributes,:notes_attributes,:todos_attributes,
-                      :emails_count, :follow_ups_count, :todos_count, :notes_count
+                      :emails_count, :follow_ups_count, :todos_count, :notes_count,:impressions_count
 
       #core model has the followin actions so accepting nested attributes is must for Form, fields_for 
       accepts_nested_attributes_for :emails,:follow_ups,:notes,:todos, :allow_destroy => true                 

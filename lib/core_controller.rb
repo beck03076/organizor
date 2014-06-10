@@ -3,7 +3,9 @@ module CoreController
 
   def self.included(base)
     base.class_eval do
-      impressionist :actions=>[:show]
+      if self.name != "ProgrammesController"
+        impressionist :actions=>[:show]
+      end
     end  
   end
 
