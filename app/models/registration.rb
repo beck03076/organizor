@@ -68,10 +68,9 @@ class Registration < ActiveRecord::Base
   :notes_attributes,:image,:remote_image_url,
   :progression_status_id,:branch_id,:assigned_at,
   :impressions_count, :response_time,:registered_by,
-  :nationality,:todos_attributes
+  :nationality,:conversion_time
   
-  accepts_nested_attributes_for :programmes,:emails,:follow_ups,
-  :notes,:todos,:proficiency_exams, 
+  accepts_nested_attributes_for :programmes,:proficiency_exams, 
   :documents, :allow_destroy => true
   
   

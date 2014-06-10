@@ -72,13 +72,12 @@ class Enquiry < ActiveRecord::Base
                   :mobile2, :score, :source_id, 
                   :surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,
-                  :follow_ups_attributes,:active,:notes_attributes,
-                  :todos_attributes,:contact_type_id,:registered,
+                  :active,:contact_type_id,:registered,
                   :image,:remote_image_url,:branch_id,:registered_at,
                   :registered_by,:response_time,:assigned_at,
-                  :todos_attributes
+                  :conversion_time
                   
-  accepts_nested_attributes_for :programmes,:emails,:follow_ups,:notes,:todos, :allow_destroy => true  
+  accepts_nested_attributes_for :programmes, :allow_destroy => true  
 
   
 

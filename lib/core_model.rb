@@ -31,7 +31,8 @@ module CoreModel
       #============================================
 
       #core model has the followin actions so attr accesible is must for Form, fields_for
-      attr_accessible :emails_attributes,:follow_ups_attributes,:notes_attributes,:todos_attributes
+      attr_accessible :emails_attributes,:follow_ups_attributes,:notes_attributes,:todos_attributes,
+                      :emails_count, :follow_ups_count, :todos_count, :notes_count
 
       #core model has the followin actions so accepting nested attributes is must for Form, fields_for 
       accepts_nested_attributes_for :emails,:follow_ups,:notes,:todos, :allow_destroy => true                 
