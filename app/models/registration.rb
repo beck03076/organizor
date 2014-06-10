@@ -92,7 +92,7 @@ class Registration < ActiveRecord::Base
     if !self.enquiry_id.nil?
       enq = Enquiry.find(enquiry_id)
       deact = EnquiryStatus.find_by_name("deactivated").id
-      conv_time = (Date.today - created_at.to_date).to_i 
+      conv_time = (Date.today - enq.created_at.to_date).to_i 
       enq.update_attributes(registered: true,
                             active: false,
                             status_id: deact,
