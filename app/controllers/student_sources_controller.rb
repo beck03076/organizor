@@ -19,6 +19,7 @@ class StudentSourcesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @student_source }
+      format.js
     end
   end
 

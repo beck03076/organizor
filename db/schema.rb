@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140610155522) do
+ActiveRecord::Schema.define(:version => 20140611184720) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -312,7 +312,6 @@ ActiveRecord::Schema.define(:version => 20140610155522) do
     t.string   "gender"
     t.date     "date_of_birth"
     t.integer  "score"
-    t.integer  "source_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
     t.integer  "created_by"
@@ -337,6 +336,9 @@ ActiveRecord::Schema.define(:version => 20140610155522) do
     t.integer  "follow_ups_count",  :default => 0,     :null => false
     t.integer  "todos_count",       :default => 0,     :null => false
     t.integer  "notes_count",       :default => 0,     :null => false
+    t.integer  "student_source_id"
+    t.boolean  "direct"
+    t.integer  "sub_agent_id"
   end
 
   create_table "enquiry_statuses", :force => true do |t|
@@ -747,8 +749,6 @@ ActiveRecord::Schema.define(:version => 20140610155522) do
     t.string   "qua_exam"
     t.string   "qua_score"
     t.integer  "course_id"
-    t.integer  "reg_source_id"
-    t.boolean  "reg_direct"
     t.string   "reg_came_through"
     t.integer  "sub_agent_id"
     t.string   "emer_full_name"
@@ -780,6 +780,9 @@ ActiveRecord::Schema.define(:version => 20140610155522) do
     t.integer  "todos_count",           :default => 0, :null => false
     t.integer  "follow_ups_count",      :default => 0, :null => false
     t.integer  "emails_count",          :default => 0, :null => false
+    t.integer  "contact_type_id"
+    t.integer  "student_source_id"
+    t.boolean  "direct"
   end
 
   create_table "roles", :force => true do |t|
@@ -862,12 +865,12 @@ ActiveRecord::Schema.define(:version => 20140610155522) do
   create_table "student_sources", :force => true do |t|
     t.string   "name"
     t.text     "desc"
-    t.integer  "contact_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "cl"
+    t.integer  "contact_type_id"
   end
 
   create_table "timelines", :force => true do |t|

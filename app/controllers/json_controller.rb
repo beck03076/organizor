@@ -1,4 +1,12 @@
 class JsonController < ApplicationController
+
+  def student_sources   
+    @student_sources = ContactType.find(params[:contact_type_id]).student_sources   
+    respond_to do |format|
+      format.json { render json: @student_sources }
+    end
+
+  end
   
   def currency
     set_url_params

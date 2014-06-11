@@ -21,16 +21,31 @@ module FeeCommissionAnalytics
     qualified_fees = qualify_period_size(Fee,conditions,false,false)
     # Complete output hash with name as key and fees and commission as values
     out = @model.total_fee_commission((qualified_fees.map &:id),@data)
+    # readying table head in a separate array because it is being reused in charts categories
+    table_head = ["#{@actual_core.titleize}","Fees Paid (Units)","Commission Received(Units)","Commission Pending(Units)"]
     # structuring the same for charts
-    #charts = charts_data(institutions,out)
-    # returning the output as hash
-    {table_header: ["#{@actual_core.titleize}","Total Fees Paid (Units)","Total Commission Received(Units)","Total Commission Pending(Units)"],
-     ordered_output: out.first(conditions[:size].to_i),
-     #charts: charts,
+    charts = [out.keys,charts_series(out,table_head)]
+    # returning the output as hash    
+    {table_header: table_head,
+     ordered_output: out.first(conditions[:size].to_i),     
      page_header: "#{@title.titleize} Profitable #{@actual_core.titleize} <<size>>",
-     #chart_text: "Applied Vs #{@data.titleize}",
+     charts: charts,
+     chart_text: "Fees Paid, Commission Paid and Commission Pending",
      partial: "fee_commission"}
 
+  end
+
+  def charts_series(out,th)
+    result = []
+    
+    values = out.values
+    th.slice(1..3).each_with_index do |i,index|
+      hsh = {}
+      hsh[:name] = i
+      hsh[:data] = values.map{|i| i[index]}
+      result << hsh
+    end
+    result
   end
 
 

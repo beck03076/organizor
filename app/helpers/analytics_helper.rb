@@ -5,7 +5,7 @@ module AnalyticsHelper
   	arr.each do |a|
   	  html += '<h4 class="border-b">'
   	  html += link_to "#{a[0]} #{text}","/analytics/#{core}/#{link}/#{a[1].downcase}-#{a[0].downcase}"
-  	  html += '&nbsp;<small>asdfdsafdsafdsaf</small></h4>'
+  	  html += "&nbsp;<small>#{!@charts.nil? ? "Charts" : nil}</small></h4>"
     end
     html.html_safe
   end

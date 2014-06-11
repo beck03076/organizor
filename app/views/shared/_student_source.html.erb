@@ -1,0 +1,47 @@
+<div class="well blue-well col-xs-10">
+        <div class="text-center">          
+          <% %w(direct indirect).each do |i| %>
+            <%= f.radio_button :direct,
+                               i,{:onclick => "$('.source').css('display','none');$('.#{i}').show();",
+                                  :autocomplete => "off"} %>
+            &nbsp;<%= f.label i %>&nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>          
+        </div>
+
+        <div class="row source direct" style="display:none;">
+          <label class="control-label col-xs-2">Contact Type</label>
+          <div class="col-xs-7">
+          <%= f.collection_select(:contact_type_id,ContactType.order(:name),
+                                                 :id,
+                                                 :name,
+                                                 {prompt: "-contact type-"},
+                                                 {class: "form-control",
+                                                 onchange: "prepSelect(this,
+                                                           '.student_sources_select',
+                                                           '/get_student_sources/');"}) %>
+          </div>
+        </div>
+
+        <div class="row source direct" style="display:none;">
+          <label class="control-label col-xs-2">Student Source</label>
+          <div class="col-xs-7">
+          <%= f.collection_select(:student_source_id,StudentSource.order(:name),
+                                                 :id,
+                                                 :name,
+                                                 {prompt: "-student source-"},
+                                                 {class: "form-control student_sources_select"}) %>
+          </div>
+        </div> 
+
+
+        <div class="row source indirect">
+          <label class="control-label col-xs-2">Sub Agent</label>   
+          <div class="col-xs-7">
+          <%= f.collection_select(:sub_agent_id,Person.sub_agent,
+                                                 :id,
+                                                 :first_name,
+                                                 {prompt: "-sub agent-"},
+                                                 {class: "form-control"}) %>
+         </div>
+        </div> 
+      </div>

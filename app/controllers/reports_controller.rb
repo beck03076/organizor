@@ -8,12 +8,13 @@ class ReportsController < ApplicationController
     r = Report.new(@module,@heading)
   	@cols = r.get_fil_hash    
   	@search = self.model.search(@q)
-  	@results = @search.result.paginate(page: @page, per_page: 3)    
+  	@results = @search.result(distinct: true).paginate(page: @page, per_page: 20)    
     @search.build_sort if @search.sorts.empty?
     @main_sel = r.get_main_sel
     self.set_pie(r)
     self.set_bar(r)   
     @saved_report = params[:saved_report] || SavedReport.new
+    render @heading if @heading == "charts"
   end 
 
   def repair_module

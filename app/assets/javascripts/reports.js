@@ -69,6 +69,34 @@ function init_negative_chart(container,cat,ser,title){
         });
 }
 
+function init_donut_chart(container,title,subtitle,data_name,data){
+        $(container).highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: title
+                },
+                subtitle: {
+                    text: subtitle
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: data_name,
+                    data: data
+                }]
+            });
+}    
+
 function init_chart(type,series_data1,meta,series_data2,from){
    var from = from || "html"; 
    if (type == "pie"){
@@ -117,7 +145,7 @@ function init_chart(type,series_data1,meta,series_data2,from){
         
         $('#bar').highcharts({
             chart: {
-                type: 'bar'
+                type: 'column'
             },
             title: {
                 text: meta
@@ -134,7 +162,7 @@ function init_chart(type,series_data1,meta,series_data2,from){
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Population (millions)',
+                    text: 'Units',
                     align: 'high'
                 },
                 labels: {

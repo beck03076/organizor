@@ -1,9 +1,24 @@
+<div class="row">
 <%= form_for(@saved_report,html: {id: "saved_report"}) do |f| %>
   <%= f.hidden_field :q %> 
   <%= f.hidden_field :created_by %>
   <%= f.hidden_field :heading %>
   <%= f.hidden_field :module %>
-  <%= f.text_field :name,{placeholder: "Name your filter"}  %> <br/>
-  <%= f.text_area :desc,{placeholder: "Describe your filter",size: "50X25"}  %><br/>
-  <%= f.submit %>
+  <div class="row">
+  	<div class="col-xs-10">
+      <%= f.text_field :name,{placeholder: "Name your filter",class: "form-control"}  %> <br/>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-10">
+      <%= f.text_area :desc,{placeholder: "Describe your filter",size: "40X100", class: "form-control"}  %><br/>
+    </div>
+
+  	<div class="col-xs-10">
+      <div class="form-group">
+  	    <%= f.submit "Save Report",{class: "btn btn-primary "} %>
+      </div> 	
+    </div>
+  </div>    
 <% end %>
+</div>

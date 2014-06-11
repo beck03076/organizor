@@ -20,7 +20,7 @@ module CoreModel
         # recording impressions and retrieving them
         is_impressionable :counter_cache => true, :unique => :request_hash
         #setting assigned_at value
-        before_create :set_assigned_at     
+        before_save :set_assigned_at     
       end      
 
       #========= Actions on Core Start ============
@@ -58,7 +58,7 @@ module CoreModel
   # ===========
 
   def set_assigned_at
-    return of
+    return if !assigned_to_changed?
     self.assigned_at = Time.now
   end
   

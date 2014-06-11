@@ -346,7 +346,7 @@ background-color:#f1c1c1;
 }
 
 .l{
-  left: 7px;
+  left: 4px;
 }
 
 .marL30{
@@ -365,8 +365,11 @@ background-color:#f1c1c1;
 .bb{border-bottom: 1px solid #dddddd; }
 
 .bblue{
- color: #008cba;
- 
+ color: #008cba; 
+}
+
+.bred{
+ color: #F67878;
 }
 .vmid{
   vertical-align: middle;
@@ -445,6 +448,11 @@ vertical-align: top;
 .main .main-content .bold-head {
     font-size: 19px;
     font-weight: bold; }
+
+
+.bor-r {
+  border-right: 1px dashed #333;
+}
 
 
 

@@ -16,35 +16,38 @@ class Registration < ActiveRecord::Base
                          message: " Surname and Date of Birth already exists as another registration, please check!" }  
   
   mount_uploader :image, HumanImageUploader
+
+  #=== BELONGS TO =====
   belongs_to :qualification, foreign_key: 'qua_id'
-
-
+  belongs_to :sub_agent
+  belongs_to :student_source
+  belongs_to :contact_type
+  belongs_to :country_of_origin,
+             :class_name => "Country",
+             :foreign_key => "country_id"
+  # ==== duplicate of country of origin for reports ===           
+  belongs_to :country,
+             :class_name => "Country",
+             :foreign_key => "country_id"
+  # ==== duplicate of country of origin for reports ===
+  belongs_to :address_country,
+             :class_name => "Country",
+             :foreign_key => "address_country_id"
+  belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"  
+  belongs_to :branch
+  belongs_to :user, foreign_key: "assigned_to"
+  belongs_to :progression_status          
+  #==================
+  #=== HAS MANY =====
   has_many :programmes, dependent: :destroy
   has_many :institutions, through: :programmes
   has_many :application_statuses, through: :programmes,:foreign_key => 'app_status_id'
   has_many :course_levels, through: :programmes
-  has_many :fee, through: :programmes
-  
+  has_many :fee, through: :programmes  
   has_many :exams
-  has_many :proficiency_exams,class_name: "Exam", dependent: :destroy
-  belongs_to :sub_agent
-  belongs_to :student_source, foreign_key: 'reg_source_id'  
-  
+  has_many :proficiency_exams,class_name: "Exam", dependent: :destroy  
   has_many :documents, dependent: :destroy
-  
-   belongs_to :country_of_origin,
-             :class_name => "Country",
-             :foreign_key => "country_id"
-   belongs_to :address_country,
-             :class_name => "Country",
-             :foreign_key => "address_country_id"
-             
-  belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"
-  
-  belongs_to :branch
-  belongs_to :user, foreign_key: "assigned_to"
-  belongs_to :progression_status
-
+  #==================
     
   attr_accessor :_destroy
 
@@ -60,7 +63,7 @@ class Registration < ActiveRecord::Base
   :passport_number,:prof_eng_level_id, :prof_exam_id, :qua_exam, 
   :qua_grade, :qua_id, :qua_institution, :qua_score, 
   :qua_subject, :ref_no, :reg_came_through, 
-  :reg_direct, :reg_source_id, :sub_agent_id, 
+  :reg_direct, :sub_agent_id, 
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
@@ -68,7 +71,8 @@ class Registration < ActiveRecord::Base
   :notes_attributes,:image,:remote_image_url,
   :progression_status_id,:branch_id,:assigned_at,
   :impressions_count, :response_time,:registered_by,
-  :nationality,:conversion_time
+  :nationality,:conversion_time,:contact_type_id,
+  :student_source_id
   
   accepts_nested_attributes_for :programmes,:proficiency_exams, 
   :documents, :allow_destroy => true
@@ -169,11 +173,15 @@ class Registration < ActiveRecord::Base
   def nationality=(i)
     self.country_id = i
   end
+
+  def channel
+    self.contact_type.name rescue "Unknown"
+  end
   
   def source
     self.student_source.name rescue "Unknown"
   end
-  
+
   def quick_st
     total = self.programmes.size
     j = self.programmes.includes(:application_status).where(application_statuses: {name: "joined"}).size
@@ -206,6 +214,21 @@ class Registration < ActiveRecord::Base
     includes(asso,
              sub_asso).where(cond).where(c1.to_sym => 
                              {cat2 => cats}).group(["#{asso.to_s.pluralize}.#{asso_name}","#{c1}.name"]).count.reject{|k,v| k[0].nil? }
+  end 
+
+  def self.total_fee_commission(ids,direction)
+    hsh = {}    
+    joins(programmes: [:fee])
+    .where(fees: {id: ids})
+    .group("level_id")
+    .select("sum(fees.tuition_fee_cents) as result1,
+             sum(fees.commission_paid_cents) as result2,
+             sum(fees.commission_amount_cents - fees.commission_paid_cents) as result3,
+             registrations.first_name as rname,
+             registrations.id as id")
+    .order("result2 #{direction}")
+    .map {|o| hsh[o.rname] = [o.result1,o.result2,o.result3,o.id]}
+    hsh
   end 
 
 end

@@ -1,5 +1,9 @@
 class StudentSource < ActiveRecord::Base
-  has_many :enquiries,:foreign_key => "source_id"
+
+  has_many :enquiries
   has_many :registrations
-  attr_accessible :contact_id, :desc, :name
+
+  belongs_to :contact_type
+  
+  attr_accessible :contact_type_id, :desc, :name
 end

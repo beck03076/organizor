@@ -27,8 +27,8 @@ class Enquiry < ActiveRecord::Base
   belongs_to :enquiry_status, class_name: "EnquiryStatus",foreign_key: "status_id"
   belongs_to :user, class_name: "User",foreign_key: "assigned_to"
   # ======================================================================
-  belongs_to :contact_type  
-  belongs_to :student_source,:foreign_key => "source_id"   
+  belongs_to :student_source
+  belongs_to :contact_type 
   
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries  
@@ -44,9 +44,6 @@ class Enquiry < ActiveRecord::Base
                           :follow_ups,
                           :country_of_origin).where("enquiry_statuses.name != 'deactivated'")
                           
-  belongs_to :branch
-  belongs_to :student_source, foreign_key: 'source_id'
-  
   #scope :inactive,includes(:status).where("enquiry_statuses.name = 'deactivated'")
   
   scope :myactive, lambda{|user|
@@ -69,13 +66,13 @@ class Enquiry < ActiveRecord::Base
                   :assigned_by, :assigned_to, :created_by, 
                   :date_of_birth, :email1, :email2, 
                   :first_name, :gender, :mobile1, 
-                  :mobile2, :score, :source_id, 
-                  :surname, :updated_by,:country_ids,
+                  :mobile2, :score,:surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,
-                  :active,:contact_type_id,:registered,
+                  :active,:registered,
                   :image,:remote_image_url,:branch_id,:registered_at,
                   :registered_by,:response_time,:assigned_at,
-                  :conversion_time
+                  :conversion_time,:contact_type_id,:student_source_id,
+                  :sub_agent_id
                   
   accepts_nested_attributes_for :programmes, :allow_destroy => true  
 

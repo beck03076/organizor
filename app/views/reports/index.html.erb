@@ -1,15 +1,18 @@
 <%= render 'header' %>
 
-<% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Institutions","home"],["People","open"] ]%>
+<% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Institutions","home"],["People","globe"]]%>
 
 <%  [["Core Modules","Generate reports, filtering by anything","green-well","tower",
 	 core],
-    ["Activities","Reports of core modules, based on follow ups, todos and emails","yellow-well","time",
-     core],
-    ["Users","Reports, that focuses on various attributes of any user","red-well","user",
-     [["Single User","user"],["Compare Users","random"],["User Performance","thumbs-up"]]],
-    ["Resources","Reports, based on all the configuration items","blue-well0","th-list",
-     [["Course Level","book"],["Application Status","star"],["Student Source","transfer"],["Branches","globe"]]]].each do |r| %>
+    ["Charts","Prepare charts for the core modules","yellow-well","signal",
+     [["Enquiries","align-left"],["Registrations","align-right"],["Institutions","align-center"],["People","align-justify"]]],
+    ["Users","Reports, that focuses on various attributes of users","red-well","user",
+     [["Single User","user"],["Compare Users","random"]]],
+    ["Analytics","Data Insights that helps to take action and measure performance","blue-well0","th-list",
+     [["Course Levels","book","course_levels/fees_commission/desc-most"],
+      ["Commissions","gbp","registrations/fees_commission/asc-most"],
+      ["Payments","euro","institutions/first_payment_duration/minus-long"],
+      ["All Analytics","th",""]]]].each do |r| %>
 
     <div class="row">	 
 		<div class="col-md-3">
@@ -29,17 +32,22 @@
 	    	<div class="col-md-2"> 
 	    	  <div class="row">	
 	    	  	  <% ds_item = despace(r1[0]) %>
-		    	  <%= link_to "/reports/#{despace(r[0])}/#{ds_item}",{id: "#{ds_item}"} do %>	
-			    	  <span class="rounded well pointer">
+
+	    	  	  <% if (despace(r[0]) == "analytics") %>
+	    	  	    <% link = "/analytics/#{r1[2]}" %>
+	    	  	  <% else %>
+	    	  	    <% link = "/reports/#{despace(r[0])}/#{ds_item}" %>
+	    	  	  <% end %>
+
+		    	  <%= link_to link,{id: "#{ds_item}"} do %>	
+			    	  <span class="rounded well pointer modal-content orange-well">
 		                <span class="l glyphicon glyphicon-<%= r1[1] %>">
 		                </span>
 			    	  </span>
-			    	  
-			    	  <div class="row">
-			    	    <small class="text-center"><%= r1[0] %></small>
-			    	  </div>
-
 		    	  <% end %>
+		    	  <div class="row">
+			    	 <h5><%= r1[0] %></h5>
+			      </div>
 	    	  </div>
 	    	</div>  
 	    	<% end %>

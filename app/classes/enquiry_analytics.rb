@@ -18,7 +18,7 @@ class EnquiryAnalytics
      # returning the output as hash
     {table_header: ["name","channel","source","conversion_time","owner"],
      ordered_output: filtered,
-     page_header: "Top <<size>> Enquiries That Took #{@title.titleize} Time to Join",
+     page_header: "Top <<size>> Enquiries That Took #{@title.titleize} Time to Register",
      link_id: :id,
      partial: "duration"}
   end

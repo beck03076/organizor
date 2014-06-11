@@ -45,8 +45,6 @@ module AnalyticsCommon
   def impressions_counts(conditions)
     # fetching filtered applications 
     filtered = qualify_period_size(order_by_impressions,conditions,false)
-    p "&&&&&&&&&&&"
-    p filtered
      # returning the output as hash
     {table_header: ["name","impressions_count"],
      ordered_output: filtered,

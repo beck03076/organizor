@@ -29,8 +29,11 @@ class Report
   end	
 
   def get_current_pie  	  	  	
-  	@meta = "#{@mod.titleize} based on #{asso.titleize}"    
-
+  	@meta = "#{@mod.titleize} based on #{asso.titleize}"   
+    p "****"
+    p @asso
+    p @mod 
+    
     temp = self.model(@asso).includes(@mod.to_sym).where(self.cond).all.map {|i| 
              s = i.send(@mod).size
              if s != 0
@@ -52,6 +55,7 @@ class Report
 
     @split = send("#{@module}_bar_split",@split_param)
   	@meta = "#{@mod.titleize} based on #{asso.titleize}"
+    
     temp = self.model(@asso).includes(@mod.to_sym).all.map {|i| 
              s = i.send(@mod).size
              if s != 0

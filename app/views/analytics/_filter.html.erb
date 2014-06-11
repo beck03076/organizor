@@ -16,7 +16,7 @@
 				                                     ["Last 6 months",6],
 				                                     ["Last 1 year",12]],@last_months),
 			                     {prompt: "-period-",
-			                      class: "form-control reddd"} %>
+			                      class: "form-control greendd"} %>
 		</div>
 		<div class="col-xs-2">
 			<%= text_field_tag :from,@from,{placeholder: "-from-",class: "form-control greendd datepicker"} %>
@@ -31,11 +31,25 @@
 		<% end %>
 	</div>
 </div>
+<% if !@last_months.blank? || !@from.blank? || !@to.blank? %>
+<div class="row padAll10 green-well text-center modal-tab">
+	<span class="bold-subhead">Filtered By:</span> 
+	&nbsp;
+	<%= @last_months.blank? ? nil : @last_months.to_s + "month(s)" %>
+	&nbsp;
+	<%= @from %>
+	&nbsp;
+	<%= @to %>
+</div> 
+<% end %>
 
 <link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">
 
 <script>
   $('#from, #to').blur(function() {
     $('#last_months').prop('selectedIndex',0);
+  });
+  $('#last_months').focus(function() {
+    $('#from,#to').val('');
   });
 </script>

@@ -125,5 +125,16 @@ class Programme < ActiveRecord::Base
     .order("result1 #{direction}")
     .map {|o| hsh[o.cname] = o.result1.to_i }
     hsh
+  end 
+
+  def self.course_level_weight(ids,direction)
+    hsh = {}    
+    joins(:course_level)
+    .where(id: ids)
+    .group(:level_id)
+    .select("count(programmes.id) as r1,course_levels.name as cname")
+    .order("r1 #{direction}")
+    .map {|o| hsh[o.cname] = o.r1.to_i }
+    hsh
   end   
 end

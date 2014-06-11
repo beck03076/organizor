@@ -9,7 +9,9 @@
 	<%= head_total(core) %>
 
 	<%= analytics_listing(core,[["Long","DESC"],["Less","ASC"]],"Time To Join","duration") %> 
-	<%= analytics_listing(core,[["Most","minus"],["Least","plus"]],"Preferred Course Levels","course_level_weight") %> 
+
+	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Preferred Course Levels","course_level_weight") %> 
+
 	<%= analytics_listing("course_levels",[["Most","DESC"],["Least","ASC"]],"Profitable Course Levels","fees_commission") %>
 	<%= analytics_listing(core,[["More","DESC"],["Less","ASC"]],"Processing Fee Earned Countries","countries_processing_fees") %>
 
@@ -30,6 +32,8 @@
 	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
 
 	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+
+	<%= analytics_listing(core,[["Most","ASC"],["Least","DESC"]],"Profitable Registrations","fees_commission") %>
 
 
 	<% core = "institutions" %>

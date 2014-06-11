@@ -1,3 +1,7 @@
+<div class="row well">
+	<div id="container">
+	</div>
+</div>
 
 <div class="row well">
 	<table class="table table-bordered">
@@ -17,3 +21,11 @@
 
 	</table>
 </div>
+
+<script type="text/javascript">
+ init_donut_chart("#container",
+ 	              "<%= @chart_meta[0] %>",
+ 	              "<%= @chart_meta[1] %>",
+ 	              "<%= @chart_meta[2] %>",
+ 	              <%= @charts.to_s.html_safe %>)
+</script>

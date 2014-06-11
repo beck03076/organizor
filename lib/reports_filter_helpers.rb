@@ -34,7 +34,7 @@ module ReportsFilterHelpers
           html += "<div class='clear'></div>" 
           html += hidable_div(c,q)
           html += "<div class='clear'></div>"    
-          html += "<h5 class='bold-subhead'> #{c[:title]} <span onclick=$('.#{c[:title]}').toggle(); class='cgreen pointer padL10 glyphicon mar0 glyphicon-remove'></span></h5>"          
+          html += "<h5 class='bold-subhead'> #{c[:title]} <span onclick=$('.#{c[:title].tr(' ','_')}').toggle(); class='cgreen pointer padL10 glyphicon mar0 glyphicon-remove'></span></h5>"          
 
             c[:cols].each do |j|
 
@@ -72,12 +72,12 @@ module ReportsFilterHelpers
       #===============================================================
       #=== deals with opening div that hides =========================
       def hidable_div(c,q)
-        "<div class='#{c[:title]}' style='display: #{compare_q_cols(q,c[:cols],c[:table])};'>" 
+        "<div class='#{c[:title].tr(' ','_')}' style='display: #{compare_q_cols(q,c[:cols],c[:table])};'>" 
       end
       #===============================================================
       #=== deals with creating links that toggles the hiding divs ====
       def show_link(c)
-        ("<div onclick=$('.#{c[:title]}').slideToggle(); class='padTL10'> <div class='pilled'> <span class='glyphicon glyphicon-#{c[:logo]} mar0'></span>" + "<span > #{c[:title]} </span>" + "</div></div>").html_safe
+        ("<div onclick=$('.#{c[:title].tr(' ','_')}').slideToggle(); class='padTL10'> <div class='pilled'> <span class='glyphicon glyphicon-#{c[:logo]} mar0'></span>" + "<span > #{c[:title]} </span>" + "</div></div>").html_safe
       end
       #===============================================================
       #=== deals with text fields and date picker fields =============
@@ -118,6 +118,7 @@ module ReportsFilterHelpers
                                 *tail      
 
           end
+          html
       end    
       #===============================================================
       

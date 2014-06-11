@@ -1,5 +1,5 @@
 <!-- New enquiry personal information -->
-                      <h4 class="form-heading">Personal Information</h4>
+                      <h4 class="bold-subhead">Personal Information</h4>
                       <br/>
                       <div class="row row-top">
 
@@ -36,14 +36,6 @@
                                               {prompt: "-assign to-"},{}],
                                               "collection_select",
                                               ["Assign To",4],7,6) %>
-
-                        <%= bs(f,[:source_id,StudentSource.order(:name),
-                                              :id,
-                                              :name,
-                                              {prompt: "-student source-"},{}],
-                                              "collection_select",
-                                              [nil,4],7,6) %>
-
                         <div class="col-xs-6">
                           <div class="form-group">
                             <label class="control-label col-xs-4">Score</label>
@@ -56,19 +48,17 @@
                           </div>
                         </div>
 
-                        <%= bs(f,[:contact_type_id,ContactType.order(:name),
-                                              :id,
-                                              :name,
-                                              {prompt: "-contact type-"},{}],
-                                              "collection_select",
-                                              [nil,4],7,6) %>
-
                         <%= bs(f,[:branch_id,Branch.order(:name),
                                               :id,
                                               :name,
                                               {prompt: "-branch-"},{}],
                                               "collection_select",
                                               ["Branch",4],7,6) %>
+
+                         <h4 class="bold-subhead">Source</h4>
+                         <br/>                     
+
+                         <%= render 'shared/student_source', f: f %>                     
 
                     </div>
 

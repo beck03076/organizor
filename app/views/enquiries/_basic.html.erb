@@ -9,11 +9,9 @@
 
     <ul class="vlsdet-s" >
         <h4 class="bold-subhead">Quick Info</h4>
-           <%= li2('source',[:source_id,:select,StudentSource,:source_name],a,nil,"span","strong")%>
-           <%= li2('status',[:status_id,:select,EnquiryStatus,:status_name],a,
-                 nil,"span","strong")%>
-           <%= li2('channel',[:contact_type_id,:select,ContactType,
-                  :contact_type_name],a,nil,"span","strong")%>
+           <%= li2('status',[:status_id,:select,EnquiryStatus,:status_name],a,nil,"span","strong")%>          
+           <%= li2('channel',[:contact_type_id,:select,ContactType,:contact_type_name],a,nil,"span","strong")%>
+           <%= li2('source',[:student_source_id,:select,StudentSource,:source_name],a,nil,"span","strong")%>       
 
            <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
            <% %w(emails follow_ups todos notes).each do |act| %>
@@ -26,11 +24,13 @@
   <div class="col-xs-5 row-top">
     <ul class="vlsdet pt-0 border-b">
         <h4 class="row-top bold-subhead">Personal</h4>
-        <% %w(first_name surname date_of_birth gender nationality).each do |v| %>
+        <% %w(first_name surname date_of_birth gender).each do |v| %>
         <%= li1(v,v,'span','small',a)%>
         <% end %>
+        <%= li2('nationality',[:country_id,:select,Country,
+                  :nationality],a,nil,"span","strong")%>
     </ul>
-    <ul class="vlsdet">
+    <ul class="vlsdet-s">
         <h4 class="bold-subhead">Contact</h4>
         <% %w(mobile1 mobile2 email1 email2 address).each do |v| %>
         <%= li1(v,v,'span','small',a)%>

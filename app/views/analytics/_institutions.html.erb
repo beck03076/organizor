@@ -1,4 +1,7 @@
-
+<div class="row well">
+	<div id="container">
+	</div>
+</div>
 <div class="row well">
 	<table class="table table-bordered">
 		<thead>			
@@ -19,3 +22,9 @@
 
 	</table>
 </div>
+
+<script>
+<% if !@charts.nil? %>
+  	init_negative_chart('#container',<%= @charts[0].to_s.html_safe %>,<%= @charts[1].to_json.html_safe %>,'<%= @chart_text %>'); 
+<% end %>
+</script>

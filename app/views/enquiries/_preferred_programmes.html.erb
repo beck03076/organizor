@@ -1,6 +1,6 @@
 <!-- prefer programmes -->
 <% if flag == "show_title" %>
-<h4 class="form-heading">Preferred Programmes</h4>
+<h4 class="bold-subhead">Preferred Programmes</h4>
 <% end %>
   <%= f.fields_for :programmes, (build rescue nil) do |p| %>
         <% parent = f.object_name.to_s %>

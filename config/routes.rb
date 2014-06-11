@@ -297,6 +297,8 @@ Organizor::Application.routes.draw do
  
   
   match '/get_cities/:co_id(/:type)' => 'json#cities'
+
+  match '/get_student_sources/:contact_type_id' => 'json#student_sources'
   
   match '/get_institutions/:country_id(/:city_id(/:ins_type_id))' => 'json#institutions'  
  
