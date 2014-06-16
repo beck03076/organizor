@@ -4,15 +4,14 @@ class Report
   include Generic
   attr_accessor :asso, :module, :mod
 
-  def initialize(mod, heading = nil, asso = nil,split_param = nil, year = nil, month = nil)
+  def initialize(mod, heading = nil, asso = nil,split_param = nil, from = nil,to = nil, last_months = nil)
   	@mod = mod
   	@module = mod[0..2]
   	@heading = heading  	
   	@asso = asso || "branch"
     @asso_name = get_asso_name(@asso)
   	@split_param = split_param || "def" 
-    @year = year
-    @month = month
+    @conditions = {last_months: last_months,from: from, to: to} 
   end
 
   def get_asso_name(i)
@@ -30,16 +29,14 @@ class Report
 
   def get_current_pie  	  	  	
   	@meta = "#{@mod.titleize} based on #{asso.titleize}"   
-    p "****"
-    p @asso
-    p @mod 
     
-    temp = self.model(@asso).includes(@mod.to_sym).where(self.cond).all.map {|i| 
+    temp = self.qualify_period_size(self.model(@asso).includes(@mod.to_sym),@conditions).all.map {|i| 
              s = i.send(@mod).size
              if s != 0
               [i.name,s] 
              end 
            }.compact
+      
     if !temp.empty?
       sorted = temp.sort_by{|i| i[1] }
       sorted[0] = { name: sorted[0][0], y: sorted[0][1],sliced: true,selected: true}
@@ -54,6 +51,8 @@ class Report
   	@split_param = @split_param || split_param
 
     @split = send("#{@module}_bar_split",@split_param)
+    return if @split.nil?
+
   	@meta = "#{@mod.titleize} based on #{asso.titleize}"
     
     temp = self.model(@asso).includes(@mod.to_sym).all.map {|i| 
@@ -65,7 +64,7 @@ class Report
     sorted = temp.sort_by{|i| i[1] }.reverse.take(10)
     category = sorted.map {|i| i [0] }
 
-    temp_series = self.model(@mod.singularize).bar_chart(self.cond,@asso,@asso_name,@split[0],@split[1],@split[2])
+    temp_series = self.qualify_period_size(self.model(@mod.singularize),@conditions).bar_chart(self.cond,@asso,@asso_name,@split[0],@split[1],@split[2])
     #  category usually looks like this, ["Australia", "New Zealand"] => the 2 elements data part pertains to this categories
     #  series usually looks like this, [{:name=>"Sent", :data=>[0, 0]}, {:name=>"Conditional Offer", :data=>[0, 0]}, 
     #                                   {:name=>"Unconditional Offer", :data=>[0, 0]}, 
@@ -87,6 +86,17 @@ class Report
     cond << (@month.blank? ? "" : "MONTH(#{@mod}.created_at) = #{@month}")
     cond.reject(&:empty?).join(" AND ")
   end
+
+  def qualify_period_size(records,conditions)
+    if !conditions[:last_months].blank? 
+      out = records.where("DATE(#{@mod}.created_at) > CURDATE() - INTERVAL #{conditions[:last_months]} MONTH")
+    elsif !conditions[:from].blank? && !conditions[:to].blank?
+      out = records.where("DATE(#{@mod}.created_at) BETWEEN '#{conditions[:from]}' AND '#{conditions[:to]}' ")
+    else
+      out = records
+    end
+    out
+  end 
 
   def get_main_sel
   	arr = send("#{@module}_pie_val")

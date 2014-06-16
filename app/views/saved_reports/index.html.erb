@@ -7,7 +7,6 @@
   <table class="table table-striped">
        <tr>
         <th>Name</th>       
-        <th>Heading</th>
         <th>Module</th> 
         <th>Description</th>
         <th>Actions</th>  
@@ -15,8 +14,7 @@
        </tr>
     <% @saved_reports.each do |sr| %>
       <tr>
-        <td><%= link_to sr.name.titleize, filter_reports_path(q: eval(sr.q),heading: sr.heading, module: sr.module), method: :post %></td> 
-        <td><%= sr.heading.to_s.titleize %></td> 
+        <td><%= link_to sr.name.titleize, filter_reports_path(q: eval(sr.q),heading: sr.heading, module: sr.module,saved_name: sr.name), method: :post %></td> 
         <td>
           <span class="tag-like green">
             <%= sr.module.to_s.titleize %>

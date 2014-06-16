@@ -8,36 +8,25 @@ class CoreStatistics
 		#send(@core)
 	end
 
-	def all_statistics	
-      # => core_methods = EnquiryStatistics.instance_methods(false)
-	  methods = ((CoreStatistics.instance_methods(false) - [:all,:all=,:all_statistics])).map &:to_s	
+	def all_statistics(klazz)
+      core_methods = klazz.instance_methods(false) + CoreStatistics.instance_methods(false) - [:all,:all=,:all_statistics]
+      filtered_methods = (core_methods.map &:to_s).sort 
+	  
 	  @users.each do |user|
-	  	methods.each do |method|
+	  	filtered_methods.each do |method|
+	  		p "&&&"
+	  		p method
 	  		@all[method][user.id] = send(method,user)	  		
 	    end
 	  end	 	  
 
 	end
 
-	def assigned(u)
+	def Assigned(u)
 	  u.send(@core).size
 	end
 
-	def created(u)
+	def Created(u)
 	  u.send(@core).where(created_by: u.id).size
 	end
-
-=begin
-
-    def registrations
-		status_hash = {}
-			ApplicationStatus.all.map {|i| status_hash[i.name] = i.id }
-
-			status_hash.keys.each do |status|
-			  define_method("#{status}") do |argument|
-				argument.registrations.includes(:programmes).where(programmes: {app_status_id: status_hash[status]}).size
-		    end
-		end 
-    end
-=end
 end

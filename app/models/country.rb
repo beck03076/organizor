@@ -6,6 +6,8 @@ class Country < ActiveRecord::Base
     
   has_many :cities
   has_many :institutions
+  has_many :people
+  has_many :users
   
   has_many :programmes
   has_many :registrations, through: :programmes

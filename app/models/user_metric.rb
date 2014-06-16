@@ -10,15 +10,15 @@ class UserMetric
 
   def statistics      	
     obj = UserStatistics.new(@users)
-    obj.all_statistics        
+    obj.all_statistics      
     @all[:statistics] = obj.all
   end
 
   %w(enquiries registrations institutions people).each do |action|
       define_method("#{action}") do 
-        obj = CoreStatistics.new(@users,action)
-        #obj.core = action      
-        obj.all_statistics    
+        klazz = (action.singularize.camelize + "Statistics").constantize
+        obj = klazz.new(@users,action) 
+        obj.all_statistics(klazz)    
         @all[action.to_sym] = obj.all       
       end
     end

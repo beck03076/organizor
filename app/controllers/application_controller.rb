@@ -2,23 +2,22 @@ require "ipaddr"
 
 class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
+  before_filter :set_last_seen_at, if: proc { |p| user_signed_in? && (session[:last_seen_at] == nil || session[:last_seen_at] < 15.minutes.ago) }
   protect_from_forgery
   
   
   layout :layout
 
   rescue_from CanCan::AccessDenied do |e|
-    p "***********************"
-    p "unauthorized subject: #{e.subject} and action: #{e.action}"
-    p "***********************"
     
     flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} this #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
     respond_to do |format|
       format.html { redirect_to '/handle/cancan'  }
       format.js { redirect_to '/handle/cancan' }
-#      render :js => "info('Unauthorized','#{flash[:notice]}');" }
     end
   end
+
+  
 
   def all_notifications
      @notys = Audit.notys(current_user.id)
@@ -193,12 +192,17 @@ class ApplicationController < ActionController::Base
   end
   
   def xls_pdf 
-    @records = @model.camelize.constantize.where(id: @ids.split(","))
+    @records = @model.camelize.constantize.where(id: @ids.split(","))    
     @filename = "#{Time.now.to_i}_#{@records.size}_#{@model.to_s.downcase.pluralize}.#{@format}"
     headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\"" 
   end 
 
   private
+
+  def set_last_seen_at
+    current_user.update_attribute(:last_seen_at, Time.now)
+    session[:last_seen_at] = Time.now
+  end
   
   def set_current_user
       User.current = current_user

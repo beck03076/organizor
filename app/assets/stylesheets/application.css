@@ -162,6 +162,10 @@ strong.sm{font-size:12px;}
 .abs-plus:hover{cursor:pointer}
 .rel{position:relative}
 
+
+.main .main-content .green-well2 {
+    background-color: #A8E1E5; }
+
 .main .main-content .green-well {
     background-color: #e1f5e0; }
 .main .main-content .green-well1 {
@@ -198,7 +202,7 @@ strong.sm{font-size:12px;}
     border-radius:10px;
     background-color: #eeeeec;          }
     
-    .main .main-content .pilled {
+ .pilled {
     color: #222222;
     padding: 5px 5px 5px 5px;
     font-size: 11px;
@@ -207,7 +211,7 @@ strong.sm{font-size:12px;}
     cursor: pointer;          
     background-color: #86CF9D;}
     
-   .main .main-content .pilled:hover {
+ .pilled:hover {
     color: #000000;
     padding: 5px 5px 5px 5px;
     font-size: 11px;
@@ -325,6 +329,10 @@ background-color:#f1c1c1;
 
 .sm{
   font-size: 11px; 
+}
+
+.md{
+  font-size: 13px; 
 }
 
 .grey-sm{
@@ -452,6 +460,23 @@ vertical-align: top;
 
 .bor-r {
   border-right: 1px dashed #333;
+}
+
+.inline li{
+  display: inline;
+  margin-right: 5px;
+}
+
+.bright-tag{
+  padding: 1px 1px 1px 1px;  
+  color: #D44B56;
+  font-size: 17px;  
+}
+
+.bright-well{
+  
+  background-color: #f1c1c1;;
+  color: #000;
 }
 
 

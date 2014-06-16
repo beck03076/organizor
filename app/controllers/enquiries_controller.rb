@@ -25,8 +25,11 @@ class EnquiriesController < ApplicationController
       format.html # index.html.erb
       format.json { core_json("enquiry") } # in core_methods
       format.js { core_js("enquiry") } # in core_methods
+      format.xls
     end
   end
+
+
 
   # GET /enquiries/1
   # GET /enquiries/1.json
@@ -176,8 +179,6 @@ class EnquiriesController < ApplicationController
       a = current_user.conf.enq_cols
       b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
       @cols = ((b & a) + (a - b)) + [:follow_up_date]   
-      p "************"
-      p  @cols
   end
   
 end

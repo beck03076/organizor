@@ -100,7 +100,7 @@
       <Row ss:Height="50">
         <Cell ss:StyleID="3"><Data ss:Type="String"><%= i + 1 %></Data></Cell>
         <Cell ss:StyleID="2"><Data ss:Type="String"><%= ins.name rescue nil %></Data></Cell>
-        <Cell ss:StyleID="2"><Data ss:Type="String"><%= ins.ins_type %></Data></Cell>
+        <Cell ss:StyleID="2"><Data ss:Type="String"><%= ins.type_name %></Data></Cell>
         <Cell ss:StyleID="ce6"><Data ss:Type="String"><%= (c.all_permitted_regions.map &:name).join(",")  %></Data></Cell>
         <Cell ss:StyleID="ce6"><Data ss:Type="String"><%= (c.all_permitted_countries.map &:name).join(",") %></Data></Cell>
         <Cell ss:StyleID="ce6"><Data ss:Type="String"><%= (c.all_prohibited_regions.map &:name).join(",")  %></Data></Cell>

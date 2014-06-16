@@ -13,10 +13,14 @@
 		<tbody>						
 			<% @ordered_output.each do |item| %>
 			   <tr> 
-               <td><h4> <%= link_to item[0].titleize,"/institutions/#{item[1][3]}" %></h4></td>
-               <td><h4> <%= item[1][0] %> </h4></td>
-               <td><h4> <%= item[1][1] %> </h4></td>     
-               <td><h4> <%= item[1][2] %> </h4></td>               
+			   <% if @no_link %>
+			     <td><h4> <%= item[0].titleize %></h4></td>
+			   <% else %>	
+                 <td><h4> <%= link_to item[0].titleize,"/institutions/#{item[1][3]}" %></h4></td>
+               <% end %>
+               <% for n in 0..(@data_limit - 1) %>
+               		<td><h4> <%= item[1][n] %> </h4></td>         
+               <% end %>
 			   </tr>
 			<% end %>		    
 		</tbody>

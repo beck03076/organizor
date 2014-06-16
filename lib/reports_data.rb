@@ -3,7 +3,7 @@ module ReportsData
     # default filters for enquiries module
 	def def_use_fil
 		[:first_name,:surname,:mobile,:email,:gender,:date_of_birth,
-		:branch_name,:updated_at,:created_at]		
+		:branch_name,:updated_at,:created_at,:associations]		
 	end
 
 	def real_use_cols
@@ -14,7 +14,16 @@ module ReportsData
 		 branch_name: ["collection_select","Branch",nil,:branch_id],
 		 # history
 		 updated_at: "datepicker",
-		 created_at: "datepicker"
+		 created_at: "datepicker",
+		   # associations
+		 associations: [
+						follow_ups,
+						todos,
+						emails,
+						enquiries,
+						registrations,
+						programmes
+					   ] 
 		}
 	end
 
@@ -39,6 +48,101 @@ module ReportsData
     end 
     #======================================================
 
+    #=== People =====================================
+    # default filters for people module
+	def def_peo_fil
+		[:first_name,:surname,:mobile,:email,:work_phone,:home_phone,:gender,:institution_name,
+		 :country_name,:city_name,:type_name,:owner,:creator,:created_at,:updated_at,:associations]		
+	end
+
+	def real_peo_cols
+		{# defaults
+		 first_name: 0,surname: 0,mobile: 0,email: 0,work_phone: 0,home_phone: 0,
+		 gender: ["select",["m","f"], :gender],
+		 country_name: ["collection_select","Country",nil,:country_id],
+		 city_name: ["collection_select","Country",nil,:city_id],
+		 # associations
+		 type_name: ["collection_select","PersonType",nil, :type_id],
+		 institution_name: ["collection_select","Institution",nil, :institution_id],		 
+		 # history
+		 owner: owner,
+		 creator: creator,
+		 updated_at: updated_at,
+		 created_at: created_at,
+		  # associations
+		 associations: [
+						follow_ups,
+						todos,
+						emails
+					   ] 
+		}
+	end
+
+	def peo_pie_val
+		%w(institution person_type country city)
+	end
+
+	def peo_bar_split_val
+		[]
+	end
+
+	def peo_bar_split(val = "sub")
+		nil
+	end
+    #======================================================
+
+    #=== Institutions =====================================
+    # default filters for institutions module
+	def def_ins_fil
+		[:name,:email,:phone,:fax,:website,:address_line1,:address_line2,:address_post_code,
+	     :city,:country,:type,:group,:poc,
+	     :owner,:created_at,:updated_at,:associations]		
+	end
+
+	def real_ins_cols
+		{# defaults
+		 name: 0,email: 0,phone: 0,fax: 0,website: 0,address_line1: 0,address_line2: 0,address_post_code: 0,
+		 country_name: ["collection_select","Country",nil,:country_id],
+		 city_name: ["collection_select","Country",nil,:city_id],
+		 # associations
+		 type_name: ["collection_select","InstitutionType",nil, :type_id],
+		 group_name: ["collection_select","InstitutionGroup",nil, :group_id],
+		 poc: ["collection_select","Person",:first_name, :person_id],
+		 # history
+		 owner: owner,
+		 creator: creator,
+		 updated_at: updated_at,
+		 created_at: created_at,
+		  # associations
+		 associations: [
+						follow_ups,
+						todos,
+						emails,
+						programmes,
+						fees,
+						commissions						
+					   ] 
+		}
+	end
+
+	def ins_pie_val
+		%w(institution_type institution_group)
+	end
+
+	def ins_bar_split_val
+		[["Statuses","sta"],["CourseLevels","cou"]]
+	end
+
+	def ins_bar_split(val = "sta")
+		case val 
+		when "sta", "def"
+			[{programmes: [:application_status]},:application_status,:name]       
+		when "cou"
+			[{programmes: [:course_level]},:course_level,:name]        
+		end
+	end
+    #======================================================
+
 	#=== Enquiries =====================================
     # default filters for enquiries module
 	def def_enq_fil
@@ -60,6 +164,7 @@ module ReportsData
 		 branch_name: ["collection_select","Branch",nil,:branch_id],
 		 # history
 		 owner: owner,
+		 creator: creator,
 		 date_of_birth: date_of_birth,		 
 		 updated_at: updated_at,
 		 created_at: created_at,
@@ -67,10 +172,11 @@ module ReportsData
 		 associations: [{title: "Preferred Countries",
 		 	             table: "preferred_countries", 
 		 	             cols: {countries: ["collection_select","Country",nil,:preferred_countries_country_id]},
-						 logo: "certificate"},
+						 logo: "plane"},
 						follow_ups,
 						todos,
-						emails				 
+						emails,
+						programmes				 
 						] 
 		}
 	end
@@ -117,11 +223,12 @@ module ReportsData
 	# default filters for registrations module
 	def def_reg_fil
 		[:ref_no,:first_name,:surname,:mobile1,:email1,:gender,
-		 :address_post_code,:address_city,:address_post_code,
-		 :qualification,:progression_status,:qua_subject,
-		 :qua_institution,:qua_exam,
-		 :passport_number,:branch_name,:owner,:date_of_birth,
-		 :updated_at,:created_at,:passport_valid_till, 
+		 :address_post_code,:address_city,
+		 :channel,:source,:branch_name,:owner,
+		 :progression_status_name,:qualification_name,:qua_subject,
+		 :qua_institution,:qua_grade,:qua_exam,:qua_score,
+		 :branch_name,:owner,:passport_number,:visa_type,:date_of_birth,
+		 :updated_at,:created_at,:passport_valid_till,
 		 :visa_valid_till,:associations ]		
 	end
 
@@ -130,44 +237,36 @@ module ReportsData
 		 ref_no: 0,	
 		 first_name: 0,surname: 0,mobile1: 0,
 		 email1: 0,gender: ["select",["m","f"], :gender],date_of_birth: "datepicker",
+		 # associations
+		 source: ["collection_select","StudentSource",nil, :student_source_id] ,
+		 channel: ["collection_select","ContactType",:name,:contact_type_id],
+		 branch_name: ["collection_select","Branch",nil,:branch_id],
+		 owner: owner,
+		 creator: creator,
 		 branch_name: ["collection_select","Branch",nil,:branch_id],
 		 nationality: ["collection_select","Country",nil,:country_id],
-		 progression_status: ["collection_select","ProgressionStatus",nil,:progression_status_id],
+		 progression_status_name: ["collection_select","ProgressionStatus",nil,:progression_status_id],
 		 address_city: 0,address_post_code: 0,
-		 qualification: ["collection_select","Qualification",nil,:qua_id],
+		 qualification_name: ["collection_select","Qualification",nil,:qualification_id],
 		 qua_subject: 0, qua_institution: 0, qua_grade: 0, qua_exam: 0,qua_score: 0,
+		 passport_number: 0, visa_type: 0,
 		 # ph stands for placeholder
 		 passport_valid_till: { range_col: "passport_valid_till",
-		 	         			cols: %w(passport_number),
-		 	         			title: "Passport",
+		 	         			cols: {passport_valid_till: 0},
+		 	         			title: "Passport Validity",
 		 	         			cl: "datepicker",
 		 	         			ph: "Passport Valid",
 		 	         			logo: "book"
 		 	       			  },
 		 visa_valid_till: {     range_col: "visa_valid_till",
-		 	         			cols: %w(visa_type),
-		 	         			title: "Visa",
+		 	         			cols: {visa_valid_till: 0},
+		 	         			title: "Visa Validity",
 		 	         			cl: "datepicker",
 		 	         			ph: "Visa Valid",
 		 	         			logo: "plane"
 		 	         	  }, 
 		 # associations
-		 associations: [{title: "Course",
-		 	             table: "programmes", 
-		 	             cols: {status: ["collection_select","ApplicationStatus",nil,:programmes_app_status_id],		 	             	    
-		 	             	    created_by: ["collection_select","User",:first_name,:programmes_created_by],
-		 	             	    course_level: ["collection_select","CourseLevel",nil,:programmes_level_id], 
-		 	             	    course_subject_text: 0,
-		 	             	    start_date: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "programmes_start_date",
-		 	             	    	           cl: "datepicker",
-								 	           ph: "Course Start Date"
-								 	       	},
-								updated_at: "datepicker<",
-								ins_ref_no: 0 },
-						 logo: "certificate"		
-						 },
+		 associations: [programmes,
 						 institutions,	
 						 {title: "Exams",
 		 	             table: "proficiency_exams", 
@@ -177,53 +276,8 @@ module ReportsData
 							   },
 					     logo: "font"		   
 						 },	
-						 {title: "Fees",
-		 	             table: "fee", 
-		 	             cols: {
-		 	             	    tuition_fee: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "fee_tuition_fee",
-		 	             	    	           type: "range",
-								 	           ph: "Tuition Fee",
-								 	           cl: "",
-								 	       	}, 
-								scholarship: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "fee_scholarship",
-		 	             	    	           type: "range",
-								 	           ph: "Scholarship",
-								 	           cl: "",
-								 	       	},  
-								invoice_date: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "fee_invoice_date",
-		 	             	    	           type: "range",
-								 	           ph: "Invoice Date",
-								 	           cl: "datepicker",
-								 	       	},  	       	
-								},
-					     logo: "euro"			
-						 },
-						 {title: "Commission",
-		 	             table: "fee", 
-		 	             cols: {	 
-		 	                    commission_percentage: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "fee_commission_percentage",
-		 	             	    	           type: "range",
-								 	           ph: "Commission Percentage",
-								 	           cl: "",
-								 	       	}, 	 	       		       	  
-								commission_amount: {  
-		 	             	    	           cols: [],
-		 	             	    	           range_col: "fee_commission_amount",
-		 	             	    	           type: "range",
-								 	           ph: "Commission Amount",
-								 	           cl: "",
-								 	       	}, 	       	     	  
-							   },
-						 logo: "gbp"	   
-						 },		
+						 fees,
+						 commissions,		
 						follow_ups,
 						todos,
 						emails	
@@ -239,7 +293,11 @@ module ReportsData
 
 
 
-	    #========== General Useable Hashed like Actions(FollowUps Todos Emails) ===========
+	#========== General Useable Hashed like Actions(FollowUps Todos Emails) ===========
+
+
+
+
     def emails
     	{title: "Emails",
 	         table: "emails", 
@@ -317,6 +375,10 @@ module ReportsData
 	def owner
 	  ["collection_select","User",:first_name,:assigned_to]
 	end
+
+	def creator
+	  ["collection_select","User",:first_name,:created_by]
+	end
 	
 	def date_of_birth  
 		{ range_col: "date_of_birth",		 	           
@@ -330,23 +392,148 @@ module ReportsData
 	
 	def updated_at	
 		{ range_col: "updated_at",		 	           
-		 	           title: "Updated",
-		 	           cl: "datepicker",
-		 	           ph: "Last Modified At",
-		 	           logo: "time",
-		 	           cols: []
+	       title: "Updated",
+	       cl: "datepicker",
+	       ph: "Last Modified At",
+	       logo: "time",
+	       cols: {updated_at: 0},
 		}
 	end
 	
 	def created_at	
 		{ range_col: "created_at",		 	           
-		 	           title: "Created",
-		 	           cl: "datepicker",
-		 	           ph: "Created At",
-		 	           logo: "time",
-		 	           cols: []
+           title: "Created",
+           cl: "datepicker",
+           ph: "Created At",
+           logo: "time",
+           cols: {created_at: 0},
 		}
 	end	
+
+	def programmes
+		{title: "Course",
+	         table: "programmes", 
+	         cols: {status: ["collection_select","ApplicationStatus",nil,:programmes_app_status_id],		 	             	    
+	         	    created_by: ["collection_select","User",:first_name,:programmes_created_by],
+	         	    course_level: ["collection_select","CourseLevel",nil,:programmes_level_id], 
+	         	    course_subject_text: 0,
+	         	    start_date: {  
+	         	    	           cols: [],
+	         	    	           range_col: "programmes_start_date",
+	         	    	           cl: "datepicker",
+				 	           ph: "Course Start Date"
+				 	       	},
+				updated_at: "datepicker<",
+				ins_ref_no: 0 },
+		 logo: "certificate"		
+		 }
+	end
+
+	def fees
+		{title: "Fees",
+	         table: "fee", 
+	         cols: {
+	         	    tuition_fee: {  
+	         	    	           cols: [],
+	         	    	           range_col: "fee_tuition_fee",
+	         	    	           type: "range",
+				 	           ph: "Tuition Fee",
+				 	           cl: "",
+				 	       	}, 
+				scholarship: {  
+	         	    	           cols: [],
+	         	    	           range_col: "fee_scholarship",
+	         	    	           type: "range",
+				 	           ph: "Scholarship",
+				 	           cl: "",
+				 	       	},  
+				invoice_date: {  
+	         	    	           cols: [],
+	         	    	           range_col: "fee_invoice_date",
+	         	    	           type: "range",
+				 	           ph: "Invoice Date",
+				 	           cl: "datepicker",
+				 	       	},  	       	
+				},
+	     logo: "euro"			
+		 }
+	end
+
+	def commissions
+		{title: "Commission",
+             table: "fee", 
+             cols: {	 
+                    commission_percentage: {  
+             	    	           cols: [],
+             	    	           range_col: "fee_commission_percentage",
+             	    	           type: "range",
+				 	           ph: "Commission Percentage",
+				 	           cl: "",
+				 	       	}, 	 	       		       	  
+				commission_amount: {  
+             	    	           cols: [],
+             	    	           range_col: "fee_commission_amount",
+             	    	           type: "range",
+				 	           ph: "Commission Amount",
+				 	           cl: "",
+				 	       	}, 	       	     	  
+			   },
+		 logo: "gbp"	   
+		 }
+	end
+
+	def range_no(col,ph = col,cl = "")
+		{ 
+	       cols: [],
+	       range_col: col,
+	       type: "range",
+		   ph: col.titleize,
+		   cl: cl,
+		}
+
+	end
+
+	def enquiries
+		{title: "Enquiry",
+	         table: "enquiries", 
+	         cols: {status: ["collection_select","EnquiryStatus",nil,:enquiries_status_id],		 	             	    
+	         	    updated_at: updated_at,
+	         	    created_at: created_at,
+	         	    score: 0,
+	         	    conversion_time: range_no("enquiries_conversion_time"),
+	         	    impressions_count: range_no("enquiries_impressions_count"),
+	         	    response_time: range_no("enquiries_response_time")
+	         	   },
+	      logo: "earphone"   	     	
+		 }
+	end
+
+	def registrations
+		{title: "Registration",
+	         table: "registrations", 
+	         cols: {status: ["collection_select","ApplicationStatus",nil,:registrations_programmes_app_status_id],		 	             	    
+	         	    updated_at: updated_at,
+	         	    created_at: created_at,	         	    
+	         	    conversion_time: range_no("registrations_conversion_time"),
+	         	    impressions_count: range_no("registrations_impressions_count"),
+	         	    response_time: range_no("registrations_response_time") 	
+	         	   },
+	      logo: "pencil"
+		 }
+	end
+
+	def programmes
+		{title: "Programmes",
+	         table: "programmes", 
+	         cols: {institution: ["collection_select","Institution",nil,:programmes_institution_id],		 
+	                course_level: ["collection_select","CourseLevel",nil,:programmes_level_id],		 	             	    
+	         	   },  
+	     logo: "certificate"    	   	
+		 }
+	end
+
+
+
 
 
     #==================================================================================

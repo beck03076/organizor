@@ -10,9 +10,25 @@
     <div class="col-md-2">                  
                   <%= select_tag :asso,options_for_select(@main_sel),
                   {:prompt => "-pie-",
-                  class: "form-control greendd",
+                  class: "form-control reddd",
                   } %>  
     </div>
+    <div class="col-xs-2">
+      <%= select_tag :last_months,options_for_select([["Last 1 month",1],
+                                             ["Last 3 months",3],
+                                             ["Last 6 months",6],
+                                             ["Last 1 year",12]],@last_months),
+                           {prompt: "-period-",
+                            class: "form-control greendd"} %>
+    </div>
+    <div class="col-xs-2">
+      <%= text_field_tag :from,@from,{placeholder: "-from-",class: "form-control greendd datepicker"} %>
+    </div>
+    <div class="col-xs-2">
+      <%= text_field_tag :to,@to,{placeholder: "-to-",class: "form-control greendd datepicker"} %>
+    </div>
+    <!-------------------------------- --
+    <% if false %>
     <div class="col-md-2">                  
                   <%= text_field_tag :year,nil,
                   {placeholder: "-year-",class: "form-control greendd "} %>  
@@ -21,11 +37,14 @@
                   <%= text_field_tag :month,nil,
                   {placeholder: "-month-(6 for june)",class: "form-control greendd "} %>  
     </div>
+    <% end %>
+  -->
     <div class="col-md-2 form-group ">
       <%= button_tag "Run", { onclick: "change_chart('pie','#pie_chart_filter','#{@module}');", 
                               class: "btn btn-primary marL30 text-left" } %>
     </div>
   </div>
+  <div id="pie_filter"></div>
 
   <div class="row well">   
     <div class="col-md-12">
@@ -35,7 +54,7 @@
 
 <div class="clear"></div>
 <hr>     
-
+<% if @bar %>
 
   <div id="bar_chart_filter" class="row well">
       <div class="col-md-2">
@@ -53,26 +72,38 @@
                 {:prompt => "-bar(X axis)-",
                 class: "form-control reddd" } %>  
       </div>
-      <div class="col-md-2">                  
-                  <%= text_field_tag :year,nil,
-                  {placeholder: "-year-",class: "form-control reddd "} %>  
+      <div class="col-xs-2">
+        <%= select_tag :last_months_bar,options_for_select([["Last 1 month",1],
+                                               ["Last 3 months",3],
+                                               ["Last 6 months",6],
+                                               ["Last 1 year",12]],@last_months_bar),
+                             {prompt: "-period-",
+                              class: "form-control greendd"} %>
       </div>
-      <div class="col-md-2">                  
-                    <%= text_field_tag :month,nil,
-                    {placeholder: "-month-(6 for june)",class: "form-control reddd "} %>  
+      <div class="col-xs-2">
+        <%= text_field_tag :from_bar,@from_bar,{placeholder: "-from-",class: "form-control greendd datepicker"} %>
       </div>
-      <div class="col-md-2 form-group ">
-      <%= button_tag "Run", { onclick: "change_chart('bar','#bar_chart_filter','#{@module}');", 
-                              class: "btn btn-primary marL30 text-left" } %>
+      <div class="col-xs-2">
+        <%= text_field_tag :to_bar,@to_bar,{placeholder: "-to-",class: "form-control greendd datepicker"} %>
       </div>
+        <br/>
+        <br/> 
+        <div class="row">
+          <div class="col-md-12 form-group text-right">
+          <%= button_tag "Run", { onclick: "change_chart('bar','#bar_chart_filter','#{@module}','_bar');", 
+                                  class: "btn btn-primary marL30 text-left" } %>
+          </div>                        
+        </div>  
+      
   </div>
+  <div id="bar_filter"></div>
 
   <div class="row well">
     <div class="col-md-12">
       <div id="bar"></div>
     </div>
   </div>
-      
+<% end %>      
 
 <script>
 
@@ -89,15 +120,19 @@
     });
 
    init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>',"ASdf");
-   init_chart("bar",<%= @bar[0].to_s.html_safe %>,'<%= @bar_meta %>',<%= @bar[1].to_json.html_safe %>);
+   <% if @bar %>
+     init_chart("bar",<%= @bar[0].to_s.html_safe %>,'<%= @bar_meta %>',<%= @bar[1].to_json.html_safe %>);
+   <% end %>
 
    $('input:text, select').each(function(){
     if ($(this).val().length > 0){
       $(this).css({'background-color' : '#f8f4b0', 'color' : '#555753'});
     }
    });
-    
-
+   // makes sure either last_months or from/to values will be passed
+   filterIndicator();
+   // makes sure either last_months or from/to values will be passed
+   filterIndicator('_bar');
 
 </script>
 

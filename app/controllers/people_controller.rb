@@ -1,30 +1,18 @@
 class PeopleController < ApplicationController
   include CoreController
+  include ActionsMethods
+  helper_method :meta  
 
-   def tab
+  def tab
+    set_url_params    
+      self.set_cols
+      render partial: @partial
+  end
+  
+  def action_partial
     set_url_params
-    
-    if @status == "new_person"
-      self.h_new
-    elsif @status == "launch"
-      @person = Person.find(@person_id)
-      @timelines = Timeline.where(m_name: "Person", 
-                                  m_id: params[:person_id]).order("created_at DESC")
-    elsif @status == "edit"
-      @person = Person.find(params[:person_id])
-    elsif @status == "clone"
-      orig = Person.find(params[:person_id])
-      @person = orig.dup
-      authorize! :create, @person
-    else
-      # a is the cols chosen stored in the database and b are the right order of cols
-      a = current_user.conf.per_cols
-      b = [:id,:first_name,:surname,:email,:mobile]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date] 
-    end
-    
-    render partial: @partial
-
+    #called from CoreMethods, 3rd param is the native partials to enquiries
+    h_action_partial("person",params[:person_id],["sub_agent"])
   end
   
   # h_new stands for help_new
@@ -49,6 +37,10 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     @person = Person.find(params[:id])
+    authorize! :read, @person
+
+    # showing basic by default
+    @partial = "basic"
 
     respond_to do |format|
       format.html # show.html.erb
@@ -124,4 +116,12 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+    def set_cols
+     # a is the cols chosen stored in the database and b are the right order of cols
+      a = current_user.conf.per_cols
+      b = [:id,:first_name,:surname,:mobile,:email,:gender]
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]         
+  end
+
 end

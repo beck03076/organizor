@@ -34,6 +34,13 @@
             {prompt: "-assign to-"},{}],
             "collection_select",
             ["Assign To",4],7,6) %>  
+
+  <%= bs(f,[:person_id,Person.order(:first_name),
+            :id,
+            :first_name,
+            {prompt: "-poc-"},{}],
+            "collection_select",
+            ["Point Of Contact",4],7,6) %>  
             
   <% %w(address_line1 address_line2).each do |el| %>
     <%= bs(f,el,"text_field",[nil,4],7,6) %>

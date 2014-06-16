@@ -871,6 +871,22 @@ function setCurrency(obj,dest)
 }
 
 
+/* function to scroll the window to this position of the element passed */
+function scrollToCurrent(obj){
+    var offset = $(obj).offset(); 
+     offset.left -= 20;
+     offset.top -= 200;
+     scroll(offset.top,offset.left);    
+}
+/* given co ordinates as numbers to top and left it will scroll */
+function scroll(top,left){
+   $('html, body').animate({
+        scrollTop: top,
+        scrollLeft: left
+   });  
+}
+
+
 
 
 

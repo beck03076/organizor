@@ -1,1 +1,4 @@
+
 init_chart("pie",<%= @pie.to_json.html_safe %>,'<%= @pie_meta %>');
+$("#pie_filter").html("<%= escape_javascript(render :partial => 'reports/charts_filter',locals: {bar: ''}) %>");
+

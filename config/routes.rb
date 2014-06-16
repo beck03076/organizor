@@ -15,7 +15,9 @@ Organizor::Application.routes.draw do
   post '/partial_pie' => "reports#partial_pie"
   post '/partial_bar' => "reports#partial_bar"
 
-  match '/reports/:heading/:module' => "reports#show"
+  match '/reports/core_modules/:module' => "reports#show"
+  match '/reports/charts/:module' => "reports#charts"
+  match '/reports/users/:module' => "reports#show"
 
   match '/reports' => "reports#index", as: "reports"
 
@@ -223,6 +225,8 @@ Organizor::Application.routes.draw do
   match 'registrations_action_partial/:partial_name/:registration_id/:list' => "registrations#action_partial"
   
   match 'institutions_action_partial/:partial_name/:institution_id/:list' => "institutions#action_partial"
+
+  match 'people_action_partial/:partial_name/:person_id/:list' => "people#action_partial"
   
   match "/emails/new" => "emails#new"
   

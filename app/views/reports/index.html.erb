@@ -1,14 +1,18 @@
+<h1>
+<%= RUBY_VERSION %>
+</h1>
+
 <%= render 'header' %>
 
 <% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Institutions","home"],["People","globe"]]%>
 
-<%  [["Core Modules","Generate reports, filtering by anything","green-well","tower",
+<%  [["Core Modules","Generate reports, filtering by anything","green-well2","tower",
 	 core],
-    ["Charts","Prepare charts for the core modules","yellow-well","signal",
+    ["Charts","Prepare charts for the core modules","green-well2","signal",
      [["Enquiries","align-left"],["Registrations","align-right"],["Institutions","align-center"],["People","align-justify"]]],
-    ["Users","Reports, that focuses on various attributes of users","red-well","user",
+    ["Users","Reports, that focuses on various attributes of users","green-well2","user",
      [["Single User","user"],["Compare Users","random"]]],
-    ["Analytics","Data Insights that helps to take action and measure performance","blue-well0","th-list",
+    ["Analytics","Data Insights that helps to take action and measure performance","green-well2","th-list",
      [["Course Levels","book","course_levels/fees_commission/desc-most"],
       ["Commissions","gbp","registrations/fees_commission/asc-most"],
       ["Payments","euro","institutions/first_payment_duration/minus-long"],
@@ -40,7 +44,7 @@
 	    	  	  <% end %>
 
 		    	  <%= link_to link,{id: "#{ds_item}"} do %>	
-			    	  <span class="rounded well pointer modal-content orange-well">
+			    	  <span class="rounded well pointer modal-content bright-well">
 		                <span class="l glyphicon glyphicon-<%= r1[1] %>">
 		                </span>
 			    	  </span>

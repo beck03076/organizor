@@ -1,8 +1,9 @@
 <!-- listing users -->
-<table class="table table-striped">
+<table class="table table-bordered">
                 <thead>
                   <tr>
                     <th>First Name</th>
+                    <th>Last Seen</th>
                     <th>Branch</th>
                     <th>Role</th>
                     <th>Email</th>
@@ -16,6 +17,7 @@
                     <% un = user.first_name.nil? ? "Mr. Unknown" : user.first_name %>
                       <tr>
                         <td><%= link_to un,user  %></td>
+                        <td><%= user.last_seen_at  %></td>
                         <td><%= user.br %></td>
                         <td><%= user.role.name.titleize rescue "Unassigned" %></td>
                         <td><%= user.email %></td>

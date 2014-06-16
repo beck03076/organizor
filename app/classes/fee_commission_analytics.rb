@@ -31,7 +31,9 @@ module FeeCommissionAnalytics
      page_header: "#{@title.titleize} Profitable #{@actual_core.titleize} <<size>>",
      charts: charts,
      chart_text: "Fees Paid, Commission Paid and Commission Pending",
-     partial: "fee_commission"}
+     partial: "fee_commission",
+     data_limit: 3
+   }
 
   end
 

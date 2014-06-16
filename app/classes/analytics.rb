@@ -11,6 +11,7 @@ class Analytics
 	end
 
     def all_analytics
+    	p @core
 		clazz = (@core.singularize + "_analytics").camelize.constantize    	
 		@out = clazz.send(@core_method,@core_params,@conditions,@core)   	
     end

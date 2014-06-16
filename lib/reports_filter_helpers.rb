@@ -16,6 +16,7 @@ module ReportsFilterHelpers
         elsif i[1].kind_of?(Hash)
           # reusing c / shortening
           c = i[1] 
+          p "im here"
           html += hidable_div(c,q)
           html += figure_range(i,f)
           html += "</div>" # weird to have only closing div, but true
@@ -72,6 +73,9 @@ module ReportsFilterHelpers
       #===============================================================
       #=== deals with opening div that hides =========================
       def hidable_div(c,q)
+        p "*****"
+        p c[:cols]
+        p "*****"
         "<div class='#{c[:title].tr(' ','_')}' style='display: #{compare_q_cols(q,c[:cols],c[:table])};'>" 
       end
       #===============================================================
@@ -133,18 +137,17 @@ module ReportsFilterHelpers
               arr << i[1][:range_col].to_sym
               arr << (i[1][:cols].empty? ? nil : (i[1][:cols]).map {|i| i.to_sym})
             elsif i[1].kind_of?(String) || i[1].kind_of?(Integer)
-              arr << ("#{t}_" + i[0].to_s).to_sym
+              arr << [t,i[0].to_s].reject(&:blank?).join("_").to_sym
+              #arr << ("#{t}_" + i[0].to_s).to_sym
             end
           end
+          p "--------------"
+          p arr
           arr.compact
 
           weight = ((arr.compact) & (q.keys.map{|i| a = i.split("_"); a.pop; a.join("_").to_sym })).size
           out = (weight > 0 ? "" : "none")
           out
-          p "****************"
-          p arr.compact
-          p (q.keys.map{|i| a = i.split("_"); a.pop; a.join("_").to_sym })
-          p out
         else
           "none"
         end
@@ -156,13 +159,13 @@ module ReportsFilterHelpers
             html += "<div class='clear'></div>"    
             html += "<h5 class='bold-subhead'> #{i[1][:title]}</h5>"
 
-
+=begin
               i[1][:cols].each do |c|
                 html += "<div class='row'>"
                 html += f.text_field (c + "_cont").to_sym,{class: "form-control", placeholder: c.to_s.titleize} 
                 html += "</div>"
               end
-              
+=end        
               d = i[1][:range_col]
 
               html += h_range(f,d,"<",i[1][:ph],i[1][:cl])

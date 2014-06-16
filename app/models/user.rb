@@ -23,8 +23,10 @@ class User < ActiveRecord::Base
                   :updated_by,:first_name,:surname,
                   :permission_ids,:role,:gender,
                   :date_of_birth,:address, :remote_image_url,
-                  :skype,:facebook,:linkedin,:twitter,:website,:gplus,:blogger,:is_active,
-                  :permission_ids,:mobile
+                  :skype,:facebook,:linkedin,:twitter,
+                  :website,:gplus,:blogger,:is_active,
+                  :permission_ids,:mobile,:last_seen_at,
+                  :country_id
                   
   has_one :conf, class_name: "UserConfig"
   has_and_belongs_to_many :permissions
@@ -48,6 +50,7 @@ class User < ActiveRecord::Base
   %w(enquiries registrations institutions people).each do |i|
     has_many i.to_sym, foreign_key: "assigned_to"
   end
+  has_many :programmes, foreign_key: "created_by"
 
   # has many items in every core module,(created)
   %w(enquiries registrations institutions people).each do |i|

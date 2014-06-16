@@ -5,6 +5,14 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 
+function pillClickShowModal(_id){
+    $('.mass-actions-pills .pilled').click(function(){       
+       var rows = getCheckedRowsAsArray(_id);
+       var clicked = $(this).data('value');   
+       $('.' + clicked + 'Modal').modal('show');
+     });
+}
+
 function compareUsers(id,obj){
   var link = $(obj).data('link');
   var ids = getCheckedRowsAsArray(id);

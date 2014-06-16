@@ -20,7 +20,7 @@ module AnalyticsCommon
 
     return result if !map
 
-    result.map{|i| [i.id,i.name,i.ins_type] }
+    result.map{|i| [i.id,i.name,i.type_name] }
   end
   # ======== Popularity based on Count of all the actions ================
   def actions_counts(conditions)

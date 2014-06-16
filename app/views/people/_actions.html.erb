@@ -1,0 +1,25 @@
+
+        <% mains = {  sub_agent:  ["Person",:update] } %>   
+
+        <% actions = {email:     ["Email",:create],
+                      follow_up: ["FollowUp",:create],
+                      note:      ["Note",:create],
+                      todo:      ["Todo",:create],
+                      assign_to: ["Person",:update]} %>       
+        
+        <li class="dropdown actions">
+            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">
+                Actions
+                    <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+               <%= iterate_tabs(actions,'person',{tabindex: "-1"}) %>
+            </ul>
+        </li>
+        
+        <%= iterate_tabs(mains,'person') %>
+        
+        
+<br/>
+<br/>
+

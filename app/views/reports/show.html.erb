@@ -6,12 +6,18 @@
                                                             html: {class: "form-horizontal", 
 	  	                                                    id: "ransack_form" } do |f| %>
       <!-- filter -->
-      <div class="row">
+      <div class="row">        
         <div class="well blue-well ransack">                                                           
-	    <%= render 'reports/ransack_filter', f: f %>
+            <div class="text-right pointer" onclick="scrollToCurrent('#reports-table');"> 
+              <h6>
+                <span class="glyphicon glyphicon-download mar0"> </span>
+                Goto Table
+              </h6>
+            </div>
+      	    <%= render 'reports/ransack_filter', f: f %>
 
-	    <%= hidden_field_tag :module,@module %>
-	    <%= hidden_field_tag :heading,@heading %>
+      	    <%= hidden_field_tag :module,@module %>
+      	    <%= hidden_field_tag :heading,@heading %>
         </div>   
       </div>
       
@@ -31,6 +37,8 @@
   </div>
 </div>
 <br/>
+
+
 
 <div id="reports-table">
   <%= render 'table', cols: @cols.except(:associations), results: @results,f: f %>

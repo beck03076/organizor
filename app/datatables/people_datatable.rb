@@ -20,6 +20,7 @@ class PeopleDatatable < Datatable
     @item_scope = [:ignore,nil]
     
     @compound = true
+    @goto = ["/people/","id"]
   end
    
 end

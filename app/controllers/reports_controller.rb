@@ -4,22 +4,45 @@ class ReportsController < ApplicationController
 
   def show
   	set_url_params
-    self.repair_module
-    r = Report.new(@module,@heading)
-  	@cols = r.get_fil_hash    
+    self.repair_module    
+  
+  	r = Report.new(@module,@heading) 
+    @cols = r.get_fil_hash    
   	@search = self.model.search(@q)
-  	@results = @search.result(distinct: true).paginate(page: @page, per_page: 20)    
-    @search.build_sort if @search.sorts.empty?
+  	@results = @search.result(distinct: true).paginate(page: @page, per_page: 10)    
+    @search.build_sort if @search.sorts.empty?  
+    @saved_report = params[:saved_report] || SavedReport.new   
+
+  end 
+
+  def charts
+    set_url_params
+    self.repair_module
+    self.set_pre
+    @heading = "charts"    
+    r = Report.new(@module,@heading,@asso)
+    @cols = r.get_fil_hash    
     @main_sel = r.get_main_sel
     self.set_pie(r)
-    self.set_bar(r)   
-    @saved_report = params[:saved_report] || SavedReport.new
-    render @heading if @heading == "charts"
-  end 
+    self.set_bar(r) 
+  end
+
+
+  def set_pre
+    @from ||= nil
+    @to ||= nil
+    @last_months ||= nil
+  end
 
   def repair_module
     if @module == "single_user"
-      @module = "users"
+      @module = "users"      
+    elsif @module == "institutions"
+      @asso = "institution_type"
+    elsif @module == "people"
+      @asso = "person_type"
+    else
+      @asso = "branch"
     end
   end
 
@@ -39,12 +62,14 @@ class ReportsController < ApplicationController
   end
 
   def partial_pie
-    r = Report.new(params[:model],nil,params[:asso],nil,params[:year],params[:month])    
+    set_url_params
+    r = Report.new(@model,nil,@asso,nil,@from,@to,@last_months)    
     set_pie(r)
   end
 
   def partial_bar
-    r = Report.new(params[:model],nil,params[:asso],params[:sub_asso],params[:year],params[:month])    
+    set_url_params
+    r = Report.new(@model,nil,@asso,@sub_asso,@from_bar,@to_bar,@last_months_bar)      
     set_bar(r)    
   end
 

@@ -1,3 +1,13 @@
+function filterIndicator(bar){
+  var bar = bar || '';
+  $('#from' + bar + ',' + '#to' + bar).blur(function() {
+    $('#last_months' + bar).prop('selectedIndex',0);
+  });
+  $('#last_months' + bar).focus(function() {
+    $('#from' + bar + ',' + '#to' + bar).val('');
+  });
+}  
+
 function save_report(obj){
     var form = getFormObj('ransack_form');
     $.post ('/save_report',form);
@@ -15,14 +25,19 @@ function getFormObj(formId) {
     return formObj;
 }
 
-function change_chart(type,container,model){ 
-
-
-    $.post('/partial_' + type + '.js',{asso: $(container).find('#asso').val(), 
-                                       sub_asso: $(container).find('#sub_asso').val(),
-                                       year: $(container).find('#year').val(), 
-                                       month: $(container).find('#month').val(), 
-                                       model: model });
+function change_chart(type,container,model,bar){ 
+    var bar = bar || '';
+    if($(container).find('#asso').val().length == 0){
+      bootbox.alert("Choose a resource to create a chart!")
+    }else {
+        var data = {};
+        var elem = ["asso","sub_asso","last_months" + bar, "from" + bar, "to" + bar];
+        $.each(elem,function(i,val){
+            data[val] =  $(container).find('#' + val).val();
+        });
+        data["model"] = model;        
+        $.post('/partial_' + type + '.js',data);
+    }
 }
 
 function change_split(type,obj,model){    
@@ -136,7 +151,7 @@ function init_chart(type,series_data1,meta,series_data2,from){
         });
         if (from == "js"){
         var a = $('#pie');
-        scrollToCurrent(a);       
+          scrollToCurrent(a);       
         }
 
 

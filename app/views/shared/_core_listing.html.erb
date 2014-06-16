@@ -300,11 +300,7 @@
                            '<label for="id_column" class="label-right">rows per page</label>' +
                            '</div></form>');
 
- $('.mass-actions-pills .pilled').click(function(){
-   var rows = getCheckedRowsAsArray('<%= _id %>');
-   var clicked = $(this).data('value');   
-   $('.' + clicked + 'Modal').modal('show');
- });
+ pillClickShowModal('<%= _id %>');
 
  actmm('<%= act %>');
  acttab('<%= @status || @partial_name %>');

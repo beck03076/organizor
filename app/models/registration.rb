@@ -18,7 +18,7 @@ class Registration < ActiveRecord::Base
   mount_uploader :image, HumanImageUploader
 
   #=== BELONGS TO =====
-  belongs_to :qualification, foreign_key: 'qua_id'
+  belongs_to :qualification
   belongs_to :sub_agent
   belongs_to :student_source
   belongs_to :contact_type
@@ -36,7 +36,8 @@ class Registration < ActiveRecord::Base
   belongs_to :english_level, foreign_key: 'prof_eng_level_id',class_name: "EnglishLevel"  
   belongs_to :branch
   belongs_to :user, foreign_key: "assigned_to"
-  belongs_to :progression_status          
+  belongs_to :progression_status   
+  belongs_to :enquiry       
   #==================
   #=== HAS MANY =====
   has_many :programmes, dependent: :destroy
@@ -76,6 +77,28 @@ class Registration < ActiveRecord::Base
   
   accepts_nested_attributes_for :programmes,:proficiency_exams, 
   :documents, :allow_destroy => true
+
+
+  # ========= delegating _name methods for assoc in array ================
+  [:student_source,:branch,:contact_type,
+   :english_level,:qualification,:country,
+   :sub_agent,:address_country,:enquiry,:progression_status].each do |assoc|
+    delegate :name, to: assoc, prefix: true, allow_nil: true
+  end  
+  # ======================================================================
+
+  # ========= aliases for methods delegated above ========================
+  alias_method :channel, :contact_type_name
+
+  alias_method :nationality, :country_name  
+
+  [:source_name,:source].each do |c|
+    alias_method c, :student_source_name
+  end
+
+  alias_method :creator, :cby
+  alias_method :owner, :ato
+  # ======================================================================
   
   
   scope :mine, lambda{|user|
@@ -113,10 +136,6 @@ class Registration < ActiveRecord::Base
         ym = Time.now.strftime("%y%m").to_s
         self.ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
-
-  def self.sco(i)
-  end
-   
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
@@ -134,22 +153,6 @@ class Registration < ActiveRecord::Base
      self.address_post_code.to_s].join(', ').strip
   end
   
-  def country_of_origin_name
-    self.country_of_origin.name rescue "Unknown"
-  end
-  
-  def qualification_name
-    self.qualification.name rescue "Unknown"
-  end
-  
-  def english_level_name
-    self.english_level.name rescue "Unknown"
-  end
-  
-  def address_country_name
-    self.address_country.name rescue "Unknown"
-  end
-  
   def tit
     self.first_name rescue "Title Unknown"
   end
@@ -158,42 +161,14 @@ class Registration < ActiveRecord::Base
     "Registrations"
   end
   
-  def a_city
-   self.address_city.name rescue "unknown"  
-  end
-  
-  def a_country
-   self.address_country.name rescue "unknown"  
-  end
-  
-  def nationality
-    country_of_origin.name rescue "Unknown"
-  end
-
   def nationality=(i)
     self.country_id = i
-  end
-
-  def channel
-    self.contact_type.name rescue "Unknown"
-  end
-  
-  def source
-    self.student_source.name rescue "Unknown"
   end
 
   def quick_st
     total = self.programmes.size
     j = self.programmes.includes(:application_status).where(application_statuses: {name: "joined"}).size
     [total,j,"joined"]
-  end
-
-  def branch_name
-    self.branch.name rescue "Unknown"
-  end
-
-  def owner
-    self._ato.first_name rescue "Unknown"
   end
 
   def self.sta(i)

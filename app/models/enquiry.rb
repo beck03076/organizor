@@ -29,6 +29,7 @@ class Enquiry < ActiveRecord::Base
   # ======================================================================
   belongs_to :student_source
   belongs_to :contact_type 
+  belongs_to :sub_agent
   
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries  
@@ -76,7 +77,26 @@ class Enquiry < ActiveRecord::Base
                   
   accepts_nested_attributes_for :programmes, :allow_destroy => true  
 
-  
+  # ========= delegating _name methods for assoc in array ================
+  [:student_source,:branch,:contact_type,:status,:country_of_origin,:sub_agent].each do |assoc|
+    delegate :name, to: assoc, prefix: true, allow_nil: true
+  end  
+  # ======================================================================
+
+  # ========= aliases for methods delegated above ========================
+  alias_method :channel, :contact_type_name
+
+  [:nationality,:country_name].each do |c|
+    alias_method c, :country_of_origin_name
+  end
+
+  [:source_name,:source].each do |c|
+    alias_method c, :student_source_name
+  end
+
+  alias_method :creator, :cby
+  alias_method :owner, :ato
+  # ======================================================================
 
   def create_email
     if !self.created_by.nil?
@@ -122,52 +142,16 @@ class Enquiry < ActiveRecord::Base
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
   end
   
-  def contact_type_name
-    self.contact_type.name rescue "Unknown"
-  end
-  
-  def status_name
-    self.status.name rescue "Unknown"
-  end
-  
   def cur_cl
     @current_cl
-  end
-  
-  def country_of_origin_name
-    self.country_of_origin.name rescue "Unknown"
-  end
-  
-  def tit
-    self.first_name rescue "Title Unknown"
   end
   
   def self.tit
     "Enquiries"
   end
   
-  def source_name
-    self.student_source.name rescue "Unknown"
-  end
-  
-  def nationality
-    self.country_of_origin.name rescue "Unknown"
-  end
-
-  def channel
-    self.contact_type.name rescue "Unknown"
-  end
-
-  def source
-    self.student_source.name rescue "Unknown"
-  end
-
   def owner
     self._ato.first_name rescue "Unknown"
-  end
-
-  def branch_name
-    self.branch.name rescue "Unknown"
   end
 
   def self.reg(i)

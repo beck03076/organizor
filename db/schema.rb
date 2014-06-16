@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140611184720) do
+ActiveRecord::Schema.define(:version => 20140613210418) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -550,6 +550,7 @@ ActiveRecord::Schema.define(:version => 20140611184720) do
     t.integer  "todos_count",       :default => 0, :null => false
     t.integer  "follow_ups_count",  :default => 0, :null => false
     t.integer  "emails_count",      :default => 0, :null => false
+    t.boolean  "sub_agent"
   end
 
   create_table "permissions", :force => true do |t|
@@ -742,14 +743,11 @@ ActiveRecord::Schema.define(:version => 20140611184720) do
     t.date     "passport_valid_till"
     t.string   "visa_type"
     t.date     "visa_valid_till"
-    t.integer  "qua_id"
     t.string   "qua_subject"
     t.string   "qua_institution"
     t.string   "qua_grade"
     t.string   "qua_exam"
     t.string   "qua_score"
-    t.integer  "course_id"
-    t.string   "reg_came_through"
     t.integer  "sub_agent_id"
     t.string   "emer_full_name"
     t.string   "emer_relationship"
@@ -765,8 +763,6 @@ ActiveRecord::Schema.define(:version => 20140611184720) do
     t.integer  "updated_by"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
-    t.integer  "prof_eng_level_id"
-    t.integer  "prof_exam_id"
     t.text     "note"
     t.integer  "enquiry_id"
     t.string   "image"
@@ -783,6 +779,7 @@ ActiveRecord::Schema.define(:version => 20140611184720) do
     t.integer  "contact_type_id"
     t.integer  "student_source_id"
     t.boolean  "direct"
+    t.integer  "qualification_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -994,6 +991,8 @@ ActiveRecord::Schema.define(:version => 20140611184720) do
     t.string   "gplus"
     t.string   "blogger"
     t.boolean  "is_active"
+    t.datetime "last_seen_at"
+    t.integer  "country_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

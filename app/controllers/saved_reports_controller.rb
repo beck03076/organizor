@@ -2,6 +2,7 @@ class SavedReportsController < ApplicationController
   # GET /saved_reports
   # GET /saved_reports.json
   def index
+    @desc = params[:saved_name]
     @saved_reports = SavedReport.where(created_by: current_user.id)
 
     respond_to do |format|

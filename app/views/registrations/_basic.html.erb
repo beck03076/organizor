@@ -49,7 +49,7 @@
            <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.ato %>
            <%= li1('assigned to',out,'span','small')%>
            <%= li1('assigned by',a.aby,'span','small')%>
-           <%= li1('assigned At',a.assigned_at.to_date,'span','small')%>
+           <%= li1('assigned At',(a.assigned_at.to_date rescue nil),'span','small')%>
         </ul>
     </div>
   </div>
@@ -61,7 +61,7 @@
         <% [['address_line1','line1'],
             ['address_line2','line2'],
             ['address_city','city'],
-            ['a_country','country'],
+            ['address_country','country'],
             ['address_post_code','post_code']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>

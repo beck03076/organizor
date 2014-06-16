@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+<Colors>
+<Color>
+<Index>3</Index>
+<RGB>#c0c0c0</RGB>
+</Color>
+<Color><Index>4</Index><RGB>#ff0000</RGB></Color>
+</Colors>
+</OfficeDocumentSettings>
+<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+</ExcelWorkbook>
+<Styles>
+<Style ss:ID="Default" ss:Name="Default"/>
+<Style ss:ID="Result" ss:Name="Result">
+<Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/>
+</Style>
+<Style ss:ID="Result2" ss:Name="Result2">
+<Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/>
+<NumberFormat ss:Format="Currency"/>
+</Style>
+<Style ss:ID="Heading" ss:Name="Heading">
+<Font ss:Bold="1" ss:Italic="1" ss:Size="16"/></Style>
+<Style ss:ID="Heading1" ss:Name="Heading1">
+<Font ss:Bold="1" ss:Italic="1" ss:Size="16"/>
+</Style>
+<Style ss:ID="co1"/>
+<Style ss:ID="co2"/>
+<Style ss:ID="co3"/>
+<Style ss:ID="co4"/>
+<Style ss:ID="co5"/>
+<Style ss:ID="co6"/>
+<Style ss:ID="co7"/>
+<Style ss:ID="co8"/>
+<Style ss:ID="co9"/>
+<Style ss:ID="ta1"/>
+<Style ss:ID="ce1"/>
+<Style ss:ID="1">
+  <Font ss:Bold="1" ss:Size="11" ss:Color="#ffffff"/>
+  <Interior ss:Color="#008cba" ss:Pattern="Solid"/>
+</Style>
+<Style ss:ID="2">
+  <Font ss:Bold="1" ss:Size="11"/>
+</Style>
+
+<Style ss:ID="ins">
+  <Font ss:Bold="1" ss:Size="15" ss:Color="#ffffff"/>
+  <Interior ss:Color="#004156" ss:Pattern="Solid"/>
+</Style>
+
+</Styles>
+
+<ss:Worksheet ss:Name="Sheet1">
+<Table>
+<ss:Column ss:Width="50"/>
+<ss:Column ss:Width="150"/>
+<ss:Column ss:Width="80"/>
+<ss:Column ss:Width="80"/>
+<ss:Column ss:Width="80"/>
+<ss:Column ss:Width="100"/>
+<ss:Column ss:Width="80"/>
+<ss:Column ss:Width="80"/>
+<ss:Column ss:Width="100"/>
+<ss:Column ss:Width="100"/>
+<ss:Column ss:Width="100"/>
+<ss:Column ss:Width="100"/>
+
+<Row ss:Height="25" ss:StyleID="ins">
+  <Cell><Data ss:Type="String">IEC Abroad - Exported Report</Data></Cell>
+</Row>
+
+<% cols = @records.column_names %>
+
+
+<Row ss:Index="3" ss:Height="14.5134" ss:StyleID="1">
+  <% cols.each do |c| %>
+    <!-- this is where we evaluate the foreign key and replace id with name to access its values -->
+    <% c = (c.ends_with? "_id") ? c.gsub('_id','_name') : c %>
+
+    <Cell><Data ss:Type="String"><%= c.titleize %></Data></Cell>
+  <% end %>
+</Row>
+<% @records.each do |r| %>
+      <Row>
+        <% cols.each do |c| %>
+              <!-- this is where we evaluate the foreign key and replace id with name to access its values -->
+              <% c = (c.ends_with? "_id") ? c.gsub('_id','_name') : c %> 
+              <% c = (c == "assigned_to" ? c.gsub('assigned_to','owner') : c) %>
+              <% c = (c == "created_by" ? c.gsub('created_by','creator') : c) %>
+
+          <Cell ss:StyleID="2"><Data ss:Type="String"><%= r.send(c) %></Data></Cell>
+        <% end %>
+      </Row>
+<% end %>
+
+</Table>
+<x:WorksheetOptions/>
+</ss:Worksheet>
+</Workbook>

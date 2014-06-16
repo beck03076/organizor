@@ -109,5 +109,6 @@ gem 'see_more'
 gem 'redactor-rails'
 gem "mini_magick"
 gem 'impressionist'
+gem 'random_data'
 
 
