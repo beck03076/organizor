@@ -1,14 +1,14 @@
 <div class="well blue-well col-xs-10">
         <div class="text-center">          
-          <% %w(direct indirect).each do |i| %>
+          <% %w(direct indirect).each do |i| %>          
             <%= f.radio_button :direct,
-                               i,{:onclick => "$('.source').css('display','none');$('.#{i}').show();",
-                                  :autocomplete => "off"} %>
+                               i,
+                               {:onclick => "$('.source').css('display','none');$('.#{i}').show();"} %>
             &nbsp;<%= f.label i %>&nbsp;&nbsp;&nbsp;&nbsp;
           <% end %>          
         </div>
 
-        <div class="row source direct" style="display:none;">
+        <div class="row source direct" >
           <label class="control-label col-xs-2">Contact Type</label>
           <div class="col-xs-7">
           <%= f.collection_select(:contact_type_id,ContactType.order(:name),
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="row source direct" style="display:none;">
+        <div class="row source direct" >
           <label class="control-label col-xs-2">Student Source</label>
           <div class="col-xs-7">
           <%= f.collection_select(:student_source_id,StudentSource.order(:name),

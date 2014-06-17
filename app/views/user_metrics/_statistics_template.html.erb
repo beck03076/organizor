@@ -9,7 +9,15 @@
 		<tbody>			
 			<% @metrics[tab].keys.each do |m| %>
 			   <tr> 
-               <td><h4> <%= m.titleize %></h4></td>
+               <td>
+               	  <h4> <%= m.titleize %> 
+               	   <% if m == "average_enquiry_response_time_in_hours" %> 
+               	   ( <%= link_to "?", "#",{data: {toggle: "modal",target: "#myModal1"}} %> )
+               	   <% elsif m == "average_enquiry_conversion_days" %> 
+               	   ( <%= link_to "?", "#",{data: {toggle: "modal",target: "#myModal"}} %> )
+               	   <% end %>
+               	  </h4>
+               	</td>
                <% @users.each do |u| %>
      			<td><h5><strong> <%= @metrics[tab][m][u.id] %></strong></h5> </td>
 			   <% end %>
@@ -21,3 +29,48 @@
 </div>
 
 <div id="compare-users-container"> </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">
+        	<span class="glyphicon glyphicon-transfer"></span>
+        	What is Conversion Time?
+        </h3>
+      </div>
+      <div class="modal-body">
+
+        The number of days taken to either register an enquiry or the number of days taken to make a registration join an institution. This is called Conversion Time. Measuring the average conversion time for an user helps us in many ways to measure the users performance.
+      </div>
+      <div class="modal-footer form-group">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">I Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">
+        	<span class="glyphicon glyphicon-flash"></span>
+        	What is Response Time?
+        </h3>
+      </div>
+      <div class="modal-body">
+
+        The number of hours taken to contact/respond to either an enquiry or a registration, too often though email. In other words, time taken by an user to send out the first manual email(not automated thank you emails) to a student in hours is called the response time. This helps in measuring the user's activeness.
+      </div>
+      <div class="modal-footer form-group">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">I Understood</button>
+      </div>
+    </div>
+  </div>
+</div>

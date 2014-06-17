@@ -693,19 +693,19 @@ function actdd(){
 }
 
 function colsClick(model){
-  var cols = $('#' + model).data('cols');
+  var cols = $('#' + model).data('cols');  
 
-  $.each(cols, function( index, value ){
-    $("#ms-user_config_" + model + "_ .ms-selectable:first-child ul li[id="+ value +"-selectable]").trigger("click");
+  $.each(cols, function( index, value ){    
+    $("#ms-" + model + "_ .ms-selectable:first-child ul li[id="+ value +"-selectable]").trigger("click");
   });
 
-    var selector = "#ms-user_config_" + model + "_ .ms-selectable"
+    var selector = "#ms-" + model + "_ .ms-selectable"
 
     $(selector + " ul").click(function(){
       var colsNo = $(selector + " ul.ms-list > li.ms-selected").length ;
       if (colsNo > 10){
         bootbox.alert("You can select only 10 columns to display!");
-        $("#ms-user_config_" + model + "_ .ms-selection ul.ms-list > li.ms-selected").last().trigger("click");
+        $("#ms-" + model + "_ .ms-selection ul.ms-list > li.ms-selected").last().trigger("click");
       }
 
     });

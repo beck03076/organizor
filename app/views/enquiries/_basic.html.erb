@@ -9,9 +9,13 @@
 
     <ul class="vlsdet-s" >
         <h4 class="bold-subhead">Quick Info</h4>
-           <%= li2('status',[:status_id,:select,EnquiryStatus,:status_name],a,nil,"span","strong")%>          
+           <%= li2('status',[:status_id,:select,EnquiryStatus,:status_name],a,nil,"span","strong")%>
+           <% if a.direct %>          
            <%= li2('channel',[:contact_type_id,:select,ContactType,:contact_type_name],a,nil,"span","strong")%>
            <%= li2('source',[:student_source_id,:select,StudentSource,:source_name],a,nil,"span","strong")%>       
+           <% else %>
+           <%= li2('sub_agent',[:sub_agent_id,:select,Person.sub_agents,:sub_agent_first_name,:first_name],a,nil,"span","strong")%>
+           <% end %>
 
            <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
            <% %w(emails follow_ups todos notes).each do |act| %>

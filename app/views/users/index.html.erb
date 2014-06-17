@@ -13,9 +13,9 @@
 </div>
 
 
-<div class="row">
+<div class="row well">
 <div class="col-md-12 data-table">
-          <div class="row well">        
+          <div class="row">        
             <div class="col-md-2">
               <div class="bold-subhead row-top"> Filter By </div>
             </div>
@@ -41,7 +41,7 @@
                        onchange: "filterUsers(this,'country');"} %>
             </div>
           </div>  
-            <div class="row well" id="users-table">
+            <div class="row" id="users-table">
                 <%= render 'table' %>
             </div>
 

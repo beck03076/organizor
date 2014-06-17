@@ -29,7 +29,7 @@ class Enquiry < ActiveRecord::Base
   # ======================================================================
   belongs_to :student_source
   belongs_to :contact_type 
-  belongs_to :sub_agent
+  belongs_to :sub_agent, class_name: 'Person',foreign_key: "sub_agent_id", conditions: 'people.sub_agent=TRUE'
   
   has_many :preferred_countries
   has_many :countries, :through => :preferred_countries  
@@ -78,9 +78,11 @@ class Enquiry < ActiveRecord::Base
   accepts_nested_attributes_for :programmes, :allow_destroy => true  
 
   # ========= delegating _name methods for assoc in array ================
-  [:student_source,:branch,:contact_type,:status,:country_of_origin,:sub_agent].each do |assoc|
+  [:student_source,:branch,:contact_type,:status,:country_of_origin].each do |assoc|
     delegate :name, to: assoc, prefix: true, allow_nil: true
   end  
+
+  delegate :first_name, to: :sub_agent, prefix: true, allow_nil: true
   # ======================================================================
 
   # ========= aliases for methods delegated above ========================

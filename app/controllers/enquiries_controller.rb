@@ -116,35 +116,6 @@ class EnquiriesController < ApplicationController
     respond_to do |format|
       if @enquiry.update_attributes(params[:enquiry].except("assign","deactivate"))
         
-         if (params[:enquiry][:assign].to_s == "from_action")
-    
-          ass_to = User.find(params[:enquiry][:assigned_to]).first_name
-          ass_by = User.find(params[:enquiry][:assigned_by]).first_name
-        
-          tl("Enquiry",params[:id],'This enquiry has been reassigned',
-             'Assigned To: ' + ass_to + ' | Assigned By: ' + ass_by,
-             'assign_to',@enquiry.assigned_to)
-                           
-        elsif (params[:enquiry][:deactivate].to_s == "from_action")
-        
-          tl("Enquiry",params[:id],'This enquiry has been deactivated',
-             "Deactivated",'deactivate',@enquiry.assigned_to)
-             
-        elsif params[:enquiry][:active].to_s == 'true'
-          
-          tl("Enquiry",params[:id],'This enquiry has been activated',
-             "Activated",'activate',@enquiry.assigned_to)
-             
-        elsif params[:enquiry][:notes_attributes]
-              tl("Enquiry",params[:id],'A note has been created for this enquiry',
-                 "Note created",'note',@enquiry.assigned_to) 
-        
-        else
-        
-          tl("Enquiry",params[:id],'Values of this enquiry has been updated',
-             "Updated",'Update',@enquiry.assigned_to)
-        end
-        
         format.html { redirect_to @enquiry, notice: 'Enquiry was successfully updated.' }
         format.json { head :ok, notice: "Enquiry was successfully updated." }
         format.js

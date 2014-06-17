@@ -60,12 +60,18 @@ class Programme < ActiveRecord::Base
                                     status_name: status_name)
     if (status_name.downcase == "joined")
       reg = registration
-      conversion_time = ((diagram.created_at - reg.created_at) / 86400).round(3)
+      conversion_time = ((diagram.created_at - reg.created_at) / 86400).round(3) rescue 0
       update_column(:conversion_time,conversion_time)
-      if reg.conversion_time.nil?
-        reg.update_column(:conversion_time,conversion_time)
+      if !reg.nil?
+        if reg.conversion_time.nil?
+          reg.update_column(:conversion_time,conversion_time)
+        end
       end
     end    
+  end
+
+  def self.joined?(id)
+    ApplicationStatus.find_by_name("joined").id == id    
   end
   
   def self.joined_ins(ins_id)

@@ -41,14 +41,14 @@ module CoreModel
       self_pl = self_name.downcase.pluralize
       self_id = (self.name.downcase + "_id")
       
-      scope :todays, where("#{self_pl}.id IN (SELECT fu.#{self_id} FROM follow_ups fu 
-                               WHERE date(fu.starts_at) = '#{Date.today.to_s(:db)}')")
+      scope :todays, includes(:follow_ups).where("date(follow_ups.starts_at) = '#{Date.today.to_s(:db)}'")
                                
-      scope :this_weeks, where("#{self_pl}.id IN (SELECT fu.#{self_id} FROM follow_ups fu 
-                                   WHERE fu.starts_at BETWEEN '#{Date.today.at_beginning_of_week.to_s(:db)}' AND '#{Date.today.at_end_of_week.to_s(:db)}')")
+      scope :this_weeks, includes(:follow_ups).where("date(follow_ups.starts_at) BETWEEN '#{Date.today.at_beginning_of_week.to_s(:db)}' AND '#{Date.today.at_end_of_week.to_s(:db)}'")
                                    
-      scope :this_months, where("#{self_pl}.id IN (SELECT fu.#{self_id} FROM follow_ups fu 
-                                   WHERE date(fu.starts_at) BETWEEN '#{Date.today.at_beginning_of_month.to_s(:db)}' AND '#{Date.today.at_end_of_month.to_s(:db)}')")
+      scope :this_months, includes(:follow_ups).where("date(follow_ups.starts_at) BETWEEN '#{Date.today.at_beginning_of_month.to_s(:db)}' AND '#{Date.today.at_end_of_month.to_s(:db)}'")
+
+      scope :no_follow_ups, includes(:follow_ups).where("follow_ups.follow_upable_id IS NULL")
+
     end
 
   end
@@ -79,11 +79,6 @@ module CoreModel
   # = Class Methods =
   # =================
   module ClassMethods    
-       def no_followups
-            self_id = (self.name.downcase + "_id").to_sym
-            includes(:follow_ups).where( :follow_ups => { self_id => nil} )
-       end
-       
        def ignore(*x)
          scoped
        end

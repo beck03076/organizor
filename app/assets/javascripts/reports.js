@@ -77,6 +77,26 @@ function init_negative_chart(container,cat,ser,title){
             xAxis: {
                 categories: cat
             },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total fruit consumption'
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>'+
+                        'Total: '+ this.point.stackTotal;
+                }
+            },
             credits: {
                 enabled: false
             },

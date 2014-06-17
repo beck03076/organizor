@@ -1,11 +1,13 @@
 <!-- assign_to for core models -->
 
-<div class="col-md-12">
-  <div class="config-content">
-    <div class="row"></div>
-    <div class="well">
-        <div class="row">
-          <h4>Assign To</h4>
+
+    <div class="row well">
+        <div class="row row-top">
+          <h4 class="bold-subhead">Assign To
+
+
+          </h4>
+
         </div>
 
             <%= form_for(obj) do |f| %>
@@ -14,6 +16,23 @@
                <%= f.hidden_field :assigned_at, :value => Time.now %>
                <%= hidden_field_tag "#{f.object_name}[assign]", "from_action" %>
                <% n_user = User.order(:first_name).reject{|i| i.id == f.object.assigned_to }  %>
+                    <h4 class="row"> 
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                          <label class="control-label col-xs-2"> Current Owner </label>
+                          <div class="col-xs-5">
+
+                        <% u = User.find(f.object.assigned_to) %>
+                        <%= uimg(u) %>
+                        <%= link_to u.name,u %>
+ 
+
+                          </div>
+                        </div>
+                      </div>  
+                    </h4>  
+ 
+                      
 
                       <%= bs(f,[:assigned_to, 
                                  n_user, 
@@ -22,21 +41,19 @@
                                  {:prompt => "--User--"},
                                {}],
                                "collection_select",
-                               [nil,2],5,12,"row") %>
+                               ["Assign To",2],5,12,"row") %>
                        
                        <%= bs(f,[:audit_comment,
                                  :size => "2x2"],"text_area",["Comments",2],5,12,"row") %>
                        
-                       <div class="form-group form-last">
-                                <div class="col-sm-offset-10 col-sm-10">
+                       <div class="row form-group">
+                                <div class="col-sm-offset-6 col-sm-5">
                                   <%= f.submit "Save", {class: "btn btn-primary"} %>
                                 </div>
                         </div>
             <% end %>
-
-     </div>
   </div>
-</div>
+
 
 <script> 
 acttab('assign_to'); 

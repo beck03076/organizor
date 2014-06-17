@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140613210418) do
+ActiveRecord::Schema.define(:version => 20140617161212) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -252,13 +252,10 @@ ActiveRecord::Schema.define(:version => 20140613210418) do
     t.text     "subject"
     t.text     "body"
     t.string   "attachment"
-    t.integer  "user_id"
-    t.integer  "enquiry_id"
-    t.integer  "registration_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "smtp_id"
     t.text     "signature"
     t.boolean  "auto"
@@ -648,7 +645,6 @@ ActiveRecord::Schema.define(:version => 20140613210418) do
     t.integer  "updated_by"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.string   "course_subject"
     t.integer  "app_status_id"
     t.integer  "ins_ref_no"
     t.integer  "registration_id"
@@ -899,7 +895,6 @@ ActiveRecord::Schema.define(:version => 20140613210418) do
   create_table "todos", :force => true do |t|
     t.integer  "topic_id"
     t.text     "desc"
-    t.integer  "status_id"
     t.datetime "duedate"
     t.string   "priority"
     t.integer  "created_by"

@@ -1,14 +1,15 @@
-<!-- prefer countries -->
+ <!-- prefer countries -->
 <h4 class="bold-subhead">Preferred Countries</h4>
 <br/>
 <div class="col-xs-12">
   <%= prefer_countries(f.object_name,
                        "country_ids",
                        @countries,
-                       (f.object.preferred_countries.map{|i| i.id})) %>
+                       (f.object.preferred_countries.map{|i| i.country_id})) %>
 </div>
 <script>
 actMultiSelect('multiple-select');
+colsClick("enquiry_country_ids");
 </script>
 
 

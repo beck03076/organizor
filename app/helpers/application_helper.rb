@@ -46,11 +46,12 @@ include ReportsFilterHelpers
   def li2(label,val,a = nil,text = nil,sizel = "small",sizev = "small")
     html = ""    
     if val.kind_of?(Array)
+     col = val[4] || :name 
      disp = best_in_place_if (can? :update,a),
                               a,
                               val[0],
                               type: val[1],
-                              collection: val[2].bip,
+                              collection: val[2].bip(col),
                               display_as: val[3],
                               inner_class: "form-control"
      cl = val[2].find(a.send(val[0])).cl rescue "green-right"
@@ -84,7 +85,7 @@ include ReportsFilterHelpers
 
    html = ""
 
-   html += "<div id=#{main}-#{sub} class='ms-selected-cols' data-items='#{data_values}'></div>"
+   html += "<div id=#{main}_#{sub} class='ms-selected-cols' data-cols='#{data_values}'></div>"
 
    html += '<div class="form-group">
                       <div class="col-xs-10 col-xs-offset-2">'

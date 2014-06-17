@@ -81,8 +81,12 @@ module MyExtension
       order(:name).map{|i| [i.name.titleize,i.id]}
     end
     
-    def bip
-      order(:name).map{|i| [i.id,i.name.titleize]}
+    def bip(col = :name)
+      order(col).map{|i| [i.id,i.name.titleize]}
+    end
+
+    def ids
+      all.map &:id
     end
   end
 end

@@ -4,7 +4,7 @@ module UserConfigsHelper
   
    html = ""
    
-   html += "<div id=#{model} class='ms-selected-cols' data-cols='#{data_values}'></div>"
+   html += "<div id=user_config_#{model} class='ms-selected-cols' data-cols='#{data_values}'></div>"
    
    html += '<div class="form-group">
                       <div class="col-md-12">'

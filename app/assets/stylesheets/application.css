@@ -309,7 +309,7 @@ background-color:#f1c1c1;
   font-weight:normal;   
 }
 .noty-row:hover{
-  background-color: #FFF0ED;  
+  background-color: #eeeeee;  
 }
 .noty-who{
   font-size:9px;
@@ -477,6 +477,10 @@ vertical-align: top;
   
   background-color: #f1c1c1;;
   color: #000;
+}
+
+.tgreen{
+  color: #2D97C0;  
 }
 
 
