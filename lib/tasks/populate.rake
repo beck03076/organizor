@@ -42,8 +42,8 @@ namespace :db do
 
     start_enquiry_populate
     start_registration_populate
-    start_institution_populate
-    start_person_populate
+    #start_institution_populate
+    #start_person_populate
 
   end
 end

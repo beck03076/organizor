@@ -67,7 +67,7 @@ module RegistrationPopulate
 					        		@current_pay = f.commission_amount_cents / 3 
 					        		Commission.populate 1 do |c|
 					        			c.paid_cents = @current_pay
-					        			@current_commission_paid = @current_pay
+					        			f.commission_paid_cents = c.paid_cents				        			
 
 					        			c.fee_id = f.id
 					        			c.created_at = f.first_payment_date
@@ -81,7 +81,7 @@ module RegistrationPopulate
 					        		if @bool.sample
 					        			Commission.populate 1 do |c|
 					        			 c.paid_cents = @current_pay
-					        			 @current_commission_paid += @current_pay
+					        			 f.commission_paid_cents = f.commission_paid_cents + c.paid_cents				        								        			 
 
 					        			 c.fee_id = f.id
 					        			 c.created_at = f.first_payment_date + 1.week					        			 
@@ -97,7 +97,7 @@ module RegistrationPopulate
 					        		if @two_run
 					        			Commission.populate 1 do |c|
 					        			 c.paid_cents = @current_pay
-					        			 @current_commission_paid += @current_pay
+					        			 f.commission_paid_cents = f.commission_paid_cents + c.paid_cents
 
 					        			 c.fee_id = f.id
 					        			 c.created_at = f.first_payment_date + 2.weeks					        			 
@@ -106,10 +106,7 @@ module RegistrationPopulate
 					        			 c.status_id = CommissionStatus.find_by_name("fully paid").id
 					        		    end
 					        		    @two_run = false
-					        		end
-					        	f.commission_paid_cents = @current_commission_paid
-					        	@current_commission_paid = 0	
-					        	
+					        		end				        	
 					        end	      
 					    end
 			      end    
