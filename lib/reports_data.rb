@@ -453,6 +453,13 @@ module ReportsData
 				 	           ph: "Invoice Date",
 				 	           cl: "datepicker",
 				 	       	},  	       	
+				first_payment_date: {  
+	         	    	           cols: [],
+	         	    	           range_col: "fee_first_payment_date",
+	         	    	           type: "range",
+				 	           ph: "First Payment Date",
+				 	           cl: "datepicker",
+				 	       	}, 	       	
 				},
 	     logo: "euro"			
 		 }
