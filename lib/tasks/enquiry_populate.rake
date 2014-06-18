@@ -9,7 +9,7 @@ module EnquiryPopulate
 	def start_enquiry_populate
 		    p "Started populating enquiries"
 
-		    Enquiry.populate 50 do |e|			      
+		    Enquiry.populate 1000 do |e|			      
 			      e.first_name = Faker::Name.first_name
 			      e.surname = Faker::Name.last_name
 			      e.mobile1 = Faker::PhoneNumber.cell_phone
