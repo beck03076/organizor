@@ -67,20 +67,28 @@ module RegistrationPopulate
 					        		@current_pay = f.commission_amount_cents / 3 
 					        		Commission.populate 1 do |c|
 					        			c.paid_cents = @current_pay
+					        			@current_commission_paid = @current_pay
+
 					        			c.fee_id = f.id
 					        			c.created_at = f.first_payment_date
-					        			@one = f.commission_amount_cents - c.paid_cents
-					        			c.remaining_cents = f.commission_amount_cents - c.paid_cents
+
+					        			@one = f.commission_amount_cents - c.paid_cents					        			
+					        			c.remaining_cents = @one
+
 					        			c.status_id = CommissionStatus.find_by_name("partially paid").id
 					        		end
 
 					        		if @bool.sample
 					        			Commission.populate 1 do |c|
 					        			 c.paid_cents = @current_pay
+					        			 @current_commission_paid += @current_pay
+
 					        			 c.fee_id = f.id
-					        			 c.created_at = f.first_payment_date + 1.week
+					        			 c.created_at = f.first_payment_date + 1.week					        			 
+					        			 
 					        			 @two = @one - @current_pay
-					        			 c.remaining_cents = @one - @current_pay
+					        			 c.remaining_cents = @two
+
 					        			 c.status_id = CommissionStatus.find_by_name("partially paid").id
 					        			 @two_run = true
 					        		    end
@@ -89,10 +97,12 @@ module RegistrationPopulate
 					        		if @two_run
 					        			Commission.populate 1 do |c|
 					        			 c.paid_cents = @current_pay
+					        			 @current_commission_paid += @current_pay
+
 					        			 c.fee_id = f.id
 					        			 c.created_at = f.first_payment_date + 2.weeks					        			 
-					        			 @current_commission_paid = @two - @current_pay
-					        			 c.remaining_cents = @current_commission_paid
+					        			 
+					        			 c.remaining_cents = @two - @current_pay
 					        			 c.status_id = CommissionStatus.find_by_name("fully paid").id
 					        		    end
 					        		    @two_run = false
