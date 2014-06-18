@@ -5,6 +5,8 @@
     </h4>
 
       <%= will_paginate @results, params: {module: @module, heading: @heading, q: @q} %>
+
+
   </div>
   <div class="col-xs-6 row-top ">
         <h4>Filtered by</h4>
@@ -40,10 +42,11 @@
                            </button>
                            </span>" %>
                 <!-----------------------Export Details Modal End---------------------------->
-<div class="row">
-  <div class="row mass-actions-pills" style="display: none;">
-    <div class="col-md-11">
+
+  <div class="mass-actions-pills" style="display: none;">
+    <div class="col-md-12 well">
         <% if (can? :read, _model) %>              
+                  <small> Options</small> &nbsp;&nbsp;
                   <span data-value="exportDetails" class="pilled">
                   <span class="glyphicon glyphicon-save mar0"></span>
                   <span>Export</span>
@@ -51,6 +54,8 @@
         <% end %>        
     </div>
   </div>
+
+
       <% if @saved_name %>
       <h4 class="text-center">
         <b>
@@ -84,7 +89,7 @@
           </tbody>
         </table>      
       </div>    
-</div>
+
 
 <script>
     $('.pagination a').attr('data-remote', 'true'); 

@@ -83,6 +83,7 @@ class Enquiry < ActiveRecord::Base
   end  
 
   delegate :first_name, to: :sub_agent, prefix: true, allow_nil: true
+  alias_method :sub_agent_name, :sub_agent_first_name
   # ======================================================================
 
   # ========= aliases for methods delegated above ========================

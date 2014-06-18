@@ -19,7 +19,7 @@ class Registration < ActiveRecord::Base
 
   #=== BELONGS TO =====
   belongs_to :qualification
-  belongs_to :sub_agent
+  belongs_to :sub_agent,class_name: 'Person',foreign_key: "sub_agent_id", conditions: 'people.sub_agent=TRUE'
   belongs_to :student_source
   belongs_to :contact_type
   belongs_to :country_of_origin,
@@ -82,9 +82,12 @@ class Registration < ActiveRecord::Base
   # ========= delegating _name methods for assoc in array ================
   [:student_source,:branch,:contact_type,
    :english_level,:qualification,:country,
-   :sub_agent,:address_country,:enquiry,:progression_status].each do |assoc|
+   :address_country,:enquiry,:progression_status].each do |assoc|
     delegate :name, to: assoc, prefix: true, allow_nil: true
   end  
+
+  delegate :first_name, to: :sub_agent, prefix: true, allow_nil: true
+  alias_method :sub_agent_name, :sub_agent_first_name
   # ======================================================================
 
   # ========= aliases for methods delegated above ========================
@@ -136,6 +139,8 @@ class Registration < ActiveRecord::Base
         ym = Time.now.strftime("%y%m").to_s
         self.ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
+
+
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip

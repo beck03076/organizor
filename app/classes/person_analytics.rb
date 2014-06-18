@@ -2,6 +2,7 @@ class PersonAnalytics
 
   include AnalyticsCommon
   include EnquiriesRegisteredAnalytics
+  include FeeCommissionAnalytics
 
 
   def initialize(data,core,actual_core=nil)

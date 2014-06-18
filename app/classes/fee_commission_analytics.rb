@@ -22,7 +22,7 @@ module FeeCommissionAnalytics
     # Complete output hash with name as key and fees and commission as values
     out = @model.total_fee_commission((qualified_fees.map &:id),@data)
     # readying table head in a separate array because it is being reused in charts categories
-    table_head = ["#{@actual_core.titleize}","Fees Paid (Units)","Commission Received(Units)","Commission Pending(Units)"]
+    table_head = ["#{@actual_core.titleize}","Tuition Fee(Units)","Commission Received(Units)","Commission Pending(Units)"]
     # structuring the same for charts
     charts = [out.keys,charts_series(out,table_head)]
     # returning the output as hash    
@@ -30,7 +30,7 @@ module FeeCommissionAnalytics
      ordered_output: out.first(conditions[:size].to_i),     
      page_header: "#{@title.titleize} Profitable #{@actual_core.titleize} <<size>>",
      charts: charts,
-     chart_text: "Fees Paid, Commission Paid and Commission Pending",
+     chart_text: "Tuition Fee, Commission Paid and Commission Pending",
      partial: "fee_commission",
      data_limit: 3
    }

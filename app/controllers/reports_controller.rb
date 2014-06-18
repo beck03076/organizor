@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   	r = Report.new(@module,@heading) 
     @cols = r.get_fil_hash    
   	@search = self.model.search(@q)
-  	@results = @search.result(distinct: true).paginate(page: @page, per_page: 10)    
+  	@results = @search.result(distinct: true).paginate(page: @page, per_page: @per_page)    
     @search.build_sort if @search.sorts.empty?  
     @saved_report = params[:saved_report] || SavedReport.new   
 

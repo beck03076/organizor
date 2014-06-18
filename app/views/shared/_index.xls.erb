@@ -89,6 +89,7 @@
               <% c = (c.ends_with? "_id") ? c.gsub('_id','_name') : c %> 
               <% c = (c == "assigned_to" ? c.gsub('assigned_to','owner') : c) %>
               <% c = (c == "created_by" ? c.gsub('created_by','creator') : c) %>
+              <% p c %>
 
           <Cell ss:StyleID="2"><Data ss:Type="String"><%= r.send(c) %></Data></Cell>
         <% end %>
