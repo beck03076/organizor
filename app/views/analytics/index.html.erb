@@ -54,7 +54,9 @@
 
 	<%= analytics_listing(core,[["Most","DESC"],["Least","ASC"]],"Popular (Actions)","popular_actions") %> 
 
+    <% if false %>
 	<%= analytics_listing(core,[["Most","reverse"],["Least","compact"]],"Popular (Impressions)","popular_impressions") %>
+	<% end %>
 
 	<%= analytics_listing(core,[["Long","minus"],["Quick","plus"]],"Time to Make the First Payment","first_payment_duration") %>
 
