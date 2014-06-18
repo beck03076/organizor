@@ -423,7 +423,6 @@ module ReportsData
 	         	    	           cl: "datepicker",
 				 	           ph: "Course Start Date"
 				 	       	},
-				updated_at: "datepicker<",
 				ins_ref_no: 0 },
 		 logo: "certificate"		
 		 }
@@ -522,15 +521,6 @@ module ReportsData
 		 }
 	end
 
-	def programmes
-		{title: "Programmes",
-	         table: "programmes", 
-	         cols: {institution: ["collection_select","Institution",nil,:programmes_institution_id],		 
-	                course_level: ["collection_select","CourseLevel",nil,:programmes_level_id],		 	             	    
-	         	   },  
-	     logo: "certificate"    	   	
-		 }
-	end
 
 
 
