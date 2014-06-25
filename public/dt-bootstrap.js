@@ -1,7 +1,7 @@
 $(function(){
 /* Set the defaults for DataTables initialisation */
 $.extend( true, $.fn.dataTable.defaults, {
-    "sDom": "<'row row-top'<'col-md-12't>><'row'<'col-md-3 vert-center'<'length-element'>><'col-md-5 text-center'i>r<'col-md-4'p>>",
+    "sDom": "<'row row-top'<'col-md-12't>><'row'<'col-md-3 text-left'<'length-element'>><'col-md-9 text-left'i>r<'col-md-12'p>>",
     "sPaginationType": "bootstrap",
     "oLanguage": {
         "sLengthMenu": "_MENU_ records per page"

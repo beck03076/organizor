@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140625081331) do
+ActiveRecord::Schema.define(:version => 20140625092153) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -508,6 +508,12 @@ ActiveRecord::Schema.define(:version => 20140625081331) do
     t.integer  "emails_count",      :default => 0, :null => false
   end
 
+  add_index "institutions", ["assigned_by"], :name => "index_institutions_on_assigned_by"
+  add_index "institutions", ["assigned_to"], :name => "index_institutions_on_assigned_to"
+  add_index "institutions", ["country_id"], :name => "index_institutions_on_country_id"
+  add_index "institutions", ["created_by"], :name => "index_institutions_on_created_by"
+  add_index "institutions", ["updated_by"], :name => "index_institutions_on_updated_by"
+
   create_table "notes", :force => true do |t|
     t.text     "content"
     t.datetime "created_at",    :null => false
@@ -561,6 +567,12 @@ ActiveRecord::Schema.define(:version => 20140625081331) do
     t.integer  "emails_count",      :default => 0, :null => false
     t.boolean  "sub_agent"
   end
+
+  add_index "people", ["assigned_by"], :name => "index_people_on_assigned_by"
+  add_index "people", ["assigned_to"], :name => "index_people_on_assigned_to"
+  add_index "people", ["country_id"], :name => "index_people_on_country_id"
+  add_index "people", ["created_by"], :name => "index_people_on_created_by"
+  add_index "people", ["updated_by"], :name => "index_people_on_updated_by"
 
   create_table "permissions", :force => true do |t|
     t.string   "name"
@@ -789,6 +801,19 @@ ActiveRecord::Schema.define(:version => 20140625081331) do
     t.boolean  "direct"
     t.integer  "qualification_id"
   end
+
+  add_index "registrations", ["assigned_by"], :name => "index_registrations_on_assigned_by"
+  add_index "registrations", ["assigned_to"], :name => "index_registrations_on_assigned_to"
+  add_index "registrations", ["branch_id"], :name => "index_registrations_on_branch_id"
+  add_index "registrations", ["contact_type_id"], :name => "index_registrations_on_contact_type_id"
+  add_index "registrations", ["country_id"], :name => "index_registrations_on_country_id"
+  add_index "registrations", ["created_by"], :name => "index_registrations_on_created_by"
+  add_index "registrations", ["enquiry_id"], :name => "index_registrations_on_enquiry_id"
+  add_index "registrations", ["progression_status_id"], :name => "index_registrations_on_progression_status_id"
+  add_index "registrations", ["qualification_id"], :name => "index_registrations_on_qualification_id"
+  add_index "registrations", ["student_source_id"], :name => "index_registrations_on_student_source_id"
+  add_index "registrations", ["sub_agent_id"], :name => "index_registrations_on_sub_agent_id"
+  add_index "registrations", ["updated_by"], :name => "index_registrations_on_updated_by"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
