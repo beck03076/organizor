@@ -52,7 +52,7 @@ class Enquiry < ActiveRecord::Base
     includes(:status,
              :follow_ups,
              :country_of_origin,
-             :_ass_to,:_upd_by).where("enquiry_statuses.name != 'deactivated'")
+             :_ass_to,:_upd_by,:branch).where("enquiry_statuses.name != 'deactivated'")
   else
     includes(:branch,
              :status,
