@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140617161212) do
+ActiveRecord::Schema.define(:version => 20140625081331) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -337,6 +337,18 @@ ActiveRecord::Schema.define(:version => 20140617161212) do
     t.boolean  "direct"
     t.integer  "sub_agent_id"
   end
+
+  add_index "enquiries", ["assigned_by"], :name => "index_enquiries_on_assigned_by"
+  add_index "enquiries", ["assigned_to"], :name => "index_enquiries_on_assigned_to"
+  add_index "enquiries", ["branch_id"], :name => "index_enquiries_on_branch_id"
+  add_index "enquiries", ["contact_type_id"], :name => "index_enquiries_on_contact_type_id"
+  add_index "enquiries", ["country_id"], :name => "index_enquiries_on_country_id"
+  add_index "enquiries", ["created_by"], :name => "index_enquiries_on_created_by"
+  add_index "enquiries", ["registered_by"], :name => "index_enquiries_on_registered_by"
+  add_index "enquiries", ["status_id"], :name => "index_enquiries_on_status_id"
+  add_index "enquiries", ["student_source_id"], :name => "index_enquiries_on_student_source_id"
+  add_index "enquiries", ["sub_agent_id"], :name => "index_enquiries_on_sub_agent_id"
+  add_index "enquiries", ["updated_by"], :name => "index_enquiries_on_updated_by"
 
   create_table "enquiry_statuses", :force => true do |t|
     t.string   "name"
