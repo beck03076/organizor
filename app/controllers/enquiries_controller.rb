@@ -1,4 +1,6 @@
 class EnquiriesController < ApplicationController
+
+
   include CoreController
   include ActionsMethods
   helper_method :meta  
@@ -18,6 +20,7 @@ class EnquiriesController < ApplicationController
   # GET /enquiries
   # GET /enquiries.json
   def index
+    authorize! :list, Enquiry
     set_url_params
     self.set_cols
     

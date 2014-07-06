@@ -48,6 +48,7 @@ class Registration < ActiveRecord::Base
   has_many :exams
   has_many :proficiency_exams,class_name: "Exam", dependent: :destroy  
   has_many :documents, dependent: :destroy
+  has_many :users, as: :userable
   #==================
     
   attr_accessor :_destroy

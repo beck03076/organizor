@@ -1,0 +1,11 @@
+ 
+  <% ctnt = (render 'link', {a: @user}) %>
+ 
+  $('#resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource-edit', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Link User With',
+                                                         button: nil}) %>");
+  
+  $('#resource-edit').modal('show');  
+  

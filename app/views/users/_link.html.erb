@@ -1,0 +1,26 @@
+
+<%= form_for @user do |f| %> 
+
+    <% title = {Institutions: "name", Registrations: "ref_no", People: "email"} %>
+    <div class="row">
+      <%= bs(f,[:userable_type,
+                [["institutions","Institution"],["registrations","Registration"],["people","Person"]],
+                {prompt: "-link with-"},{onchange: "selectUpdate('dummy',
+                                                   '/' + this.options[this.selectedIndex].innerHTML.toLowerCase() + '.select',
+                                                   '.linkable_select',
+                                                   'first_name');"}],
+               "select",
+               ['Link With',2],7,12) %>
+    </div>
+    <div class="row">
+      <%= bs(f,[:userable_id,[],{prompt: "-link to-"},{class: "linkable_select"}],
+               "select",
+               ["Link To",2],7,12) %>
+    </div>
+    <div class="row form-group form-last">
+      <div class="col-xs-9 text-right">
+        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+      </div>
+    </div>    
+<% end %>           
+              

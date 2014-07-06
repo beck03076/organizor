@@ -9,9 +9,9 @@ class Ability
           else
             can permission.action.to_sym, permission.subject_class.constantize
           end
-        else
-          can permission.action.to_sym, permission.subject_class.constantize, :id => user.id
-        end
+        elsif permission.subject_id == 1
+          can permission.action.to_sym, permission.subject_class.constantize, users: { id: user.id }
+        end        
       end
   end
   

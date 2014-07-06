@@ -55,23 +55,27 @@
         </ul>
     </div>
   </div>
+
   <div class="col-xs-4">
-    <ul class="vlsdet">
+   <div class="well orange-well">   
         <h4 class="bold-subhead">Preferred Countries</h4>
-         <li>
+         <ul class="vlsdet"> 
            <%= a.preferred_countries.blank? ? "<h5>No preferred countries</h5>".html_safe : "" %>
-           <% a.preferred_countries.each do |p| %>
-             <span class="tag-like blue"><%= p.country.name %></span>
-           <% end %>
-         </li>
-    </ul>
+           <% a.preferred_countries.each_with_index do |p,i| %>
+             <li><%= i + 1 %>. <%= p.country.name.titleize rescue "Unknown" %></li>
+           <% end %>         
+         </ul> 
+  </div>
   </div> 
 </div>
 
-<div class="row row-top">
-  <div class="col-xs-12">
+<div class="row">
+  <div class="row row-top">
+    <div class="col-xs-12">  
+      <h4 class="bold-subhead">Programmes Interested</h4>
+    </div>
+  </div>
   <ul class="vlsdet">
-  <h4 class="bold-subhead">Programmes Interested</h4>
   <%= a.programmes.blank? ? "<h5>No programmes</h5>".html_safe : "" %>
   <% a.programmes.each do |i| %>
       <div class="col-xs-6">
@@ -79,7 +83,7 @@
       </div>
   <% end %>
   </ul>
-  </div>
+  
 </div>
 <div class="row row-top border-b">
   <div class="col-xs-12">

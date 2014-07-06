@@ -1,38 +1,47 @@
 <!-- permissions used twice - Users, Roles but different in create roles-->
 
-    <% perms = (Permission.all.group_by &:subject_class) %>
-     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <% perms = (Permission.all.group_by &:subject_class) %>     
      <% r = perms.keys %>
      <% defs = ["Enquiry","Registration","Institution","Person"] %>
      <% r = r - ["All","Country","City"] %>
-
+     <div class="row">
      <% defs.each do |model| %>
-    
-          <tr colspan="5">
-          <td>
-          <h6>
-          <%= model %>
-          </h6>
-          </td>
+      <div class="col-xs-3">
+          <ul class="vlsdet-s">
+          <li> <h4><%= model %></h5></li>
           
-          
-          <% perms[model].each do |p| %>
-            <td>
+          <% perms[model].reject{|i| i.subject_id == 1}.each do |p| %>            
+            <li>
                     <%= check_box_tag "#{f}[permission_ids][]",
-                                                                      p.id, 
-                                                                      role.permissions.include?(p) %>
+                                      p.id, 
+                                      role.permissions.include?(p) %>                                                                      
                     <%= label_tag(:permissions, p.action.titleize)%>
-            </td>
+            </li>
+         <% end %>        
+         
+         <% perms[model].select{|i| i.subject_id == 1}.each do |p| %>                    
+              <li>
+                    <%= check_box_tag "#{f}[permission_ids][]",
+                                      p.id, 
+                                      role.permissions.include?(p) %>                                                                      
+                    <%= label_tag(:permissions, p.action.titleize + " Assigned")%>        
+                    
+            </li>
          <% end %>
-         </tr>
+       </ul>
+     </div>
+         
    
     <% end %>
-    <tr>
-    <td colspan="6">
-    <a class="toggler" onclick="$('.more_permissions').slideToggle(); $('#perm_save_1').slideToggle();"> more </a>
-    </td>
-    </tr>
-     </table>
+    </div>
+
+      <div class="row form-group">
+        <div class="col-xs-12">
+          <a class="pointer btn btn-default"  
+             onclick="$('.more_permissions').slideToggle(); $('#perm_save_1').slideToggle();"> more </a>       
+       </div>
+      </div>
+
      <table  class="tables3 more_permissions" border="0" cellpadding="0" cellspacing="0" width="100%"  style="display:none;">
                <tr>
                <td></td>

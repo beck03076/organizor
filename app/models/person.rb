@@ -37,6 +37,7 @@ class Person < ActiveRecord::Base
 
   has_one :programme, through: :institution
   has_many :enquiries, foreign_key: "sub_agent_id"
+  has_many :users, as: :userable
 
   before_save :update_sub_agent
 

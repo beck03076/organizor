@@ -2,7 +2,7 @@
 <% if @todos.any? %>
 <% a = @todos.group_by(&:topic) %>
 <% a.keys.each do |k| %>
-           <h4 class="col-xs-4 first"><%= k.name.titleize %> todos</h4>
+           <h4 class="col-xs-4 first bold-bighead"><%= k.name.titleize %> todos</h4>
            <br/>
            <% a[k].each do |i| %>
                 <% edi = i.assigned_by == current_user.id %>

@@ -17,8 +17,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  
-
   def all_notifications
      @notys = Audit.notys(current_user.id)
      render 'shared/all_notifications'

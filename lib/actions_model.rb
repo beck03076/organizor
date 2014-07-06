@@ -24,8 +24,10 @@ module ActionsModel
       end
     else
       set_core_obj
-      set_col
-      change_count @core_obj,@col,&:+      
+      if !@core_name.nil?
+        set_col
+        change_count @core_obj,@col,&:+      
+      end
     end
   end
   
@@ -35,15 +37,18 @@ module ActionsModel
         change_count core,:emails_count, &:-      
       end
     else
-      set_core_obj
-      set_col
-      change_count @core_obj,@col,&:-             
+      set_core_obj   
+      if !@core_name.nil?   
+        set_col
+        change_count @core_obj,@col,&:-             
+      end
     end
   end
 
   def set_core_obj
       @klass = self.class.name.underscore
       @core_name = send((@klass + "able_type").downcase)
+      return if @core_name.nil?
       @core_class = @core_name.constantize
       @core_id = send((@klass + "able_id").downcase)
       @core_obj = @core_class.find(@core_id)      

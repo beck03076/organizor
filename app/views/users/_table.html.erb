@@ -1,29 +1,31 @@
 <!-- listing users -->
 <table class="table table-bordered">
                 <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Seen</th>
+                  <tr  class="sm">
+                    <th>Picture</th>
+                    <th>Name</th>
                     <th>Branch</th>
                     <th>Role</th>
-                    <th>Email</th>
+                    <th>Last Seen</th>
                     <th>Invitation</th>
                     <th>State</th>
-                    <th colspan=2>&nbsp;</th>
-                  </tr>
+                    <th colspan=2>Action</th>
+                                      </tr>
                 </thead>
                 <tbody>
                   <% @users.each do |user| %>
-                    <% un = user.first_name.nil? ? "Mr. Unknown" : user.first_name %>
+                    <% un = user.name.nil? ? "Mr. Unknown" : user.name %>
                       <tr>
-                        <td><%= link_to un,user  %></td>
-                        <td><%= user.last_seen_at  %></td>
-                        <td><%= user.br %></td>
-                        <td><%= user.role.name.titleize rescue "Unassigned" %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.confirmed_at ? "Accepted" : "Not Accepted" %></td>
-                        <td><%= user.active_for_authentication? ? "Active" : "Inactive" %></td>
-                        <td>
+                        <td><%= uimg(user) %></td> 
+                        <td><h4><%= link_to un,user  %></h4><%= user.email %> 
+                        <td  class="sm"><%= user.br %></td>
+                        <td class="sm"><%= user.role.name.titleize rescue "Unassigned" %></td>
+                        <td class="sm"><%= user.last_seen_at  %></td>
+
+                        
+                        <td  class="sm"><%= user.confirmed_at ? "Accepted" : "Not Accepted" %></td>
+                        <td  class="sm"><%= user.active_for_authentication? ? "Active" : "Inactive" %></td>
+                        <td  class="sm">
                         <% if (!user.adm? rescue "OK") %>
                         <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
                                     user, 
@@ -31,7 +33,15 @@
                                     data: { confirm: 'Are you sure?' } %>
                         <% end %>
                         </td>
+                        <td>
+                        <%= link_to '<span class="glyphicon glyphicon-link"></span>'.html_safe,
+                                    link_user_path(user), 
+                                    remote: true  %>
+                        
+                        </td>
                       </tr>
+
+ 
                   <% end %>
                 </tbody>
               </table>

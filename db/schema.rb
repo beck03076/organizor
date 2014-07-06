@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140625092153) do
+ActiveRecord::Schema.define(:version => 20140626175226) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -230,6 +230,9 @@ ActiveRecord::Schema.define(:version => 20140625092153) do
     t.datetime "updated_at",           :null => false
     t.integer  "contract_id"
     t.integer  "contract_category_id"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.string   "doc_type"
   end
 
   create_table "email_templates", :force => true do |t|
@@ -1025,6 +1028,8 @@ ActiveRecord::Schema.define(:version => 20140625092153) do
     t.boolean  "is_active"
     t.datetime "last_seen_at"
     t.integer  "country_id"
+    t.string   "userable_type"
+    t.integer  "userable_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -50,7 +50,7 @@ gem 'rmagick'
 gem 'devise'
 gem 'cancan'
 
-gem 'rails3-jquery-autocomplete'
+gem 'twitter-typeahead-rails'
 
 gem 'carrierwave'
 #gem "audited-activerecord"

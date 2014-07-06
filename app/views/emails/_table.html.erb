@@ -1,7 +1,7 @@
 <!-- listing emails -->
-<h4>Total : <%= @emails.size %> emails</h4>
+<h4>Total : <span class="bold-subhead"><%= @emails.size %></span> emails</h4>
 
-<table class="table table-striped">
+<table class="table table-bordered">
                 <thead>
                   <tr>
                     <th>To</th>
@@ -14,9 +14,18 @@
                 <tbody>
                   <% @emails.each do |e| %>
                       <tr>
-                        <% t = e.to.split(",").size %>
-                        <% to_size = (t == 0 ? "Unknown" : t) %>
-                        <td><%= truncate(e.to,length: 20) %> <%= to_size == 1 ? nil : "[#{to_size}]" %> </td>
+                        <% total_emails = e.to.split(",").size rescue 0 %>
+                        
+
+                        <td>
+                          <% if total_emails == 1 %>
+                            <%= link_to e.to,e %>
+                          <% elsif total_emails > 1 %>
+                            <%= link_to truncate(e.to,length: 20),e %> <%= "[#{total_emails}]" %> 
+                          <% else %>  
+                             Unknown 
+                          <% end %>
+                        </td>
                         <td><%= e.subject %></td>
                         <td><%= e.created_at.to_s %></td>
                         <td><%= e.email._cre_by.name rescue "Unknown" %></td>

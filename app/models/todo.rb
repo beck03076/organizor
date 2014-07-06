@@ -12,6 +12,8 @@ class Todo < ActiveRecord::Base
                                  title: :title,
                                  create_comment: "New <<here>> has been created", 
                                  update_comment: "Some values of this <<here>> has been updated"
+
+  validates_presence_of :title,:duedate,:topic_id,:assigned_to,message: "missing!"
   
   
   attr_accessible :created_by, :desc, :duedate, 

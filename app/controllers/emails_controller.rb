@@ -8,16 +8,20 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
     @sent_by = @sent_by.blank? ? nil : @sent_by
     @sent_to = @sent_to.blank? ? nil : @sent_to
     who = @sent_by || @sent_to
-    
-    ids = params[who.to_sym].values.reject(&:empty?).join(",")
-    
-    if (!@from_date.blank? && !@to_date.blank?)
-      cond = "#{who.pluralize}.id in (#{ids}) AND date(emails.created_at) BETWEEN '#{@from_date}' AND '#{@to_date}'"
+
+    if who.nil? 
+      @emails = Email.where("date(emails.created_at) BETWEEN '#{@from_date}' AND '#{@to_date}'")
     else
-      cond = { id: ids}
-    end
+      ids = params[who.to_sym].values.reject(&:empty?).join(",")    
     
-    @emails = (who.camelize.constantize.includes(:emails).where(cond).map &:emails).flatten
+      if (!@from_date.blank? && !@to_date.blank?)
+        cond = "#{who.pluralize}.id in (#{ids}) AND date(emails.created_at) BETWEEN '#{@from_date}' AND '#{@to_date}'"
+      else
+        cond = { id: ids}
+      end
+      
+      @emails = (who.camelize.constantize.includes(:emails).where(cond).map &:emails).flatten
+    end
     
   end
 

@@ -51,16 +51,24 @@ module CoreController
       render :partial => 'shared/email', :locals => @locals
 
     else
-      # except register and deactivate other partials are shared, said are in enquiries
+      # except register and deactivate other partials are shared, said are in shared
       out = (except_arr.include?(@partial_name) ? @partial_name : "shared/" + @partial_name)
       @obj = model.find(obj_id)
+
+      if out == "document"
+        handle_document
+      end
+
       render partial: out, locals:  {:e => Email.new,
                                      :id => obj_id,
                                      :obj => @obj,
                                      :obj_id => id,
                                      :obj_name => name}
-    end
-     
+    end     
+  end
+
+  def handle_document
+    @sub_type = @sub_type || "all"     
   end
       
   def basic_select(model,cond = true)

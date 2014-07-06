@@ -273,8 +273,6 @@ GEM
       bundler (~> 1.0)
       railties (= 3.2.13)
     rails-env-switcher (0.2.4)
-    rails3-jquery-autocomplete (1.0.13)
-      rails (>= 3.0)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -373,6 +371,10 @@ GEM
     turn (0.9.7)
       ansi
       minitest (~> 4)
+    twitter-typeahead-rails (0.10.2)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
     tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
@@ -431,7 +433,6 @@ DEPENDENCIES
   private_pub
   pry (= 0.9.12.4)
   rails (= 3.2.13)
-  rails3-jquery-autocomplete
   ransack
   redactor-rails
   redcarpet
@@ -447,6 +448,7 @@ DEPENDENCIES
   thin
   tinymce-rails
   turn
+  twitter-typeahead-rails
   uglifier (>= 1.0.3)
   wicked_pdf
   will_paginate

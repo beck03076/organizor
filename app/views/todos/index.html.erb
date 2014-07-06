@@ -1,9 +1,10 @@
 <!-- todos index -->
 
-<div class="row row-top row-right">
+<div class="row row-top">
   <div class="col-xs-6">
     <h3>Todos</h3>
   </div>
+  <% if false %>
   <div class="col-xs-6">
     <div class="form-group form-last pull-right">
       <%= link_to "Sync my Todos with Google Tasks",
@@ -15,60 +16,65 @@
                   {class: "btn btn-primary", id: "id_new_todo"} %>
     </div>
   </div>
+  <% end %>
 </div>
-
-<div class="col-xs-3">
-  <div class="row">
-    <div class="well well-sm filter-well" id= "todo-filter">
-      <h4>Filter</h4>
-      <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,"#",
-                  {onclick: "filterTodosReset();"} %>
-      <div class="form-group">
-        <%= select_tag :abdc,
-                    options_for_select([["-all time-",""],
-                                       ["Today","todays"],
-                                       ["This Week","this_weeks"],
-                                       ["This Month","this_months"]]),
-                    {id: "period",class: "form-control"} %>
-      </div>
-      <div class="form-group">
-        <%= select_tag :topic_id,
-                  options_for_select(TodoTopic.order(:name).map{|i| [i.name,i.id]}),
-                  {prompt: "-topic-",
+<div class="row">
+  <div class="col-xs-12">
+    <div class="well">
+      <div class="blue-well data-table padAll10" id="todo-filter">
+        <div class="row  padAll10">
+        <h4 class="bold-subhead  border-b">Filter By</h4>
+            <div class="form-group col-xs-4">
+              <%= select_tag :abdc,
+                          options_for_select([["-all time-",""],
+                                             ["Today","todays"],
+                                             ["This Week","this_weeks"],
+                                             ["This Month","this_months"]]),
+                          {id: "period",class: "form-control"} %>
+            </div>
+            <div class="form-group col-xs-4">
+              <%= select_tag :topic_id,
+                        options_for_select(TodoTopic.order(:name).map{|i| [i.name,i.id]}),
+                        {prompt: "-topic-",
+                         class: "form-control",
+                         id: "topic"} %>
+            </div>
+            <div class="form-group col-xs-4">
+              <%= select_tag :done,
+                  options_for_select([["completed",1],["not completed",0]]),
+                  {prompt: "-status-",
                    class: "form-control",
-                   id: "topic"} %>
+                   id: "done"} %>
+            </div>
+            <div class="form-group col-xs-4">
+              <%= select_tag :assigned_by,
+                  options_for_select(User.order(:first_name).map{|i| [i.first_name,i.id]}),
+                  {prompt: "-assigned by-",
+                   class: "form-control",
+                   id: "assigned_by"} %>
+            </div>
+            <div class="form-group col-xs-4">
+              <%= text_field_tag :duedate,nil,{placeholder: "Due on",
+                                               id: "duedate",
+                                               class: "datepicker form-control"} %>
+            </div>
+            <div class="form-group col-xs-4 padL20">
+              <%= link_to "Reset","#",
+                  {onclick: "filterTodosReset();",class: "clickable sm"} %>
+            </div> 
+            </div>     
       </div>
-      <div class="form-group">
-        <%= select_tag :done,
-            options_for_select([["completed",1],["not completed",0]]),
-            {prompt: "-status-",
-             class: "form-control",
-             id: "done"} %>
-      </div>
-      <div class="form-group">
-        <%= select_tag :assigned_by,
-            options_for_select(User.order(:first_name).map{|i| [i.first_name,i.id]}),
-            {prompt: "-assigned by-",
-             class: "form-control",
-             id: "assigned_by"} %>
-      </div>
-      <div class="form-group">
-        <%= text_field_tag :duedate,nil,{placeholder: "Due on",
-                                         id: "duedate",
-                                         class: "datepicker form-control"} %>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-xs-9">
-  <div class="row row-right add-todo">
+
+    <div class="row padAll10 add-todo green-well data-table">
+    <h4 class="bold-subhead  border-b">Quick Todo</h4>
     <%= form_for(Todo.new, html: {class: "form"}) do |g| %>
-    <%= g.hidden_field :assigned_by, value: current_user.id %>
+      <%= g.hidden_field :assigned_by, value: current_user.id %>
       <div class="to-do">
-        <div class="form-group">
-          <%= g.text_field :title,{placeholder: "Add a todo", class: "form-control", size: ''} %>
+        <div class="form-inline"> 
+        <div class="form-group col-xs-5">
+          <%= g.text_field :title,{placeholder: "Add a todo", class: "form-control", size: '20'} %>
         </div>
-        <div class="form-inline">
+        
 
           <div class="form-group">
             <%= g.collection_select :topic_id,
@@ -96,19 +102,26 @@
       </div>
     <% end %>
   </div>
-
-  <div class="row row-right">
-    <div id="show-todos">
-     <%= render 'show' %>
+    
+      <div class="row row-right">
+        <div id="show-todos">
+         <%= render 'show' %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
+  
+
+
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.css">
 
 
 <script type="text/javascript">
 
  actmm("todos");
+
  $('#todo-filter select').change(function(){
        filterTodos();
  });

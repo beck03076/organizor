@@ -1,8 +1,7 @@
 class Institution < ActiveRecord::Base
   include CoreModel
 
-  validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!" 
-         
+  validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!"          
     
   mount_uploader :image, HumanImageUploader
   
@@ -25,6 +24,7 @@ class Institution < ActiveRecord::Base
   has_many :application_statuses, through: :programmes,:foreign_key => 'app_status_id'
   has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes 
+  has_many :users, as: :userable
   
   attr_accessible :city_id, :country_id, :created_by, 
   :name, :poc, :type_id, 

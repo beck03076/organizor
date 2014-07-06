@@ -37,6 +37,7 @@ class Enquiry < ActiveRecord::Base
   
   has_many :institutions, through: :programmes
   has_many :institution_city, through: :institutions, foreign_key: "city_id"
+  has_many :users, as: :userable
   
   scope :inactive,includes(:status,
                            :follow_ups,
@@ -100,6 +101,9 @@ class Enquiry < ActiveRecord::Base
   alias_method :creator, :cby
   alias_method :owner, :ato
   # ======================================================================
+
+  def enquiry_first_name
+  end
 
   def create_email
     if !self.created_by.nil?

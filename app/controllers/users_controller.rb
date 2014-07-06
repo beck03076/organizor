@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   include ActionsMethods
   helper_method :meta
+
+  def link
+    @user = User.find(params[:id])
+  end
   
   def log
     @user = User.find(params[:id])

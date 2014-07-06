@@ -24,6 +24,7 @@ class RegistrationsController < ApplicationController
   # GET /registrations
   # GET /registrations.json
   def index
+   authorize! :list, Registration 
    set_url_params
    self.set_cols
 
@@ -31,6 +32,7 @@ class RegistrationsController < ApplicationController
       format.html # index.html.erb
       format.json { core_json("registration") } # in core_methods
       format.js { core_js("registration") } # in core_methods
+      format.select { render json: Registration.all }
     end
   end
 

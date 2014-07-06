@@ -35,12 +35,14 @@ class InstitutionsController < ApplicationController
   # GET /institutions
   # GET /institutions.json
   def index
+    authorize! :list, Institution
     set_url_params
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { core_json("institution") } # in core_methods
       format.js { core_js("institution") } # in core_methods
+      format.select { render json: Institution.all }
     end
   end
   
@@ -75,6 +77,7 @@ class InstitutionsController < ApplicationController
   # GET /institutions/1/edit
   def edit
     @institution = Institution.find(params[:id])
+    authorize! :update, @institution
   end
 
   # POST /institutions
@@ -97,7 +100,7 @@ class InstitutionsController < ApplicationController
   # PUT /institutions/1.json
   def update
     @institution = Institution.find(params[:id])
-    authorize! :update, @institution
+    
 
     respond_to do |format|
       if @institution.update_attributes(params[:institution].except("assign","_destroy"))

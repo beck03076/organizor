@@ -3,14 +3,15 @@
    <div class="panel panel-default">
        <div class="panel-heading">
           <h5>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
-            <strong><%= i.institution.name %></strong></a>
+            <a class="text-center" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
+              <%= i.institution.name.titleize %>
+            </a>            
             <br/>
             <br/>
             <small>
                <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
                <span class="ml-10 tag-like blue"><%= i.institution.type.name rescue "Unknown" %></span>
-               <span class="ml-10 tag-like blue"'><%= i.institution.group.name rescue "No" %> Group</span>
+               <span class="ml-10 tag-like blue"><%= i.institution.group.name rescue "No" %> Group</span>
             </small>
           </h5>
         </div>

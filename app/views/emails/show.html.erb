@@ -1,0 +1,13 @@
+<div class="row row-top border-b">
+    <div class="col-xs-10">
+      <h3><%= @email.subject.titleize rescue "No Subject" %></h3>
+    </div>
+    <div class="col-xs-2">
+      <div class="form-group form-last pull-right">
+        <%= link_to "All Emails", emails_path,{class: "btn btn-primary"} %>
+      </div>
+    </div>
+</div>
+
+
+<%= render 'show' %>

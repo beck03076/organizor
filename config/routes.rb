@@ -1,5 +1,10 @@
 Organizor::Application.routes.draw do
 
+  
+  resources :typeaheads
+
+
+  match '/typeaheads/:models/:col/:q.json' => 'typeaheads#results'
   match '/analytics' => "analytics#index", as: "analytics"
   match "/analytics/:core/:core_method/:core_params" => "analytics#show"
 
@@ -222,7 +227,7 @@ Organizor::Application.routes.draw do
   
   match 'enquiries_action_partial/:partial_name/:enquiry_id/:list' => "enquiries#action_partial"
   
-  match 'registrations_action_partial/:partial_name/:registration_id/:list' => "registrations#action_partial"
+  match 'registrations_action_partial/:partial_name/:registration_id/:list(/:sub_type)' => "registrations#action_partial"
   
   match 'institutions_action_partial/:partial_name/:institution_id/:list' => "institutions#action_partial"
 
@@ -236,7 +241,11 @@ Organizor::Application.routes.draw do
   
   resources :user_configs
 
-  resources :users
+  resources :users do 
+    member do
+      get :link
+    end
+  end
 
   resources :enquiry_statuses
   

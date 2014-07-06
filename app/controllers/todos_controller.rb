@@ -9,11 +9,7 @@ skip_authorize_resource :only => :show_hover
   # GET /todos
   # GET /todos.json
   def index
-    request.params[:y] = 5
-    p "********"
-    p request.params
-    
-    temp = current_user.todos.includes(:topic,:_ass_by)
+    temp = current_user.todos.includes(:topic,:_ass_by).order('created_at DESC')
     
     if !params[:filter].nil?
       hsh = {}

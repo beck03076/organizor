@@ -24,6 +24,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
+    authorize! :list, Person
     set_url_params
 
     respond_to do |format|

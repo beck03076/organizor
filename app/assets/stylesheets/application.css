@@ -8,6 +8,7 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
+*= require typeahead
 *= require bootstrap
 *= require dt-bootstrap
 *= require multi-select
@@ -17,6 +18,7 @@
 *= require custom
 *= require datepicker
 *= require redactor-rails
+
 */
 
 /* states and images */
@@ -432,6 +434,10 @@ vertical-align: top;
   font-size: 13px;
   font-weight: bold; }
 
+.bold-bighead {
+  font-size: 19px;
+  font-weight: bold; }
+
 .elem15{
   width: 15px;
   height: 15px;
@@ -483,6 +489,17 @@ vertical-align: top;
 .tgreen{
   color: #2D97C0;  
 }
+
+.nav-tabs > li.active > a{
+  background-color: #219285;
+  color: #fff;
+}
+
+.bor-b {
+  
+  border-bottom: 1px solid #dddddd;
+}
+
 
 
 

@@ -8,6 +8,7 @@ class ContactTypesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @contact_types }
+      format.select { render text: (@contact_types.map &:name) }
     end
   end
 

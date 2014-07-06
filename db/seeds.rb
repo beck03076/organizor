@@ -38,7 +38,7 @@ if @user.nil?
 end
 
 models = %w[users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit]
-actions = %w[create read update destroy]
+actions = %w[create read update delete]
 models.each do |m|
   actions.each do |a|
     if Permission.where(subject_class: m.singularize.titleize.gsub(/ /,""),action: a).blank?
@@ -50,6 +50,34 @@ models.each do |m|
     end                    
    end
 end
+
+# my models permissions
+%w(Enquiry Registration Institution Person).each do |m|
+  %w(read update).each do |a|
+    if Permission.where(subject_class: m,action: a,subject_id: 1).blank?
+      p "Creating #{m} for #{a} permissions (mine)..."
+        Permission.create!(:name => "#{a}_#{m}",
+                           :description => "With this permission, an user can #{a} a #{m.singularize} assigned to him",
+                           :subject_class => "#{m}",
+                           :action => "#{a}",
+                           :subject_id => 1)
+    end
+  end 
+end
+
+# only core models permissions
+%w(Enquiry Registration Institution Person).each do |m|
+  %w(list).each do |a|
+    if Permission.where(subject_class: m,action: a).blank?
+      p "Creating #{m} for #{a} permissions (mine)..."
+        Permission.create!(:name => "#{a}_#{m}",
+                           :description => "With this permission, an user can #{a} a #{m.singularize} assigned to him",
+                           :subject_class => "#{m}",
+                           :action => "#{a}")
+    end
+  end 
+end
+
 
 if (UserConfig.all.size == 0)
 

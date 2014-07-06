@@ -23,6 +23,11 @@
 //= require data-confirm-modal
 //= require see_more
 //= require redactor-rails
+//= require twitter/typeahead
+
+
+
+
 
 function notify(){
   $.get('/unchecked_notys.js',function(d){
@@ -316,10 +321,11 @@ function prepareSelect(sourObj,destVar,hit)
 }
 
 //list is 1 so the previous actions table for the enquirie will be returned in this partial
-function action_partial(model,action,id)
+function action_partial(model,action,id,sub_type)
 {
+  sub_type = sub_type || '';
   $("#action_div").html("<img class=temp src=/images/icons/sload.gif >");
-  $.get("/" + model + "_action_partial/" + action + '/' + id + '/1',function(partial){
+  $.get("/" + model + "_action_partial/" + action + '/' + id + '/1' + '/' + sub_type,function(partial){
       
       var $container = $("#action_div").html(partial);
       var $dTF = $('.dateTimeField', $container);
@@ -664,7 +670,7 @@ function checkRemaining(val,rem,name){
 function tabLength(oTable,obj){
  var selectedValue = obj.options[obj.selectedIndex].text;
  var oSettings = oTable.fnSettings();
- oSettings._iDisplayLength = selectedValue;
+ oSettings._iDisplayLength = parseInt(selectedValue);
  oTable.fnDraw();
 }
 
@@ -792,7 +798,8 @@ function token(model,filter){
 $('.filter_container').html('');
   $.get('/get_column_names/' + model + '/' + filter,function(out){
       $.each(out, function(i,col){
-         $('.filter_container').append('<input class="' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
+         $('.filter_container').addClass('blue-well');
+         $('.filter_container').append('<input class="form-control ' + col +'" name=' + model +'[' + col+']  placeholder="'+col+'" type="text"><br/>')
          $("." + col).tokenInput("/search/" + model + '/' +  col +"/token.json", {
            placeHolderText: col,
            propertyToSearch: col,

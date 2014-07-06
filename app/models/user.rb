@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
                   :skype,:facebook,:linkedin,:twitter,
                   :website,:gplus,:blogger,:is_active,
                   :permission_ids,:mobile,:last_seen_at,
-                  :country_id
+                  :country_id,:userable_type, :userable_id
                   
   has_one :conf, class_name: "UserConfig"
   has_and_belongs_to_many :permissions
@@ -42,9 +42,11 @@ class User < ActiveRecord::Base
   
   belongs_to :branch
   
-  belongs_to :nationality,
+  belongs_to :country,
              :class_name => "Country",
              :foreign_key => "country_id"
+
+  belongs_to :userable, polymorphic: true           
 
   # has many items in every core module
   %w(enquiries registrations institutions people).each do |i|
@@ -57,6 +59,9 @@ class User < ActiveRecord::Base
     has_many ("created_" + i).to_sym, foreign_key: "created_by"
   end
   
+  delegate :name, to: :country, prefix: true, allow_nil: true
+  alias_method :nationality, :country_name
+
   accepts_nested_attributes_for :permissions
 
   def self.first_adm
@@ -64,7 +69,7 @@ class User < ActiveRecord::Base
   end
   
   def br
-    (self.branch.name) + "(#{self.branch.country.name})"  rescue "Unassigned"
+    (self.branch.name)   rescue "Unassigned"
   end
 
   def name
@@ -110,6 +115,7 @@ class User < ActiveRecord::Base
   
   def role_changed
     if self.role_id_changed?
+      self.permissions.delete_all
       self.permissions << Permission.where(subject_class: "User", action: ["update","read"])
       self.permissions << self.role.permissions
     end
