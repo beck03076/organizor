@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140626175226) do
+ActiveRecord::Schema.define(:version => 20140709210454) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -347,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20140626175226) do
   add_index "enquiries", ["contact_type_id"], :name => "index_enquiries_on_contact_type_id"
   add_index "enquiries", ["country_id"], :name => "index_enquiries_on_country_id"
   add_index "enquiries", ["created_by"], :name => "index_enquiries_on_created_by"
+  add_index "enquiries", ["first_name"], :name => "index_enquiries_on_first_name"
   add_index "enquiries", ["registered_by"], :name => "index_enquiries_on_registered_by"
   add_index "enquiries", ["status_id"], :name => "index_enquiries_on_status_id"
   add_index "enquiries", ["student_source_id"], :name => "index_enquiries_on_student_source_id"
@@ -515,6 +516,7 @@ ActiveRecord::Schema.define(:version => 20140626175226) do
   add_index "institutions", ["assigned_to"], :name => "index_institutions_on_assigned_to"
   add_index "institutions", ["country_id"], :name => "index_institutions_on_country_id"
   add_index "institutions", ["created_by"], :name => "index_institutions_on_created_by"
+  add_index "institutions", ["name"], :name => "index_institutions_on_name"
   add_index "institutions", ["updated_by"], :name => "index_institutions_on_updated_by"
 
   create_table "notes", :force => true do |t|
@@ -575,6 +577,7 @@ ActiveRecord::Schema.define(:version => 20140626175226) do
   add_index "people", ["assigned_to"], :name => "index_people_on_assigned_to"
   add_index "people", ["country_id"], :name => "index_people_on_country_id"
   add_index "people", ["created_by"], :name => "index_people_on_created_by"
+  add_index "people", ["first_name"], :name => "index_people_on_first_name"
   add_index "people", ["updated_by"], :name => "index_people_on_updated_by"
 
   create_table "permissions", :force => true do |t|
@@ -812,6 +815,7 @@ ActiveRecord::Schema.define(:version => 20140626175226) do
   add_index "registrations", ["country_id"], :name => "index_registrations_on_country_id"
   add_index "registrations", ["created_by"], :name => "index_registrations_on_created_by"
   add_index "registrations", ["enquiry_id"], :name => "index_registrations_on_enquiry_id"
+  add_index "registrations", ["first_name"], :name => "index_registrations_on_first_name"
   add_index "registrations", ["progression_status_id"], :name => "index_registrations_on_progression_status_id"
   add_index "registrations", ["qualification_id"], :name => "index_registrations_on_qualification_id"
   add_index "registrations", ["student_source_id"], :name => "index_registrations_on_student_source_id"
@@ -951,6 +955,11 @@ ActiveRecord::Schema.define(:version => 20140626175226) do
     t.boolean  "auto"
     t.string   "todoable_type"
     t.integer  "todoable_id"
+  end
+
+  create_table "typeaheads", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_configs", :force => true do |t|
