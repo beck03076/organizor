@@ -29,7 +29,7 @@ function typeaheads ($obj,model)
         var typeaheads = $obj;
 
         // Instantiate the Typeahead UI
-        $obj.typeahead(null,{
+        $obj.typeahead({minLength: 3},{
             displayKey: function(item) {
                    return '<div class="bor-b pointer"><span class="md">' 
                           + item[mapped["first"][0]] 
