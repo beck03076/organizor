@@ -1,7 +1,7 @@
 require "ipaddr"
 
 class ApplicationController < ActionController::Base
-  before_filter :authenticate_user!, :set_current_user, :ban_ip, except: [:ban_ip]
+  before_filter :authenticate_user!, :set_current_user #, :ban_ip, except: [:ban_ip]
   before_filter :set_last_seen_at, if: proc { |p| user_signed_in? && (session[:last_seen_at] == nil || session[:last_seen_at] < 15.minutes.ago) }
   protect_from_forgery
   
