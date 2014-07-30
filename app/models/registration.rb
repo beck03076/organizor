@@ -1,14 +1,22 @@
 class Registration < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :confirmable
+
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   include CoreModel
 
-  notifiably_audited alert_for: [[[:mobile1,:email1,:surname],"Contact Details","Primary mobile/email is changed for this registration"],
+  notifiably_audited alert_for: [[[:mobile1,:email,:surname],"Contact Details","Primary mobile/email is changed for this registration"],
                                  [[:assigned_to],"Re-assigned","This registration has been reassigned to you"]],
                                  title: :first_name,
                                  create_comment: "New <<here>> has been created", 
                                  update_comment: "Custom: Values of <<here>> has been updated",
                                  except: [:follow_ups_count,:todos_count,:notes_count,:emails_count]
 
-  before_create :set_ref_no
+  before_create :set_ref_no,:set_password,:set_permissions
   after_create :set_enquiry_fields
   
   validates :first_name, on: :create,
@@ -16,6 +24,18 @@ class Registration < ActiveRecord::Base
                          message: " Surname and Date of Birth already exists as another registration, please check!" }  
   
   mount_uploader :image, HumanImageUploader
+  # ============== Elasticsearch ===============
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  mapping do
+      indexes :id, :type => 'integer'
+      indexes :date_of_birth, type: 'date'      
+      [:ref_no,:first_name,:surname,:mobile1,:mobile2,:email,:alternate_email].each do |attribute|
+        indexes attribute, :type => 'string'
+      end
+  end
+  # ============================================
 
   #=== BELONGS TO =====
   belongs_to :qualification
@@ -50,14 +70,15 @@ class Registration < ActiveRecord::Base
   has_many :documents, dependent: :destroy
   has_many :users, as: :userable
   #==================
-    
+  has_and_belongs_to_many :permissions
+  
   attr_accessor :_destroy
 
   attr_accessible :address_city, :address_country_id, :address_line1, 
   :address_line2, :address_others, :address_post_code, 
   :assigned_by, :assigned_to, :country_id, 
   :course_id, :created_by, :date_of_birth, 
-  :email1, :email2, :emer_email, 
+  :email, :alternate_email, :emer_email, 
   :emer_full_name, :emer_mobile, :emer_relationship, 
   :first_name, :flight_airport, :flight_arrival_date, 
   :flight_arrival_time, :flight_no, :gender, 
@@ -74,7 +95,8 @@ class Registration < ActiveRecord::Base
   :progression_status_id,:branch_id,:assigned_at,
   :impressions_count, :response_time,:registered_by,
   :nationality,:conversion_time,:contact_type_id,
-  :student_source_id
+  :student_source_id,:qualification_id,:last_seen_at,
+  :direct
   
   accepts_nested_attributes_for :programmes,:proficiency_exams, 
   :documents, :allow_destroy => true
@@ -133,6 +155,10 @@ class Registration < ActiveRecord::Base
     end
   end
 
+  def set_permissions
+      self.permissions << Permission.where(subject_class: 'Document')
+  end
+
   def set_ref_no
     # creating new reference number logic
         ref_temp = (Registration.select("max(ref_no) as ref_no").map &:ref_no)[0]
@@ -141,7 +167,10 @@ class Registration < ActiveRecord::Base
         self.ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
 
-
+  def set_password
+    self.password = self.ref_no
+    self.password_confirmation = self.ref_no
+  end 
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip

@@ -19,15 +19,6 @@
             </li>
          <% end %>        
          
-         <% perms[model].select{|i| i.subject_id == 1}.each do |p| %>                    
-              <li>
-                    <%= check_box_tag "#{f}[permission_ids][]",
-                                      p.id, 
-                                      role.permissions.include?(p) %>                                                                      
-                    <%= label_tag(:permissions, p.action.titleize + " Assigned")%>        
-                    
-            </li>
-         <% end %>
        </ul>
      </div>
          

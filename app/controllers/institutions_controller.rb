@@ -2,7 +2,7 @@ class InstitutionsController < ApplicationController
   include CoreController
   include ActionsMethods
   helper_method :meta
-  
+  skip_before_filter :authenticate_user!, only: [:action_partial]  
   def tab
     set_url_params
     self.set_cols      
@@ -22,7 +22,7 @@ class InstitutionsController < ApplicationController
     #called from CoreMethods
     h_action_partial("institution",
                      params[:institution_id],
-                     ["contract","people","finance"])
+                     ["contract","people","finance","students"])
      
   end
   

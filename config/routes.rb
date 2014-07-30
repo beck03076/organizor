@@ -1,10 +1,14 @@
 Organizor::Application.routes.draw do
 
-  
+  devise_for :institutions
+
+ # get "partners/index"
+
+  devise_for :registrations
+
   resources :typeaheads
 
-
-  match '/typeaheads/:models/:col/:q.json' => 'typeaheads#results'
+  match '/typeaheads/:models/:col/:q' => 'typeaheads#results', format: false, constraints: { q: /[^\/]+/ }
   match '/analytics' => "analytics#index", as: "analytics"
   match "/analytics/:core/:core_method/:core_params" => "analytics#show"
 
@@ -302,12 +306,8 @@ Organizor::Application.routes.draw do
         get :more
       end
   end
-  
 
-
-  resources :enquiry_sources
-  
- 
+  resources :enquiry_sources 
   
   match '/get_cities/:co_id(/:type)' => 'json#cities'
 
@@ -319,9 +319,29 @@ Organizor::Application.routes.draw do
 
   unless Rails.application.config.consider_all_requests_local
     match '*not_found', to: 'enquiries#error'
+  end    
+
+  get '/home/:type' => 'home#index'
+
+  devise_scope :user do
+    authenticated :user do
+      root to: 'enquiries#index', as: :root
+    end
   end
-  
- 
-  root :to => "enquiries#index"
+
+
+  devise_scope :registration do
+    authenticated :registration do
+      root to: 'students#index', as: :root
+    end
+  end
+
+  devise_scope :institution do
+    authenticated :institution do
+      root to: 'partners#index', as: :root  
+    end
+  end                           
+
+  root to: 'home#index'
 
 end

@@ -1,6 +1,6 @@
 <!-- Institution information  - STARTS -->
 <div class="row">
-  <% %w(first_name surname mobile1 mobile2 email1 email2).each do |el| %>
+  <% %w(first_name surname mobile1 mobile2 email alternate_email).each do |el| %>
     <%= bs(f,el,"text_field",[nil,4],7,6) %>
   <% end %>  
   

@@ -66,8 +66,5 @@ module Organizor
     
     config.exceptions_app = self.routes
     
-    
-    
-    
   end
 end

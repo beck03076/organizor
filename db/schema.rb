@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140709210454) do
+ActiveRecord::Schema.define(:version => 20140730075100) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -307,8 +307,8 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.string   "surname"
     t.string   "mobile1"
     t.string   "mobile2"
-    t.string   "email1"
-    t.string   "email2"
+    t.string   "email"
+    t.string   "alternate_email"
     t.string   "gender"
     t.date     "date_of_birth"
     t.integer  "score"
@@ -488,8 +488,8 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.integer  "type_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "email"
     t.string   "phone"
     t.string   "fax"
@@ -506,10 +506,24 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.datetime "assigned_at"
     t.integer  "impressions_count"
     t.string   "response_time"
-    t.integer  "notes_count",       :default => 0, :null => false
-    t.integer  "todos_count",       :default => 0, :null => false
-    t.integer  "follow_ups_count",  :default => 0, :null => false
-    t.integer  "emails_count",      :default => 0, :null => false
+    t.integer  "notes_count",            :default => 0,  :null => false
+    t.integer  "todos_count",            :default => 0,  :null => false
+    t.integer  "follow_ups_count",       :default => 0,  :null => false
+    t.integer  "emails_count",           :default => 0,  :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.datetime "last_seen_at"
   end
 
   add_index "institutions", ["assigned_by"], :name => "index_institutions_on_assigned_by"
@@ -518,6 +532,13 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
   add_index "institutions", ["created_by"], :name => "index_institutions_on_created_by"
   add_index "institutions", ["name"], :name => "index_institutions_on_name"
   add_index "institutions", ["updated_by"], :name => "index_institutions_on_updated_by"
+
+  create_table "institutions_permissions", :force => true do |t|
+    t.integer  "institution_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "notes", :force => true do |t|
     t.text     "content"
@@ -589,6 +610,13 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "subject_var"
+  end
+
+  create_table "permissions_registrations", :force => true do |t|
+    t.integer  "permission_id"
+    t.integer  "registration_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "permissions_roles", :force => true do |t|
@@ -753,8 +781,8 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.string   "gender"
     t.date     "date_of_birth"
     t.integer  "country_id"
-    t.string   "email1"
-    t.string   "email2"
+    t.string   "email"
+    t.string   "alternate_email"
     t.string   "mobile1"
     t.string   "mobile2"
     t.string   "home_phone"
@@ -787,8 +815,8 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.integer  "assigned_by"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.text     "note"
     t.integer  "enquiry_id"
     t.string   "image"
@@ -798,26 +826,43 @@ ActiveRecord::Schema.define(:version => 20140709210454) do
     t.string   "response_time"
     t.integer  "impressions_count"
     t.string   "conversion_time"
-    t.integer  "notes_count",           :default => 0, :null => false
-    t.integer  "todos_count",           :default => 0, :null => false
-    t.integer  "follow_ups_count",      :default => 0, :null => false
-    t.integer  "emails_count",          :default => 0, :null => false
+    t.integer  "notes_count",            :default => 0,  :null => false
+    t.integer  "todos_count",            :default => 0,  :null => false
+    t.integer  "follow_ups_count",       :default => 0,  :null => false
+    t.integer  "emails_count",           :default => 0,  :null => false
     t.integer  "contact_type_id"
     t.integer  "student_source_id"
     t.boolean  "direct"
     t.integer  "qualification_id"
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.datetime "last_seen_at"
   end
 
   add_index "registrations", ["assigned_by"], :name => "index_registrations_on_assigned_by"
   add_index "registrations", ["assigned_to"], :name => "index_registrations_on_assigned_to"
   add_index "registrations", ["branch_id"], :name => "index_registrations_on_branch_id"
+  add_index "registrations", ["confirmation_token"], :name => "index_registrations_on_confirmation_token", :unique => true
   add_index "registrations", ["contact_type_id"], :name => "index_registrations_on_contact_type_id"
   add_index "registrations", ["country_id"], :name => "index_registrations_on_country_id"
   add_index "registrations", ["created_by"], :name => "index_registrations_on_created_by"
+  add_index "registrations", ["email"], :name => "index_registrations_on_email1", :unique => true
   add_index "registrations", ["enquiry_id"], :name => "index_registrations_on_enquiry_id"
   add_index "registrations", ["first_name"], :name => "index_registrations_on_first_name"
   add_index "registrations", ["progression_status_id"], :name => "index_registrations_on_progression_status_id"
   add_index "registrations", ["qualification_id"], :name => "index_registrations_on_qualification_id"
+  add_index "registrations", ["reset_password_token"], :name => "index_registrations_on_reset_password_token", :unique => true
   add_index "registrations", ["student_source_id"], :name => "index_registrations_on_student_source_id"
   add_index "registrations", ["sub_agent_id"], :name => "index_registrations_on_sub_agent_id"
   add_index "registrations", ["updated_by"], :name => "index_registrations_on_updated_by"

@@ -1,13 +1,27 @@
 class Enquiry < ActiveRecord::Base  
   include CoreModel
-  
+
+  # ============== Elasticsearch ===============
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  mapping do
+      indexes :id, :type => 'integer'
+      indexes :date_of_birth, type: 'date'
+      [:first_name,:surname,:mobile1,:mobile2,:email,:alternate_email].each do |attribute|
+        indexes attribute, :type => 'string'
+      end
+  end
+  # ============================================
+
+
   after_create :create_email,:create_follow_up
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
                          message: " Surname and Date of Birth already exists as another enquiry, please check!" }
 
-  notifiably_audited alert_for: [[[:mobile1,:email1,:surname],"Contact Details","Primary mobile/email is changed for this enquiry"],
+  notifiably_audited alert_for: [[[:mobile1,:email,:surname],"Contact Details","Primary mobile/email is changed for this enquiry"],
                                  [[:assigned_to],"Re-assigned","This Enquiry has been reassigned to you"],
                                  [[:notes_count],"count","Count of notes"]],
                                  title: :first_name,
@@ -66,7 +80,7 @@ class Enquiry < ActiveRecord::Base
   
   attr_accessible :emails_attributes,:programmes_attributes,
                   :assigned_by, :assigned_to, :created_by, 
-                  :date_of_birth, :email1, :email2, 
+                  :date_of_birth, :email, :alternate_email, 
                   :first_name, :gender, :mobile1, 
                   :mobile2, :score,:surname, :updated_by,:country_ids,
                   :name,:address,:status_id,:country_id,

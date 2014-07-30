@@ -3,8 +3,8 @@ class RegistrationsController < ApplicationController
   include FetchFromContract
   include ActionsMethods
   helper_method :r_order,:meta
+  skip_before_filter :authenticate_user!, only: [:action_partial,:show,:update]
 
-  
   def tab
     set_url_params
     self.set_cols
@@ -40,7 +40,7 @@ class RegistrationsController < ApplicationController
   # GET /registrations/1.json
   def show
     @registration = Registration.find(params[:id])
-    authorize! :read, @registration
+    #authorize! :read, @registration
     # showing basic by default
     @partial = "basic"
     
@@ -163,7 +163,7 @@ class RegistrationsController < ApplicationController
   def set_cols
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.reg_cols
-      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
+      b = [:id,:ref_no,:first_name,:surname,:mobile1,:email,:gender,:date_of_birth]
       @cols = ((b & a) + (a - b)) + [:follow_up_date]
   end
   

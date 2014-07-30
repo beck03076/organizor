@@ -500,6 +500,14 @@ vertical-align: top;
   border-bottom: 1px solid #dddddd;
 }
 
+#header-students{
+    height: 70px;
+    background-color: #4D1E49;
+    color: #FFFFFF;
+}
 
-
-
+#header-partners{
+    height: 70px;
+    background-color: #6B3636;
+    color: #FFFFFF;
+}

@@ -20,7 +20,7 @@ function typeaheads ($obj,model)
                 return Bloodhound.tokenizers.whitespace(datum.value);
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: '../typeaheads/' + model + '/' + col + '/%QUERY.json'
+            remote: '../typeaheads/' + model + '/' + col + '/%QUERY'
         });
 
         // Initialize the Bloodhound suggestion engine

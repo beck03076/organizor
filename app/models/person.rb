@@ -28,6 +28,18 @@ class Person < ActiveRecord::Base
   :assigned_at,:sub_agent
   
   mount_uploader :image, HumanImageUploader
+    # ============== Elasticsearch ===============
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  mapping do
+      indexes :id, :type => 'integer'
+      indexes :date_of_birth, type: 'date'      
+      [:first_name,:surname,:mobile,:email,:alternate_email,:job_title].each do |attribute|
+        indexes attribute, :type => 'string'
+      end
+  end
+  # ============================================
   
   belongs_to :country             
   belongs_to :city  

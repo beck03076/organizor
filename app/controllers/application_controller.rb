@@ -5,8 +5,17 @@ class ApplicationController < ActionController::Base
   before_filter :set_last_seen_at, if: proc { |p| user_signed_in? && (session[:last_seen_at] == nil || session[:last_seen_at] < 15.minutes.ago) }
   protect_from_forgery
   
-  
   layout :layout
+
+  def current_user_with_registration
+    current_user_without_registration || current_registration
+  end
+  alias_method_chain :current_user, :registration
+
+ # def authenticate_user_with_registration!
+ #  authenticate_user_without_registration! || authenticate_registration!
+ # end
+  #alias_method_chain :authenticate_user! , :registration
 
   rescue_from CanCan::AccessDenied do |e|
     
@@ -16,6 +25,12 @@ class ApplicationController < ActionController::Base
       format.js { redirect_to '/handle/cancan' }
     end
   end
+
+  def authenticate
+    
+
+  end
+
 
   def all_notifications
      @notys = Audit.notys(current_user.id)
@@ -203,11 +218,11 @@ class ApplicationController < ActionController::Base
   end
   
   def set_current_user
-      User.current = current_user
+    User.current = current_user
   end
   
   def ban_ip
-    if (    !current_user.adm? rescue nil)
+    if (!current_user.adm? rescue nil)
         result = []
     
         AllowIp.all.each do |o|
@@ -235,6 +250,10 @@ class ApplicationController < ActionController::Base
       false
     elsif is_a?(Users::InvitationsController) 
       false 
+    elsif is_a?(Devise::ConfirmationsController) 
+      false 
+    elsif current_registration
+      false
     else
       "application"
     end  

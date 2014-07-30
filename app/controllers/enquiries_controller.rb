@@ -151,7 +151,7 @@ class EnquiriesController < ApplicationController
   def set_cols
      # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.enq_cols
-      b = [:id,:first_name,:surname,:mobile1,:email1,:gender,:date_of_birth]
+      b = [:id,:first_name,:surname,:mobile1,:email,:gender,:date_of_birth]
       @cols = ((b & a) + (a - b)) + [:follow_up_date]   
   end
   

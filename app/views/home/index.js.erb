@@ -1,0 +1,5 @@
+ 
+  $('#login_type').html("<%= escape_javascript(render :partial => 'shared/new_session') %>");
+  $('#login_tabs li').removeClass('active');
+  $('#login_tabs #<%= @type %>').addClass('active');
+  

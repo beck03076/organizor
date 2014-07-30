@@ -1,9 +1,29 @@
 class Institution < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable,
+         :confirmable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   include CoreModel
+
+  before_create :set_password,:set_permissions
 
   validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!"          
     
   mount_uploader :image, HumanImageUploader
+  # ============== Elasticsearch ===============
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+  mapping do
+      indexes :id, :type => 'integer'           
+      [:name,:email,:phone,:website,:address_line1,:address_line2,:address_post_code].each do |attribute|
+        indexes attribute, :type => 'string'
+      end
+  end
+  # ============================================
   
   belongs_to :type, class_name: 'InstitutionType', foreign_key: 'type_id'  
   belongs_to :group, class_name: 'InstitutionGroup', foreign_key: 'group_id'  
@@ -25,6 +45,8 @@ class Institution < ActiveRecord::Base
   has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes 
   has_many :users, as: :userable
+
+  has_and_belongs_to_many :permissions
   
   attr_accessible :city_id, :country_id, :created_by, 
   :name, :poc, :type_id, 
@@ -52,7 +74,16 @@ class Institution < ActiveRecord::Base
   def tit
     self.name rescue "Title Unknown"
   end
-  
+
+  def set_password
+    self.password = self.email
+    self.password_confirmation = self.email
+  end 
+
+  def set_permissions
+    self.permissions << Permission.where(subject_class: "Student",action: "read")
+  end
+
   def my_enqs(user_id)
     self.enquiries.where(assigned_to: user_id)
   end

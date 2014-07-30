@@ -14,11 +14,11 @@ class AuditorObserver < ActiveRecord::Observer
   :document,:role
 
    def before_create(record)
-     record.created_by = User.current.id
+     record.created_by = User.current.id unless User.current.nil?
    end
    
    def before_update(record)
-     record.updated_by = User.current.id
+     record.updated_by = User.current.id unless User.current.nil?
    end
   
 end
