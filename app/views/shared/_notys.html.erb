@@ -1,4 +1,5 @@
   <% @notys.includes(:creator).each do |n| %>
+  <% if n.creator %>
 
     <div class="noty-row noty-row-<%= n.id %> row padT10 seperator <%= n.checked ? '' : 'noty_unchecked' %>" >
         <div class="col-xs-10">
@@ -19,6 +20,5 @@
           <% end %>
         </div>              
     </div>
-    
-
+  <% end %>
   <% end %>  
