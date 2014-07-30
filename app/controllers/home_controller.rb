@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_filter :authenticate_user!,:authenticate_registration! 
+  skip_before_filter :authenticate_user!,:authenticate_registration!,:authenticate_institution!  
 	layout false
 
   def index  	
