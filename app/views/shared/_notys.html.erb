@@ -2,7 +2,7 @@
 
     <div class="noty-row noty-row-<%= n.id %> row padT10 seperator <%= n.checked ? '' : 'noty_unchecked' %>" >
         <div class="col-xs-10">
-          <span class="noty-img"><%= image_tag((n.creator.image? ? n.creator.image_url : "/images/icons/user.png"),
+          <span class="noty-img"><%= image_tag((n.creator ? n.creator.image_url : "/images/icons/user.png"),
                                          {width: "50",
                                           height: "50",
                                           class: "img-rounded",
