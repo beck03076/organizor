@@ -37,7 +37,7 @@ if @user.nil?
   PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
 end
 
-models = %w[users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit]
+models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit]
 actions = %w[create read update delete]
 models.each do |m|
   actions.each do |a|
