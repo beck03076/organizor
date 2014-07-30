@@ -28,11 +28,33 @@ class Registration < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  settings analysis: {
+    filter: {
+      ngram_filter: {
+        type: "nGram",
+        min_gram: 1,
+        max_gram: 15
+      }
+    },
+    analyzer: {
+      index_ngram_analyzer: {
+        tokenizer: "standard",
+        filter: ['standard', 'lowercase', "stop", "ngram_filter"],
+        type: "custom"
+      },
+      search_ngram_analyzer: {
+        tokenizer: "standard",
+        filter: ['standard', 'lowercase', "stop"],
+        type: "custom"
+      }
+    }
+  }
+
   mapping do
       indexes :id, :type => 'integer'
-      indexes :date_of_birth, type: 'date'      
+      indexes :date_of_birth, type: 'date',search_analyzer: 'search_ngram_analyzer',index_analyzer: 'index_ngram_analyzer',boost: 100.0      
       [:ref_no,:first_name,:surname,:mobile1,:mobile2,:email,:alternate_email].each do |attribute|
-        indexes attribute, :type => 'string'
+        indexes attribute, :type => 'string',search_analyzer: 'search_ngram_analyzer',index_analyzer: 'index_ngram_analyzer',boost: 100.0
       end
   end
   # ============================================
