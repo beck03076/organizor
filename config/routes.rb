@@ -313,13 +313,7 @@ Organizor::Application.routes.draw do
 
   match '/get_student_sources/:contact_type_id' => 'json#student_sources'
   
-  match '/get_institutions/:country_id(/:city_id(/:ins_type_id))' => 'json#institutions'  
- 
-  match '/not_found' => 'enquiries#error'
-
-  unless Rails.application.config.consider_all_requests_local
-    match '*not_found', to: 'enquiries#error'
-  end    
+  match '/get_institutions/:country_id(/:city_id(/:ins_type_id))' => 'json#institutions'    
 
   get '/home/:type' => 'home#index'
 
@@ -343,5 +337,11 @@ Organizor::Application.routes.draw do
   end                           
 
   root to: 'home#index'
+
+  match '/not_found' => 'enquiries#error'
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'enquiries#error'
+  end  
 
 end
