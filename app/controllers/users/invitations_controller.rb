@@ -16,6 +16,10 @@
                  @user.permissions << Permission.where(subject_class: "User", action: ["update","read"])
                  @user.permissions << Role.find(params[:role_id]).permissions
                end
+
+               if !params[:branch_id].blank?
+                  @user.update_attribute(:branch_id,params[:branch_id])
+               end
       end
     end
     flash[:notice] = "User(s) - #{params[:email].values.reject{|i| i.blank? }.join(", ")} are invited succesfully" 
