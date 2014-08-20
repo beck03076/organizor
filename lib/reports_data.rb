@@ -146,7 +146,7 @@ module ReportsData
 	#=== Enquiries =====================================
     # default filters for enquiries module
 	def def_enq_fil
-		[:first_name,:surname,:mobile1,:email1,:gender,:score,:nationality,
+		[:first_name,:surname,:mobile1,:email,:gender,:score,:nationality,
 		:channel,:status_name,:registered,:source,
 		:branch_name,:owner,:date_of_birth,:updated_at,:created_at,:associations]		
 	end
@@ -154,7 +154,7 @@ module ReportsData
 	def real_enq_cols
 		{# defaults
 		 first_name: 0,surname: 0,mobile1: 0,
-		 email1: 0,gender: ["select",["m","f"], :gender],date_of_birth: "datepicker",
+		 email: 0,gender: ["select",["m","f"], :gender],date_of_birth: "datepicker",
 		 score: 0,nationality: ["collection_select","Country",nil,:country_id],
 		 # associations
 		 source: ["collection_select","StudentSource",nil, :student_source_id] ,
@@ -222,7 +222,7 @@ module ReportsData
 
 	# default filters for registrations module
 	def def_reg_fil
-		[:ref_no,:first_name,:surname,:mobile1,:email1,:gender,
+		[:ref_no,:first_name,:surname,:mobile1,:email,:gender,
 		 :address_post_code,:address_city,
 		 :channel,:source,:branch_name,:owner,
 		 :progression_status_name,:qualification_name,:qua_subject,
@@ -236,7 +236,7 @@ module ReportsData
 		{# defaults
 		 ref_no: 0,	
 		 first_name: 0,surname: 0,mobile1: 0,
-		 email1: 0,gender: ["select",["m","f"], :gender],date_of_birth: "datepicker",
+		 email: 0,gender: ["select",["m","f"], :gender],date_of_birth: "datepicker",
 		 # associations
 		 source: ["collection_select","StudentSource",nil, :student_source_id] ,
 		 channel: ["collection_select","ContactType",:name,:contact_type_id],
