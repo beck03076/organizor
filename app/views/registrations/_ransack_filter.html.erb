@@ -117,11 +117,11 @@
                     </div>
                     <% end %>
                     <%= hidden_field_tag :status, (@status || "all")  %>
-                    <div class="col-md-3 form-group">        
+                    <div class="col-md-12 row text-right form-group">        
                        <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">
                          Filter
                        </span>
-                       <a class="pointer" onclick="$('#ransack_form')[0].reset();" >
+                       <a class="btn btn-primary" onclick="$('#ransack_form')[0].reset();" >
                          Reset
                        </a>
                     </div>                  
