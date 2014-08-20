@@ -112,5 +112,6 @@ gem 'impressionist'
 gem 'populator'
 gem 'faker'
 gem 'tire'
+gem 'virb'
 
 

@@ -98,19 +98,24 @@
                   </div>
                   </div>
               </div>
-              
+              <!-- remove sort by temp -->              
+              <% if false %>
+
               <div class="row">
                <div class="col-md-12">
                     <h4 class="border-b bold-subhead">Sort By</h4>
                </div>
               </div> 
+              <% end %>
               <div class="row">
-                  <div class="col-md-12 form-inline">
+                <div class="col-md-12 form-inline">
+                    <% if false %>
                     <div class="col-md-5">
                             <%= f.sort_fields do |s| %>
                                 <%= s.sort_select({},{class: "form-control"}) %>
                             <% end %>
                     </div>
+                    <% end %>
                     <%= hidden_field_tag :status, (@status || "all")  %>
                     <div class="col-md-3 form-group">        
                        <span onclick="$(this).submit();" class="btn btn-primary" id="ransack_submit">

@@ -531,6 +531,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
   add_index "institutions", ["country_id"], :name => "index_institutions_on_country_id"
   add_index "institutions", ["created_by"], :name => "index_institutions_on_created_by"
   add_index "institutions", ["name"], :name => "index_institutions_on_name"
+  add_index "institutions", ["reset_password_token"], :name => "index_institutions_on_reset_password_token", :unique => true
   add_index "institutions", ["updated_by"], :name => "index_institutions_on_updated_by"
 
   create_table "institutions_permissions", :force => true do |t|
