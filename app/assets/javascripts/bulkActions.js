@@ -89,11 +89,13 @@ function changeBranch(tableId){
 
 function groupAssignTo(tableId){
        var rows = getCheckedRowsAsArray(tableId);
-       sel = "select#group_assign_user_" + tableId
-       var user_id = $(sel).val();
+       sel_user = "select#branch_user_id"
+       sel_branch = "select#group_assign_branch_" + tableId
+       var user_id = $(sel_user).val();
+       var branch_id = $(sel_branch).val();
        var model = $("#group_assign_to_" + tableId).data("model");
 
-       url = '/group_assign/' + model + '/' + rows + '/user/' + user_id;
+       url = '/group_assign/' + model + '/' + rows + '/branch/' + branch_id + '/user/' + user_id;
 
        $.get(url,function(table){
          $("#group_assign_to_" + tableId).css("display","none");

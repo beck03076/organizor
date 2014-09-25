@@ -93,16 +93,26 @@
                 <!----------------------- Group Assign Modal Start---------------------------->
                 <% ctnt = '<form class="form-horizontal" role="form">' +
                           '<div class="row">' + 
-                          '<div class="col-md-4 text-right" >' + 
-                          label_tag(:user,"User") +
+                          '<div class="col-md-4  text-right" >' + 
+                          label_tag(:branch,"Branch") +
                           '</div>' +
                           '<div class="col-md-3">' + 
-                          select_tag("group_assign_user_#{_id}",
-                          options_for_select(User.order(:first_name).map{|i| [i.name,i.id]}),
+                          select_tag("group_assign_branch_#{_id}",
+                          options_for_select(Branch.order(:name).map{|i| [i.name,i.id]}),
+                          {prompt: "-branch-",
+                          class: "form-control hor-first",
+                          # data: {model: model},
+                          onchange: "prepSelect(this,
+                                                    '#branch_user_id',
+                                                    '/get_users/',
+                                                    'first_name');"}) +
+                          select_tag("branch_user_id",
+                          options_for_select(''),
                           {prompt: "-user-",
                           class: "form-control hor-first",
+                          # id: "branch_user_id",
                           data: {model: model}}) +
-                          '</div>' +
+                          '</div>' +                          
                           '</div></form>' %>
 
                 <%= render 'shared/modal',id: 'assignToModal',

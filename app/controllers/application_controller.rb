@@ -162,7 +162,8 @@ class ApplicationController < ActionController::Base
     ids = params[:model_ids].split(",")
     
     to_update = model.where(id: ids)
-    to_update.update_all(assigned_to: params[:user_id],
+    to_update.update_all(branch_id: params[:branch_id],
+                         assigned_to: params[:user_id],
                          assigned_by: current_user.id,
                          assigned_at: Time.now)   
     # this is because the update_all does not triiger updated_at to update itself                         

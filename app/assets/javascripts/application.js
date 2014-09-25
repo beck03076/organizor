@@ -523,11 +523,12 @@ function simplePrepareSelect(sourObj,destSel,hit)
   selectUpdate(itemId,urlTo,destSel);
 }
 
-function prepSelect(sourObj,destSel,hit)
-{
+function prepSelect(sourObj,destSel,hit,query)
+{ 
+  query = query || "name";
   var itemId = sourObj.options[sourObj.selectedIndex].value;
   var urlTo = hit + itemId;
-  selectUpdate(itemId,urlTo,destSel);
+  selectUpdate(itemId,urlTo,destSel,query);
 }
 
 function showInstitution(obj){

@@ -104,6 +104,13 @@ class JsonController < ApplicationController
     @p_types = ProgrammeType.all
     @c_levels = self.basic_select(CourseLevel)
   end
-  
  
+ def get_users
+   set_url_params
+   @users = User.where('branch_id = ?', @branch_id).order(:first_name)
+    respond_to do |format|
+      format.html 
+      format.json { render json: @users }
+    end   
+ end
 end
