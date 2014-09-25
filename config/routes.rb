@@ -138,6 +138,8 @@ Organizor::Application.routes.draw do
 
   match '/institution_type/:type_id' => 'json#institution_type'
 
+  match '/get_users/:branch_id' => 'json#get_users'
+
   match "/people/tab/:status/:partial(/:person_id)" => "people#tab"  
   
   resources :person_types
@@ -215,7 +217,7 @@ Organizor::Application.routes.draw do
   
   match '/bulk_email/:model/:model_ids' => "emails#bulk_email"
   
-  match '/group_assign/:model/:model_ids/user/:user_id' => "application#group_assign"
+  match '/group_assign/:model/:model_ids/branch/:branch_id/user/:user_id' => "application#group_assign"
   
   match '/group_delete/:model/:model_ids' => "application#group_delete"
   
