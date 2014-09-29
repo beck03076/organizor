@@ -44,7 +44,7 @@ class UserMailer < ActionMailer::Base
     doc.css('img').each do |img|
       src = img['src']
       fname = src.split("/").last
-      fpath = Rails.root.to_s + '/public' + src.gsub(/\.\./,'')
+      fpath = Rails.root.to_s + '/public/' + src.gsub(/\.\./,'')
       attachments.inline[fname] = File.read(fpath)
       img.set_attribute('src',attachments[fname].url)
     end
