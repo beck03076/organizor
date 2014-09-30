@@ -3,7 +3,12 @@ Organizor::Application.routes.draw do
   devise_for :institutions
 
  # get "partners/index"
-
+  resources :registrations do
+      collection { post :search, to: 'registrations#index' }
+      member do
+        get :clone
+      end
+  end
   devise_for :registrations
 
   resources :typeaheads
@@ -290,12 +295,7 @@ Organizor::Application.routes.draw do
         get :clone
     end
   end
-  resources :registrations do
-      collection { post :search, to: 'registrations#index' }
-      member do
-        get :clone
-      end
-  end
+
   resources :enquiries do
       collection { post :search, to: 'enquiries#index' }      
       member do

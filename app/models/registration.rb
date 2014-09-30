@@ -18,6 +18,8 @@ class Registration < ActiveRecord::Base
 
   before_create :set_ref_no,:set_password,:set_permissions
   after_create :set_enquiry_fields
+
+  validates_uniqueness_of :email
   
   validates :first_name, on: :create,
             uniqueness: {scope: [:surname,:date_of_birth], 
