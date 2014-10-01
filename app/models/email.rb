@@ -1,5 +1,6 @@
 class Email < ActiveRecord::Base
   include ActionsModel
+  mount_uploader :attachment, AttachmentUploader
 
   has_and_belongs_to_many :enquiries, :uniq => true  
   has_and_belongs_to_many :registrations, :uniq => true  
@@ -23,7 +24,7 @@ class Email < ActiveRecord::Base
   accepts_nested_attributes_for :enquiries
 
   before_create :set_from
-  after_create :send_mail,:set_response_time
+  after_save :set_response_time, :send_mail
 
   def set_from
     self.from = _from.name

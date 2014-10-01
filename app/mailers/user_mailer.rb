@@ -4,14 +4,15 @@ class UserMailer < ActionMailer::Base
   default from: 'from@email.com'
   
   def send_email(obj,smtp_id)
-  
+
     smtp = Smtp.find(smtp_id)    
       
     set_smtp(smtp)
 
     @body = inline_attachify(obj.body)
     p "*************"
-    p obj.signature
+
+    attachments.inline[obj.attachment.file.file.split('/').last] = File.read("#{Rails.root}/public/uploads/email/attachment/#{obj.id}/#{obj.attachment.file.file.split('/').last}")
     @sign = inline_attachify(obj.signature)     
     
     mail(:to => obj.to, 
