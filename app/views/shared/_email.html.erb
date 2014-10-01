@@ -44,7 +44,7 @@
           <h4 class="bold-subhead">New Email</h4>
         </div>
 
-          <%= form_for(e) do |p| %>
+          <%= form_for e, :html => { :multipart => true } do |p| %>
             <%= hidden_field_tag "#{p.object_name}[model]", obj_name %>
             <%= hidden_field_tag "#{p.object_name}[#{obj_ids}][]", @subject_ids %>
             <%= p.hidden_field :auto, value: false %>
