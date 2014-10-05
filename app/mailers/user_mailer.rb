@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     @body = inline_attachify(obj.body)
     p "*************"
 
-    attachments.inline[obj.attachment.file.file.split('/').last] = File.read("#{Rails.root}/public/uploads/email/attachment/#{obj.id}/#{obj.attachment.file.file.split('/').last}")
+    attachments.inline[obj.attachment.file.file.split('/').last] = File.read("#{Rails.root}/public/uploads/email/attachment/#{obj.id}/#{obj.attachment.file.file.split('/').last}") if obj.attachment.present?
     @sign = inline_attachify(obj.signature)     
     
     mail(:to => obj.to, 
