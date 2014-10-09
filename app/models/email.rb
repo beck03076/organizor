@@ -31,7 +31,7 @@ class Email < ActiveRecord::Base
   end
 
   def send_mail
-    UserMailer.send_email(self,self.smtp_id).deliver
+    BackgroundJob.delay_for(5.seconds).email(self.id)
   end
 
   def set_response_time
