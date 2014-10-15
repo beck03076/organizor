@@ -24,8 +24,8 @@
 //= require see_more
 //= require redactor-rails
 //= require twitter/typeahead
-
-
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
 
 
 

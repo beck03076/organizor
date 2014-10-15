@@ -21,6 +21,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
   gem 'jquery-ui-rails'
+  gem 'jquery-fileupload-rails'
 end
 
 gem 'will_paginate'
@@ -81,6 +82,7 @@ gem 'google_currency'
 
 group :development do
 #  gem "rails-dev-tweaks"
+  gem 'pry', '0.9.12.4'
 end
 
 
