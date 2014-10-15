@@ -82,7 +82,6 @@ gem 'google_currency'
 
 group :development do
 #  gem "rails-dev-tweaks"
-  gem 'pry', '0.9.12.4'
 end
 
 
