@@ -114,5 +114,7 @@ gem 'populator'
 gem 'faker'
 gem 'tire'
 gem 'virb'
-
+gem 'devise-async'
+gem 'sinatra', :require => false
+gem 'slim'
 

@@ -1,5 +1,8 @@
+require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
+  mount Sidekiq::Web => '/sidekiq'
+  
   devise_for :institutions
   devise_for :registrations, :controllers => {:registrations => "registrations"}
  # get "partners/index"
