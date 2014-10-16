@@ -15,6 +15,6 @@ class Document < ActiveRecord::Base
   before_create :default_name
   
   def default_name
-    self.name = File.basename(path.filename, '.*').titleize if path
+    self.name = File.basename(path.filename) if path
   end
 end
