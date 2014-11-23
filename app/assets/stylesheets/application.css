@@ -511,3 +511,19 @@ vertical-align: top;
     background-color: #6B3636;
     color: #FFFFFF;
 }
+
+.progress {
+    background: none repeat scroll 0 0 #b4f5b4;
+    border-radius: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    height: 21px;
+    margin-bottom: 21px;
+    overflow: hidden;
+}
+
+.bar {
+    background-color: #008000;
+    border-radius: 3px;
+    height: 20px;
+    width: 0;
+}

@@ -21,6 +21,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
   gem 'jquery-ui-rails'
+  gem 'jquery-fileupload-rails'
 end
 
 gem 'will_paginate'
@@ -113,5 +114,7 @@ gem 'populator'
 gem 'faker'
 gem 'tire'
 gem 'virb'
-
+gem 'devise-async'
+gem 'sinatra', :require => false
+gem 'slim'
 
