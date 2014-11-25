@@ -513,7 +513,7 @@ vertical-align: top;
 }
 
 .progress {
-    background: none repeat scroll 0 0 #b4f5b4;
+    background: none repeat scroll 0 0 #ffffff;
     border-radius: 0;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
     height: 21px;
@@ -522,7 +522,7 @@ vertical-align: top;
 }
 
 .bar {
-    background-color: #008000;
+    background-color: #008CBA;
     border-radius: 3px;
     height: 20px;
     width: 0;
