@@ -9,7 +9,7 @@ class Institution < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   include CoreModel
 
-  before_create :set_password,:set_permissions
+  before_create :set_permissions #:set_password
 
   validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!"          
     
@@ -70,15 +70,32 @@ class Institution < ActiveRecord::Base
   alias_method :creator, :cby
   alias_method :owner, :ato
   # ======================================================================
-  
+
+
+  # new function to set the password without knowing the current password used in our confirmation controller. 
+  def attempt_set_password(params)
+    p = {}
+    p[:password] = params[:password]
+    p[:password_confirmation] = params[:password_confirmation]
+    update_attributes(p)
+  end
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
+
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
+  end  
+
   def tit
     self.name rescue "Title Unknown"
   end
 
-  def set_password
-    self.password = self.email
-    self.password_confirmation = self.email
-  end 
+  # def set_password
+  #   self.password = self.email
+  #   self.password_confirmation = self.email
+  # end 
 
   def set_permissions
     self.permissions << Permission.where(subject_class: "Student",action: "read")

@@ -16,7 +16,7 @@ class Registration < ActiveRecord::Base
                                  update_comment: "Custom: Values of <<here>> has been updated",
                                  except: [:follow_ups_count,:todos_count,:notes_count,:emails_count]
 
-  before_create :set_ref_no,:set_password,:set_permissions
+  before_create :set_ref_no,:set_permissions #:set_password
   after_create :set_enquiry_fields
 
   validates_uniqueness_of :email
@@ -191,10 +191,25 @@ class Registration < ActiveRecord::Base
         self.ref_no = ym + "%04d" % (ref_temp_no.to_i + 1)
   end
 
-  def set_password
-    self.password = self.ref_no
-    self.password_confirmation = self.ref_no
-  end 
+  # new function to set the password without knowing the current password used in our confirmation controller. 
+  def attempt_set_password(params)
+    p = {}
+    p[:password] = params[:password]
+    p[:password_confirmation] = params[:password_confirmation]
+    update_attributes(p)
+  end
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
+
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
+  end    
+  # def set_password
+  #   self.password = self.ref_no
+  #   self.password_confirmation = self.ref_no
+  # end 
   
   def name
     (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip

@@ -2,9 +2,16 @@ require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
-  
-  devise_for :institutions
-  devise_for :registrations, :controllers => {:registrations => "registrations"}
+
+  devise_for :institutions, :controllers => {confirmations: "institution_confirmations" }
+  as :institution do
+      match '/institution/confirmation' => 'institution_confirmations#update', :via => :put, :as => :update_institution_confirmation
+  end
+
+  devise_for :registrations, :controllers => {registrations: "registrations", confirmations: "registration_confirmations" }
+  as :registration do
+      match '/registration/confirmation' => 'registration_confirmations#update', :via => :put, :as => :update_registration_confirmation
+  end    
  # get "partners/index"
   resources :registrations do
       collection { post :search, to: 'registrations#index' }
@@ -184,7 +191,7 @@ Organizor::Application.routes.draw do
   
   resources :smtps
   
-  resources :roles 
+  resources :roles
   
   resources :doc_categories
   
@@ -206,6 +213,7 @@ Organizor::Application.routes.draw do
   
   resources :emails
   
+  match "/all_notifications" => "application#all_notifications"
   
   match "/email_sent_by/:sent_by" => "emails#index"
   
