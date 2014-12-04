@@ -11,7 +11,8 @@ class Institution < ActiveRecord::Base
 
   before_create :set_permissions #:set_password
 
-  validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!"          
+  validates_uniqueness_of :name, on: :create, message: " already exists as another institution, please check!" 
+  validates_uniqueness_of :email, on: :create, message: " for the institution is already exists, please check!"         
     
   mount_uploader :image, HumanImageUploader
   # ============== Elasticsearch ===============

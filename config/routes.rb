@@ -3,7 +3,7 @@ Organizor::Application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  devise_for :institutions, :controllers => {confirmations: "institution_confirmations" }
+  devise_for :institutions, :controllers => {registrations: "institutions", confirmations: "institution_confirmations" }
   as :institution do
       match '/institution/confirmation' => 'institution_confirmations#update', :via => :put, :as => :update_institution_confirmation
   end
