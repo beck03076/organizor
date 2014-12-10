@@ -11,6 +11,6 @@ class StudentsController < ApplicationController
 
   def index
   	@registration = current_registration
-  	@partial = "registrations/basic"  	
+  	@partial = "students/basic"
   end
 end
