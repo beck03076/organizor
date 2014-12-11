@@ -1,18 +1,16 @@
-<h2>Account Activation</h2>
-
 <%= form_for resource, :as => resource_name, :url => update_institution_confirmation_path, :html => {:method => 'put', class: "form-horizontal", :id => 'activation-form'} do |f| %>
   <%= devise_error_messages! %>
   <div class="container main">
-    <p>Account Activation
+    <h2>Account Activation
       <% if resource.email %> for <%= resource.email %><% end %>
-    </p>
+    </h2>
     <% if @requires_password %>
         <%= bs(f,"password","password_field",['password',4],6,6) %>
         <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],6,6) %>
     <% end %>
   </div>
     <%= hidden_field_tag :confirmation_token,@confirmation_token %>
-    <%= f.submit "Activate", :id => "account-activate" %>
+    <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
 <% end %>
 
 <script>
@@ -23,7 +21,7 @@
       return true;
     }    
     else {
-      alert("Please provide exact password");
+      alert("Password confirmation doesn't match Password");
      return false;
     }
   });
