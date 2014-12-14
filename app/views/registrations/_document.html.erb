@@ -50,7 +50,7 @@
                    <td>[<%= cat.category.name rescue "Unknown" %>]</td>
                    <td><%= cat.uploader.name rescue "Unknown" %></td>
                    <td><%= cat.created_at.to_s %></td>
-                   <td><%= link_to "Download",cat %> </td>                   
+                   <td><%= link_to "Download",cat.path.url %> </td>                
                    </tbody>
                 <% end %>
                 </table>

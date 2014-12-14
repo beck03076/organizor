@@ -59,14 +59,17 @@
     <ul class="vlsdet">
         <h4 class="bold-subhead">Address</h4>
         <% [['address_line1','line1'],
-            ['address_line2','line2'],
-            ['address_city','city'],
-            ['address_country','country'],
-            ['address_post_code','post_code']].each do |v| %>
+            ['address_line2','line2']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
+        <%= li2('city',[:address_city,:select,City,
+                  :city],a,nil,"span","strong")%>
+        <%= li2('country',[:address_country_id,:select,Country,
+                  :country],a,nil,"span","strong")%>
+        <%= li1('post_code','address_post_code','span','small',a)%>
     </ul>
   </div>
+
   <div class="col-xs-6">
     <ul class="vlsdet">
         <h4 class="bold-subhead">Passport & Visa</h4>
@@ -84,8 +87,9 @@
   <div class="col-xs-6">
     <ul class="vlsdet">
         <h4 class="bold-subhead">Educational Background</h4>
-        <% [['qualification_name','qualification'],
-            ['qua_subject','subject'],
+        <%= li2('qualification',[:qualification_name,:select,Qualification,
+                  :qualification],a,nil,"span","strong")%>        
+        <% [['qua_subject','subject'],
             ['qua_institution','institution'],
             ['qua_grade','grade'],
             ['qua_exam','exam'],
@@ -98,9 +102,11 @@
     <ul class="vlsdet">
         <h4 class="bold-subhead">English Language Proficiency</h4>
         <% a.exams.each do |x| %>
-        <% [['english_level_name','english_level'],
-            ['exam_type_name','exam_type'],
-            ['exam_score','score'],
+        <%= li2('english_level',[:english_level_name,:select,EnglishLevel,
+                  :english_level],a,nil,"span","strong")%>
+        <%= li2('exam_type',[:exam_type_name,:select,ExamType,
+                  :qualification],a,nil,"span","strong")%>
+        <% [['exam_score','score'],
             ['exam_date','date']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',x)%>
         <% end %>

@@ -69,6 +69,8 @@ class Registration < ActiveRecord::Base
   belongs_to :country_of_origin,
              :class_name => "Country",
              :foreign_key => "country_id"
+  belongs_to :city
+  belongs_to :exam_type
   # ==== duplicate of country of origin for reports ===           
   belongs_to :country,
              :class_name => "Country",
@@ -129,7 +131,8 @@ class Registration < ActiveRecord::Base
   # ========= delegating _name methods for assoc in array ================
   [:student_source,:branch,:contact_type,
    :english_level,:qualification,:country,
-   :address_country,:enquiry,:progression_status].each do |assoc|
+   :address_country,:enquiry,:progression_status,
+    :city, :exam_type].each do |assoc|
     delegate :name, to: assoc, prefix: true, allow_nil: true
   end  
 

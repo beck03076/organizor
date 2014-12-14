@@ -4,5 +4,6 @@ class City < ActiveRecord::Base
   has_many :institutions  
   has_many :people
   belongs_to :country
+  has_many :registrations
 
 end
