@@ -124,10 +124,8 @@ class DocumentsController < ApplicationController
   
   def show
     @document = Document.find(params[:id])
-    
     t = params[:disposition]
     disp = (t.nil? ? "attachment" : t)
-    
     send_data @document.path, filename: @document.name, disposition: "inline"
   end
 

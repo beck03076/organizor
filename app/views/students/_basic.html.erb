@@ -6,15 +6,9 @@
   <div class="col-xs-3">
     <%= render 'images/disp', core: "registration", a: a %>
 
-
-    <ul class="vlsdet-s" >
-        <h4 class="bold-subhead">Quick Info</h4>
-        <%= li1('ref_no','ref_no','span','small',a)%>
-    </ul>
-
   </div>
-  <div class="col-xs-5 row-top">
-    <ul class="vlsdet pt-0 border-b">
+  <div class="col-xs-4 row-top">
+    <ul class="vlsdet pt-0">
         <h4 class="row-top bold-subhead">Personal</h4>
         <% %w(first_name surname date_of_birth gender).each do |v| %>
         <%= li1(v,v,'span','small',a)%>
@@ -22,28 +16,16 @@
         <%= li2('nationality',[:country_id,:select,Country,
                   :nationality],a,nil,"span","strong")%>
     </ul>
-    <ul class="vlsdet">
-        <h4 class="bold-subhead">Contact</h4>
+  </div>
+  <div class="col-xs-5 row-top">
+    <ul class="vlsdet pt-0">
+        <h4 class="row-top bold-subhead">Contact</h4>
         <% %w(mobile1 mobile2 email alternate_email home_phone work_phone).each do |v| %>
         <%= li1(v,v,'span','small',a)%>
         <% end %>
     </ul>
   </div>
-  <div class="col-xs-4">
-    <div class="well well-sm form-last">
-        <h4 class="bold-subhead">History</h4>
-        <ul class="vlsdet-s pt-0">
-           <%= li1('registered_at',a.created_at.to_date,'span','small')%>
-           <%= li1('registered_by',a.cby,'span','small')%>
-           <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
-           <%= li1('Modified By',a.uby,'span','small')%>
-           <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.ato %>
-           <%= li1('assigned to',out,'span','small')%>
-           <%= li1('assigned by',a.aby,'span','small')%>
-           <%= li1('assigned At',(a.assigned_at.to_date rescue nil),'span','small')%>
-        </ul>
-    </div>
-  </div>
+
 </div>
 <div class="row row-top border-b">
   <div class="col-xs-6">
