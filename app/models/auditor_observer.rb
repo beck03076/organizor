@@ -11,7 +11,7 @@ class AuditorObserver < ActiveRecord::Observer
   :smtp,:email_template,:allow_ip,
   :commission_claim_status,:progression_status,
   :processing_fee_type,:processing_fee_status,
-  :document,:role
+  :document,:role,:required_doc, :required_doc_type
 
    def before_create(record)
      record.created_by = User.current.id unless User.current.nil?

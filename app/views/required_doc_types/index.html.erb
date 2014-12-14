@@ -1,0 +1,66 @@
+
+<!-- rendering the left menu -->
+<%= render 'resources/menu' %>
+
+<!-- branches more information -->
+
+<% resource_disp1 = "Required Doc Type" %>
+<% resource_disp2 = "Required Doc Types" %>
+<% resource = @required_doc_types %>
+<% new_resource = RequiredDocType.new %>
+
+<div class="col-md-12">
+  <div class="config-content">
+        <div class="row row-top">
+          <h3><%= resource_disp2 %></h3>
+        </div>
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Desc</th>
+                <th>Belongs To</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th colspan=2>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% resource.each do |r| %>
+                <tr>
+                  <td><%= link_to r.name,
+                                  required_doc_type_path(r),
+                                  {remote: true} %></td>
+                  <td><%= truncate(r.desc,length: 20) %></td>
+                  <td><%= (r.required_doc.try(:name)).to_s.titleize rescue "Unassigned" %></td>
+                  <td><%= r.created_at.to_s %></td>
+                  <td><%= r.updated_at.to_s %></td>
+                  <td>
+                    <% r_name = resource_disp1.downcase.tr(" ","_") %>
+                    <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                                edit_required_doc_type_path(r),
+                                {remote: true,
+                                onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
+                                r, 
+                                method: :delete, 
+                                data: { confirm: 'Are you sure?' }  %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+  <%= render "form", {new_resource: new_resource,
+                      resource_disp1: resource_disp1,
+                      div: "well",
+                      h: "New"} %>
+                      
+  <div id="edit-resource-container"></div>
+</div>
+</div>
+
+
+

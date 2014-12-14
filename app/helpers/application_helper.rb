@@ -287,8 +287,8 @@ include ReportsFilterHelpers
                                                '#{e.downcase.tr(" ", "_")}',
                                                '#{obj_id}');",
                       data: {toggle: "tab"}}
-
-        html += link_to(elem.to_s.titleize,"#",options.merge(opts))
+        # pass the 3rd element in the array to append to the menu display
+        html += link_to((elem.to_s.pluralize).titleize,"#",options.merge(opts))
 
         html += '</li>'
       end

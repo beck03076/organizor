@@ -37,7 +37,7 @@ if @user.nil?
   PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
 end
 
-models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit]
+models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
 actions = %w[create read update delete]
 models.each do |m|
   actions.each do |a|
@@ -144,7 +144,9 @@ end
  {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
  {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},
  {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)},
- {processing_fee_status: %w(Paid Unpaid Partially_paid Refunded)}].each do |i|
+ {processing_fee_status: %w(Paid Unpaid Partially_paid Refunded)},
+ {required_doc: %w(language_course bachelors masters)},
+ {required_doc_type: %w(IELTS TOEFL FCE Pearson 10th_mark_sheet CAS VISA)}].each do |i|
     model = i.keys[0].to_s.camelize.constantize
     values = i.values[0]
     values.each do |v|

@@ -1,0 +1,2 @@
+module RequiredDocTypesHelper
+end
