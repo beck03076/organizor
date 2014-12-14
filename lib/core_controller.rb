@@ -66,9 +66,16 @@ module CoreController
                                      :obj_name => name}
     end     
   end
-
+  # sub_type-required_doc-required_doc_type is the usual format
   def handle_document
     @sub_type = @sub_type || "all"     
+    if @sub_type.start_with?("required")
+      result = @sub_type.split("-")[1] || RequiredDoc.first.name
+      @required_doc = RequiredDoc.find_by_name(result) if result 
+      @required_docs = RequiredDoc.all
+      @required_doc_types = @required_doc.try(:required_doc_types)
+      @sub_type = "required"
+    end
   end
       
   def basic_select(model,cond = true)

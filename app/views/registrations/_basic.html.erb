@@ -2,67 +2,70 @@
 <% a = @registration %>
 
 <div class="row border-b">
-  
+
   <div class="col-xs-3">
     <%= render 'images/disp', core: "registration", a: a %>
 
 
     <ul class="vlsdet-s" >
-        <h4 class="bold-subhead">Quick Info</h4>
-           <%= li1('ref_no','ref_no','span','small',a)%>
-           <%= li1('channel',a.channel,'span','small')%>
-           <%= li1('source',a.source,'span','small')%>
+      <h4 class="bold-subhead">Quick Info</h4>
+      <%= li1('ref_no','ref_no','span','small',a)%>
+      <%= li1('channel',a.channel,'span','small')%>
+      <%= li1('source',a.source,'span','small')%>
 
-           <%= li1('applications',a.quick_st,'span','small')%>
-           <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
-           <% %w(emails follow_ups todos notes).each do |act| %>
-             <% out = meta(current_user.id,"registration",act,a,hsh[act.to_sym]) %>
-             <%= li1(act,out,'span','small')%>
-           <% end %>
+      <%= li1('applications',a.quick_st,'span','small')%>
+      <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
+      <% %w(emails follow_ups todos notes).each do |act| %>
+        <% out = meta(current_user.id,"registration",act,a,hsh[act.to_sym]) %>
+        <%= li1(act,out,'span','small')%>
+      <% end %>
     </ul>
 
   </div>
   <div class="col-xs-5 row-top">
     <ul class="vlsdet pt-0 border-b">
-        <h4 class="row-top bold-subhead">Personal</h4>
-        <% %w(first_name surname date_of_birth gender).each do |v| %>
+      <h4 class="row-top bold-subhead">Personal</h4>
+      <% %w(first_name surname gender).each do |v| %>
         <%= li1(v,v,'span','small',a)%>
-        <% end %>
-        <%= li2('nationality',[:country_id,:select,Country,
-                  :nationality],a,nil,"span","strong")%>
-    </ul>
-    <ul class="vlsdet">
-        <h4 class="bold-subhead">Contact</h4>
-        <% %w(mobile1 mobile2 email alternate_email home_phone work_phone).each do |v| %>
-        <%= li1(v,v,'span','small',a)%>
-        <% end %>
-    </ul>
+      <% end %>
+      <%= li2('date_of_birth',{type: :date,column: :date_of_birth},a,nil,"span","strong")%>
+      <%= li2('nationality',[:country_id,:select,Country,
+                             :nationality],a,nil,"span","strong")%>
+
+  </ul>
+  <ul class="vlsdet">
+    <h4 class="bold-subhead">Contact</h4>
+    <% %w(mobile1 mobile2 email alternate_email home_phone work_phone).each do |v| %>
+      <%= li1(v,v,'span','small',a)%>
+    <% end %>
+  </ul>
   </div>
   <div class="col-xs-4">
     <div class="well well-sm form-last">
-        <h4 class="bold-subhead">History</h4>
-        <ul class="vlsdet-s pt-0">
-           <%= li1('registered_at',a.created_at.to_date,'span','small')%>
-           <%= li1('registered_by',a.cby,'span','small')%>
-           <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
-           <%= li1('Modified By',a.uby,'span','small')%>
-           <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.ato %>
-           <%= li1('assigned to',out,'span','small')%>
-           <%= li1('assigned by',a.aby,'span','small')%>
-           <%= li1('assigned At',(a.assigned_at.to_date rescue nil),'span','small')%>
-        </ul>
+      <h4 class="bold-subhead">History</h4>
+      <ul class="vlsdet-s pt-0">
+        <%= li1('registered_at',a.created_at.to_date,'span','small')%>
+        <%= li1('registered_by',a.cby,'span','small')%>
+        <%= li1('Modified At',a.updated_at.to_date,'span','small')%>
+        <%= li1('Modified By',a.uby,'span','small')%>
+        <% out = current_user.id == a.assigned_to ? [a.ato,1,'to me'] : a.ato %>
+        <%= li1('assigned to',out,'span','small')%>
+        <%= li1('assigned by',a.aby,'span','small')%>
+        <%= li1('assigned At',(a.assigned_at.to_date rescue nil),'span','small')%>
+      </ul>
     </div>
   </div>
 </div>
 <div class="row row-top border-b">
   <div class="col-xs-6">
     <ul class="vlsdet">
-        <h4 class="bold-subhead">Address</h4>
-        <% [['address_line1','line1'],
-            ['address_line2','line2'],
-            ['address_city', 'city']].each do |v| %>
+      <h4 class="bold-subhead">Address</h4>
+      <% [['address_line1','line1'],
+          ['address_line2','line2']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
+        <%= li2('city',[:address_city,:select,City,
+                  :city],a,nil,"span","strong")%>
         <%= li2('country',[:address_country_id,:select,Country,
                   :country],a,nil,"span","strong")%>
         <%= li1('post_code','address_post_code','span','small',a)%>
@@ -71,11 +74,11 @@
 
   <div class="col-xs-6">
     <ul class="vlsdet">
-        <h4 class="bold-subhead">Passport & Visa</h4>
-        <% ['passport_number',
-            'passport_valid_till',
-            'visa_type',
-            'visa_valid_till'].each do |v| %>
+      <h4 class="bold-subhead">Passport & Visa</h4>
+      <% ['passport_number',
+          'passport_valid_till',
+          'visa_type',
+          'visa_valid_till'].each do |v| %>
           <%= li1(v,v,'span','small',a)%>
         <% end %>
     </ul>
@@ -128,19 +131,19 @@
   </div>
   <div class="col-xs-6">
     <ul class="vlsdet">
-        <h4 class="bold-subhead">Flight Details</h4>
-        <% [['flight_no','flight_no'],
-            ['flight_arrival_date','arrival_date'],
-            ['flight_arrival_time','arrival_time'],
-            ['flight_airport','airport']].each do |v| %>
+      <h4 class="bold-subhead">Flight Details</h4>
+      <% [['flight_no','flight_no'],
+          ['flight_arrival_date','arrival_date'],
+          ['flight_arrival_time','arrival_time'],
+          ['flight_airport','airport']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
     </ul>
   </div>
 </div>
-  <br/>
+<br/>
 <script>
-  $('.best_in_place').best_in_place();
+$('.best_in_place').best_in_place();
 </script>
 
 

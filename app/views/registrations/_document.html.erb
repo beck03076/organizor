@@ -1,128 +1,149 @@
 <!-- Documents for regs -->
 <% a = @obj %>
-<% if can? :create, Registration %>
-  <% doc_type = %w(all students universities reports) %>
-<% else %>
-  <% doc_type = %w(all students universities) %>
-<%end%>
+<% doc_type = set_doc_type(current_user) %>
 
 <div class="row">
-<ul class="nav nav-tabs">
-  <% doc_type.each do |t| %>
-    <li class='<%= (t == @sub_type ? "active" : nil) %>'>
-      <a data-toggle="tab" 
-         onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= t %>');" 
-         href="#">
-        <%= t.titleize %>
-      </a>
-    </li>
-  <% end %> 
-</ul>
+  <ul class="nav nav-tabs">
+    <% doc_type.each do |t| %>
+      <li class='<%= (t == @sub_type ? "active" : nil) %>'>
+        <a data-toggle="tab" 
+           onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= t %>');" 
+           href="#">
+           <%= t.titleize %>
+        </a>
+      </li>
+    <% end %> 
+  </ul>
 
-<div class="well">
-    <h4 class="bold-subhead"> 
-      Documents Uploaded
-    </h4>
+  <div class="well">
+    <% if @sub_type.start_with?("required") %>
+      <ul class="nav nav-tabs tab-reverse">
+        <% @required_docs.each do |t| %>
+          <li class='<%= (t.name == @required_doc.try(:name) ? "active" : nil) %>'>
+            <a data-toggle="tab" 
+               onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= "required-" + t.name %>');" 
+               href="#">
+               <%= t.name.titleize %>
+            </a>
+          </li>
+        <% end %> 
+      </ul>
+      <div class="well">
+        <h4 class="bold-subhead"> 
+          Required Documents 
+        </h4>
 
-    <% if a.documents.size == 0  %>
-    
-      No documents uploaded
-    
-    <% else %>
-    
-        <%= form_tag('/documents/delete_or_download') do %>
-            <%= hidden_field_tag :reg_id,a.id %>
-                <table class="table table-bordered">
-                    <thead>
-                        <th>Select</th>
-                        <th>Name</th>
-                        <th>Category</th> 
-                        <th>Uploaded By</th> 
-                        <th>Uploaded At</th> 
-                        <th>&nbsp;</th>
-                    </thead>
-
-                <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>    
-                <% a.documents.includes(:category).where(cond).each do |cat| %>
-                   <tbody>
-                   <td><%= check_box_tag "doc_id[]",cat.id %></td>
-                   <td><%= cat.name rescue "Unknown" %></td>
-                   <td>[<%= cat.category.name rescue "Unknown" %>]</td>
-                   <td><%= cat.uploader.name rescue "Unknown" %></td>
-                   <td><%= cat.created_at.to_s %></td>
-                   <td><%= link_to "Download",cat.path.url %> </td>                
-                   </tbody>
-                <% end %>
-                </table>
-
-            <div class="form-group">
-                <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} %>
-                <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} %>            
-                <% if false %>
-                  <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
-                <% end %>
-            </div>
+        <% @required_doc_types.each do |type| %>
+          <li> <%= type.name %> </li>
 
         <% end %>
-    
-    <% end %>
-</div>
+      </div>
+
+    <% else %>
+      <h4 class="bold-subhead"> 
+        Documents Uploaded
+      </h4>
+
+      <% if a.documents.size == 0  %>
+
+        No documents uploaded
+
+      <% else %>
+
+        <%= form_tag('/documents/delete_or_download') do %>
+          <%= hidden_field_tag :reg_id,a.id %>
+          <table class="table table-bordered">
+            <thead>
+              <th>Select</th>
+              <th>Name</th>
+              <th>Category</th> 
+              <th>Uploaded By</th> 
+              <th>Uploaded At</th> 
+              <th>&nbsp;</th>
+            </thead>
+
+            <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>    
+            <% a.documents.includes(:category).where(cond).each do |cat| %>
+              <tbody>
+                <td><%= check_box_tag "doc_id[]",cat.id %></td>
+                <td><%= cat.name rescue "Unknown" %></td>
+                <td>[<%= cat.category.name rescue "Unknown" %>]</td>
+                <td><%= cat.uploader.name rescue "Unknown" %></td>
+                <td><%= cat.created_at.to_s %></td>
+                <td><%= link_to "Download",cat %> </td>                   
+              </tbody>
+            <% end %>
+          </table>
+
+          <div class="form-group">
+            <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} %>
+            <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} %>            
+            <% if false %>
+              <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
+            <% end %>
+          </div>
+
+        <% end %>
+
+      <% end %>
+  </div>
 </div>
 <div class="well row">
-        <h4 class="bold-subhead">New Upload</h4>
-        <%=  nested_form_for(a,html: {class: "form-horizontal", id: "file_upload"}) do |reg| %>
-            
-                <%= reg.fields_for :documents,a.documents.build do |d| %>
-                  <div class="row blue-well padAll10">
-                    <%= d.hidden_field :registration_id %>
-                    <div class="row row-top">
-                      <div class="col-xs-12 text-right padR30">
-                        <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe, size: "30x30") %>
-                      </div>
-                    </div>
-                    
-                    <% if can? :create, Registration %>
-                      <%= bs(d,[:category_id,DocCategory.order(:name),
-                            :id,
-                            :name,
-                            {prompt: "-category-"},{}],
-                            "collection_select",
-                            ["Doc Category",4],7,6) %>
-                            
-                      <%= bs(d,[:doc_type,(doc_type - ["all"]),{},{}],
-                            "select",
-                            ["Type",4],7,6) %>
-                    <%end%>
+  <h4 class="bold-subhead">New Upload</h4>
+  <%=  nested_form_for(a,html: {class: "form-horizontal", id: "file_upload"}) do |reg| %>
+
+    <%= reg.fields_for :documents,a.documents.build do |d| %>
+      <div class="row blue-well padAll10">
+        <%= d.hidden_field :registration_id %>
+        <div class="row row-top">
+          <div class="col-xs-12 text-right padR30">
+            <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe, size: "30x30") %>
+          </div>
+        </div>
+
+        <% if can? :create, Registration %>
+          <%= bs(d,[:category_id,DocCategory.order(:name),
+                    :id,
+                    :name,
+                    {prompt: "-category-"},{}],
+          "collection_select",
+          ["Doc Category",4],7,6) %>
+
+        <%= bs(d,[:doc_type,(doc_type - ["all"]),{},{}],
+               "select",
+               ["Type",4],7,6) %>
+           <%end%>
 
 
 
 
 
-                    
-                  <div class="col-xs-6">
-                      <div class="form-group">
-                        <label for="registration_documents_attributes_0_path" class="control-label col-xs-4">Path</label>
-                        <div class="col-xs-7">
-                          <input type="file" name="registration[documents_attributes][0][path]" multiple="multiple" id="registration_documents_attributes_0_path" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="clear"></div><br/>                                     
-                 <% end %>
 
-        <script id="template-upload" type="text/x-tmpl">
-          <div class="upload">
+           <div class="col-xs-6">
+             <div class="form-group">
+               <label for="registration_documents_attributes_0_path" class="control-label col-xs-4">Path</label>
+               <div class="col-xs-7">
+                 <input type="file" name="registration[documents_attributes][0][path]" multiple="multiple" id="registration_documents_attributes_0_path" class="form-control">
+               </div>
+             </div>
+           </div>
+      </div>
+      <div class="clear"></div><br/>                                     
+    <% end %>
+
+    <script id="template-upload" type="text/x-tmpl">
+<div class="upload">
             <h5>{%=o.name%}</h5>
             <div class="progress">
               <div class="bar" style="width: 0%">
               </div>
             </div>
           </div>
-        </script>
+    </script>
 
-        <% end %> 
-  </div>
+  <% end %> 
+<% end %>
+</div>
 
 <script type="text/javascript">
 

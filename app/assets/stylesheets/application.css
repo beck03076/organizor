@@ -10,14 +10,13 @@
 *
 *= require typeahead
 *= require bootstrap
-*= require dt-bootstrap
 *= require multi-select
 *= require fullcalendar
 *= require token-input-bootstrappy
 *= require bootstrap-markdown.min
 *= require custom
-*= require datepicker
 *= require redactor-rails
+*= require jqueryui-datepicker
 
 */
 
@@ -494,6 +493,14 @@ vertical-align: top;
   background-color: #219285;
   color: #fff;
 }
+
+.tab-reverse > li.active > a{
+  background-color: #eee;
+  color: #219285;
+  font-weight: bold;
+}
+
+
 
 .bor-b {
   

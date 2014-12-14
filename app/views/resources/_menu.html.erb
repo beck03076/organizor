@@ -22,7 +22,7 @@
       <button data-toggle="dropdown" class="btn btn-success dropdown-toggle" type="button">Registration <span class="caret"></span></button>
       <ul role="menu" class="dropdown-menu">
         <% [:application_status,
-            :course_level,:course_subject,:doc_category,
+            :course_level,:course_subject,:doc_category,:required_doc,:required_doc_type,
             :english_level,:exam_type,:qualification,:progression_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
