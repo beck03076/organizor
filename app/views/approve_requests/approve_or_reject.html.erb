@@ -1,0 +1,19 @@
+<h1>Listing requests</h1>
+
+<table>
+  <tr>
+    <th>Registration</th>
+    <th>Values</th>
+    <th>Approved</th>
+  </tr>
+
+<% @request.each do |approve_request| %>
+  <tr>
+    <td><%= approve_request.registration_id %></td>
+    <td><%= approve_request.values %></td>
+    <td><%= link_to "Approve", approval_path(id: approve_request.id), method: :post, class: "btn" %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

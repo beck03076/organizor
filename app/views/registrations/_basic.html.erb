@@ -59,11 +59,10 @@
     <ul class="vlsdet">
         <h4 class="bold-subhead">Address</h4>
         <% [['address_line1','line1'],
-            ['address_line2','line2']].each do |v| %>
+            ['address_line2','line2'],
+            ['address_city', 'city']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
-        <%= li2('city',[:address_city,:select,City,
-                  :city],a,nil,"span","strong")%>
         <%= li2('country',[:address_country_id,:select,Country,
                   :country],a,nil,"span","strong")%>
         <%= li1('post_code','address_post_code','span','small',a)%>

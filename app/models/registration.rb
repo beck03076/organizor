@@ -132,7 +132,7 @@ class Registration < ActiveRecord::Base
   [:student_source,:branch,:contact_type,
    :english_level,:qualification,:country,
    :address_country,:enquiry,:progression_status,
-    :city, :exam_type].each do |assoc|
+   :exam_type].each do |assoc|
     delegate :name, to: assoc, prefix: true, allow_nil: true
   end  
 

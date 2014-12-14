@@ -76,6 +76,78 @@ include ReportsFilterHelpers
              </li>"
     html.html_safe
   end  
+
+  #basic li ul listing with vlsdet
+  def li2_insecure(label,val,a = nil,text = nil,sizel = "small",sizev = "small")
+    html = ""    
+    if val.kind_of?(Array)
+     col = val[4] || :name 
+     disp = best_in_place     a,
+                              val[0],
+                              type: val[1],
+                              path: "/approve_requests/#{a.id}",
+                              collection: val[2].bip(col),
+                              display_as: val[3],
+                              inner_class: "form-control"
+     cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+    elsif val.kind_of?(String) 
+      disp = val
+      cl ="green-right"
+    elsif val.kind_of?(Symbol) 
+      disp = best_in_place_if (can? :update,a),a,val
+      cl = val.cl rescue "green-right"
+    end  
+    if !text.nil?
+      text = "<small>&nbsp;&nbsp; #{text}</small>"
+    else
+      text = ''
+    end
+    html += "<li>
+             <div class=#{cl}>
+             <label><#{sizel}>#{label.titleize}</#{sizel}></label>
+             <#{sizev}  class='#{cl} sm'>#{disp}</#{sizev}> 
+             #{text}
+             </div>
+             </li>"
+    html.html_safe
+  end    
+
+  def li1_insecure(label,val,sizel,sizev,a = nil)
+    html = ""    
+    if val.kind_of?(Array)
+      value = val[0]
+      if (val[1].to_i == 0 || val[1].to_i == 97)
+        cl = "red-wrong "
+      elsif val[1].to_i == 98
+        cl = "yellow-ok"
+      elsif val[1].to_i == 99 
+        cl = "green-right"
+      else
+        cl = "green-right" 
+      end
+      if (val[1] == 99 ||  val[1] ==  98 || val[1].to_i == 97)
+        disp1 = "<small>#{val[2]}</small>"
+      else
+        disp1 = "<small>&nbsp;&nbsp;&nbsp; #{val[1]} #{val[2]}</small>"
+      end
+      
+    else
+      value = val
+      cl ="padded"
+    end
+    if a.nil?
+      disp = value
+    else
+      disp = best_in_place a, value.to_sym, path: "/approve_requests/#{a.id}"
+    end  
+    html += "<li>
+             <div class=#{cl}>
+             <label><#{sizel} class='light'>#{label.titleize}</#{sizel}></label>
+             <#{sizev}  class=#{cl} >#{disp}  #{disp1}</#{sizev}> 
+             </div>
+             </li>"
+    html.html_safe
+  end
   
   def li_dt(col,ymsg,gmsg,obj)
    [((Date.today <= obj.send(col).to_date rescue col) ? [col,98,gmsg] : [col,99,ymsg]),col]
