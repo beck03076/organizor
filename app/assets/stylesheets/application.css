@@ -10,14 +10,13 @@
 *
 *= require typeahead
 *= require bootstrap
-*= require dt-bootstrap
 *= require multi-select
 *= require fullcalendar
 *= require token-input-bootstrappy
 *= require bootstrap-markdown.min
 *= require custom
-*= require datepicker
 *= require redactor-rails
+*= require jqueryui-datepicker
 
 */
 

@@ -1,5 +1,5 @@
 module ApplicationHelper
-include ReportsFilterHelpers  
+  include ReportsFilterHelpers  
 
   def despace(i)
     i. downcase.tr(' ','_')
@@ -23,7 +23,7 @@ include ReportsFilterHelpers
       else
         disp1 = "<small>&nbsp;&nbsp;&nbsp; #{val[1]} #{val[2]}</small>"
       end
-      
+
     else
       value = val
       cl ="padded"
@@ -41,20 +41,27 @@ include ReportsFilterHelpers
              </li>"
     html.html_safe
   end
-  
+
   #basic li ul listing with vlsdet
   def li2(label,val,a = nil,text = nil,sizel = "small",sizev = "small")
     html = ""    
     if val.kind_of?(Array)
-     col = val[4] || :name 
-     disp = best_in_place_if (can? :update,a),
-                              a,
-                              val[0],
-                              type: val[1],
-                              collection: val[2].bip(col),
-                              display_as: val[3],
-                              inner_class: "form-control"
-     cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+      col = val[4] || :name 
+      disp = best_in_place_if (can? :update,a),
+        a,
+        val[0],
+        type: val[1],
+        collection: val[2].bip(col),
+        display_as: val[3],
+        inner_class: "form-control"
+      cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+    elsif val.kind_of?(Hash)
+      disp = best_in_place_if (can? :update,a),
+        a,
+        val[:column],
+        type: val[:type],
+        inner_class: "form-control"
+      cl = "green-right"
     elsif val.kind_of?(String) 
       disp = val
       cl ="green-right"
@@ -71,33 +78,33 @@ include ReportsFilterHelpers
              <div class=#{cl}>
              <label><#{sizel}>#{label.titleize}</#{sizel}></label>
              <#{sizev}  class='#{cl} sm'>#{disp}</#{sizev}> 
-             #{text}
+    #{text}
              </div>
              </li>"
     html.html_safe
   end  
-  
+
   def li_dt(col,ymsg,gmsg,obj)
-   [((Date.today <= obj.send(col).to_date rescue col) ? [col,98,gmsg] : [col,99,ymsg]),col]
+    [((Date.today <= obj.send(col).to_date rescue col) ? [col,98,gmsg] : [col,99,ymsg]),col]
   end
 
   def prefer_countries(main,sub,values,data_values)
 
-   html = ""
+    html = ""
 
-   html += "<div id=#{main}_#{sub} class='ms-selected-cols' data-cols='#{data_values}'></div>"
+    html += "<div id=#{main}_#{sub} class='ms-selected-cols' data-cols='#{data_values}'></div>"
 
-   html += '<div class="form-group">
+    html += '<div class="form-group">
                       <div class="col-xs-10 col-xs-offset-2">'
 
-   html +=  select_tag("#{main}[#{sub}][]",
-           options_for_select(values),
-                      {multiple: true,
-                       class: "multiple-select"})
+    html +=  select_tag("#{main}[#{sub}][]",
+                        options_for_select(values),
+                        {multiple: true,
+                         class: "multiple-select"})
 
-   html += '</div> </div>'
+    html += '</div> </div>'
 
-   html.html_safe
+    html.html_safe
 
   end
 
@@ -125,10 +132,10 @@ include ReportsFilterHelpers
 
     (div3_head +
      div2_head +
-    '<div class="form-group">' +
-    f.label((name.kind_of?(Array) ? n[0].to_sym : n.to_sym),
-              l.titleize,
-              {class: "control-label col-xs-" + lab[1].to_s }) +
+     '<div class="form-group">' +
+     f.label((name.kind_of?(Array) ? n[0].to_sym : n.to_sym),
+             l.titleize,
+             {class: "control-label col-xs-" + lab[1].to_s }) +
      "<div class=col-xs-#{div} >" +
      f.send(elem,*name) +
      "</div>" +
@@ -187,60 +194,60 @@ include ReportsFilterHelpers
 
   def go_create(obj,obj_name,id,name,disp = "none",box_cl = "frbox",tabindex = nil)
 
-   prompt = "--" + obj_name.titleize + "--"
-   model = obj_name.camelize.constantize
-   main_div = obj_name + "_div"
-   sel_cl = obj_name + "_select"
-   a_id = "new_" + obj_name
-   form_id = "new_" + obj_name + "_form"
-   desc_id = obj_name + "_desc"
-   add_desc_id = "add_" + obj_name + "_description"
-   create_id = "create_" + obj_name
+    prompt = "--" + obj_name.titleize + "--"
+    model = obj_name.camelize.constantize
+    main_div = obj_name + "_div"
+    sel_cl = obj_name + "_select"
+    a_id = "new_" + obj_name
+    form_id = "new_" + obj_name + "_form"
+    desc_id = obj_name + "_desc"
+    add_desc_id = "add_" + obj_name + "_description"
+    create_id = "create_" + obj_name
 
-     html = ""
+    html = ""
 
-      html += "<div class='#{main_div} #{box_cl}' style='display:#{disp.to_s};'>"
+    html += "<div class='#{main_div} #{box_cl}' style='display:#{disp.to_s};'>"
 
-      html += obj.label(obj_name.to_sym)
-      html +="&nbsp;"
-      html += obj.collection_select(id.to_sym,
-                                    model.all,
-                                    :id,
-                                    name.to_sym,
-                                    {:prompt => prompt },
-                                    {:class => sel_cl,
-                                     :tabindex => tabindex })
-      if (can? :create, model)
+    html += obj.label(obj_name.to_sym)
+    html +="&nbsp;"
+    html += obj.collection_select(id.to_sym,
+                                  model.all,
+                                  :id,
+                                  name.to_sym,
+                                  {:prompt => prompt },
+                                  {:class => sel_cl,
+                                   :tabindex => tabindex })
+    if (can? :create, model)
 
-          html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
+      html += "<span id='#{a_id}' class='plus' onClick=showPopGoCreate('#{main_div}',event,this);>+</span>"
 
-          html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
-     html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePopGoCreate('#{main_div}',this);>x</span><div class='cl'></div></div>"
+      html += "<div id=#{main_div} class='addNewPop' style='display:none;'>"
+      html += "<div class='popuptitle'><span class='fl'>Add new #{obj_name.tr('_',' ')}</span><span class='Bpclose close-icon' lang=#{main_div} onClick=closePopGoCreate('#{main_div}',this);>x</span><div class='cl'></div></div>"
 
-          html += "<br/><div class='fpbox'>"
-          html += label_tag(name.to_sym)
-          html += text_field_tag(name.to_sym)
-          html += "</div>"
+      html += "<br/><div class='fpbox'>"
+      html += label_tag(name.to_sym)
+      html += text_field_tag(name.to_sym)
+      html += "</div>"
 
-          html += "<div id='#{desc_id}' style='display:none;' class='fpbox'>"
-          html += label_tag(:description)
-          html += text_area_tag(:desc)
-          html += "</div>"
+      html += "<div id='#{desc_id}' style='display:none;' class='fpbox'>"
+      html += label_tag(:description)
+      html += text_area_tag(:desc)
+      html += "</div>"
 
-          html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
-
-
-          html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{main_div}','#{obj_name}'); > Create #{obj_name.titleize} </span><div class='cl'></div><br/>"
+      html += "<br/><span id='#{add_desc_id}'  class='btns fr' onClick=div_toggle(this,'div##{desc_id}');>Add description </span>"
 
 
-          html += "</div>"
+      html += "<span lang='#{main_div}' class='Bpclose btnp fr' id='#{create_id}' onClick=submit_link(this,'div##{main_div}','#{obj_name}'); > Create #{obj_name.titleize} </span><div class='cl'></div><br/>"
 
-      end
 
       html += "</div>"
 
+    end
 
-      html.html_safe
+    html += "</div>"
+
+
+    html.html_safe
 
   end
 
@@ -286,7 +293,7 @@ include ReportsFilterHelpers
         options = {onclick: "action_partial('#{model.pluralize}',
                                                '#{e.downcase.tr(" ", "_")}',
                                                '#{obj_id}');",
-                      data: {toggle: "tab"}}
+                                               data: {toggle: "tab"}}
         # pass the 3rd element in the array to append to the menu display
         html += link_to((elem.to_s.pluralize).titleize,"#",options.merge(opts))
 
@@ -300,15 +307,15 @@ include ReportsFilterHelpers
   def link_to_add_fields(name, f, type)
     new_object = f.object.send "build_#{type}"
     id = "new_#{type}"
-      fields = f.send("#{type}_fields", new_object, child_index: id) do |builder|
+    fields = f.send("#{type}_fields", new_object, child_index: id) do |builder|
       render("shared/" + type.to_s + "_fields", f: builder)
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
-  
+
   def li(label,value,grid_col_no,ul_class,label_no,value_no,label_align = "right",value_align = "left")
-   html = ""
-   html += "<div class=row><div class='col-xs-#{grid_col_no} text-left'><ul class=#{ul_class}><li>
+    html = ""
+    html += "<div class=row><div class='col-xs-#{grid_col_no} text-left'><ul class=#{ul_class}><li>
             <div class='col-xs-#{label_no} text-#{label_align}'>
                 <span class=light>
                   <small>#{label}</small>
@@ -319,31 +326,31 @@ include ReportsFilterHelpers
                   </ul>
               </div>
             </div>"
-            
-   html.html_safe
+
+    html.html_safe
   end
-  
+
   def bulk_asso_update(label,select,obj,prompt,model,current_user_id,modal,modal_head,onclick,_id)
     html = ""
-    
+
     ctnt = '<div class="row">
              <div class="col-md-10">
              <div class="col-md-offset-3">
              <form class="form-inline" role="form">' +
              label_tag(:user,label,{class: "col-md-3"}) +
-               select_tag("#{select}#{_id}",
-                          options_for_select(obj.constantize.order(:name).map{|i| [i.name.titleize,i.id]}),
-               {prompt: prompt,
-                class: "form-control hor-first col-md-4",
-                        data: {model: model,
-                        user_id: current_user_id}}) +
-            '</form> </div></div></div>'
+             select_tag("#{select}#{_id}",
+                        options_for_select(obj.constantize.order(:name).map{|i| [i.name.titleize,i.id]}),
+                        {prompt: prompt,
+                         class: "form-control hor-first col-md-4",
+                         data: {model: model,
+                                user_id: current_user_id}}) +
+                               '</form> </div></div></div>'
 
-    render 'shared/modal',id: modal,
-                         content: ctnt.html_safe,
-                         header: modal_head,
-                         button: "<button onclick=#{onclick}('#{_id}');>Change</button>"
-                         
+                               render 'shared/modal',id: modal,
+                                 content: ctnt.html_safe,
+                                 header: modal_head,
+                                 button: "<button onclick=#{onclick}('#{_id}');>Change</button>"
+
   end
-  
+
 end

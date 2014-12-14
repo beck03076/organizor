@@ -17,9 +17,9 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
                    {"name": "sSearch_2", "value": ransack });
     },
     "aoColumnDefs": [
-      { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1) ] }
+      { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1),(hide_follow_up_sort + 2) ] }
     ],
-    "iDisplayLength": 10,
+    "iDisplayLength": 20,
      "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
           var reg = $(aData[0]).data('registered');
           var fu_now = $(aData[0]).data('fu-now');
