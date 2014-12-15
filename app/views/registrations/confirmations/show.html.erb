@@ -9,8 +9,10 @@
         <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],6,6) %>
     <% end %>
   </div>
+  <div class="form-group">
     <%= hidden_field_tag :confirmation_token,@confirmation_token %>
     <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
+  </div>
 <% end %>
 
 <script>
