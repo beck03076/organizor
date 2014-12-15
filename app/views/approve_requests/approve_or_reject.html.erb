@@ -1,16 +1,18 @@
+
+<div class="row well">
 <div class="row row-top">
   <div class="col-md-10 users">
-    <h3>Approval Request</h3>
+    <h3>Approval Requests</h3>
   </div>
 </div>
 
-<div class="row well">
   <div class="col-md-12">
     <div class="row">        
-      <div class="row" id="users-table">
+      <div id="users-table">
         <table class="table table-bordered">
           <thead align="center">
             <tr class="b text-center">
+              <th>Picture</th>
               <th>Registration</th>
               <th>Fields</th>
               <th>New Value</th>
@@ -19,7 +21,8 @@
           </thead>
           <tbody>
             <% @requests.each do |request| %>
-              <tr>
+              <tr class=<%= request.approved ? nil : "pending"  %>>
+                <td><%= uimg(request.registration) %></td> 
                 <td><h4><%= link_to request.registration.name, "/registrations/#{request.registration_id}"  %></h4><%= request.registration.email %> </td>
                 <% a = %w(address_country_id country_id qualification_id) %>
                 <% if a.include?(request.values.keys.first) %>
@@ -33,14 +36,13 @@
                   <% end %>
                   <td class="m"><%= value %></td>
                 <% else %>
-                  <td class="m"><%= request.values.keys.first %></td>
+                  <td class="m"><%= request.values.keys.first.titleize %></td>
                   <td class="m"><%= request.values.values.first %></td>
                 <% end %>
-                <td class="sm">
-                  <%= link_to '<span class="glyphicon glyphicon-ok"></span>'.html_safe, approval_path(id: request.id), method: :post %>
-                </td>
-                <td>
-                  <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, "/approve_requests/#{request.id}", method: :delete %>
+                <td class="form-group" >
+                  <% if !request.approved %>
+                    <%= link_to 'Approve'.html_safe, approval_path(id: request.id), {method: :post, class: "btn btn-primary"} %>
+                  <% end %>
                 </td>
               </tr>
 

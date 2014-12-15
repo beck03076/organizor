@@ -8,15 +8,14 @@ class ApproveRequestsController < ApplicationController
     values = params["registration"]
     ApproveRequest.create(registration_id: registration_id, request_to: request_to, values: values)
     respond_to do |format|
-      format.json { render :json => { :message => "Request sent" } }
+      format.json { render 'update' }
     end
   end
 
   def approve_or_reject
     if request.method == "GET"
-      @requests = ApproveRequest.where("request_to = #{current_user.id} and approved = false")
+      @requests = ApproveRequest.where("request_to = #{current_user.id}").order("created_at DESC")
     elsif request.method == "POST"
-      binding.pry
       approval = ApproveRequest.find params["id"]
       registration = Registration.find approval.registration_id
       field = approval.values.keys.first

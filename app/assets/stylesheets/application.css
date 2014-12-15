@@ -58,6 +58,8 @@
 .well tr.fu_week td {background: #f8f4b0 !important; }
 .well tr.fu_now td {background: #f7d0d0 !important; }
 
+.well tr.pending td {background: #fcfadf !important; }
+
 .tooltip-c {
   position: absolute;
   font-size: 12px;
