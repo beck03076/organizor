@@ -84,19 +84,25 @@ module ApplicationHelper
     html.html_safe
   end  
 
-  #basic li ul listing with vlsdet
   def li2_insecure(label,val,a = nil,text = nil,sizel = "small",sizev = "small")
     html = ""    
     if val.kind_of?(Array)
-     col = val[4] || :name 
-     disp = best_in_place     a,
-                              val[0],
-                              type: val[1],
-                              path: "/approve_requests/#{a.id}",
-                              collection: val[2].bip(col),
-                              display_as: val[3],
-                              inner_class: "form-control"
-     cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+      col = val[4] || :name 
+      disp = best_in_place a,
+        val[0],
+        type: val[1],
+        path: "/approve_requests/#{a.id}",
+        collection: val[2].bip(col),
+        display_as: val[3],
+        inner_class: "form-control"
+      cl = val[2].find(a.send(val[0])).cl rescue "green-right"
+    elsif val.kind_of?(Hash)
+      disp = best_in_place  a,
+        val[:column],
+        type: val[:type],
+        path: "/approve_requests/#{a.id}",
+        inner_class: "form-control"
+      cl = "green-right"
     elsif val.kind_of?(String) 
       disp = val
       cl ="green-right"
@@ -117,7 +123,7 @@ module ApplicationHelper
              </div>
              </li>"
     html.html_safe
-  end    
+  end
 
   def li1_insecure(label,val,sizel,sizev,a = nil)
     html = ""    

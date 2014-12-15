@@ -75,12 +75,10 @@
   <div class="col-xs-6">
     <ul class="vlsdet">
       <h4 class="bold-subhead">Passport & Visa</h4>
-      <% ['passport_number',
-          'passport_valid_till',
-          'visa_type',
-          'visa_valid_till'].each do |v| %>
-          <%= li1(v,v,'span','small',a)%>
-        <% end %>
+      <%= li1('passport_number','passport_number','span','small',a)%>
+      <%= li2('passport_valid_till',{type: :date,column: :passport_valid_till},a,nil,"span","strong")%>
+      <%= li1('visa_type','visa_type','span','small',a)%>
+      <%= li2('visa_valid_till',{type: :date,column: :visa_valid_till},a,nil,"span","strong")%>
     </ul>
   </div>
 </div>
@@ -107,11 +105,9 @@
         <%= li2('english_level',[:english_level_name,:select,EnglishLevel,
                   :english_level],a,nil,"span","strong")%>
         <%= li2('exam_type',[:exam_type_name,:select,ExamType,
-                  :qualification],a,nil,"span","strong")%>
-        <% [['exam_score','score'],
-            ['exam_date','date']].each do |v| %>
-          <%= li1(v[1],v[0],'span','small',x)%>
-        <% end %>
+                  :exam_type],a,nil,"span","strong")%>
+        <%= li1('score','exam_score','span','small',x)%>
+        <%= li2('exam_date',{type: :date,column: :exam_date},x,nil,"span","strong")%>
         <% end %>
     </ul>
   </div>
@@ -132,9 +128,9 @@
   <div class="col-xs-6">
     <ul class="vlsdet">
       <h4 class="bold-subhead">Flight Details</h4>
-      <% [['flight_no','flight_no'],
-          ['flight_arrival_date','arrival_date'],
-          ['flight_arrival_time','arrival_time'],
+      <%= li1('flight_no','flight_no','span','small',a)%>
+      <%= li2('arrival_date',{type: :date,column: :flight_arrival_date},a,nil,"span","strong")%>
+      <% [['flight_arrival_time','arrival_time'],
           ['flight_airport','airport']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>

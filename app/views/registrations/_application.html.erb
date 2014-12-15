@@ -87,14 +87,13 @@
                    <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
                    <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course yet to end']) %>
                         <% [['institution_name','institution_name'],
-                            [['ins_ref_no',99,'alloted by institution'],'reference_no'],
-                            ['course_level_name','course_level'],
-                            ['course_subject_text','course_subject'],
-                            [s,'start_date'],
-                            [e,'end_date']].each do |v| %>
+                            [['ins_ref_no',99,'alloted by institution'],'reference_no']].each do |v| %>
                           <%= li1(v[1],v[0],'span','small',i)%>
                         <% end %>
-                        
+                        <%= li2('course_level',[:course_level_name,:select,CourseLevel, :course_level_name],i,nil,"span","strong")%>
+                        <%= li1('course_subject','course_subject_text','span','small',i)%>
+                        <%= li2('start_date',{type: :date,column: :start_date},i,nil,"span","strong")%>
+                        <%= li2('end_date',{type: :date,column: :end_date},i,nil,"span","strong")%>
                         <h4 class="bold-subhead">Processing Fee Details</h4>
                         <li>
                          <div class="padded">
