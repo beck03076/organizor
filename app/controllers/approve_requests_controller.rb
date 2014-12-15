@@ -7,9 +7,9 @@ class ApproveRequestsController < ApplicationController
     request_to = registration.assigned_to
     values = params["registration"]
     if ApproveRequest.create(registration_id: registration_id, request_to: request_to, values: values)
-      flash.now[:notice] = 'Your request will be verified soon by our team'
-    else
-      flash.now[:alert] = 'Error while sending request!'
+      respond_to do |format|
+        format.js { render "approve_requests/update" }
+      end
     end
   end
 
