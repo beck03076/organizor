@@ -73,7 +73,10 @@
 
             </span>
           </a> 
+
+
           <span data-ajaxload="/limited_notifications.js" id="bell" class="pointer glyphicon glyphicon-bell notification-icon no-link"></span>
+
           <%  badge =  Audit.notys_badge(current_user.id) %>
           <span class="badge <%= badge[1] %>"><%= badge[0] %></span>
 
@@ -117,9 +120,11 @@
               <small class="green-right sm"><%= u.role_name %></small><br/>
               <span class="grey-sm">Branch</span>
               <small class="yellow-ok sm"><%= u.branch_name %></small><br/>
-              <%= link_to "Pending Approval", approval_path %>
+              <div class="sm">
+                <%= link_to "Approval Requests", approval_path %>
+                <span class="pointer glyphicon glyphicon-info-sign"></span>
+              </div>
 
-              
             </p>
           </div>
           <div class="row">
