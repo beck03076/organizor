@@ -1,0 +1,32 @@
+<div class="row well">
+<h4 class="bold-subhead">Permissions</h3>
+<div class="row">
+</div>
+<%= form_for(@obj) do |f| %>
+  <table class="table table-bordered">
+    <% Permission.registrations.each do |p| %>
+      <tr>
+        <td>
+
+
+          <h5> 
+
+            <%= check_box_tag "registration[permission_ids][]",
+              p.id, 
+              @obj.permissions.include?(p),{class: "permissions"} %>
+            <%= p.name.titleize %> </h5>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="form-group form-last">
+    <%= f.submit "Save", {class: "btn btn-primary"} %>
+  </div>
+
+
+<% end %>
+
+</div>
+
+

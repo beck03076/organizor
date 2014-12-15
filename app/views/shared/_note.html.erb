@@ -17,13 +17,14 @@
   </div>
 </div>
 
-
-
-
-
 <script>
+<% if current_user.is_a?(User) %>
+  <% tab = "note" %>
+<% else %>
+  <% tab = "comment" %>
+<% end %>
 
-acttab('note');
+acttab(tab);
 actdd();
 </script>
 

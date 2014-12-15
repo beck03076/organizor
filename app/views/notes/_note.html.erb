@@ -1,6 +1,12 @@
 <!-- everywhere notes -->
-<% sub.notes.each do |note| %>
-<% u = note._cre_by %>
+<% if current_user.is_a?(User) %>
+  <% all_notes = sub.notes %>
+<% else %>
+  <% all_notes = sub.notes.where(created_type: current_user.class.name) %>
+<% end %>
+
+<% all_notes.each do |note| %>
+<% u = note.created %>
 <% if !u.nil? %>
            <div class="blue-box note-box">
 

@@ -3,6 +3,8 @@
              </h4>
              <%= nested_form_for(i,remote: true) do |r| %>
               <%= r.fields_for :notes,i.notes.build do |n| %>
+                <%= n.hidden_field :created_type, value: current_user.class.name %>
+
                 <div class="notearea"> 
                   <%= n.text_area :content,{class: "redactor"} %>
                 </div>

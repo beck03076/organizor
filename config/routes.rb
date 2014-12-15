@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
+  match '/document/edit/:id' => "documents#edit"
+
   match '/approve_requests/:registration_id' => 'approve_requests#update', via: :put
 
   match '/approval' => 'approve_requests#approve_or_reject', via: [:get, :post], as: :approval

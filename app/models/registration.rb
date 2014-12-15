@@ -6,7 +6,7 @@ class Registration < ActiveRecord::Base
 
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :permission_ids
   include CoreModel
 
   notifiably_audited alert_for: [[[:mobile1,:email,:surname],"Contact Details","Primary mobile/email is changed for this registration"],

@@ -52,6 +52,9 @@
 
         <%= form_tag('/documents/delete_or_download') do %>
           <%= hidden_field_tag :reg_id,a.id %>
+
+    
+
           <table class="table table-bordered">
             <thead>
               <th>Select</th>
@@ -67,17 +70,22 @@
               <tbody>
                 <td><%= check_box_tag "doc_id[]",cat.id %></td>
                 <td><%= cat.name rescue "Unknown" %></td>
-                <td>[<%= cat.category.name rescue "Unknown" %>]</td>
+                <td><%= cat.category.try(:name) %> </td>
+                
                 <td><%= cat.uploader.name rescue "Unknown" %></td>
                 <td><%= cat.created_at.to_s %></td>
-                <td><%= link_to "Download",cat.path.url,{target: "_blank"} %> </td>                 
+                <td>
+                  <%= link_to "Edit","/document/edit/#{cat.id}",{remote: true} if can? :update, Document %> |
+                  <%= link_to "Download",cat.path.url,{target: "_blank"} if can? :download, Document %>
+                </td>                 
               </tbody>
             <% end %>
           </table>
 
           <div class="form-group">
-            <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} %>
-            <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} %>            
+
+            <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} if can? :delete, Document %>
+            <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} if can? :download, Document %>            
             <% if false %>
               <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
             <% end %>
@@ -88,51 +96,52 @@
       <% end %>
   </div>
 </div>
-<div class="well row">
-  <h4 class="bold-subhead">New Upload</h4>
-  <%=  nested_form_for(a,html: {class: "form-horizontal", id: "file_upload"}) do |reg| %>
+<% if can? :upload, Document %>
+  <div class="well row">
+    <h4 class="bold-subhead">New Upload</h4>
+    <%=  nested_form_for(a,html: {class: "form-horizontal", id: "file_upload"}) do |reg| %>
 
-    <%= reg.fields_for :documents,a.documents.build do |d| %>
-      <div class="row blue-well padAll10">
-        <%= d.hidden_field :registration_id %>
-        <div class="row row-top">
-          <div class="col-xs-12 text-right padR30">
-            <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe, size: "30x30") %>
+      <%= reg.fields_for :documents,a.documents.build do |d| %>
+        <div class="row blue-well padAll10">
+          <%= d.hidden_field :registration_id %>
+          <div class="row row-top">
+            <div class="col-xs-12 text-right padR30">
+              <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe, size: "30x30") %>
+            </div>
           </div>
-        </div>
 
-        <% if can? :create, Registration %>
-          <%= bs(d,[:category_id,DocCategory.order(:name),
-                    :id,
-                    :name,
-                    {prompt: "-category-"},{}],
-          "collection_select",
-          ["Doc Category",4],7,6) %>
+          <% if current_user.is_a?(User) %>
 
-        <%= bs(d,[:doc_type,(doc_type - ["all"]),{},{}],
-               "select",
-               ["Type",4],7,6) %>
-           <%end%>
+            <%= bs(d,[:category_id,DocCategory.order(:name),
+                      :id,
+                      :name,
+                      {},{}],
+            "collection_select",
+            ["Doc Category",4],7,6) %>
 
+            <%= bs(d,[:doc_type,(doc_type - ["all"]),{},{}],
+                 "select",
+                 ["Type",4],7,6) %>
+         <% else %>
+           <%= d.hidden_field :doc_type,value: "my_documents" %>
+           <%= d.hidden_field :category_id,value: DocCategory.first.id %>
+         <% end %>
 
-
-
-
-
-           <div class="col-xs-6">
-             <div class="form-group">
-               <label for="registration_documents_attributes_0_path" class="control-label col-xs-4">Path</label>
-               <div class="col-xs-7">
-                 <input type="file" name="registration[documents_attributes][0][path]" multiple="multiple" id="registration_documents_attributes_0_path" class="form-control">
+             <div class="col-xs-6">
+               <div class="form-group">
+                 <label for="registration_documents_attributes_0_path" class="control-label col-xs-4">Path</label>
+                 <div class="col-xs-7">
+                   <input type="file" name="registration[documents_attributes][0][path]" multiple="multiple" id="registration_documents_attributes_0_path" class="form-control">
+                 </div>
                </div>
              </div>
-           </div>
-      </div>
-      <div class="clear"></div><br/>                                     
-    <% end %>
+        </div>
 
+        <div class="clear"></div><br/>                                     
+  <% end %>
+<%end%>
     <script id="template-upload" type="text/x-tmpl">
-<div class="upload">
+       <div class="upload">
             <h5>{%=o.name%}</h5>
             <div class="progress">
               <div class="bar" style="width: 0%">
@@ -144,6 +153,8 @@
   <% end %> 
 <% end %>
 </div>
+
+<div id="edit-resource-container"></div>
 
 <script type="text/javascript">
 

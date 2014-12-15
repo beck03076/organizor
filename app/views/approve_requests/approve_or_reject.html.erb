@@ -16,7 +16,7 @@
               <th>Registration</th>
               <th>Fields</th>
               <th>New Value</th>
-              <th colspan=2>Actions</th>
+              <th colspan=2>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -40,7 +40,9 @@
                   <td class="m"><%= request.values.values.first %></td>
                 <% end %>
                 <td class="form-group" >
-                  <% if !request.approved %>
+                  <% if request.approved %>
+                    <span class="glyphicon glyphicon-thumbs-up"></span>Approved
+                  <% else %>
                     <%= link_to 'Approve'.html_safe, approval_path(id: request.id), {method: :post, class: "btn btn-primary"} %>
                   <% end %>
                 </td>

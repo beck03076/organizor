@@ -1,7 +1,26 @@
 class DocumentsController < ApplicationController
+  skip_before_filter :authenticate_user!, :only => [:delete_or_download,:edit,:update]
 
   require 'zip/zip'
   require 'zip/zipfilesystem'
+
+  def edit
+    @document = Document.find(params[:id])
+  end
+
+  def update
+    @document = Document.find(params[:id])
+
+    respond_to do |format|      
+      if @document.update_attributes(params[:document])
+        format.html {redirect_to :back}
+        format.json { head :no_content }
+      else
+        format.html {puts @document.errors.to_s; redirect_to :back}
+        format.json { render json: @document.errors, status: :unprocessable_entity }
+      end
+    end
+  end
   
   def index
     output = TestDocument.new.to_pdf
@@ -28,11 +47,15 @@ class DocumentsController < ApplicationController
          d = Document.where(id: params[:doc_id])
          d.map &:remove_path! # deleting files
          d.delete_all # deleting records
+         if current_user.is_a?(User)
          if !params[:reg_id].nil?
            redirect_to "/registrations/"+params[:reg_id].to_s
          elsif !params[:contract_id].nil?
            redirect_to "/institutions/"+params[:contract_id].to_s
          end
+       else
+        redirect_to :root
+      end
 
          
      elsif params[:doc_download]

@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  skip_before_filter :authenticate_user!, only: [:destroy,:update]
   include ActionView::Helpers::SanitizeHelper  
   # GET /notes
   # GET /notes.json

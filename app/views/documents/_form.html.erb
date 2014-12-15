@@ -1,0 +1,31 @@
+<!-- edit only branches -->
+<div class="row">
+      <div class="<%= div %>">
+        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+          <%= bs(f,"name","text_field",[nil,3],6) %>
+          <%= bs(f,[:category_id,DocCategory.order(:name), 
+                             :id, 
+                             :name,
+                             {prompt: "-doc category-"},{}],
+                             "collection_select",
+                             [nil,3],6) %>
+
+          <% if current_user.is_a?(User) %> 
+            <div class="form-group">
+              <label class="control-label col-xs-3">
+                Type
+              </label>
+              <div class="col-xs-6">
+                <%= f.select(:doc_type, ["students","universities","reports"],{}, {class: "form-control"}) %>
+              </div>  
+            </div>                              
+          <% end %>         
+          
+          <div class="form-group form-last">
+            <div class="col-sm-offset-3 col-sm-5">
+              <%= f.submit "Save", {class: "btn btn-primary"} %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+</div>

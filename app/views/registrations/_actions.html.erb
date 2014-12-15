@@ -1,29 +1,34 @@
 <!-- actions the tabs -->
- <% mains = {  application:     ["Programme",:read, "s"],
+<% mains = {  application:     ["Programme",:read, "s"],
               document:     ["Document",:read, "s"], 
-                  finance: ["Finance",:read],
-                  timeline: ["Registration",:read]} %>
- <% if current_user.is_a?(User) %>                      
-    <% actions = {email:     ["Email",:create],
-                  follow_up: ["FollowUp",:create],
-                  note:      ["Note",:create],
-                  todo:      ["Todo",:create],
-                  assign_to: ["Registration",:update]} %>       
-    
-    <li class="dropdown actions">
-        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">
-            Actions
-                <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-           <%= iterate_tabs(actions,'registration',{tabindex: "-1"}) %>
-        </ul>
-        </li>
- <% end %>
-        
-        <%= iterate_tabs(mains,'registration') %>
-        
-        
-<br/>
-<br/>
+              finance: ["Finance",:read],
+              timeline: ["Registration",:read],
+              permission: ["Registration",:create]
+           } %>
+
+            <% if current_user.is_a?(User) %>                      
+              <% actions = {email:     ["Email",:create],
+                            follow_up: ["FollowUp",:create],
+                            note:      ["Note",:create],
+                            todo:      ["Todo",:create],
+                            assign_to: ["Registration",:update]} %>       
+
+                          <li class="dropdown actions">
+                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">
+                              Actions
+                              <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                              <%= iterate_tabs(actions,'registration',{tabindex: "-1"}) %>
+                            </ul>
+                          </li>
+                          <% else %>
+                          <% mains[:comment] = ["Comment",:create] %>
+                        <% end %>
+
+                        <%= iterate_tabs(mains,'registration') %>
+
+
+                        <br/>
+                        <br/>
 

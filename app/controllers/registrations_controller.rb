@@ -17,7 +17,7 @@ class RegistrationsController < ApplicationController
     #called from CoreMethods
     h_action_partial("registration",
                      params[:registration_id],
-                     ["application","document","finance"])
+                     ["application","document","finance","permission","comment"])
      
   end
   
@@ -105,7 +105,7 @@ class RegistrationsController < ApplicationController
                     
         format.html { redirect_to @registration, notice: 'Registration was successfully updated.' }
         format.json { head :no_content }
-        format.js
+        format.js 
       else
         format.html { render action: "edit" }
         format.json { render json: @registration.errors, status: :unprocessable_entity }

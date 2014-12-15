@@ -2,13 +2,14 @@ class ApproveRequestsController < ApplicationController
   skip_before_filter :authenticate_user!, :only => :update
 
   def update
-    registration_id = params["registration_id"]
-    registration = Registration.find registration_id
-    request_to = registration.assigned_to
-    values = params["registration"]
-    ApproveRequest.create(registration_id: registration_id, request_to: request_to, values: values)
+    registration = Registration.find params["registration_id"]
+    if can? :approve, Registration
+      ApproveRequest.create(registration_id: params["registration_id"], request_to: registration.assigned_to, values: params["registration"])
+    else
+      registration.update_attributes(params[:registration])
+    end
     respond_to do |format|
-      format.json { render 'update' }
+      format.json
     end
   end
 
