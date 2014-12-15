@@ -8,6 +8,6 @@ class Permission < ActiveRecord::Base
   def self.registrations
   	where(name: ["update_registrations","upload_documents","download_documents",
   		           "read_documents","update_documents","delete_documents","approve_registrations",
-  		           "update_doc_categories","create_comments"]).all
+  		           "create_comments"]).all
   end
 end
