@@ -1,10 +1,31 @@
-<div class="row well">
-<h2>Welcome <%= @resource.first_name %></h2>
-<div class="row">
-  <img src="/images/carousel/screenshot.jpg">
-</div>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Organizor</title>
+<style>
+body{color:#444444;font-family:arial,sans-serif;}
+.outbx{background:#E9E9E9;padding:20px 10px 20px 10px}
+.inbox{margin:20px auto 20px auto;width:420px;border:1px solid #3BA7F2;padding:20px 30px 20px 30px;background:#fff}
+h1{color:#3BA7F2}
 
-<div class="row">
-  <%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token),{class: "btn btn-primary"} %>
+span{color:#666666;font-size:12px;line-height:25px}
+.btnp,.btnp:active,.btnp:link,.btnp:visited{text-decoration:none;font-size:14px;background:#3BA7F2;color:#fff;padding:10px 15px 10px 15px;border:1px solid #3BA7F2; margin-right:10px;font-weight:bold}
+.btnp:hover{cursor:pointer;background:#3BA7F2;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="outbx">
+<div class="inbox">
+<h1>Welcome to Organizor</h1>
+<span>You are invited to join <%= root_url %>. To activate your account, please verify your mail address by clicking the button below.</span><br/><br/>
+<a class="btnp" href="<%=confirmation_url(@resource, :confirmation_token => @token) %>" target="_blank" >Confirm My Account</a>
+<br/><br/><br/><br/><br/><br/><br/>
+<hr/>
+<span>Want some help on how to use Organizor?</span><br/>
+<span>Check out our <a href="#" >getting started tutorial</a> or watch this <a href="#">video</a>.</span>
+<br/><br/>
 </div>
 </div>
+</body>
+</html>
+
