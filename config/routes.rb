@@ -5,6 +5,8 @@ Organizor::Application.routes.draw do
 
   match '/approval' => 'approve_requests#approve_or_reject', via: [:get, :post], as: :approval
 
+  match '/approve_requests/:id' => 'approve_requests#delete', via: :delete
+
   mount Sidekiq::Web => '/sidekiq'
 
   devise_for :institutions, :controllers => {registrations: "institutions", confirmations: "institution_confirmations" }

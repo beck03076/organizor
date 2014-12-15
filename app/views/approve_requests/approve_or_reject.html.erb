@@ -1,19 +1,54 @@
-<h1>Listing requests</h1>
+<div class="row row-top">
+  <div class="col-md-10 users">
+    <h3>Approval Request</h3>
+  </div>
+</div>
 
-<table>
-  <tr>
-    <th>Registration</th>
-    <th>Values</th>
-    <th>Approved</th>
-  </tr>
+<div class="row well">
+  <div class="col-md-12">
+    <div class="row">        
+      <div class="row" id="users-table">
+        <table class="table table-bordered">
+          <thead align="center">
+            <tr class="b text-center">
+              <th>Registration</th>
+              <th>Fields</th>
+              <th>New Value</th>
+              <th colspan=2>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @requests.each do |request| %>
+              <tr>
+                <td><h4><%= link_to request.registration.name, "/registrations/#{request.registration_id}"  %></h4><%= request.registration.email %> </td>
+                <% a = %w(address_country_id country_id qualification_id) %>
+                <% if a.include?(request.values.keys.first) %>
+                  <% field = request.values.keys.first.split('_') %>
+                  <% array_field = field.pop %>
+                  <td class="m"><%= field.join('_') %></td>
+                  <% if request.values.keys.first == "qualification_id" %>
+                    <% value = Qualification.find(request.values.values.first).name %>
+                  <% else %>
+                    <% value = Country.find(request.values.values.first).name %>
+                  <% end %>
+                  <td class="m"><%= value %></td>
+                <% else %>
+                  <td class="m"><%= request.values.keys.first %></td>
+                  <td class="m"><%= request.values.values.first %></td>
+                <% end %>
+                <td class="sm">
+                  <%= link_to '<span class="glyphicon glyphicon-ok"></span>'.html_safe, approval_path(id: request.id), method: :post %>
+                </td>
+                <td>
+                  <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, "/approve_requests/#{request.id}", method: :delete %>
+                </td>
+              </tr>
 
-<% @request.each do |approve_request| %>
-  <tr>
-    <td><%= approve_request.registration_id %></td>
-    <td><%= approve_request.values %></td>
-    <td><%= link_to "Approve", approval_path(id: approve_request.id), method: :post, class: "btn" %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
