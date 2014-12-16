@@ -1,5 +1,5 @@
 class HumanImageUploader < CarrierWave::Uploader::Base
-  #include CarrierWave::RMagick
+  include CarrierWave::RMagick
 
   storage :file
 
