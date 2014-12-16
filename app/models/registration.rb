@@ -95,7 +95,7 @@ class Registration < ActiveRecord::Base
   has_many :proficiency_exams,class_name: "Exam", dependent: :destroy  
   has_many :documents, dependent: :destroy
   has_many :users, as: :userable
-  has_many :approve_requests
+  has_many :approve_requests, :dependent => :destroy
   #==================
   has_and_belongs_to_many :permissions
   
