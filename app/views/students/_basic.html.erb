@@ -1,6 +1,6 @@
 <!-- basic information about the registration -->
 <% a = @registration %>
-
+<div class="students">
 <div class="row border-b">  
   <div class="col-xs-3">
     <%= render 'images/disp', core: "registration", a: a %>
@@ -106,7 +106,12 @@
     </ul>
   </div>
 </div>
-  <br/>
+</div>
 <script>
-  $('.best_in_place').best_in_place();
+$('.best_in_place').best_in_place();
+<% if (cannot? :approve, Registration) %>
+  $('.students.best_in_place').bind("ajax:success", function () {
+    bootbox.alert("Request Sent for Approval!");
+  });
+<% end %>
 </script>

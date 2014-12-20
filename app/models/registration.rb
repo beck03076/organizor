@@ -93,6 +93,7 @@ class Registration < ActiveRecord::Base
   has_many :fee, through: :programmes  
   has_many :exams
   has_many :proficiency_exams,class_name: "Exam", dependent: :destroy  
+  has_many :qualifications
   has_many :documents, dependent: :destroy
   has_many :users, as: :userable
   has_many :approve_requests
@@ -110,13 +111,13 @@ class Registration < ActiveRecord::Base
   :first_name, :flight_airport, :flight_arrival_date, 
   :flight_arrival_time, :flight_no, :gender, 
   :home_phone, :mobile1, :mobile2, 
-  :passport_number,:prof_eng_level_id, :prof_exam_id, :qua_exam, 
-  :qua_grade, :qua_id, :qua_institution, :qua_score, 
-  :qua_subject, :ref_no, :reg_came_through, 
+  :passport_number,:prof_eng_level_id, :prof_exam_id, 
+  :ref_no, :reg_came_through, 
   :reg_direct, :sub_agent_id, 
   :surname, :updated_by, :passport_valid_till, 
   :visa_valid_till, :visa_type, :work_phone,
   :programmes_attributes,:proficiency_exams_attributes,
+  :qualifications_attributes,
   :note,:documents_attributes,:_destroy,:enquiry_id,
   :notes_attributes,:image,:remote_image_url,
   :progression_status_id,:branch_id,:assigned_at,
@@ -125,7 +126,7 @@ class Registration < ActiveRecord::Base
   :student_source_id,:qualification_id,:last_seen_at,
   :direct
   
-  accepts_nested_attributes_for :programmes,:proficiency_exams, 
+  accepts_nested_attributes_for :programmes,:proficiency_exams,:qualifications, 
   :documents, :allow_destroy => true
 
 

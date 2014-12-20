@@ -1,5 +1,6 @@
 class Qualification < ActiveRecord::Base
-  has_many :registrations,foreign_key: 'qua_id'
-   
-  attr_accessible :desc, :name
+  belongs_to :registration
+  belongs_to :qualification_name 
+
+  attr_accessible :desc, :name, :institution,:subject, :grade, :exam,:score, :graduated_out, :registration_id, :qualification_name_id 
 end

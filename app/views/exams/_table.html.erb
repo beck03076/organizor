@@ -1,0 +1,20 @@
+<table class="table table-bordered">
+                <thead>
+                  <tr class="sm">
+                    <th>English Level</th>
+                    <th>Exam Type</th>
+                    <th>Date</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @exams.each do |e| %>
+                      <tr>
+                        <td><%= e.english_level.try(:name) %></td> 
+                        <td><%= e.exam_type.try(:name) %> </td>
+                        <td><%= e.exam_date %> </td>
+                        <td><%= e.exam_score %> </td>
+                     </tr>
+                  <% end %>
+                </tbody>
+              </table>

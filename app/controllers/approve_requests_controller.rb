@@ -9,7 +9,7 @@ class ApproveRequestsController < ApplicationController
       registration.update_attributes(params[:registration])
     end
     respond_to do |format|
-      format.json
+      format.json {head :no_content }
     end
   end
 

@@ -4,7 +4,7 @@ class AuditorObserver < ActiveRecord::Observer
   :registration,:email,:application_status,
   :contact_type,:course_level,:course_subject,:doc_category,
   :english_level,:enquiry_status,:event_type,:exam_type,
-  :qualification,:student_source,
+  :qualification_name,:student_source,
   :todo_topic,:institution_type,:institution_group,
   :contract,:contract_doc_category,:person_type,
   :person,:commission_status,:branch,

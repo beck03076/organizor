@@ -12,7 +12,7 @@
       <%= li1('ref_no','ref_no','span','small',a)%>
       <%= li1('channel',a.channel,'span','small')%>
       <%= li1('source',a.source,'span','small')%>
-
+     
       <%= li1('applications',a.quick_st,'span','small')%>
       <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
       <% %w(emails follow_ups todos notes).each do |act| %>
@@ -41,6 +41,19 @@
   </ul>
   </div>
   <div class="col-xs-4">
+
+    <h5 class="text-center green-sided">Branch : <b><%= a.branch.try(:name) %></b></h5>
+    <h5 class="text-center red-sided">Owner : <b><%= a.ato %></b></h5>
+
+    <div class="yellow-well well-sm form-last">
+      <h4 class="bold-subhead">Educational</h4>
+      <ul class="vlsdet-s pt-0">
+        <h5><%= link_to "Qualification",qualification_path,{remote: true} %></h5>
+        <h5><%= link_to "Proficiency Exams",exam_path,{remote: true} %></h5>
+      </ul>
+    </div>
+    <br/>
+
     <div class="well well-sm form-last">
       <h4 class="bold-subhead">History</h4>
       <ul class="vlsdet-s pt-0">
@@ -65,10 +78,10 @@
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
         <%= li2('city',[:address_city,:select,City,
-                  :city],a,nil,"span","strong")%>
-        <%= li2('country',[:address_country_id,:select,Country,
-                  :country],a,nil,"span","strong")%>
-        <%= li1('post_code','address_post_code','span','small',a)%>
+                        :city],a,nil,"span","strong")%>
+                      <%= li2('country',[:address_country_id,:select,Country,
+                                         :country],a,nil,"span","strong")%>
+                                       <%= li1('post_code','address_post_code','span','small',a)%>
     </ul>
   </div>
 
@@ -82,45 +95,46 @@
     </ul>
   </div>
 </div>
-
-<div class="row row-top border-b">
-  <div class="col-xs-6">
-    <ul class="vlsdet">
+<% if false %>
+  <!-- not using now, deprecated in the next version -->
+  <div class="row row-top border-b">
+    <div class="col-xs-6">
+      <ul class="vlsdet">
         <h4 class="bold-subhead">Educational Background</h4>
         <%= li2('qualification',[:qualification_name,:select,Qualification,
-                  :qualification],a,nil,"span","strong")%>        
-        <% [['qua_subject','subject'],
-            ['qua_institution','institution'],
-            ['qua_grade','grade'],
-            ['qua_exam','exam'],
-            ['qua_score','score']].each do |v| %>
-          <%= li1(v[1],v[0],'span','small',a)%>
-        <% end %>
-    </ul>
-  </div>
-  <div class="col-xs-6">
-    <ul class="vlsdet">
+                                 :qualification],a,nil,"span","strong")%>        
+                               <% [['qua_subject','subject'],
+                                   ['qua_institution','institution'],
+                                   ['qua_grade','grade'],
+                                   ['qua_exam','exam'],
+                                   ['qua_score','score']].each do |v| %>
+                                   <%= li1(v[1],v[0],'span','small',a)%>
+                                 <% end %>
+      </ul>
+    </div>
+    <div class="col-xs-6">
+      <ul class="vlsdet">
         <h4 class="bold-subhead">English Language Proficiency</h4>
         <% a.exams.each do |x| %>
-        <%= li2('english_level',[:english_level_name,:select,EnglishLevel,
-                  :english_level],a,nil,"span","strong")%>
-        <%= li2('exam_type',[:exam_type_name,:select,ExamType,
-                  :exam_type],a,nil,"span","strong")%>
-        <%= li1('score','exam_score','span','small',x)%>
-        <%= li2('exam_date',{type: :date,column: :exam_date},x,nil,"span","strong")%>
-        <% end %>
-    </ul>
+          <%= li2('english_level',[:english_level_name,:select,EnglishLevel,
+                                   :english_level],a,nil,"span","strong")%>
+                                 <%= li2('exam_type',[:exam_type_name,:select,ExamType,
+                                                      :exam_type],a,nil,"span","strong")%>
+                                                    <%= li1('score','exam_score','span','small',x)%>
+                                                    <%= li2('exam_date',{type: :date,column: :exam_date},x,nil,"span","strong")%>
+                                                  <% end %>
+      </ul>
+    </div>
   </div>
-</div>
-
+<% end %>
 <div class="row row-top border-b">
   <div class="col-xs-6">
     <ul class="vlsdet">
-        <h4 class="bold-subhead">Emergency Contact</h4>
-        <% [['emer_full_name','Full Name'],
-            ['emer_relationship','Relationship'],
-            ['emer_mobile','Mobile'],
-            ['emer_email','Email']].each do |v| %>
+      <h4 class="bold-subhead">Emergency Contact</h4>
+      <% [['emer_full_name','Full Name'],
+          ['emer_relationship','Relationship'],
+          ['emer_mobile','Mobile'],
+          ['emer_email','Email']].each do |v| %>
           <%= li1(v[1],v[0],'span','small',a)%>
         <% end %>
     </ul>

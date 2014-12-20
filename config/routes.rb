@@ -301,6 +301,7 @@ Organizor::Application.routes.draw do
    
    resources :english_levels
    resources :exam_types
+   resources :qualification_names
    resources :qualifications
   
   resources :course_subjects

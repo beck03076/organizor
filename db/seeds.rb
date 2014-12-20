@@ -37,7 +37,7 @@ end
    PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
  end
 
- models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualifications roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
+ models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualification_names roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
  actions = %w[create read update delete]
  models.each do |m|
    actions.each do |a|
@@ -52,16 +52,16 @@ end
  end
 
 
- p "Creating documnet upload permissions..."
  if Permission.where(subject_class: "Document",action: "upload").blank?
+   p "Creating document upload permissions..."
    Permission.create!(:name => "upload_documents",
                       :description => "With this permission, an user can upload documents",
                       :subject_class => "Document",
                       :action => "upload")
    p "created.."
  end
- p "Creating documnet download permissions..."
  if Permission.where(subject_class: "Document",action: "download").blank?
+   p "Creating documnet download permissions..."
    Permission.create!(:name => "download_documents",
                       :description => "With this permission, an user can download documents",
                       :subject_class => "Document",
@@ -69,8 +69,8 @@ end
    p "created.."
  end
 
-  p "Creating approve request permissions..."
  if Permission.where(subject_class: "Registration",action: "approve").blank?
+   p "Creating approve request permissions..."
    Permission.create!(:name => "approve_registrations",
                       :description => "With this permission, an user can approve registrations",
                       :subject_class => "Registration",
@@ -78,8 +78,8 @@ end
    p "created.."
  end
 
-   p "Creating create comments permissions..."
  if Permission.where(subject_class: "Comment",action: "create").blank?
+   p "Creating create comments permissions..."
    Permission.create!(:name => "create_comments",
                       :description => "With this permission, an user can approve registrations",
                       :subject_class => "Comment",
@@ -169,7 +169,7 @@ end
                          {institution_type: %w(University Language_School Business_Partner 
                        Education_Provider Official_Sub_Agent Private_Provider)},
                        {person_type: %w(contact unofficial_sub_agent personal)},
-                       {qualification: %w(School_certificate Foundation A-level
+                       {qualification_name: %w(School_certificate Foundation A-level
                     Diploma Bachelor Pre-master 
                     PgDiploma Master PhD)},
                     {student_source: %w(Forum Google_Search Google_Advert 

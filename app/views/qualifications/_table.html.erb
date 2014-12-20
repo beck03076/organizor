@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+                <thead>
+                  <tr class="sm">
+                    <th>Name</th>
+                    <th>Subject/Stream</th>
+                    <th>Institution/School</th>
+                    <th>Exam/Board</th>
+                    <th>Score/Marks</th>
+                    <th>Grade/GPA(If any)</th>
+                    <th>Passed Out</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @qualifications.each do |q| %>
+                      <tr>
+                        <td><%= q.qualification_name.try(:name) %></td> 
+                        <td><%= q.subject %> </td>
+                        <td><%= q.institution %> </td>
+                        <td><%= q.exam %> </td>
+                        <td><%= q.score %> </td>
+                        <td><%= q.grade %> </td>
+                        <td><%= q.graduated_out %> </td>
+                     </tr>
+                  <% end %>
+                </tbody>
+              </table>

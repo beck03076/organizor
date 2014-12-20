@@ -112,6 +112,18 @@ strong.sm{font-size:12px;}
   padding:0 5px 0 5px;
 }
 
+.green-sided{
+  color: #FFFFFF;
+  background-color: #20A2AD;
+  padding: 5px 5px 5px 5px;
+}
+
+.red-sided{
+  color: #FDFDFD;
+  background-color: #FF4D4D;
+  padding: 5px 5px 5px 5px;
+}
+
 .yellow-ok{
   color: #555753;
   background-color:#f8f4b0;
