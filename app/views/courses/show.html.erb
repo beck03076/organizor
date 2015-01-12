@@ -1,115 +1,106 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @course.name %>
-</p>
-
-<p>
-  <b>University:</b>
-  <%= @course.university %>
-</p>
-
-<p>
+<div class="row well">
+  <h3><%= @course.name %></h3>
+  <h4><%= @course.university %></h4>
+  <hr>
+  <p>
   <b>Department:</b>
   <%= @course.department %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Qdmode:</b>
   <%= @course.qdmode %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Intake:</b>
   <%= @course.intake %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Requirements:</b>
-  <%= @course.requirements %>
-</p>
+  <%= @course.requirements.html_safe rescue "" %>
+  </p>
 
-<p>
+  <p>
   <b>Intl:</b>
-  <%= @course.intl %>
-</p>
+  <%= @course.intl.html_safe rescue "" %>
+  </p>
 
-<p>
+  <p>
   <b>Desc:</b>
-  <%= @course.desc %>
-</p>
+  <%= @course.desc.html_safe rescue "" %> 
+  </p>
 
-<p>
+  <p>
   <b>Ukfee:</b>
   <%= @course.ukfee %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Internfee:</b>
   <%= @course.internfee %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Fund:</b>
-  <%= @course.fund %>
-</p>
+  <%= @course.fund.html_safe rescue "" %> 
+  </p>
 
-<p>
+  <p>
   <b>Named pathway:</b>
   <%= @course.named_pathway %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>New enrollment:</b>
   <%= @course.new_enrollment %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Total enrollment:</b>
   <%= @course.total_enrollment %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Scholarships:</b>
   <%= @course.scholarships %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Gscholarships:</b>
   <%= @course.gscholarships %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Bursaries:</b>
   <%= @course.bursaries %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Contact name:</b>
   <%= @course.contact_name %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Contact email:</b>
   <%= @course.contact_email %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Contact phone:</b>
   <%= @course.contact_phone %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Contact web:</b>
   <%= @course.contact_web %>
-</p>
+  </p>
 
-<p>
+  <p>
   <b>Apply link:</b>
   <%= @course.apply_link %>
-</p>
+  </p>
 
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+</div>
