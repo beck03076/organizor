@@ -119,6 +119,10 @@ class Enquiry < ActiveRecord::Base
   def enquiry_first_name
   end
 
+  def name
+    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+  end
+
   def create_email
     if !self.created_by.nil?
       c = User.find(self.created_by).conf
@@ -159,9 +163,7 @@ class Enquiry < ActiveRecord::Base
    self.date_of_birth.strftime("%d-%m-%Y") rescue "Not Captured"
   end
   
-  def name
-    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
-  end
+
   
   def cur_cl
     @current_cl

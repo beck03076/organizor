@@ -57,6 +57,8 @@ module CoreModel
   # = Methods =
   # ===========
 
+
+
   def set_assigned_at
     return if !assigned_to_changed?
     self.assigned_at = Time.now
