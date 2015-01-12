@@ -1,0 +1,32 @@
+<%= simple_form_for(@course) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :university %>
+    <%= f.input :department %>
+    <%= f.input :qdmode %>
+    <%= f.input :intake %>
+    <%= f.input :requirements %>
+    <%= f.input :intl %>
+    <%= f.input :desc %>
+    <%= f.input :ukfee %>
+    <%= f.input :internfee %>
+    <%= f.input :fund %>
+    <%= f.input :named_pathway %>
+    <%= f.input :new_enrollment %>
+    <%= f.input :total_enrollment %>
+    <%= f.input :scholarships %>
+    <%= f.input :gscholarships %>
+    <%= f.input :bursaries %>
+    <%= f.input :contact_name %>
+    <%= f.input :contact_email %>
+    <%= f.input :contact_phone %>
+    <%= f.input :contact_web %>
+    <%= f.input :apply_link %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

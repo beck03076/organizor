@@ -1,6 +1,9 @@
 require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
+  resources :courses
+
+
   match '/document/edit/:id' => "documents#edit"
 
   match '/approve_requests/:registration_id' => 'approve_requests#update', via: :put

@@ -1,0 +1,65 @@
+<h1>Listing courses</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>University</th>
+    <th>Department</th>
+    <th>Qdmode</th>
+    <th>Intake</th>
+    <th>Requirements</th>
+    <th>Intl</th>
+    <th>Desc</th>
+    <th>Ukfee</th>
+    <th>Internfee</th>
+    <th>Fund</th>
+    <th>Named pathway</th>
+    <th>New enrollment</th>
+    <th>Total enrollment</th>
+    <th>Scholarships</th>
+    <th>Gscholarships</th>
+    <th>Bursaries</th>
+    <th>Contact name</th>
+    <th>Contact email</th>
+    <th>Contact phone</th>
+    <th>Contact web</th>
+    <th>Apply link</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @courses.each do |course| %>
+  <tr>
+    <td><%= course.name %></td>
+    <td><%= course.university %></td>
+    <td><%= course.department %></td>
+    <td><%= course.qdmode %></td>
+    <td><%= course.intake %></td>
+    <td><%= course.requirements %></td>
+    <td><%= course.intl %></td>
+    <td><%= course.desc %></td>
+    <td><%= course.ukfee %></td>
+    <td><%= course.internfee %></td>
+    <td><%= course.fund %></td>
+    <td><%= course.named_pathway %></td>
+    <td><%= course.new_enrollment %></td>
+    <td><%= course.total_enrollment %></td>
+    <td><%= course.scholarships %></td>
+    <td><%= course.gscholarships %></td>
+    <td><%= course.bursaries %></td>
+    <td><%= course.contact_name %></td>
+    <td><%= course.contact_email %></td>
+    <td><%= course.contact_phone %></td>
+    <td><%= course.contact_web %></td>
+    <td><%= course.apply_link %></td>
+    <td><%= link_to 'Show', course %></td>
+    <td><%= link_to 'Edit', edit_course_path(course) %></td>
+    <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Course', new_course_path %>
