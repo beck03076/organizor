@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.1.8'
 
-
+gem 'mina'
+gem 'unicorn'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -15,14 +16,17 @@ gem 'execjs'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails','~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
-  gem 'jquery-ui-rails'
-  gem 'jquery-fileupload-rails'
-end
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.3'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
+gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-ui-rails'
+gem 'jquery-fileupload-rails'
+
 
 gem 'will_paginate'
 
@@ -56,7 +60,9 @@ gem 'twitter-typeahead-rails'
 gem 'carrierwave'
 #gem "audited-activerecord"
 gem 'private_pub'
-gem 'notifiably_audited-activerecord'
+# gem 'notifiably_audited-activerecord', '~> 1.0.10'
+# https://github.com/rails/protected_attributes/issues/5
+gem 'protected_attributes'
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'

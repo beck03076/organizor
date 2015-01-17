@@ -62,9 +62,10 @@ module Organizor
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.active_record.observers = :auditor_observer, :notification_observer
-    
+    # http://stackoverflow.com/questions/18095864/undefined-method-instantiate-observers-error-after-restarting-spork-server
+    # config.active_record.observers = :auditor_observer, :notification_observer
+
     config.exceptions_app = self.routes
-    
+
   end
 end
