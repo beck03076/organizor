@@ -1,7 +1,7 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-require 'mina/rbenv'
+require 'mina/rvm'
 # require 'mina_sidekiq/tasks'
 
 #                                                                        Config
@@ -28,7 +28,7 @@ set :keep_releases,   5
 #                                          folder structure
 
 task :environment do
-  invoke :'rbenv:load'
+  invoke :'rvm:use[ruby-2.2.0]'
 end
 
 #                                                                    Setup task
