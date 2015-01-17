@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   mapping do
       indexes :id, :type => 'integer'
       indexes :date_of_birth, type: 'date'      
-      [:first_name,:surname,:mobile,:email,:alternate_email,:job_title].each do |attribute|
+      [:first_name,:surname,:mobile,:email,:alternate_email].each do |attribute|
         indexes attribute, :type => 'string'
       end
   end
@@ -77,11 +77,7 @@ class Person < ActiveRecord::Base
      self.country_name,
      self.address_post_code.to_s].join(', ').strip
   end
- 
-  def name
-    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
-  end
-  
+
   def self.sub_agent
     type = PersonType.find_by_name("unofficial sub agent").id
     where(type_id: type).order(:first_name)

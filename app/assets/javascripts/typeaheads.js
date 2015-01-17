@@ -9,10 +9,12 @@ function typeaheadChangeMode(){
 
 function typeaheads ($obj,model) 
 {
-    var mode = model.toLowerCase();    
-    var mapped = setDisplay(mode);     
-    model = mapped["model"] || mode;
-    col = mapped["search_col"] || mapped["first"][0];
+    
+    // var mode = model.toLowerCase();    
+    // var mapped = setDisplay(mode);     
+    // model = mapped["model"] || mode;
+    var mapped = setDisplay();    
+    col = "title";
 
          // Instantiate the Bloodhound suggestion engine
         var items = new Bloodhound({
@@ -20,7 +22,8 @@ function typeaheads ($obj,model)
                 return Bloodhound.tokenizers.whitespace(datum.value);
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: '../typeaheads/' + model + '/' + col + '/%QUERY'
+            //remote: '../typeaheads/' + model + '/' + col + '/%QUERY'
+            remote: '../typeaheads' + '/%QUERY'
         });
 
         // Initialize the Bloodhound suggestion engine
@@ -31,15 +34,20 @@ function typeaheads ($obj,model)
         // Instantiate the Typeahead UI
         $obj.typeahead({minLength: 3},{
             displayKey: function(item) {
-                   return '<div class="bor-b pointer"><span class="md">' 
-                          + item[mapped["first"][0]] 
-                          + ' ' 
+                   ico = item[mapped["first"][0]];
+                   model = item[mapped["second"][2]];
+                   return '<div class="bor-b pointer row">'                          
+                          + '<div class="col-xs-9">'
+                          + '<span class="md ' + model + '">'                           
                           + (item[mapped["first"][1]] || '')
-                          + '</span><br/> <span class=grey-sm>' 
-                          + item[mapped["second"][0]]
-                          + ' ' 
-                          + (item[mapped["second"][1]] || '')
-                          + '</span></div>'  ;
+                          + '</span><br/> <div class=grey-sm>' 
+                          + (item[mapped["second"][0]] || "No email")
+                          + '<br/>'
+                          + (item[mapped["second"][1]] || "No phone")
+                          + '</div></div>'
+                          + '<div class=col-xs-3>'
+                          + ico
+                          + '</div></div>'  ;
                 },
             source: items.ttAdapter()
         });
@@ -51,6 +59,12 @@ function typeaheads ($obj,model)
         typeaheads.on('typeahead:selected', numSelectedHandler);
 }
 
+
+function setDisplay(){
+    return { model: "all",first: ["shape","title"], second: ["email","mobile1","model"] };    
+}
+
+/*
 function setDisplay(model){
     var map =  {
         referenceno: {model: "registrations",first: ["ref_no"], second: ["first_name","surname"],search_col: "ref_no"},
@@ -58,6 +72,8 @@ function setDisplay(model){
         registrations: {first: ["first_name","surname"], second: ["email1"]},
         institutions: {first: ["name"], second: ["email"]},
         people: {first: ["first_name","surname"], second: ["email"]},
+        all: {model: "all",first: ["title"], second: ["description"]},
     };
-    return map[model];
+    return map["all"];
 }
+*/

@@ -184,6 +184,10 @@ class Registration < ActiveRecord::Base
     end
   end
 
+  def name
+    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+  end
+
   def set_permissions
       self.permissions << Permission.where(subject_class: 'Document')
   end
@@ -215,11 +219,7 @@ class Registration < ActiveRecord::Base
   #   self.password = self.ref_no
   #   self.password_confirmation = self.ref_no
   # end 
-  
-  def name
-    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
-  end
-  
+
   def statuses
     self.programmes.includes(:application_status,:institution).map{|i| [i.institution.try(:name),i.application_status.try(:name)]} rescue ""
   end

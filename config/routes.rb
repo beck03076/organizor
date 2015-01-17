@@ -29,15 +29,13 @@ Organizor::Application.routes.draw do
       member do
         get :clone
       end
-  end
-  
-
-  resources :typeaheads
+  end  
 
   resources :required_docs
   resources :required_doc_types
 
-  match '/typeaheads/:models/:col/:q' => 'typeaheads#results', format: false, constraints: { q: /[^\/]+/ }
+  # match '/typeaheads/:models/:col/:q' => 'typeaheads#results', format: false, constraints: { q: /[^\/]+/ }
+  match '/typeaheads/:q' => 'typeaheads#results', format: false, constraints: { q: /[^\/]+/ }
   match '/analytics' => "analytics#index", as: "analytics"
   match "/analytics/:core/:core_method/:core_params" => "analytics#show"
 

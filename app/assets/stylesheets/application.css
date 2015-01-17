@@ -548,3 +548,22 @@ vertical-align: top;
     height: 15px;
     width: 0;
 }
+
+.red-strip {
+color: #FDFDFD;
+padding: 3px 3px 3px 3px;
+display: inline;
+float: right;
+}
+.enquiry {
+  color: #20A2AD;
+  }
+.registration {
+  color: #FF4D4D;
+  }
+.institution {
+  color: #18A6DD;
+  }
+.person {
+  color: #8F0E8F;
+}  
