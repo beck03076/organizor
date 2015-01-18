@@ -1,5 +1,5 @@
-app_path = "/home/rails/apps/organizor/current"
-shared_path = "/home/rails/apps/organizor/shared"
+app_path = "/home/deployer/apps/organizor/current"
+shared_path = "/home/deployer/apps/organizor/shared"
 
 worker_processes   2
 preload_app        true

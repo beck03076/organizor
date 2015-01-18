@@ -12,7 +12,7 @@ set :rails_env,       'production'
 set :domain,          '104.130.200.148'
 # set :port,            37894
 
-set :deploy_to,       "/home/rails/apps/organizor"
+set :deploy_to,       "/home/deployer/apps/organizor"
 set :app_path,        "#{deploy_to}/current"
 
 set :repository,      'https://github.com/beck03076/organizor.git'
@@ -28,7 +28,7 @@ set :keep_releases,   5
 #                                          folder structure
 
 task :environment do
-  invoke :'rvm:use[ruby-2.2.0]'
+  invoke :'rvm:use[ruby-2.1.2]'
 end
 
 #                                                                    Setup task
