@@ -18,13 +18,13 @@ set :app_path,        "#{deploy_to}/current"
 set :repository,      'https://github.com/beck03076/organizor.git'
 set :branch,          'redesign-new'
 
-set :user,            'rails'
+set :user,            'deployer'
 set :shared_paths,    ['config/database.yml', 'log' 'tmp']
 set :keep_releases,   5
 
-#                                                                           Rbenv
+#                                                                           Rvm
 # ===============================================================================
-# set :rbenv_path, '/home/deployer/.rbenv' not required when installed in default
+# set :rvm_path, '/home/deployer/.rvm' not required when installed in default
 #                                          folder structure
 
 task :environment do
