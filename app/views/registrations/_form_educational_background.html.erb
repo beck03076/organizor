@@ -9,7 +9,7 @@
               {prompt: "-qualification-"},{}],
     "collection_select",
     ['Qualification',4],7,6) %> 
-  <% %w(subject institution grade exam score).each do |el| %>
+  <% %w(subject partner grade exam score).each do |el| %>
     <%= bs(f,'qua_' + el,"text_field",[el,4],7,6) %>
   <% end %>
   </div>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="row">
-    <% %w(subject institution score graduated_out grade exam).each do |el| %>
+    <% %w(subject partner score graduated_out grade exam).each do |el| %>
       <%= bs(q,el,"text_field",[nil,4],7,6) %>
     <% end %> 
 

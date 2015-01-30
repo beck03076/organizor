@@ -2,18 +2,18 @@ class Programme < ActiveRecord::Base
   include CoreModel
   
   validates :registration_id, on: :create,
-            uniqueness: {scope: [:institution_id,:level_id], 
-                         message: "with same Institution and CourseLevel already exsits!" }  
+            uniqueness: {scope: [:partner_id,:level_id], 
+                         message: "with same Partner and CourseLevel already exsits!" }  
 
   validates_presence_of :start_date, on: :create
 
   belongs_to :enquiry
   belongs_to :registration
   belongs_to :course_level, :foreign_key => 'level_id'   
-  belongs_to :institution
+  belongs_to :partner
   belongs_to :country
   belongs_to :city
-  belongs_to :ins_type, class_name: "InstitutionType",:foreign_key => 'type_id'
+  belongs_to :ins_type, class_name: "PartnerType",:foreign_key => 'type_id'
   belongs_to :course_subject, :foreign_key => 'subject_id'
   belongs_to :application_status,:foreign_key => 'app_status_id'
   belongs_to :claim_status,:foreign_key => 'claim_status_id', class_name: "CommissionClaimStatus"
@@ -31,7 +31,7 @@ class Programme < ActiveRecord::Base
   
 
   attr_accessible :city_id, :country_id, :created_by, 
-                  :end_date, :enquiry_id, :institution_id, 
+                  :end_date, :enquiry_id, :partner_id, 
                   :level_id, :start_date, :subject_id, 
                   :type_id, :updated_by, :course_subject,
                   :app_status_id,:ins_ref_no,:registration_id,
@@ -46,8 +46,8 @@ class Programme < ActiveRecord::Base
   before_create :set_country_city
 
   def set_country_city
-    self.country_id = institution.country_id
-    self.city_id = institution.city_id
+    self.country_id = partner.country_id
+    self.city_id = partner.city_id
   end 
   
   def set_status_diagram_conversion_time
@@ -75,7 +75,7 @@ class Programme < ActiveRecord::Base
   end
   
   def self.joined_ins(ins_id)
-    includes(:application_status).where(institution_id: ins_id,application_statuses: {name: "joined"})
+    includes(:application_status).where(partner_id: ins_id,application_statuses: {name: "joined"})
   end
 
   def self.deferred
@@ -98,8 +98,8 @@ class Programme < ActiveRecord::Base
     p_fee_status.name rescue "Unknown"
   end
   
-  def institution_name
-    institution.name rescue "Unknown"
+  def partner_name
+    partner.name rescue "Unknown"
   end 
 
   def ins_type_name
@@ -115,7 +115,7 @@ class Programme < ActiveRecord::Base
   end
 
   def name
-    course_level_name + ' ' + institution_name
+    course_level_name + ' ' + partner_name
   end
 
   def assigned_to

@@ -119,9 +119,9 @@
                        (reg_cols.map {|i| [i.titleize,i]})) %>
       </div>
       
-      <% ins_cols = Institution.column_names.sort %>
+      <% ins_cols = Partner.column_names.sort %>
       <div class="frbox">
-          <%= label_tag :for_institution %>
+          <%= label_tag :for_partner %>
           <%= f.select(:def_ins_search_col, 
                        (ins_cols.map {|i| [i.titleize,i]})) %>
       </div>
@@ -214,7 +214,7 @@
   
   
   <h3>
-  For Institution <span class="toggler " onclick="deselectAllCheck('#ins_cols');">deselect all </span>
+  For Partner <span class="toggler " onclick="deselectAllCheck('#ins_cols');">deselect all </span>
   </h3>
   <br/>
   <br/>

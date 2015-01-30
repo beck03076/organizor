@@ -12,7 +12,7 @@ class CreateContracts < ActiveRecord::Migration
       t.string :internal_target
       t.string :recruitment_territories
       t.text :desc
-      t.integer :institution_id
+      t.integer :partner_id
 
       t.timestamps
     end

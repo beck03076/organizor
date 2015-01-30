@@ -62,8 +62,8 @@ class ContractsController < ApplicationController
       if @contract.update_attributes(params[:contract])
         if (params[:contract][:notes_attributes])
           
-                tl("Institution",@contract.institution.id,'A note to a contract has been created for this institution',
-             "#{(@contract.institution.name rescue "Unknown")}",'Note',@contract.institution.assigned_to)
+                tl("Partner",@contract.partner.id,'A note to a contract has been created for this partner',
+             "#{(@contract.partner.name rescue "Unknown")}",'Note',@contract.partner.assigned_to)
             
         end
         format.html { redirect_to @contract, notice: 'Contract was successfully updated.' }
@@ -83,7 +83,7 @@ class ContractsController < ApplicationController
     @contract.destroy
 
     respond_to do |format|
-      format.html { redirect_to @contract.institution }
+      format.html { redirect_to @contract.partner }
       format.json { head :no_content }
     end
   end

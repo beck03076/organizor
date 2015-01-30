@@ -4,7 +4,7 @@ class Email < ActiveRecord::Base
 
   has_and_belongs_to_many :enquiries, :uniq => true  
   has_and_belongs_to_many :registrations, :uniq => true  
-  has_and_belongs_to_many :institutions, :uniq => true  
+  has_and_belongs_to_many :partners, :uniq => true  
   has_and_belongs_to_many :people, :uniq => true  
 
   
@@ -17,7 +17,7 @@ class Email < ActiveRecord::Base
   :cc, :created_by, :enquiry_id, 
   :from, :registration_id, :subject, 
   :to, :updated_by, :user_id, 
-  :smtp_id,:signature,:enquiry_ids,:registration_ids,:institution_ids,
+  :smtp_id,:signature,:enquiry_ids,:registration_ids,:partner_ids,
   :auto,:core
 
   

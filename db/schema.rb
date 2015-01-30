@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140730075100) do
+ActiveRecord::Schema.define(:version => 20150111210910) do
 
   create_table "allow_ips", :force => true do |t|
     t.string   "from"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "updated_at", :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
+  end
+
+  create_table "approve_requests", :force => true do |t|
+    t.integer  "registration_id"
+    t.integer  "request_to"
+    t.text     "values"
+    t.boolean  "approved",        :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   create_table "audits", :force => true do |t|
@@ -148,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.string   "internal_target"
     t.string   "recruitment_territories"
     t.text     "desc"
-    t.integer  "institution_id"
+    t.integer  "partner_id"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.integer  "created_by"
@@ -197,6 +206,33 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.integer  "updated_by"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "courses", :force => true do |t|
+    t.string   "name"
+    t.string   "university"
+    t.string   "department"
+    t.string   "qdmode"
+    t.string   "intake"
+    t.text     "requirements"
+    t.text     "intl"
+    t.text     "desc"
+    t.text     "ukfee"
+    t.text     "internfee"
+    t.text     "fund"
+    t.text     "named_pathway"
+    t.text     "new_enrollment"
+    t.text     "total_enrollment"
+    t.text     "scholarships"
+    t.text     "gscholarships"
+    t.text     "bursaries"
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "contact_phone"
+    t.text     "contact_web"
+    t.string   "apply_link"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "currencies", :force => true do |t|
@@ -272,11 +308,11 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "emails_institutions", :force => true do |t|
+  create_table "emails_partners", :force => true do |t|
     t.integer  "email_id"
-    t.integer  "institution_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "partner_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "emails_people", :force => true do |t|
@@ -462,7 +498,20 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
   add_index "impressions", ["impressionable_type", "message", "impressionable_id"], :name => "impressionable_type_message_index", :length => {"impressionable_type"=>nil, "message"=>255, "impressionable_id"=>nil}
   add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
-  create_table "institution_groups", :force => true do |t|
+  create_table "notes", :force => true do |t|
+    t.text     "content"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.boolean  "auto"
+    t.string   "noteable_type"
+    t.integer  "noteable_id"
+    t.integer  "assigned_to"
+    t.string   "created_type"
+  end
+
+  create_table "partner_groups", :force => true do |t|
     t.string   "name"
     t.text     "desc"
     t.integer  "created_by"
@@ -471,7 +520,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "institution_types", :force => true do |t|
+  create_table "partner_types", :force => true do |t|
     t.string   "name"
     t.text     "desc"
     t.integer  "created_by"
@@ -481,7 +530,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.boolean  "educational"
   end
 
-  create_table "institutions", :force => true do |t|
+  create_table "partners", :force => true do |t|
     t.string   "name"
     t.integer  "city_id"
     t.integer  "country_id"
@@ -526,31 +575,19 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "last_seen_at"
   end
 
-  add_index "institutions", ["assigned_by"], :name => "index_institutions_on_assigned_by"
-  add_index "institutions", ["assigned_to"], :name => "index_institutions_on_assigned_to"
-  add_index "institutions", ["country_id"], :name => "index_institutions_on_country_id"
-  add_index "institutions", ["created_by"], :name => "index_institutions_on_created_by"
-  add_index "institutions", ["name"], :name => "index_institutions_on_name"
-  add_index "institutions", ["reset_password_token"], :name => "index_institutions_on_reset_password_token", :unique => true
-  add_index "institutions", ["updated_by"], :name => "index_institutions_on_updated_by"
+  add_index "partners", ["assigned_by"], :name => "index_partners_on_assigned_by"
+  add_index "partners", ["assigned_to"], :name => "index_partners_on_assigned_to"
+  add_index "partners", ["country_id"], :name => "index_partners_on_country_id"
+  add_index "partners", ["created_by"], :name => "index_partners_on_created_by"
+  add_index "partners", ["name"], :name => "index_partners_on_name"
+  add_index "partners", ["reset_password_token"], :name => "index_partners_on_reset_password_token", :unique => true
+  add_index "partners", ["updated_by"], :name => "index_partners_on_updated_by"
 
-  create_table "institutions_permissions", :force => true do |t|
-    t.integer  "institution_id"
+  create_table "partners_permissions", :force => true do |t|
+    t.integer  "partner_id"
     t.integer  "permission_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  create_table "notes", :force => true do |t|
-    t.text     "content"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.boolean  "auto"
-    t.string   "noteable_type"
-    t.integer  "noteable_id"
-    t.integer  "assigned_to"
   end
 
   create_table "people", :force => true do |t|
@@ -578,7 +615,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.text     "desc"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
-    t.integer  "institution_id"
+    t.integer  "partner_id"
     t.integer  "type_id"
     t.integer  "assigned_to"
     t.integer  "assigned_by"
@@ -694,7 +731,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.integer  "type_id"
     t.integer  "country_id"
     t.integer  "city_id"
-    t.integer  "institution_id"
+    t.integer  "partner_id"
     t.integer  "level_id"
     t.integer  "subject_id"
     t.date     "start_date"
@@ -741,7 +778,7 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "qualifications", :force => true do |t|
+  create_table "qualification_names", :force => true do |t|
     t.string   "name"
     t.text     "desc"
     t.integer  "created_by"
@@ -750,10 +787,27 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "qualifications", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.text     "subject"
+    t.text     "partner"
+    t.string   "grade"
+    t.string   "exam"
+    t.string   "score"
+    t.integer  "registration_id"
+    t.integer  "qualification_name_id"
+    t.string   "graduated_out"
+  end
+
   create_table "reg_courses", :force => true do |t|
     t.integer  "city_id"
     t.integer  "country_id"
-    t.integer  "institution_id"
+    t.integer  "partner_id"
     t.integer  "course_level_id"
     t.string   "course_subject"
     t.integer  "programme_type_id"
@@ -798,11 +852,6 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.date     "passport_valid_till"
     t.string   "visa_type"
     t.date     "visa_valid_till"
-    t.string   "qua_subject"
-    t.string   "qua_institution"
-    t.string   "qua_grade"
-    t.string   "qua_exam"
-    t.string   "qua_score"
     t.integer  "sub_agent_id"
     t.string   "emer_full_name"
     t.string   "emer_relationship"
@@ -834,7 +883,6 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
     t.integer  "contact_type_id"
     t.integer  "student_source_id"
     t.boolean  "direct"
-    t.integer  "qualification_id"
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -862,11 +910,29 @@ ActiveRecord::Schema.define(:version => 20140730075100) do
   add_index "registrations", ["enquiry_id"], :name => "index_registrations_on_enquiry_id"
   add_index "registrations", ["first_name"], :name => "index_registrations_on_first_name"
   add_index "registrations", ["progression_status_id"], :name => "index_registrations_on_progression_status_id"
-  add_index "registrations", ["qualification_id"], :name => "index_registrations_on_qualification_id"
   add_index "registrations", ["reset_password_token"], :name => "index_registrations_on_reset_password_token", :unique => true
   add_index "registrations", ["student_source_id"], :name => "index_registrations_on_student_source_id"
   add_index "registrations", ["sub_agent_id"], :name => "index_registrations_on_sub_agent_id"
   add_index "registrations", ["updated_by"], :name => "index_registrations_on_updated_by"
+
+  create_table "required_doc_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "required_doc_id"
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+  end
+
+  create_table "required_docs", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "desc"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"

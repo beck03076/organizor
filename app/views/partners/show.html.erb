@@ -1,0 +1,39 @@
+<!-- Enquiry show page -->
+<div class="col-md-9">
+  <h3><%= @partner.name %></h3>
+</div>
+
+    <% a = @partner %>
+    <div class="col-md-3 text-right">
+                    <div class="form-group">
+                         <%= link_to "Edit", edit_partner_path(a), {class: "btn btn-primary"} %> 
+                         <%= link_to "Clone", clone_partner_path(a), {class: "btn btn-primary"} %>
+                    </div>
+    </div>
+
+
+<div class="row">
+  <div class="col-md-12">
+      <ul class="nav nav-pills seperator">
+        <li id="basic" class="active">
+          <%= link_to "Basic","/partners/#{a.id}" %>
+        </li>
+        <%= render "actions" %>
+      </ul>
+      <!-- some html5 data to be sent to the back end -->
+      <div id="partner_id_div" data-partner_id='<%= a.id %>' data-model_sing='partner' data-model_plu='partners' ></div>
+
+      <div id="edit-resource-container"></div>
+      <div id="action_div">
+        <%= render @partial, @locals %>
+      </div>
+  </div>
+</div>
+
+
+
+<script>
+
+ actmm('partners'); 
+
+</script>

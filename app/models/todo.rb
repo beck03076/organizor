@@ -20,7 +20,7 @@ class Todo < ActiveRecord::Base
   :priority, :status_id, :topic_id, 
   :updated_by,:assigned_to, :assigned_by,
   :enquiry_id,:registration_id,:done,
-  :institution_id,:done_at,:api,:title,
+  :partner_id,:done_at,:api,:title,
   :ref_no,:auto
   
   def as_json(options = {})  

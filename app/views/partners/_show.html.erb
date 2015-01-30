@@ -1,0 +1,231 @@
+<script type="text/javascript">
+$(function(){
+
+  activeMM("partnersMM");
+  setColorsFromSession();
+  $('.best_in_place').best_in_place();
+
+});
+
+</script>
+<% a = @partner %>
+<div class="tab-content3" id="tab-content62">
+
+        <div class="boxp">
+            <div class="htab">
+            <h5>
+                <b>Partner Type : 
+                    <span class="sp">
+                        <h6>
+                            <b><%= a.type.name rescue "Unknown" %> </b>
+                        </h6>
+                    </span>
+                </b>
+            </h5>
+
+            <%= link_to "Edit", edit_partner_path(a), {class: "btnp fr"} %>
+             <%= link_to "Clone", clone_partner_path(a), {class: "btnp fr"} %>
+            
+            <div class="cl"></div>
+        </div>
+        <br/>
+        
+        <div class="cols" style="padding-bottom:20px">
+            <div class="col8">
+                <div id="scrollboxu">
+                <h5>
+                  <b>                        
+                    <%= a.name %>
+                  </b>
+                </h5>
+                <br/>
+                <br/>
+                <div class="rel abs-plus-box">
+                      <%= image_tag((a.image? ? a.image_url : "/images/icons/grey_bkgrnd.png"),
+                                   {width: "420",height: "280",class: "tooltip",title: "Upload your photo",
+                                    class: "imgb fl"
+                                    }) %>
+                <span onclick = "showPopUp('upload_image');" class="abs-plus">+</span>
+                </div>
+                <div id="upload_image" class="addNewPop" style="display: none; top: 483px; left: 455px;"> 
+                       <%= render 'shared/img_upload', a: a %>
+                </div>
+                <br/>
+                <div class="fl padl20">
+                    <br/>
+                    <h4 class="htab">Contact Information</h4>
+                    <br/>
+                     <br/>
+                        <ul class="vlsdet">
+                        <li><label>Email </label>: <%= best_in_place_if (can? :update,a), a, :email %></li>
+                        <li><label>Phone </label>: <%= best_in_place_if (can? :update,a), a, :phone %></li>
+                        <li><label>Fax </label>: <%= best_in_place_if (can? :update,a), a, :fax %></li>
+                        <li><label>Website </label>: <%= best_in_place_if (can? :update,a), a, :website %></li>
+                   <br/>
+                   <h4 class="htab">Address</h4>
+                   <br/>
+                   <br/>
+                    <li><label>line1</label>: <%= best_in_place_if (can? :update,a), a, 
+                                                           :address_line1 %></li>
+                    <li><label>line2</label>: <%= best_in_place_if (can? :update,a), a,
+                                                           :address_line2 %></li>
+                    <li><label>City</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                      :city_id,
+                                                                      :type => :select, 
+                                                                      :collection => City.order(:name).map{|i| [i.id,i.name]},:display_as => "city_name" %></li>
+                                                                      
+                    <li><label>Country</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                      :country_id,
+                                                                      :type => :select, 
+                                                                      :collection => Country.order(:name).map{|i| [i.id,i.name]},:display_as => "country_name" %></li>
+
+                    <li><label>Post Code</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :address_post_code %></li>
+                   <br/>
+                   <h4 class="htab">Description</h4>
+                   <br/>
+                   <br/>
+                    <li><label>About</label>: <%= best_in_place_if (can? :update,a), a,
+                                                                  :desc, type: :textarea %></li>
+                    </ul>
+                   </div>
+            </div>
+            </div>
+            <div class="col4 ">
+                <div class="boxs">
+                    <ul class="infodhls">
+                        <li>Partner history</li>
+                        <li>
+                        <b>Partner Group :</b> 
+                          <%= disp1(a,'group') %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Created</b></li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.created_by).map &:first_name)[0] %>
+                        </li>
+                        <li><b>At :</b> 
+                          <%= tym(a.created_at) %>
+                        </li>
+                        <li>
+                        <br>
+                        <b>Last modified</b></li>
+                        <li><b>By :</b> 
+                            <%= (User.where(id: a.updated_by).map &:first_name)[0] %>
+                        </li>
+                        <li><b>At :</b> 
+                            <%= tym(a.updated_at) %>
+                        </li>
+                        <li><br><b>Currently Assigned</b></li>
+                        <li><b>To :</b>
+                            <%= a._ass_to.first_name rescue "Unknown" %>
+                        </li>
+                        <li><b>By :</b> 
+                            <%= a._ass_by.first_name rescue "Unknown" %>
+                        </li> 
+                        <li>
+                        <br>
+                        <b><%= a.people.size %></b> people
+                        </li>
+                        <li>
+                        <b><%= a.contracts.size %></b> contracts
+                        </li>
+                        <li>
+                        <b><%= a.enqs.size %></b> enquiries
+                        </li>
+                        <li>
+                        <b><%= a.regs.size %></b> registrations
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       
+<br/>
+
+        <div class="htab">
+          <h5><b>Action</b></h5>
+        </div>
+        <div class="boxstheme">
+          <%= render "actions" %>
+          <!-- Action container -->
+          <div id="action_div">
+          </div>
+       </div>
+       <br/><br/>
+
+<%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#application-display').slideToggle();"} %>
+
+
+<div id="application-display">
+    <div class="htab">
+      <h5>
+        Contracts & People
+      </h5>
+      <div class="cl"></div>
+    </div>
+    <br/>
+
+        <% tabs_arr = %w(Contract People) %>
+        <div class="newtab-container">
+            <ul class="newtab-menus">
+            <% tabs_arr.each do |i|  %>
+                <% i1 = i.downcase %>
+                <li lang='<%= i1 + "-content" %>' id='<%= i1 %>'><%= i %></li>
+            <% end %>
+            </ul>
+            
+            <% tabs_arr.each do |i|  %>
+                <% i1 = i.downcase %>
+                <div class="newtab-content" id='<%= i1+ "-content" %>'>
+                  <%= render i1 %>
+                </div>
+            <% end %>
+            
+        </div>
+</div>
+
+
+
+<div class="cl"></div>
+ </div>
+<% if false %>
+
+           <div id="registration_id_div" data-registration_id='<%= a.id %>' data-model_sing='registration' data-model_plu='registrations' ></div>      
+
+
+        
+       <%= image_tag "/images/icons/exchange_top.png",{class: "fr",width: "20", onclick: "$('div#timeline-display').slideToggle();"} %>
+<div id="timeline-display">
+        <br/><div class="htab">
+            <h5><b>Timeline</b></h5>
+            </div><br/>
+            <div id="scrollboxu"  style="height:440px">    
+            <ul>
+                <%= render 'enquiries/timeline' %>
+            </ul>
+            </div>
+</div>
+<% end %>
+<!-- INQUIRY DETAILS - ENDS -->
+
+<script type="text/javascript">
+
+activeNewSubTab("newtab-content","contract-content","contract");
+
+$(document).ready(function(){
+    /* ON CLICKING MAIN MENU*/
+    $(".newtab-menus li").click(function(){
+        /* HIDE ALL TABS CONTENT*/
+        $(".newtab-content").hide();
+        /* SHOW THE CORESPONDING TAB CONTENT*/
+        $("#"+this.lang).show();
+        /* INACTIVE ALL TABS */
+        $(".newtab-menus li").removeClass("active-tab");
+        /* ACTIVE CURRENT TABS */
+        $(this).addClass("active-tab");
+    });
+});
+
+</script>

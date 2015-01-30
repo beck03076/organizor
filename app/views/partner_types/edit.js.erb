@@ -1,0 +1,15 @@
+ 
+  <% ctnt = (render 'form', {new_resource: @partner_type,
+                             resource_disp1: "Partner Type",
+                             div: "",
+                             h: "Edit"}) %>
+ 
+  $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource-edit', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Edit',
+                                                         button: nil}) %>");
+  
+  $('#resource-edit').modal('show');
+  
+  $('.temp').remove();

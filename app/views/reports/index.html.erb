@@ -1,17 +1,17 @@
 <%= render 'header' %>
 
-<% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Institutions","home"],["People","globe"]]%>
+<% core =  [["Enquiries","earphone"],["Registrations","pencil"],["Partners","home"],["People","globe"]]%>
 
 <%  [["Core Modules","Generate reports, filtering by anything","green-well2","tower",
 	 core],
     ["Charts","Prepare charts for the core modules","green-well2","signal",
-     [["Enquiries","align-left"],["Registrations","align-right"],["Institutions","align-center"],["People","align-justify"]]],
+     [["Enquiries","align-left"],["Registrations","align-right"],["Partners","align-center"],["People","align-justify"]]],
     ["Users","Reports, that focuses on various attributes of users","green-well2","user",
      [["Single User","user"],["Compare Users","random"]]],
     ["Analytics","Data Insights that helps to take action and measure performance","green-well2","th-list",
      [["Course Levels","book","course_levels/fees_commission/desc-most"],
       ["Commissions","gbp","registrations/fees_commission/asc-most"],
-      ["Payments","euro","institutions/first_payment_duration/minus-long"],
+      ["Payments","euro","partners/first_payment_duration/minus-long"],
       ["All Analytics","th",""]]]].each do |r| %>
 
     <div class="row">	 

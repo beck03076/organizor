@@ -4,7 +4,7 @@ class Note < ActiveRecord::Base
   require 'redcarpet'
   belongs_to :noteable, polymorphic: true
   belongs_to :registration
-  belongs_to :institution
+  belongs_to :partner
   belongs_to :programme
   attr_accessible :content,:auto,:created_type
 

@@ -51,7 +51,7 @@ class DocumentsController < ApplicationController
          if !params[:reg_id].nil?
            redirect_to "/registrations/"+params[:reg_id].to_s
          elsif !params[:contract_id].nil?
-           redirect_to "/institutions/"+params[:contract_id].to_s
+           redirect_to "/partners/"+params[:contract_id].to_s
          end
        else
         redirect_to :root

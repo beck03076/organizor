@@ -3,7 +3,7 @@ class CreateRegCourses < ActiveRecord::Migration
     create_table :reg_courses do |t|
       t.integer :city_id
       t.integer :country_id
-      t.integer :institution_id
+      t.integer :partner_id
       t.integer :course_level_id
       t.string :course_subject
       t.integer :programme_type_id

@@ -1,0 +1,30 @@
+<div class="row well">
+	<div id="container">
+	</div>
+</div>
+<div class="row well">
+	<table class="table table-bordered">
+		<thead>			
+			<% @table_header.each do |u| %>
+     			<th><h5><strong> <%= u %> </strong></h5> </th>
+			<% end %>
+		</thead>
+		<tbody>			
+			<% @ordered_output.each do |partner| %>
+			   <tr> 
+               <td><h4> <%= link_to partner[1].titleize,"/partners/#{partner[0]}" %></h4></td>
+               <td><h4> <%= partner[2] %></h4></td>
+               <td><h4><strong> <%= @table_data[partner[0]][0] %></strong></h4> </td>
+               <td><h4><strong> <%= @table_data[partner[0]][1] %></strong></h4> </td>
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>
+
+<script>
+<% if !@charts.nil? %>
+  	init_negative_chart('#container',<%= @charts[0].to_s.html_safe %>,<%= @charts[1].to_json.html_safe %>,'<%= @chart_text %>'); 
+<% end %>
+</script>

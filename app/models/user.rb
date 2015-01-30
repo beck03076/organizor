@@ -49,13 +49,13 @@ class User < ActiveRecord::Base
   belongs_to :userable, polymorphic: true           
 
   # has many items in every core module
-  %w(enquiries registrations institutions people).each do |i|
+  %w(enquiries registrations partners people).each do |i|
     has_many i.to_sym, foreign_key: "assigned_to"
   end
   has_many :programmes, foreign_key: "created_by"
 
   # has many items in every core module,(created)
-  %w(enquiries registrations institutions people).each do |i|
+  %w(enquiries registrations partners people).each do |i|
     has_many ("created_" + i).to_sym, foreign_key: "created_by"
   end
   

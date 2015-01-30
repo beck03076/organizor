@@ -1,10 +1,10 @@
 
 <%= form_for @user do |f| %> 
 
-    <% title = {Institutions: "name", Registrations: "ref_no", People: "email"} %>
+    <% title = {Partners: "name", Registrations: "ref_no", People: "email"} %>
     <div class="row">
       <%= bs(f,[:userable_type,
-                [["institutions","Institution"],["registrations","Registration"],["people","Person"]],
+                [["partners","Partner"],["registrations","Registration"],["people","Person"]],
                 {prompt: "-link with-"},{onchange: "selectUpdate('dummy',
                                                    '/' + this.options[this.selectedIndex].innerHTML.toLowerCase() + '.select',
                                                    '.linkable_select',

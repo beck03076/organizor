@@ -33,9 +33,9 @@
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
-      <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">Institution<span class="caret"></span></button>
+      <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">Partner<span class="caret"></span></button>
       <ul role="menu" class="dropdown-menu">
-        <% [:institution_type,:institution_group,
+        <% [:partner_type,:partner_group,
             :contract_doc_category,:commission_claim_status,:processing_fee_type,
             :processing_fee_status,:commission_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>

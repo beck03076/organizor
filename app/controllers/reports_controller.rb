@@ -37,8 +37,8 @@ class ReportsController < ApplicationController
   def repair_module
     if @module == "single_user"
       @module = "users"      
-    elsif @module == "institutions"
-      @asso = "institution_type"
+    elsif @module == "partners"
+      @asso = "partner_type"
     elsif @module == "people"
       @asso = "person_type"
     else

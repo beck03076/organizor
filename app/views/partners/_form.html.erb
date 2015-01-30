@@ -1,0 +1,208 @@
+<!-- New partner form -->
+<link rel="stylesheet" href="/assets/jqueryui-datepicker.css">
+<%= nested_form_for(@partner,
+                    html: {onsubmit: "return validateAll(this);",
+                    class: "form-horizontal"}) do |f| %>
+
+                          <% if @partner.errors.any? %>
+                           <div id="error_explanation" class="row">
+                           <div class="col-xs-12">
+                           <h2>
+                           <%= pluralize(@partner.errors.count, "error") %> prohibited this partner from being saved</h2>
+                           <ul class="vlsdet-s">
+                             <% @partner.errors.full_messages.each do |msg| %>
+                              <li>
+                              <label>&nbsp;</label>
+                              <small  class="red-wrong"><%= msg %></small>
+                              </li>
+                             <% end %>
+                           </ul>
+                           </div>
+                           </div>
+                          <% end %>
+
+   <div class="row row-top">
+    <div class="col-xs-9">
+      <h3><%= what %> partner <span class="light"> <%= link %> </span></h3>
+    </div>
+    <div class="col-xs-3 text-right">
+      <div class="form-group form-last">
+        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+        <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
+      </div>
+    </div>
+  </div>
+  <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scales]} %>
+  <% parts = [:start,
+              :partner_information,
+              hsh,
+              :people] %>
+  <% parts_values = parts.map{|i| i.kind_of?(Hash) ? i.values : i }.flatten %>
+  <div class="new-enq-reg">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <p class="lead">Step <span id="id_no">1</span> of <%= parts_values.size %></p>
+                  </div>
+                  <div class="col-xs-10">
+                    <div class="progress">
+                      <div class="progress-striped progress-bar " role="progressbar" style="width: 16%;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-top">
+                  <div class="col-xs-12">
+
+                    <% parts_values.each_with_index do |elem,i| %>
+                        <% set = "" %>
+                        <% if i == 0 %>
+                          <% set = "active-link" %>
+                        <% end %>
+                        <div class="col-xs-2 text-center top-link <%= set %>">
+                          <a href="#" part="<%= i + 1 %>"><%= elem.to_s.titleize %></a>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="well">
+
+
+                        <% parts.each_with_index do |elem,i| %>
+
+                            <% set = "display-hide" %>
+                            <% if i == 0 %>
+                              <% set = "" %>
+                            <% end %>
+                            <% if elem.kind_of?(Hash) %>
+                              <%= render 'form_' + elem.keys.first.to_s, index: i,
+                                                                    set: set,
+                                                                    arr: elem.values.flatten,
+                                                                    f: f %>
+                              <% @after_hsh = 1 %>
+                            <% else %>
+                <% index = (@after_hsh == 1) ? (i + hsh.values.flatten.size) : i + 1  %>
+                                <div id="id_part_<%= index %>" class="<%= set %>">
+                                  <h4 class="bold-subhead" id="<%= elem %>"><%= elem.to_s.titleize %></h4>
+                                  <div class="row"></div>
+                                    <%= render 'form_' + elem.to_s, f: f %>
+                                </div>
+                            <% end %>
+                        <% end %>
+                        <div class="row"></div>
+
+                        <div class="row row-right">
+                          <div class="col-xs-1 text-left">
+                            <div class="form-group form-last">
+                              <a go="previous" id="id_previous" class="btn btn-primary btn-next display-hide">Previous</a>
+                            </div>
+                          </div>
+                          <div class="col-xs-1 col-xs-offset-10 text-right">
+                            <div class="form-group form-last">
+                              <a  go="next" id="id_next" class="btn btn-primary btn-next">Next</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+</div>
+
+<div id="resource-container"></div>
+<div class="row"> </div>
+
+
+<% end %>
+
+<script type="text/javascript">
+        $('.top-link').children('a').click(function(event) {
+          $('.top-link').each(function(index, el) {
+            $(this).removeClass('active-link');
+          });
+          $(this).parent().addClass('active-link');
+          var part = $(this).attr('part');
+          $('#id_no').text(part);
+          $('.progress-bar').css({width: part * 16.6 + '%'});
+          $("[id^='id_part_']").hide('fast');
+          $('#id_part_' + part).show('fast');
+          if (part === '1') {
+            $('#id_previous').hide();
+          } else {
+            $('#id_previous').show();
+          }
+          if (part === $("div[id^='id_part_']").length.toString()) {
+            $('#id_next').hide();
+          } else {
+            $('#id_next').show();
+          }
+        });
+
+        $('#id_previous, #id_next').click(function(event) {
+          var part = parseInt($('.active-link').children('a').attr('part'), 10);
+          if ($(this).attr('go') === 'previous') {
+            part = "" + (part - 1);
+          } else {
+            part = "" + (part + 1);
+          }
+          ss = {}
+          if ($("div#id_part_5").is(':visible') && $("div#id_part_4").is(':hidden')){
+
+                $('div#id_part_5 select').each(function(index){
+                                 if( $(this).attr('id').match(/_course_level_id$/) ) {
+
+                                    ss[index] = [$("option:selected",$(this)).text()]
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#from').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#to').val());
+                                    ss[index].push($(this).parents('.col-xs-12').siblings().find('#commission_percentage').val());
+                                }
+                          });
+
+               $.post('/sliding_scales/collective.js',{ 'ss': ss });
+               $('[part=' + part + ']').click();
+          }
+          else{
+               $('[part=' + part + ']').click();
+          }
+        });
+
+         $(document).on('nested:fieldAdded', function(event){
+
+              var field = event.field;
+              var dateField = field.find('.dateField');
+              dateField.datepicker({
+                inline: true,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd",
+                yearRange: '1980:2050'
+              });
+
+              var id1 = field.find('.token_coun_pro').attr("id");
+              var id2 = field.find('.token_coun_per').attr("id");
+              var id3 = field.find('.token_reg_pro').attr("id");
+              var id4 = field.find('.token_reg_per').attr("id");
+
+              tokens('#' + id1,"/srch_countries.json");
+              tokens('#' + id2,"/srch_countries.json");
+              tokens('#' + id3,"/srch_regions.json");
+              tokens('#' + id4,"/srch_regions.json");
+
+              slidingScale(field);
+
+              var course_id = field.find('.course_ids').attr("id");
+              tokens('#' + course_id,"/search/course_level/name/token.json");
+           });
+
+           slidingScale();
+           $( 'input.course_ids' ).each(function(){
+             var course_id = $(this).attr("id");
+             tokens('#' + course_id,"/search/course_level/name/token.json");
+           });
+
+           actmm("partners");
+
+    </script>
+

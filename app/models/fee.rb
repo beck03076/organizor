@@ -7,7 +7,7 @@ class Fee < ActiveRecord::Base
   belongs_to :programme
   has_many :commissions, dependent: :destroy
   has_one :registration, through: :programme
-  has_one :institution, through: :programme
+  has_one :partner, through: :programme
   
   monetize :tuition_fee_cents
   monetize :scholarship_cents

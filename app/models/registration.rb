@@ -87,7 +87,7 @@ class Registration < ActiveRecord::Base
   #==================
   #=== HAS MANY =====
   has_many :programmes, dependent: :destroy
-  has_many :institutions, through: :programmes
+  has_many :partners, through: :programmes
   has_many :application_statuses, through: :programmes,:foreign_key => 'app_status_id'
   has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes  
@@ -221,7 +221,7 @@ class Registration < ActiveRecord::Base
   # end 
 
   def statuses
-    self.programmes.includes(:application_status,:institution).map{|i| [i.institution.try(:name),i.application_status.try(:name)]} rescue ""
+    self.programmes.includes(:application_status,:partner).map{|i| [i.partner.try(:name),i.application_status.try(:name)]} rescue ""
   end
 
   def address

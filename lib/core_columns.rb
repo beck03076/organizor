@@ -26,11 +26,11 @@ module CoreColumns
                          :created_by => [:_cre_by,:first_name],
                          :updated_by => [:_upd_by,:first_name],
                          :prof_eng_level_id => [:english_level,:name],
-                         :institution_id => [:institutions,:name],
+                         :partner_id => [:partners,:name],
                          :branch_id => [:branch,:name],
                          :progression_status_id => [:progression_status,:name]}
      
-     elsif model == 'institution'
+     elsif model == 'partner'
        @def_ins_cols = {type_id: [:type,:name],
                      group_id: [:group,:name],
                      country_id: [:country, :name],
@@ -42,7 +42,7 @@ module CoreColumns
    
      elsif model == 'person'
        @def_per_cols =  {type_id: [:type,:name],
-                     institution_id: [:institution,:name],
+                     partner_id: [:partner,:name],
                      country_id: [:country, :name],
                      city_id: [:city,:name],
                      assigned_to: [:_ass_to,:first_name],
@@ -52,7 +52,7 @@ module CoreColumns
      
      elsif model == 'programme'
        @def_pro_cols =  {level_id: [:course_level,:name],
-                     institution_id: [:institution,:name],
+                     partner_id: [:partner,:name],
                      country_id: [:country, :name],
                      city_id: [:city,:name],
                      ref_no: [:registration,:ref_no],

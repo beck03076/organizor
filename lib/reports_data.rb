@@ -51,7 +51,7 @@ module ReportsData
     #=== People =====================================
     # default filters for people module
 	def def_peo_fil
-		[:first_name,:surname,:mobile,:email,:work_phone,:home_phone,:gender,:institution_name,
+		[:first_name,:surname,:mobile,:email,:work_phone,:home_phone,:gender,:partner_name,
 		 :country_name,:city_name,:type_name,:owner,:creator,:created_at,:updated_at,:associations]		
 	end
 
@@ -63,7 +63,7 @@ module ReportsData
 		 city_name: ["collection_select","Country",nil,:city_id],
 		 # associations
 		 type_name: ["collection_select","PersonType",nil, :type_id],
-		 institution_name: ["collection_select","Institution",nil, :institution_id],		 
+		 partner_name: ["collection_select","Partner",nil, :partner_id],		 
 		 # history
 		 owner: owner,
 		 creator: creator,
@@ -79,7 +79,7 @@ module ReportsData
 	end
 
 	def peo_pie_val
-		%w(institution person_type country city)
+		%w(partner person_type country city)
 	end
 
 	def peo_bar_split_val
@@ -91,8 +91,8 @@ module ReportsData
 	end
     #======================================================
 
-    #=== Institutions =====================================
-    # default filters for institutions module
+    #=== Partners =====================================
+    # default filters for partners module
 	def def_ins_fil
 		[:name,:email,:phone,:fax,:website,:address_line1,:address_line2,:address_post_code,
 	     :city,:country,:type,:group,:poc,
@@ -105,8 +105,8 @@ module ReportsData
 		 country_name: ["collection_select","Country",nil,:country_id],
 		 city_name: ["collection_select","Country",nil,:city_id],
 		 # associations
-		 type_name: ["collection_select","InstitutionType",nil, :type_id],
-		 group_name: ["collection_select","InstitutionGroup",nil, :group_id],
+		 type_name: ["collection_select","PartnerType",nil, :type_id],
+		 group_name: ["collection_select","PartnerGroup",nil, :group_id],
 		 poc: ["collection_select","Person",:first_name, :person_id],
 		 # history
 		 owner: owner,
@@ -126,7 +126,7 @@ module ReportsData
 	end
 
 	def ins_pie_val
-		%w(institution_type institution_group)
+		%w(partner_type partner_group)
 	end
 
 	def ins_bar_split_val
@@ -226,7 +226,7 @@ module ReportsData
 		 :address_post_code,:address_city,
 		 :channel,:source,:branch_name,:owner,
 		 :progression_status_name,:qualification_name,:qua_subject,
-		 :qua_institution,:qua_grade,:qua_exam,:qua_score,
+		 :qua_partner,:qua_grade,:qua_exam,:qua_score,
 		 :branch_name,:owner,:passport_number,:visa_type,:date_of_birth,
 		 :updated_at,:created_at,:passport_valid_till,
 		 :visa_valid_till,:associations ]		
@@ -248,7 +248,7 @@ module ReportsData
 		 progression_status_name: ["collection_select","ProgressionStatus",nil,:progression_status_id],
 		 address_city: 0,address_post_code: 0,
 		 qualification_name: ["collection_select","Qualification",nil,:qualification_id],
-		 qua_subject: 0, qua_institution: 0, qua_grade: 0, qua_exam: 0,qua_score: 0,
+		 qua_subject: 0, qua_partner: 0, qua_grade: 0, qua_exam: 0,qua_score: 0,
 		 passport_number: 0, visa_type: 0,
 		 # ph stands for placeholder
 		 passport_valid_till: { range_col: "passport_valid_till",
@@ -267,7 +267,7 @@ module ReportsData
 		 	         	  }, 
 		 # associations
 		 associations: [programmes,
-						 institutions,	
+						 partners,	
 						 {title: "Exams",
 		 	             table: "proficiency_exams", 
 		 	             cols: {
@@ -360,13 +360,13 @@ module ReportsData
 
     end
 
-    def institutions
-    	{title: "Institutions",
-             table: "institutions", 
+    def partners
+    	{title: "Partners",
+             table: "partners", 
              cols: {name: 0,
-             	    city: ["collection_select","City",nil,:institutions_city_id],
-             	    country: ["collection_select","Country",nil,:institutions_country_id],
-             	    type: ["collection_select","InstitutionType",nil,:institutions_type_id],
+             	    city: ["collection_select","City",nil,:partners_city_id],
+             	    country: ["collection_select","Country",nil,:partners_country_id],
+             	    type: ["collection_select","PartnerType",nil,:partners_type_id],
 				},
          logo: "home"				 
 		 }

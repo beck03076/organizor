@@ -9,7 +9,7 @@ class FollowUp < ActiveRecord::Base
   :ends_at, :event_type_id, :remind_before, 
   :starts_at, :title, :updated_by, :venue,
   :enquiry_id, :assigned_to, :assigned_by,
-  :registration_id,:institution_id,:ref_no,
+  :registration_id,:partner_id,:ref_no,
   :followed,:auto
 
   notifiably_audited alert_for: [[[:assigned_to],"FollowUp assigned","This follow up has been reassigned to you"]],

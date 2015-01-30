@@ -4,7 +4,7 @@
 
 <% _id =  (@status || "all") + "_" + model_pl %>
 <% if model == "Programme" %>
-  <% url = "/institution_programmes/#{@institution_id}.json" %>
+  <% url = "/partner_programmes/#{@partner_id}.json" %>
 <% else %>
   <% url = send(model_pl + "_url",format: "json") %>
 <% end %>
@@ -64,7 +64,7 @@
                       
                     <% end %>
                     
-                    <% if (_model == Institution) && (can? :update, _model) %>
+                    <% if (_model == Partner) && (can? :update, _model) %>
                       <span data-value="exportDetails" class="pilled">
                       <span class="glyphicon glyphicon-save mar0"></span>
                       <span>Export</span>

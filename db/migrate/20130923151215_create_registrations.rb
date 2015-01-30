@@ -25,7 +25,7 @@ class CreateRegistrations < ActiveRecord::Migration
       t.date :visa_valid_till
       t.integer :qua_id
       t.string :qua_subject
-      t.string :qua_institution
+      t.string :qua_partner
       t.string :qua_grade
       t.string :qua_exam
       t.string :qua_score

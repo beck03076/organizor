@@ -50,7 +50,7 @@ module EnquiryPopulate
 
 			      Programme.populate 1..4 do |prog|
 			        prog.type_id = @programme_type
-			        prog.institution_id = @institution
+			        prog.partner_id = @partner
 			        prog.level_id = @course_level
 			        start = 1.year.from_now..4.years.from_now
 			        prog.start_date = start

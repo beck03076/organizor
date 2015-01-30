@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
   def validate_recruit
     set_url_params
  
-    contract = Institution.find(@ins_id).contracts.first
+    contract = Partner.find(@ins_id).contracts.first
     if @form_country_id.to_i == 0
       @co_id = @model.camelize.constantize.find(@item_id).country_id
     else
@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
     end   
      
     if contract.nil? 
-      @out = "No contract created for this institution, skipping recruitment territory validation!"
+      @out = "No contract created for this partner, skipping recruitment territory validation!"
     elsif !@co_id.nil?
 
         pro_coun = contract.all_prohibited_countries.map &:id
@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
             per = per_coun + per_regions_coun
             
             if pro.include?(@co_id.to_i)
-              @out = "This students country of origin is a prohibited territory as per this institutions contract"
+              @out = "This students country of origin is a prohibited territory as per this partners contract"
             else    
               @out = "Not a prohibited territory!"
             end
@@ -143,7 +143,7 @@ class ApplicationController < ActionController::Base
             if !per.empty? && per.include?(@co_id.to_i)
               @out = "Permitted territory!"
             else
-              @out = "This students country of origin is not a permitted territory as per this institutions contract"
+              @out = "This students country of origin is not a permitted territory as per this partners contract"
             end
         end
     elsif @co_id.nil?

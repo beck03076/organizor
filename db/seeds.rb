@@ -37,7 +37,7 @@ end
    PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
  end
 
- models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups institutions notes programmes qualification_names roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
+ models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups partners notes programmes qualification_names roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
  actions = %w[create read update delete]
  models.each do |m|
    actions.each do |a|
@@ -88,7 +88,7 @@ end
  end
 
  # my models permissions
- %w(Enquiry Registration Institution Person).each do |m|
+ %w(Enquiry Registration Partner Person).each do |m|
    %w(read update).each do |a|
      if Permission.where(subject_class: m,action: a,subject_id: 1).blank?
        p "Creating #{m} for #{a} permissions (mine)..."
@@ -102,7 +102,7 @@ end
  end
 
  # only core models permissions
- %w(Enquiry Registration Institution Person).each do |m|
+ %w(Enquiry Registration Partner Person).each do |m|
    %w(list).each do |a|
      if Permission.where(subject_class: m,action: a).blank?
        p "Creating #{m} for #{a} permissions (mine)..."
@@ -139,7 +139,7 @@ end
                       def_ins_search_col: "name",
                       ins_cols: [:email, :name],
                       def_per_search_col: "first_name",
-                      per_cols: [[:city_id, :city, :name], [:country_id, :country, :name], :created_by, :first_name, :gender, [:institution_id, :institution, :name], :surname, [:type_id, :type, :name]])
+                      per_cols: [[:city_id, :city, :name], [:country_id, :country, :name], :created_by, :first_name, :gender, [:partner_id, :partner, :name], :surname, [:type_id, :type, :name]])
 
    p "Created User config with nil as user id, use it!"
  end
@@ -165,8 +165,8 @@ end
                          {enquiry_status: %w(Pending Following Deactivated)},
                          {event_type: %w(Call Email Sms Meet)},
                          {exam_type: %w(IELTS TOEFL FCE Pearson)},
-                         {institution_group: %w(ABC DEF PQR XYZ)},
-                         {institution_type: %w(University Language_School Business_Partner 
+                         {partner_group: %w(ABC DEF PQR XYZ)},
+                         {partner_type: %w(University Language_School Business_Partner 
                        Education_Provider Official_Sub_Agent Private_Provider)},
                        {person_type: %w(contact unofficial_sub_agent personal)},
                        {qualification_name: %w(School_certificate Foundation A-level
@@ -175,7 +175,7 @@ end
                     {student_source: %w(Forum Google_Search Google_Advert 
                      Website Education_Event Friend)},
                      {todo_topic: %w(Default Documents Administrative
-                 Enquiry Registration Institution 
+                 Enquiry Registration Partner 
                  Person)},
                  {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
                  {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},

@@ -3,18 +3,18 @@ module FetchFromContract
   # = Methods =
   # ===========
   def fetch_from_contract(prog_id)
-    # p for programme, i for institution and r_ids for registration_ids, r for registration
+    # p for programme, i for partner and r_ids for registration_ids, r for registration
     p = Programme.find(prog_id)
-    i = p.institution
+    i = p.partner
     r = p.registration
-    # how manieth registration is this for this institution is r_order    
+    # how manieth registration is this for this partner is r_order    
     r_order = self.r_order(r.id,i.id)
     p "&&&&&&&&&&&&&&&&&"
     p  r_order
     p "&&&&&&&&&&&&&&&&&"
-    # check if this institution has a contract at all
+    # check if this partner has a contract at all
     if !i.contracts.first.nil?
-        # ss stands for sliding scales, assuming only one contract per institution    
+        # ss stands for sliding scales, assuming only one contract per partner    
         ss = i.contracts.first.sliding_scales
         # case where there is no sliding scale at all
         if ss.nil?
@@ -51,7 +51,7 @@ module FetchFromContract
           end
         end
      else
-       @out = "No contract created for this institution!"
+       @out = "No contract created for this partner!"
      end
     @out
   end

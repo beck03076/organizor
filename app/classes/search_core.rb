@@ -3,7 +3,7 @@ class SearchCore
 
   def initialize(options = {})
     @options = HashWithIndifferentAccess.new(options)
-    @resources = [ :enquiries, :registrations, :institutions, :people]
+    @resources = [ :enquiries, :registrations, :partners, :people]
   end
 
   def results
@@ -38,7 +38,7 @@ class SearchCore
       'earphone'
     when 'registration'
       'pencil'
-    when 'institution'
+    when 'partner'
       'home'
     when 'person'
       'globe'

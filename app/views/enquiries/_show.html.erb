@@ -104,7 +104,7 @@ $(function(){
                       <% j = i.programme_type.try(:name).titleize rescue "Unknown" %>
                                                
                         <li><label>Type</label>: <%= j %></li>
-                        <li><label>Institution</label>: <%= i.institution.try(:name) %></li>
+                        <li><label>Partner</label>: <%= i.partner.try(:name) %></li>
                         <li><label>City</label>: <%= i.city.try(:name) %></li>
                         <li><label>Country</label>: <%= i.country.try(:name) %></li>
                         

@@ -4,7 +4,7 @@ class CreateProgrammes < ActiveRecord::Migration
       t.integer :type_id
       t.integer :country_id
       t.integer :city_id
-      t.integer :institution_id
+      t.integer :partner_id
       t.integer :level_id
       t.integer :subject_id
       t.date :start_date

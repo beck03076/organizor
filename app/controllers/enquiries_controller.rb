@@ -59,7 +59,7 @@ class EnquiriesController < ApplicationController
     authorize! :create, @enquiry
       
     @countries = basic_select(Country)
-    @p_types = InstitutionType.where(educational: true)
+    @p_types = PartnerType.where(educational: true)
   end
   
 
@@ -75,7 +75,7 @@ class EnquiriesController < ApplicationController
     authorize! :update, @enquiry
     
     @countries = basic_select(Country)
-    @p_types = InstitutionType.where(educational: true)
+    @p_types = PartnerType.where(educational: true)
   end
 
   # POST /enquiries

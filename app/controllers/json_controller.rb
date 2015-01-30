@@ -42,9 +42,9 @@ class JsonController < ApplicationController
     set_url_params    
     country = Country.find(@co_id)
     if @type == "simple"
-       @cities = country.cities.includes(:institutions)
+       @cities = country.cities.includes(:partners)
     else
-       @cities = country.cities.includes(:institutions).where("institutions.id is not null").order("cities.name")    
+       @cities = country.cities.includes(:partners).where("partners.id is not null").order("cities.name")    
     end
     
     
@@ -55,34 +55,34 @@ class JsonController < ApplicationController
     
   end
 
-  def institutions
+  def partners
     set_url_params
     if @country_id.to_i != 0
-      @institutions = Country.find(@country_id).institutions
+      @partners = Country.find(@country_id).partners
     end
     if @city_id.to_i != 0
-      @institutions = @institutions.blank? ? Institution : @institutions
-      @institutions = @institutions.where(city_id: @city_id)
+      @partners = @partners.blank? ? Partner : @partners
+      @partners = @partners.where(city_id: @city_id)
     end
     if @ins_type_id.to_i != 0 && (@country_id.to_i != 0 || @city_id.to_i != 0)
-      @institutions = @institutions.blank? ? Institution : @institutions
-      @institutions = @institutions.where(type_id: @ins_type_id)
+      @partners = @partners.blank? ? Partner : @partners
+      @partners = @partners.where(type_id: @ins_type_id)
     end
 
     respond_to do |format|
       format.html 
-      format.json { render json: @institutions.order(:name) }
+      format.json { render json: @partners.order(:name) }
     end
   end
   
-  def institution_type
+  def partner_type
     set_url_params
     
-    @institutions = InstitutionType.find(@type_id).institutions
+    @partners = PartnerType.find(@type_id).partners
 
     respond_to do |format|
       format.html 
-      format.json { render json: @institutions }
+      format.json { render json: @partners }
     end
   end
   
@@ -92,14 +92,14 @@ class JsonController < ApplicationController
       country = Country.find(co)
       @cities = self.basic_select(country.cities)
       city = City.find(ci)
-      @institutions = self.basic_select(city.institutions,{:type_id => p_type})
+      @partners = self.basic_select(city.partners,{:type_id => p_type})
     elsif !co.nil?     
       country = Country.find(co)
       @cities = self.basic_select(country.cities)
-      @institutions = []
+      @partners = []
     elsif co.nil?       
       @cities = []
-      @institutions = []
+      @partners = []
     end  
     @p_types = ProgrammeType.all
     @c_levels = self.basic_select(CourseLevel)

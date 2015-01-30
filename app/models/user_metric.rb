@@ -14,7 +14,7 @@ class UserMetric
     @all[:statistics] = obj.all
   end
 
-  %w(enquiries registrations institutions people).each do |action|
+  %w(enquiries registrations partners people).each do |action|
       define_method("#{action}") do 
         klazz = (action.singularize.camelize + "Statistics").constantize
         obj = klazz.new(@users,action) 

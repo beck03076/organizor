@@ -2,7 +2,7 @@
 
      <% perms = (Permission.all.group_by &:subject_class) %>     
      <% r = perms.keys %>
-     <% defs = ["Enquiry","Registration","Institution","Person"] %>
+     <% defs = ["Enquiry","Registration","Partner","Person"] %>
      <% r = r - ["All","Country","City"] %>
      <div class="row">
      <% defs.each do |model| %>

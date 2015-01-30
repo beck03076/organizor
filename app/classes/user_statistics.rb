@@ -71,13 +71,13 @@ class UserStatistics
 	  u.follow_ups.where("DATE(ends_at) < '#{Date.today.strftime("%Y-%m-%d")}'").size
 	end
 
-	%w(enquiries registrations institutions).each do |action|
+	%w(enquiries registrations partners).each do |action|
 	  define_method("#{action}_total_views") do |argument|
 		Impression.where(user_id: argument.id,impressionable_type: action.singularize.camelize).size	  	
   	  end
     end 
 
-    %w(enquiries registrations institutions).each do |action|
+    %w(enquiries registrations partners).each do |action|
 	  define_method("#{action}_unique_views") do |argument|
 		Impression.where(user_id: argument.id,impressionable_type: action.singularize.camelize).select("Distinct impressionable_id").size	  	
   	  end

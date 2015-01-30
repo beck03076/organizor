@@ -27,7 +27,7 @@ class ProgrammeAnalytics
     # Complete output hash with name as key and fees and commission as values
     out = @model.countries_processing_fee((qualified_programmes.map &:id),@data)
     # structuring the same for charts
-    #charts = charts_data(institutions,out)
+    #charts = charts_data(partners,out)
     # returning the output as hash
     {table_header: ["Countries","Total Processiong Fee (Units)"],
      ordered_output: out.first(conditions[:size].to_i),
@@ -64,7 +64,7 @@ class ProgrammeAnalytics
   	# fetching filtered applications 
     filtered = qualify_period_size(order_nil_conversion_time,conditions,false)
      # returning the output as hash
-    {table_header: ["registration_name","institution_name","course_level_name","conversion_time","owner"],
+    {table_header: ["registration_name","partner_name","course_level_name","conversion_time","owner"],
      ordered_output: filtered,
      page_header: "Top <<size>> Programmes That Took #{@title.titleize} Time to Join",
      #charts: charts,

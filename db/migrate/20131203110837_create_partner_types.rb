@@ -1,0 +1,12 @@
+class CreatePartnerTypes < ActiveRecord::Migration
+  def change
+    create_table :partner_types do |t|
+      t.string :name
+      t.text :desc
+      t.integer :created_by
+      t.integer :updated_by
+
+      t.timestamps
+    end
+  end
+end

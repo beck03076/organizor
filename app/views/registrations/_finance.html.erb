@@ -2,13 +2,13 @@
 
 <% @obj.programmes.each do |i| %>
 
-  <% app_name = (i.institution.name rescue "Unknown") %>
+  <% app_name = (i.partner.name rescue "Unknown") %>
   <% app_status = (i.application_status.name rescue "Unknown") %>
   <% eval_status = (app_status.downcase == "joined") %>
   <% fe = i.fee %>
   <% fe_size = fe.nil? ? 0 : 1 %>
-  <!-- how manieth registration is this for this institution is r_order -->
-    <% r_order = r_order(i.registration.id,i.institution.id) rescue 1 %>
+  <!-- how manieth registration is this for this partner is r_order -->
+    <% r_order = r_order(i.registration.id,i.partner.id) rescue 1 %>
 <% if eval_status %>
 <div class="row row-right">
 <div class="panel-group" id="accordion">

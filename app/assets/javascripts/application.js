@@ -238,9 +238,9 @@ function ins_type_change(obj){
     i = $('.fields');
     // Setting the value of the countries_select to --Country-- when the radio button of programme_type is switched
     //i.find('.countries_select').val($(".countries_select option:first").val());
-    // Emptying the cities_select and institutions_select when the radio button of programme_type is switched
+    // Emptying the cities_select and partners_select when the radio button of programme_type is switched
     //empPromptSelect(i,'.cities_select','--City--');
-    //empPromptSelect(i,'.institutions_select','--Institution--');
+    //empPromptSelect(i,'.partners_select','--Partner--');
     // Based on the object_name and programme_type, the divs are shown and hidden
     if( o == "registration"){
       i.find(".ins_ref_no").show();
@@ -441,9 +441,9 @@ function registrationTabSwitch(obj){
 
 
 
-// institutions tabs switching
-function institutionTabSwitch(obj){
-  TabSwitch(obj,'institution','institutions');
+// partners tabs switching
+function partnerTabSwitch(obj){
+  TabSwitch(obj,'partner','partners');
 }
 
 // people tabs switching
@@ -456,17 +456,17 @@ function TabSwitch(obj,model,model_pl){
 
     var cond = $(obj).data("cond");
     var partial = $(obj).data("partial");
-    // (eg) model = institution
-    var institution_id = $(obj).data(model + "_id");
+    // (eg) model = partner
+    var partner_id = $(obj).data(model + "_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
 
     activateTab(cond,lang); //to make the clicked tab active
 
-    // (eg) model_pl = institutions
+    // (eg) model_pl = partners
     url = '/' + model_pl + '/tab/' + cond + '/' + partial + '/'
 
-    if (typeof institution_id !== "undefined"){ url = url + institution_id; }
+    if (typeof partner_id !== "undefined"){ url = url + partner_id; }
 
     $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
 
@@ -531,11 +531,11 @@ function prepSelect(sourObj,destSel,hit,query)
   selectUpdate(itemId,urlTo,destSel,query);
 }
 
-function showInstitution(obj){
-   if (obj.options[obj.selectedIndex].text == "Institution"){
-    $('.institution').fadeIn(1000);
+function showPartner(obj){
+   if (obj.options[obj.selectedIndex].text == "Partner"){
+    $('.partner').fadeIn(1000);
    }else{
-    $('.institution').fadeOut(1000);
+    $('.partner').fadeOut(1000);
    }
 }
 
@@ -568,7 +568,7 @@ function dom_tokens(cl,url){
 }
 
 function validateRecruit(obj){
-  var institution_id = obj.options[obj.selectedIndex].value;
+  var partner_id = obj.options[obj.selectedIndex].value;
   var model = $(obj).data('model');
   if (model == "enquiry"){
     item_id = $('#enquiry_id').data('id');
@@ -586,10 +586,10 @@ function validateRecruit(obj){
       throw "stop execution";
     }
     // yes nationality selected in _form scenario
-    else { url= '/validate_recruit/' + institution_id + '/' + form_country_id; }
+    else { url= '/validate_recruit/' + partner_id + '/' + form_country_id; }
   }
   // show scenario
-  else{ url= '/validate_recruit/' + institution_id + '/0/' + model + '/' + item_id; }
+  else{ url= '/validate_recruit/' + partner_id + '/0/' + model + '/' + item_id; }
 
   $.get(url,function(out){
     bootbox.alert(out);
@@ -606,7 +606,7 @@ function selectUpdate(itemId,urlTo,destSel,query){
                     type: 'GET',
                     dataType: "JSON",
                     success: function( json ) {
-                        //if (json == "") {  alert("No institutions configured"); }
+                        //if (json == "") {  alert("No partners configured"); }
                         $(destSel).empty();
                         $(destSel).append('<option value= selected="selected">-choose-</option>');
                         $.each(json, function(i,value) {
@@ -627,13 +627,13 @@ function changeInsType(obj,dest,type){
   var cityId = $(obj).data('city_id');
   var itemId = obj.options[obj.selectedIndex].value;
   if (type == "country"){
-    var url = '/get_institutions/' + itemId}
+    var url = '/get_partners/' + itemId}
   else if (type == "city"){
-    var url = '/get_institutions/0/' + itemId}
+    var url = '/get_partners/0/' + itemId}
   else if (type == "ins_type"){
     var city_id = $(obj).parent().parent().parent().siblings().find('.cities_select').val();
     var country_id = $(obj).parent().parent().parent().siblings().find('.countries_select').val();
-    var url = '/get_institutions/' + country_id + '/' + city_id + '/' + itemId }
+    var url = '/get_partners/' + country_id + '/' + city_id + '/' + itemId }
   var index = obj.id.split("_")[3];
   var obj = $('div#object_name').data("obj");
   var destDiv = '#' + obj + dest.replace("index", index);

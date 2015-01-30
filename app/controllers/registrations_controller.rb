@@ -160,7 +160,7 @@ class RegistrationsController < ApplicationController
     end
 
     @countries = basic_select(Country)
-    @p_types = InstitutionType.where(educational: true)
+    @p_types = PartnerType.where(educational: true)
   end
 
   def set_cols

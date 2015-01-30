@@ -23,7 +23,7 @@ $(function(){
       </div>
     </div>
 
-<p class="padL20"><strong>Institution</strong></p>
+<p class="padL20"><strong>Partner</strong></p>
      <!-- array of styles corresponding to [0]course_subject_text_div, [1]course_subject, [2]application_status, [3]ins_ref_no calling the array as sty (i.e styles) -->
        <% if parent == "enquiry" %>
          <% sty = ['','none','none','display:none;'] %>
@@ -33,7 +33,7 @@ $(function(){
 
        <% p_type_show = (p.object.programme_type.name == "language_school" rescue nil) ? "display:none;" : "display:block;" %>
 
-       <% good_country = Country.includes(:institutions).where("institutions.id is not null").order("countries.name") %>
+       <% good_country = Country.includes(:partners).where("partners.id is not null").order("countries.name") %>
                <%= bs(p,[:country_id,good_country,
                                               :id,
                                               :name,
@@ -43,7 +43,7 @@ $(function(){
                                                        '_programmes_attributes_index_city_id',
                                                        '/get_cities/');
                                                        changeInsType(this,
-                                                    '_programmes_attributes_index_institution_id',
+                                                    '_programmes_attributes_index_partner_id',
                                                     'country');
                                                     setCurrency(this,
                                                     '_programmes_attributes_index_currency');"}],
@@ -59,36 +59,36 @@ $(function(){
                           :name,
                           {prompt: "-city-"},
                           {class: "cities_select",
-                          onchange: "setInsTypeData(this,'.institution_type_select');
-                                     $('.institution_type_select').fadeOut(1000);
-                                     $('.institution_type_select').fadeIn(1000);
+                          onchange: "setInsTypeData(this,'.partner_type_select');
+                                     $('.partner_type_select').fadeOut(1000);
+                                     $('.partner_type_select').fadeIn(1000);
                                      changeInsType(this,
-                                                    '_programmes_attributes_index_institution_id',
+                                                    '_programmes_attributes_index_partner_id',
                                                     'city');"}],
                            "collection_select",
                            [nil,4],7,6) %>
 
                 <%= bs(p,[:type_id,
-                          InstitutionType.edu,
+                          PartnerType.edu,
                           :id,
                           :name,
-                          {prompt: "-institution type-"},
-                          {class: "institution_type_select",
+                          {prompt: "-partner type-"},
+                          {class: "partner_type_select",
                                          onchange: "changeInsType(this,
-                                                    '_programmes_attributes_index_institution_id',
+                                                    '_programmes_attributes_index_partner_id',
                                                     'ins_type');" }],
                            "collection_select",
                            [nil,4],7,6) %>
 
-                <% four = p.object.institution_id %>
-                <% five = four.blank? ? [] : Institution.where(id: four).order(:name) %>
+                <% four = p.object.partner_id %>
+                <% five = four.blank? ? [] : Partner.where(id: four).order(:name) %>
 
-                <%= bs(p,[:institution_id,
+                <%= bs(p,[:partner_id,
                           five,
                           :id,
                           :name,
-                          {prompt: "-institution-"},
-                          {class: "institutions_select",
+                          {prompt: "-partner-"},
+                          {class: "partners_select",
                            onchange: "validateRecruit(this);",
                            data: {model: parent }}],
                            "collection_select",

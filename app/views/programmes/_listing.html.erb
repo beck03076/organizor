@@ -3,7 +3,7 @@
 <% model_pl = model.downcase.pluralize %>
 
 <% _id = "all" + "_" + model_pl %>
-<% url = "/institution_programmes/#{@institution_id}.json" %>
+<% url = "/partner_programmes/#{@partner_id}.json" %>
 <% srch_url = send("search_" + model_pl + "_path") %>
 <!-- Displaying data in the jquery datatable -->
             <div class="row">
@@ -80,11 +80,11 @@
                   <div class="form-group pull-right md">
                     <span class="glyphicon mar0 glyphicon-list-alt"></span>
                     <%= link_to "xls",programmes_path,{id: "xls", 
-                                                       data: {ins_id: @institution_id,
+                                                       data: {ins_id: @partner_id,
                                                               format: 'xls'}} %> |
                     <span class="glyphicon mar0 glyphicon-book"></span>
                     <%= link_to "pdf",programmes_path,{id: "pdf", 
-                                                       data: {ins_id: @institution_id,
+                                                       data: {ins_id: @partner_id,
                                                               format: 'pdf'}} %>
                   </div>
                 </form>

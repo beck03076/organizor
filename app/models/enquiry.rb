@@ -49,8 +49,8 @@ class Enquiry < ActiveRecord::Base
   has_many :countries, :through => :preferred_countries  
   has_many :programmes
   
-  has_many :institutions, through: :programmes
-  has_many :institution_city, through: :institutions, foreign_key: "city_id"
+  has_many :partners, through: :programmes
+  has_many :partner_city, through: :partners, foreign_key: "city_id"
   has_many :users, as: :userable
   
   scope :inactive,includes(:status,

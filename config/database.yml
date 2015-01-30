@@ -12,7 +12,7 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: organizor
+  database: organizor_dev
   pool: 8
   username: root
   password: desidime123

@@ -25,7 +25,7 @@
                 </div>
                 <div class="content hide">
                     <ul class="vlsdet">
-                      <% %w(enquiry registration institution person).each do |n| %>
+                      <% %w(enquiry registration partner person).each do |n| %>
                       <li>
                       <small><%= link_to n.titleize, send('new_' + n + '_path'),{class: "clickable"} %></small>
                       </li>
@@ -97,8 +97,8 @@
               <%= link_to registrations_path do %><span class="glyphicon glyphicon-pencil"></span>Registrations<% end %>
             </li>
 
-            <li id="institutions">
-              <%= link_to institutions_path do %><span class="glyphicon glyphicon-home"></span>Institutions<% end %>
+            <li id="partners">
+              <%= link_to partners_path do %><span class="glyphicon glyphicon-home"></span>Partners<% end %>
             </li>
 
             <li id="people">

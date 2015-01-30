@@ -12,9 +12,9 @@ class UserMetricsController < ApplicationController
   	@users = User.where(id: @uids.split("-"))
   	@metrics = {} 
   	@tab ||= "statistics"  	
-  	@core = %w(statistics enquiries registrations institutions people)
+  	@core = %w(statistics enquiries registrations partners people)
   	@style = {statistics: ["stats","orange-well"], enquiries: ["earphone","green-well"], registrations: ["pencil","yellow-well2"],
-  	          institutions: ["home","purple-well2"], people: ["globe","blue-well2"]}
+  	          partners: ["home","purple-well2"], people: ["globe","blue-well2"]}
   end
 
   def compare_users_modal

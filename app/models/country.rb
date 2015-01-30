@@ -5,7 +5,7 @@ class Country < ActiveRecord::Base
   has_many :enquiries, :through => :preferred_countries
     
   has_many :cities
-  has_many :institutions
+  has_many :partners
   has_many :people
   has_many :users
   

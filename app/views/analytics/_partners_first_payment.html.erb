@@ -1,0 +1,21 @@
+
+<div class="row well">
+	<table class="table table-bordered">
+		<thead>			
+			<% @table_header.each do |u| %>
+     			<th><h5><strong> <%= u %> </strong></h5> </th>
+			<% end %>
+		</thead>
+		<tbody>			
+			<% @ordered_output.each do |programme| %>
+			   <tr> 
+               <td><h4><%= link_to programme.partner_name.titleize,"/partners/#{programme.partner_id}" %></h4></td>
+               <td><h4> <%= programme.ins_type_name %></h4></td>
+               <td><h4> <%= programme.course_level_name %></h4></td>
+               <td><h4><strong> <%= @table_data[programme.id] %></strong></h4> </td>               
+			   </tr>
+			<% end %>		    
+		</tbody>
+
+	</table>
+</div>

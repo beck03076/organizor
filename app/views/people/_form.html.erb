@@ -99,14 +99,14 @@
                              :first_name,{},
                                     {tabindex: 14}],"collection_select",nil,"Assign To") %>
                     </div>
-                    <div class="frbox institution" style="display:none;">
-                         <%= f.label "Institution Type" %>
+                    <div class="frbox partner" style="display:none;">
+                         <%= f.label "Partner Type" %>
                  <%= select_tag(:abcd,
-                     options_for_select(InstitutionType.order(:name).collect {|p| [ p.name, p.id ] }.unshift(["--Institution Type--",""])), 
+                     options_for_select(PartnerType.order(:name).collect {|p| [ p.name, p.id ] }.unshift(["--Partner Type--",""])), 
                     {tabindex: 13,
                      :onchange => "prepSelect(this,
-                                             '#person_institution_id',
-                                             '/institution_type/');"}) %>
+                                             '#person_partner_id',
+                                             '/partner_type/');"}) %>
                      </div>
                </div>
                <div class="col6">
@@ -116,16 +116,16 @@
                              :id, 
                              :name,{},
                              {tabindex: 14,
-                              :onchange => "showInstitution(this);"}],
+                              :onchange => "showPartner(this);"}],
                              "collection_select",nil,"Person Type") %>
                     </div>
-                     <div class="frbox institution" style="display:none;">
-                         <%= f.label "Institution" %>
-                         <%= f.collection_select(:institution_id, 
+                     <div class="frbox partner" style="display:none;">
+                         <%= f.label "Partner" %>
+                         <%= f.collection_select(:partner_id, 
                                             [], 
                                             :id, 
                                             :name,
-                                            {:prompt => "--Institution Type--"},
+                                            {:prompt => "--Partner Type--"},
                                             {tabindex: 13}) %>
                      </div>
                </div>

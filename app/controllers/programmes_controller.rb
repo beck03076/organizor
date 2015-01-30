@@ -95,7 +95,7 @@ class ProgrammesController < ApplicationController
     respond_to do |format|
 
       format.html # index.html.erb
-      format.json { core_json("programme",params[:institution_id]) } # in core_methods
+      format.json { core_json("programme",params[:partner_id]) } # in core_methods
       format.js { core_js("programme") } # in core_methods
       format.xls { self.xls_pdf("xls")}
       format.pdf{ self.xls_pdf
@@ -116,14 +116,14 @@ class ProgrammesController < ApplicationController
     else
           @programmes = Programme.where(id: @prog_ids.split(","))
     end
-    @institution = Institution.find(@ins_id)
+    @partner = Partner.find(@ins_id)
     
-    @filename = @institution.name.tr(" ","_") + "_iecabroad"
+    @filename = @partner.name.tr(" ","_") + "_iecabroad"
     
     headers["Content-Disposition"] = "attachment; filename=\"#{@filename}#{ext.nil? ? nil : ".xls"}\"" 
   end
 
-  def from_institution
+  def from_partner
     set_url_params
   end
   
@@ -240,7 +240,7 @@ class ProgrammesController < ApplicationController
         if (params[:programme][:notes_attributes])
           
           tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
-             "#{(@programme.institution.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
+             "#{(@programme.partner.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
             
         end
       

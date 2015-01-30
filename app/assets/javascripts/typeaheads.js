@@ -70,7 +70,7 @@ function setDisplay(model){
         referenceno: {model: "registrations",first: ["ref_no"], second: ["first_name","surname"],search_col: "ref_no"},
         enquiries: {first: ["first_name","surname"], second: ["mobile1"]},
         registrations: {first: ["first_name","surname"], second: ["email1"]},
-        institutions: {first: ["name"], second: ["email"]},
+        partners: {first: ["name"], second: ["email"]},
         people: {first: ["first_name","surname"], second: ["email"]},
         all: {model: "all",first: ["title"], second: ["description"]},
     };

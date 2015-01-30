@@ -1,0 +1,20 @@
+<script type="text/javascript">
+$(function(){
+  $("ul.tab-menus li.new_partner").show();
+  $(".tab-menus li").removeClass("active-tab");
+  $("ul.tab-menus li.new_partner").addClass("active-tab");
+  $("ul.tab-menus li.new_partner").text('Clone - <%= @partner.name.titleize %>');
+  $("ul.tab-menus li.new_partner").attr('data-partner_id', '<%= @partner.id %>');
+  $("ul.tab-menus li.new_partner").attr('data-cond', 'clone');
+  $("ul.tab-menus li.new_partner").trigger("click");
+  activeMM("partnersMM");
+});
+</script>
+
+
+<div class="tab-container">
+  <%= render 'enquiries/tabs', :stat => "PartnerType",:model => "partner"  %>
+  <div class="tab-content" id="clone_id">
+  </div>
+
+</div>

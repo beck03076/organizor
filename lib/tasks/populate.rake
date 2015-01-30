@@ -7,7 +7,7 @@ namespace :db do
     include ActionPopulate
     include EnquiryPopulate 
     include RegistrationPopulate 
-    include InstitutionPopulate 
+    include PartnerPopulate 
     include PersonPopulate 
 
     %w(Enquiry Registration Programme Fee Commission FollowUp Email Todo Note).each do|m|
@@ -28,8 +28,8 @@ namespace :db do
     @created = 2.years.ago..1.month.ago
     @score = [1,2,3,4,5,6,7,8,9,10]
     @user = User.ids
-    @programme_type = InstitutionType.edu.ids
-    @institution = Institution.ids
+    @programme_type = PartnerType.edu.ids
+    @partner = Partner.ids
     @course_level = CourseLevel.ids
     @bool = [true,false]
     @todo_topic = TodoTopic.ids
@@ -42,7 +42,7 @@ namespace :db do
 
     start_enquiry_populate
     start_registration_populate
-    #start_institution_populate
+    #start_partner_populate
     #start_person_populate
 
   end

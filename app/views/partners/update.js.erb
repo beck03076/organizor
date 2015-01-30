@@ -1,0 +1,3 @@
+ $("#shared_note_" + "<%= @partner.id %>").html("<%= escape_javascript(render :partial => 'notes/note', :locals => {:sub => @partner}) %>");
+ $(".app_note").val("");
+

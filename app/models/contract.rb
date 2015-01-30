@@ -1,6 +1,6 @@
 class Contract < ActiveRecord::Base
   attr_accessible :commission_rate, :current_contract_end_date, :current_contract_start_date, 
-  :desc, :initiate_date, :institution_id, 
+  :desc, :initiate_date, :partner_id, 
   :internal_target, :invoicing_deadline, :name, 
   :partners_target, :recruitment_territories, :renewal_reminder_date,:notes_attributes,
   :created_by,:updated_by,:documents_attributes,
@@ -15,7 +15,7 @@ class Contract < ActiveRecord::Base
   
   has_many :documents, dependent: :destroy
    
-  belongs_to :institution
+  belongs_to :partner
   
   has_many :sliding_scales
   
@@ -52,7 +52,7 @@ class Contract < ActiveRecord::Base
   end
 
   def assigned_to
-    institution.assigned_to
+    partner.assigned_to
   end
   
  

@@ -17,7 +17,7 @@ class UserConfigsController < ApplicationController
   end
   
   def set_all_cols
-    %w(enquiry registration institution person).each do |i|
+    %w(enquiry registration partner person).each do |i|
       set_cols(i)
     end
   end
@@ -35,7 +35,7 @@ class UserConfigsController < ApplicationController
                                                    
       @reg_cols = Registration.column_names.sort
       
-      @ins_cols = Institution.column_names.sort 
+      @ins_cols = Partner.column_names.sort 
       
       @per_cols = Person.column_names.sort
       

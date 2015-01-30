@@ -4,14 +4,14 @@
        <div class="panel-heading">
           <h5>
             <a class="text-center" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i.id %>">
-              <%= i.institution.name.titleize %>
+              <%= i.partner.name.titleize %>
             </a>            
             <br/>
             <br/>
             <small>
                <span class="ml-10 tag-like purple"><%= i.course_level_name %></span>
-               <span class="ml-10 tag-like blue"><%= i.institution.type.name rescue "Unknown" %></span>
-               <span class="ml-10 tag-like blue"><%= i.institution.group.name rescue "No" %> Group</span>
+               <span class="ml-10 tag-like blue"><%= i.partner.type.name rescue "Unknown" %></span>
+               <span class="ml-10 tag-like blue"><%= i.partner.group.name rescue "No" %> Group</span>
             </small>
           </h5>
         </div>
@@ -25,8 +25,8 @@
                     
                        <% s = ((Date.today >= i.start_date rescue 'start_date') ? ['start_date',99,'course started'] : ['start_date',98,'course yet to start']) %>
                        <% e = ((Date.today >= i.end_date rescue 'end_date') ? ['end_date',97,'course ended'] : ['end_date',98,'course yet to end']) %>
-                            <% [['institution_name','institution_name'],
-                                [['ins_ref_no',99,'alloted by institution'],'reference_no'],
+                            <% [['partner_name','partner_name'],
+                                [['ins_ref_no',99,'alloted by partner'],'reference_no'],
                                 ['course_level_name','course_level'],
                                 ['course_subject_text','course_subject'],
                                 [s,'start_date'],
