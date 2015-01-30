@@ -15,7 +15,7 @@ development:
   database: organizor_dev
   pool: 8
   username: root
-  password: desidime123
+  password: Sector@123
   socket: /var/run/mysqld/mysqld.sock
   local_infile: true
 # Warning: The database defined as "test" will be erased and
