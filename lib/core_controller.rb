@@ -29,8 +29,8 @@ module CoreController
           @d_note = current_user.conf.def_note
           @note = Note.new(content: @d_note)
           
-    elsif @partial_name == "todo"
-          @todo = Todo.new
+    elsif @partial_name == "task"
+          @task = Task.new
           
     elsif @partial_name == "timeline"
           @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")

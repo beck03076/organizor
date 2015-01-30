@@ -16,8 +16,8 @@
                <% else %>
                  <%= li2('role',a.role_name,a,nil,"span","strong")%>
                <% end %>
-               <% hsh = {emails: "by",follow_ups: "to",todos: "to"} %>
-               <% %w(emails follow_ups todos).each do |act| %>
+               <% hsh = {emails: "by",follow_ups: "to",tasks: "to"} %>
+               <% %w(emails follow_ups tasks).each do |act| %>
                  <% out = meta(current_user.id,"user",act,a,hsh[act.to_sym]) %>
                  <%= li1(act,out,'span','small')%>
                <% end %>

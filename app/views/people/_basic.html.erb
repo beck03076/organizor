@@ -15,8 +15,8 @@
            <%= li2('partner',[:partner_id,:select,Partner,:partner_name],a,nil,"span","strong")%>
            
 
-           <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
-           <% %w(emails follow_ups todos notes).each do |act| %>
+           <% hsh = {emails: "by",follow_ups: "to",tasks: "to",notes: "by"} %>
+           <% %w(emails follow_ups tasks notes).each do |act| %>
              <% out = meta(current_user.id,"person",act,a,hsh[act.to_sym]) %>
              <%= li1(act,out,'span','small')%>
            <% end %>

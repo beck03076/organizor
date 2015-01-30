@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   
   belongs_to :_invited_by, class_name: "User",foreign_key: "invited_by_id"
   
-  has_many :todos, foreign_key: "assigned_to"
+  has_many :tasks, foreign_key: "assigned_to"
   has_many :emails, foreign_key: "created_by"
   has_many :follow_ups, foreign_key: "assigned_to"
   has_many :notes,foreign_key: "created_by"

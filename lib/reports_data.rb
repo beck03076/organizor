@@ -18,7 +18,7 @@ module ReportsData
 		   # associations
 		 associations: [
 						follow_ups,
-						todos,
+						tasks,
 						emails,
 						enquiries,
 						registrations,
@@ -72,7 +72,7 @@ module ReportsData
 		  # associations
 		 associations: [
 						follow_ups,
-						todos,
+						tasks,
 						emails
 					   ] 
 		}
@@ -116,7 +116,7 @@ module ReportsData
 		  # associations
 		 associations: [
 						follow_ups,
-						todos,
+						tasks,
 						emails,
 						programmes,
 						fees,
@@ -174,7 +174,7 @@ module ReportsData
 		 	             cols: {countries: ["collection_select","Country",nil,:preferred_countries_country_id]},
 						 logo: "plane"},
 						follow_ups,
-						todos,
+						tasks,
 						emails,
 						programmes				 
 						] 
@@ -279,7 +279,7 @@ module ReportsData
 						 fees,
 						 commissions,		
 						follow_ups,
-						todos,
+						tasks,
 						emails	
 		               ],		 		 
 		 # history
@@ -293,7 +293,7 @@ module ReportsData
 
 
 
-	#========== General Useable Hashed like Actions(FollowUps Todos Emails) ===========
+	#========== General Useable Hashed like Actions(FollowUps Tasks Emails) ===========
 
 
 
@@ -315,19 +315,19 @@ module ReportsData
 		 }
     end
 
-    def todos
-    	{title: "Todos",
-             table: "todos", 
+    def tasks
+    	{title: "Tasks",
+             table: "tasks", 
              cols: {title: 0,
              	    duedate: {  
              	    	           cols: [],
-             	    	           range_col: "todos_duedate",
+             	    	           range_col: "tasks_duedate",
              	    	           cl: "datepicker",
-				 	           ph: "Todo Duedate"
+				 	           ph: "Task Duedate"
 				 	       	},
-				 created_by: ["collection_select","User",:first_name,:todos_created_by],
-				 assigned_to: ["collection_select","User",:first_name,:todos_assigned_to],	  
-				 done: ["select",[true,false],:todos_done],	     	
+				 created_by: ["collection_select","User",:first_name,:tasks_created_by],
+				 assigned_to: ["collection_select","User",:first_name,:tasks_assigned_to],	  
+				 done: ["select",[true,false],:tasks_done],	     	
 				},
              logo: "check"
 		 }

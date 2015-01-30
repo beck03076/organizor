@@ -111,7 +111,7 @@ module RegistrationPopulate
 					    end
 			      end    
 
-			      %w(emails todos follow_ups notes).each do |a|
+			      %w(emails tasks follow_ups notes).each do |a|
 			      	p "--#{a}--"	
 			        r.send(a + '_count=',send('create_' + a + '_per_core',"registrations",r.id,"emails_registration"))
 			      end 

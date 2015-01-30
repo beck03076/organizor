@@ -28,33 +28,33 @@ module ActionPopulate
     end 
 
 
-    def create_todos_per_core(core_type,core_id,dummy)
+    def create_tasks_per_core(core_type,core_id,dummy)
 
       core_model = core_type.singularize.camelize
 
-      todos_count = 0
-      Todo.populate 1..5 do |todo|
-        todos_count += 1
-        todo.topic_id = @todo_topic
-        todo.desc = Faker::Lorem.sentence
-        todo.duedate = @near_future
-        todo.created_by = @user
-        todo.created_at = @created
-        todo.assigned_to = @user
-        todo.assigned_by = @user
-        todo.done = @bool
+      tasks_count = 0
+      Task.populate 1..5 do |task|
+        tasks_count += 1
+        task.topic_id = @task_topic
+        task.desc = Faker::Lorem.sentence
+        task.duedate = @near_future
+        task.created_by = @user
+        task.created_at = @created
+        task.assigned_to = @user
+        task.assigned_by = @user
+        task.done = @bool
 
-        if todo.done
-          todo.done_at = todo.duedate - 1.week
+        if task.done
+          task.done_at = task.duedate - 1.week
         end
 
-        todo.title = Faker::Lorem.sentence
-        todo.auto = @bool
-        todo.todoable_type = core_model
-        todo.todoable_id = core_id
+        task.title = Faker::Lorem.sentence
+        task.auto = @bool
+        task.taskable_type = core_model
+        task.taskable_id = core_id
       end
 
-      todos_count
+      tasks_count
 
     end
 

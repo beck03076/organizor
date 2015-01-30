@@ -1,14 +1,14 @@
 require 'test_helper'
 
-class TodoStatusesControllerTest < ActionController::TestCase
+class TaskStatusesControllerTest < ActionController::TestCase
   setup do
-    @todo_status = todo_statuses(:one)
+    @task_status = task_statuses(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:todo_statuses)
+    assert_not_nil assigns(:task_statuses)
   end
 
   test "should get new" do
@@ -16,34 +16,34 @@ class TodoStatusesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create todo_status" do
-    assert_difference('TodoStatus.count') do
-      post :create, todo_status: { desc: @todo_status.desc, name: @todo_status.name }
+  test "should create task_status" do
+    assert_difference('TaskStatus.count') do
+      post :create, task_status: { desc: @task_status.desc, name: @task_status.name }
     end
 
-    assert_redirected_to todo_status_path(assigns(:todo_status))
+    assert_redirected_to task_status_path(assigns(:task_status))
   end
 
-  test "should show todo_status" do
-    get :show, id: @todo_status
+  test "should show task_status" do
+    get :show, id: @task_status
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @todo_status
+    get :edit, id: @task_status
     assert_response :success
   end
 
-  test "should update todo_status" do
-    put :update, id: @todo_status, todo_status: { desc: @todo_status.desc, name: @todo_status.name }
-    assert_redirected_to todo_status_path(assigns(:todo_status))
+  test "should update task_status" do
+    put :update, id: @task_status, task_status: { desc: @task_status.desc, name: @task_status.name }
+    assert_redirected_to task_status_path(assigns(:task_status))
   end
 
-  test "should destroy todo_status" do
-    assert_difference('TodoStatus.count', -1) do
-      delete :destroy, id: @todo_status
+  test "should destroy task_status" do
+    assert_difference('TaskStatus.count', -1) do
+      delete :destroy, id: @task_status
     end
 
-    assert_redirected_to todo_statuses_path
+    assert_redirected_to task_statuses_path
   end
 end

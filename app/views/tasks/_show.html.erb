@@ -1,0 +1,60 @@
+<!-- show task items -->
+<% if @tasks.any? %>
+<% a = @tasks.group_by(&:topic) %>
+<% a.keys.each do |k| %>
+           <h4 class="col-xs-4 first bold-bighead"><%= k.name.titleize %> tasks</h4>
+           <br/>
+           <% a[k].each do |i| %>
+                <% edi = i.assigned_by == current_user.id %>
+                <div class="row row-top">
+                  <div class="col-xs-12 first">
+                    <div class="to-do">
+                      <div class="well well-sm <%= i.done ? 'complete' : 'to-do' %>">
+                        <div class="row row-top row-right task_container">
+                          <div class="col-xs-12">
+                            <span class="pointer" style='font-size: 1.5em;'>
+                              <%= best_in_place_if (i.assigned_to == current_user.id),
+                                  i,
+                                  :done,
+                                  type: :checkbox ,
+                                  collection: ["<span data-state='empty'>&#x2610;</span>".html_safe,
+                                               "<span data-state='fill'>&#x2611;</span>".html_safe],
+                                  classes: "task_checkbox"  %>
+                            </span>
+                            <div class="task-head">
+                              <strong class="task-text">
+                                <%= best_in_place_if (edi),i,
+                                    :title,
+                                    type: "textarea" %>
+                              </strong>
+                            </div>
+                          </div>
+                          <div class="col-xs-12">
+                            <div class="col-xs-5 first">
+                              <small>By: <%= (link_to i._ass_by.name,i._ass_by) rescue "Unknown" %> </small>
+                            </div>
+                            <div class="col-xs-6">
+                              <small><%= best_in_place_if (edi),i,
+                                         :duedate,
+                                         :type => :date,
+                                         :display_as => "due" %></small>
+                            </div>
+                            <div class="col-xs-1 text-right">
+                            <% if edi %>
+                                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                                i,
+                                method: :delete,
+                                data: { confirm: 'Are you sure?' }  %>
+                            <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+         <% end %>
+<% end %>
+<% else %>
+ <p class="lead"> No tasks to display</p>
+<% end %>

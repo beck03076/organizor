@@ -121,7 +121,7 @@ Organizor::Application.routes.draw do
 
   get '/get_column_names/:model/:filter' => "application#get_column_names"
 
-  post '/filter_todos' => 'todos#index'
+  post '/filter_tasks' => 'tasks#index'
 
   match '/filter_users/:model(/:f_id)' => "users#index"
 
@@ -137,11 +137,11 @@ Organizor::Application.routes.draw do
   # this url will be hit once the google authentication is succesful
   match '/auth/:provider/callback' => 'application#determine_redirect'
 
-  match '/todos/google_create' => "todos#google_create"
+  match '/tasks/google_create' => "tasks#google_create"
 
-  match '/todos/start_sync' => "todos#start_sync"
+  match '/tasks/start_sync' => "tasks#start_sync"
 
-  match '/todos/google_sync' => "todos#google_sync"
+  match '/tasks/google_sync' => "tasks#google_sync"
 
   resources :allow_ips
 
@@ -209,13 +209,13 @@ Organizor::Application.routes.draw do
 
   resources :images
 
-  resources :todo_statuses
+  resources :task_statuses
 
   resources :contact_types
 
-  resources :todo_topics
+  resources :task_topics
 
-  resources :todos
+  resources :tasks
 
   resources :notes
 
@@ -231,15 +231,15 @@ Organizor::Application.routes.draw do
 
   match "/calendar_user/:user_id" => "follow_ups#index"
 
-  match "/todo_assigned_to/:ass_to" => "todos#index"
+  match "/task_assigned_to/:ass_to" => "tasks#index"
 
-  match "/todo_assigned_by/:ass_by" => "todos#index"
+  match "/task_assigned_by/:ass_by" => "tasks#index"
 
   match "/email_hover/:id" => "emails#show_hover"
 
   match "/follow_up_hover/:id" => "follow_ups#show_hover"
 
-  match "/todo_hover/:id" => "todos#show_hover"
+  match "/task_hover/:id" => "tasks#show_hover"
 
   match '/permissions/role/:role_id' => "roles#show_permissions"
 
@@ -269,7 +269,7 @@ Organizor::Application.routes.draw do
 
   match "/emails/new" => "emails#new"
 
-  match "/todo_statuss" => "todo_statuses#index"
+  match "/task_statuss" => "task_statuses#index"
 
  #match "/user_configuration" => "user_configs#edit"
 

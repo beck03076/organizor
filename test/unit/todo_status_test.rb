@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TodoStatusTest < ActiveSupport::TestCase
+class TaskStatusTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

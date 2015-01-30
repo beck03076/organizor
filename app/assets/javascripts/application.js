@@ -118,7 +118,7 @@ $('.datepicker').datepicker();
         ignoreTimezone: false
       },
       {
-        url: '/todos',
+        url: '/tasks',
         ignoreTimezone: false
       }
     ],
@@ -146,7 +146,7 @@ $('.datepicker').datepicker();
     timeFormat: 'h:mm t{ - h:mm t} ',
     dragOpacity: "0.5",
     eventRender: function(event, element) {
-      element.parent().find('a.todo_item div.fc-event-inner').addClass('cal_todo');
+      element.parent().find('a.task_item div.fc-event-inner').addClass('cal_task');
       element.parent().find('a.follow_up_item > .fc-event-inner').addClass('cal_follow_up');
     },
 
@@ -181,7 +181,7 @@ $('.datepicker').datepicker();
         url: '/follow_ups'
       },
       {
-        url: '/todos'
+        url: '/tasks'
       }
     ],
       eventMouseover: function(event, jsEvent, view) {
@@ -190,14 +190,14 @@ $('.datepicker').datepicker();
             }
         },
     eventRender: function(event, element) {
-      element.parent().find('a.todo_this > .fc-event-inner').attr('class','todo_class');
+      element.parent().find('a.task_this > .fc-event-inner').attr('class','task_class');
 
       //imagePreview("follow_up",event.id);
     },
     });
 
-    dropdownUser('select#assigned_to_todo','/todo_assigned_to/');
-    dropdownUser('select#assigned_by_todo','/todo_assigned_by/');
+    dropdownUser('select#assigned_to_task','/task_assigned_to/');
+    dropdownUser('select#assigned_by_task','/task_assigned_by/');
     dropdownUser('select#sent_by_email','/email_sent_by/');
     //dropdownUser('select#calendar_user','/calendar_user/');
 
@@ -279,7 +279,7 @@ function submit_link(obj,tog,obj_name){
                var param = {};
                param[obj_name] = {name: name, desc: desc};
                var sel = '.' + obj_name + '_select'
-               obj_name = (obj_name == 'todo_status') ? 'todo_statuse' : obj_name
+               obj_name = (obj_name == 'task_status') ? 'task_statuse' : obj_name
                obj_name = (obj_name == 'doc_category') ? 'doc_categorie' : obj_name
                 obj_name = (obj_name == 'contract_doc_category') ? 'contract_doc_categorie' : obj_name
                obj_name = (obj_name == 'application_status') ? 'application_statuse' : obj_name
@@ -724,17 +724,17 @@ function filterUsers(obj,model){
   $.getScript("/filter_users/" + model +"/" + obj.value);
 }
 
-function filterTodos(){
+function filterTasks(){
   $('h3').append("<img class=temp src=/images/icons/sload.gif >");
   var e = ['period', 'done', 'assigned_by','topic'];
 
   $.each(e, function(key, value) {
-    window[value] = $('#todo-filter #' + value).val();
+    window[value] = $('#task-filter #' + value).val();
   });
 
-  var duedate = $('#todo-filter #duedate').val();
+  var duedate = $('#task-filter #duedate').val();
 
-  $.post('/filter_todos.js', { filter: true,
+  $.post('/filter_tasks.js', { filter: true,
                      period: period,
                      done: done,
                      assigned_by: assigned_by,
@@ -742,7 +742,7 @@ function filterTodos(){
                      duedate: duedate});
 }
 
-function filterTodosReset(){
+function filterTasksReset(){
   $('input#duedate').val('');
   var e = ['period', 'done', 'assigned_by','topic'];
 

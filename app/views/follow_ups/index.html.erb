@@ -4,17 +4,17 @@
                 <h3>Calendar</h3><br/>
                 
                     <span class="cal_follow_up">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;Follow Ups&nbsp;
-                    <span class="cal_todo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;Todos&nbsp;
+                    <span class="cal_task">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;Tasks&nbsp;
                     
                     [<small>
-                      Choose a date(click) or a date range(click & drag) to create a follow up/todo
+                      Choose a date(click) or a date range(click & drag) to create a follow up/task
                     </small>]
               </div>
               <% if false %>
               <div class="col-md-2">
                 <div class="form-group form-last pull-right">
                   <%= link_to "Sync my Events with Google Calendar",
-                              '/todos/start_sync',
+                              '/tasks/start_sync',
                               {class: "btn btn-primary",
                                data: { confirm: 'This can take a few moments, are you sure?' }} %>
                 </div>

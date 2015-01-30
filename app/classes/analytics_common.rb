@@ -28,7 +28,7 @@ module AnalyticsCommon
     filtered = qualify_period_size(sum_and_order_all_actions,conditions,false)
      # returning the output as hash
     {table_header: ["name","total_score","emails_count",
-                    "todos_count","follow_ups_count","notes_count"],
+                    "tasks_count","follow_ups_count","notes_count"],
      ordered_output: filtered,
      page_header: "#{@title.titleize} Popular <<size>> #{@core.titleize} Based on Actions",
      link_id: :id,
@@ -37,7 +37,7 @@ module AnalyticsCommon
 
   def sum_and_order_all_actions
     model = @core.singularize.camelize.constantize
-    model.order("(emails_count + todos_count + notes_count + follow_ups_count) #{@data}")
+    model.order("(emails_count + tasks_count + notes_count + follow_ups_count) #{@data}")
   end
   # =====================================================================
   # ======== Popularity based on Count of all the impressions ================

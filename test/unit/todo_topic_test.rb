@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TodoTopicTest < ActiveSupport::TestCase
+class TaskTopicTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

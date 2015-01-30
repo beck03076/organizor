@@ -142,7 +142,7 @@
 
             <% [["reports","stats","<hr>"],["enquiries","earphone"],["registrations","pencil"],
              ["partners","home"],["people","globe","<hr>"],["emails","envelope"],
-             ["todos","check"],["follow_ups","calendar","<hr>"]].each do |menu| %>
+             ["tasks","check"],["follow_ups","calendar","<hr>"]].each do |menu| %>
                 <% if can? :read, menu[0].singularize.camelize.constantize %>
                      <li id="<%= menu[0] %>">
                       <%= link_to send(menu[0] + "_path") do %>

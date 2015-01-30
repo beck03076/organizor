@@ -35,8 +35,8 @@ class UserStatistics
     end 
 
 
-    def average_todo_completion_hours(u)
-      u.todos.select("AVG(TIMESTAMPDIFF(HOUR,created_at,done_at)) as ans").first.ans.to_f.round(2)    
+    def average_task_completion_hours(u)
+      u.tasks.select("AVG(TIMESTAMPDIFF(HOUR,created_at,done_at)) as ans").first.ans.to_f.round(2)    
     end
 
 	def average_follow_up_completion_hours(u)
@@ -51,16 +51,16 @@ class UserStatistics
 	  u.emails.where(auto: false).size
 	end
 
-	def todos_completed(u)
-	  u.todos.where(done: true).size
+	def tasks_completed(u)
+	  u.tasks.where(done: true).size
 	end
 
-    def todos_pending(u)
-	  u.todos.where(done: false).size
+    def tasks_pending(u)
+	  u.tasks.where(done: false).size
 	end
 
-	def todos_overdue(u)
-	  u.todos.where("DATE(duedate) < '#{Date.today.strftime("%Y-%m-%d")}'").size
+	def tasks_overdue(u)
+	  u.tasks.where("DATE(duedate) < '#{Date.today.strftime("%Y-%m-%d")}'").size
 	end
 
 	def follow_ups_completed(u)

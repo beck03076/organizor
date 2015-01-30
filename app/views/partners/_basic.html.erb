@@ -16,8 +16,8 @@
                                     a.my_regs(current_user.id).size,
                                     'to me'],'span','small')%>
 
-           <% hsh = {emails: "by",follow_ups: "to",todos: "to",notes: "by"} %>
-           <% %w(emails follow_ups todos notes).each do |act| %>
+           <% hsh = {emails: "by",follow_ups: "to",tasks: "to",notes: "by"} %>
+           <% %w(emails follow_ups tasks notes).each do |act| %>
              <% out = meta(current_user.id,"partner",act,a,hsh[act.to_sym]) %>
              <%= li1(act,out,'span','small')%>
            <% end %>

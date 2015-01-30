@@ -14,7 +14,7 @@ class Registration < ActiveRecord::Base
                                  title: :first_name,
                                  create_comment: "New <<here>> has been created", 
                                  update_comment: "Custom: Values of <<here>> has been updated",
-                                 except: [:follow_ups_count,:todos_count,:notes_count,:emails_count]
+                                 except: [:follow_ups_count,:tasks_count,:notes_count,:emails_count]
 
   before_create :set_ref_no,:set_permissions #:set_password
   after_create :set_enquiry_fields

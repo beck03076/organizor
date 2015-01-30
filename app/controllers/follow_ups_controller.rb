@@ -6,7 +6,7 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
   def cal_click
     set_url_params
     @follow_up = FollowUp.new(starts_at: @start, ends_at: @end)
-    @todo = Todo.new(duedate: @start)
+    @task = Task.new(duedate: @start)
     render partial: 'cal_click'
   end
 

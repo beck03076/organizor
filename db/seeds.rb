@@ -37,7 +37,7 @@ end
    PermissionsUser.create! user_id: @user.id, permission_id: @admin.id
  end
 
- models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups partners notes programmes qualification_names roles smtps student_sources sub_agents todos todo_statuses todo_topics people audit required_doc required_doc_type]
+ models = %w[contracts finances students users enquiries registrations countries programme_types cities application_statuses contact_types course_levels course_subjects doc_categories documents emails email_templates english_levels enquiry_statuses event_types exams exam_types follow_ups partners notes programmes qualification_names roles smtps student_sources sub_agents tasks task_statuses task_topics people audit required_doc required_doc_type]
  actions = %w[create read update delete]
  models.each do |m|
    actions.each do |a|
@@ -174,7 +174,7 @@ end
                     PgDiploma Master PhD)},
                     {student_source: %w(Forum Google_Search Google_Advert 
                      Website Education_Event Friend)},
-                     {todo_topic: %w(Default Documents Administrative
+                     {task_topic: %w(Default Documents Administrative
                  Enquiry Registration Partner 
                  Person)},
                  {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},

@@ -6,7 +6,7 @@
   <% actions = {      email:     ["Email",:create],
                       follow_up: ["FollowUp",:create],
                       note:      ["Note",:create],
-                      todo:      ["Todo",:create],
+                      task:      ["Task",:create],
                       assign_to: ["Registration",:update]} %>
                 
   <% @enquiry.registered ? mains.delete(:register) : nil %>

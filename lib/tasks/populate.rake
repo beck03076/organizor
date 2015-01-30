@@ -10,7 +10,7 @@ namespace :db do
     include PartnerPopulate 
     include PersonPopulate 
 
-    %w(Enquiry Registration Programme Fee Commission FollowUp Email Todo Note).each do|m|
+    %w(Enquiry Registration Programme Fee Commission FollowUp Email Task Note).each do|m|
       p "Deleting #{m}(s) from 50..500000"  
       m.constantize.where(id: (50..500000)).delete_all
     end    
@@ -32,7 +32,7 @@ namespace :db do
     @partner = Partner.ids
     @course_level = CourseLevel.ids
     @bool = [true,false]
-    @todo_topic = TodoTopic.ids
+    @task_topic = TaskTopic.ids
     @near_future = 1.week.from_now..6.months.from_now
     @event_type = EventType.ids
     @app_status = ApplicationStatus.ids

@@ -1,0 +1,45 @@
+<!-- cal click create task -->
+<%= form_for(@task, html: {class: "form-horizontal"}) do |g| %>
+                      <!-- Task Details -------------->
+                      <h5 class="col-md-12">Task Details</h5><br/>
+                      <%= bs(g,"title","text_field",[nil,3],8) %>
+                      <%= bs(g,[:topic_id,TaskTopic.order(:name), 
+                                              :id, 
+                                              :name,
+                                              {prompt: "-topic-"},{}],
+                                              "collection_select",
+                                              [nil,3],8) %>                      
+                      <%= bs(g,[:assigned_to,User.order(:first_name), 
+                                              :id, 
+                                              :first_name,
+                                              {prompt: "-assigned_to-"},{}],
+                                              "collection_select",
+                                              ["Assign To",3],8) %>
+                     
+                     <!-- Link Task -------------->
+                      <h5 class="col-md-12">Link with Registration</h5><br/><br/>
+                      <div class="form-group">
+                          <label for="follow_up_t" class="control-label col-sm-3">Reference No</label>
+                          <div class="col-sm-8">
+                            <%= text_field_tag "task[ref_no]",nil,{class: "form-control"} %>
+                          </div>
+                      </div>
+                      <!-- Task Description-------------->
+                      <h5 class="col-md-12">
+                        Description
+                      </h5><br/>
+                      <%= bs(g,["desc",rows: nil,cols: nil],"text_area",["Description",3],8) %>
+                      
+
+                      <!-- Task hidden fields -------------->
+                     <%= g.hidden_field :assigned_by, :value => current_user.id.to_s %>
+                     <%= g.hidden_field :sub_class, :value => "enquiry" %>
+                     <%= g.hidden_field :sub_class, :value => "enquiry" %>
+                     <%= g.hidden_field :duedate, :value => g.object.duedate %>
+                     <!-- Task submit -------------->
+                      <div class="form-group form-last">
+                       <div class="col-sm-offset-3 col-sm-5">
+                        <%= g.submit "Create",{class: "btn btn-primary"} %>
+                       </div>
+                      </div>
+<% end %>

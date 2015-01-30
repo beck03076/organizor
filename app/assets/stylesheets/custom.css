@@ -188,16 +188,16 @@ h1 {
     margin-left: -10px; }
   .main .main-content .to-do .well {
     margin-bottom: 10px; }
-  .main .main-content .to-do .todo-head {
+  .main .main-content .to-do .task-head {
     display: inline-block;
     padding-bottom: 5px; }
-  .main .main-content .to-do .overdue .todo-date {
+  .main .main-content .to-do .overdue .task-date {
     color: red; }
   .main .main-content .to-do .overdue .well {
     border: 1px solid red; }
   .main .main-content .to-do .complete {
     color: #aaaaaa; }
-    .main .main-content .to-do .complete .todo-text {
+    .main .main-content .to-do .complete .task-text {
       text-decoration: line-through; }
   .main .main-content .data-table .well {
     padding-left: 0; }

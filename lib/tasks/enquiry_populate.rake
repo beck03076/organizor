@@ -62,7 +62,7 @@ module EnquiryPopulate
 			        prog.notes_count = 0
 			      end
 
-			      %w(emails todos follow_ups notes).each do |a|
+			      %w(emails tasks follow_ups notes).each do |a|
 			      	p "--#{a}--"	
 			        e.send(a + '_count=',send('create_' + a + '_per_core',"enquiries",e.id,"emails_enquiries"))
 			      end 

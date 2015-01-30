@@ -49,7 +49,7 @@
     <div class="btn-group">
       <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" type="button">Actions <span class="caret"></span></button>
       <ul role="menu" class="dropdown-menu">
-         <% [:event_type,:todo_topic,:smtp,:email_template,].sort.each do |r| %>
+         <% [:event_type,:task_topic,:smtp,:email_template,].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
                  <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>

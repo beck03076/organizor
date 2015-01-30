@@ -25,17 +25,17 @@ module CoreModel
 
       #========= Actions on Core Start ============
       has_many :follow_ups, as: :follow_upable
-      has_many :todos,as: :todoable
+      has_many :tasks,as: :taskable
       has_many :notes,as: :noteable
       has_and_belongs_to_many :emails, :uniq => true
       #============================================
 
       #core model has the followin actions so attr accesible is must for Form, fields_for
-      attr_accessible :emails_attributes,:follow_ups_attributes,:notes_attributes,:todos_attributes,
-                      :emails_count, :follow_ups_count, :todos_count, :notes_count,:impressions_count
+      attr_accessible :emails_attributes,:follow_ups_attributes,:notes_attributes,:tasks_attributes,
+                      :emails_count, :follow_ups_count, :tasks_count, :notes_count,:impressions_count
 
       #core model has the followin actions so accepting nested attributes is must for Form, fields_for 
-      accepts_nested_attributes_for :emails,:follow_ups,:notes,:todos, :allow_destroy => true                 
+      accepts_nested_attributes_for :emails,:follow_ups,:notes,:tasks, :allow_destroy => true                 
       
       
       self_pl = self_name.downcase.pluralize
@@ -74,7 +74,7 @@ module CoreModel
   end
 
   def total_score
-    emails_count + notes_count + todos_count + follow_ups_count
+    emails_count + notes_count + tasks_count + follow_ups_count
   end
   
   # =================

@@ -8,12 +8,12 @@
                     </button>
                     <h3>
                         Create
-                        <a class="togglerb" onclick="showHide('new_todo','new_follow_up');" href="#"> 
+                        <a class="togglerb" onclick="showHide('new_task','new_follow_up');" href="#"> 
                           Event
                         </a>
                           Or
-                        <a href="#" class="togglerb" onclick="showHide('new_follow_up','new_todo');">
-                          Todo
+                        <a href="#" class="togglerb" onclick="showHide('new_follow_up','new_task');">
+                          Task
                         </a>
                     </h3>
                   </div>
@@ -21,8 +21,8 @@
                       <div id="new_follow_up"> 
                         <%= render 'cal_follow_up' %>
                       </div>
-                      <div id="new_todo" style="display: none;">
-                        <%= render 'cal_todo' %>
+                      <div id="new_task" style="display: none;">
+                        <%= render 'cal_task' %>
                       </div>
                   </div><!-- modal-body -->
                   <div class="modal-footer">

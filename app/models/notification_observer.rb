@@ -8,7 +8,7 @@ class NotificationObserver < ActiveRecord::Observer
   end
 =begin
  # please note the group assign notification is done in the controller side
-  observe :enquiry,:registration,:todo,:follow_up,:programme,:note,:email
+  observe :enquiry,:registration,:task,:follow_up,:programme,:note,:email
    
    def after_save(record)
      
@@ -27,8 +27,8 @@ class NotificationObserver < ActiveRecord::Observer
                           ass_by: nil)
                           
      elsif (record.assigned_to != record.assigned_by rescue false)
-       # this condition is added to ignore updating done field of todo to be notified
-       if (record.class.name == "Todo" && record.done)
+       # this condition is added to ignore updating done field of task to be notified
+       if (record.class.name == "Task" && record.done)
          PrivatePub.publish_to("/notify/" + record.assigned_by.to_s, 
                           message: "#{record.class.name} has been re-assigned/changed",
                           ass_by: record.assigned_by)

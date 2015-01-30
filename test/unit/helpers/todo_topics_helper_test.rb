@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class TodoTopicsHelperTest < ActionView::TestCase
+class TaskTopicsHelperTest < ActionView::TestCase
 end

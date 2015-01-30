@@ -28,7 +28,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   
    config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources todo_topics]}
+    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources task_topics]}
   end
 
   config.before(:each) do
@@ -36,7 +36,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources todo_topics]}
+    DatabaseCleaner.strategy = :truncation, {:except => %w[roles permissions user_configs allow_ips application_statuses commission_statuses contact_types course_levels doc_categories english_levels enquiry_statuses event_types exam_types institution_groups institution_types person_types qualifications student_sources task_topics]}
   end
 
   config.before(:each) do

@@ -1,14 +1,14 @@
 require 'test_helper'
 
-class TodosControllerTest < ActionController::TestCase
+class TasksControllerTest < ActionController::TestCase
   setup do
-    @todo = todos(:one)
+    @task = tasks(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:todos)
+    assert_not_nil assigns(:tasks)
   end
 
   test "should get new" do
@@ -16,34 +16,34 @@ class TodosControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create todo" do
-    assert_difference('Todo.count') do
-      post :create, todo: { created_by: @todo.created_by, desc: @todo.desc, duedate: @todo.duedate, priority: @todo.priority, status_id: @todo.status_id, topic_id: @todo.topic_id, updated_by: @todo.updated_by }
+  test "should create task" do
+    assert_difference('Task.count') do
+      post :create, task: { created_by: @task.created_by, desc: @task.desc, duedate: @task.duedate, priority: @task.priority, status_id: @task.status_id, topic_id: @task.topic_id, updated_by: @task.updated_by }
     end
 
-    assert_redirected_to todo_path(assigns(:todo))
+    assert_redirected_to task_path(assigns(:task))
   end
 
-  test "should show todo" do
-    get :show, id: @todo
+  test "should show task" do
+    get :show, id: @task
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @todo
+    get :edit, id: @task
     assert_response :success
   end
 
-  test "should update todo" do
-    put :update, id: @todo, todo: { created_by: @todo.created_by, desc: @todo.desc, duedate: @todo.duedate, priority: @todo.priority, status_id: @todo.status_id, topic_id: @todo.topic_id, updated_by: @todo.updated_by }
-    assert_redirected_to todo_path(assigns(:todo))
+  test "should update task" do
+    put :update, id: @task, task: { created_by: @task.created_by, desc: @task.desc, duedate: @task.duedate, priority: @task.priority, status_id: @task.status_id, topic_id: @task.topic_id, updated_by: @task.updated_by }
+    assert_redirected_to task_path(assigns(:task))
   end
 
-  test "should destroy todo" do
-    assert_difference('Todo.count', -1) do
-      delete :destroy, id: @todo
+  test "should destroy task" do
+    assert_difference('Task.count', -1) do
+      delete :destroy, id: @task
     end
 
-    assert_redirected_to todos_path
+    assert_redirected_to tasks_path
   end
 end
