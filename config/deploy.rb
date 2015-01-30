@@ -16,7 +16,7 @@ set :deploy_to,       "/home/deployer/apps/organizor"
 set :app_path,        "#{deploy_to}/current"
 
 set :repository,      'https://github.com/beck03076/organizor.git'
-set :branch,          'redesign-new'
+set :branch,          'rename'
 
 set :user,            'deployer'
 set :shared_paths,    ['config/database.yml', 'log' 'tmp']
