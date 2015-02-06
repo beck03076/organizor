@@ -2,7 +2,20 @@ require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
   resources :courses
-  match '/secondaries/:model_name' => 'secondaries#index'
+
+  match '/configurations' => 'configurations#index', via: :get
+
+  match '/edit_configuration/:model_name/:id' => "secondaries#edit", via: :get
+
+  match '/show_configuration/:model_name/:id' => "secondaries#show", via: :get
+
+  match '/secondaries/:model_name' => 'secondaries#index', via: :get
+
+  match '/secondaries/:model_name' => 'secondaries#create', via: :post
+
+  match '/secondaries/:model_name/:id' => 'secondaries#update', via: :put
+
+  match '/secondaries/:model_name/:id' => 'secondaries#destroy', via: :delete
 
   match '/document/edit/:id' => "documents#edit"
 
@@ -125,14 +138,7 @@ Organizor::Application.routes.draw do
 
   match '/filter_users/:model(/:f_id)' => "users#index"
 
-  match '/edit_resource/:r_name/:r_id' => "resources#edit"
-
-  match '/show_resource/:r_name/:r_id' => "resources#show"
-
   match '/user_configs/manage/:partial' => 'user_configs#manage'
-
-  match '/configuration' => 'resources#index'
-
 
   # this url will be hit once the google authentication is succesful
   match '/auth/:provider/callback' => 'application#determine_redirect'

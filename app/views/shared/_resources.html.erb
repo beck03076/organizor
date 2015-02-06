@@ -1,5 +1,5 @@
 <!-- rendering the left menu -->
-<%= render 'resources/menu' %>
+<%= render 'configurations/menu' %>
 
 <div class="col-md-12">
   <div class="config-content">
@@ -16,13 +16,14 @@
             <th></th>
           </tr>
         </thead>
+        <% r_name = resource_disp1.downcase.tr(" ","_") %>
         <tbody>
           <% resource.each do |r| %>
-             <% r_name = resource_disp1.downcase.tr(" ","_") %>
+
             <tr>
               <td>
                 <%= link_to(r.tname,
-                            "/show_resource/#{r_name}/#{r.id}",
+                            "/show_configuration/#{r_name}/#{r.id}",
                             {remote: true,
                              onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'}) %>
               </td>
@@ -30,19 +31,19 @@
                 <%= truncate(r.desc,length: 40) %>
               </td>
               <td>
-               
-                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
-                            "/edit_resource/#{r_name}/#{r.id}",
+
+                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                            "/edit_configuration/#{r_name}/#{r.id}",
                             {remote: true,
                             onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
               </td>
               <td>
-                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
-                            r, 
-                            method: :delete, 
+                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                            "/secondaries/#{r_name}/#{r.id}",
+                            method: :delete,
                             data: { confirm: 'Are you sure?' }  %>
-                
-                
+
+
               </td>
             </tr>
           <% end %>
@@ -50,11 +51,12 @@
       </table>
     </div>
 
-    <%= render 'shared/resource_form', {new_resource: new_resource,
+    <%= render 'shared/resource_new_form', {new_resource: new_resource,
                                         resource_disp1: resource_disp1,
+                                        model_name: r_name,
                                         div: "well",
                                         h: "New"} %>
-                                        
+
     <div id="edit-resource-container"></div>
   </div>
 </div>
