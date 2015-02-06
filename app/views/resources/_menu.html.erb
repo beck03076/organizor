@@ -1,7 +1,7 @@
 <!-- All resources to configure -->
     <div class="row row-top">
       <h3>Configuration</h3>
-    </div>  
+    </div>
 
 <!-- Single button -->
 <div class="form-group">
@@ -12,10 +12,10 @@
         <% [ :contact_type,:student_source,:enquiry_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %>      
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
@@ -26,10 +26,10 @@
             :english_level,:exam_type,:qualification_name,:progression_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %> 
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
@@ -40,10 +40,10 @@
             :processing_fee_status,:commission_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %> 
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
@@ -52,10 +52,10 @@
          <% [:event_type,:task_topic,:smtp,:email_template,].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %> 
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
@@ -64,10 +64,10 @@
          <% [:person_type].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %> 
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
     <div class="btn-group">
@@ -76,10 +76,10 @@
          <% [:allow_ip,:branch,:role].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/" + r.to_s.pluralize %>
+                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
               </li>
               <% end %>
-        <% end %> 
+        <% end %>
       </ul>
     </div><!-- /btn-group -->
   </div>

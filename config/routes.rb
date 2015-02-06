@@ -2,7 +2,7 @@ require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
   resources :courses
-
+  match '/secondaries/:model_name' => 'secondaries#index'
 
   match '/document/edit/:id' => "documents#edit"
 
