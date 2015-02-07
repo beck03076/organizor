@@ -1,8 +1,9 @@
 module ApplicationHelper
   include ReportsFilterHelpers  
+  include TopMenuHelper   
 
   def despace(i)
-    i. downcase.tr(' ','_')
+    i.downcase.tr(' ','_')
   end
   #basic li ul listing with vlsdet
   def li1(label,val,sizel,sizev,a = nil)

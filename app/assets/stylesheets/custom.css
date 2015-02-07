@@ -6,7 +6,8 @@ html {
 
 body {
   min-width: 970px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  background-color: #e1f5e0; }
 
 .block {
   display: block; }
@@ -78,7 +79,7 @@ h1 {
 
 /* Set the fixed height of the footer here */
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 50px;
@@ -113,7 +114,7 @@ h1 {
       color: #004156; }
 
 .container {  
-  width: 970px;
+  width: 1070px;
   position: relative;
   max-width: none !important;
   padding-left: 0;
@@ -139,6 +140,12 @@ h1 {
   .login-container .login-well {
     border: 1px solid #BBBBBB; }
 
+.main{
+  background-color:#ffffff; 
+  padding:10px 0 10px 10px;
+  border-left:1px solid #CCCCCC;
+  border-right:1px solid #CCCCCC;
+}
 .main .left-nav {
   padding-top: 1rem;
   padding-right: 0; }

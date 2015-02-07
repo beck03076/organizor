@@ -17,7 +17,8 @@
 *= require custom
 *= require redactor-rails
 *= require jqueryui-datepicker
-
+*= require smartmenus
+*= require smartmenus_custom
 */
 
 /* states and images */

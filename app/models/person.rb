@@ -63,6 +63,9 @@ class Person < ActiveRecord::Base
   alias_method :creator, :cby
   alias_method :owner, :ato
   
+  def name
+    (self.first_name.to_s + ' ' + self.surname.to_s).titleize.strip
+  end
 
   def update_sub_agent
     sub_agent = PersonType.find_by_name("unofficial sub agent").id

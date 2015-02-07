@@ -21,6 +21,7 @@
   <%= notifiably_audited('notify();').html_safe %>
 
   <body>
+  <!-- Header ---------------------------------------------------------------------------------------- -->
   <!-- Shortening variable -->
   <% u = current_user %>
     <div id="header">
@@ -125,55 +126,20 @@
             </div>
           </div>
         </div>
+
       </div>
+
     </div>
 
+     <%= render 'layouts/top_menu', u: u %>
 
-    <!-- Begin page content -->
+    <!-- Begin page content ---------------------------------------------------------------------------------------- -->
     <div class="container main">
 
-      <div class="row">
-        <div class="col-xs-2 left-nav">
-          <ul class="nav nav-pills nav-stacked main-menu">
-
-            <li class="disabled">
-              <a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a>
-            </li>
-
-            <% [["reports","stats","<hr>"],["enquiries","earphone"],["registrations","pencil"],
-             ["partners","home"],["people","globe","<hr>"],["emails","envelope"],
-             ["tasks","check"],["follow_ups","calendar","<hr>"]].each do |menu| %>
-                <% if can? :read, menu[0].singularize.camelize.constantize %>
-                     <li id="<%= menu[0] %>">
-                      <%= link_to send(menu[0] + "_path") do %>
-                        <span class="glyphicon glyphicon-<%= menu[1] %>">
-                        </span>
-                          <%= menu[0].titleize %>
-                      <% end %>
-                     </li>
-                     <%= menu[2].html_safe if !menu[2].nil? %>
-                 <% end %>
-            <% end %>
-
-            <li id="users">
-              <% if u.role?(:agency_administrator) %>
-                  <%= link_to "/users" do %><span class="glyphicon glyphicon-user"></span>Users<% end %>
-              <% else %>
-                <%= link_to "/users/#{current_user.id}" do %><span class="glyphicon glyphicon-user"></span>My account<% end %>
-              <% end %>
-            </li>
-
-            <% if current_user.adm? %>
-              <li id="configuration">
-                  <%= link_to "/configuration" do %><span class="glyphicon glyphicon-list"></span>Configuration<% end %>
-              </li>
-            <% end %>
-
-          </ul>
-        </div>
-        <div class="col-xs-10 main-content">
+      <div class="row col-xs-12 main-content">
+        
           <%= yield %>
-        </div>
+        
       </div>
     </div>
 

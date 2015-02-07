@@ -1,0 +1,66 @@
+<div class="navbar navbar-default seperator" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div class="container navbar-collapse collapse custom-navbar">
+
+    <!-- Left nav -->
+    <ul class="nav navbar-nav">
+
+      <li id="dashboard">
+        <a href="#"><span class="glyphicon glyphicon-th"></span>Dashboard</a>
+      </li>
+
+
+      <li id="students">
+        <a href="#">
+          <span class="glyphicon glyphicon-folder-open"></span> 
+          Students
+        </a>
+          <ul class="dropdown-menu">
+            <% [["enquiries","phone-alt"],["registrations","flag"],["web_enquiries","cloud-download"]].each do |menu| %>
+              <%= render_permitted_item(menu) %>
+            <% end %>
+          </ul>
+      </li>    
+
+      <li>
+        <a href="#">
+          <span class="glyphicon glyphicon-send"></span> 
+          Actions
+        </a>
+          <ul class="dropdown-menu">
+             <% [["emails","envelope"],["tasks","check"],["follow_ups","calendar"]].each do |menu| %>
+               <%= render_permitted_item(menu) %>
+             <% end %>
+          </ul>
+      </li> 
+
+      <% [["partners","home"],["people","globe"],["reports","stats"]].each do |menu| %>
+          <%= render_permitted_item(menu) %>
+      <% end %>
+
+
+
+      <li id="users">
+        <% if u.role?(:agency_administrator) %>
+            <%= link_to "/users" do %><span class="glyphicon glyphicon-user"></span>Users<% end %>
+        <% else %>
+          <%= link_to "/users/#{current_user.id}" do %><span class="glyphicon glyphicon-user"></span>My account<% end %>
+        <% end %>
+      </li>
+
+      <% if current_user.adm? %>
+        <li id="configuration">
+            <%= link_to "/configuration" do %><span class="glyphicon glyphicon-wrench"></span>Configuration<% end %>
+        </li>
+      <% end %>      
+    </ul>
+
+  </div><!--/.nav-collapse -->
+</div>
