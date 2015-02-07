@@ -1,7 +1,7 @@
 <!-- edit any standard name-desc resource -->
 <div class="row">
       <div class="<%= div %>">
-        <%= form_for(new_resource, html: {class: 'form-horizontal'}) do |f| %>
+        <%= form_for(new_resource, :url => "/secondaries/" + resource_name + "/#{new_resource.id}", :method => "put", html: {class: 'form-horizontal'}) do |f| %>
           <% if h=="New" %>
           <h4 class="form-heading">New <%= resource_disp1 %></h4>
           <br/>
