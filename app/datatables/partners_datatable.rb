@@ -1,7 +1,7 @@
 class PartnersDatatable < Datatable
   include CoreColumns
 
-  def initialize(view,cols,sFil,asso_id = nil)
+  def initialize(view,cols,sFil,asso_id = nil,tab_type)
     model = "partner"
     @view = view
     @cols = cols

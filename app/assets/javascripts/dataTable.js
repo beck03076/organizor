@@ -1,4 +1,4 @@
-function dataTableStart(table,filterValue,cols,cols_size,ransack)
+function dataTableStart(table,filterValue,cols,cols_size,ransack,tab_type)
 {
 
 
@@ -14,7 +14,8 @@ function dataTableStart(table,filterValue,cols,cols_size,ransack)
     "fnServerParams": function ( aoData ) {
       aoData.push( { "name": "sFilter", "value": filterValue },
                    { "name": "sCols", "value": cols },
-                   {"name": "sSearch_2", "value": ransack });
+                   {"name": "sSearch_2", "value": ransack },
+                   {"name": "tab_type", "value": tab_type });
     },
     "aoColumnDefs": [
       { "bSortable": false, "aTargets": [ 0,hide_follow_up_sort,(hide_follow_up_sort + 1),(hide_follow_up_sort + 2) ] }

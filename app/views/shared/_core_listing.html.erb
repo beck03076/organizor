@@ -1,15 +1,24 @@
 <!-- setting other variables based on model passed to this partial -->
 <% _model = eval(model) %>
+
 <% model_pl = model.downcase.pluralize %>
 
 <% _id =  (@status || "all") + "_" + model_pl %>
+
 <% if model == "Programme" %>
   <% url = "/partner_programmes/#{@partner_id}.json" %>
 <% else %>
   <% url = send(model_pl + "_url",format: "json") %>
 <% end %>
+
 <% srch_url = send("search_" + model_pl + "_path") %>
 <% act = act || model_pl %>
+
+<% if ["Enquiry","Registration"].include? (model) %>
+  <% acttm = "students" %>
+<% else %>
+  <% acttm = act %>
+<% end %>
 <div class="row mass-actions-pills" style="display: none;">
            <div class="col-md-10">
                     <!----------------------- Group Assign Start---------------------------->
@@ -300,7 +309,7 @@
 <script src="/dt-bootstrap.js"></script>
 <script>
 
- var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>');
+ var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>','{}','<%= @tab_type %>');
 
  $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
                            '<select class="form-control hor-first" onchange="tabLength(tab,this);">' +
@@ -316,6 +325,7 @@
 
  pillClickShowModal('<%= _id %>');
 
+ acttm('<%= acttm %>');
  actmm('<%= act %>');
  acttab('<%= @status || @partial_name %>');
 

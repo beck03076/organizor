@@ -37,7 +37,8 @@ class PartnersController < ApplicationController
   def index
     authorize! :list, Partner
     set_url_params
-
+    self.set_cols
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { core_json("partner") } # in core_methods
@@ -132,7 +133,6 @@ class PartnersController < ApplicationController
     # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.ins_cols
       b = [:id,:name,:email,:phone]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date]
-  
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]  
   end
 end

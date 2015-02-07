@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
+  get 'web_enquiries' => "enquiries#index"
+
   resources :courses
 
   match '/configurations' => 'configurations#index', via: :get

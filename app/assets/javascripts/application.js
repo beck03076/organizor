@@ -386,12 +386,15 @@ function enquiryTabSwitch(obj){
     var partial = $(obj).data("partial");
     var enquiry_id = $(obj).data("enquiry_id");
     var lang = $(obj).attr("lang");
+    var tab_type = $(obj).attr("tab_type");
 
     activateTab(cond,lang); //to make the clicked tab active
 
     url = '/enquiries/tab/' + cond + '/' + partial + '/'
 
     if (typeof enquiry_id !== "undefined"){ url = url + enquiry_id; }
+
+    if (typeof tab_type !== "undefined"){ url = url + '?tab_type=' + tab_type; }
 
     $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
 
@@ -680,9 +683,14 @@ function importContacts(url){
   $(this).submit();
 }
 
+function acttm(what){
+  $('ul.navbar-nav li').removeClass('active');
+  $('ul.navbar-nav li#' + what).addClass('active');
+}
+
 function actmm(what){
-  $('ul.main-menu li').removeClass('active');
-  $('ul.main-menu li#' + what).addClass('active');
+  $('ul.navbar-nav li > ul > li').removeClass('active');
+  $('ul.navbar-nav li > ul > li#' + what).addClass('active');
 }
 
 function actsm(what){

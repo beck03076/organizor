@@ -23,7 +23,7 @@
           Students
         </a>
           <ul class="dropdown-menu">
-            <% [["enquiries","phone-alt"],["registrations","flag"],["web_enquiries","cloud-download"]].each do |menu| %>
+            <% [["enquiries","phone-alt"],["registrations","flag"],["web_enquiries","cloud-download","ContactType"]].each do |menu| %>
               <%= render_permitted_item(menu) %>
             <% end %>
           </ul>
@@ -57,7 +57,7 @@
 
       <% if current_user.adm? %>
         <li id="configuration">
-            <%= link_to "/configuration" do %><span class="glyphicon glyphicon-wrench"></span>Configuration<% end %>
+            <%= link_to "/configurations" do %><span class="glyphicon glyphicon-wrench"></span>Configuration<% end %>
         </li>
       <% end %>      
     </ul>

@@ -7,8 +7,8 @@ class EnquiriesController < ApplicationController
   
   def tab
     set_url_params    
-      self.set_cols
-      render partial: @partial
+    self.set_cols
+    render partial: @partial
   end
   
   def action_partial
@@ -23,11 +23,11 @@ class EnquiriesController < ApplicationController
     authorize! :list, Enquiry
     set_url_params
     self.set_cols
-    
+    @tab_type ||= "EnquiryStatus"
     respond_to do |format|
       format.html # index.html.erb
-      format.json { core_json("enquiry") } # in core_methods
-      format.js { core_js("enquiry") } # in core_methods
+      format.json { core_json("enquiry",nil,@tab_type) } # in core_methods
+      format.js { core_js("enquiry",nil,@tab_type) } # in core_methods
       format.xls
     end
   end
@@ -65,8 +65,11 @@ class EnquiriesController < ApplicationController
 
   def clone
     # To have this next line, is to display the enquiry name on the tab, thats all
-    @enquiry = Enquiry.find(params[:id])
+    @enquiry = Enquiry.find(params[:id]).deep_clone
     authorize! :create, @enquiry
+
+    @countries = basic_select(Country)
+    @p_types = PartnerType.where(educational: true)
   end
 
   # GET /enquiries/1/edit

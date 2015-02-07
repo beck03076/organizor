@@ -82,12 +82,12 @@ module CoreController
     model.where(cond).order(:name).map{|i| [i.name,i.id]}
   end
   
-  def core_json(model,asso_id = nil)
+  def core_json(model,asso_id = nil,tab_type = nil)
     cl = (model.pluralize.camelize + "Datatable").constantize
     if (params[:sSearch_2] == "undefined" || params[:sSearch_2] == "")
-          render :json => cl.new(view_context,eval(@sCols),@sFilter,asso_id)
+          render :json => cl.new(view_context,eval(@sCols),@sFilter,asso_id,tab_type)
     else
-          render :json => cl.new(view_context,@cols,@sFilter,asso_id)
+          render :json => cl.new(view_context,@cols,@sFilter,asso_id,tab_type)
     end
   end
   
