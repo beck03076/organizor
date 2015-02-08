@@ -1,0 +1,2 @@
+class WebEnquiry
+end
