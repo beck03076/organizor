@@ -174,9 +174,7 @@ end
                     PgDiploma Master PhD)},
                     {student_source: %w(Forum Google_Search Google_Advert 
                      Website Education_Event Friend)},
-                     {task_topic: %w(Default Documents Administrative
-                 Enquiry Registration Partner 
-                 Person)},
+                     #{todo_topic: %w(Default Documents Administrative Enquiry Registration Partner      Person)},
                  {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
                  {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},
                  {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)},
