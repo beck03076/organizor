@@ -23,7 +23,11 @@ class EnquiriesController < ApplicationController
     authorize! :list, Enquiry
     set_url_params
     self.set_cols
+    
     @tab_type ||= "EnquiryStatus"
+
+    set_tab_value
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { core_json("enquiry",nil,@tab_type) } # in core_methods

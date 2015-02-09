@@ -5,7 +5,7 @@
 <% new_resource = PartnerType.new %>
                                
 <!-- rendering the left menu -->
-<%= render 'resources/menu' %>
+<%= render 'configurations/menu' %>
 
 
 <div class="col-md-9">
@@ -18,7 +18,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Educational</th>
+                <th>Category</th>
                 <th>Description</th>
                 <th>Created</th>
                 <th>Last Modified</th>
@@ -33,7 +33,7 @@
                                   partner_type_path(r),
                                   {remote: true,
                                    onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %></td>
-                  <td><%= r.educational %></td>
+                  <td><%= r.try_chain(:partner_category,:name) %></td>
                   <td><%= truncate(r.desc,length: 20) %></td>
                   <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
                   <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>

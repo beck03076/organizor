@@ -23,13 +23,45 @@
           Students
         </a>
           <ul class="dropdown-menu">
-            <% [["enquiries","phone-alt"],["registrations","flag"],["web_enquiries","cloud-download","ContactType"]].each do |menu| %>
+            <% [["enquiries","phone-alt"],["registrations","flag"],["web_enquiries","cloud-download","ContactType","Website"],["joined_students","ok-sign","ApplicationStatus","joined"]].each do |menu| %>
               <%= render_permitted_item(menu) %>
             <% end %>
           </ul>
-      </li>    
+      </li>         
+      
+      <% glyphs = {"educational" => "list-alt", "business" => "briefcase", "indirect" => "random"} %>
+      <li id="partners">
+        <a href="#">
+          <span class="glyphicon glyphicon-heart"></span> 
+          Partners
+        </a>
+          <ul class="dropdown-menu">
+            <li id="all">
+              <a href="/partners?partner_type=All">                   
+                <span class="glyphicon glyphicon-th"></span>            
+                <b>All</b>
+              </a>
+            </li>
+          <% PartnerCategory.all.each do |p| %>
+            <li id="<%= p.name %>">
+              <a href="<%= "/partners?tab_type=PartnerCategory&tab_value=" + p.name %>">   
+                <% p_name = p.name.downcase %>
+                <span class="glyphicon glyphicon-<%= (glyphs.keys.include?(p_name) ? glyphs[p_name] : "") %>"></span>             
+                <b><%= p.name.titleize %></b>
+              </a>
+              
+                <% p.partner_types.all.each do |pt| %>
+                    <li class="ml" id="<%= pt.name %>">                     
+                      <%= link_to pt.name.titleize,"/partners?tab_type=PartnerType&tab_value=" + pt.name  %>
+                    </li>  
+                <% end %>
+              
+            </li>  
+          <% end %>
+          </ul>
+      </li> 
 
-      <li>
+      <li id="actions">
         <a href="#">
           <span class="glyphicon glyphicon-send"></span> 
           Actions
@@ -41,11 +73,9 @@
           </ul>
       </li> 
 
-      <% [["partners","home"],["people","globe"],["reports","stats"]].each do |menu| %>
+      <% [["people","globe"],["reports","stats"]].each do |menu| %>
           <%= render_permitted_item(menu) %>
       <% end %>
-
-
 
       <li id="users">
         <% if u.role?(:agency_administrator) %>
@@ -56,8 +86,8 @@
       </li>
 
       <% if current_user.adm? %>
-        <li id="configuration">
-            <%= link_to "/configurations" do %><span class="glyphicon glyphicon-wrench"></span>Configuration<% end %>
+        <li id="configurations">
+            <%= link_to "/configurations" do %><span class="glyphicon glyphicon-wrench"></span>System Configuration<% end %>
         </li>
       <% end %>      
     </ul>

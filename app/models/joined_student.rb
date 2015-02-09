@@ -1,0 +1,3 @@
+class JoinedStudent
+
+end

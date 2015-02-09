@@ -28,6 +28,7 @@ class Partner < ActiveRecord::Base
 
   belongs_to :type, class_name: 'PartnerType', foreign_key: 'type_id'
   belongs_to :group, class_name: 'PartnerGroup', foreign_key: 'group_id'
+  belongs_to :category, class_name: 'PartnerCategory', foreign_key: 'category_id'
   belongs_to :country
   belongs_to :city
   belongs_to :person
@@ -57,7 +58,7 @@ class Partner < ActiveRecord::Base
   :desc, :phone, :fax,
   :address_line2,:assigned_to,:assigned_by,:prohibited_country_ids,:prohibited_region_ids,
   :permitted_country_ids,:permitted_region_ids,:group_id,:assigned_at,
-  :person_id
+  :person_id, :category_id
 
   accepts_nested_attributes_for :contracts,:people,:allow_destroy => true
 

@@ -35,8 +35,8 @@
   <% hsh = {contracts: [:contract_details, :recruitment_territories,:sliding_scales]} %>
   <% parts = [:start,
               :partner_information,
-              hsh,
-              :people] %>
+              :people,
+              hsh] %>
   <% parts_values = parts.map{|i| i.kind_of?(Hash) ? i.values : i }.flatten %>
   <div class="new-enq-reg">
                 <div class="row">

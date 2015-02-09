@@ -1,19 +1,24 @@
 <!-- adding people under partner -->
-   <%= f.fields_for :people do |p| %>
+   <h5> You can add any number of people associated with this partner. Goto "People" to add more fields for a person</h5>
+
+
    <hr>
-   <div class="row row-top new-program text-center">
+   <%= f.fields_for :people do |p| %>
+   
+   <div class="row row-top text-center">
    
               <div class="row row-top">
                 <div class="col-xs-offset-11 text-center">
                   <%= p.link_to_remove ('<span class="glyphicon glyphicon-remove"></span>'.html_safe) %>
                 </div>
               </div>
-              <% %w(first_name surname mobile email).each do |el| %>
+              <% %w(first_name surname designation mobile email skype facebook linkedin twitter).each do |el| %>
                 <%= bs(p,el,"text_field",[nil,4],7,6) %>
               <% end %>
               
               <%= bs(p,[:desc,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,4],7,6) %>
    </div>
+   <hr>
    <% end %>
 
-  <%= f.link_to_add "Quick Add", :people,{:class => "btns fl"} %>
+  <%= f.link_to_add "Add another", :people,{:class => "btns fl"} %>

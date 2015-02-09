@@ -12,6 +12,8 @@
           <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Created</th>
+            <th>Last Modified</th>
             <th></th>
             <th></th>
           </tr>
@@ -26,25 +28,27 @@
                             "/show_configuration/#{r_name}/#{r.id}",
                             {remote: true,
                              onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'}) %>
-              </td>
-              <td>
-                <%= truncate(r.desc,length: 40) %>
-              </td>
-              <td>
+            </td>
+            <td>
+              <%= truncate(r.desc,length: 40) %>
+            </td>
+            <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
+            <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
+            <td>
 
-                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe,
-                            "/edit_configuration/#{r_name}/#{r.id}",
-                            {remote: true,
-                            onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
-              </td>
-              <td>
-                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
-                            "/secondaries/#{r_name}/#{r.id}",
-                            method: :delete,
-                            data: { confirm: 'Are you sure?' }  %>
+              <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                "/edit_configuration/#{r_name}/#{r.id}",
+                {remote: true,
+                 onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+          </td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+              "/secondaries/#{r_name}/#{r.id}",
+              method: :delete,
+              data: { confirm: 'Are you sure?' }  %>
 
 
-              </td>
+        </td>
             </tr>
           <% end %>
         </tbody>
@@ -52,16 +56,16 @@
     </div>
 
     <%= render 'shared/resource_new_form', {new_resource: new_resource,
-                                        resource_disp1: resource_disp1,
-                                        model_name: r_name,
-                                        div: "well",
-                                        h: "New"} %>
+                                            resource_disp1: resource_disp1,
+                                            model_name: r_name,
+                                            div: "well",
+                                            h: "New"} %>
 
-    <div id="edit-resource-container"></div>
+                                          <div id="edit-resource-container"></div>
   </div>
 </div>
 
 <!-- To activate the currently clicked resource menu -->
 <script>
-    $(".col-md-3 > ul.nav-pills > li#<%= resource_disp1.underscore.tr(" ","_") %>").attr('class','active');
+$(".col-md-3 > ul.nav-pills > li#<%= resource_disp1.underscore.tr(" ","_") %>").attr('class','active');
 </script>

@@ -109,7 +109,7 @@ class Datatable < DeviseController
       else        
         if @tab.nil?          
           fet_stat = nil
-        else          
+        else     
           fet_stat = @tab.find_by_name(@sFilter.titleize).try(@model_pl.to_sym)
         end
         i = fet_stat.blank? ? [] : fet_stat.send(@item_scope[0],@item_scope[1])

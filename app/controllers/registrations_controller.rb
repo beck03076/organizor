@@ -28,6 +28,10 @@ class RegistrationsController < ApplicationController
     set_url_params
     self.set_cols
 
+    @tab_type ||= "ApplicationStatus"
+   
+    set_tab_value
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { core_json("registration") } # in core_methods

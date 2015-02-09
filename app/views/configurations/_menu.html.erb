@@ -5,14 +5,14 @@
 
 <!-- Single button -->
 <div class="form-group">
-
+  <% tertiaries = [:branch, :partner_type, :student_source] %>
     <div class="btn-group">
       <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">Enquiry<span class="caret"></span></button>
       <ul role="menu" class="dropdown-menu">
         <% [ :contact_type,:student_source,:enquiry_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>
@@ -26,7 +26,7 @@
             :english_level,:exam_type,:qualification_name,:progression_status].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>
@@ -35,12 +35,12 @@
     <div class="btn-group">
       <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">Partner<span class="caret"></span></button>
       <ul role="menu" class="dropdown-menu">
-        <% [:partner_type,:partner_group, :contract_status,
-            :contract_doc_category,:commission_claim_status,:processing_fee_type,
-            :processing_fee_status,:commission_status].sort.each do |r| %>
+        <% [:partner_category,:partner_type,:partner_group, :contract_status,
+            :contract_doc_category,:commission_status,:commission_claim_status,
+            :processing_fee_type,:processing_fee_status].each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>
@@ -52,7 +52,7 @@
          <% [:event_type,:task_topic,:smtp,:email_template,].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>
@@ -64,7 +64,7 @@
          <% [:person_type].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>
@@ -76,7 +76,7 @@
          <% [:allow_ip,:branch,:role].sort.each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
-                 <%= link_to r.to_s.titleize.pluralize,"/secondaries/" + r.to_s %>
+                 <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>
               </li>
               <% end %>
         <% end %>

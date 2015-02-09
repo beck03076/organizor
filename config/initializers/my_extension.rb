@@ -5,6 +5,12 @@ module MyExtension
     User.find(self.created_by).first_name
   end
 
+  def try_chain(*args) 
+    args.inject(self) do |result, method| 
+      result.try(method)
+    end
+  end
+
   module ClassMethods
   # nothing yet
     def bar

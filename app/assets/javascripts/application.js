@@ -414,6 +414,7 @@ function registrationTabSwitch(obj){
     var enquiry_id = $(obj).data("enquiry_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
+    var tab_type = $(obj).attr("tab_type");
 
     activateTab(cond,lang); //to make the clicked tab active
 
@@ -423,6 +424,8 @@ function registrationTabSwitch(obj){
     else if (typeof enquiry_id === "undefined" || enquiry_id.length == 0   ){ url = url + _id; }
     else if (typeof enquiry_id !== "undefined" )
     { url = '/register/tab/new_registration/form/' + enquiry_id + "/" + note; }
+
+  if (typeof tab_type !== "undefined"){ url = url + '?tab_type=' + tab_type; }
 
      $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
 
@@ -463,6 +466,7 @@ function TabSwitch(obj,model,model_pl){
     var partner_id = $(obj).data(model + "_id");
     var note = $(obj).data("note");
     var lang = $(obj).attr("lang");
+    var tab_type = $(obj).attr("tab_type");
 
     activateTab(cond,lang); //to make the clicked tab active
 
@@ -470,6 +474,7 @@ function TabSwitch(obj,model,model_pl){
     url = '/' + model_pl + '/tab/' + cond + '/' + partial + '/'
 
     if (typeof partner_id !== "undefined"){ url = url + partner_id; }
+    if (typeof tab_type !== "undefined"){ url = url + '?tab_type=' + tab_type; }
 
     $('#'+lang).html("<div align='center'><h2>Loading...</h2></div>");
 

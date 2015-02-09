@@ -3,6 +3,7 @@ class PartnersController < ApplicationController
   include ActionsMethods
   helper_method :meta
   skip_before_filter :authenticate_user!, only: [:action_partial]  
+
   def tab
     set_url_params
     self.set_cols      
@@ -29,24 +30,26 @@ class PartnersController < ApplicationController
   # h_new stands for help_new
   def h_new
     
-  end
-  
+  end  
   
   # GET /partners
   # GET /partners.json
   def index
     authorize! :list, Partner
+
     set_url_params
     self.set_cols
-    
-    respond_to do |format|
+    @tab_type ||= "PartnerType"
+   
+    set_tab_value
+
+    respond_to do |format|      
       format.html # index.html.erb
-      format.json { core_json("partner") } # in core_methods
-      format.js { core_js("partner") } # in core_methods
+      format.json { core_json("partner",nil,@tab_type) } # in core_methods
+      format.js { core_js("partner",nil,@tab_type) } # in core_methods
       format.select { render json: Partner.all }
     end
-  end
-  
+  end  
 
   # GET /partners/1
   # GET /partners/1.json

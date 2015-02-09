@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Organizor::Application.routes.draw do
 
+  get 'joined_students' => "registrations#index"
+
   get 'web_enquiries' => "enquiries#index"
 
   resources :courses
@@ -171,7 +173,7 @@ Organizor::Application.routes.draw do
 
   match '/srch_regions.json' => 'json#srch_regions'
 
-  match '/partner_type/:type_id' => 'json#partner_type'
+#  match '/partner_type/:type_id' => 'json#partner_type'
 
   match '/get_users/:branch_id' => 'json#get_users'
 
@@ -344,6 +346,8 @@ Organizor::Application.routes.draw do
   resources :enquiry_sources
 
   match '/get_cities/:co_id(/:type)' => 'json#cities'
+
+  match '/get_partner_types/:id' => 'json#partner_types'
 
   match '/get_student_sources/:contact_type_id' => 'json#student_sources'
 

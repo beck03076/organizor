@@ -6,7 +6,7 @@ class PartnersDatatable < Datatable
     @view = view
     @cols = cols
     @sFilter = sFil
-    @tab = "PartnerType".camelize.constantize
+    @tab = tab_type.camelize.constantize
     
     @model_cl = model.camelize.constantize
     @model_pl = model.pluralize

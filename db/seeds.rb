@@ -174,21 +174,24 @@ end
                     PgDiploma Master PhD)},
                     {student_source: %w(Forum Google_Search Google_Advert 
                      Website Education_Event Friend)},
-                     #{todo_topic: %w(Default Documents Administrative Enquiry Registration Partner      Person)},
-                 {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
-                 {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},
-                 {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)},
-                 {processing_fee_status: %w(Paid Unpaid Partially_paid Refunded)},
-                 {required_doc: %w(language_course bachelors masters)},
-                 {required_doc_type: %w(IELTS TOEFL FCE Pearson 10th_mark_sheet CAS VISA)}].each do |i|
-                   model = i.keys[0].to_s.camelize.constantize
-                   values = i.values[0]
-                   values.each do |v|
-                     if model.where(name: v.titleize).blank?
-                       p "Creating a value .. #{v} in the resource #{model}"
-                       model.create!(name: v.titleize, desc: "This is a default value.")
+                     #{todo_topic: %w(Default Documents Administrative Enquiry Registration Partner Person)},
+                     {commission_claim_status: %w(Claimed Claim_Confirmed Invoiced Credit_Note_Raised Full_Payment_Received Partial_Payment_Received)},
+                     {progression_status: %w(Progression_UG Progression_PG Progression_Complete Non_Progression )},
+                     {processing_fee_type: %w(Admin_Fee Processing_Fee Logistics_Fee)},
+                     {processing_fee_status: %w(Paid Unpaid Partially_paid Refunded)},
+                     {required_doc: %w(language_course bachelors masters)},
+                     {required_doc_type: %w(IELTS TOEFL FCE Pearson 10th_mark_sheet CAS VISA)},
+                     {partner_category: %w(Educational Business Indirect)},
+                     {contract_status: %w(Enquiry Provisional Active Inactive)}].each do |i|
+
+                       model = i.keys[0].to_s.camelize.constantize
+                       values = i.values[0]
+                       values.each do |v|
+                         if model.where(name: v.titleize).blank?
+                           p "Creating a value .. #{v} in the resource #{model}"
+                           model.create!(name: v.titleize, desc: "This is a default value.")
+                         end
+                       end
                      end
-                   end
-                 end
 
 

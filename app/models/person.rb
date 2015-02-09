@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
   :created_by,:updated_by,:assigned_by,
   :assigned_to,:type_id,:notes_attributes,
   :job_title, :partner_id,:remote_image_url,
-  :assigned_at,:sub_agent
+  :assigned_at,:sub_agent,:designation
   
   mount_uploader :image, HumanImageUploader
     # ============== Elasticsearch ===============

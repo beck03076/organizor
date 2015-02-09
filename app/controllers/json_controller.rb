@@ -55,6 +55,17 @@ class JsonController < ApplicationController
     
   end
 
+  def partner_types 
+   
+    @types = PartnerCategory.find(params[:id]).try(:partner_types)
+    
+    respond_to do |format|
+      format.html 
+      format.json { render json: @types }
+    end
+    
+  end
+
   def partners
     set_url_params
     if @country_id.to_i != 0

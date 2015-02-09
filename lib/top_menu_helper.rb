@@ -4,7 +4,7 @@ module TopMenuHelper
 		if can? :read, menu[0].singularize.camelize.constantize
 			html = ''
 			html += "<li id='#{menu[0]}'>"
-			html += link_to send(menu[0] + "_path",{tab_type: menu[2]}) do
+			html += link_to send(menu[0] + "_path",{tab_type: menu[2], tab_value: menu[3] }) do
 				        " <span class='glyphicon glyphicon-#{menu[1]}'></span>".html_safe + menu[0].titleize
               end
       html += "</li>"           

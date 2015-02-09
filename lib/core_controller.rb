@@ -12,6 +12,17 @@ module CoreController
   # ===========
   # = Methods =
   # ===========
+
+
+  def set_tab_value
+    
+    if @tab_value
+      @tab_value = @tab_value.underscore.tr(" ","_")
+    else
+      @tab_value = "all"
+    end
+
+  end
   
    def h_action_partial(name,obj_id,except_arr = [])
     
