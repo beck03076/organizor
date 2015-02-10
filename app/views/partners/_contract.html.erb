@@ -21,9 +21,15 @@
                     <% e = li_dt('current_contract_end_date','contract ended','is not ended',a) %>
                     <% r = li_dt('renewal_reminder_date','reminded','not yet',a) %>
 
+                    <div class="pull-right">
+                      <h5 class="text-center green-sided">Status : <b><%= a.contract_status.try(:name) %></b></h5>
+                    </div>
+
                     <% %w(name invoicing_deadline partners_target internal_target).each do |v| %>
                       <%= li1(v,v,'span','small',a) %>
                     <% end %>
+
+
 
                      <% [i,s,e,r].each do |v| %>
                           <%= li1(v[1],v[0],'span','small',a)%>
@@ -229,13 +235,13 @@
       </h4>
     </div>
     <div id="collapsenot" class="panel-collapse collapse">
-      <div class="panel-body">          
+      <div class="panel-body">
         <div class="col-xs-8">
           <div id="shared_note_<%= a.id %>" >
             <%= render 'notes/note', sub: a %>
           </div>
             <%= render 'notes/form', i: a %>
-         </div>        
+         </div>
       </div>
     </div>
   </div>
