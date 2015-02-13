@@ -56,17 +56,17 @@ class ContractsController < ApplicationController
   # PUT /contracts/1
   # PUT /contracts/1.json
   def update
-    @contract = Contract.find(params[:id])    
+    @contract = Contract.find(params[:id])
 
     respond_to do |format|
       if @contract.update_attributes(params[:contract])
         if (params[:contract][:notes_attributes])
-          
+
                 tl("Partner",@contract.partner.id,'A note to a contract has been created for this partner',
              "#{(@contract.partner.name rescue "Unknown")}",'Note',@contract.partner.assigned_to)
-            
+
         end
-        format.html { redirect_to @contract, notice: 'Contract was successfully updated.' }
+        format.html { redirect_to partner_path(@contract.partner), notice: 'Contract was successfully updated.' }
         format.json { head :no_content }
         format.js { render "contracts/update" }
       else
