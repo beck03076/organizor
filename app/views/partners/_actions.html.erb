@@ -1,14 +1,15 @@
 <!-- actions the tabs -->
 <% mains = {          contract:     ["Contract",:read],
-                      people:     ["Person",:read], 
+                      people:     ["Person",:read],
                       finance: ["Finance",:read],
-                      students: ["Student",:read]} %>
-<% if current_user.is_a?(User) %>                      
+                      students: ["Student",:read],
+                      documents: ["Document", :read]} %>
+<% if current_user.is_a?(User) %>
 <% actions = {email:     ["Email",:create],
                         follow_up: ["FollowUp",:create],
                         note:      ["Note",:create],
                         task:      ["Task",:create],
-                        assign_to: ["Partner",:update]} %>       
+                        assign_to: ["Partner",:update]} %>
 
                     <li class="dropdown actions">
                         <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">
@@ -19,9 +20,8 @@
                                 <%= iterate_tabs(actions,'partner',{tabindex: "-1"}) %>
                             </ul>
                             </li>
-<% end %> 
+<% end %>
 <%= iterate_tabs(mains,'partner') %>
-        
-<br/>
-<br/>
 
+<br/>
+<br/>

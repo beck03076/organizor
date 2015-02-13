@@ -37,7 +37,7 @@
       <ul role="menu" class="dropdown-menu">
         <% [:partner_category,:partner_type,:partner_group, :contract_status,
             :contract_doc_category,:commission_status,:commission_claim_status,
-            :processing_fee_type,:processing_fee_status].each do |r| %>
+            :processing_fee_type,:processing_fee_status, :partner_doc_category].each do |r| %>
               <% if can? :read, r.to_s.camelize.constantize %>
               <li>
                  <%= link_to r.to_s.titleize.pluralize,(tertiaries.include?(r) ? ("/" + r.to_s.pluralize) : ("/secondaries/" + r.to_s)) %>

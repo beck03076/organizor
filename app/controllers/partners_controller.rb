@@ -2,36 +2,36 @@ class PartnersController < ApplicationController
   include CoreController
   include ActionsMethods
   helper_method :meta
-  skip_before_filter :authenticate_user!, only: [:action_partial]  
+  skip_before_filter :authenticate_user!, only: [:action_partial]
 
   def tab
     set_url_params
-    self.set_cols      
+    self.set_cols
     render partial: @partial
   end
-  
+
   def action_partial
     set_url_params
-    
+
     if @partial_name == "finance"
       # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.pro_cols
       b = [:start_date]
       @cols = ((b & a) + (a - b))
     end
-    
+
     #called from CoreMethods
     h_action_partial("partner",
                      params[:partner_id],
-                     ["contract","people","finance","students"])
-     
+                     ["contract","people","finance","students","documents"])
+
   end
-  
+
   # h_new stands for help_new
   def h_new
-    
-  end  
-  
+
+  end
+
   # GET /partners
   # GET /partners.json
   def index
@@ -40,16 +40,16 @@ class PartnersController < ApplicationController
     set_url_params
     self.set_cols
     @tab_type ||= "PartnerType"
-   
+
     set_tab_value
 
-    respond_to do |format|      
+    respond_to do |format|
       format.html # index.html.erb
       format.json { core_json("partner",nil,@tab_type) } # in core_methods
       format.js { core_js("partner",nil,@tab_type) } # in core_methods
       format.select { render json: Partner.all }
     end
-  end  
+  end
 
   # GET /partners/1
   # GET /partners/1.json
@@ -71,7 +71,7 @@ class PartnersController < ApplicationController
     authorize! :create, @partner
     @partner.contracts.build
   end
-  
+
   def clone
     # To have this next line, is to display the enquiry name on the tab, thats all
     @partner = Partner.find(params[:id])
@@ -104,7 +104,7 @@ class PartnersController < ApplicationController
   # PUT /partners/1.json
   def update
     @partner = Partner.find(params[:id])
-    
+
 
     respond_to do |format|
       if @partner.update_attributes(params[:partner].except("assign","_destroy"))
@@ -131,11 +131,11 @@ class PartnersController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def set_cols 
+
+  def set_cols
     # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.ins_cols
       b = [:id,:name,:email,:phone]
-      @cols = ((b & a) + (a - b)) + [:follow_up_date]  
+      @cols = ((b & a) + (a - b)) + [:follow_up_date]
   end
 end

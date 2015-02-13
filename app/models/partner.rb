@@ -47,7 +47,7 @@ class Partner < ActiveRecord::Base
   has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes
   has_many :users, as: :userable
-
+  has_many :documents
   has_and_belongs_to_many :permissions
 
   attr_accessible :city_id, :country_id, :created_by,

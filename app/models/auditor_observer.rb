@@ -12,15 +12,15 @@ class AuditorObserver < ActiveRecord::Observer
   :commission_claim_status,:progression_status,
   :processing_fee_type,:processing_fee_status,
   :document,:role,:required_doc, :required_doc_type,
-  :contract_status, :partner_category
+  :contract_status, :partner_category, :partner_doc_category
 
 
    def before_create(record)
      record.created_by = User.current.id unless User.current.nil?
    end
-   
+
    def before_update(record)
      record.updated_by = User.current.id unless User.current.nil?
    end
-  
+
 end
