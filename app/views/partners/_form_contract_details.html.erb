@@ -1,18 +1,24 @@
 <!-- setting a default contract name -->
-  
+
   <div class="row">
            <% c_name = [Organizor::Application::ORG_NAME,@partner.name].join("_").tr(" ","_") %>
-           
+
            <%= bs(c,[:name,value: c_name],"text_field",[nil,4],7,6) %>
-           
+
            <% %w(current_contract_start_date initiate_date current_contract_end_date renewal_reminder_date).each do |el| %>
              <%= bs(c,[el.to_sym,:class => "dateField caltf"],"text_field",[nil,4],7,6) %>
            <% end %>
-           
+
            <% %w(invoicing_deadline internal_target partners_target).each do |el| %>
              <%= bs(c,el,"text_field",[nil,4],7,6) %>
-           <% end %> 
-           
-           <%= bs(c,[:desc,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,4],7,6) %>
-  </div>
+           <% end %>
 
+           <%= bs(c,[:desc,{class: 'form-control', cols: nil, rows: nil}],"text_area",[nil,4],7,6) %>
+           <%= bs(c,[:contract_status_id,
+             ContractStatus.order(:name),
+             :id,
+             :name,
+             {prompt: "-contract status-"},{}],
+             "collection_select",
+             [nil,4],7,"6 contract_status_div") %>
+  </div>
