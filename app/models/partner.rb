@@ -47,7 +47,7 @@ class Partner < ActiveRecord::Base
   has_many :course_levels, through: :programmes
   has_many :fee, through: :programmes
   has_many :users, as: :userable
-  has_many :documents
+  has_many :documents, dependent: :destroy
   has_and_belongs_to_many :permissions
 
   attr_accessible :city_id, :country_id, :created_by,
@@ -58,9 +58,9 @@ class Partner < ActiveRecord::Base
   :desc, :phone, :fax,
   :address_line2,:assigned_to,:assigned_by,:prohibited_country_ids,:prohibited_region_ids,
   :permitted_country_ids,:permitted_region_ids,:group_id,:assigned_at,
-  :person_id, :category_id
+  :person_id, :category_id, :documents_attributes
 
-  accepts_nested_attributes_for :contracts,:people,:allow_destroy => true
+  accepts_nested_attributes_for :contracts,:people,:documents,:allow_destroy => true
 
     # ========= delegating _name methods for assoc in array ================
   [:country,:city,:type,:group,:person].each do |assoc|

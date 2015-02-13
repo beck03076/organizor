@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   attr_accessible :category_id, :name, :path,
   :registration_id, :remove_path,:contract_id,
-  :contract_category_id,:doc_type
+  :contract_category_id,:doc_type, :partner_category_id, :partner_id
   validates :name, uniqueness: {scope: :registration_id}
 
   belongs_to :registration

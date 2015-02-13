@@ -3,7 +3,7 @@
                       people:     ["Person",:read],
                       finance: ["Finance",:read],
                       students: ["Student",:read],
-                      documents: ["Document", :read]} %>
+                      document: ["Document", :read]} %>
 <% if current_user.is_a?(User) %>
 <% actions = {email:     ["Email",:create],
                         follow_up: ["FollowUp",:create],

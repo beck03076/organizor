@@ -277,6 +277,8 @@ Organizor::Application.routes.draw do
 
   match 'people_action_partial/:partial_name/:person_id/:list' => "people#action_partial"
 
+  match 'partners_action_partial/:partial_name/:partner_id/:list(/:sub_type)' => "partners#action_partial"
+
   match "/emails/new" => "emails#new"
 
   match "/task_statuss" => "task_statuses#index"

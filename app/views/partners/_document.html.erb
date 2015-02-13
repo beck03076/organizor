@@ -1,0 +1,178 @@
+<!-- Documents for partners -->
+<% a = @obj %>
+<% doc_type = set_doc_type(current_user) %>
+
+<div class="row">
+  <ul class="nav nav-tabs">
+    <% doc_type.each do |t| %>
+    <li class='<%= (t == @sub_type ? "active" : nil) %>'>
+      <a data-toggle="tab"
+      onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= t %>');"
+      href="#">
+      <%= t.titleize %>
+    </a>
+  </li>
+  <% end %>
+</ul>
+
+<div class="well">
+  <% if @sub_type.start_with?("required") %>
+  <ul class="nav nav-tabs tab-reverse">
+    <% @required_docs.each do |t| %>
+    <li class='<%= (t.name == @required_doc.try(:name) ? "active" : nil) %>'>
+      <a data-toggle="tab"
+      onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= "required-" + t.name %>');"
+      href="#">
+      <%= t.name.titleize %>
+    </a>
+  </li>
+  <% end %>
+</ul>
+<div class="well">
+  <h4 class="bold-subhead">
+    Required Documents
+  </h4>
+
+  <% @required_doc_types.each do |type| %>
+  <li> <%= type.name %> </li>
+
+  <% end %>
+</div>
+
+<% else %>
+<h4 class="bold-subhead">
+  Documents Uploaded
+</h4>
+
+<% if a.documents.size == 0  %>
+
+No documents uploaded
+
+<% else %>
+
+<%= form_tag('/documents/delete_or_download') do %>
+<%= hidden_field_tag :reg_id,a.id %>
+
+
+
+<table class="table table-bordered">
+  <thead>
+    <th>Select</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Uploaded By</th>
+    <th>Uploaded At</th>
+    <th>&nbsp;</th>
+  </thead>
+
+  <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>
+  <% a.documents.includes(:category).where(cond).each do |cat| %>
+  <tbody>
+    <td><%= check_box_tag "doc_id[]",cat.id %></td>
+    <td><%= cat.name rescue "Unknown" %></td>
+    <td><%= cat.category.try(:name) %> </td>
+
+    <td><%= cat.uploader.name rescue "Unknown" %></td>
+    <td><%= cat.created_at.to_s %></td>
+    <td>
+      <%= link_to "Edit","/document/edit/#{cat.id}",{remote: true} if can? :update, Document %> |
+      <%= link_to "Download",cat.path.url,{target: "_blank"} if can? :download, Document %>
+    </td>
+  </tbody>
+  <% end %>
+</table>
+
+<div class="form-group">
+
+  <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} if can? :delete, Document %>
+  <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} if can? :download, Document %>
+  <% if false %>
+  <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
+  <% end %>
+</div>
+
+<% end %>
+
+<% end %>
+</div>
+</div>
+<% if can? :upload, Document %>
+<div class="well row">
+  <h4 class="bold-subhead">New Upload</h4>
+  <%=  nested_form_for(a,html: {class: "form-horizontal", id: "file_upload"}) do |reg| %>
+
+  <%= reg.fields_for :documents,a.documents.build do |d| %>
+  <div class="row blue-well padAll10">
+    <%= d.hidden_field :partner_id %>
+    <div class="row row-top">
+      <div class="col-xs-12 text-right padR30">
+        <%= d.link_to_remove('<span class="glyphicon mar0 glyphicon-remove"></span>'.html_safe, size: "30x30") %>
+      </div>
+    </div>
+
+    <% if current_user.is_a?(User) %>
+
+    <%= bs(d,[:partner_category_id,PartnerDocCategory.order(:name),
+    :id,
+    :name,
+    {},{}],
+    "collection_select",
+    ["Partner Doc Category",4],7,6) %>
+
+    <%= bs(d,[:doc_type,(doc_type - ["all"]),{},{}],
+    "select",
+    ["Type",4],7,6) %>
+    <% else %>
+    <%= d.hidden_field :doc_type,value: "my_documents" %>
+    <%= d.hidden_field :partner_category_id,value: PartnerDocCategory.first.id %>
+    <% end %>
+
+    <div class="col-xs-6">
+      <div class="form-group">
+        <label for="partner_documents_attributes_0_path" class="control-label col-xs-4">Path</label>
+        <div class="col-xs-7">
+          <input type="file" name="partner[documents_attributes][0][path]" multiple="multiple" id="partner_documents_attributes_0_path" class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clear"></div><br/>
+  <% end %>
+  <%end%>
+  <script id="template-upload" type="text/x-tmpl">
+    <div class="upload">
+      <h5>{%=o.name%}</h5>
+      <div class="progress">
+        <div class="bar" style="width: 0%">
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <% end %>
+  <% end %>
+</div>
+
+<div id="edit-resource-container"></div>
+
+<script type="text/javascript">
+
+  jQuery(function() {
+    $('#file_upload').fileupload({
+      dataType: "script",
+      add: function(e, data) {
+        data.context = $(tmpl("template-upload", data.files[0]));
+        $('#file_upload').append(data.context);
+        return data.submit();
+      },
+      progress: function(e, data) {
+        var progress;
+        if (data.context) {
+          progress = parseInt(data.loaded / data.total * 100, 10);
+          return data.context.find('.bar').css('width', progress + '%');
+        }
+      }
+    });
+  });
+</script>

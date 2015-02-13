@@ -23,7 +23,7 @@ class PartnersController < ApplicationController
     #called from CoreMethods
     h_action_partial("partner",
                      params[:partner_id],
-                     ["contract","people","finance","students","documents"])
+                     ["contract","people","finance","students","document"])
 
   end
 
