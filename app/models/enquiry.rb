@@ -88,7 +88,7 @@ class Enquiry < ActiveRecord::Base
                   :image,:remote_image_url,:branch_id,:registered_at,
                   :registered_by,:response_time,:assigned_at,
                   :conversion_time,:contact_type_id,:student_source_id,
-                  :sub_agent_id
+                  :sub_agent_id,:direct
                   
   accepts_nested_attributes_for :programmes, :allow_destroy => true  
 

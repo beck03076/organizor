@@ -34,26 +34,28 @@ function typeaheads ($obj,model)
         // Instantiate the Typeahead UI
         $obj.typeahead({minLength: 3},{
             displayKey: function(item) {
+
                    ico = item[mapped["first"][0]];
                    model = item[mapped["second"][2]];
                    return '<div class="bor-b pointer row">'                          
-                          + '<div class="col-xs-9">'
-                          + '<span class="md ' + model + '">'                           
+                          + '<div class="col-xs-11"><h4>'
+                          + '<span class=" ' + model + '">'                           
                           + (item[mapped["first"][1]] || '')
-                          + '</span><br/> <div class=grey-sm>' 
+                          + '</span><br/><br/> <div class=grey-sm>' 
+                          + '<span class="glyphicon glyphicon-envelope"></span>'
                           + (item[mapped["second"][0]] || "No email")
-                          + '<br/>'
+                          + '<br/><span class="glyphicon glyphicon-phone"></span>'
                           + (item[mapped["second"][1]] || "No phone")
                           + '</div></div>'
-                          + '<div class=col-xs-3>'
+                          + '<div class="text-leftcol-xs-1 padT10">'
                           + ico
-                          + '</div></div>'  ;
+                          + '</div></h4></div>'  ;
                 },
             source: items.ttAdapter()
         });
 
-        var numSelectedHandler = function (eventObject, suggestionObject, suggestionDataset) {
-            window.location.href = '/' + model + '/' + suggestionObject.id
+        var numSelectedHandler = function (eventObject, suggestionObject, suggestionDataset) {            
+            window.location.href = '/' + suggestionObject.model_pl + '/' + suggestionObject.id
         };
 
         typeaheads.on('typeahead:selected', numSelectedHandler);
@@ -61,7 +63,7 @@ function typeaheads ($obj,model)
 
 
 function setDisplay(){
-    return { model: "all",first: ["shape","title"], second: ["email","mobile1","model"] };    
+    return { model: "all",first: ["shape","title"], second: ["email","mobile1","model","id","model_pl"] };    
 }
 
 /*

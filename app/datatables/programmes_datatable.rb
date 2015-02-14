@@ -1,7 +1,7 @@
 class ProgrammesDatatable < Datatable
   include CoreColumns
 
-  def initialize(view,cols,sFil,asso_id = nil)
+  def initialize(view,cols,sFil,asso_id = nil,tab_type = nil)
     model = "programme"
     
     @view = view

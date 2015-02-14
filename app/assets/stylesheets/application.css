@@ -344,6 +344,10 @@ background-color:#f1c1c1;
   font-weight: bold;
 }
 
+.vsm{
+  font-size: 8px; 
+}
+
 .sm{
   font-size: 11px; 
 }
@@ -352,8 +356,13 @@ background-color:#f1c1c1;
   font-size: 13px; 
 }
 
+.xl{
+  font-size: 20px; 
+}
+
+
 .grey-sm{
-  font-size: 10px;
+  font-size: 13px;
   color: #666;
 }
 
@@ -557,6 +566,7 @@ padding: 3px 3px 3px 3px;
 display: inline;
 float: right;
 }
+
 .enquiry {
   color: #20A2AD;
   }
@@ -569,3 +579,7 @@ float: right;
 .person {
   color: #8F0E8F;
 }  
+
+.typeahead{
+  width: 400px !important;
+}
