@@ -1,12 +1,12 @@
 module CoreController
-  
+
 
   def self.included(base)
     base.class_eval do
       if self.name != "ProgrammesController"
         impressionist :actions=>[:show]
       end
-    end  
+    end
   end
 
   # ===========
@@ -15,7 +15,7 @@ module CoreController
 
 
   def set_tab_value
-    
+
     if @tab_value
       @tab_value = @tab_value.underscore.tr(" ","_")
     else
@@ -23,9 +23,9 @@ module CoreController
     end
 
   end
-  
+
    def h_action_partial(name,obj_id,except_arr = [])
-    
+
     model = name.camelize.constantize
     id = name + "_id"
     ids = name + "_ids"
@@ -33,16 +33,16 @@ module CoreController
     if @partial_name == "follow_up"
           #@d_f_u_days = current_user.conf.def_follow_up_days
           con = current_user.conf
-          @follow_up = FollowUp.new(title: con.def_f_u_name, 
+          @follow_up = FollowUp.new(title: con.def_f_u_name,
                                     desc: con.def_f_u_desc)
 
     elsif @partial_name == "note"
           @d_note = current_user.conf.def_note
           @note = Note.new(content: @d_note)
-          
+
     elsif @partial_name == "task"
           @task = Task.new
-          
+
     elsif @partial_name == "timeline"
           @timelines = Timeline.where(m_name: "Enquiry", m_id: params[:id]).order("created_at DESC")
     end
@@ -50,11 +50,11 @@ module CoreController
     if @partial_name == "email"
       def_email = 'def_' + name[0..2] + '_email'
       mail_to_use = current_user.conf.send(def_email).to_sym rescue :email
-      
+
       @subject = model.where(id: obj_id)
       @subject_ids = (@subject.map &:id).join(",")
       @email_to = ((@subject.map &mail_to_use) - ["",nil]).join(", ")
-      @locals = {:e => Email.new(to: @email_to), 
+      @locals = {:e => Email.new(to: @email_to),
                  :id => params[:e_id],
                  :obj => @subject,
                  :obj_ids => ids,
@@ -75,24 +75,24 @@ module CoreController
                                      :obj => @obj,
                                      :obj_id => id,
                                      :obj_name => name}
-    end     
+    end
   end
   # sub_type-required_doc-required_doc_type is the usual format
   def handle_document
-    @sub_type = @sub_type || "all"     
+    @sub_type = @sub_type || "all"
     if @sub_type.start_with?("required")
       result = @sub_type.split("-")[1] || RequiredDoc.first.name
-      @required_doc = RequiredDoc.find_by_name(result) if result 
+      @required_doc = RequiredDoc.find_by_name(result) if result
       @required_docs = RequiredDoc.all
       @required_doc_types = @required_doc.try(:required_doc_types)
       @sub_type = "required"
     end
   end
-      
+
   def basic_select(model,cond = true)
     model.where(cond).order(:name).map{|i| [i.name,i.id]}
   end
-  
+
   def core_json(model,asso_id = nil,tab_type = nil)
     cl = (model.pluralize.camelize + "Datatable").constantize
     if (params[:sSearch_2] == "undefined" || params[:sSearch_2] == "")
@@ -101,12 +101,12 @@ module CoreController
       render :json => cl.new(view_context,@cols,@sFilter,asso_id,tab_type)
     end
   end
-  
+
   def core_js(model)
     @b = params[:q].to_json
     @status = (params[:status] || "all").to_s
     @model = model.camelize
     render 'shared/index'
   end
-    
+
 end

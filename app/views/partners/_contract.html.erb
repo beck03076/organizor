@@ -184,10 +184,10 @@
                       </div>
                     </div>
 
-                      <%= bs(d,[:category_id,DocCategory.order(:name),
+                      <%= bs(d,[:contract_category_id,ContractDocCategory.order(:name),
                                                                   :id,
                                                                   :name,
-                                                                  {prompt: "-doc category-"},{}],
+                                                                  {prompt: "-contract doc category-"},{}],
                                                                   "collection_select",
                                                                   [nil,4],7,6) %>
                       <%= bs(d,"name","text_field",[nil,4],7,6) %>

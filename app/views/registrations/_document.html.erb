@@ -6,13 +6,13 @@
   <ul class="nav nav-tabs">
     <% doc_type.each do |t| %>
       <li class='<%= (t == @sub_type ? "active" : nil) %>'>
-        <a data-toggle="tab" 
-           onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= t %>');" 
+        <a data-toggle="tab"
+           onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= t %>');"
            href="#">
            <%= t.titleize %>
         </a>
       </li>
-    <% end %> 
+    <% end %>
   </ul>
 
   <div class="well">
@@ -20,17 +20,17 @@
       <ul class="nav nav-tabs tab-reverse">
         <% @required_docs.each do |t| %>
           <li class='<%= (t.name == @required_doc.try(:name) ? "active" : nil) %>'>
-            <a data-toggle="tab" 
-               onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= "required-" + t.name %>');" 
+            <a data-toggle="tab"
+               onclick="action_partial('<%= obj_name.pluralize %>','document','<%= id %>','<%= "required-" + t.name %>');"
                href="#">
                <%= t.name.titleize %>
             </a>
           </li>
-        <% end %> 
+        <% end %>
       </ul>
       <div class="well">
-        <h4 class="bold-subhead"> 
-          Required Documents 
+        <h4 class="bold-subhead">
+          Required Documents
         </h4>
 
         <% @required_doc_types.each do |type| %>
@@ -40,7 +40,7 @@
       </div>
 
     <% else %>
-      <h4 class="bold-subhead"> 
+      <h4 class="bold-subhead">
         Documents Uploaded
       </h4>
 
@@ -53,31 +53,31 @@
         <%= form_tag('/documents/delete_or_download') do %>
           <%= hidden_field_tag :reg_id,a.id %>
 
-    
+
 
           <table class="table table-bordered">
             <thead>
               <th>Select</th>
               <th>Name</th>
-              <th>Category</th> 
-              <th>Uploaded By</th> 
-              <th>Uploaded At</th> 
+              <th>Category</th>
+              <th>Uploaded By</th>
+              <th>Uploaded At</th>
               <th>&nbsp;</th>
             </thead>
 
-            <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>    
+            <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>
             <% a.documents.includes(:category).where(cond).each do |cat| %>
               <tbody>
                 <td><%= check_box_tag "doc_id[]",cat.id %></td>
                 <td><%= cat.name rescue "Unknown" %></td>
                 <td><%= cat.category.try(:name) %> </td>
-                
+
                 <td><%= cat.uploader.name rescue "Unknown" %></td>
                 <td><%= cat.created_at.to_s %></td>
                 <td>
                   <%= link_to "Edit","/document/edit/#{cat.id}",{remote: true} if can? :update, Document %> |
                   <%= link_to "Download",cat.path.url,{target: "_blank"} if can? :download, Document %>
-                </td>                 
+                </td>
               </tbody>
             <% end %>
           </table>
@@ -85,7 +85,7 @@
           <div class="form-group">
 
             <%= submit_tag "Delete Selected",{name: "doc_delete",class: "btn btn-primary",data: { confirm: 'Are you sure?' }} if can? :delete, Document %>
-            <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} if can? :download, Document %>            
+            <%= submit_tag "Download Selected",{name: "doc_download", class: "btn btn btn-primary"} if can? :download, Document %>
             <% if false %>
               <%= submit_tag "Consolidate Selected",{name: "doc_consolidate_temp", class: "btn btn btn-primary", style:"text-decoration: line-through;", onclick: "alert('Not ready yet!'); return false;"} %>
             <% end %>
@@ -112,7 +112,7 @@
 
           <% if current_user.is_a?(User) %>
 
-            <%= bs(d,[:category_id,DocCategory.order(:name),
+            <%= bs(d,[:partner_category_id,DocCategory.order(:name),
                       :id,
                       :name,
                       {},{}],
@@ -137,7 +137,7 @@
              </div>
         </div>
 
-        <div class="clear"></div><br/>                                     
+        <div class="clear"></div><br/>
   <% end %>
 <%end%>
     <script id="template-upload" type="text/x-tmpl">
@@ -150,7 +150,7 @@
           </div>
     </script>
 
-  <% end %> 
+  <% end %>
 <% end %>
 </div>
 
