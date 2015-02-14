@@ -198,7 +198,9 @@ strong.sm{font-size:12px;}
     .main .main-content .pink-well {
     background-color: #f9f0f6; }
     .main .main-content .blue-box {
-    background-color: #f5f8fb; }
+    background-color:  rgb(215, 229, 243); }
+    .main .main-content .green-box {
+    background-color: rgb(174, 231, 176); }
     .main .main-content .tag-like {
     color: #fff;
     padding: 5px 5px 5px 5px;
@@ -506,7 +508,7 @@ vertical-align: top;
 
 .bright-well{
   
-  background-color: #f1c1c1;;
+  background-color: #f1c1c1;
   color: #000;
 }
 
@@ -583,3 +585,4 @@ float: right;
 .typeahead{
   width: 400px !important;
 }
+

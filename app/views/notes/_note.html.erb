@@ -4,11 +4,11 @@
 <% else %>
   <% all_notes = sub.notes.where(created_type: current_user.class.name) %>
 <% end %>
-
+<h4> Notes highlighted in green are created by <b>students or partners</b> </h4>
 <% all_notes.each do |note| %>
 <% u = note.created %>
 <% if !u.nil? %>
-           <div class="blue-box note-box">
+           <div class="<%= ((note.created_type == "User") ? "blue-box" : "green-box") %> note-box">
 
               <div class="row padT10">
                  <div class="col-xs-2">

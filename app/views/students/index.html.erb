@@ -11,7 +11,7 @@
 	</div>
 <div class="container main">
 <!-- Begin page content -->
-  <div class="col-xs-12 main-content">
+  <div class="main-content">
       <div class="col-md-8">
           <h3><%= @registration.name %></h3>
       </div>
@@ -21,8 +21,8 @@
               <%= link_to "Logout",destroy_registration_session_path, {:method => :delete,class: "btn btn-primary"} %>
           </div>
       </div>		  
-      <div class="row">
-          <div class="col-md-12">
+      <div class="row col-md-12">
+          
               <ul class="nav nav-pills seperator">
                   <li id="basic" class="active">
                   <%= link_to "Basic","/" %>
@@ -36,7 +36,7 @@
               <div id="action_div">
                   <%= render @partial, @locals %>
               </div>
-          </div>
-      </div>
+          
+      </div>      
   </div>
 </div>

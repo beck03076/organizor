@@ -23,7 +23,7 @@
             <% @requests.each do |request| %>
               <tr class=<%= request.approved ? nil : "pending"  %>>
                 <td><%= uimg(request.registration) %></td> 
-                <td><h4><%= link_to request.registration.name, "/registrations/#{request.registration_id}"  %></h4><%= request.registration.email %> </td>
+                <td><h4><%= link_to request.try_chain(:registration,:name), "/registrations/#{request.registration_id}"  %></h4><%= request.try_chain(:registration,:email) %> </td>
                 <% a = %w(address_country_id country_id qualification_id) %>
                 <% if a.include?(request.values.keys.first) %>
                   <% field = request.values.keys.first.split('_') %>

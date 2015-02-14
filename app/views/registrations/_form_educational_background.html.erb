@@ -35,7 +35,7 @@
   </div>
 
   <div class="row">
-    <% %w(subject partner score graduated_out grade exam).each do |el| %>
+    <% %w(subject institution score graduated_out grade exam).each do |el| %>
       <%= bs(q,el,"text_field",[nil,4],7,6) %>
     <% end %> 
 

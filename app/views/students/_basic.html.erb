@@ -26,7 +26,7 @@
     </ul>
   </div>
 
-    <div class="yellow-well well-sm form-last">
+    <div class="well-sm form-last">
       <h4 class="bold-subhead">Educational</h4>
       <ul class="vlsdet-s pt-0">
         <h5><%= link_to "Qualification",qualification_path(@registration.id),{remote: true} %></h5>
@@ -87,6 +87,11 @@
   </div>
 </div>
 </div>
+<div class="clear"></div>
+<br/>
+<br/>
+<br/>
+<br/>
 <script>
 $('.best_in_place').best_in_place();
 <% if (cannot? :approve, Registration) %>
