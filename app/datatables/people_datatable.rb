@@ -1,13 +1,13 @@
 class PeopleDatatable < Datatable
   include CoreColumns
 
-  def initialize(view,cols,sFil,asso_id = nil)
+  def initialize(view,cols,sFil,asso_id = nil, tab_type = nil)
     model = "person"
     
     @view = view
     @cols = cols
     @sFilter = sFil
-    @tab = "PersonType".camelize.constantize
+    @tab = tab_type.camelize.constantize
     
     @model_cl = model.camelize.constantize
     @model_pl = model.pluralize

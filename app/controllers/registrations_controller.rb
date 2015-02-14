@@ -34,7 +34,7 @@ class RegistrationsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { core_json("registration") } # in core_methods
+      format.json { core_json("registration",nil,@tab_type) } # in core_methods
       format.js { core_js("registration") } # in core_methods
       format.select { render json: Registration.all }
     end

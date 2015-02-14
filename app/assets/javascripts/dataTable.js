@@ -1,7 +1,6 @@
 function dataTableStart(table,filterValue,cols,cols_size,ransack,tab_type)
 {
 
-
   tableId = "#" + table;
   var hide_follow_up_sort = parseInt(cols_size);
 

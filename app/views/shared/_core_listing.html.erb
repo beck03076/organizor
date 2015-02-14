@@ -19,6 +19,7 @@
 <% else %>
   <% acttm = act %>
 <% end %>
+
 <div class="row mass-actions-pills" style="display: none;">
            <div class="col-md-10">
                     <!----------------------- Group Assign Start---------------------------->
@@ -308,7 +309,6 @@
 </table>
 <script src="/dt-bootstrap.js"></script>
 <script>
-
  var tab = dataTableStart("<%= _id %>","<%= @status %>","<%= @cols %>",'<%= @cols.size %>','{}','<%= @tab_type %>');
 
  $('.length-element').html('<form class="form-inline" role="form"><div class="form-group">' +
