@@ -1,28 +1,40 @@
-<%= form_for resource, :as => resource_name, :url => update_partner_confirmation_path, :html => {:method => 'put', class: "form-horizontal", :id => 'activation-form'} do |f| %>
-  <%= devise_error_messages! %>
-  <div class="container main">
-    <h2>Account Activation
-      <% if resource.email %> for <%= resource.email %><% end %>
-    </h2>
-    <% if @requires_password %>
-        <%= bs(f,"password","password_field",['password',4],6,6) %>
-        <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],6,6) %>
+<div class="container main">
+  <div class="row">
+    <%= form_for resource, :as => resource_name, :url => update_partner_confirmation_path, :html => {:method => 'put', class: "form-horizontal", :id => 'activation-form'} do |f| %>
+    <%= devise_error_messages! %>
+    <div class="row well">
+      <div class="row">
+        <div class="col-xs-8 text-center">
+          <h1>Account Activation
+            <% if resource.name %> for <%= resource.name %><% end %>
+          </h1>
+        </div>
+      </div>
+      <br/>
+
+      <% if @requires_password %>
+      <%= bs(f,"password","password_field",['password',4],8,8) %>
+      <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],8,8) %>
+      <% end %>
+
+      <div class=" form-group col-xs-8 text-right">
+        <%= hidden_field_tag :confirmation_token,@confirmation_token %>
+        <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
+      </div>
+    </div>
     <% end %>
   </div>
-    <%= hidden_field_tag :confirmation_token,@confirmation_token %>
-    <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
-<% end %>
-
+</div>
 <script>
-  $('#account-activate').click(function(){
-    var password = $('#partner_password').val();
-    var password_confirmation 2= $('#partner_password_confirmation').val();
-    if ( password != "" && password == password_confirmation) {
-      return true;
-    }    
-    else {
-      alert("Password confirmation doesn't match Password");
-     return false;
-    }
-  });
+$('#account-activate').click(function(){
+  var password = $('#partner_password').val();
+  var password_confirmation = $('#partner_password_confirmation').val();
+  if ( password != "" && password == password_confirmation) {
+    return true;
+  }
+  else {
+    alert("Password confirmation doesn't match Password");
+    return false;
+  }
+});
 </script>

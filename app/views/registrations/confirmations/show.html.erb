@@ -1,29 +1,29 @@
 <div class="container main">
-      <div class="row">
-<%= form_for resource, :as => resource_name, :url => update_registration_confirmation_path, :html => {:method => 'put', class: "form-horizontal", :id => 'activation-form'} do |f| %>
-  <%= devise_error_messages! %>
-    <div class="row well">
-      <div class="row">
-        <div class="col-xs-8 text-center">
-        <h1>Account Activation
-          <% if resource.first_name %> for <%= resource.first_name %><% end %>
-        </h1>
+  <div class="row">
+    <%= form_for resource, :as => resource_name, :url => update_registration_confirmation_path, :html => {:method => 'put', class: "form-horizontal", :id => 'activation-form'} do |f| %>
+    <%= devise_error_messages! %>
+      <div class="row well">
+        <div class="row">
+          <div class="col-xs-8 text-center">
+          <h1>Account Activation
+            <% if resource.first_name %> for <%= resource.first_name %><% end %>
+          </h1>
+          </div>
+        </div>
+        <br/>
+
+        <% if @requires_password %>
+            <%= bs(f,"password","password_field",['password',4],8,8) %>
+            <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],8,8) %>
+        <% end %>
+
+        <div class=" form-group col-xs-8 text-right">
+          <%= hidden_field_tag :confirmation_token,@confirmation_token %>
+          <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
         </div>
       </div>
-      <br/>
-
-      <% if @requires_password %>
-          <%= bs(f,"password","password_field",['password',4],8,8) %>
-          <%= bs(f,"password_confirmation","password_field",['password_confirmation',4],8,8) %>
-      <% end %>
-  
-      <div class=" form-group col-xs-8 text-right">
-        <%= hidden_field_tag :confirmation_token,@confirmation_token %>
-        <%= f.submit "Activate", :id => "account-activate", class: "btn btn-primary" %>
-      </div>
-    </div>
-<% end %>
-</div>
+    <% end %>
+  </div>
 </div>
 <script>
   $('#account-activate').click(function(){
@@ -31,7 +31,7 @@
     var password_confirmation = $('#registration_password_confirmation').val();
     if ( password != "" && password == password_confirmation) {
       return true;
-    }    
+    }
     else {
       alert("Password confirmation doesn't match Password");
      return false;

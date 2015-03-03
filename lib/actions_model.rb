@@ -1,46 +1,46 @@
 module ActionsModel
-  
+
   # ============
   # = Included =
   # ============
   def self.included(base)
-    base.extend(ClassMethods)    
+    base.extend(ClassMethods)
     # ===========
     # = Scoping =
     # ===========
     base.class_eval do
       after_create :increment_counter
-      before_destroy :decrement_counter      
+      before_destroy :decrement_counter
     end
   end
-  
+
   # ===========
   # = Methods =
   # ===========
   def increment_counter
     if self.class.name == "Email"
       send(core).each do |core|
-        change_count core,:emails_count, &:+        
+        change_count core,:emails_count, &:+
       end
     else
       set_core_obj
       if !@core_name.nil?
         set_col
-        change_count @core_obj,@col,&:+      
+        change_count @core_obj,@col,&:+
       end
     end
   end
-  
+
   def decrement_counter
     if self.class.name == "Email"
       send(core).each do |core|
-        change_count core,:emails_count, &:-      
+        change_count core,:emails_count, &:-
       end
     else
-      set_core_obj   
-      if !@core_name.nil?   
+      set_core_obj
+      if !@core_name.nil?
         set_col
-        change_count @core_obj,@col,&:-             
+        change_count @core_obj,@col,&:-
       end
     end
   end
@@ -51,7 +51,7 @@ module ActionsModel
       return if @core_name.nil?
       @core_class = @core_name.constantize
       @core_id = send((@klass + "able_id").downcase)
-      @core_obj = @core_class.find(@core_id)      
+      @core_obj = @core_class.find(@core_id)
   end
 
   def set_col
@@ -60,7 +60,7 @@ module ActionsModel
 
   def change_count(core,col)
     current = yield core.send(col),1
-    core.update_attribute(col, current) 
+    core.update_attribute(col, current)
   end
 
   def parent
@@ -71,6 +71,6 @@ module ActionsModel
   # =================
   # = Class Methods =
   # =================
-  module ClassMethods    
+  module ClassMethods
   end
 end

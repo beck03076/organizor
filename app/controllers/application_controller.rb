@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_current_user #, :ban_ip, except: [:ban_ip]
   before_filter :set_last_seen_at, if: proc { |p| user_signed_in? && (session[:last_seen_at] == nil || session[:last_seen_at] < 15.minutes.ago) }
   protect_from_forgery
-  
+
   layout :layout
 
   def current_user_with_registration
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   #alias_method_chain :authenticate_user! , :registration
 
   rescue_from CanCan::AccessDenied do |e|
-    
+
     flash[:notice] = "You are not authorized to #{e.action.to_s.downcase} this #{e.subject.class.model_name.to_s.downcase rescue "resource"}"
     respond_to do |format|
       format.html { redirect_to '/handle/cancan'  }
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    
+
 
   end
 
@@ -57,8 +57,8 @@ class ApplicationController < ActionController::Base
   def unchecked_notys
     cnt = Audit.unchecked(current_user.id).size
     render text: cnt
-  end 
-    
+  end
+
   def token_search
     set_url_params
     @result = @model.camelize.constantize.where("#{@col} like ?", "%#{params[:q]}%")
@@ -67,56 +67,56 @@ class ApplicationController < ActionController::Base
         format.json { render :json => @result.map(&:attributes) }
       end
   end
-  
+
   def get_column_names
     set_url_params
     out = @model.camelize.constantize.column_names.grep(/^#{@filter}\d*$/)
     render json: out
   end
-  
+
   def bulk_asso_update
     set_url_params
-    
+
     @model = @main.camelize.constantize
     authorize! :update, @model
-    
+
     ids = @main_ids.split(",")
     to_update = @model.where(id: ids)
-    
+
     @status = @asso.camelize.constantize.find(@asso_id).name
-    
+
     to_update.each do |u|
       u.update_attributes(@asso_col.to_sym => @asso_id,
                           updated_by: @user_id)
     end
-                         
+
     text = "#{@status} set."
-    
+
     render text: text
   end
-  
-  
+
+
   def determine_redirect
    p "==== determining redirect====="
-   #What data comes back from OmniAuth?     
+   #What data comes back from OmniAuth?
    @auth = request.env["omniauth.auth"]
    #Use the token from the data to request a list of calendars
    session[:token] = @auth["credentials"]["token"]
-      
+
     redirect_to session[:destination]
   end
-  
+
   def validate_recruit
     set_url_params
- 
+
     contract = Partner.find(@ins_id).contracts.first
     if @form_country_id.to_i == 0
       @co_id = @model.camelize.constantize.find(@item_id).country_id
     else
       @co_id = @form_country_id.to_i
-    end   
-     
-    if contract.nil? 
+    end
+
+    if contract.nil?
       @out = "No contract created for this partner, skipping recruitment territory validation!"
     elsif !@co_id.nil?
 
@@ -124,22 +124,22 @@ class ApplicationController < ActionController::Base
         pro_reg = contract.all_prohibited_regions.map &:id
         per_coun = contract.all_permitted_countries.map &:id
         per_reg = contract.all_permitted_regions.map &:id
-        
+
         if pro_coun.blank? && pro_reg.blank? && per_coun.blank? && per_reg.blank?
           @out = "No regions/countries are prohibited/permitted in the contract, skipping recruitment territory validation!"
         else
             pro_regions_coun = Country.includes(:region).where(region_id: pro_reg).map &:id
             pro = pro_coun + pro_regions_coun
-            
+
             per_regions_coun = Country.includes(:region).where(region_id: per_reg).map &:id
             per = per_coun + per_regions_coun
-            
+
             if pro.include?(@co_id.to_i)
               @out = "This students country of origin is a prohibited territory as per this partners contract"
-            else    
+            else
               @out = "Not a prohibited territory!"
             end
-            
+
             if !per.empty? && per.include?(@co_id.to_i)
               @out = "Permitted territory!"
             else
@@ -147,32 +147,32 @@ class ApplicationController < ActionController::Base
             end
         end
     elsif @co_id.nil?
-      @out = "Nationality for this student is not selected, skipping recruitment territory validation!" 
+      @out = "Nationality for this student is not selected, skipping recruitment territory validation!"
     end
 
     render text: @out
-  
+
   end
-  
+
   def group_assign
     set_url_params
     model = @model.camelize.constantize
     authorize! :update, model
-    
+
     ids = params[:model_ids].split(",")
-    
+
     to_update = model.where(id: ids)
     to_update.update_all(branch_id: params[:branch_id],
                          assigned_to: params[:user_id],
                          assigned_by: current_user.id,
-                         assigned_at: Time.now)   
-    # this is because the update_all does not triiger updated_at to update itself                         
+                         assigned_at: Time.now)
+    # this is because the update_all does not triiger updated_at to update itself
     model.find(ids.first).update_attribute(:updated_at,Time.now)
-                          
+
     render text: "Successfully assigned!"
-  
+
   end
-  
+
   def group_delete
     set_url_params
     model = @model.camelize.constantize
@@ -192,24 +192,24 @@ class ApplicationController < ActionController::Base
       to_delete = model.where(id: params[:model_ids].split(","))
       to_delete.delete_all
     end
-    
-    render text: "Successfully deactivated!"  
+
+    render text: "Successfully deactivated!"
   end
-  
+
   def export_details
     set_url_params
-    
+
     respond_to do |format|
         format.xls {xls_pdf
         render "#{@model.to_s.downcase.pluralize}/index.xls.erb"}
     end
   end
-  
-  def xls_pdf 
-    @records = @model.camelize.constantize.where(id: @ids.split(","))    
+
+  def xls_pdf
+    @records = @model.camelize.constantize.where(id: @ids.split(","))
     @filename = "#{Time.now.to_i}_#{@records.size}_#{@model.to_s.downcase.pluralize}.#{@format}"
-    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\"" 
-  end 
+    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\""
+  end
 
   private
 
@@ -217,15 +217,15 @@ class ApplicationController < ActionController::Base
     current_user.update_attribute(:last_seen_at, Time.now)
     session[:last_seen_at] = Time.now
   end
-  
+
   def set_current_user
     User.current = current_user
   end
-  
+
   def ban_ip
     if (!current_user.adm? rescue nil)
         result = []
-    
+
         AllowIp.all.each do |o|
           t = o.to
           f = o.from
@@ -245,36 +245,36 @@ class ApplicationController < ActionController::Base
 
   def layout
     # only turn it off for login pages and user invite accept pages
-    if is_a?(Devise::SessionsController) 
-      false 
-    elsif is_a?(Devise::PasswordsController) 
+    if is_a?(Devise::SessionsController)
       false
-    elsif is_a?(Users::InvitationsController) 
-      false 
-    elsif is_a?(Devise::ConfirmationsController) 
-      false 
+    elsif is_a?(Devise::PasswordsController)
+      "passwords"
+    elsif is_a?(Users::InvitationsController)
+      false
+    elsif is_a?(Devise::ConfirmationsController)
+      false
     elsif current_registration
       false
     else
       "application"
-    end  
-  end
-  
-  def set_url_params(params_list = 0)  
-    if params_list == 0    
-      params_list = params.keys.join(",")                            
     end
-        
-    params_list.split(",").each do |p|    
-       if !params[p.to_sym].nil?            
-         val = params[p.to_sym]               
-         instance_variable_set("@"+p,val)                            
-      end                  
-    end    
   end
-  
+
+  def set_url_params(params_list = 0)
+    if params_list == 0
+      params_list = params.keys.join(",")
+    end
+
+    params_list.split(",").each do |p|
+       if !params[p.to_sym].nil?
+         val = params[p.to_sym]
+         instance_variable_set("@"+p,val)
+      end
+    end
+  end
+
   def tl(model,p_id,msg,comment,act,r_id = nil)
-  
+
    Timeline.create!(user_id: current_user.id,
                     user_name: current_user.name,
                     m_name: model,
@@ -285,7 +285,7 @@ class ApplicationController < ActionController::Base
                     action: act,
                     checked: false,
                     receiver_id: r_id)
-                    
+
   end
 
 end
