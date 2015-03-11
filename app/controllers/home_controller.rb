@@ -1,9 +1,9 @@
 class HomeController < ApplicationController
-  skip_before_filter :authenticate_user!,:authenticate_registration!,:authenticate_partner!  
+  skip_before_filter :authenticate_user!,:authenticate_registration!,:authenticate_partner!
 	layout false
 
-  def index  	
-  	if params[:type]  
+  def index
+  	if params[:type]
   		@type = params[:type]
 
   	  type_singular = @type.singularize
@@ -11,8 +11,8 @@ class HomeController < ApplicationController
 
   	  @resource_name = type_singular.to_sym
   		@resource = type_model.new
-  		@devise_mapping = Devise.mappings[@resource_name] 
-  		@controller_name = "sessions" 	
+  		@devise_mapping = Devise.mappings[@resource_name]
+  		@controller_name = "sessions"
     end
   end
 

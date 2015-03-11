@@ -4,13 +4,13 @@ class ProgrammesController < ApplicationController
   authorize_resource
   # GET /programmes
   # GET /programmes.json
-  
+
   def update_comm_claim
     set_url_params
     authorize! :update, Programme
-    
+
     #@main_ids has programme_ids and asso_id has commission_claim_Status_id
-    
+
     ids = @main_ids.split(",")
     to_update = Programme.where(id: ids)
     @status = CommissionClaimStatus.find(@asso_id).name.titleize
@@ -25,17 +25,17 @@ class ProgrammesController < ApplicationController
       to_update.update_all(claim_status_id: @asso_id)
       @text = "#{@status} set."
     end
-    
+
     render text: @text
 
   end
-  
+
   def iterate_fee(objs,col)
     objs.each do |p|
         if p.fee
           if (col == :first_payment_date) && (p.fee.invoice_date.nil?)
-            @text = "You cannot set Paid without Invoicing." 
-          else 
+            @text = "You cannot set Paid without Invoicing."
+          else
             p.fee.update_attribute(col,Date.today)
             p.update_attributes(claim_status_id: @asso_id,
                          updated_by: @user_id)
@@ -43,7 +43,7 @@ class ProgrammesController < ApplicationController
               stat_id = CommissionStatus.find_by_name("partially paid").id
               p.fee.commissions.where(status_id: stat_id).delete_all
               create_comm(p)
-            elsif (@status == "Partial Payment Received")              
+            elsif (@status == "Partial Payment Received")
               calc_create_comm(p)
             end
             @text = "#{@status} set. #{col.to_s.titleize} Successfully Set."
@@ -53,7 +53,7 @@ class ProgrammesController < ApplicationController
         end
     end
   end
-  
+
   def calc_create_comm(p)
         if p.fee
           if @id_partial_fee[p.fee.id.to_s].present?
@@ -66,9 +66,9 @@ class ProgrammesController < ApplicationController
                c_c_s_id = CommissionClaimStatus.find_by_name("full payment received").id
                p.update_attribute(:claim_status_id,c_c_s_id)
               end
-              
+
               curr_remain = prev_remain - curr_pay
-              Commission.create!(paid_cents: curr_pay, 
+              Commission.create!(paid_cents: curr_pay,
                                  remaining_cents: curr_remain,
                                  status_id: s_id,
                                  currency: p.fee.currency,
@@ -76,21 +76,21 @@ class ProgrammesController < ApplicationController
           end
         end
   end
-  
+
   def create_comm(p)
         if p.fee
-          Commission.create!(paid_cents: p.fee.commission_amount_cents, 
+          Commission.create!(paid_cents: p.fee.commission_amount_cents,
                              remaining_cents: 0,
                              status_id: @fp_s_id,
                              currency: p.fee.currency,
                              fee_id: p.fee.id)
         end
   end
-  
-  def index    
+
+  def index
     set_url_params
     self.set_cols
-    
+
 
     respond_to do |format|
 
@@ -108,42 +108,42 @@ class ProgrammesController < ApplicationController
       }
     end
   end
-  
-  def xls_pdf(ext = nil) 
-    
+
+  def xls_pdf(ext = nil)
+
     if @prog_ids == "0"
           @programmes = Programme.joined_ins(@ins_id)
     else
           @programmes = Programme.where(id: @prog_ids.split(","))
     end
     @partner = Partner.find(@ins_id)
-    
+
     @filename = @partner.name.tr(" ","_") + "_iecabroad"
-    
-    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}#{ext.nil? ? nil : ".xls"}\"" 
+
+    headers["Content-Disposition"] = "attachment; filename=\"#{@filename}#{ext.nil? ? nil : ".xls"}\""
   end
 
   def from_partner
     set_url_params
   end
-  
+
   def more
    @programme = Programme.find(params[:id])
    @registration = @programme.registration
    @fee = @programme.fee
    respond_to do |format|
-      format.js 
+      format.js
     end
   end
-  
+
   def create_p_fee
     @programme = Programme.find(params[:programme_id])
   end
-  
+
   def change_p_fee_status
     @programme = Programme.find(params[:programme_id])
   end
-  
+
   def show_full
     set_url_params
     out = @model.camelize.constantize.find(@id).send(@col)
@@ -156,7 +156,7 @@ class ProgrammesController < ApplicationController
     end
 
     respond_to do |format|
-      format.js 
+      format.js
     end
   end
 
@@ -209,8 +209,8 @@ class ProgrammesController < ApplicationController
   # PUT /programmes/1.json
   def update
     @programme = Programme.find(params[:id])
-    
-    # the following block decimals up the entered tuition_fee and scholarship and creates a fee for a program 
+    old_app_status_id = @programme.app_status_id
+    # the following block decimals up the entered tuition_fee and scholarship and creates a fee for a program
     if params[:programme][:fee_attributes].present?
         %w(tuition_fee scholarship).each do |s|
           self.set_fee_params(s)
@@ -220,11 +220,12 @@ class ProgrammesController < ApplicationController
         comm_amount = ((fee[:tuition_fee_cents] - fee[:scholarship_cents]) * (comm_percentage.to_f/100)).to_f
         params[:programme][:fee_attributes][:commission_amount_cents] = comm_amount
         params[:programme][:fee_attributes][:commission_percentage] = comm_percentage
-        
+
     end
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
+        status_change(@programme, old_app_status_id) if @programme.app_status_id != old_app_status_id
         # first pending commmission is created here
         @commissions = @programme.fee.commissions rescue ""
         if (params[:programme][:fee_attributes])
@@ -236,14 +237,14 @@ class ProgrammesController < ApplicationController
                              remaining_cents: params[:programme][:fee_attributes][:commission_amount_cents],
                              currency: params[:programme][:fee_attributes][:currency])
         end
-        
+
         if (params[:programme][:notes_attributes])
-          
+
           tl("Registration",@programme.registration.id,'A note to a programme has been created for this registration',
              "#{(@programme.partner.name rescue "Unknown")}",'Note',@programme.registration.assigned_to)
-            
+
         end
-      
+
         format.html { redirect_to @programme.registration, notice: 'Programme was successfully updated.' }
         format.json { head :no_content }
         if params[:programme][:fee_attributes].present?
@@ -252,9 +253,9 @@ class ProgrammesController < ApplicationController
           format.js { render "programmes/change_p_fee_status" }
         elsif params[:change_status].nil?
           format.js { render "programmes/update" }
-        else             
-          format.js { render "application_statuses/update" }           
-        end   
+        else
+          format.js { render "application_statuses/update" }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @programme.errors, status: :unprocessable_entity }
@@ -273,24 +274,40 @@ class ProgrammesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def set_fee_params(s)
     ss = s.to_sym
     params[:programme][:fee_attributes][(s + '_cents').to_sym] = parse_amt(params[:programme][:fee_attributes][ss])
     params[:programme][:fee_attributes].delete(ss)
-  end  
-  
+  end
+
   def set_cols
      # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.pro_cols
       b = [:surname,:first_name]
       @cols = ((b & a) + (a - b))
   end
-  
+
   def parse_amt(i)
    i.tr(',','').to_f * 100
   end
-  
-  
+
+  private
+
+  def status_change programme, old_app_status_id
+    email_template = programme.application_status.email_template
+    email_to = programme.registration.email
+    user = current_user.conf
+    smtp = Smtp.find(user.def_from_email)
+    Email.create(subject: email_template.subject,
+                  body: email_template.body,
+                  signature: email_template.signature,
+                  to: email_to,
+                  smtp_id: smtp.id,
+                  from: smtp.name,
+                  auto: true)
+  end
+
+
 
 end

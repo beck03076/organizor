@@ -3,7 +3,7 @@
 <% resource_disp2 = "Partner Types"%>
 <% resource = @partner_types %>
 <% new_resource = PartnerType.new %>
-                               
+
 <!-- rendering the left menu -->
 <%= render 'configurations/menu' %>
 
@@ -39,15 +39,15 @@
                   <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
                   <td>
                     <% r_name = resource_disp1.downcase.tr(" ","_") %>
-                    <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, 
+                    <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe,
                                 edit_partner_type_path(r),
                                 {remote: true,
                                 onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
                   </td>
                   <td>
-                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, 
-                                r, 
-                                method: :delete, 
+                    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                                r,
+                                method: :delete,
                                 data: { confirm: 'Are you sure?' }  %>
                   </td>
                 </tr>
@@ -60,7 +60,7 @@
                       resource_disp1: resource_disp1,
                       div: "well",
                       h: "New"} %>
-                      
+
   <div id="edit-resource-container"></div>
 </div>
 </div>
@@ -69,8 +69,3 @@
  actsm("partner_type");
 
 </script>
-
-
-
-
-

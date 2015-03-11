@@ -1,8 +1,70 @@
+<!-- resources -->
+<% resource_disp1 = "Application Status" %>
+<% resource_disp2 = "Application Statuses"%>
+<% resource = @application_statuses %>
+<% new_resource = ApplicationStatus.new %>
+
+<!-- rendering the left menu -->
+<%= render 'configurations/menu' %>
 
 
-<%= render "shared/resources",{resource_disp1: "Application Status",
-                               resource_disp2: "Application Statuses",
-                               resource: @application_statuses,
-                               new_resource: ApplicationStatus.new }   %>
+<div class="col-md-9">
+  <div class="config-content">
+    <div class="row row-top">
+      <h3><%= resource_disp2 %></h3>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email Template</th>
+            <th>Description</th>
+            <th>Created</th>
+            <th>Last Modified</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% resource.each do |r| %>
+            <tr>
+              <td><%= link_to r.name,
+                              application_status_path(r),
+                              {remote: true,
+                              onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %></td>
+              <td><%= r.try_chain(:email_template,:name) %></td>
+              <td><%= truncate(r.desc,length: 20) %></td>
+              <td><%= r.cby %>(<%= r.created_at.to_s %>)</td>
+              <td><%= r.uby %>(<%= r.updated_at.to_s %>)</td>
+              <td>
+                <% r_name = resource_disp1.downcase.tr(" ","_") %>
+                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe,
+                edit_application_status_path(r),
+                {remote: true,
+                  onclick: '$("div.row-top > h3").append("<img class=temp src=/images/icons/sload.gif >");'} %>
+              </td>
+              <td>
+                  <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe,
+                  r,
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' }  %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
+    <%= render "form", {new_resource: new_resource,
+      resource_disp1: resource_disp1,
+      div: "well",
+      h: "New"} %>
 
+    <div id="edit-resource-container"></div>
+  </div>
+</div>
+<script type="text/javascript">
+  actmm("configuration");
+  actsm("application_statuses");
+</script>
