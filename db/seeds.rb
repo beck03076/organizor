@@ -51,6 +51,20 @@ end
    end
  end
 
+ models = %w[users enquiries registrations emails follow_ups partners tasks people ]
+ actions = %w[list]
+ models.each do |m|
+   actions.each do |a|
+     if Permission.where(subject_class: m.singularize.titleize.gsub(/ /,""),action: a).blank?
+       p "Creating #{m} for #{a} permissions..."
+       Permission.create!(:name => "#{a}_#{m}",
+                          :description => "With this permission, an user can #{a} a #{m.singularize}",
+                          :subject_class => "#{m.singularize.titleize.gsub(/ /,"")}",
+                          :action => "#{a}")
+     end                    
+   end
+ end
+
 
  if Permission.where(subject_class: "Document",action: "upload").blank?
    p "Creating document upload permissions..."
