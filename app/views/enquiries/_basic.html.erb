@@ -80,16 +80,18 @@
     </div>
   </div>
   <ul class="vlsdet">
-  <%= a.programmes.blank? ? "<h5>No programmes</h5>".html_safe : "" %>
-  <% a.programmes.each do |i| %>
+    <div class="col-xs-12">
+      <%= a.programmes.blank? ? "<h5>No programmes</h5>".html_safe : "" %>
+    </div>
+    <% a.programmes.each do |i| %>
       <div class="col-xs-6">
         <%= render 'programme', i: i %>
       </div>
-  <% end %>
+    <% end %>
   </ul>
   
 </div>
-<div class="row row-top border-b">
+<div class="row border-b">
   <div class="col-xs-12">
       <div class="panel-group" id="accordion">
       <div class="panel panel-default">

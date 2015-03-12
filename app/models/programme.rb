@@ -51,6 +51,7 @@ class Programme < ActiveRecord::Base
   end 
   
   def notify_status_change
+    return if application_status.nil?
     email_template = application_status.email_template
     if email_template
       email_to = registration.email

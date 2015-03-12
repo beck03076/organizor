@@ -1,18 +1,26 @@
-<div id="register-action" class="action-box">
-<div class="htab">
-<h6><b>New Registration</b></h6>
-</div>
-<br/>
-  <%= form_tag url_for(:controller => 'registrations', :action => 'new'),method: 'get' do %>
-    <div class="fbox" style="height:auto"><label>Note</label>
+<div class="col-md-12 well">
+  <div class="config-content">
+
+    <h4 class="bold-subhead">Register this enquiry</h4>
+
+    <div class="row">
+<%= form_tag url_for(:controller => 'registrations', :action => 'new'),method: 'get',class: "form-horizontal" do %>
+    <h4>Note</h4>
     <%= hidden_field_tag :enquiry_id, id %>
+
     <%= text_area_tag "note",
-                       nil,
-                       {:size => '10x3', :style => 'width:400px;'} %> <br/><br/>
+                       "This enquiry has submitted all the documents",
+                       {:size => '10x3', :style => 'width:400px;', class: 'form-control'} %> <br/><br/>
+    <div class="col-md-2">
+        <%= submit_tag "Register",{class: 'form-control btn btn-primary form-group',data: { confirm: 'Registering an enquiry, will deactivate the enquiry and convert it to a registration, are you sure to continue?' }} %>    
     </div>
-        <%= submit_tag "Register",{class: 'btnp',data: { confirm: 'Registering an enquiry, will deactivate the enquiry and convert it to a registration, are you sure to continue?' }} %>    
+    
+    </div>
   <% end %>
-  
+
+          </div>
+  </div>
 </div>
+ 
 
 <script> acttab('register'); </script>
