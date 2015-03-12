@@ -1,163 +1,158 @@
 <!-- People form -->
-<%= form_for(@person, :html => {:onsubmit => "return validateAll(this);"}) do |f| %>
-  <% if @person.errors.any? %>
-   <div id="error_explanation">
-   <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
-   <ul>
-     <% @person.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-     <% end %>
-   </ul>
-   </div>
-  <% end %>
+<%= form_for(@person, :html => {:onsubmit => "return validateAll(this);",
+                                :class => "form-horizontal"}) do |f| %>
+                                <% if @person.errors.any? %>
+                                  <div id="error_explanation">
+                                    <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+                                    <ul>
+                                      <% @person.errors.full_messages.each do |msg| %>
+                                        <li><%= msg %></li>
+                                      <% end %>
+                                    </ul>
+                                  </div>
+                                <% end %>
 
-  <div class="row row-top">
-    <div class="col-xs-9">
-      <h3><%= what %> People <span class="light"> <%= link %>  </span></h3>
-    </div>
-    <div class="col-xs-3 text-right">
-      <div class="form-group form-last">
-        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
-        <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
-      </div>
-    </div>
-  </div>
+                                <div class="row row-top">
+                                  <div class="col-xs-9">
+                                    <h3><%= what %> Person <span class="light"> <%= link %>  </span></h3>
+                                  </div>
+                                  <div class="col-xs-3 text-right">
+                                    <div class="form-group form-last">
+                                      <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+                                      <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
+                                    </div>
+                                  </div>
+                                </div>
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="well">
-       <div class="cols">
-         <div class="col6">
-           <%= bs(f,"first_name","text_field",['first_name',4],7,6) %>
-           <%= bs(f,"surname","text_field",['surname',4],7,6) %>
-           <%= bs(f,"mobile","text_field",['mobile',4],7,6) %>
-           <%= bs(f,"job_title","text_field",['job_title',4],7,6) %>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <div class="well">
+                                      <div class="cols">
 
-           <div class="col-xs-6">
-             <div class="form-group">
-               <label class="control-label col-xs-4">Gender</label>
-               <div class="col-xs-7">
-                 <% {male: 'm', female: 'f'}.each do |i| %>
-                 <%= f.radio_button :gender, i[1] %>
-                 <%= f.label i[0].to_s.strip %>
-                 <% end %>
-               </div>
-             </div>
-           </div>
-           <%= bs(f,"email","email_field",['email',4],7,6) %>
-           <%= bs(f,["date_of_birth",{class: "datepicker"}],"text_field",[nil,4],7,6) %>
-         </div>
-         <div class="clear"></div>
+                                        <h4 class="bold-subhead">Information</h4>
+                                        <div class="col6">
+                                          <%= bs(f,"first_name","text_field",['first_name',4],7,6) %>
+                                          <%= bs(f,"surname","text_field",['surname',4],7,6) %>
+                                          <%= bs(f,"mobile","text_field",['mobile',4],7,6) %>
+                                          <%= bs(f,"job_title","text_field",['job_title',4],7,6) %>
 
-
-         <h4 class="bold-subhead">Assign</h4>
-
-
-         <%= bs(f,[:assigned_to,User.order(:first_name),
-           :id,
-           :first_name,
-           {prompt: "-assign to-"},{}],
-           "collection_select",
-           ["Assign To",4],7,6) %>
+                                          <div class="col-xs-6">
+                                            <div class="form-group">
+                                              <label class="control-label col-xs-4">Gender</label>
+                                              <div class="col-xs-7">
+                                                <% {male: 'm', female: 'f'}.each do |i| %>
+                                                  <%= f.radio_button :gender, i[1] %>
+                                                  <%= f.label i[0].to_s.strip %>
+                                                <% end %>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <%= bs(f,"email","email_field",['email',4],7,6) %>
+                                          <%= bs(f,["date_of_birth",{class: "datepicker"}],"text_field",[nil,4],7,6) %>
+                                        </div>
+                                        <div class="clear"></div>
 
 
-           <%= bs(f,[:partner_id,PartnerType.order(:name),
-             :id,
-             :name,
-             {prompt: "-partner type-"},{}],
-             "collection_select",
-             ["Partner Type",4],7,6) %>
+                                        <h4 class="bold-subhead">Assign</h4>
 
 
-           <%= bs(f,[:type_id,PersonType.order(:name),
-             :id,
-             :name,
-             {prompt: "-person type -"},{}],
-             "collection_select",
-             ["Person Type",4],7,6) %>
-           <div class="clear"></div>
+                                        <%= bs(f,[:assigned_to,User.order(:first_name),
+                                                  :id,
+                                                  :first_name,
+                                                  {prompt: "-assign to-"},{}],
+                                        "collection_select",
+                                        ["Assign To",4],7,6) %>
 
 
-           <h4 class="bold-subhead">Address & Contact</h4>
-           <%= bs(f,"home_phone","text_field",['home_phone',4],7,6) %>
-           <%= bs(f,"work_phone","text_field",['work_phone',4],7,6) %>
-           <%= bs(f,"address_line1","text_field",['address_line1',4],7,6) %>
-           <%= bs(f,"address_line2","text_field",['address_line2',4],7,6) %>
-           <%= bs(f,"address_post_code","text_field",['address_post_code',4],7,6) %>
+                                      <%= bs(f,[:partner_id,PartnerType.order(:name),
+                                                :id,
+                                                :name,
+                                                {prompt: "-partner type-"},{}],
+                                      "collection_select",
+                                      ["Partner Type",4],7,6) %>
 
-           <%= bs(f,[:country_id,Country.order(:name),
-             :id,
-             :name,
-             {prompt: "- country -"},{}],
-             "collection_select",
-             ["Country",4],7,6) %>
 
-                    <!-- <div class="frbox">
-                    <%#= label_tag "Country" %>
-                    <%#= f.collection_select(:country_id,
-                                            Country.order(:name),
+                                    <%= bs(f,[:type_id,PersonType.order(:name),
+                                              :id,
+                                              :name,
+                                              {prompt: "-person type -"},{}],
+                                    "collection_select",
+                                    ["Person Type",4],7,6) %>
+                                  <div class="clear"></div>
+
+
+                                  <h4 class="bold-subhead">Address & Contact</h4>
+                                  <%= bs(f,"home_phone","text_field",['home_phone',4],7,6) %>
+                                  <%= bs(f,"work_phone","text_field",['work_phone',4],7,6) %>
+                                  <%= bs(f,"address_line1","text_field",['address_line1',4],7,6) %>
+                                  <%= bs(f,"address_line2","text_field",['address_line2',4],7,6) %>
+                                  <%= bs(f,"address_post_code","text_field",['address_post_code',4],7,6) %>
+
+                                  <%= bs(f,[:country_id,Country.order(:name),
                                             :id,
                                             :name,
-                                            {:prompt => "--Country--"},
-                                            {tabindex: 13,
-                                             :class => "countries_select",
-                                             :onchange => "simplePrepareSelect(this,
-                                                           '#person_city_id',
-                                                           '/get_cities/');"}) %>
-                    </div> -->
+                                            {prompt: "- country -"},{}],
+                                  "collection_select",
+                                  ["Country",4],7,6) %>
+
+                                <!-- <div class="frbox">
+                                  <%#= label_tag "Country" %>
+                                  <%#= f.collection_select(:country_id,
+                                                           Country.order(:name),
+                                                           :id,
+                                                           :name,
+                                                           {:prompt => "--Country--"},
+                                                           {tabindex: 13,
+                                                            :class => "countries_select",
+                                                            :onchange => "simplePrepareSelect(this,
+                                                                                              '#person_city_id',
+                                                                                              '/get_cities/');"}) %>
+                                                                                            </div> -->
 
 
-            <%= bs(f,"desc","text_area",['Description',4],7,6) %>
+                                                                                            <%= bs(f,"desc","text_area",['Description',4],7,6) %>
 
-            <%= bs(f,[:city_id,City.order(:name),
-              :id,
-              :name,
-              {prompt: "- city -"},{}],
-              "collection_select",
-              ["Country",4],7,6) %>
-
-
-
-                    <%#= fs(f,[:city_id,
-                            City.order(:name),
-                            :id,
-                            :name,{},
-                            {tabindex: 12}],"collection_select",nil,"city") %>
-
-                    <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
-               </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
-
-
-  <br/>
-  <br/>
-
-  <div class="actions" style="margin-bottom:10px;">
-   <%= f.submit "Save",{:class => "btnp fr"} %>
-   <%= f.submit "Save and New",{:class => "btnp fr", :name => 'save_new'} %>
-  </div>
-   <div class="cl"></div>
-<% end %>
+                                                                                            <%= bs(f,[:city_id,City.order(:name),
+                                                                                                      :id,
+                                                                                                      :name,
+                                                                                                      {prompt: "- city -"},{}],
+                                                                                            "collection_select",
+                                                                                            ["Country",4],7,6) %>
 
 
 
-<script type="text/javascript">
- $(function(){
-  setColorsFromSession();
-  $(document).on('nested:fieldAdded', function(event){
-      var field = event.field;
-      var dateField = field.find('.dateField');
-      dateField.datepicker({
-        inline: true,
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: "yy-mm-dd",
-        yearRange: '1980:2050' });
-      setColorsFromSession();
-    })
-});
-</script>
+                                                                                          <%#= fs(f,[:city_id,
+                                                                                                     City.order(:name),
+                                                                                                     :id,
+                                                                                                     :name,{},
+                                                                                                     {tabindex: 12}],"collection_select",nil,"city") %>
+
+                                                                                                   <%= f.hidden_field :assigned_by, :value => current_user.id.to_s %>
+
+                                                                                                   <div class="clear"></div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row row-top">
+                                    <div class="col-xs-offset-10">
+                                      <div class="form-group form-last">
+                                        <%= f.submit "Save",{class: "btn btn-primary btn-next"} %>
+                                        <%= f.submit "Save and New",{class: "btn btn-primary btn-next", :name => 'save_new'} %>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+
+                                </div>
+                                </div>
+
+
+                              <% end %>
+
+
+
+                              <script type="text/javascript">
+                              </script>

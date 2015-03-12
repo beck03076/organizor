@@ -209,7 +209,6 @@ class ProgrammesController < ApplicationController
   # PUT /programmes/1.json
   def update
     @programme = Programme.find(params[:id])
-    old_app_status_id = @programme.app_status_id
     # the following block decimals up the entered tuition_fee and scholarship and creates a fee for a program
     if params[:programme][:fee_attributes].present?
         %w(tuition_fee scholarship).each do |s|
@@ -225,7 +224,6 @@ class ProgrammesController < ApplicationController
 
     respond_to do |format|
       if @programme.update_attributes(params[:programme])
-        status_change(@programme, old_app_status_id) if @programme.app_status_id != old_app_status_id
         # first pending commmission is created here
         @commissions = @programme.fee.commissions rescue ""
         if (params[:programme][:fee_attributes])
@@ -291,23 +289,5 @@ class ProgrammesController < ApplicationController
   def parse_amt(i)
    i.tr(',','').to_f * 100
   end
-
-  private
-
-  def status_change programme, old_app_status_id
-    email_template = programme.application_status.email_template
-    email_to = programme.registration.email
-    user = current_user.conf
-    smtp = Smtp.find(user.def_from_email)
-    Email.create(subject: email_template.subject,
-                  body: email_template.body,
-                  signature: email_template.signature,
-                  to: email_to,
-                  smtp_id: smtp.id,
-                  from: smtp.name,
-                  auto: true)
-  end
-
-
 
 end

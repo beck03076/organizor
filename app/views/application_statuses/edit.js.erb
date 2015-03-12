@@ -1,0 +1,16 @@
+ 
+  <% ctnt = (render 'form', {new_resource: @application_status,
+                             resource_disp1: "Application Status",
+                             div: "",
+                             h: "Edit"}) %>
+                             
+ 
+  $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource-edit', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Edit',
+                                                         button: nil}) %>");
+  
+  $('#resource-edit').modal('show');
+  
+  $('.temp').remove();

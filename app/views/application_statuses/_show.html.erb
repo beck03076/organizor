@@ -1,0 +1,16 @@
+
+<div class="row">
+              <div class="row row-top ">
+                <div class="col-md-6">
+                  <div class="col-md-4 text-right light">Name</div>
+                  <div class="col-md-8"><%= a.name %></div>
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Email Template</div>
+                  <div class="col-md-8"><%= a.try_chain(:email_template,:name) %></div> 
+                  <div style="clear:both;"></div>
+                  <div class="col-md-4 text-right light">Description</div>
+                  <div class="col-md-8"><%= a.desc %></div>
+                  <div style="clear:both;"></div>                  
+                </div>
+               </div>
+</div>

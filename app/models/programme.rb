@@ -42,13 +42,31 @@ class Programme < ActiveRecord::Base
                   
   accepts_nested_attributes_for :notes,:fee
   
-  after_save :set_status_diagram_conversion_time 
+  after_save :set_status_diagram_conversion_time, :notify_status_change
   before_create :set_country_city
 
   def set_country_city
     self.country_id = partner.country_id
     self.city_id = partner.city_id
   end 
+  
+  def notify_status_change
+    email_template = application_status.email_template
+    if email_template
+      email_to = registration.email
+      user = User.current.conf
+      smtp = Smtp.find(user.def_from_email)
+      Email.create(subject: email_template.subject,
+                   body: email_template.body,
+                   signature: email_template.signature,
+                   to: email_to,
+                   smtp_id: smtp.id,
+                   from: smtp.name,
+                   auto: true,
+                   core: "registrations")
+    end
+  end
+
   
   def set_status_diagram_conversion_time
     return if !app_status_id_changed?

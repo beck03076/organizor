@@ -372,7 +372,7 @@ Organizor::Application.routes.draw do
 
   devise_scope :partner do
     authenticated :partner do
-      root to: 'partners#index', as: :root
+      root to: 'company#index', as: :root
     end
   end
 

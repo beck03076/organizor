@@ -2,7 +2,7 @@ class PartnersController < ApplicationController
   include CoreController
   include ActionsMethods
   helper_method :meta
-  skip_before_filter :authenticate_user!, only: [:action_partial]
+  skip_before_filter :authenticate_user!, only: [:action_partial,:show,:update]
 
   def tab
     set_url_params
@@ -35,7 +35,7 @@ class PartnersController < ApplicationController
   # GET /partners
   # GET /partners.json
   def index
-    authorize! :list, Partner
+    #authorize! :list, Partner
 
     set_url_params
     self.set_cols
