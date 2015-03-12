@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 authorize_resource
-skip_authorize_resource :only => :show_hover
+skip_authorize_resource :only => [:show_hover, :index]
 
   def show_hover 
     @task = Task.find(params[:id])
@@ -9,6 +9,8 @@ skip_authorize_resource :only => :show_hover
   # GET /tasks
   # GET /tasks.json
   def index
+
+    authorize! :list, Task
     temp = current_user.tasks.includes(:topic,:_ass_by).order('created_at DESC')
     
     if !params[:filter].nil?

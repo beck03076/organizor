@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
 authorize_resource
-skip_authorize_resource :only => [:show_hover,:bulk_email]
+skip_authorize_resource :only => [:show_hover,:bulk_email,:index]
 
   def filter
     set_url_params
@@ -26,6 +26,7 @@ skip_authorize_resource :only => [:show_hover,:bulk_email]
   end
 
   def index
+    authorize! :list, Email
     @emails = current_user.emails.includes(:_cre_by)
   end
 

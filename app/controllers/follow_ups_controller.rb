@@ -1,7 +1,7 @@
 class FollowUpsController < ApplicationController
 
 authorize_resource
-skip_authorize_resource :only => [:show_hover,:cal_click]
+skip_authorize_resource :only => [:show_hover,:cal_click, :index]
 
   def cal_click
     set_url_params
@@ -17,6 +17,7 @@ skip_authorize_resource :only => [:show_hover,:cal_click]
   # GET /follow_ups
   # GET /follow_ups.json
   def index  
+    authorize! :list, FollowUp
     #set_url_params
     @follow_ups = FollowUp.where(assigned_to: current_user.id).reject{|i| i.starts_at.nil? }
 

@@ -35,7 +35,7 @@ class PartnersController < ApplicationController
   # GET /partners
   # GET /partners.json
   def index
-    #authorize! :list, Partner
+    authorize! :list, Partner
 
     set_url_params
     self.set_cols

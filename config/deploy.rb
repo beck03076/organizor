@@ -58,6 +58,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
+    queue! "#{rake} db:seed"
     invoke :'rails:assets_precompile'
     invoke :'deploy:link_shared_paths'
     # invoke :'sidekiq:quiet'

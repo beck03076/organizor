@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     else
       @users = User.order(:first_name)
     end
-    authorize! :read, @users, id: current_user.id
+    authorize! :list, @users, id: current_user.id
 
     respond_to do |format|
       format.html # index.html.erb
