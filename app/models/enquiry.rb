@@ -137,6 +137,7 @@ class Enquiry < ActiveRecord::Base
                              to: send(to),
                              smtp_id: smtp.id,
                              from: smtp.name,
+                             core: "enquiries",
                              auto: true)
       end    
     end
