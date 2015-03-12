@@ -1,53 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Forgot your password?</title>
-  <%= stylesheet_link_tag    "home" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
- 
-  
-  <!--p class="notice"><%= notice %></p-->
-  <!--p class="alert"><%= alert %></p-->
-</head>
-<body>
-<script type="text/javascript">
-$(document).ready(function(){
-$('#fade').cycle();
-});
-</script>
-<div id="fade">
-<img src="/images/b1.jpg" class="theme"/>
-<img src="/images/b2.jpg" class="theme"/>
-<img src="/images/b3.jpg" class="theme"/>
-</div>
-<div id="bg1">
-<div id="login-box" style="width:450px">
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-<center>
-<h2 style="color:#fff">Forgot Your Password?</h2>
-<h4 style="color:#fff">Enter your email and reset</h4>
+<div class="container">
 
-</center>
-<table cellpadding="10" cellspacing="0" width="100%">
-<tr>
-     <td align="center">
-     <%= f.text_field :email %>
-     <%= f.submit 'Reset'%>
-     <div align="center" class="white-link">
-      <%= render "devise/shared/links" %>
-     </div>
-     </td>
-     <td>
-       
-    </td>
-</tr>
-</table>
-<% end %>
+<div class="row">
+  <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, class: "form-horizontal" }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.full_error :confirmation_token %>
+    <div class="row well">
+      <div class="row">
+        <br/>
+        <div class="col-xs-offset-3 ">
+          <h1>Forgot your password? <br/> <small> Enter your email and reset!</small> </h1>
+        </div>
+
+      </div>
+      <br/>
+
+      <%= bs(f,"email","email_field",['email',4],8,8) %>
+      <div class=" form-group col-xs-8 text-right">
+        <%= f.submit "Reset", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 </div>
 </div>
-</body>
-</html>
-
-
-

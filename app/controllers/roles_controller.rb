@@ -8,7 +8,6 @@ class RolesController < ApplicationController
 
  def index
     @roles = Role.includes(:permissions).all.reject {|i| i.name == "agency_administrator"}
-    permissions
     
     respond_to do |format|
       format.html { }#render layout: "users" }

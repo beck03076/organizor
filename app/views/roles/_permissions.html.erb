@@ -1,6 +1,6 @@
 <!-- permissions used twice - Users, Roles but different in create roles-->
 
-     <% perms = (Permission.all.group_by &:subject_class) %>     
+     <% perms = (Permission.where("name REGEXP 'create|update|delete|read|list'").group_by &:subject_class) %>     
      <% r = perms.keys %>
      <% defs = ["Enquiry","Registration","Partner","Person"] %>
      <% r = r - ["All","Country","City"] %>

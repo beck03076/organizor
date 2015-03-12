@@ -1,14 +1,19 @@
-<div class="container main">
+<div class="container">
+  
   <div class="row">
     <%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, class: "form-horizontal" }) do |f| %>
       <%= f.error_notification %>
       <%= f.full_error :confirmation_token %>
       <div class="row well">
         <div class="row">
+          <br/>
           <div class="col-xs-8 text-center">
             <h1>Resend confirmation instructions</h1>
           </div>
+
         </div>
+          <br/>
+
         <%= bs(f,"email","email_field",['email',4],8,8) %>
         <div class=" form-group col-xs-8 text-right">
           <%= f.submit "submit", class: "btn btn-primary" %>
