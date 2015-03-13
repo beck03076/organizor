@@ -61,9 +61,9 @@ class EnquiriesController < ApplicationController
                            gender: "m",
                            score: 5)
     authorize! :create, @enquiry
-      
-    @countries = basic_select(Country)
-    @p_types = PartnerType.where(educational: true)
+
+    set_prelims
+
   end
   
 
@@ -72,8 +72,7 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.find(params[:id]).deep_clone
     authorize! :create, @enquiry
 
-    @countries = basic_select(Country)
-    @p_types = PartnerType.where(educational: true)
+    set_prelimes
   end
 
   # GET /enquiries/1/edit
@@ -81,8 +80,7 @@ class EnquiriesController < ApplicationController
     @enquiry = Enquiry.find(params[:id])
     authorize! :update, @enquiry
     
-    @countries = basic_select(Country)
-    @p_types = PartnerType.where(educational: true)
+    set_prelims
   end
 
   # POST /enquiries
@@ -93,6 +91,8 @@ class EnquiriesController < ApplicationController
      
     stat_id = EnquiryStatus.find_by_name("pending").id
     @enquiry.status_id = stat_id
+
+    set_prelims
     
     respond_to do |format|
       
@@ -155,6 +155,11 @@ class EnquiriesController < ApplicationController
     end
   end
   
+  def set_prelims
+    @countries = basic_select(Country)
+    @p_types = PartnerType.where(educational: true)
+  end
+
   def set_cols
      # a is the cols chosen stored in the database and b are the right order of cols
       a = current_user.conf.enq_cols
