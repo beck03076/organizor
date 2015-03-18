@@ -2,6 +2,7 @@ class Ability
   include CanCan::Ability
   
   def initialize(user)
+    if user
       user.permissions.each do |permission|
         if permission.subject_id.nil?
           if permission.subject_class == "All"
@@ -13,6 +14,7 @@ class Ability
           can permission.action.to_sym, permission.subject_class.constantize, users: { id: user.id }
         end        
       end
+    end
   end
   
 end
