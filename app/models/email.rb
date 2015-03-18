@@ -27,7 +27,7 @@ class Email < ActiveRecord::Base
   after_save :set_response_time, :send_mail
 
   def set_from
-    self.from = _from.name
+    self.from = _from.try(:name)
   end
 
   def send_mail
