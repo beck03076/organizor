@@ -3,7 +3,7 @@
 class DocumentUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -18,6 +18,26 @@ class DocumentUploader < CarrierWave::Uploader::Base
     elsif !model.contract_id.nil?
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.contract_id}"
     end
+  end
+
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
+
+  version :thumb do
+    process :manualcrop
+    process :resize_to_limit => [200, 200]
+  end
+
+  version :large do
+    process :resize_to_limit => [650, 650]
+  end
+
+  def manualcrop
+    return unless model.cropping?
+    manipulate! do |img| 
+      img = img.crop(model.crop_x.to_i,model.crop_y.to_i,model.crop_h.to_i,model.crop_w.to_i) 
+    end 
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

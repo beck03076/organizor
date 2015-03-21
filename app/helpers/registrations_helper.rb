@@ -8,4 +8,12 @@ module RegistrationsHelper
     end
   end
 
+  def croppable_img(doc)
+    if ((can? :download, Document) && (doc.img?)) 
+      (" | " + 
+       link_to("Set as Profile Image","/crop/#{doc.id}",{remote: true})).html_safe
+    end
+  end
+
+
 end

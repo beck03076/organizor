@@ -19,6 +19,7 @@
 *= require jqueryui-datepicker
 *= require smartmenus
 *= require smartmenus_custom
+*= require jcrop-min
 */
 
 /* states and images */

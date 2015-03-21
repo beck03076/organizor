@@ -1,0 +1,12 @@
+
+  <% ctnt = (render 'crop') %>
+ 
+  $('#edit-resource-container').html("<%= escape_javascript(render :partial => 'shared/modal',
+                                           :locals =>   {id: 'resource-edit', 
+                                                         content: ctnt.html_safe,
+                                                         header: 'Crop Image',
+                                                         button: nil}) %>");
+ 
+
+$('#resource-edit').modal('show');
+

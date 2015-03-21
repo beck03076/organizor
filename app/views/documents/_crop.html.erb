@@ -1,0 +1,46 @@
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#cropbox').Jcrop({
+    onChange: update_crop,
+    onSelect: update_crop,
+    setSelect: [0, 0, 500, 500],
+    aspectRatio: 1,
+    keySupport: false
+  });
+});
+
+function update_crop(coords) {
+  var rx = 100/coords.w;
+  var ry = 100/coords.h;
+  var lw = $('#cropbox').width();
+  var lh = $('#cropbox').height();
+  var ratio = <%= @document.profile_geometry[:width] %> / lw ;
+  $('#preview').css({
+    width: Math.round(rx * lw) + 'px',
+    height: Math.round(ry * lh) + 'px',
+    marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+    marginTop: '-' + Math.round(ry * coords.y) + 'px'
+  });
+  $("#crop_x").val(Math.round(coords.x * ratio));
+  $("#crop_y").val(Math.round(coords.y * ratio));
+  $("#crop_w").val(Math.round(coords.w * ratio));
+  $("#crop_h").val(Math.round(coords.h * ratio));
+}
+</script>
+
+<div class="row">
+  <div class="col-md-12 ">
+    <%= image_tag @document.path_url(:large), :id => "cropbox" %>
+
+    <div class="row">
+      <%= form_for @document do |f| %>
+        <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+          <%= f.hidden_field attribute, :id => attribute %>
+        <% end %>
+        <div class="form-group">
+          <p><%= f.submit "Crop and Set",{class: "btn btn-primary", name: "registration_image"} %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

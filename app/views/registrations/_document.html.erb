@@ -66,17 +66,18 @@
             </thead>
 
             <% cond = @sub_type == "all" ? nil : {doc_type: @sub_type} %>
-            <% a.documents.includes(:category).where(cond).each do |cat| %>
+            <% a.documents.includes(:category).where(cond).each do |doc| %>
               <tbody>
-                <td><%= check_box_tag "doc_id[]",cat.id %></td>
-                <td><%= cat.name rescue "Unknown" %></td>
-                <td><%= cat.category.try(:name) %> </td>
+                <td><%= check_box_tag "doc_id[]",doc.id %></td>
+                <td><%= doc.name rescue "Unknown" %></td>
+                <td><%= doc.category.try(:name) %> </td>
 
-                <td><%= cat.uploader.name rescue "Unknown" %></td>
-                <td><%= cat.created_at.to_s %></td>
+                <td><%= doc.uploader.name rescue "Unknown" %></td>
+                <td><%= doc.created_at.to_s %></td>
                 <td>
-                  <%= link_to "Edit","/document/edit/#{cat.id}",{remote: true} if can? :update, Document %> |
-                  <%= link_to "Download",cat.path.url,{target: "_blank"} if can? :download, Document %>
+                  <%= link_to "Edit","/document/edit/#{doc.id}",{remote: true} if can? :update, Document %> |
+                  <%= link_to "Download",doc.path.url,{target: "_blank"} if can? :download, Document %>
+                  <%= croppable_img(doc) %>
                 </td>
               </tbody>
             <% end %>

@@ -1,7 +1,9 @@
 class Document < ActiveRecord::Base
   attr_accessible :category_id, :name, :path,
   :registration_id, :remove_path,:contract_id,
-  :contract_category_id,:doc_type, :partner_category_id, :partner_id
+  :contract_category_id,:doc_type, :partner_category_id, :partner_id,
+  :crop_x, :crop_y, :crop_w, :crop_h
+
   validates :name, uniqueness: {scope: :registration_id}
 
   belongs_to :registration
@@ -14,8 +16,33 @@ class Document < ActiveRecord::Base
   mount_uploader :path, DocumentUploader
 
   before_create :default_name
+  after_update :reprocess_profile, :if => :cropping?
 
   def default_name
     self.name = File.basename(path.filename) if path
   end
+
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+
+  def profile_geometry
+    img = Magick::Image::read(self.path.current_path).first
+    @geometry = {:width => img.columns, :height => img.rows }
+  end
+
+  def img?
+    if %w(jpg jpeg png gif JPG JPEG PNG GIF).include?(path.file.extension)
+      true
+    else
+      false
+    end
+  end
+
+  private
+
+  def reprocess_profile
+    self.path.recreate_versions!
+  end
+
 end

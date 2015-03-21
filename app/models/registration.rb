@@ -169,6 +169,12 @@ class Registration < ActiveRecord::Base
   end
   }
 
+  def self.change_image(id,img)
+    registration = find(id)
+    registration.image = img
+    registration.save
+  end
+
   def set_enquiry_fields
     if !self.enquiry_id.nil?
       enq = Enquiry.find(enquiry_id)

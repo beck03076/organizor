@@ -11,9 +11,18 @@ class DocumentsController < ApplicationController
   def update
     @document = Document.find(params[:id])
 
+    if params[:registration_image]
+      registration = Registration.find(@document.registration_id)
+      registration.image = @document.path.versions[:thumb]
+      registration.save
+    end 
+
     respond_to do |format|      
       if @document.update_attributes(params[:document])
-        format.html {redirect_to :back}
+        format.html {
+          Registration.change_image(@document.registration_id,@document.path.versions[:thumb]) if params[:registration_image]
+          redirect_to @document.registration
+        }
         format.json { head :no_content }
       else
         format.html {puts @document.errors.to_s; redirect_to :back}
@@ -33,10 +42,16 @@ class DocumentsController < ApplicationController
       }
     end
   end
+
+  def crop
+    @document = Document.find(params[:doc_id])
+    respond_to do |format|
+      format.js
+    end
+  end
   
   def create
     Document.create! params[:document]
-    
     redirect_to "/registrations/" + params[:document][:registration_id].to_s
   end
   
