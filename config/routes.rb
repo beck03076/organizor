@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Organizor::Application.routes.draw do
+  get 'crop/:doc_id' => 'documents#crop'
 
   get 'joined_students' => "registrations#index"
 
